@@ -1,33 +1,33 @@
-name: Unit tests
+name: Unit Tests
 
 on: [push, workflow_dispatch]
 
 permissions:
-    contents: read
+  contents: read
 
 jobs:
-    test:
-        runs-on: ${{ matrix.os }}
+  test:
+    runs-on: ${{ matrix.os }}
 
-        strategy:
-            matrix:
-                os: [ubuntu-latest]
+    strategy:
+      matrix:
+        os: [ubuntu-latest]
 
-        steps:
-            - name: Check out Git repository
-              uses: actions/checkout@v4
+    steps:
+      - name: Check out Git repository
+        uses: actions/checkout@v4
 
-            - name: Install Node.js, NPM and Yarn
-              uses: actions/setup-node@v4
-              with:
-                  node-version: 22
+      - name: Install Node.js, NPM and Yarn
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
 
-            - name: yarn install
-              run: |
-                  yarn install
+      - name: yarn install
+        run: |
+          yarn install
 
-            - name: yarn test
-              env:
-                  GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-              run: |
-                  yarn test
+      - name: yarn test
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          yarn test
