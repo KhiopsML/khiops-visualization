@@ -23,6 +23,7 @@
 - [Installation](#-installation)
 - [Usage](#-usage)
 - [Development](#-development)
+- [Development Demos Versions](#-development-demos-versions)
 - [Testing](#-testing)
 - [License](#-license)
 
@@ -123,6 +124,13 @@ src/
 │   └── mocks/                    # Sample data files
 └── environments/                 # Environment configurations
 ```
+
+## 🚧 Development Demos Versions
+
+The current development versions are accessible here:
+
+- [DEV Visualization](https://khiopsml.github.io/khiops-visualization/dev-visualization.html)
+- [DEV Covisualization](https://khiopsml.github.io/khiops-visualization/dev-covisualization.html)
 
 ## 🧪 Testing
 
