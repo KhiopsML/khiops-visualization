@@ -888,6 +888,9 @@ export class DistributionDatasService {
         graphItem.name = el.name;
       } else if (el instanceof Variable2dModel) {
         graphItem.name = el.name1 + ' x ' + el.name2;
+      } else {
+        // Fallback for TrainedPredictorModel or other types
+        graphItem.name = (el as any).name;
       }
       graphItem.value = el?.level || 0; // Do not add tofixed here because datas are < 0.00
       currentDataSet.data.push(graphItem.value);
@@ -927,6 +930,9 @@ export class DistributionDatasService {
         graphItem.name = el.name;
       } else if (el instanceof Variable2dModel) {
         graphItem.name = el.name1 + ' x ' + el.name2;
+      } else {
+        // Fallback for TrainedPredictorModel or other types
+        graphItem.name = (el as any).name;
       }
       graphItem.value = (el as any)?.importance || 0; // Do not add tofixed here because datas are < 0.00
       currentDataSet.data.push(graphItem.value);
