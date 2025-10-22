@@ -164,10 +164,12 @@ export class ModelingViewComponent extends SelectableTabComponent {
 
   onShowLevelDistributionFromButton() {
     if (this.modelingDatas?.trainedPredictorsListDatas) {
-      // Cast to VariableModel[] as the level distribution expects this type
-      this.onShowLevelDistributionGraph(
-        this.modelingDatas.trainedPredictorsListDatas as any,
+      // Sort data by level before showing distribution
+      const sortedData = this.distributionService.sortDatasByLevel(
+        this.modelingDatas.trainedPredictorsListDatas,
       );
+      // Cast to VariableModel[] as the level distribution expects this type
+      this.onShowLevelDistributionGraph(sortedData);
     }
   }
 
@@ -177,11 +179,12 @@ export class ModelingViewComponent extends SelectableTabComponent {
 
   onShowImportanceDistributionFromButton() {
     if (this.modelingDatas?.trainedPredictorsListDatas) {
-      // Cast to VariableModel[] as the importance distribution expects this type
-      this.onShowDistributionGraph(
-        this.modelingDatas.trainedPredictorsListDatas as any,
-        'importance',
+      // Sort data by importance before showing distribution
+      const sortedData = this.distributionService.sortDatasByImportance(
+        this.modelingDatas.trainedPredictorsListDatas,
       );
+      // Cast to VariableModel[] as the importance distribution expects this type
+      this.onShowDistributionGraph(sortedData, 'importance');
     }
   }
 

@@ -165,7 +165,11 @@ export class TreePreparationViewComponent extends SelectableTabComponent {
 
   onShowLevelDistributionFromButton() {
     if (this.variablesDatas) {
-      this.onShowLevelDistributionGraph(this.variablesDatas);
+      // Sort data by level before showing distribution
+      const sortedData = this.distributionService.sortDatasByLevel(
+        this.variablesDatas,
+      );
+      this.onShowLevelDistributionGraph(sortedData);
     }
   }
 

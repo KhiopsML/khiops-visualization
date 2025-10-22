@@ -117,7 +117,11 @@ export class Preparation2dViewComponent extends SelectableTabComponent {
 
   onShowLevelDistributionFromButton() {
     if (this.variables2dDatas) {
-      this.onShowLevelDistributionGraph(this.variables2dDatas);
+      // Sort data by level before showing distribution
+      const sortedData = this.distributionService.sortDatasByLevel(
+        this.variables2dDatas,
+      );
+      this.onShowLevelDistributionGraph(sortedData);
     }
   }
 
