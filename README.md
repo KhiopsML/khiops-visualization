@@ -26,7 +26,6 @@
 - [Installation](#-installation)
 - [Usage](#-usage)
 - [Development](#-development)
-- [Development Demos Versions](#-development-demos-versions)
 - [Testing](#-testing)
 - [License](#-license)
 
@@ -128,7 +127,7 @@ src/
 └── environments/                 # Environment configurations
 ```
 
-## 🚧 Development Demos Versions
+### Development Demos Versions
 
 The current development versions are accessible here:
 
