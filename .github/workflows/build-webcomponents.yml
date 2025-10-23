@@ -102,6 +102,9 @@ jobs:
           git config --local user.email "stephane.bouget@orange.com"
           git config --local user.name "Stéphane Bouget"
 
+          # Pull latest changes before committing
+          git pull origin ${{ inputs.branch || 'master' }}
+
           # Force add the file even if it's in gitignore
           git add -f docs/dist/khiops-webcomponents.bundle.js
           if git diff --staged --quiet; then
