@@ -99,8 +99,6 @@ jobs:
 
       - name: Commit and push changes
         run: |
-          git config --local user.email "action@github.com"
-          git config --local user.name "GitHub Action"
           # Force add the file even if it's in gitignore
           git add -f docs/dist/khiops-webcomponents.bundle.js
           if git diff --staged --quiet; then
