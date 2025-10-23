@@ -44,5 +44,14 @@ jobs:
       - name: Build
         run: yarn build:webcomponents
 
+      - name: Update built package.json version
+        run: |
+          NEW_VERSION="${PREVTAG:1}" # Remove the 'v' from the tag
+          sed -i "s/\"version\": \"NPM_PUBLISH_VERSION\"/\"version\": \"$NEW_VERSION\"/" dist/khiops-webcomponent/package.json
+          cat dist/khiops-webcomponent/package.json
+        env:
+          PREVTAG: ${{ steps.previoustag.outputs.tag }}
+
       - name: Publish to npm
-        run: npm publish dist/khiops-webcomponent
+        working-directory: dist/khiops-webcomponent
+        run: npm publish
