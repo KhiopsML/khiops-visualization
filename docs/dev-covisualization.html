@@ -19,7 +19,12 @@
       id="kv1"
       style="width: 100%; height: 100%"
     ></khiops-covisualization>
-    <script src="./dist/khiops-webcomponents.bundle.js?v=${Math.random()}"></script>
+    <script>
+      // Load the webcomponents bundle with cache busting
+      const script = document.createElement('script');
+      script.src = `./dist/khiops-webcomponents.bundle.js?v=${Math.random()}`;
+      document.head.appendChild(script);
+    </script>
     <script>
       document.addEventListener('DOMContentLoaded', function () {
         // Load the demo.khj file and set the data to the visualization component
