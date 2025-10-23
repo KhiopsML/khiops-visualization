@@ -26,7 +26,6 @@ import { Component, Input } from '@angular/core';
       .tooltip {
         position: absolute;
         background-color: rgba(0, 0, 0, 0.8);
-        color: #fff;
         font-weight: 200;
         z-index: 2;
         padding: 0 10px;
@@ -34,6 +33,9 @@ import { Component, Input } from '@angular/core';
         font-size: 0.8rem;
         min-width: 140px;
         pointer-events: none;
+        p {
+          color: #fff;
+        }
       }
       .title {
         font-weight: bold;
