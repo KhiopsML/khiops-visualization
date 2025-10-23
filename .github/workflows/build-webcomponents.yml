@@ -30,12 +30,6 @@ jobs:
       - name: Install dependencies
         run: yarn install
 
-      - name: Capture commit ID
-        run: |
-          COMMIT_HASH=$(git rev-parse HEAD)
-          echo "COMMIT_HASH=$COMMIT_HASH" >> $GITHUB_ENV
-          echo "Build commit ID: $COMMIT_HASH"
-
       - name: Debug - Check Angular CLI and project structure
         run: |
           echo "Angular CLI version:"
@@ -61,18 +55,6 @@ jobs:
           ls -la dist/ || echo "No dist directory"
           ls -la dist/khiops-webcomponent/ || echo "No khiops-webcomponent directory"
 
-      - name: Create build info
-        run: |
-          # Create simple build info with just commit ID
-          cat > build-info.js << EOF
-          // Build commit ID - Generated automatically
-          window.KHIOPS_BUILD_INFO = {
-            commit: {
-              hash: "$COMMIT_HASH"
-            }
-          };
-          EOF
-
       - name: Process CSS and create bundle
         run: |
           if [ -f "dist/khiops-webcomponent/styles.css" ]; then
@@ -97,13 +79,10 @@ jobs:
           [ ! -f "polyfills.js" ] && touch polyfills.js
           [ ! -f "styles.js" ] && touch styles.js
 
-          # Copy build info file
-          cp ../../build-info.js .
+          # Create bundle
+          cat polyfills.js styles.js main.js > khiops-webcomponents.bundle.js
 
-          # Create bundle with commit ID
-          cat build-info.js polyfills.js styles.js main.js > khiops-webcomponents.bundle.js
-
-          echo "Bundle created with build info, contents:"
+          echo "Bundle created, contents:"
           ls -la
           cd ../..
 
@@ -116,10 +95,7 @@ jobs:
         run: mkdir -p docs/dist
 
       - name: Copy bundle to docs/dist
-        run: |
-          cp dist/khiops-webcomponent/khiops-webcomponents.bundle.js docs/dist/
-          echo "Copied bundle to docs/dist:"
-          ls -la docs/dist/
+        run: cp dist/khiops-webcomponent/khiops-webcomponents.bundle.js docs/dist/
 
       - name: Commit and push changes
         run: |
@@ -130,7 +106,6 @@ jobs:
           if git diff --staged --quiet; then
             echo "No changes to commit"
           else
-            COMMIT_SHORT=$(echo $COMMIT_HASH | cut -c1-7)
-            git commit -m "Generate khiops-webcomponents.bundle.js from commit $COMMIT_SHORT"
+            git commit -m "Generate khiops-webcomponents.bundle.js"
             git push
           fi
