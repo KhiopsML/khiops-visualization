@@ -10,6 +10,7 @@ import { HISTOGRAM_COLORS } from '@khiops-visualization/config/colors';
 import { AppService } from '@khiops-visualization/providers/app.service';
 import { UtilsService } from '@khiops-library/providers/utils.service';
 import { LS } from '@khiops-library/enum/ls';
+import { AppConfig } from '../../../../../environments/environment';
 
 @Injectable({
   providedIn: 'root',
@@ -93,7 +94,10 @@ export class HistogramUIService {
     bounds += d.partition[0] + ', ' + d.partition[1] + ']';
 
     const title = `${AppService.translate.get('GLOBAL.INTERVAL')}: ${bounds}`;
-    const numPrecision = AppService.Ls.get(LS.SETTING_NUMBER_PRECISION);
+    const numPrecision = AppService.Ls.get(
+      LS.SETTING_NUMBER_PRECISION,
+      AppConfig.visualizationCommon.GLOBAL.TO_FIXED,
+    );
 
     const body = `
       ${AppService.translate.get('GLOBAL.DENSITY')}: ${UtilsService.getPrecisionNumber(d.density, numPrecision)}<br>
