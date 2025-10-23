@@ -315,8 +315,6 @@ export class DistributionGraphComponent
     if (datasetWithExtra?.extra?.[items.dataIndex]?.extra) {
       const coverageValue =
         datasetWithExtra.extra[items.dataIndex].extra.coverageValue;
-      const conditionalProba =
-        datasetWithExtra.extra[items.dataIndex].extra.conditionalProba;
       if (
         coverageValue !== undefined &&
         coverageValue !== null &&
@@ -341,12 +339,15 @@ export class DistributionGraphComponent
         }
 
         return this.translate.get('GLOBAL.FREQUENCY') + ': ' + value;
-      } else if (conditionalProba) {
-        // For covisualization return conditional proba
+      } else {
+        // For covisualization (no coverageValue), show frequency in the main label
+        const frequencyValue =
+          datasetWithExtra.extra[items.dataIndex].extra.frequencyValue;
+
         return (
-          this.translate.get('GLOBAL.PROBABILITY') +
+          this.translate.get('GLOBAL.FREQUENCY') +
           ': ' +
-          this.toPrecision.transform(conditionalProba)
+          this.toPrecision.transform(frequencyValue)
         );
       }
     }
@@ -366,6 +367,8 @@ export class DistributionGraphComponent
       const coverageValue =
         datasetWithExtra.extra[items.dataIndex].extra.coverageValue;
 
+      const conditionalProba =
+        datasetWithExtra.extra[items.dataIndex].extra.conditionalProba;
       // Only show probability if coverageValue is defined and is a valid number
       if (
         coverageValue !== undefined &&
@@ -379,15 +382,13 @@ export class DistributionGraphComponent
           this.toPrecision.transform(percentValue) +
           '%'
         );
-      } else {
-        // For covisualization (no coverageValue), show frequency in the main label
-        const frequencyValue =
-          datasetWithExtra.extra[items.dataIndex].extra.frequencyValue;
-
+      } else if (conditionalProba) {
+        // For covisualization return conditional proba
         return (
-          this.translate.get('GLOBAL.FREQUENCY') +
+          this.translate.get('GLOBAL.PROBABILITY') +
           ': ' +
-          this.toPrecision.transform(frequencyValue)
+          this.toPrecision.transform(conditionalProba) +
+          '%'
         );
       }
     }
