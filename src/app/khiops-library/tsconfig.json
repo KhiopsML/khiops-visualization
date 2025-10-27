@@ -1,11 +1,3 @@
 {
-  "extends": "../../../tsconfig.json",
-  "compilerOptions": {
-    "baseUrl": "./",
-    "paths": {
-      "@khiops-library/*": ["*"],
-      "@khiops-visualization/*": ["./src/app/khiops-visualization/*"],
-      "@khiops-covisualization/*": ["./src/app/khiops-covisualization/*"]
-    }
-  }
+  "extends": "../../../tsconfig.json"
 }
