@@ -41,7 +41,6 @@ yarn start
 - [Original d3-hypertree API Reference](https://github.com/glouwa/d3-hypertree/blob/master/docs/readme.md)
 - [Tree of Life Demo](https://hyperbolic-tree-of-life.github.io/)
 - [Interactive API Demo](https://glouwa.github.io/d3-hypertree-examples/examples-html/mouse-events/)
-- [Khiops Documentation](https://khiops.org/)
 
 ## 💻 Usage
 
@@ -200,10 +199,6 @@ This library follows a modular architecture with several key components:
 - **Layers**: Rendering layers for different visual elements (nodes, links, labels)
 - **Models**: Data models and mathematical transformations
 - **Interactions**: User interaction handling
-
-## 🤝 Contributing
-
-This library is part of the Khiops ecosystem. For contributing guidelines, please refer to the [main project's contribution guide](../../CONTRIBUTING.md).
 
 ## 📄 License
 
