@@ -23,13 +23,17 @@
       // Load the webcomponents bundle with cache busting
       const script = document.createElement('script');
       script.src = `./dist/khiops-webcomponents.bundle.js?v=${Math.random()}`;
-      document.head.appendChild(script);
-    </script>
-    <script>
-      document.addEventListener('DOMContentLoaded', function () {
-        // Load the demo.khj file and set the data to the visualization component
+      
+      // Wait for the script to load before initializing
+      script.onload = function () {
         loadDemoData();
-      });
+      };
+      
+      script.onerror = function () {
+        console.error('Failed to load khiops-webcomponents.bundle.js');
+      };
+      
+      document.head.appendChild(script);
 
       async function loadDemoData() {
         try {
@@ -37,14 +41,16 @@
           const data = await response.json();
 
           const kv1 = document.querySelector('khiops-visualization');
-          if (kv1) {
+          if (kv1 && typeof kv1.clean === 'function') {
             kv1.clean();
             kv1.setDatas(data);
             kv1.setConfig({
               showOpenFileBtn: true,
             });
-          } else {
+          } else if (!kv1) {
             console.error('khiops-visualization element not found');
+          } else {
+            console.error('kv1.clean is not a function - component not fully initialized');
           }
         } catch (error) {
           console.error('Error loading demo data:', error);

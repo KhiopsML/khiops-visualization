@@ -21,9 +21,22 @@
     ></khiops-covisualization>
     <script src="https://unpkg.com/khiops-visualization/khiops-webcomponents.bundle.js"></script>
     <script>
-      document.addEventListener('DOMContentLoaded', function () {
-        // Load the demo.khj file and set the data to the visualization component
+      // Wait for the script to load before initializing
+      function initializeComponent() {
         loadDemoData();
+      }
+
+      // For external CDN script, use DOMContentLoaded as fallback
+      // but add additional check for component availability
+      document.addEventListener('DOMContentLoaded', function () {
+        // Check if component is available, if not wait a bit
+        const kv1 = document.querySelector('khiops-covisualization');
+        if (kv1 && typeof kv1.clean === 'function') {
+          initializeComponent();
+        } else {
+          // Retry after a short delay
+          setTimeout(initializeComponent, 500);
+        }
       });
 
       async function loadDemoData() {
@@ -32,11 +45,13 @@
           const data = await response.json();
 
           const kv1 = document.querySelector('khiops-covisualization');
-          if (kv1) {
+          if (kv1 && typeof kv1.clean === 'function') {
             kv1.clean();
             kv1.setDatas(data);
-          } else {
+          } else if (!kv1) {
             console.error('khiops-covisualization element not found');
+          } else {
+            console.error('kv1.clean is not a function - component not fully initialized');
           }
         } catch (error) {
           console.error('Error loading demo data:', error);
