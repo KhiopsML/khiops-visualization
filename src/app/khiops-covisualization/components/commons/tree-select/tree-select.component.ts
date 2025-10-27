@@ -14,7 +14,7 @@ import {
   AfterViewInit,
   Input,
 } from '@angular/core';
-import * as TreeView from '@khiops-treeview/treeview';
+import TreeView from '@khiops-treeview/treeview';
 import { DimensionCovisualizationModel } from '@khiops-library/model/dimension.covisualization.model';
 import { EventsService } from '@khiops-covisualization/providers/events.service';
 import { TreenodesService } from '@khiops-covisualization/providers/treenodes.service';
@@ -129,7 +129,7 @@ export class TreeSelectComponent
   private initTree(selectedNode?: TreeNodeModel) {
     // @ts-ignore
     this.tree = new TreeView(
-      this.dimensionsTree,
+      this.dimensionsTree || [],
       this.configService.getRootElementDom(),
       'tree_' + this.position,
     );
