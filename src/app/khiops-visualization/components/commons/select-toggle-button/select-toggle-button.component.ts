@@ -14,7 +14,6 @@ import {
   SimpleChanges,
 } from '@angular/core';
 import { TranslateService } from '@ngstack/translate';
-import _ from 'lodash';
 import { ChartToggleValuesI } from '@khiops-visualization/interfaces/chart-toggle-values';
 import { PageChangeEventI } from '@khiops-visualization/interfaces/page-change-event';
 import { MatCheckboxChange } from '@angular/material/checkbox';

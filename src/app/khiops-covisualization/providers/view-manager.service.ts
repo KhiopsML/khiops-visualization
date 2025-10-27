@@ -8,7 +8,6 @@ import { EventEmitter, Injectable } from '@angular/core';
 import { ViewLayoutVO } from '@khiops-covisualization/model/view-layout.model';
 import { Ls } from '@khiops-library/providers/ls.service';
 import { AppConfig } from '../../../environments/environment';
-import * as _ from 'lodash'; // Important to import lodash in karma
 import { AppService } from './app.service';
 import { LS } from '@khiops-library/enum/ls';
 import { DimensionCovisualizationModel } from '@khiops-library/model/dimension.covisualization.model';

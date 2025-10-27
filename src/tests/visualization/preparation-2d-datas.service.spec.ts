@@ -8,7 +8,6 @@
 import { TestBed } from '@angular/core/testing';
 
 import { HttpClientModule } from '@angular/common/http';
-import * as _ from 'lodash'; // Important to import lodash in karma
 import { TranslateModule } from '@ngstack/translate';
 import { Preparation2dDatasService } from '../../app/khiops-visualization/providers/preparation2d-datas.service';
 import { AppService } from '../../app/khiops-visualization/providers/app.service';

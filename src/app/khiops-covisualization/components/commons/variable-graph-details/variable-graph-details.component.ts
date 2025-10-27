@@ -25,7 +25,6 @@ import { TreeNodeModel } from '@khiops-covisualization/model/tree-node.model';
 import { Subscription } from 'rxjs';
 import { DistributionOptionsI } from '@khiops-library/interfaces/distribution-options';
 import { ChartDatasModel } from '@khiops-library/model/chart-datas.model';
-import * as _ from 'lodash';
 import { ConfigService } from '@khiops-library/providers/config.service';
 import { HistogramType } from '../../../../khiops-visualization/components/commons/histogram/histogram.type';
 import { DimensionCovisualizationModel } from '@khiops-library/model/dimension.covisualization.model';

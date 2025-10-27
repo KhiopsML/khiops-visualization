@@ -12,7 +12,6 @@ import {
 } from '../../khiops-covisualization/interfaces/app-datas';
 import { TYPES } from '@khiops-library/enum/types';
 import { DimensionVisualization } from '../../khiops-visualization/interfaces/app-datas';
-import _ from 'lodash';
 
 export class DimensionCovisualizationModel implements DimensionCovisualization {
   name!: string;

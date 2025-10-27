@@ -5,7 +5,6 @@
  */
 
 import { Injectable } from '@angular/core';
-import * as _ from 'lodash'; // Important to import lodash in karma
 import { UtilsService } from '@khiops-library/providers/utils.service';
 import { BarModel } from '../model/bar.model';
 import { DistributionDatasService } from './distribution-datas.service';

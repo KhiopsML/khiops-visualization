@@ -10,7 +10,6 @@ import { TestBed } from '@angular/core/testing';
 import { DistributionDatasService } from '@khiops-visualization/providers/distribution-datas.service';
 import { HttpClientModule } from '@angular/common/http';
 import { AppService } from '@khiops-visualization/providers/app.service';
-import * as _ from 'lodash'; // Important to import lodash in karma
 import { PreparationDatasService } from '@khiops-visualization/providers/preparation-datas.service';
 import { TreePreparationDatasService } from '@khiops-visualization/providers/tree-preparation-datas.service';
 import { REPORT } from '@khiops-library/enum/report';
