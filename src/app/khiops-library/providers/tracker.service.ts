@@ -13,8 +13,6 @@ import {
 import { ConfirmDialogComponent } from '@khiops-library/components/confirm-dialog/confirm-dialog.component';
 import { LS } from '@khiops-library/enum/ls';
 import { TranslateService } from '@ngstack/translate';
-// @ts-ignore
-import { v4 as uuidv4 } from 'uuid';
 import { Ls } from '@khiops-library/providers/ls.service';
 import { ConfigService } from './config.service';
 
