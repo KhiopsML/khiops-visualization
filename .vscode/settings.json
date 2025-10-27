@@ -1,3 +1,8 @@
-{
-    "typescript.tsdk": "node_modules\\typescript\\lib"
+﻿{
+    "typescript.tsdk": "node_modules\\typescript\\lib",
+    "typescript.preferences.includePackageJsonAutoImports": "on",
+    "typescript.suggest.autoImports": true,
+    "files.associations": {
+        "*.spec.ts": "typescript"
+    }
 }
