@@ -30,17 +30,25 @@ class InteractionLayer2 {
             const clickableNodes = this.view.unitdisk.cache.unculledNodes.filter((n) => n.precalc && n.precalc.clickable);
             if (clickableNodes.length === 0)
                 return undefined;
-            const points = clickableNodes.map((d) => [d.cache.re, d.cache.im]);
+            const points = clickableNodes.map((d) => [
+                d.cache.re,
+                d.cache.im,
+            ]);
             const delaunay = d3.Delaunay.from(points);
             const index = delaunay.find(m[0], m[1]);
             return index >= 0 ? clickableNodes[index] : undefined;
         };
         this.findUnculledNodeByCell = (m) => {
-            const points = this.view.unitdisk.cache.unculledNodes.map((d) => [d.cache.re, d.cache.im]);
+            const points = this.view.unitdisk.cache.unculledNodes.map((d) => [
+                d.cache.re,
+                d.cache.im,
+            ]);
             const delaunay = d3.Delaunay.from(points);
             const voronoiDiagram = delaunay.voronoi([-2, -2, 2, 2]);
             const findIndex = delaunay.find(m.re, m.im);
-            const find = findIndex >= 0 ? this.view.unitdisk.cache.unculledNodes[findIndex] : undefined;
+            const find = findIndex >= 0
+                ? this.view.unitdisk.cache.unculledNodes[findIndex]
+                : undefined;
             return find; // Return the full node, not find.data
         };
         this.view = view;
@@ -80,11 +88,16 @@ class InteractionLayer2 {
     // just to keep the list above clear
     fireMouseDown(event) {
         this.mousedown = true;
-        this.fireMouseEvent(event, 'onPointerStart');
+        const m = this.currMousePosAsC(event);
+        this.onPointerStart('mouse', m);
     }
     fireMouseMove(event) {
-        if (this.mousedown)
-            this.fireMouseEvent(event, 'onPointerMove');
+        if (this.mousedown) {
+            const m = this.currMousePosAsC(event);
+            if (this.onPointerMove('mouse', m)) {
+                this.view.hypertree.update.transformation();
+            }
+        }
         else {
             if (!this.view.hypertree.isInitializing &&
                 !this.view.hypertree.isAnimationRunning())
@@ -93,9 +106,12 @@ class InteractionLayer2 {
     }
     fireMouseUp(event) {
         this.mousedown = false;
-        this.fireMouseEvent(event, 'onPointerEnd');
+        const m = this.currMousePosAsC(event);
+        if (this.onPointerEnd('mouse', m)) {
+            this.view.hypertree.update.transformation();
+        }
     }
-    async fireNodeHover(n) {
+    fireNodeHover(n) {
         //fire onNodeHover if the node is close enough
         //or if the node is undefined, we will also tell the onNodeHover function
         if (this.mousedown) {
@@ -116,32 +132,27 @@ class InteractionLayer2 {
             }
         }
         else {
-            await this.delay(100);
-            if (!this.view.unitdisk.cache.lastHovered)
-                return;
-            (0, preset_process_1.setHoverNodeCache)(undefined, this.view.unitdisk.cache);
-            if (this.view.hypertree.args.interaction.onHoverNodeChange) {
-                this.view.hypertree.args.interaction.onHoverNodeChange(undefined);
-            }
+            // Use setTimeout instead of await delay to avoid blocking
+            setTimeout(() => {
+                if (!this.view.unitdisk.cache.lastHovered)
+                    return;
+                (0, preset_process_1.setHoverNodeCache)(undefined, this.view.unitdisk.cache);
+                if (this.view.hypertree.args.interaction.onHoverNodeChange) {
+                    this.view.hypertree.args.interaction.onHoverNodeChange(undefined);
+                }
+            }, 100);
         }
-    }
-    delay(ms) {
-        return new Promise((resolve) => {
-            setTimeout(() => resolve(null), ms);
-        });
     }
     //-----------------------------------------------------------------------------------------
     fireMouseEvent(event, eventName) {
         event.stopPropagation();
         event.preventDefault();
         const m = this.currMousePosAsC(event);
-        requestAnimationFrame(() => {
-            try {
-                if (this[eventName]('mouse', m))
-                    this.view.hypertree.update.transformation();
-            }
-            catch (error) { }
-        });
+        try {
+            if (this[eventName]('mouse', m))
+                this.view.hypertree.update.transformation();
+        }
+        catch (error) { }
     }
     fireMouseWheelEvent(event) {
         event.stopPropagation();
@@ -191,6 +202,10 @@ class InteractionLayer2 {
             points: [m],
         });
         if (this.view.hypertree.args.objects.traces.length === 1) {
+            this.dragStartTime = performance.now();
+            // Cancel any running animation so drag starts immediately
+            // This ensures the transformation state is not changing during drag initialization
+            this.view.hypertree.transition = undefined;
             this.dST = (0, hyperbolic_math_4.clone)(this.view.unitdisk.args.transformation.state);
             this.view.unitdisk.isDraging = true;
             this.panStart = m;
@@ -248,6 +263,9 @@ class InteractionLayer2 {
         return true;
     }
     onPointerEnd(pid, m) {
+        // Save trace info before filtering
+        const currentTrace = this.view.hypertree.args.objects.traces.find((e) => e.id === pid);
+        const moveCount = currentTrace ? currentTrace.points.length : 0;
         this.view.hypertree.args.objects.traces =
             this.view.hypertree.args.objects.traces.filter((e) => e.id !== pid);
         this.pinchcenter = undefined;
@@ -256,7 +274,12 @@ class InteractionLayer2 {
         if (this.view.hypertree.args.objects.traces.length === 0) {
             this.dST = undefined;
             this.view.unitdisk.isDraging = false;
-            if (this.dist(this.panStart, m) < 0.006 && this.nopinch) {
+            // Treat as click only if:
+            // 1. Distance is extremely small (< 0.006)
+            // 2. It's not a pinch gesture
+            // 3. Very few move events were recorded (1-2 points = almost no movement during drag)
+            const distance = this.dist(this.panStart, m);
+            if (distance < 0.006 && this.nopinch && moveCount <= 2) {
                 if ((0, hyperbolic_math_2.CktoCp)(m).r < 1) {
                     this.click(m);
                     return false;
@@ -320,7 +343,10 @@ class InteractionLayer2 {
             this.view.hypertree.args.interaction.onNodeClick(undefined, m, this);
             return;
         }
-        const points = clickableNodes.map((d) => [d.cache.re, d.cache.im]);
+        const points = clickableNodes.map((d) => [
+            d.cache.re,
+            d.cache.im,
+        ]);
         const delaunay = d3.Delaunay.from(points);
         const index = delaunay.find(m.re, m.im);
         const n = index >= 0 ? clickableNodes[index] : undefined;

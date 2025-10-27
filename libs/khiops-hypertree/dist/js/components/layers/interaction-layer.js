@@ -54,7 +54,7 @@ class InteractionLayer {
                 ti3.stop();
                 this.view.hypertree.args.objects.traces.length = 0;
                 this.view.hypertree.update.transformation();
-            }, 2000);
+            }, 500);
             var dc = (0, hyperbolic_math_2.CsubC)(s, e);
             var dist = Math.sqrt(dc.re * dc.re + dc.im * dc.im);
             if (dist < 0.006)

@@ -15,6 +15,7 @@ export declare class InteractionLayer2 implements ILayer {
     dST: any;
     htapi: any;
     hoverpath: any;
+    dragStartTime: number;
     constructor(view: ILayerView, args: InteractionLayer2Args);
     update: {
         parent: () => void;
@@ -27,7 +28,6 @@ export declare class InteractionLayer2 implements ILayer {
     private fireMouseMove;
     private fireMouseUp;
     private fireNodeHover;
-    private delay;
     private fireMouseEvent;
     private fireMouseWheelEvent;
     private fireTouchEvent;
