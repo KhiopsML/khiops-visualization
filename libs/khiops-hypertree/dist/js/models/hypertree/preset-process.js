@@ -3,9 +3,19 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.doVoronoiStuff = doVoronoiStuff;
 exports.setHoverNodeCache = setHoverNodeCache;
 exports.doLabelStuff = doLabelStuff;
+const d3 = require("d3");
 function doVoronoiStuff(ud, cache) {
-    cache.voronoiDiagram = ud.voronoiLayout(cache.unculledNodes.filter((n) => n.precalc.clickable));
-    cache.cells = cache.voronoiDiagram.polygons();
+    const clickableNodes = cache.unculledNodes.filter((n) => n.precalc.clickable);
+    const points = clickableNodes.map((d) => [d.cache.re, d.cache.im]);
+    if (points.length > 0) {
+        const delaunay = d3.Delaunay.from(points);
+        cache.voronoiDiagram = delaunay.voronoi([-2, -2, 2, 2]);
+        cache.cells = Array.from(cache.voronoiDiagram.cellPolygons());
+    }
+    else {
+        cache.voronoiDiagram = null;
+        cache.cells = [];
+    }
 }
 function setHoverNodeCache(node, cache) {
     cache.lastHovered = node;

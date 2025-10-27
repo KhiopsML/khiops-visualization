@@ -383,6 +383,10 @@ class Hypertree {
             this.addPath(pt, n);
     }
     addPath(pathType, n, color) {
+        if (!n || !n.precalc) {
+            console.warn('addPath called with invalid node:', n);
+            return;
+        }
         color = color || '#8ba9dd';
         const newpath = {
             type: pathType,

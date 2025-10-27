@@ -9,7 +9,7 @@ export interface IUnitDisk {
     view: UnitDiskView;
     args: UnitDiskArgs;
     cache: any;
-    voronoiLayout: d3.VoronoiLayout<N>;
+    voronoiLayout: d3.Voronoi<N>;
     layerStack: LayerStack;
     navParameter?: UnitDisk;
     isDraging?: boolean;
@@ -28,7 +28,7 @@ export declare class UnitDisk implements IUnitDisk {
     view: UnitDiskView;
     args: UnitDiskArgs;
     cache: TransformationCache;
-    voronoiLayout: d3.VoronoiLayout<N>;
+    voronoiLayout: d3.Voronoi<N>;
     layerStack: LayerStack;
     pinchcenter: C;
     isDraging: boolean;
@@ -53,7 +53,7 @@ export declare class UnitDiskNav implements IUnitDisk {
     args: UnitDiskArgs;
     cache: any;
     layerStack: any;
-    get voronoiLayout(): d3.VoronoiLayout<N>;
+    get voronoiLayout(): d3.Voronoi<N>;
     mainView: UnitDisk;
     navBackground: UnitDisk;
     navParameter: UnitDisk;

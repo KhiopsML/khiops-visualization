@@ -50,20 +50,13 @@ class UnitDisk {
             .attr('id', 'circle-clip' + this.args.clipRadius)
             .append('circle')
             .attr('r', this.args.clipRadius);
-        this.voronoiLayout = d3
-            .voronoi()
-            .x((d) => {
+        this.voronoiLayout = d3.Delaunay.from([], (d) => {
             console.assert(typeof d.cache.re === 'number');
             return d.cache.re;
-        })
-            .y((d) => {
-            console.assert(typeof d.cache.re === 'number');
+        }, (d) => {
+            console.assert(typeof d.cache.im === 'number');
             return d.cache.im;
-        })
-            .extent([
-            [-2, -2],
-            [2, 2],
-        ]);
+        }).voronoi([-2, -2, 2, 2]);
         this.layerStack = new layerstack_1.LayerStack({
             parent: this.mainsvg,
             unitdisk: this,
@@ -168,8 +161,16 @@ class UnitDiskNav {
                     θ: args.transformation.state.λ * 2 * Math.PI,
                     r: -spr,
                 }));
-                cache.voronoiDiagram = ud.voronoiLayout(cache.unculledNodes);
-                cache.cells = cache.voronoiDiagram.polygons();
+                const points = cache.unculledNodes.map((d) => [d.cache.re, d.cache.im]);
+                if (points.length > 0) {
+                    const delaunay = d3.Delaunay.from(points);
+                    cache.voronoiDiagram = delaunay.voronoi([-2, -2, 2, 2]);
+                    cache.cells = Array.from(cache.voronoiDiagram.cellPolygons());
+                }
+                else {
+                    cache.voronoiDiagram = null;
+                    cache.cells = [];
+                }
                 ud.cacheMeta = {
                     minWeight: [0],
                     Δ: [performance.now() - t0],

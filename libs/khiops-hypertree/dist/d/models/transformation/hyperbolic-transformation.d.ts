@@ -76,6 +76,6 @@ export declare class TransformationCache {
     emojis: N[];
     images: N[];
     lastHovered?: N;
-    voronoiDiagram: d3.VoronoiDiagram<N>;
-    cells: d3.VoronoiPolygon<N>[];
+    voronoiDiagram: any;
+    cells: any[];
 }

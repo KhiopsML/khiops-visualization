@@ -17,12 +17,12 @@ export declare class InteractionLayer implements ILayer {
         transformation: () => void;
         style: () => void;
     };
-    currMousePosAsArr: () => [number, number];
-    currMousePosAsC: () => {
+    currMousePosAsArr: (event: any) => [number, number];
+    currMousePosAsC: (event: any) => {
         re: number;
         im: number;
     };
-    findNodeByCell: () => N;
+    findNodeByCell: (event: any) => N;
     private initMouseStuff;
     private onDragStart;
     private onDragλ;

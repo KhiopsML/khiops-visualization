@@ -494,6 +494,11 @@ export class Hypertree {
   }
 
   protected addPath(pathType: string, n: N, color?) {
+    if (!n || !n.precalc) {
+      console.warn('addPath called with invalid node:', n);
+      return;
+    }
+
     color = color || '#8ba9dd';
 
     const newpath: Path = {

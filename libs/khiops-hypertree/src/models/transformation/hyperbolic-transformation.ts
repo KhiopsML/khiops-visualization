@@ -114,6 +114,6 @@ export class TransformationCache {
   images: N[];
   lastHovered?: N;
 
-  voronoiDiagram: d3.VoronoiDiagram<N>;
-  cells: d3.VoronoiPolygon<N>[] = [];
+  voronoiDiagram: any; // D3 v6 Voronoi diagram
+  cells: any[] = [];
 }

@@ -23,29 +23,25 @@ class InteractionLayer2 {
         this.nopinch = null;
         this.pinchcenter = null;
         this.pinchPreservingNode = null;
-        this.currMousePosAsArr = () => d3.mouse(this.view.parent.node());
-        this.currMousePosAsC = () => (0, hyperbolic_math_2.ArrtoC)(this.currMousePosAsArr());
-        this.findNodeByCell = () => {
-            var m = this.currMousePosAsArr();
-            var find = this.view.unitdisk.cache.voronoiDiagram.find(m[0], m[1]);
-            return find ? find.data : undefined;
+        this.currMousePosAsArr = (event) => d3.pointer(event, this.view.parent.node());
+        this.currMousePosAsC = (event) => (0, hyperbolic_math_2.ArrtoC)(this.currMousePosAsArr(event));
+        this.findNodeByCell = (event) => {
+            var m = this.currMousePosAsArr(event);
+            const clickableNodes = this.view.unitdisk.cache.unculledNodes.filter((n) => n.precalc && n.precalc.clickable);
+            if (clickableNodes.length === 0)
+                return undefined;
+            const points = clickableNodes.map((d) => [d.cache.re, d.cache.im]);
+            const delaunay = d3.Delaunay.from(points);
+            const index = delaunay.find(m[0], m[1]);
+            return index >= 0 ? clickableNodes[index] : undefined;
         };
         this.findUnculledNodeByCell = (m) => {
-            const voronoiLayout = d3
-                .voronoi()
-                .x((d) => {
-                return d.cache.re;
-            })
-                .y((d) => {
-                return d.cache.im;
-            })
-                .extent([
-                [-2, -2],
-                [2, 2],
-            ]);
-            const voronoiDiagram = voronoiLayout(this.view.unitdisk.cache.unculledNodes);
-            const find = voronoiDiagram.find(m.re, m.im);
-            return find ? find.data : undefined;
+            const points = this.view.unitdisk.cache.unculledNodes.map((d) => [d.cache.re, d.cache.im]);
+            const delaunay = d3.Delaunay.from(points);
+            const voronoiDiagram = delaunay.voronoi([-2, -2, 2, 2]);
+            const findIndex = delaunay.find(m.re, m.im);
+            const find = findIndex >= 0 ? this.view.unitdisk.cache.unculledNodes[findIndex] : undefined;
+            return find; // Return the full node, not find.data
         };
         this.view = view;
         this.args = args;
@@ -55,21 +51,21 @@ class InteractionLayer2 {
     }
     updateParent() {
         const mousehandlers = (de) => de
-            .on('wheel', (e) => this.fireMouseWheelEvent())
-            .on('mousedown', (e) => this.fireMouseDown())
-            .on('mousemove', (e) => {
-            this.fireNodeHover(this.findNodeByCell());
-            this.fireMouseMove();
+            .on('wheel', (event) => this.fireMouseWheelEvent(event))
+            .on('mousedown', (event) => this.fireMouseDown(event))
+            .on('mousemove', (event) => {
+            this.fireNodeHover(this.findNodeByCell(event));
+            this.fireMouseMove(event);
         })
-            .on('mouseup', (e) => this.fireMouseUp())
-            .on('mouseout', (e) => {
+            .on('mouseup', (event) => this.fireMouseUp(event))
+            .on('mouseout', (event) => {
             this.fireNodeHover(undefined);
             this.htapi.setPathHead(this.hoverpath, undefined);
         })
-            .on('touchstart', (e) => this.fireTouchEvent('onPointerStart'))
-            .on('touchmove', (e) => this.fireTouchEvent('onPointerMove'))
-            .on('touchend', (e) => this.fireTouchEvent('onPointerEnd'))
-            .on('touchcancel', (e) => this.fireTouchEvent('onPointerEnd'));
+            .on('touchstart', (event) => this.fireTouchEvent(event, 'onPointerStart'))
+            .on('touchmove', (event) => this.fireTouchEvent(event, 'onPointerMove'))
+            .on('touchend', (event) => this.fireTouchEvent(event, 'onPointerEnd'))
+            .on('touchcancel', (event) => this.fireTouchEvent(event, 'onPointerEnd'));
         this.view.parent
             .append('circle')
             .attr('class', 'mouse-circle')
@@ -82,22 +78,22 @@ class InteractionLayer2 {
             .call(mousehandlers);
     }
     // just to keep the list above clear
-    fireMouseDown() {
+    fireMouseDown(event) {
         this.mousedown = true;
-        this.fireMouseEvent('onPointerStart');
+        this.fireMouseEvent(event, 'onPointerStart');
     }
-    fireMouseMove() {
+    fireMouseMove(event) {
         if (this.mousedown)
-            this.fireMouseEvent('onPointerMove');
+            this.fireMouseEvent(event, 'onPointerMove');
         else {
             if (!this.view.hypertree.isInitializing &&
                 !this.view.hypertree.isAnimationRunning())
-                this.htapi.setPathHead(this.hoverpath, this.findNodeByCell());
+                this.htapi.setPathHead(this.hoverpath, this.findNodeByCell(event));
         }
     }
-    fireMouseUp() {
+    fireMouseUp(event) {
         this.mousedown = false;
-        this.fireMouseEvent('onPointerEnd');
+        this.fireMouseEvent(event, 'onPointerEnd');
     }
     async fireNodeHover(n) {
         //fire onNodeHover if the node is close enough
@@ -135,10 +131,10 @@ class InteractionLayer2 {
         });
     }
     //-----------------------------------------------------------------------------------------
-    fireMouseEvent(eventName) {
-        d3.event.stopPropagation();
-        d3.event.preventDefault();
-        const m = this.currMousePosAsC();
+    fireMouseEvent(event, eventName) {
+        event.stopPropagation();
+        event.preventDefault();
+        const m = this.currMousePosAsC(event);
         requestAnimationFrame(() => {
             try {
                 if (this[eventName]('mouse', m))
@@ -147,38 +143,39 @@ class InteractionLayer2 {
             catch (error) { }
         });
     }
-    fireMouseWheelEvent() {
-        d3.event.stopPropagation();
-        d3.event.preventDefault();
-        const mΔ = d3.event.deltaY;
+    fireMouseWheelEvent(event) {
+        event.stopPropagation();
+        event.preventDefault();
+        const mΔ = event.deltaY;
         const oldλp = this.view.unitdisk.args.transformation.state.λ;
         const Δsens = this.view.hypertree.args.interaction.wheelFactor;
         const newλp = mΔ >= 0 ? oldλp / Δsens : oldλp * Δsens; //- λΔ
         if (newλp > this.view.hypertree.args.interaction.λbounds[0] &&
             newλp < this.view.hypertree.args.interaction.λbounds[1]) {
-            const m = this.currMousePosAsArr();
-            requestAnimationFrame(() => {
-                const t = this.view.unitdisk.args.transformation;
-                const preservingNode = this.findUnculledNodeByCell((0, hyperbolic_math_2.ArrtoC)(m));
-                t.onDragλ(newλp);
+            const m = this.currMousePosAsArr(event);
+            const t = this.view.unitdisk.args.transformation;
+            const preservingNode = this.findUnculledNodeByCell((0, hyperbolic_math_2.ArrtoC)(m));
+            t.onDragλ(newλp);
+            // Only update layout path if we have a valid preservingNode
+            if (preservingNode && typeof preservingNode.ancestors === 'function') {
                 this.view.hypertree.updateLayoutPath_(preservingNode); // only path to center
                 t.state.P = (0, hyperbolic_math_5.compose)(t.state, (0, hyperbolic_math_5.shift)(t.state, {
                     re: 0,
                     im: 0,
                 }, preservingNode.cache)).P;
-                this.view.hypertree.update.transformation();
-            });
+            }
+            this.view.hypertree.update.transformation();
         }
     }
-    fireTouchEvent(eventName) {
-        d3.event.stopPropagation();
-        d3.event.preventDefault();
-        const changedTouches = d3.event.changedTouches;
+    fireTouchEvent(event, eventName) {
+        event.stopPropagation();
+        event.preventDefault();
+        const changedTouches = event.changedTouches;
         let update = false;
         for (let i = 0; i < changedTouches.length; ++i) {
             const t = changedTouches[i];
             const pid = t.identifier;
-            const m = (0, hyperbolic_math_2.ArrtoC)(d3.touches(this.view.parent.node(), changedTouches)[i]);
+            const m = (0, hyperbolic_math_2.ArrtoC)(d3.pointer(t, this.view.parent.node()));
             update = this[eventName](pid, m) || update;
         }
         requestAnimationFrame(() => {
@@ -317,8 +314,16 @@ class InteractionLayer2 {
         }
     }
     click(m) {
-        const q = this.view.unitdisk.cache.voronoiDiagram.find(m.re, m.im);
-        const n = q ? q.data : undefined;
+        // For D3 v6, we need to find the closest node from the cache directly
+        const clickableNodes = this.view.unitdisk.cache.unculledNodes.filter((n) => n.precalc && n.precalc.clickable);
+        if (clickableNodes.length === 0) {
+            this.view.hypertree.args.interaction.onNodeClick(undefined, m, this);
+            return;
+        }
+        const points = clickableNodes.map((d) => [d.cache.re, d.cache.im]);
+        const delaunay = d3.Delaunay.from(points);
+        const index = delaunay.find(m.re, m.im);
+        const n = index >= 0 ? clickableNodes[index] : undefined;
         if (!this.view.hypertree.isAnimationRunning())
             this.view.hypertree.args.interaction.onNodeClick(n, m, this);
     }

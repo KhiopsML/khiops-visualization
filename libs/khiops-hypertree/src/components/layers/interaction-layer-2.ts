@@ -47,23 +47,23 @@ export class InteractionLayer2 implements ILayer {
   private updateParent() {
     const mousehandlers = (de) =>
       de
-        .on('wheel', (e) => this.fireMouseWheelEvent())
+        .on('wheel', (event) => this.fireMouseWheelEvent(event))
 
-        .on('mousedown', (e) => this.fireMouseDown())
-        .on('mousemove', (e) => {
-          this.fireNodeHover(this.findNodeByCell());
-          this.fireMouseMove();
+        .on('mousedown', (event) => this.fireMouseDown(event))
+        .on('mousemove', (event) => {
+          this.fireNodeHover(this.findNodeByCell(event));
+          this.fireMouseMove(event);
         })
-        .on('mouseup', (e) => this.fireMouseUp())
-        .on('mouseout', (e) => {
+        .on('mouseup', (event) => this.fireMouseUp(event))
+        .on('mouseout', (event) => {
           this.fireNodeHover(undefined);
           this.htapi.setPathHead(this.hoverpath, undefined);
         })
 
-        .on('touchstart', (e) => this.fireTouchEvent('onPointerStart'))
-        .on('touchmove', (e) => this.fireTouchEvent('onPointerMove'))
-        .on('touchend', (e) => this.fireTouchEvent('onPointerEnd'))
-        .on('touchcancel', (e) => this.fireTouchEvent('onPointerEnd'));
+        .on('touchstart', (event) => this.fireTouchEvent(event, 'onPointerStart'))
+        .on('touchmove', (event) => this.fireTouchEvent(event, 'onPointerMove'))
+        .on('touchend', (event) => this.fireTouchEvent(event, 'onPointerEnd'))
+        .on('touchcancel', (event) => this.fireTouchEvent(event, 'onPointerEnd'));
 
     this.view.parent
       .append('circle')
@@ -80,25 +80,25 @@ export class InteractionLayer2 implements ILayer {
 
   // just to keep the list above clear
 
-  private fireMouseDown() {
+  private fireMouseDown(event) {
     this.mousedown = true;
-    this.fireMouseEvent('onPointerStart');
+    this.fireMouseEvent(event, 'onPointerStart');
   }
 
-  private fireMouseMove() {
-    if (this.mousedown) this.fireMouseEvent('onPointerMove');
+  private fireMouseMove(event) {
+    if (this.mousedown) this.fireMouseEvent(event, 'onPointerMove');
     else {
       if (
         !this.view.hypertree.isInitializing &&
         !this.view.hypertree.isAnimationRunning()
       )
-        this.htapi.setPathHead(this.hoverpath, this.findNodeByCell());
+        this.htapi.setPathHead(this.hoverpath, this.findNodeByCell(event));
     }
   }
 
-  private fireMouseUp() {
+  private fireMouseUp(event) {
     this.mousedown = false;
-    this.fireMouseEvent('onPointerEnd');
+    this.fireMouseEvent(event, 'onPointerEnd');
   }
 
   private async fireNodeHover(n) {
@@ -144,11 +144,11 @@ export class InteractionLayer2 implements ILayer {
 
   //-----------------------------------------------------------------------------------------
 
-  private fireMouseEvent(eventName: string) {
-    d3.event.stopPropagation();
-    d3.event.preventDefault();
+  private fireMouseEvent(event, eventName: string) {
+    event.stopPropagation();
+    event.preventDefault();
 
-    const m = this.currMousePosAsC();
+    const m = this.currMousePosAsC(event);
     requestAnimationFrame(() => {
       try {
         if (this[eventName]('mouse', m))
@@ -157,11 +157,11 @@ export class InteractionLayer2 implements ILayer {
     });
   }
 
-  private fireMouseWheelEvent() {
-    d3.event.stopPropagation();
-    d3.event.preventDefault();
+  private fireMouseWheelEvent(event) {
+    event.stopPropagation();
+    event.preventDefault();
 
-    const mΔ = d3.event.deltaY;
+    const mΔ = event.deltaY;
     const oldλp = this.view.unitdisk.args.transformation.state.λ;
     const Δsens = this.view.hypertree.args.interaction.wheelFactor;
     const newλp = mΔ >= 0 ? oldλp / Δsens : oldλp * Δsens; //- λΔ
@@ -170,12 +170,14 @@ export class InteractionLayer2 implements ILayer {
       newλp > this.view.hypertree.args.interaction.λbounds[0] &&
       newλp < this.view.hypertree.args.interaction.λbounds[1]
     ) {
-      const m = this.currMousePosAsArr();
+      const m = this.currMousePosAsArr(event);
 
-      requestAnimationFrame(() => {
-        const t = this.view.unitdisk.args.transformation;
-        const preservingNode = this.findUnculledNodeByCell(ArrtoC(m));
-        t.onDragλ(newλp);
+      const t = this.view.unitdisk.args.transformation;
+      const preservingNode = this.findUnculledNodeByCell(ArrtoC(m));
+      t.onDragλ(newλp);
+      
+      // Only update layout path if we have a valid preservingNode
+      if (preservingNode && typeof preservingNode.ancestors === 'function') {
         this.view.hypertree.updateLayoutPath_(preservingNode); // only path to center
         t.state.P = compose(
           t.state,
@@ -188,22 +190,22 @@ export class InteractionLayer2 implements ILayer {
             preservingNode.cache,
           ),
         ).P;
+      }
 
-        this.view.hypertree.update.transformation();
-      });
+      this.view.hypertree.update.transformation();
     }
   }
 
-  private fireTouchEvent(eventName: string) {
-    d3.event.stopPropagation();
-    d3.event.preventDefault();
+  private fireTouchEvent(event, eventName: string) {
+    event.stopPropagation();
+    event.preventDefault();
 
-    const changedTouches = d3.event.changedTouches;
+    const changedTouches = event.changedTouches;
     let update = false;
     for (let i = 0; i < changedTouches.length; ++i) {
       const t = changedTouches[i];
       const pid = t.identifier;
-      const m = ArrtoC(d3.touches(this.view.parent.node(), changedTouches)[i]);
+      const m = ArrtoC(d3.pointer(t, this.view.parent.node()));
 
       update = this[eventName](pid, m) || update;
     }
@@ -393,8 +395,17 @@ export class InteractionLayer2 implements ILayer {
   }
 
   private click(m: C) {
-    const q = this.view.unitdisk.cache.voronoiDiagram.find(m.re, m.im);
-    const n = q ? q.data : undefined;
+    // For D3 v6, we need to find the closest node from the cache directly
+    const clickableNodes = this.view.unitdisk.cache.unculledNodes.filter((n: any) => n.precalc && n.precalc.clickable);
+    if (clickableNodes.length === 0) {
+      this.view.hypertree.args.interaction.onNodeClick(undefined, m, this);
+      return;
+    }
+
+    const points: [number, number][] = clickableNodes.map((d) => [d.cache.re, d.cache.im]);
+    const delaunay = d3.Delaunay.from(points);
+    const index = delaunay.find(m.re, m.im);
+    const n = index >= 0 ? clickableNodes[index] : undefined;
 
     if (!this.view.hypertree.isAnimationRunning())
       this.view.hypertree.args.interaction.onNodeClick(n, m, this);
@@ -404,32 +415,26 @@ export class InteractionLayer2 implements ILayer {
     return this.view.hypertree.args.objects.traces.find((e) => e.id === pid);
   }
 
-  private currMousePosAsArr = () => d3.mouse(this.view.parent.node());
-  private currMousePosAsC = () => ArrtoC(this.currMousePosAsArr());
-  private findNodeByCell = () => {
-    var m = this.currMousePosAsArr();
-    var find = this.view.unitdisk.cache.voronoiDiagram.find(m[0], m[1]);
-    return find ? find.data : undefined;
+  private currMousePosAsArr = (event) => d3.pointer(event, this.view.parent.node());
+  private currMousePosAsC = (event) => ArrtoC(this.currMousePosAsArr(event));
+  private findNodeByCell = (event) => {
+    var m = this.currMousePosAsArr(event);
+    const clickableNodes = this.view.unitdisk.cache.unculledNodes.filter((n: any) => n.precalc && n.precalc.clickable);
+    if (clickableNodes.length === 0) return undefined;
+
+    const points: [number, number][] = clickableNodes.map((d) => [d.cache.re, d.cache.im]);
+    const delaunay = d3.Delaunay.from(points);
+    const index = delaunay.find(m[0], m[1]);
+    return index >= 0 ? clickableNodes[index] : undefined;
   };
 
   private findUnculledNodeByCell = (m: C) => {
-    const voronoiLayout = d3
-      .voronoi<N>()
-      .x((d) => {
-        return d.cache.re;
-      })
-      .y((d) => {
-        return d.cache.im;
-      })
-      .extent([
-        [-2, -2],
-        [2, 2],
-      ]);
-    const voronoiDiagram = voronoiLayout(
-      this.view.unitdisk.cache.unculledNodes,
-    );
-    const find = voronoiDiagram.find(m.re, m.im);
-    return find ? find.data : undefined;
+    const points: [number, number][] = this.view.unitdisk.cache.unculledNodes.map((d) => [d.cache.re, d.cache.im]);
+    const delaunay = d3.Delaunay.from(points);
+    const voronoiDiagram = delaunay.voronoi([-2, -2, 2, 2]);
+    const findIndex = delaunay.find(m.re, m.im);
+    const find = findIndex >= 0 ? this.view.unitdisk.cache.unculledNodes[findIndex] : undefined;
+    return find; // Return the full node, not find.data
   };
 
   private dist(a: C, b: C) {

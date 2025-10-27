@@ -19,7 +19,7 @@ export interface IUnitDisk {
   args: UnitDiskArgs;
 
   cache;
-  voronoiLayout: d3.VoronoiLayout<N>;
+  voronoiLayout: d3.Voronoi<N>;
   layerStack: LayerStack;
   navParameter?: UnitDisk;
   isDraging?: boolean;
@@ -43,7 +43,7 @@ export class UnitDisk implements IUnitDisk {
   public view: UnitDiskView;
   public args: UnitDiskArgs;
   public cache: TransformationCache;
-  public voronoiLayout: d3.VoronoiLayout<N>;
+  public voronoiLayout: d3.Voronoi<N>;
 
   public layerStack: LayerStack;
   public pinchcenter: C;
@@ -94,20 +94,17 @@ export class UnitDisk implements IUnitDisk {
       .append('circle')
       .attr('r', this.args.clipRadius);
 
-    this.voronoiLayout = d3
-      .voronoi<N>()
-      .x((d) => {
+    this.voronoiLayout = d3.Delaunay.from<N>(
+      [],
+      (d) => {
         console.assert(typeof d.cache.re === 'number');
         return d.cache.re;
-      })
-      .y((d) => {
-        console.assert(typeof d.cache.re === 'number');
+      },
+      (d) => {
+        console.assert(typeof d.cache.im === 'number');
         return d.cache.im;
-      })
-      .extent([
-        [-2, -2],
-        [2, 2],
-      ]);
+      },
+    ).voronoi([-2, -2, 2, 2]);
 
     this.layerStack = new LayerStack({
       parent: this.mainsvg,
@@ -124,7 +121,7 @@ export class UnitDiskNav implements IUnitDisk {
   public cache; // redircteds NOT xD to view.cache
   public layerStack;
 
-  get voronoiLayout(): d3.VoronoiLayout<N> {
+  get voronoiLayout(): d3.Voronoi<N> {
     return this.mainView.voronoiLayout;
   }
 
@@ -209,8 +206,15 @@ export class UnitDiskNav implements IUnitDisk {
             }),
           );
 
-          cache.voronoiDiagram = ud.voronoiLayout(cache.unculledNodes);
-          cache.cells = <any>cache.voronoiDiagram.polygons();
+          const points: [number, number][] = cache.unculledNodes.map((d) => [d.cache.re, d.cache.im]);
+          if (points.length > 0) {
+            const delaunay = d3.Delaunay.from(points);
+            cache.voronoiDiagram = delaunay.voronoi([-2, -2, 2, 2]);
+            cache.cells = Array.from(cache.voronoiDiagram.cellPolygons());
+          } else {
+            cache.voronoiDiagram = null;
+            cache.cells = [];
+          }
           ud.cacheMeta = {
             minWeight: [0],
             Δ: [performance.now() - t0],

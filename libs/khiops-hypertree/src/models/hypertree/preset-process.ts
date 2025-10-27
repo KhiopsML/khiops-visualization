@@ -1,12 +1,20 @@
+import * as d3 from 'd3';
 import { N } from '../n/n';
 import { IUnitDisk } from '../../components/unitdisk/unitdisk';
 import { TransformationCache } from '../transformation/hyperbolic-transformation';
 
 export function doVoronoiStuff(ud: IUnitDisk, cache: TransformationCache) {
-  cache.voronoiDiagram = ud.voronoiLayout(
-    cache.unculledNodes.filter((n: N) => n.precalc.clickable),
-  );
-  cache.cells = cache.voronoiDiagram.polygons();
+  const clickableNodes = cache.unculledNodes.filter((n: N) => n.precalc.clickable);
+  const points: [number, number][] = clickableNodes.map((d) => [d.cache.re, d.cache.im]);
+  
+  if (points.length > 0) {
+    const delaunay = d3.Delaunay.from(points);
+    cache.voronoiDiagram = delaunay.voronoi([-2, -2, 2, 2]);
+    cache.cells = Array.from(cache.voronoiDiagram.cellPolygons());
+  } else {
+    cache.voronoiDiagram = null;
+    cache.cells = [];
+  }
 }
 
 export function setHoverNodeCache(node: N, cache: TransformationCache) {

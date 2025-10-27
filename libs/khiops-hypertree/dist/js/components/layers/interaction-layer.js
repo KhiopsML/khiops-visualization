@@ -14,12 +14,17 @@ class InteractionLayer {
             transformation: () => { },
             style: () => { },
         };
-        this.currMousePosAsArr = () => d3.mouse(this.view.parent.node());
-        this.currMousePosAsC = () => (0, hyperbolic_math_2.ArrtoC)(this.currMousePosAsArr());
-        this.findNodeByCell = () => {
-            var m = this.currMousePosAsArr();
-            var find = this.view.unitdisk.cache.voronoiDiagram.find(m[0], m[1]);
-            return find ? find.data : undefined;
+        this.currMousePosAsArr = (event) => d3.pointer(event, this.view.parent.node());
+        this.currMousePosAsC = (event) => (0, hyperbolic_math_2.ArrtoC)(this.currMousePosAsArr(event));
+        this.findNodeByCell = (event) => {
+            var m = this.currMousePosAsArr(event);
+            const clickableNodes = this.view.unitdisk.cache.unculledNodes.filter((n) => n.precalc && n.precalc.clickable);
+            if (clickableNodes.length === 0)
+                return undefined;
+            const points = clickableNodes.map((d) => [d.cache.re, d.cache.im]);
+            const delaunay = d3.Delaunay.from(points);
+            const index = delaunay.find(m[0], m[1]);
+            return index >= 0 ? clickableNodes[index] : undefined;
         };
         //-----------------------------------------------------------------------------------------
         this.onDragStart = (n, m) => {
@@ -53,7 +58,7 @@ class InteractionLayer {
             var dc = (0, hyperbolic_math_2.CsubC)(s, e);
             var dist = Math.sqrt(dc.re * dc.re + dc.im * dc.im);
             if (dist < 0.006)
-                this.onClick(n, e);
+                this.onClick(null, n, e);
             this.view.unitdisk.args.transformation.onDragEnd(e);
             this.view.hypertree.update.transformation();
         };
@@ -68,10 +73,10 @@ class InteractionLayer {
             clearTimeout(this.dblClickTimer);
             this.dblClickTimer = null;
         };
-        this.onClick = (n, m) => {
-            if (d3.event && d3.event.preventDefault)
-                d3.event.preventDefault();
-            m = m || this.currMousePosAsC();
+        this.onClick = (event, n, m) => {
+            if (event && event.preventDefault)
+                event.preventDefault();
+            m = m || this.currMousePosAsC(event);
             //m = n.cache
             if (!this.dblClickTimer)
                 this.dblClickTimer = setTimeout(() => {
@@ -84,9 +89,9 @@ class InteractionLayer {
             else
                 this.cancelClickTimer();
         };
-        this.onDblClick = (n) => {
-            d3.event.preventDefault();
-            var m = this.currMousePosAsC();
+        this.onDblClick = (event, n) => {
+            event.preventDefault();
+            var m = this.currMousePosAsC(event);
             this.cancelClickTimer();
             this.args.onClick(n, m);
         };
@@ -99,12 +104,12 @@ class InteractionLayer {
         let lasttransform = null;
         var zoom = d3
             .zoom() // zoomevents: start, end, mulitiple,
-            .on('zoom', () => {
-            console.assert(d3.event);
-            if (d3.event &&
-                d3.event.sourceEvent &&
-                d3.event.sourceEvent.type === 'wheel') {
-                const mΔ = d3.event.sourceEvent.deltaY;
+            .on('zoom', (event) => {
+            console.assert(event);
+            if (event &&
+                event.sourceEvent &&
+                event.sourceEvent.type === 'wheel') {
+                const mΔ = event.sourceEvent.deltaY;
                 const λΔ = ((mΔ / 100) * 2 * Math.PI) / 16;
                 const oldλp = this.view.unitdisk.args.transformation.state.λ;
                 const newλp = oldλp - λΔ;
@@ -114,32 +119,32 @@ class InteractionLayer {
                     this.onDragλ(newλp);
             }
             //
-            else if (d3.event &&
-                d3.event.sourceEvent &&
-                d3.event.sourceEvent.type === 'touchmove') {
+            else if (event &&
+                event.sourceEvent &&
+                event.sourceEvent.type === 'touchmove') {
                 // :D
-                if (d3.event.transform.k !== lasttransform) {
-                    lasttransform = d3.event.transform.k;
-                    const newλp = d3.event.transform.k + 0.5;
+                if (event.transform.k !== lasttransform) {
+                    lasttransform = event.transform.k;
+                    const newλp = event.transform.k + 0.5;
                     const min = 0.1 * Math.PI;
                     const max = 0.8 * Math.PI * 2;
                     if (newλp.θ < max && newλp.θ > min)
                         this.onDragλ(newλp);
                 }
                 else {
-                    this.onDragByNode(dragStartElement, dragStartPoint, this.currMousePosAsC());
+                    this.onDragByNode(dragStartElement, dragStartPoint, this.currMousePosAsC(event));
                 }
             }
             //
             else {
-                this.onDragByNode(dragStartElement, dragStartPoint, this.currMousePosAsC());
+                this.onDragByNode(dragStartElement, dragStartPoint, this.currMousePosAsC(event));
             }
         })
-            .on('start', () => {
-            this.onDragStart((dragStartElement = this.findNodeByCell()), (dragStartPoint = this.currMousePosAsC()));
+            .on('start', (event) => {
+            this.onDragStart((dragStartElement = this.findNodeByCell(event)), (dragStartPoint = this.currMousePosAsC(event)));
         })
-            .on('end', () => {
-            this.onDragEnd(dragStartElement, dragStartPoint, this.currMousePosAsC());
+            .on('end', (event) => {
+            this.onDragEnd(dragStartElement, dragStartPoint, this.currMousePosAsC(event));
         });
         const htapi = this.view.hypertree.api;
         const hoverpath = this.view.hypertree.args.objects.pathes[0];
@@ -147,9 +152,9 @@ class InteractionLayer {
             .append('circle')
             .attr('class', 'mouse-circle')
             .attr('r', this.args.mouseRadius)
-            .on('dblclick', (d) => this.onDblClick(this.findNodeByCell()))
-            .on('mousemove', (d) => htapi.setPathHead(hoverpath, this.findNodeByCell()))
-            .on('mouseout', (d) => htapi.setPathHead(hoverpath, undefined))
+            .on('dblclick', (event, d) => this.onDblClick(event, this.findNodeByCell(event)))
+            .on('mousemove', (event, d) => htapi.setPathHead(hoverpath, this.findNodeByCell(event)))
+            .on('mouseout', (event, d) => htapi.setPathHead(hoverpath, undefined))
             .call(zoom)
             .on('dblclick.zoom', null);
     }

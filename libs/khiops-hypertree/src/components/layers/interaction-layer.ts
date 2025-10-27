@@ -33,12 +33,17 @@ export class InteractionLayer implements ILayer {
     style: () => {},
   };
 
-  currMousePosAsArr = () => d3.mouse(this.view.parent.node());
-  currMousePosAsC = () => ArrtoC(this.currMousePosAsArr());
-  findNodeByCell = () => {
-    var m = this.currMousePosAsArr();
-    var find = this.view.unitdisk.cache.voronoiDiagram.find(m[0], m[1]);
-    return find ? find.data : undefined;
+  currMousePosAsArr = (event) => d3.pointer(event, this.view.parent.node());
+  currMousePosAsC = (event) => ArrtoC(this.currMousePosAsArr(event));
+  findNodeByCell = (event) => {
+    var m = this.currMousePosAsArr(event);
+    const clickableNodes = this.view.unitdisk.cache.unculledNodes.filter((n: any) => n.precalc && n.precalc.clickable);
+    if (clickableNodes.length === 0) return undefined;
+
+    const points: [number, number][] = clickableNodes.map((d) => [d.cache.re, d.cache.im]);
+    const delaunay = d3.Delaunay.from(points);
+    const index = delaunay.find(m[0], m[1]);
+    return index >= 0 ? clickableNodes[index] : undefined;
   };
 
   private initMouseStuff() {
@@ -47,15 +52,15 @@ export class InteractionLayer implements ILayer {
     let lasttransform = null;
     var zoom = d3
       .zoom() // zoomevents: start, end, mulitiple,
-      .on('zoom', () => {
-        console.assert(d3.event);
+      .on('zoom', (event) => {
+        console.assert(event);
 
         if (
-          d3.event &&
-          d3.event.sourceEvent &&
-          d3.event.sourceEvent.type === 'wheel'
+          event &&
+          event.sourceEvent &&
+          event.sourceEvent.type === 'wheel'
         ) {
-          const mΔ = d3.event.sourceEvent.deltaY;
+          const mΔ = event.sourceEvent.deltaY;
           const λΔ = ((mΔ / 100) * 2 * Math.PI) / 16;
           const oldλp = this.view.unitdisk.args.transformation.state.λ;
           const newλp = oldλp - λΔ;
@@ -66,15 +71,15 @@ export class InteractionLayer implements ILayer {
         }
         //
         else if (
-          d3.event &&
-          d3.event.sourceEvent &&
-          d3.event.sourceEvent.type === 'touchmove'
+          event &&
+          event.sourceEvent &&
+          event.sourceEvent.type === 'touchmove'
         ) {
           // :D
-          if (d3.event.transform.k !== lasttransform) {
-            lasttransform = d3.event.transform.k;
+          if (event.transform.k !== lasttransform) {
+            lasttransform = event.transform.k;
 
-            const newλp = d3.event.transform.k + 0.5;
+            const newλp = event.transform.k + 0.5;
             const min = 0.1 * Math.PI;
             const max = 0.8 * Math.PI * 2;
 
@@ -83,7 +88,7 @@ export class InteractionLayer implements ILayer {
             this.onDragByNode(
               dragStartElement,
               dragStartPoint,
-              this.currMousePosAsC(),
+              this.currMousePosAsC(event),
             );
           }
         }
@@ -92,21 +97,21 @@ export class InteractionLayer implements ILayer {
           this.onDragByNode(
             dragStartElement,
             dragStartPoint,
-            this.currMousePosAsC(),
+            this.currMousePosAsC(event),
           );
         }
       })
-      .on('start', () => {
+      .on('start', (event) => {
         this.onDragStart(
-          (dragStartElement = this.findNodeByCell()),
-          (dragStartPoint = this.currMousePosAsC()),
+          (dragStartElement = this.findNodeByCell(event)),
+          (dragStartPoint = this.currMousePosAsC(event)),
         );
       })
-      .on('end', () => {
+      .on('end', (event) => {
         this.onDragEnd(
           dragStartElement,
           dragStartPoint,
-          this.currMousePosAsC(),
+          this.currMousePosAsC(event),
         );
       });
 
@@ -117,11 +122,11 @@ export class InteractionLayer implements ILayer {
       .append('circle')
       .attr('class', 'mouse-circle')
       .attr('r', this.args.mouseRadius)
-      .on('dblclick', (d) => this.onDblClick(this.findNodeByCell()))
-      .on('mousemove', (d) =>
-        htapi.setPathHead(hoverpath, this.findNodeByCell()),
+      .on('dblclick', (event, d) => this.onDblClick(event, this.findNodeByCell(event)))
+      .on('mousemove', (event, d) =>
+        htapi.setPathHead(hoverpath, this.findNodeByCell(event)),
       )
-      .on('mouseout', (d) => htapi.setPathHead(hoverpath, undefined))
+      .on('mouseout', (event, d) => htapi.setPathHead(hoverpath, undefined))
       .call(zoom)
       .on('dblclick.zoom', null);
   }
@@ -163,7 +168,7 @@ export class InteractionLayer implements ILayer {
     var dc = CsubC(s, e);
     var dist = Math.sqrt(dc.re * dc.re + dc.im * dc.im);
 
-    if (dist < 0.006) this.onClick(n, e);
+    if (dist < 0.006) this.onClick(null, n, e);
     this.view.unitdisk.args.transformation.onDragEnd(e);
     this.view.hypertree.update.transformation();
   };
@@ -198,10 +203,10 @@ export class InteractionLayer implements ILayer {
     clearTimeout(this.dblClickTimer);
     this.dblClickTimer = null;
   };
-  private onClick = (n: N, m) => {
-    if (d3.event && d3.event.preventDefault) d3.event.preventDefault();
+  private onClick = (event, n: N, m) => {
+    if (event && event.preventDefault) event.preventDefault();
 
-    m = m || this.currMousePosAsC();
+    m = m || this.currMousePosAsC(event);
     //m = n.cache
 
     if (!this.dblClickTimer)
@@ -215,9 +220,9 @@ export class InteractionLayer implements ILayer {
     else this.cancelClickTimer();
   };
 
-  private onDblClick = (n: N) => {
-    d3.event.preventDefault();
-    var m = this.currMousePosAsC();
+  private onDblClick = (event, n: N) => {
+    event.preventDefault();
+    var m = this.currMousePosAsC(event);
 
     this.cancelClickTimer();
     this.args.onClick(n, m);
