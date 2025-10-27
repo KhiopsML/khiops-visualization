@@ -5,7 +5,16 @@
  */
 
 import { Injectable } from '@angular/core';
-import * as d3 from 'd3';
+import {
+  select,
+  scaleLinear,
+  scaleLog,
+  axisBottom,
+  axisLeft,
+  format,
+  type Axis,
+  type NumberValue,
+} from 'd3';
 import { HistogramService } from './histogram.service';
 import { HistogramUIService } from './histogram.ui.service';
 import { HistogramBarModel } from './histogram.bar.model';
@@ -88,10 +97,9 @@ export class HistogramRendererService {
     yPadding: number,
   ): any {
     // First remove svg if already added to the dom
-    d3.select(chartElement).select('svg').remove();
+    select(chartElement).select('svg').remove();
 
-    return d3
-      .select(chartElement)
+    return select(chartElement)
       .append('svg')
       .attr('width', chartW)
       .attr('height', h + yPadding);
@@ -323,14 +331,13 @@ export class HistogramRendererService {
     shift = shift + xPadding;
 
     if (graphOptionsX?.selected === HistogramType.XLIN) {
-      xAxis = d3.scaleLinear().domain(domain).range([0, width]);
+      xAxis = scaleLinear().domain(domain).range([0, width]);
     } else {
-      xAxis = d3.scaleLog().base(10).domain(domain).range([0, width]);
+      xAxis = scaleLog().base(10).domain(domain).range([0, width]);
     }
 
     //@ts-ignore
-    const axis: d3.Axis<d3.NumberValue> = d3
-      .axisBottom(xAxis)
+    const axis: Axis<NumberValue> = axisBottom(xAxis)
       .ticks([xTickCount])
       .tickArguments([xTickCount, '.0e'])
       .tickSize(-h + yPadding / 2);
@@ -391,13 +398,11 @@ export class HistogramRendererService {
 
     // Create the scale
     if (graphOptionsY?.selected === HistogramType.YLIN) {
-      y = d3
-        .scaleLinear()
+      y = scaleLinear()
         .domain([0, rangeYLin || 0])
         .range([h - yPadding / 2, 0]);
     } else {
-      y = d3
-        .scaleLinear()
+      y = scaleLinear()
         .domain([rangeYLog?.max || 0, rangeYLog?.min || 0])
         .range([0, h - yPadding / 2]);
     }
@@ -406,8 +411,7 @@ export class HistogramRendererService {
     const tickSize = -(w - xPadding * 2);
 
     // Draw the axis
-    const axis = d3
-      .axisLeft(y)
+    const axis = axisLeft(y)
       .tickSize(tickSize)
       .tickPadding(10)
       // @ts-ignore
@@ -417,7 +421,7 @@ export class HistogramRendererService {
           return NumberFormatter.format(val);
         } else {
           const antiLog = Math.pow(10, val);
-          return d3.format('.0e')(antiLog);
+          return format('.0e')(antiLog);
         }
       })
       .ticks(yTicksCount);
