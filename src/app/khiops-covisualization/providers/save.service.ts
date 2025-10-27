@@ -22,7 +22,7 @@ import { UtilsService } from '@khiops-library/providers/utils.service';
 import { DimensionCovisualizationModel } from '@khiops-library/model/dimension.covisualization.model';
 import { TYPES } from '@khiops-library/enum/types';
 import { TreeNodeModel } from '@khiops-covisualization/model/tree-node.model';
-import _ from 'lodash';
+import sortBy from 'lodash-es/sortBy';
 
 @Injectable({
   providedIn: 'root',
@@ -326,7 +326,7 @@ export class SaveService {
     // Sort clusters by leaf and rank only once at the end
     truncatedHierarchy.forEach((hierarchy) => {
       if (hierarchy?.clusters) {
-        hierarchy.clusters = _.sortBy(hierarchy.clusters, [
+        hierarchy.clusters = sortBy(hierarchy.clusters, [
           (e) => e.isLeaf === false,
           'rank',
         ]);

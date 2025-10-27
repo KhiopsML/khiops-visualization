@@ -8,7 +8,7 @@ import { Component } from '@angular/core';
 import { AppService } from '@khiops-covisualization/providers/app.service';
 import { MatDialogRef } from '@angular/material/dialog';
 import { ViewLayoutVO } from '@khiops-covisualization/model/view-layout.model';
-import * as _ from 'lodash'; // Important to import lodash in karma
+import cloneDeep from 'lodash-es/cloneDeep';
 import { ViewManagerService } from '@khiops-covisualization/providers/view-manager.service';
 import { MAT_RIPPLE_COLOR } from '@khiops-covisualization/config/colors';
 import { DimensionViewLayoutModel } from '@khiops-covisualization/model/dimension-view-layout.model';
@@ -30,7 +30,7 @@ export class ManageViewsComponent {
     private viewManagerService: ViewManagerService,
     private dialogRef: MatDialogRef<ManageViewsComponent>,
   ) {
-    this.viewsLayout = _.cloneDeep(this.viewManagerService.getViewsLayout());
+    this.viewsLayout = cloneDeep(this.viewManagerService.getViewsLayout());
     this.isContextView = this.appService.getActiveTabIndex() === 1;
     this.computeIsDimensionVisible();
   }

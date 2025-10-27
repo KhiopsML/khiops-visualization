@@ -6,7 +6,7 @@
 
 import { Injectable } from '@angular/core';
 import { AppService } from './app.service';
-import * as _ from 'lodash'; // Important to import lodash in karma
+import cloneDeep from 'lodash-es/cloneDeep';
 import { AppConfig } from '../../../environments/environment';
 import { BarModel } from '../model/bar.model';
 import { ChartDatasetModel } from '@khiops-library/model/chart-dataset.model';
@@ -439,7 +439,7 @@ export class DistributionDatasService {
         const variableDetails: VariableDetailsModel = new VariableDetailsModel(
           currentVar,
         );
-        const dimensions: DimensionVisualization[] = _.cloneDeep(
+        const dimensions: DimensionVisualization[] = cloneDeep(
           variableDetails.dataGrid.dimensions,
         );
         let currentDatas: number[] | number[][] = [];

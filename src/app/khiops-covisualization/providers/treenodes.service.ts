@@ -11,7 +11,8 @@ import { AppService } from './app.service';
 import { UtilsService } from '@khiops-library/providers/utils.service';
 import { TreeNodeModel } from '../model/tree-node.model';
 import { deepEqual } from 'fast-equals';
-import _ from 'lodash';
+import cloneDeep from 'lodash-es/cloneDeep';
+import isEqual from 'lodash-es/isEqual';
 import { HierarchyDatasModel } from '@khiops-covisualization/model/hierarchy-datas.model';
 import { DynamicI } from '@khiops-library/interfaces/globals';
 import { DimensionCovisualizationModel } from '@khiops-library/model/dimension.covisualization.model';
@@ -148,7 +149,7 @@ export class TreenodesService {
   /**
    * Sets the selected node for a given hierarchy and node name.
    * This method updates the selected node in the dimensions data and emits
-   * a tree selection changed event if the nodes have changed or if a 
+   * a tree selection changed event if the nodes have changed or if a
    * selectedValue is provided (for variable search within the same cluster).
    *
    * @param {string} hierarchyName - The name of the hierarchy.
@@ -238,7 +239,7 @@ export class TreenodesService {
         previousSelectedNodes,
         this.dimensionsDatasService.dimensionsDatas.selectedNodes,
       );
-      
+
       if (nodesChanged || selectedValue) {
         // search in the complete datas the corresponding node
         const realNodeVO =
@@ -455,7 +456,7 @@ export class TreenodesService {
         nodeName,
       );
     }
-    return _.cloneDeep(nodeVO); // important to clone datas to keep origin immmutable
+    return cloneDeep(nodeVO); // important to clone datas to keep origin immmutable
   }
 
   /**
@@ -496,7 +497,7 @@ export class TreenodesService {
           });
       }
     }
-    return _.cloneDeep(nodeVO); // important to clone datas to keep origin immmutable
+    return cloneDeep(nodeVO); // important to clone datas to keep origin immmutable
   }
 
   /**
@@ -708,6 +709,6 @@ export class TreenodesService {
    * @returns {boolean} - True if the saved data has changed, false otherwise.
    */
   isSaveChanged(savedDatas: DynamicI, testedSavedDatas: DynamicI): boolean {
-    return !_.isEqual(savedDatas, testedSavedDatas);
+    return !isEqual(savedDatas, testedSavedDatas);
   }
 }

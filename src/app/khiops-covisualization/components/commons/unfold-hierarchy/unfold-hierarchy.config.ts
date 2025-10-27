@@ -6,7 +6,7 @@
 
 import { CheckboxCellComponent } from '@khiops-library/components/ag-grid/checkbox-cell/checkbox-cell.component';
 import { TranslateService } from '@ngstack/translate';
-import * as _ from 'lodash'; // Important to import lodash in karma
+import cloneDeep from 'lodash-es/cloneDeep';
 import type { ChartOptions } from 'chart.js';
 
 export function getHierarchyGridColumns(translate: TranslateService) {
@@ -35,7 +35,7 @@ export function getClusterPerDimChartOptions(
   translate: TranslateService,
   baseOptions: ChartOptions<'line'>,
 ): ChartOptions<'line'> {
-  const options = _.cloneDeep(baseOptions);
+  const options = cloneDeep(baseOptions);
   options.scales!.x!.title!.text = translate.get(
     'GLOBAL.TOTAL_NUMBER_OF_CLUSTERS',
   );
@@ -49,7 +49,7 @@ export function getInfoPerClusterChartOptions(
   translate: TranslateService,
   baseOptions: ChartOptions<'line'>,
 ): ChartOptions<'line'> {
-  const options = _.cloneDeep(baseOptions);
+  const options = cloneDeep(baseOptions);
   options.scales!.x!.title!.text = translate.get(
     'GLOBAL.TOTAL_NUMBER_OF_CLUSTERS',
   );

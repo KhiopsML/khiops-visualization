@@ -6,7 +6,9 @@
 
 import { Injectable } from '@angular/core';
 import { TreeNodeModel } from '@khiops-visualization/model/tree-node.model';
-import * as _ from 'lodash'; // Important to import lodash in karma
+import transform from 'lodash-es/transform';
+import isEqual from 'lodash-es/isEqual';
+import isObject from 'lodash-es/isObject';
 
 @Injectable({
   providedIn: 'root',
@@ -79,11 +81,11 @@ export class UtilsService {
   ) {
     // tslint:disable-next-line: no-shadowed-variable
     function changes(object: object | undefined, base: object) {
-      return _.transform(object || {}, function (result: any, value, key) {
-        if (!_.isEqual(value, base[key])) {
+      return transform(object || {}, function (result: any, value, key) {
+        if (!isEqual(value, (base as any)[key])) {
           result[key] =
-            _.isObject(value) && _.isObject(base[key])
-              ? changes(value, base[key])
+            isObject(value) && isObject((base as any)[key])
+              ? changes(value, (base as any)[key])
               : value;
         }
       });

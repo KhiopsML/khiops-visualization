@@ -5,7 +5,7 @@
  */
 
 import { Injectable } from '@angular/core';
-import * as _ from 'lodash'; // Important to import lodash in karma
+import cloneDeep from 'lodash-es/cloneDeep';
 import { DimensionsDatasService } from './dimensions-datas.service';
 import { TreeNodeModel } from '../model/tree-node.model';
 import { DimensionCovisualizationModel } from '@khiops-library/model/dimension.covisualization.model';
@@ -269,7 +269,7 @@ export class CompositionService {
   ): CompositionModel[] {
     // Create deep copies to avoid mutating the original objects
     const formattedCompositions = compositionValues.map((composition) =>
-      _.cloneDeep(composition),
+      cloneDeep(composition),
     );
 
     for (const composition of formattedCompositions) {

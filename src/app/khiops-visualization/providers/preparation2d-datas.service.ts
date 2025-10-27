@@ -5,7 +5,7 @@
  */
 
 import { Injectable } from '@angular/core';
-import * as _ from 'lodash'; // Important to import lodash in karma
+import cloneDeep from 'lodash-es/cloneDeep';
 import { AppService } from './app.service';
 import { TranslateService } from '@ngstack/translate';
 import { UtilsService } from '@khiops-library/providers/utils.service';
@@ -37,6 +37,7 @@ import {
 import { MatrixDatasModel } from '@khiops-library/model/matrix-datas.model';
 import { MATRIX_MODES } from '@khiops-library/enum/matrix-modes';
 import { VARIABLE_TYPES } from '@khiops-library/enum/variable-types';
+import isEqual from 'lodash-es/isEqual';
 
 @Injectable({
   providedIn: 'root',
@@ -439,7 +440,7 @@ export class Preparation2dDatasService {
             variableDetails.dataGrid.dimensions[0]?.partition[
               defaultGroupIndex
             ];
-          isCurrentDefaultGroup = _.isEqual(
+          isCurrentDefaultGroup = isEqual(
             defaultGroupPartition,
             selectedCell.xaxisPartValues,
           );
@@ -632,7 +633,7 @@ export class Preparation2dDatasService {
       this.getVariableDetails(selectedVariable);
 
     if (variablesDetails) {
-      const variableDatas: VariableDetailsModel = _.cloneDeep(variablesDetails);
+      const variableDatas: VariableDetailsModel = cloneDeep(variablesDetails);
 
       if (
         variableDatas?.dataGrid &&
@@ -909,10 +910,9 @@ export class Preparation2dDatasService {
       );
     }
     if (currentRes[MATRIX_MODES.TARGET_FREQUENCY]) {
-      res[MATRIX_MODES.TARGET_FREQUENCY] =
-        UtilsService.getMinAndMaxFromArray(
-          currentRes[MATRIX_MODES.TARGET_FREQUENCY].flat(),
-        );
+      res[MATRIX_MODES.TARGET_FREQUENCY] = UtilsService.getMinAndMaxFromArray(
+        currentRes[MATRIX_MODES.TARGET_FREQUENCY].flat(),
+      );
     }
 
     res[MATRIX_MODES.PROB_CELL] = [0, 1];

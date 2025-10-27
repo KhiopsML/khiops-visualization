@@ -10,7 +10,7 @@ import {
 } from '@khiops-covisualization/interfaces/app-datas';
 import { TYPES } from '@khiops-library/enum/types';
 import { DimensionVisualization } from '@khiops-visualization/interfaces/app-datas';
-import _ from 'lodash';
+import clone from 'lodash-es/clone';
 
 export class DimensionVisualizationModel implements DimensionVisualization {
   partition!: number[][] | string[];
@@ -32,7 +32,7 @@ export class DimensionVisualizationModel implements DimensionVisualization {
 
     if (this.partition) {
       // Clone partition to keep real datas
-      this.partitionInputs = _.clone(object.partition);
+      this.partitionInputs = clone(object.partition);
       this.setMissingPartition();
       this.parts = this.partition.length;
     }

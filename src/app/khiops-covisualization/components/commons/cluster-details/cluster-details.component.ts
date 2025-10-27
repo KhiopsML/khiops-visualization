@@ -13,7 +13,6 @@ import {
   NgZone,
   SimpleChanges,
 } from '@angular/core';
-import _ from 'lodash';
 import { TranslateService } from '@ngstack/translate';
 import { DimensionCovisualizationModel } from '@khiops-library/model/dimension.covisualization.model';
 import { ClustersService } from '@khiops-covisualization/providers/clusters.service';
@@ -25,6 +24,7 @@ import { TreeNodeModel } from '@khiops-covisualization/model/tree-node.model';
 import { getClusterGridColumns } from './cluster-details.config';
 import { EventsService } from '@khiops-covisualization/providers/events.service';
 import { Subscription } from 'rxjs';
+import cloneDeep from 'lodash-es/cloneDeep';
 
 @Component({
   selector: 'app-cluster-details',
@@ -123,7 +123,7 @@ export class ClusterDetailsComponent implements OnInit, OnChanges, OnDestroy {
   private updateSelectedNode() {
     if (this.selectedNode && this.filteredDimensionsClusters) {
       // Get nodes from input to update it
-      this.nodeToSelect = _.cloneDeep(this.selectedNode);
+      this.nodeToSelect = cloneDeep(this.selectedNode);
       const findNodeToSelect = this.filteredDimensionsClusters.find(
         (e) => e._id.toString() === this.nodeToSelect?._id.toString(),
       );
@@ -150,7 +150,7 @@ export class ClusterDetailsComponent implements OnInit, OnChanges, OnDestroy {
           this.nodeToSelect = this.getFirstNodeLeaf(this.nodeToSelect);
         }
       }
-      this.selectedNode = _.cloneDeep(this.nodeToSelect);
+      this.selectedNode = cloneDeep(this.nodeToSelect);
     }
   }
 

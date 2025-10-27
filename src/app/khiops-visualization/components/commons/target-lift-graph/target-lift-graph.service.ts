@@ -15,7 +15,7 @@ import { TargetLiftValuesI } from '@khiops-visualization/interfaces/target-lift-
 import { ChartColorsSetI } from '@khiops-library/interfaces/chart-colors-set';
 import { ChartToggleValuesI } from '@khiops-visualization/interfaces/chart-toggle-values';
 import { LS } from '@khiops-library/enum/ls';
-import _ from 'lodash';
+import cloneDeep from 'lodash-es/cloneDeep';
 import { UtilsService } from '../../../../khiops-library/providers/utils.service';
 import { AppConfig } from '../../../../../environments/environment';
 
@@ -116,9 +116,7 @@ export class TargetLiftGraphService {
     const targetLift =
       this.evaluationDatasService.getLiftTargets(currentTarget);
 
-    const colorSet = _.cloneDeep(
-      this.khiopsLibraryService.getGraphColorSet()[1],
-    );
+    const colorSet = cloneDeep(this.khiopsLibraryService.getGraphColorSet()[1]);
     let title: string;
     let titleWithoutDetails: string;
     let targetLiftGraph: ChartDatasModel | undefined;
@@ -177,7 +175,7 @@ export class TargetLiftGraphService {
     colorSet: ChartColorsSetI,
     displayedValues: ChartToggleValuesI[],
   ): ChartColorsSetI {
-    const updatedColorSet = _.cloneDeep(colorSet);
+    const updatedColorSet = cloneDeep(colorSet);
 
     let i = displayedValues.length;
     while (i--) {

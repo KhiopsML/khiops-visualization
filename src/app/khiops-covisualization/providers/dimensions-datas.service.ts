@@ -9,7 +9,6 @@ import { AppService } from './app.service';
 import { TreeNodeModel } from '../model/tree-node.model';
 import { UtilsService } from '@khiops-library/providers/utils.service';
 import { MatrixUtilsService } from '@khiops-library/components/matrix/matrix.utils.service';
-import * as _ from 'lodash'; // Important to import lodash in karma
 import { AppConfig } from '../../../environments/environment';
 import { DimensionsDatasModel } from '../model/dimensions-data.model';
 import { TYPES } from '@khiops-library/enum/types';
@@ -23,6 +22,7 @@ import {
   ValueGroup,
 } from '@khiops-covisualization/interfaces/app-datas';
 import { DimensionCovisualizationModel } from '@khiops-library/model/dimension.covisualization.model';
+import orderBy from 'lodash-es/orderBy';
 
 @Injectable({
   providedIn: 'root',
@@ -629,7 +629,7 @@ export class DimensionsDatasService {
 
     // Remove any undefined elements and sort by rank
     const validClusters = clusters.filter(Boolean);
-    const sortedClusters = _.orderBy(validClusters, (e) => e.rank);
+    const sortedClusters = orderBy(validClusters, (e) => e.rank);
 
     // Unflatten the tree
     const trees = UtilsService.unflatten(sortedClusters);

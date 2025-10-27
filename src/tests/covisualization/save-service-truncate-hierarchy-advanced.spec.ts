@@ -16,7 +16,7 @@ import { AnnotationService } from '@khiops-covisualization/providers/annotation.
 import { ImportExtDatasService } from '@khiops-covisualization/providers/import-ext-datas.service';
 import { CovisualizationDatas } from '@khiops-covisualization/interfaces/app-datas';
 import { TreeNodeModel } from '@khiops-covisualization/model/tree-node.model';
-import * as _ from 'lodash';
+import sortBy from 'lodash-es/sortBy';
 
 /**
  * Advanced unit tests for SaveService.truncateJsonHierarchy method
@@ -263,7 +263,7 @@ describe('SaveService - truncateJsonHierarchy Advanced Tests', () => {
     expect(idDimension!.clusters.length).toBe(originalIdClusters);
 
     // Clusters should be sorted by isLeaf and rank
-    const sortedClusters = _.sortBy(
+    const sortedClusters = sortBy(
       testData.coclusteringReport.dimensionHierarchies[0].clusters,
       [(e) => e.isLeaf === false, 'rank'],
     );

@@ -5,7 +5,7 @@
  */
 
 import { Injectable } from '@angular/core';
-import _ from 'lodash'; // Important to import lodash in karma
+import cloneDeep from 'lodash-es/cloneDeep';
 import { AppService } from './app.service';
 import { TranslateService } from '@ngstack/translate';
 import { UtilsService } from '@khiops-library/providers/utils.service';
@@ -226,7 +226,7 @@ export class TreePreparationDatasService {
     if (treeDatas?.[rank]?.treeNodes) {
       const flattenTree: TreeChildNode[] = UtilsService.flattenTree(
         [],
-        _.cloneDeep(treeDatas[rank].treeNodes),
+        cloneDeep(treeDatas[rank].treeNodes),
       );
       this.treePreparationDatas.selectedFlattenTree = flattenTree;
     }
@@ -246,7 +246,7 @@ export class TreePreparationDatasService {
         nodeDatas,
         this.treePreparationDatas,
       );
-      this.treePreparationDatas.dimensionTree = _.cloneDeep([currentDimTree]);
+      this.treePreparationDatas.dimensionTree = cloneDeep([currentDimTree]);
     }
   }
 
@@ -439,7 +439,7 @@ export class TreePreparationDatasService {
 
       // get a hierarchy branch with all recursive parents
       const nodeHierarchy: TreeNodeModel[] = UtilsService.returnHierarchy(
-        _.cloneDeep(this.treePreparationDatas?.dimensionTree) || [],
+        cloneDeep(this.treePreparationDatas?.dimensionTree) || [],
         currentNode?.id || '',
       );
 

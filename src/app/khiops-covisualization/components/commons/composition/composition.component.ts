@@ -19,7 +19,7 @@ import { CompositionModel } from '@khiops-covisualization/model/composition.mode
 import { DimensionCovisualizationModel } from '@khiops-library/model/dimension.covisualization.model';
 import { EventsService } from '@khiops-covisualization/providers/events.service';
 import { Subscription } from 'rxjs';
-import _ from 'lodash';
+import cloneDeep from 'lodash-es/cloneDeep';
 import { GridColumnsI } from '@khiops-library/interfaces/grid-columns';
 import { TreeNodeModel } from '@khiops-covisualization/model/tree-node.model';
 import { ExtDatasModel } from '@khiops-covisualization/model/ext-datas.model';
@@ -205,7 +205,7 @@ export class CompositionComponent implements OnInit, OnDestroy, AfterViewInit {
       const newCompositionValues =
         this.compositionService.getCompositionClusters(
           selectedNode.hierarchy,
-          _.cloneDeep(selectedNode),
+          cloneDeep(selectedNode),
         );
       // Create a new array to ensure Angular detects the change
       this.compositionValues = [...newCompositionValues];

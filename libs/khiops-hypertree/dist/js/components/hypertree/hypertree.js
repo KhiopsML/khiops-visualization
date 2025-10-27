@@ -185,7 +185,7 @@ class Hypertree {
         //##
         //########################################################################################################
         this.btnPathId = (pathType, n) => `btn-path-${pathType}` +
-            (pathType === 'SelectionPath' ? `-${n.mergeId}` : '');
+            (pathType === 'SelectionPath' ? `-${n === null || n === void 0 ? void 0 : n.mergeId}` : '');
         this.view_ = view;
         this.initPromise = this.api.setModel(args);
     }
@@ -365,8 +365,6 @@ class Hypertree {
     }
     toggleSelection(n) {
         if (this.args.objects.selections.includes(n)) {
-            //const nidx = this.args.objects.selections.indexOf(n)
-            //delete this.args.objects.selections[nidx]
             this.args.objects.selections = this.args.objects.selections.filter((e) => e !== n);
             this.removePath('SelectionPath', n);
         }
@@ -375,8 +373,6 @@ class Hypertree {
             this.addPath('SelectionPath', n);
         }
     }
-    // es kann nur einen pro id geben, gibt es bereits einen wird dieser entfernt
-    // (praktisch für hover)
     setPathHead(path, n) {
         const pt = path ? path.type : 'HoverPath';
         const oldPathId = this.btnPathId(pt, n);
@@ -466,7 +462,6 @@ class Hypertree {
             reject: err,
             frame: (progress01) => {
                 const waydone01 = 1 - (0, hyperbolic_math_4.sigmoid)(progress01);
-                // console.assert(waydone01 >= 0 && waydone01 <= 1)
                 const waydone = way * waydone01;
                 const λ = newλ + waydone;
                 this.args.geometry.transformation.state.λ = λ;

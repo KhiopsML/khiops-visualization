@@ -9,7 +9,7 @@ import { DimensionsDatasService } from '@khiops-covisualization/providers/dimens
 import { MatDialogRef } from '@angular/material/dialog';
 import { KhiopsLibraryService } from '@khiops-library/providers/khiops-library.service';
 import { TranslateService } from '@ngstack/translate';
-import * as _ from 'lodash'; // Important to import lodash in karma
+import cloneDeep from 'lodash-es/cloneDeep';
 import { TreenodesService } from '@khiops-covisualization/providers/treenodes.service';
 import { ClustersService } from '@khiops-covisualization/providers/clusters.service';
 import { AppConfig } from '../../../../../environments/environment';
@@ -111,7 +111,7 @@ export class UnfoldHierarchyComponent implements OnInit {
   ngOnInit() {
     this.hierarchyService.initialize();
 
-    this.previousHierarchyRank = _.cloneDeep(
+    this.previousHierarchyRank = cloneDeep(
       this.hierarchyDatas?.selectedUnfoldHierarchy ?? 0,
     );
     this.currentUnfoldHierarchy = this.previousHierarchyRank;
@@ -122,7 +122,7 @@ export class UnfoldHierarchyComponent implements OnInit {
     }
 
     setTimeout(() => {
-      this.dimensions = _.cloneDeep(
+      this.dimensions = cloneDeep(
         this.dimensionsDatasService.dimensionsDatas.dimensions,
       );
 
@@ -145,10 +145,10 @@ export class UnfoldHierarchyComponent implements OnInit {
         }
       }
 
-      this.colorSetClusterPerDim = _.cloneDeep(
+      this.colorSetClusterPerDim = cloneDeep(
         this.khiopsLibraryService.getGraphColorSet()[0],
       );
-      this.colorSetInfoPerCluster = _.cloneDeep(
+      this.colorSetInfoPerCluster = cloneDeep(
         this.khiopsLibraryService.getGraphColorSet()[0],
       );
 
@@ -327,7 +327,7 @@ export class UnfoldHierarchyComponent implements OnInit {
     }
 
     // Dimension changed, clone to update array
-    this.dimensions = _.cloneDeep(
+    this.dimensions = cloneDeep(
       this.dimensionsDatasService.dimensionsDatas?.dimensions,
     );
 
