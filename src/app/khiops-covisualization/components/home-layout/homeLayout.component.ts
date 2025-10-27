@@ -177,6 +177,9 @@ export class HomeLayoutComponent implements OnInit, OnDestroy {
     _tabHeader: MatTabHeader,
     index: number,
   ) {
+    // Remove fullscreen class from all components when changing tab
+    this.resetAllFullscreenStates();
+
     if (index === 1 && this.isContextDimensions) {
       this.openContextView = true;
       this.trackerService.trackEvent('page_view', 'context');
@@ -196,6 +199,8 @@ export class HomeLayoutComponent implements OnInit, OnDestroy {
       this.openContextView = false;
     }
 
+    // Remove fullscreen class from all components when changing tab
+    this.resetAllFullscreenStates();
     // init selected area to undefined
     this.selectableService.initialize();
     this.selectedTab = e;
@@ -316,5 +321,18 @@ export class HomeLayoutComponent implements OnInit, OnDestroy {
   closeFile() {
     this.dialogRef.closeAll();
     this.fileLoader?.closeFile();
+  }
+
+  /**
+   * Reset all fullscreen states by removing the fullscreen class from all elements
+   */
+  private resetAllFullscreenStates() {
+    const rootElement = this.configService.getRootElementDom();
+    if (rootElement) {
+      const fullscreenElements = rootElement.querySelectorAll('.fullscreen');
+      fullscreenElements.forEach((element: Element) => {
+        element.classList.remove('fullscreen');
+      });
+    }
   }
 }
