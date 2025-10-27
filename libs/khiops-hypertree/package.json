@@ -9,13 +9,13 @@
     "start": "gulp build && gulp watch"
   },
   "dependencies": {
-    "d3": "6.7.0",
+    "d3": "7.9.0",
     "d3-force-gravity": "1.0.2",
     "glob-parent": "6.0.2",
     "timers": "0.1.1"
   },
   "devDependencies": {
-    "@types/d3": "6.7.0",
+    "@types/d3": "7.4.3",
     "@types/node": "24.9.1",
     "del": "8.0.1",
     "gulp": "5.0.1",
@@ -34,13 +34,5 @@
     "webpack": "5.102.1",
     "webpack-stream": "7.0.0",
     "yargs": "18.0.0"
-  },
-  "resolutions": {
-    "micromatch": "4.0.8",
-    "d3-color": "3.1.0",
-    "d3-zoom": "3.0.0",
-    "glob-parent": "6.0.2",
-    "braces": "3.0.3",
-    "lodash.template": "4.5.0"
   }
 }
