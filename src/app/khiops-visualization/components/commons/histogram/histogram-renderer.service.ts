@@ -6,7 +6,6 @@
 
 import { Injectable } from '@angular/core';
 import * as d3 from 'd3';
-import { format } from 'mathjs';
 import { HistogramService } from './histogram.service';
 import { HistogramUIService } from './histogram.ui.service';
 import { HistogramBarModel } from './histogram.bar.model';
@@ -14,6 +13,7 @@ import { HistogramType } from './histogram.type';
 import { HistogramValuesI, RangeYLogI } from './histogram.interfaces';
 import { UtilsService } from '@khiops-library/providers/utils.service';
 import { DistributionOptionsI } from '@khiops-library/interfaces/distribution-options';
+import { NumberFormatter } from '../../../providers/number.utils.service';
 
 /**
  * Service responsible for rendering histogram graphics
@@ -339,7 +339,7 @@ export class HistogramRendererService {
       // @ts-ignore
       axis.tickFormat((d: number) => {
         let val: any = d;
-        return '' + format(val);
+        return NumberFormatter.format(val);
       });
     }
 
@@ -414,7 +414,7 @@ export class HistogramRendererService {
       .tickFormat((d: number) => {
         let val: number = d;
         if (graphOptionsY?.selected === HistogramType.YLIN) {
-          return '' + format(val);
+          return NumberFormatter.format(val);
         } else {
           const antiLog = Math.pow(10, val);
           return d3.format('.0e')(antiLog);
