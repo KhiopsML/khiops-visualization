@@ -112,10 +112,6 @@ button {
   font-size: 1em !important;
 }
 
-::ng-deep mat-mdc-dialog-container {
-  background-color: var(-bgColor) !important;
-}
-
 .mat-mdc-mini-fab {
   width: 36px !important;
   height: 36px !important;

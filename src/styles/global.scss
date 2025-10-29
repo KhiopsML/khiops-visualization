@@ -388,17 +388,6 @@ canvas:focus {
 }
 
 /**
-  Hyper tree overriding styles
-*/
-::ng-deep .unitdisk-nav {
-  svg {
-    .background-circle {
-      fill: var(-bgColor-30) !important;
-    }
-  }
-}
-
-/**
   Electron js toast
 */
 .cc-floating.cc-theme-classic {
