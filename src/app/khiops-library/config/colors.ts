@@ -18,6 +18,12 @@ export const CHART_COLORS_0 = [
 
 /**
  * Second chart colors data set
+ * used by level distribution, distribution
+ */
+export const CHART_COLORS_2 = ['#ffbe46'];
+
+/**
+ * Second chart colors data set
  * used by target distribution, target lift, target variable
  */
 export const CHART_COLORS_1 = [
@@ -112,9 +118,3 @@ export const CHART_COLORS_1 = [
   '#F4B678',
   '#EC7A08',
 ];
-
-/**
- * Second chart colors data set
- * used by level distribution, distribution
- */
-export const CHART_COLORS_2 = ['#ffbe46'];
