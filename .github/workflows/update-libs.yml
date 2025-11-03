@@ -28,11 +28,14 @@ jobs:
 
       - name: Update dependencies
         run: |
-          # Install yarn-upgrade-all globally
-          npm install -g yarn-upgrade-all
+          # Install npm-check-updates
+          npm install -g npm-check-updates
 
-          # Update all dependencies in package.json except @ag-grid-community/*
-          yarn-upgrade-all --ignore "@ag-grid-community"
+          # Update all dependencies except @ag-grid-community/*
+          ncu -u --reject "@ag-grid-community/*"
+
+          # Install updated dependencies
+          yarn install
 
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v5
