@@ -30,14 +30,14 @@ jobs:
         run: |
           # Install yarn-upgrade-all globally
           npm install -g yarn-upgrade-all
-          
+
           # Update all dependencies in package.json except @ag-grid-community/*
           yarn-upgrade-all --ignore "@ag-grid-community/*"
 
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v5
         with:
-          token: ${{ secrets.GITHUB_TOKEN }}
+          token: ${{ secrets.PAT_TOKEN }}
           commit-message: 'chore: update dependencies'
           title: 'chore: update dependencies'
           body: |
