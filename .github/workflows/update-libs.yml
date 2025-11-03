@@ -1,0 +1,48 @@
+name: Update libs
+
+on:
+  schedule:
+    # Every Monday at 09:00 UTC
+    - cron: '0 9 * * 1'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  update-dependencies:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out Git repository
+        uses: actions/checkout@v4
+
+      - name: Install Node.js and Yarn
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: yarn install
+        run: yarn install
+
+      - name: Update dependencies
+        run: |
+          # Update all dependencies except @ag-grid-community/*
+          yarn upgrade --interactive=false \
+            --exclude-pattern="@ag-grid-community/.*"
+
+      - name: Create Pull Request
+        uses: peter-evans/create-pull-request@v5
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          commit-message: 'chore: update dependencies'
+          title: 'chore: update dependencies'
+          body: |
+            Automated dependency update.
+
+            This PR updates all dependencies in `package.json` except for `@ag-grid-community/*` packages.
+
+            Please review and merge if all checks pass.
+          branch: chore/update-dependencies
+          delete-branch: true
