@@ -28,20 +28,22 @@ jobs:
 
       - name: Update dependencies
         run: |
-          # Update all dependencies except @ag-grid-community/*
-          yarn upgrade --interactive=false \
-            --exclude-pattern="@ag-grid-community/.*"
+          # Install yarn-upgrade-all globally
+          yarn global add yarn-upgrade-all
+
+          # Update all dependencies in package.json except @ag-grid-community/*
+          yarn upgrade-all --ignore "@ag-grid-community/*"
 
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v5
         with:
-          token: ${{ secrets.PAT_TOKEN }}
+          token: ${{ secrets.GITHUB_TOKEN }}
           commit-message: 'chore: update dependencies'
           title: 'chore: update dependencies'
           body: |
             Automated dependency update.
 
-            This PR updates all dependencies in `package.json` except for `@ag-grid-community/*` packages.
+            This PR updates all dependencies in `package.json` and `yarn.lock` except for `@ag-grid-community/*` packages.
 
             Please review and merge if all checks pass.
           branch: chore/update-dependencies
