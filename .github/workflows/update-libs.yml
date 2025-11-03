@@ -32,7 +32,7 @@ jobs:
           npm install -g yarn-upgrade-all
 
           # Update all dependencies in package.json except @ag-grid-community/*
-          yarn-upgrade-all --ignore "@ag-grid-community/*"
+          yarn-upgrade-all --ignore "@ag-grid-community"
 
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v5
