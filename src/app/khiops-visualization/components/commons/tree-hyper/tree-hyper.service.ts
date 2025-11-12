@@ -225,16 +225,29 @@ export class TreeHyperService {
   }
 
   /**
-   * Determines if a node layer is visible based on displayed values.
+   * Determines whether the node layer is visible based on the displayed values.
    * @param displayedValues - The values that determine visibility.
    * @param n - The node to check.
    * @returns 'block' if the node layer is visible, otherwise 'none'.
    */
   static isNodeLayerVisible(displayedValues: ChartToggleValuesI[], n: N) {
-    if (!displayedValues) {
-      // Set layers visibles at init
+    if (!displayedValues || displayedValues.length === 0) {
+      // Set layers visible at init or when no display values configured yet
       return 'block';
     }
+
+    // For regression analysis, ensure we have valid display values
+    if (n.data.isRegressionAnalysis) {
+      // Check if displayedValues seems to have regression interval format
+      const hasValidRegressionValues = displayedValues.some(
+        (dv) => dv.name && (dv.name.includes('[') || dv.name.includes('I')),
+      );
+      if (!hasValidRegressionValues) {
+        // If displayedValues don't look like regression intervals, show all nodes
+        return 'block';
+      }
+    }
+
     const isVisible = TreeHyperService.filterVisibleNodes(n, displayedValues);
     if (isVisible) {
       return 'block';
