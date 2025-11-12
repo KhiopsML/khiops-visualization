@@ -440,7 +440,7 @@ export class TreePreparationDatasService {
           const rowData: any = {
             _id: currentNode.nodeId,
             nodeId: currentNode.nodeId,
-            values: JSON.stringify(displayValues),
+            values: '[' + displayValues.join(', ') + ']',
             frequencies: JSON.stringify(currentNode.targetValues.frequencies),
           };
           treeDetails.values?.push(rowData);
