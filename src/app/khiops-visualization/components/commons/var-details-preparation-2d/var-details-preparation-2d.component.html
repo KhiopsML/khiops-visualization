@@ -94,12 +94,14 @@
     </as-split>
   </as-split-area>
 </as-split>
-<kl-no-data
-  fxFlexFill
+<div
+  class="kl-card"
+  fxFlex
   *ngIf="
     (preparation2dDatas?.selectedVariable &&
       preparation2dDatas?.selectedVariable?.noCorrelation) ||
     !preparation2dDatas?.selectedVariable
   "
 >
-</kl-no-data>
+  <kl-no-data fxFlexFill> </kl-no-data>
+</div>
