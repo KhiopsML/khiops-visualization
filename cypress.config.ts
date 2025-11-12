@@ -1,8 +1,22 @@
+// @ts-nocheck
+
 import { defineConfig } from 'cypress';
 
 export default defineConfig({
   e2e: {
     baseUrl: 'http://localhost:4200/',
+    setupNodeEvents(on, config) {
+      on('before:browser:launch', (browser = {}, launchOptions) => {
+        if (browser.family === 'chromium' || browser.name === 'chrome') {
+          launchOptions.args.push('--no-sandbox');
+          launchOptions.args.push('--disable-setuid-sandbox');
+          launchOptions.args.push('--disable-dev-shm-usage');
+          launchOptions.args.push('--disable-gpu');
+        }
+        return launchOptions;
+      });
+      return config;
+    },
   },
   env: {
     CYPRESS_TEST: true,
@@ -11,7 +25,7 @@ export default defineConfig({
   includeShadowDom: true,
   chromeWebSecurity: false,
   watchForFileChanges: true,
-  viewportWidth: 3000, // important to have big screen to prevent hidden texts
+  viewportWidth: 3000,
   viewportHeight: 1500,
   component: {
     devServer: {
@@ -19,5 +33,17 @@ export default defineConfig({
       bundler: 'webpack',
     },
     specPattern: 'cypress/**/*.cy.ts',
+    setupNodeEvents(on, config) {
+      on('before:browser:launch', (browser = {}, launchOptions) => {
+        if (browser.family === 'chromium') {
+          launchOptions.args.push('--no-sandbox');
+          launchOptions.args.push('--disable-setuid-sandbox');
+          launchOptions.args.push('--disable-dev-shm-usage');
+          launchOptions.args.push('--disable-gpu');
+        }
+        return launchOptions;
+      });
+      return config;
+    },
   },
 });
