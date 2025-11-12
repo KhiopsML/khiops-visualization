@@ -45,6 +45,10 @@ describe('Test Plan for Khiops Covisualization', () => {
       const res = expectedResults[fileIndex];
 
       cy.readFile('./src/assets/mocks/kc/' + fileName).then((datas) => {
+        // if current file extension is .khcj, we need to parse it into json
+        if (fileName.endsWith('.khcj')) {
+          datas = JSON.parse(datas);
+        }
         cy.wait(500);
 
         // Move to the first matrix cell

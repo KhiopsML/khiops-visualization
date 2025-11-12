@@ -16,6 +16,7 @@ import { setupTreePreparationTests } from 'cypress/setups/tree-preparation-tests
 describe('Test Khiops Visualization sample files', () => {
   const files = [
     '000_000_10000words_AllReports.json',
+    'AnalysisResults-IrisRegressionWithTree.khj',
     'CoronaWords100000_AllReports.V11.json',
     'NGrams10_AnalysisResults.json',
     'NGrams100_AnalysisResults.json',
@@ -81,6 +82,11 @@ describe('Test Khiops Visualization sample files', () => {
       cy.loadFile('visualization', fileName);
 
       cy.readFile('./src/assets/mocks/kv/' + fileName).then((datas) => {
+        // if current file extension is .khj, we need to parse it into json
+        if (fileName.endsWith('.khj')) {
+          datas = JSON.parse(datas);
+        }
+
         const testView = [];
         const testsValues = initTestValues();
         if (datas.preparationReport) {

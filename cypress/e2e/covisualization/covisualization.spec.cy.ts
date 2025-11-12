@@ -54,6 +54,10 @@ describe('Test Khiops Covisualization sample files', () => {
       cy.loadFile('covisualization', fileName);
 
       cy.readFile('./src/assets/mocks/kc/' + fileName).then((datas) => {
+        // if current file extension is .khcj, we need to parse it into json
+        if (fileName.endsWith('.khcj')) {
+          datas = JSON.parse(datas);
+        }
         const testsValues = {
           Axis: [],
           Context: [],
