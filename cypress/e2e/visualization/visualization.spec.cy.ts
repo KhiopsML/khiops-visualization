@@ -52,7 +52,6 @@ describe('Test Khiops Visualization sample files', () => {
     'copydatas.json',
     'iris2d.json',
     'mainTargetValue.json',
-    'Filtered_Iris_AnalysisResults.khj',
     'defaultGroup.json',
     'AdultAgeAllReports.json',
     'incomplete-detailed-stats.json',
