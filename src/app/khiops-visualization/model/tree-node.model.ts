@@ -41,7 +41,8 @@ export class TreeNodeModel implements TreeChildNode {
 
     this.id = object.nodeId || undefined;
     this._id = this.id;
-    this.isLeaf = object.childNodes ? false : true;
+    // A leaf node has no childNodes, or has targetValues (regression case)
+    this.isLeaf = !object.childNodes || (!!object.targetValues && !object.childNodes);
     this.color = treePreparationDatas?.treeColorsMap[this.id || ''] || '#999'; // for folders : grey
 
     this.isTrusted = isTrusted || false;

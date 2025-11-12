@@ -294,17 +294,23 @@ export class DistributionDatasService {
    */
   initTargetDistributionDisplayedValues(partition: string[] | number[][]) {
     // init graph option to show all values if not already set
-    if (
-      JSON.stringify(
-        this.distributionDatas.targetDistributionDisplayedValues?.map(
-          (e) => e.name,
-        ),
-      ) !== JSON.stringify(partition?.map((e) => e.toString()))
-    ) {
+    const formatLabel = (item: any) => {
+      return Array.isArray(item) && item.length === 2
+        ? `[${item[0]}, ${item[1]}]` // Regression case
+        : item?.toString() || '';
+    };
+
+    const currentNames =
+      this.distributionDatas.targetDistributionDisplayedValues?.map(
+        (e) => e.name,
+      );
+    const partitionNames = partition?.map(formatLabel);
+
+    if (JSON.stringify(currentNames) !== JSON.stringify(partitionNames)) {
       this.distributionDatas.targetDistributionDisplayedValues = [];
       for (let l = 0; l < partition.length; l++) {
         this.distributionDatas.targetDistributionDisplayedValues?.push({
-          name: partition[l]?.toString() || '',
+          name: formatLabel(partition[l]),
           show: true,
         });
       }
@@ -344,9 +350,12 @@ export class DistributionDatasService {
 
       for (let k = 0; k < dimensionLength; k++) {
         const currentPartition = partition[k];
-        const currentDataSet = new ChartDatasetModel(
-          currentPartition?.toString() || '',
-        );
+        // Format interval labels for regression: [1, 2.4] instead of "1,2.4"
+        const label =
+          Array.isArray(currentPartition) && currentPartition.length === 2
+            ? `[${currentPartition[0]}, ${currentPartition[1]}]` // Regression case
+            : currentPartition?.toString() || '';
+        const currentDataSet = new ChartDatasetModel(label);
         targetDistributionGraphDatas.datasets.push(currentDataSet);
 
         let l: number = currentXAxis.length;
@@ -366,9 +375,13 @@ export class DistributionDatasService {
           const currentTotal = UtilsService.arraySum(el);
 
           // if currentPartition must be displayed (graph options)
+          const partitionLabel =
+            Array.isArray(currentPartition) && currentPartition.length === 2
+              ? `[${currentPartition[0]}, ${currentPartition[1]}]` // Regression case
+              : currentPartition?.toString() || '';
           const kObj: ChartToggleValuesI | undefined =
             this.distributionDatas.targetDistributionDisplayedValues?.find(
-              (e) => e.name === currentPartition?.toString(),
+              (e) => e.name === partitionLabel,
             );
 
           if (kObj?.show) {

@@ -28,6 +28,7 @@ import { VariableDetail } from '@khiops-visualization/interfaces/app-datas';
 import { Observable, take } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { selectedNodesSelector } from '@khiops-visualization/selectors/tree-preparation.selector';
+import { TASKS } from '@khiops-library/enum/tasks';
 
 @Injectable({
   providedIn: 'root',
@@ -351,6 +352,53 @@ export class TreePreparationDatasService {
   }
 
   /**
+   * Converts regression target interval IDs (I0, I1, I2...) to actual interval values.
+   * @param {string[]} intervalIds - Array of interval IDs like ["I0", "I1"]
+   * @returns {string[]} Array of formatted interval strings
+   */
+  convertIntervalIdsToValues(intervalIds: string[]): string[] {
+    if (!this.treePreparationDatas?.isRegressionAnalysis) {
+      return intervalIds; // Return as-is for classification
+    }
+
+    const treeDatas =
+      this.appService.appDatas?.treePreparationReport?.treeDetails;
+    const currentRank = this.getSelectedVariableRank();
+
+    if (!currentRank || !treeDatas?.[currentRank]?.targetPartition) {
+      return intervalIds; // Return as-is if no target partition found
+    }
+
+    const targetPartition = treeDatas[currentRank].targetPartition;
+    const intervals = targetPartition.partition;
+
+    return intervalIds.map((id) => {
+      // Extract index from ID (I0 -> 0, I1 -> 1, etc.)
+      const match = id.match(/I(\d+)/);
+      if (match && match[1] && intervals) {
+        const index = parseInt(match[1]);
+        const interval = intervals[index];
+        if (interval && interval.length === 2) {
+          return `[${interval[0]}, ${interval[1]}]`;
+        }
+      }
+      return id; // Return original if conversion fails
+    });
+  }
+
+  /**
+   * Gets formatted target values for display (converts I0, I1... to intervals in regression).
+   * @param {TreeNodeModel} node - The tree node
+   * @returns {string[]} Array of formatted target values
+   */
+  getFormattedTargetValues(node: TreeNodeModel): string[] {
+    if (!node?.targetValues?.values) {
+      return [];
+    }
+    return this.convertIntervalIdsToValues(node.targetValues.values);
+  }
+
+  /**
    * Retrieves the details of the selected tree nodes.
    * Constructs a grid data object containing the node ID, values, and frequencies.
    * @returns {GridDatasI} The grid data object containing the details of the selected tree nodes.
@@ -385,10 +433,14 @@ export class TreePreparationDatasService {
         const currentNode = selectedNodes[i];
         if (currentNode?.isLeaf) {
           // it's a leaf
+          const displayValues = this.treePreparationDatas?.isRegressionAnalysis // Regression case
+            ? this.convertIntervalIdsToValues(currentNode.targetValues.values)
+            : currentNode.targetValues.values;
+
           const rowData: any = {
             _id: currentNode.nodeId,
             nodeId: currentNode.nodeId,
-            values: JSON.stringify(currentNode.targetValues.values),
+            values: JSON.stringify(displayValues),
             frequencies: JSON.stringify(currentNode.targetValues.frequencies),
           };
           treeDetails.values?.push(rowData);
@@ -519,7 +571,8 @@ export class TreePreparationDatasService {
     if (!this.treePreparationDatas) return;
     const appDatas = this.appService.appDatas;
     this.treePreparationDatas.isRegressionAnalysis =
-      appDatas?.treePreparationReport?.summary?.learningTask === 'Regression';
+      appDatas?.treePreparationReport?.summary?.learningTask ===
+      TASKS.REGRESSION;
     if (
       this.treePreparationDatas.isRegressionAnalysis &&
       this.treePreparationDatas.selectedVariable
