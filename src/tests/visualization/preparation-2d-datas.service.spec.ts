@@ -117,12 +117,53 @@ describe('Visualization', () => {
       preparation2dDatasService.setSelectedCellIndex(0);
       const currentCellDatas = preparation2dDatasService.getCurrentCellDatas();
 
+      // Check that interval and frequency columns are present for numerical variables
       expect(currentCellDatas?.displayedColumns[0]![0]!.field).toEqual(
         'interval',
       );
+      expect(currentCellDatas?.displayedColumns[0]![1]!.field).toEqual(
+        'frequency',
+      );
 
-      expect(currentCellDatas?.values[0]![0]!.interval).toEqual(2);
-      expect(currentCellDatas?.values[0]![1]!.interval).toEqual(3.05);
+      // Check that interval values are formatted as [min,max] for numerical variables
+      expect(currentCellDatas?.values[0]![0]!.interval).toEqual('[2,3.05]');
+      expect(currentCellDatas?.values[0]![0]!.frequency).toEqual(37);
+    });
+
+    it('getCurrentCellDatas should return valid datas [adult-bivar, R01]', () => {
+      const fileDatas = require('../../assets/mocks/kv/adult-bivar.json');
+      appService.setFileDatas(fileDatas);
+      preparation2dDatasService.initialize();
+      const selectedVariable = preparation2dDatasService.setSelectedVariable(
+        'capital_loss',
+        'native_country',
+      );
+      preparation2dDatasService.getMatrixDatas(selectedVariable!);
+      preparation2dDatasService.setSelectedCellIndex(0);
+      let currentCellDatas = preparation2dDatasService.getCurrentCellDatas();
+
+      // Check that interval and frequency columns are present for numerical variables
+      expect(currentCellDatas?.displayedColumns[0]![0]!.field).toEqual(
+        'interval',
+      );
+      expect(currentCellDatas?.displayedColumns[0]![1]!.field).toEqual(
+        'frequency',
+      );
+
+      // Check that interval values are formatted as [min,max] for numerical variables
+      expect(currentCellDatas?.values[0]![0]!.interval).toEqual('[0,70]');
+      expect(currentCellDatas?.values[0]![0]!.frequency).toEqual(31158);
+
+      // Check categorical values
+      expect(currentCellDatas?.values[1][0].values).toEqual('United-States');
+      expect(currentCellDatas?.values[1][0].frequency).toEqual(31267);
+      expect(currentCellDatas?.values[1][1].values).toEqual('Philippines');
+      expect(currentCellDatas?.values[1][1].frequency).toEqual(203);
+
+      preparation2dDatasService.setSelectedCellIndex(1);
+      currentCellDatas = preparation2dDatasService.getCurrentCellDatas();
+      expect(currentCellDatas?.values[0]![0]!.interval).toEqual('[70,1457]');
+      expect(currentCellDatas?.values[0]![0]!.frequency).toEqual(92);
     });
 
     it('getGlobalMinAndMax2dValues should return valid datas [co-oc, R1]', () => {

@@ -406,6 +406,10 @@ export class Preparation2dDatasService {
             headerName: this.translate.get('GLOBAL.INTERVAL_OF') + xName,
             field: 'interval',
           });
+          displayedColumnsX.push({
+            headerName: this.translate.get('GLOBAL.FREQUENCY'),
+            field: 'frequency',
+          });
         } else {
           displayedColumnsX.push({
             headerName: this.translate.get('GLOBAL.VALUES_OF') + xName,
@@ -420,6 +424,10 @@ export class Preparation2dDatasService {
           displayedColumnsY.push({
             headerName: this.translate.get('GLOBAL.INTERVAL_OF') + yName,
             field: 'interval',
+          });
+          displayedColumnsY.push({
+            headerName: this.translate.get('GLOBAL.FREQUENCY'),
+            field: 'frequency',
           });
         } else {
           displayedColumnsY.push({
@@ -450,12 +458,14 @@ export class Preparation2dDatasService {
           displayedColumnsX,
           xName,
           isCurrentDefaultGroup,
+          xType,
         );
         const datasY = this.computeCellDatasByAxis(
           selectedCell.yaxisPartValues || [],
           displayedColumnsY,
           yName,
           isCurrentDefaultGroup,
+          yType,
         );
         if (this.preparation2dDatas?.currentCellDatas) {
           this.preparation2dDatas.currentCellDatas.values = [datasX, datasY];
@@ -466,38 +476,59 @@ export class Preparation2dDatasService {
         }
       }
     }
-
     return this.preparation2dDatas?.currentCellDatas;
   }
 
   /**
    * Compute cell data for a given axis and formats it for display.
-   * @param type - The type of the axis (e.g., numerical or categorical).
    * @param axisPartValues - The values of the axis parts.
-   * @param displayaxisPart - The display value of the axis part.
+   * @param displayedColumns - The columns to display.
    * @param variableName - The name of the variable.
    * @param isCurrentDefaultGroup - True if the current group is the default group, otherwise false.
+   * @param variableType - The type of the variable (numerical or categorical).
    */
   computeCellDatasByAxis(
     axisPartValues: number[] | string,
     displayedColumns: GridColumnsI[],
     variableName: string,
     isCurrentDefaultGroup: boolean,
+    variableType?: string,
   ) {
     const datasAxis: any = [];
     if (axisPartValues) {
-      for (let k = 0; k < axisPartValues.length; k++) {
-        // get value into global json
-        datasAxis[k] = {};
+      if (
+        variableType === TYPES.NUMERICAL &&
+        Array.isArray(axisPartValues) &&
+        axisPartValues.length === 2
+      ) {
+        // For numerical variables, group min and max bounds on a single line
+        datasAxis[0] = {};
         if (displayedColumns[0]?.field) {
-          datasAxis[k][displayedColumns[0].field] = axisPartValues[k];
+          // Format as [min, max] like in Preparation tab
+          datasAxis[0][displayedColumns[0].field] =
+            JSON.stringify(axisPartValues);
         }
-        if (displayedColumns[1]) {
-          const modalityFreq = this.getModalityFrequency(
-            variableName,
-            axisPartValues[k]?.toString() || '',
-          );
-          datasAxis[k][displayedColumns[1].field] = modalityFreq;
+        if (displayedColumns[1]?.field === 'frequency') {
+          // For numerical variables, we need to get the frequency from the cell data
+          // This will be calculated from the selected cell's frequency
+          datasAxis[0][displayedColumns[1].field] =
+            this.getSelectedCell()?.cellFreq;
+        }
+      } else {
+        // For categorical variables or other cases, keep the original behavior
+        for (let k = 0; k < axisPartValues.length; k++) {
+          // get value into global json
+          datasAxis[k] = {};
+          if (displayedColumns[0]?.field) {
+            datasAxis[k][displayedColumns[0].field] = axisPartValues[k];
+          }
+          if (displayedColumns[1]) {
+            const modalityFreq = this.getModalityFrequency(
+              variableName,
+              axisPartValues[k]?.toString() || '',
+            );
+            datasAxis[k][displayedColumns[1].field] = modalityFreq;
+          }
         }
       }
       if (isCurrentDefaultGroup) {
