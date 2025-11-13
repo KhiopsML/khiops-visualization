@@ -152,14 +152,6 @@ Run e2e tests with Cypress:
 yarn e2e
 ```
 
-### Test Coverage
-
-Generate and view test results:
-
-```bash
-yarn test
-```
-
 ### Bundle Compilation
 
 ```powershell
