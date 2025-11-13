@@ -281,10 +281,15 @@ button.mdc-icon-button {
   * Angular 19 Material styles Migration
   */
 
-.mat-mdc-tooltip {
-  font-size: 12px !important;
+.mat-mdc-tooltip,
+.mat-mdc-tooltip .mdc-tooltip__surface {
+  font-size: 11px !important;
+  font-weight: 100 !important;
   background: var(--bg-tooltip) !important;
-  color: var(--bg-color) !important;
+  color: var(--color-tooltip) !important;
+  font-style: normal !important;
+  border-radius: 0 !important;
+  border: 1px solid var(--color-tooltip) !important;
 }
 
 .mat-mdc-menu-content {

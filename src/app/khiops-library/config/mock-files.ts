@@ -9,7 +9,7 @@
  * To change the default file, uncomment the desired line and comment the current active one.
  */
 export function getVisualizationMockFile(): string {
-  let urlKV = 'ALLREPORTS_Std_Iris_AnalysisResults.khj';
+  // let urlKV = 'ALLREPORTS_Std_Iris_AnalysisResults.khj';
   // let urlKV = 'AnalysisResults-IrisRegressionWithTree.khj';
   // let urlKV = 'new-hyper-tree.json';
   // let urlKV = 'NGrams10_AnalysisResults.json';
@@ -71,7 +71,7 @@ export function getVisualizationMockFile(): string {
   // let urlKV = 'CriteoAnalysisResults.khj';
   // let urlKV = 'Words100_AllReports.json';
   // let urlKV = 'UnivariateAnalysisResults.json';
-  // let urlKV = 'ylogAdultAllReports.json';
+  let urlKV = 'ylogAdultAllReports.json';
   // let urlKV = 'AdversePairAnalysisResults.Bug.khj';
   // let urlKV = 'AdversePairAnalysisResults.NoSNB.khj';
   // let urlKV = 'AdversePairAnalysisResults.Corrected.khj';
@@ -107,7 +107,7 @@ export function getCoviszalizationMockFile(): string {
   // let urlKC = '8-TS4624User_Coclustering.json';
   // let urlKC = 'IV-AdultEducation.json';
   // let urlKC = 'Coclustering-IVAdultEducation.json';
-  // let urlKC = 'Coclustering-IV-Glass.khcj';
+  let urlKC = 'Coclustering-IV-Glass.khcj';
   // let urlKC = 'Coclustering-IV-Iris.khcj';
   // let urlKC = 'Coclustering-IV-Pima.khcj';
   // let urlKC = 'Coclustering_NewSeparator.khcj';
@@ -126,7 +126,7 @@ export function getCoviszalizationMockFile(): string {
   // let urlKC = 'ext-CC_Coclustering.json';
   // let urlKC = 'ext-datas_Coclustering.json';
   // let urlKC = 'ext-CC_Coclustering.json';
-  let urlKC = 'CC_3_Coclustering.json';
+  // let urlKC = 'CC_3_Coclustering.json';
 
   return urlKC;
 }

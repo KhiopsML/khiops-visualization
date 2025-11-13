@@ -100,14 +100,5 @@
 ::ng-deep .tooltip-container {
   .tooltip {
     display: none;
-    position: absolute;
-    top: 0;
-    left: 0;
-    padding: 10px;
-    border-radius: 5px;
-    font-family: Arial, Helvetica, sans-serif;
-    font-size: 13px;
-    background-color: rgba(0, 0, 0, 0.7);
-    color: white;
   }
 }

@@ -29,8 +29,8 @@ import { Component, Input } from '@angular/core';
         font-weight: 200;
         z-index: 2;
         padding: 0 10px;
-        border-radius: 5px;
-        font-size: 0.8rem;
+        border-radius: 0px;
+        font-size: 12px;
         min-width: 140px;
         pointer-events: none;
         p {
