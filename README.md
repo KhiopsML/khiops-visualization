@@ -144,6 +144,18 @@ Run unit tests with Karma:
 yarn test
 ```
 
+Run unit tests with watch:
+
+```bash
+yarn test:watch
+```
+
+Run single test
+
+```bash
+yarn test:watch --include="**/preparation-2d-datas.service.spec.ts"
+```
+
 ### End-to-End Tests
 
 Run e2e tests with Cypress:
