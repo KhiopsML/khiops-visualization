@@ -296,8 +296,6 @@ export class PreparationDatasService {
             );
             if (index !== 0) {
               // replace [ by ] for all indexes excepting 0
-              // currentPartition = currentPartition.replace('[', ']');
-              // Code scanning alerts #3
               currentPartition = currentPartition.replace(/\[/g, ']');
             }
             datas[0]['interval'] = currentPartition;
