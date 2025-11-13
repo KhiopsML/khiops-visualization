@@ -262,6 +262,10 @@ export class PreparationDatasService {
               variableDetails.dataGrid.dimensions[0]?.variable,
             field: 'interval',
           });
+          displayedColumns.push({
+            headerName: this.translate.get('GLOBAL.FREQUENCY'),
+            field: 'frequency',
+          });
 
           // init datas array
           datas[0] = {};
@@ -302,6 +306,30 @@ export class PreparationDatasService {
           } else {
             datas[0]['interval'] = this.translate.get('GLOBAL.MISSING');
           }
+
+          // Add frequency data for numerical variables
+          let frequency = 0;
+          if (
+            variableDetails.dataGrid.frequencies &&
+            variableDetails.dataGrid.frequencies[index] !== undefined
+          ) {
+            // Use frequencies if available (unsupervised case)
+            frequency = variableDetails.dataGrid.frequencies[index] || 0;
+          } else if (
+            variableDetails.dataGrid.partTargetFrequencies &&
+            variableDetails.dataGrid.partTargetFrequencies[index]
+          ) {
+            // Sum frequencies across all target classes for supervised case
+            const targetFreqs =
+              variableDetails.dataGrid.partTargetFrequencies[index];
+            if (targetFreqs) {
+              frequency = targetFreqs.reduce(
+                (sum: number, freq: number) => sum + freq,
+                0,
+              );
+            }
+          }
+          datas[0]['frequency'] = frequency;
 
           title = this.translate.get('GLOBAL.CURRENT_INTERVAL');
         } else if (currentVariableType === TYPES.CATEGORICAL) {

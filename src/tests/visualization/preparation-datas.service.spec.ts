@@ -179,6 +179,7 @@ describe('Visualization', () => {
         values: [
           {
             interval: '[0.0002370088478,0.3074067]',
+            frequency: 799804,
           },
         ],
         displayedColumns: [
@@ -186,6 +187,10 @@ describe('Visualization', () => {
             headerName:
               'GLOBAL.INTERVAL_OFMean(LLFields.missing energy magnitude)',
             field: 'interval',
+          },
+          {
+            headerName: 'GLOBAL.FREQUENCY',
+            field: 'frequency',
           },
         ],
       };
@@ -212,6 +217,7 @@ describe('Visualization', () => {
         values: [
           {
             interval: ']2.049679,2.23972]',
+            frequency: 94851,
           },
         ],
         displayedColumns: [
@@ -219,6 +225,10 @@ describe('Visualization', () => {
             headerName:
               'GLOBAL.INTERVAL_OFMean(LLFields.missing energy magnitude) where jet 2 pt > 0.8902',
             field: 'interval',
+          },
+          {
+            headerName: 'GLOBAL.FREQUENCY',
+            field: 'frequency',
           },
         ],
       };
@@ -322,12 +332,17 @@ describe('Visualization', () => {
         values: [
           {
             interval: ']24.5,31.5]',
+            frequency: 8686,
           },
         ],
         displayedColumns: [
           {
             headerName: 'GLOBAL.INTERVAL_OFage',
             field: 'interval',
+          },
+          {
+            headerName: 'GLOBAL.FREQUENCY',
+            field: 'frequency',
           },
         ],
       };
