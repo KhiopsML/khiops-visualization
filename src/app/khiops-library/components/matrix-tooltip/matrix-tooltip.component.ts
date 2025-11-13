@@ -31,7 +31,6 @@ export class MatrixTooltipComponent implements OnChanges {
   };
   @ViewChild('matrixTooltipDiv')
   private matrixTooltipDiv?: ElementRef<HTMLElement>;
-
   ngOnChanges(changes: SimpleChanges) {
     if (
       this.matrixTooltipDiv?.nativeElement &&
@@ -47,11 +46,13 @@ export class MatrixTooltipComponent implements OnChanges {
       this.matrixTooltipDiv.nativeElement.style.top =
         this.position!.y - 100 + 'px';
     }
+
+    // Simple visibility toggle with CSS fade animation
     if (this.matrixTooltipDiv?.nativeElement && changes.cell) {
       if (changes.cell.currentValue) {
-        this.matrixTooltipDiv.nativeElement.style.visibility = 'visible';
+        this.matrixTooltipDiv.nativeElement.classList.add('visible');
       } else {
-        this.matrixTooltipDiv.nativeElement.style.visibility = 'hidden';
+        this.matrixTooltipDiv.nativeElement.classList.remove('visible');
       }
     }
   }
