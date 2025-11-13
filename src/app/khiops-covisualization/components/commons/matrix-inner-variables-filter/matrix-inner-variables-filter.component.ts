@@ -56,6 +56,9 @@ export class MatrixInnerVariablesFilterComponent implements OnInit, OnChanges {
    * Initializes the inner variables from the selected dimensions
    */
   private initializeInnerVariables() {
+    // Store previous selection to preserve it across dimension changes
+    const previousSelection = [...this.selectedInnerVariables];
+
     this.innerVariables = [];
     this.selectedInnerVariables = [];
     this.showInnerVariablesSelect = false;
@@ -67,8 +70,18 @@ export class MatrixInnerVariablesFilterComponent implements OnInit, OnChanges {
           this.innerVariables = dimension.innerVariables.dimensionSummaries.map(
             (dim) => dim.name,
           );
-          // By default, select all inner variables
-          this.selectedInnerVariables = [...this.innerVariables];
+
+          if (previousSelection.length > 0) {
+            this.selectedInnerVariables = previousSelection.filter((variable) =>
+              this.innerVariables.includes(variable),
+            );
+          }
+
+          // Fallback: If no valid selection, select all inner variables
+          if (this.selectedInnerVariables.length === 0) {
+            this.selectedInnerVariables = [...this.innerVariables];
+          }
+
           this.showInnerVariablesSelect = this.innerVariables.length > 0;
           break; // Use the first dimension with inner variables
         }
