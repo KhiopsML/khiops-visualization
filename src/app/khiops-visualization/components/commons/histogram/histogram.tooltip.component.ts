@@ -4,7 +4,7 @@
  * at https://spdx.org/licenses/BSD-3-Clause-Clear.html or see the "LICENSE" file for more details.
  */
 
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnChanges, OnDestroy } from '@angular/core';
 
 @Component({
   selector: 'app-histogram-tooltip',
@@ -15,7 +15,8 @@ import { Component, Input } from '@angular/core';
         'top.px': this.computeYPos(),
       }"
       class="tooltip"
-      [style.display]="display ? 'block' : 'none'"
+      [class.visible]="display"
+      *ngIf="shouldShow"
     >
       <p class="title" [innerHTML]="title" *ngIf="title"></p>
       <p [innerHTML]="body" *ngIf="body"></p>
@@ -33,9 +34,15 @@ import { Component, Input } from '@angular/core';
         font-size: 12px;
         min-width: 140px;
         pointer-events: none;
+        opacity: 0;
+        transition: opacity 250ms cubic-bezier(0.25, 0.46, 0.45, 0.94) 100ms;
         p {
           color: #fff;
         }
+      }
+      .tooltip.visible {
+        opacity: 1;
+        transition: opacity 250ms cubic-bezier(0.25, 0.46, 0.45, 0.94) 0ms;
       }
       .title {
         font-weight: bold;
@@ -45,13 +52,18 @@ import { Component, Input } from '@angular/core';
   ],
   standalone: false,
 })
-export class HistogramTooltipComponent {
+export class HistogramTooltipComponent implements OnChanges, OnDestroy {
   @Input() public title: string = '';
   @Input() public body: string = '';
   @Input() public display: boolean = false;
   @Input() private posX: number = 0;
   @Input() private posY: number = 0;
   @Input() private canvasW: number = 0;
+  private hideTimeout: any;
+
+  get shouldShow(): boolean {
+    return this.display || this.hideTimeout;
+  }
 
   computeYPos() {
     let top = this.posY - 0;
@@ -70,5 +82,25 @@ export class HistogramTooltipComponent {
       left = this.posX - 200;
     }
     return left;
+  }
+
+  ngOnChanges() {
+    if (this.hideTimeout) {
+      clearTimeout(this.hideTimeout);
+      this.hideTimeout = null;
+    }
+
+    if (!this.display) {
+      // Délai pour laisser l'animation de fade out se terminer
+      this.hideTimeout = setTimeout(() => {
+        this.hideTimeout = null;
+      }, 250);
+    }
+  }
+
+  ngOnDestroy() {
+    if (this.hideTimeout) {
+      clearTimeout(this.hideTimeout);
+    }
   }
 }

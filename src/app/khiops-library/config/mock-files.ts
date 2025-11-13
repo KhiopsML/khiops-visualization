@@ -9,7 +9,7 @@
  * To change the default file, uncomment the desired line and comment the current active one.
  */
 export function getVisualizationMockFile(): string {
-  // let urlKV = 'ALLREPORTS_Std_Iris_AnalysisResults.khj';
+  let urlKV = 'ALLREPORTS_Std_Iris_AnalysisResults.khj';
   // let urlKV = 'AnalysisResults-IrisRegressionWithTree.khj';
   // let urlKV = 'new-hyper-tree.json';
   // let urlKV = 'NGrams10_AnalysisResults.json';
@@ -71,7 +71,7 @@ export function getVisualizationMockFile(): string {
   // let urlKV = 'CriteoAnalysisResults.khj';
   // let urlKV = 'Words100_AllReports.json';
   // let urlKV = 'UnivariateAnalysisResults.json';
-  let urlKV = 'ylogAdultAllReports.json';
+  // let urlKV = 'ylogAdultAllReports.json';
   // let urlKV = 'AdversePairAnalysisResults.Bug.khj';
   // let urlKV = 'AdversePairAnalysisResults.NoSNB.khj';
   // let urlKV = 'AdversePairAnalysisResults.Corrected.khj';
