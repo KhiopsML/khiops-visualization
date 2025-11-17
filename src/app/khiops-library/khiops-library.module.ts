@@ -75,7 +75,6 @@ import { ZoomToolsComponent } from './components/zoom-tools/zoom-tools.component
 import { AngularSplitModule } from 'angular-split';
 import { NpmVersionComponent } from './components/npm-version/npm-version.component';
 import { ClearLsComponent } from './components/clear-ls/clear-ls.component';
-import { CookieConsentComponent } from './components/cookie-consent/cookie-consent.component';
 import { MatrixContrastSettingComponent } from './components/matrix-contrast-setting/matrix-contrast-setting.component';
 import { NumberPrecisionComponent } from './components/number-precision/number-precision.component';
 import { ScalePersistenceSettingComponent } from './components/scale-persistence-setting/scale-persistence-setting.component';
@@ -124,7 +123,6 @@ import { MenuFocusSelectedDirective } from './directives/menu-focus-selected.dir
   declarations: [
     NumberPrecisionComponent,
     MatrixContrastSettingComponent,
-    CookieConsentComponent,
     ScalePersistenceSettingComponent,
     ClearLsComponent,
     NpmVersionComponent,
@@ -167,7 +165,6 @@ import { MenuFocusSelectedDirective } from './directives/menu-focus-selected.dir
   exports: [
     NumberPrecisionComponent,
     MatrixContrastSettingComponent,
-    CookieConsentComponent,
     ScalePersistenceSettingComponent,
     ClearLsComponent,
     NpmVersionComponent,

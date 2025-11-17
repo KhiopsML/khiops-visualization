@@ -30,7 +30,6 @@ export class UserSettingsComponent implements OnChanges {
   @Input() opened: boolean = false;
 
   public numberPrecision?: number;
-  public allowCookies: boolean = false;
   public contrastValue: number =
     AppConfig.covisualizationCommon.GLOBAL.MATRIX_CONTRAST;
 
@@ -64,10 +63,6 @@ export class UserSettingsComponent implements OnChanges {
       AppConfig.covisualizationCommon.GLOBAL.MATRIX_CONTRAST;
     AppService.Ls.set(LS.SETTING_MATRIX_CONTRAST, this.contrastValue);
     AppConfig.covisualizationCommon.GLOBAL.MATRIX_CONTRAST = this.contrastValue;
-
-    // Allow cookies
-    this.allowCookies =
-      AppService.Ls.get(LS.COOKIE_CONSENT).toString() === 'true' || false;
   }
 
   onClickOnCancel() {
@@ -83,8 +78,6 @@ export class UserSettingsComponent implements OnChanges {
 
     AppService.Ls.set(LS.SETTING_MATRIX_CONTRAST, this.contrastValue);
     AppConfig.covisualizationCommon.GLOBAL.MATRIX_CONTRAST = this.contrastValue;
-
-    AppService.Ls.set(LS.COOKIE_CONSENT, this.allowCookies);
 
     AppService.Ls.setAll();
 

@@ -93,277 +93,22 @@ describe('TrackerService', () => {
   });
 
   /**
-   * Test getCookieStatus method
-   */
-  describe('getCookieStatus', () => {
-    it('should return true when cookie consent is "true"', () => {
-      mockLsService.get.and.returnValue('true');
-
-      const result = service.getCookieStatus();
-
-      expect(result).toBe(true);
-      expect(mockLsService.get).toHaveBeenCalledWith(LS.COOKIE_CONSENT);
-    });
-
-    it('should return false when cookie consent is "false"', () => {
-      mockLsService.get.and.returnValue('false');
-
-      const result = service.getCookieStatus();
-
-      expect(result).toBe(false);
-      expect(mockLsService.get).toHaveBeenCalledWith(LS.COOKIE_CONSENT);
-    });
-
-    it('should return true when cookie consent is boolean true', () => {
-      mockLsService.get.and.returnValue(true);
-
-      const result = service.getCookieStatus();
-
-      expect(result).toBe(true);
-      expect(mockLsService.get).toHaveBeenCalledWith(LS.COOKIE_CONSENT);
-    });
-
-    it('should return false when cookie consent is boolean false', () => {
-      mockLsService.get.and.returnValue(false);
-
-      const result = service.getCookieStatus();
-
-      expect(result).toBe(false);
-      expect(mockLsService.get).toHaveBeenCalledWith(LS.COOKIE_CONSENT);
-    });
-
-    it('should return undefined when cookie consent is not set', () => {
-      mockLsService.get.and.returnValue(undefined);
-
-      const result = service.getCookieStatus();
-
-      expect(result).toBeUndefined();
-      expect(mockLsService.get).toHaveBeenCalledWith(LS.COOKIE_CONSENT);
-    });
-
-    it('should return undefined when cookie consent is null', () => {
-      mockLsService.get.and.returnValue(null);
-
-      expect(() => service.getCookieStatus()).toThrow();
-      expect(mockLsService.get).toHaveBeenCalledWith(LS.COOKIE_CONSENT);
-    });
-
-    it('should return false when cookie consent is empty string', () => {
-      mockLsService.get.and.returnValue('');
-
-      const result = service.getCookieStatus();
-
-      expect(result).toBe(false);
-      expect(mockLsService.get).toHaveBeenCalledWith(LS.COOKIE_CONSENT);
-    });
-
-    it('should return false when cookie consent is any other string', () => {
-      mockLsService.get.and.returnValue('maybe');
-
-      const result = service.getCookieStatus();
-
-      expect(result).toBe(false);
-      expect(mockLsService.get).toHaveBeenCalledWith(LS.COOKIE_CONSENT);
-    });
-  });
-
-  /**
    * Test initTracker method
    */
   describe('initTracker', () => {
-    it('should show cookie consent dialog when cookie status is undefined', () => {
-      mockLsService.get.and.returnValue(undefined);
-      spyOn(service, 'showCookieConsentDialog');
-
+    it('should enable cookieless tracking mode', () => {
       service.initTracker();
 
-      expect(service.showCookieConsentDialog).toHaveBeenCalled();
-      expect(mockConfig.onSendEvent).not.toHaveBeenCalled();
-    });
-
-    it('should send forgetConsentGiven event when user has refused cookies', () => {
-      mockLsService.get.and.returnValue('false');
-
-      service.initTracker();
-
+      expect(mockConfig.onSendEvent).toHaveBeenCalledTimes(1);
       expect(mockConfig.onSendEvent).toHaveBeenCalledWith({
-        message: 'forgetConsentGiven',
-      });
-    });
-
-    it('should send setConsentGiven event when user has accepted cookies', () => {
-      mockLsService.get.and.returnValue('true');
-
-      service.initTracker();
-
-      expect(mockConfig.onSendEvent).toHaveBeenCalledWith({
-        message: 'setConsentGiven',
-      });
-    });
-
-    it('should handle boolean false cookie status', () => {
-      mockLsService.get.and.returnValue(false);
-
-      service.initTracker();
-
-      expect(mockConfig.onSendEvent).toHaveBeenCalledWith({
-        message: 'forgetConsentGiven',
-      });
-    });
-
-    it('should handle boolean true cookie status', () => {
-      mockLsService.get.and.returnValue(true);
-
-      service.initTracker();
-
-      expect(mockConfig.onSendEvent).toHaveBeenCalledWith({
-        message: 'setConsentGiven',
+        message: 'requireCookieConsent',
       });
     });
 
     it('should not send events when onSendEvent is not available', () => {
       mockConfig.onSendEvent = undefined;
-      mockLsService.get.and.returnValue('true');
 
       expect(() => service.initTracker()).not.toThrow();
-    });
-  });
-
-  /**
-   * Test showCookieConsentDialog method
-   */
-  describe('showCookieConsentDialog', () => {
-    beforeEach(() => {
-      mockTranslateService.get.and.callFake((key: string) => {
-        const translations: any = {
-          'COOKIE_CONSENT.MESSAGE': 'We use cookies to improve your experience',
-          'COOKIE_CONSENT.ALLOW': 'Allow cookies',
-        };
-        return translations[key] || key;
-      });
-    });
-
-    it('should create and configure dialog correctly', () => {
-      service.showCookieConsentDialog();
-
-      expect(mockNgZone.run).toHaveBeenCalled();
-      expect(mockDialogRef2.closeAll).toHaveBeenCalled();
-      expect(mockDialog.open).toHaveBeenCalledWith(
-        jasmine.any(Function),
-        jasmine.objectContaining({
-          width: '400px',
-          hasBackdrop: false,
-          disableClose: false,
-        }),
-      );
-    });
-
-    it('should position dialog at bottom right', () => {
-      service.showCookieConsentDialog();
-
-      expect(mockDialogRef.updatePosition).toHaveBeenCalledWith({
-        bottom: '50px',
-        right: '50px',
-      });
-    });
-
-    it('should configure dialog component properties', () => {
-      service.showCookieConsentDialog();
-
-      expect(mockDialogRef.componentInstance.message).toBe(
-        'We use cookies to improve your experience',
-      );
-      expect(mockDialogRef.componentInstance.displayRejectBtn).toBe(true);
-      expect(mockDialogRef.componentInstance.displayCancelBtn).toBe(false);
-      expect(mockDialogRef.componentInstance.confirmTranslation).toBe(
-        'Allow cookies',
-      );
-      expect(mockTranslateService.get).toHaveBeenCalledWith(
-        'COOKIE_CONSENT.MESSAGE',
-      );
-      expect(mockTranslateService.get).toHaveBeenCalledWith(
-        'COOKIE_CONSENT.ALLOW',
-      );
-    });
-
-    it('should handle confirm dialog result correctly', () => {
-      mockDialogRef.afterClosed.and.returnValue(of('confirm'));
-      spyOn(service, 'trackEvent');
-
-      service.showCookieConsentDialog();
-
-      expect(mockLsService.set).toHaveBeenCalledWith(LS.COOKIE_CONSENT, 'true');
-      expect(service.trackEvent).toHaveBeenCalledWith('cookie_consent', 'true');
-      expect(mockConfig.onSendEvent).toHaveBeenCalledWith({
-        message: 'setConsentGiven',
-      });
-    });
-
-    it('should handle reject dialog result correctly', () => {
-      mockDialogRef.afterClosed.and.returnValue(of('reject'));
-      spyOn(service, 'trackEvent');
-
-      service.showCookieConsentDialog();
-
-      expect(mockLsService.set).toHaveBeenCalledWith(
-        LS.COOKIE_CONSENT,
-        'false',
-      );
-      expect(service.trackEvent).toHaveBeenCalledWith(
-        'cookie_consent',
-        'false',
-      );
-      expect(mockConfig.onSendEvent).toHaveBeenCalledWith({
-        message: 'forgetConsentGiven',
-      });
-    });
-
-    it('should handle any other dialog result as rejection', () => {
-      mockDialogRef.afterClosed.and.returnValue(of('cancel'));
-      spyOn(service, 'trackEvent');
-
-      service.showCookieConsentDialog();
-
-      expect(mockLsService.set).toHaveBeenCalledWith(
-        LS.COOKIE_CONSENT,
-        'false',
-      );
-      expect(service.trackEvent).toHaveBeenCalledWith(
-        'cookie_consent',
-        'false',
-      );
-      expect(mockConfig.onSendEvent).toHaveBeenCalledWith({
-        message: 'forgetConsentGiven',
-      });
-    });
-
-    it('should handle null dialog result as rejection', () => {
-      mockDialogRef.afterClosed.and.returnValue(of(null));
-      spyOn(service, 'trackEvent');
-
-      service.showCookieConsentDialog();
-
-      expect(mockLsService.set).toHaveBeenCalledWith(
-        LS.COOKIE_CONSENT,
-        'false',
-      );
-      expect(service.trackEvent).toHaveBeenCalledWith(
-        'cookie_consent',
-        'false',
-      );
-      expect(mockConfig.onSendEvent).toHaveBeenCalledWith({
-        message: 'forgetConsentGiven',
-      });
-    });
-
-    it('should handle missing onSendEvent gracefully', () => {
-      mockConfig.onSendEvent = undefined;
-      mockDialogRef.afterClosed.and.returnValue(of('confirm'));
-      spyOn(service, 'trackEvent');
-
-      expect(() => service.showCookieConsentDialog()).not.toThrow();
-      expect(mockLsService.set).toHaveBeenCalledWith(LS.COOKIE_CONSENT, 'true');
-      expect(service.trackEvent).toHaveBeenCalledWith('cookie_consent', 'true');
     });
   });
 
@@ -485,40 +230,31 @@ describe('TrackerService', () => {
    * Integration tests
    */
   describe('Integration Tests', () => {
-    it('should complete full flow from initTracker to dialog interaction', () => {
-      // Setup: no existing cookie consent
-      mockLsService.get.and.returnValue(undefined);
-      mockDialogRef.afterClosed.and.returnValue(of('confirm'));
-      spyOn(service, 'trackEvent');
-
+    it('should initialize tracker with cookieless tracking enabled', () => {
       // Act: initialize tracker
       service.initTracker();
 
-      // Assert: dialog was shown and user accepted
-      expect(mockDialog.open).toHaveBeenCalled();
-      expect(mockLsService.set).toHaveBeenCalledWith(LS.COOKIE_CONSENT, 'true');
-      expect(service.trackEvent).toHaveBeenCalledWith('cookie_consent', 'true');
+      // Assert: cookieless mode is enabled
+      expect(mockConfig.onSendEvent).toHaveBeenCalledTimes(1);
       expect(mockConfig.onSendEvent).toHaveBeenCalledWith({
-        message: 'setConsentGiven',
+        message: 'requireCookieConsent',
       });
     });
 
-    it('should handle subsequent calls after user has set preference', () => {
-      // First call: user accepts
-      mockLsService.get.and.returnValue(undefined);
-      mockDialogRef.afterClosed.and.returnValue(of('confirm'));
+    it('should handle multiple initialization calls consistently', () => {
+      // First call
       service.initTracker();
 
       // Reset spies
       mockConfig.onSendEvent.calls.reset();
 
-      // Second call: preference is now saved
-      mockLsService.get.and.returnValue('true');
+      // Second call
       service.initTracker();
 
-      // Should not show dialog again, just use saved preference
+      // Should always enable cookieless tracking
+      expect(mockConfig.onSendEvent).toHaveBeenCalledTimes(1);
       expect(mockConfig.onSendEvent).toHaveBeenCalledWith({
-        message: 'setConsentGiven',
+        message: 'requireCookieConsent',
       });
     });
 
@@ -563,12 +299,6 @@ describe('TrackerService', () => {
    * Edge cases and error handling
    */
   describe('Edge Cases and Error Handling', () => {
-    it('should handle localStorage errors gracefully', () => {
-      mockLsService.get.and.throwError('LocalStorage error');
-
-      expect(() => service.getCookieStatus()).toThrow();
-    });
-
     it('should handle config service returning undefined', () => {
       mockConfigService.getConfig.and.returnValue(undefined);
 
