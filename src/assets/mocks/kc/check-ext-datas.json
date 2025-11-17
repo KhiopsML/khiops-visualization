@@ -684,7 +684,7 @@
     "importedDatas": [
       {
         "filename": "ExternalDataEducation.txt",
-        "path": "C:\\Users\\jcdf8453\\WORK\\workspace\\khiops\\visualization-component\\src\\assets\\mocks\\kc\\ExternalDataEducation.txt",
+        "path": "C:\\Applications\\Workspace\\khiops\\visualization-component\\src\\assets\\mocks\\kc\\ExternalDataEducation.txt",
         "dimension": "education",
         "joinKey": "education",
         "file": {},
