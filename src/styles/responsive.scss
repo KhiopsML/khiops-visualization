@@ -76,6 +76,15 @@
     left: 11px !important;
     top: 2px !important;
   }
+
+  /* Override responsive fullscreen styles when inside a modal dialog */
+  mat-dialog-container .fullscreen,
+  .cdk-overlay-pane .fullscreen {
+    width: calc(100% - 24px) !important;
+    height: calc(100% - 82px) !important;
+    min-width: calc(100% - 24px) !important;
+    min-height: calc(100% - 82px) !important;
+  }
 }
 
 @media (min-width: 1100px) and (max-width: 1440px) {

@@ -372,6 +372,15 @@ canvas:focus {
   padding: 20px !important;
 }
 
+/* Override fullscreen styles when inside a modal dialog */
+mat-dialog-container .fullscreen,
+.cdk-overlay-pane .fullscreen {
+  width: calc(100% - 30px) !important;
+  height: calc(100% - 95px) !important;
+  min-width: calc(100% - 30px) !important;
+  min-height: calc(100% - 95px) !important;
+}
+
 .fullscreen.selected::before {
   border: none !important;
 }
