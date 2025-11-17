@@ -8,6 +8,7 @@ import {
   Component,
   OnChanges,
   OnDestroy,
+  OnInit,
   ViewChild,
   AfterViewInit,
   Input,
@@ -37,7 +38,7 @@ import { DimensionsDatasService } from '../../../providers/dimensions-datas.serv
   standalone: false,
 })
 export class VariableGraphDetailsComponent
-  implements OnChanges, OnDestroy, AfterViewInit
+  implements OnInit, OnChanges, OnDestroy, AfterViewInit
 {
   @ViewChild('distributionGraph', {
     static: false,
@@ -54,7 +55,7 @@ export class VariableGraphDetailsComponent
 
   public scrollPosition = 0;
   public scaleValue: number = 0;
-  public graphDetails: ChartDatasModel | undefined;
+  public graphDetails: ChartDatasModel | undefined = new ChartDatasModel();
   public graphOptions: DistributionOptionsI = {
     types: [HistogramType.YLIN, HistogramType.YLOG],
     selected: undefined,
@@ -92,6 +93,12 @@ export class VariableGraphDetailsComponent
       this.eventsService.conditionalOnContextChanged.subscribe(() => {
         this.getFilteredDistribution();
       });
+  }
+
+  ngOnInit() {
+    // Initialize the title and data at the beginning to avoid the ExpressionChangedAfterItHasBeenCheckedError
+    this.updateGraphTitle();
+    this.getFilteredDistribution();
   }
 
   ngOnChanges(changes: SimpleChanges) {
