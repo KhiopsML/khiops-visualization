@@ -5,6 +5,7 @@
     fxFlexFill
   >
     <as-split-area
+      *ngIf="axisLayout.isHierarchyChecked"
       [size]="sizes?.[sizeId]?.[column0Index]"
       order="1"
       [visible]="axisLayout.isHierarchyChecked"
