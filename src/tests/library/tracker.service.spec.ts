@@ -5,9 +5,7 @@
  */
 // @ts-nocheck
 
-import { of } from 'rxjs';
 import { TrackerService } from '@khiops-library/providers/tracker.service';
-import { LS } from '@khiops-library/enum/ls';
 
 /**
  * Unit tests for TrackerService
@@ -15,72 +13,22 @@ import { LS } from '@khiops-library/enum/ls';
  */
 describe('TrackerService', () => {
   let service: TrackerService;
-  let mockLsService: any;
   let mockConfigService: any;
-  let mockTranslateService: any;
-  let mockDialog: any;
-  let mockDialogRef2: any;
-  let mockNgZone: any;
-  let mockDialogRef: any;
   let mockConfig: any;
 
   beforeEach(() => {
-    // Create mock services
-    mockLsService = {
-      get: jasmine.createSpy('get'),
-      set: jasmine.createSpy('set'),
-    };
-
-    mockConfigService = {
-      getConfig: jasmine.createSpy('getConfig'),
-    };
-
-    mockTranslateService = {
-      get: jasmine.createSpy('get').and.returnValue('mocked translation'),
-    };
-
-    mockDialogRef = {
-      afterClosed: jasmine
-        .createSpy('afterClosed')
-        .and.returnValue(of('confirm')),
-      updatePosition: jasmine.createSpy('updatePosition'),
-      componentInstance: {
-        message: '',
-        displayRejectBtn: false,
-        displayCancelBtn: false,
-        confirmTranslation: '',
-      },
-    };
-
-    mockDialog = {
-      open: jasmine.createSpy('open').and.returnValue(mockDialogRef),
-      closeAll: jasmine.createSpy('closeAll'),
-    };
-
-    mockDialogRef2 = {
-      open: jasmine.createSpy('open').and.returnValue(mockDialogRef),
-      closeAll: jasmine.createSpy('closeAll'),
-    };
-
-    mockNgZone = {
-      run: jasmine.createSpy('run').and.callFake((fn: Function) => fn()),
-    };
-
+    // Create mock config FRESH for each test
     mockConfig = {
       onSendEvent: jasmine.createSpy('onSendEvent'),
     };
 
-    mockConfigService.getConfig.and.returnValue(mockConfig);
+    // Create mock config service FRESH for each test
+    mockConfigService = {
+      getConfig: jasmine.createSpy('getConfig').and.returnValue(mockConfig),
+    };
 
-    // Create service instance with mocked dependencies
-    service = new TrackerService(
-      mockLsService,
-      mockDialogRef2,
-      mockNgZone,
-      mockConfigService,
-      mockDialog,
-      mockTranslateService,
-    );
+    // Create service instance with only ConfigService dependency
+    service = new TrackerService(mockConfigService);
   });
 
   /**
@@ -106,7 +54,9 @@ describe('TrackerService', () => {
     });
 
     it('should not send events when onSendEvent is not available', () => {
-      mockConfig.onSendEvent = undefined;
+      // Create a config without onSendEvent
+      const configWithoutEvent = {};
+      mockConfigService.getConfig.and.returnValue(configWithoutEvent);
 
       expect(() => service.initTracker()).not.toThrow();
     });
@@ -220,7 +170,9 @@ describe('TrackerService', () => {
     });
 
     it('should not throw when onSendEvent is not available', () => {
-      mockConfig.onSendEvent = undefined;
+      // Create a config without onSendEvent
+      const configWithoutEvent = {};
+      mockConfigService.getConfig.and.returnValue(configWithoutEvent);
 
       expect(() => service.trackEvent('test', 'action')).not.toThrow();
     });
