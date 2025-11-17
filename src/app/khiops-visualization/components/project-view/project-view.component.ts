@@ -28,7 +28,7 @@ export class ProjectViewComponent
 {
   private fileLoadedSub?: Subscription;
 
-  public sizes?: DynamicI;
+  public sizes?: DynamicI = { row: [null, null] };
   public isElectron: boolean = false;
   public debugFile = AppConfig.debugFile;
   public showOpenFileBtn: boolean | undefined = false;
@@ -50,6 +50,8 @@ export class ProjectViewComponent
   ngOnInit() {
     this.trackerService.trackEvent('page_view', 'project');
     this.showOpenFileBtn = this.configService.getConfig().showOpenFileBtn;
+    // Initialize sizes to avoid the ExpressionChangedAfterItHasBeenCheckedError
+    this.sizes = this.layoutService.getViewSplitSizes('projectView');
   }
 
   ngAfterViewInit() {
