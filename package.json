@@ -130,10 +130,7 @@
     "webpack-bundle-analyzer": "5.0.0"
   },
   "resolutions": {
-    "vite": "7.1.12",
-    "on-headers": "1.1.0",
-    "tar": "7.5.2",
-    "glob": "11.1.0"
+    "on-headers": "1.1.0"
   },
   "appdescription": {
     "visualization": "Khiops Visualization",
