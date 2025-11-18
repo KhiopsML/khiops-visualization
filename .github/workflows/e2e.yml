@@ -1,8 +1,8 @@
 name: End-to-end Tests
 on:
   push:
-    tags-ignore:
-      - '**'
+    branches:
+      - '**' # Only on branches, not on tags
   workflow_dispatch:
 permissions:
   contents: read
