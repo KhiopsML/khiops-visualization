@@ -1,5 +1,9 @@
 name: End-to-end Tests
-on: [push, workflow_dispatch]
+on:
+  push:
+    tags-ignore:
+      - '**'
+  workflow_dispatch:
 permissions:
   contents: read
 
