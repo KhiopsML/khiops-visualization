@@ -42,9 +42,12 @@ jobs:
       - name: Build
         run: yarn build:webcomponents
 
+      - name: Setup npm authentication
+        run: |
+          echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_AUTH_TOKEN }}" > ~/.npmrc
+          echo "registry=https://registry.npmjs.org/" >> ~/.npmrc
+
       - name: Publish to npm
-        uses: JS-DevTools/npm-publish@v3
-        with:
-          token: ${{ secrets.NPM_AUTH_TOKEN }}
-          package: dist/khiops-webcomponent
-          access: public
+        run: |
+          cd dist/khiops-webcomponent
+          npm publish --access public
