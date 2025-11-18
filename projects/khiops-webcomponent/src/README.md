@@ -1,8 +1,10 @@
-# Khiops visualization & covisualization Angular components
+# Khiops Visualization & Covisualization Components
 
-Khiops Visualization is a visualization plug-in of the data preparation and scoring tool Khiops. Khiops Visualization allows visualizing all analysis results in an intuitive way, providing a quick and easy interpretation of the discovered patterns.
+[![npm version](https://badge.fury.io/js/khiops-visualization.svg)](https://badge.fury.io/js/khiops-visualization) [![License](https://img.shields.io/badge/License-BSD%203--Clause-blue.svg)](https://opensource.org/licenses/BSD-3-Clause)
 
-## Installation
+Khiops Visualization is a powerful visualization plugin for the data preparation and scoring tool Khiops. It provides intuitive visualizations of analysis results, enabling quick and easy interpretation of discovered patterns in your data.
+
+## ⚡ Installation
 
 Latest version:
 
@@ -16,12 +18,20 @@ Or specific version:
 npm i khiops-visualization@11.5.5
 ```
 
-## Usage
+## 🚀 Usage
 
-Into you html app file:
+### 🅰️ With Angular
+
+Into your html app file:
 
 ```html
-<khiops-visualization></khiops-visualization> <khiops-covisualization></khiops-covisualization>
+<khiops-visualization></khiops-visualization>
+```
+
+or
+
+```html
+<khiops-covisualization></khiops-covisualization>
 ```
 
 Into your .ts app component:
@@ -78,7 +88,87 @@ You may have to allow CUSTOM_ELEMENTS_SCHEMA into your module:
 })
 ```
 
-## Configuration
+### 🌐 Without Angular (Vanilla JavaScript)
+
+You can also use the library in any HTML application without Angular. Here's a complete example:
+
+```html
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Khiops Visualization</title>
+    <style>
+      html,
+      body {
+        margin: 0;
+        padding: 0;
+        height: 100%;
+        width: 100%;
+      }
+    </style>
+  </head>
+  <body>
+    <khiops-visualization id="kv1" style="width: 100%; height: 100%"></khiops-visualization>
+
+    <!-- Include the library from CDN -->
+    <script src="https://unpkg.com/khiops-visualization/khiops-webcomponents.bundle.js"></script>
+
+    <script>
+      document.addEventListener('DOMContentLoaded', function () {
+        // Get the component element
+        const kv1 = document.querySelector('khiops-visualization');
+
+        // Wait for the component to be fully initialized
+        if (kv1 && typeof kv1.clean === 'function') {
+          initializeComponent();
+        } else {
+          setTimeout(() => {
+            initializeComponent();
+          }, 500);
+        }
+      });
+
+      function initializeComponent() {
+        const kv1 = document.querySelector('khiops-visualization');
+
+        // Clean any previous data
+        kv1.clean();
+
+        // Set configuration
+        kv1.setConfig({
+          showProjectTab: false,
+          showLogo: false,
+          showOpenFileBtn: true,
+        });
+
+        // Load and set your JSON data
+        loadData().then((data) => {
+          kv1.setDatas(data);
+        });
+      }
+
+      async function loadData() {
+        // Example: load data from a JSON file
+        try {
+          const response = await fetch('./your-data.json');
+          return await response.json();
+        } catch (error) {
+          console.error('Error loading data:', error);
+          return {}; // Return empty object as fallback
+        }
+      }
+    </script>
+  </body>
+</html>
+```
+
+For covisualization, simply replace `<khiops-visualization>` with `<khiops-covisualization>` in the HTML.
+
+## ⚙️ Configuration
+
+The components can be customized using the `setConfig()` method with the following options:
 
 | Option         | Type     | Description                                                                                                                                                                                                                                                    | Default |
 | -------------- | -------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------- |
@@ -92,12 +182,25 @@ You may have to allow CUSTOM_ELEMENTS_SCHEMA into your module:
 | onSendEvent    | Callback | Send custom events<br> Event must have a message and may have additionnal datas of any type                                                                                                                                                                    |         |
 | readLocalFile  | Callback | Callback when a local file is loaded automatically. <br>For security reasons, local files can not be loaded automatically without Electron.<br>Used to load external datas at startup.<br>This method takes a file in input and a callback when file is loaded |         |
 
-## Datas models
+## 📋 Data Models
 
-VisualizationDatas & CovisualizationDatas Models interfaces can be found here:\
-[VisualizationDatas](https://github.com/KhiopsML/khiops-visualization/blob/master/src/app/khiops-visualization/interfaces/app-datas.d.ts)\
-[CovisualizationDatas](https://github.com/KhiopsML/khiops-visualization/blob/master/src/app/khiops-covisualization/interfaces/app-datas.d.ts)
+The components expect specific data structures. TypeScript interfaces are available for reference:
 
-## License
+- 📊 **VisualizationDatas**: [View Interface](https://github.com/KhiopsML/khiops-visualization/blob/master/src/app/khiops-visualization/interfaces/app-datas.d.ts)
+- 🔗 **CovisualizationDatas**: [View Interface](https://github.com/KhiopsML/khiops-visualization/blob/master/src/app/khiops-covisualization/interfaces/app-datas.d.ts)
+
+> 💡 **Tip**: Use these TypeScript interfaces in your project for better type safety and IntelliSense support.
+
+## 🔧 API Methods
+
+The components provide several methods for interaction:
+
+| Method              | Description                            | Example                                  |
+| ------------------- | -------------------------------------- | ---------------------------------------- |
+| `setDatas(data)`    | Load visualization data                | `component.setDatas(jsonData)`           |
+| `setConfig(config)` | Set component configuration            | `component.setConfig({showLogo: false})` |
+| `clean()`           | Clear current data and reset component | `component.clean()`                      |
+
+## 📄 License
 
 Khiops visualization & covisualization webcomponents is available under the [BSD 3-Clause Clear License](LICENSE).
