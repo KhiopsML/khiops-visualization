@@ -146,7 +146,7 @@ export class ImportExtDatasComponent implements OnInit {
       {
         headerName: this.translate.get('GLOBAL.IMPORT'),
         field: 'import',
-        cellRendererFramework: CheckboxCellComponent,
+        cellRenderer: CheckboxCellComponent,
       },
     ];
 

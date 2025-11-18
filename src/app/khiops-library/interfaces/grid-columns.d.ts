@@ -10,7 +10,7 @@ export interface GridColumnsI {
   show?: boolean; // visible by default
   hidden?: boolean; // technical datas never visible
   tooltip?: string;
-  cellRendererFramework?: any;
+  cellRenderer?: any;
   cellRendererParams?: any;
   cellClass?: string | ((params: any) => string); // CSS class for cells
   headerClass?: string | ((params: any) => string); // CSS class for headers

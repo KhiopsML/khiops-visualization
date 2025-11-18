@@ -40,7 +40,7 @@ export function getPreparationVariablesGridColumns(
       headerName: translate.get('GLOBAL.TYPE'),
       field: 'type',
       tooltip: translate.get('TOOLTIPS.PREPARATION.VARIABLES.TYPE'),
-      cellRendererFramework: BorderTextCellComponent,
+      cellRenderer: BorderTextCellComponent,
     },
     {
       headerName: translate.get('GLOBAL.MODE'),

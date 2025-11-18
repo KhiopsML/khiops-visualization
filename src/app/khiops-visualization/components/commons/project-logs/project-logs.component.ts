@@ -40,7 +40,7 @@ export class ProjectLogsComponent {
       {
         headerName: this.translate.get('GLOBAL.GRAVITY'),
         field: 'gravity',
-        cellRendererFramework: GravityCellComponent,
+        cellRenderer: GravityCellComponent,
       },
       {
         headerName: this.translate.get('GLOBAL.MESSAGE'),

@@ -26,7 +26,7 @@ export function getHierarchyGridColumns(translate: TranslateService) {
     {
       headerName: translate.get('GLOBAL.FOLD_UNFOLD'),
       field: 'hierarchyFold',
-      cellRendererFramework: CheckboxCellComponent,
+      cellRenderer: CheckboxCellComponent,
     },
   ];
 }

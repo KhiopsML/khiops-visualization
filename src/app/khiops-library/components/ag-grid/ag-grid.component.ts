@@ -255,7 +255,7 @@ export class AgGridComponent
 
       if (this.gridMode === 'fitToContent') {
         // Apply fit to content
-        this.gridOptions.columnApi?.autoSizeAllColumns(true);
+        this.agGrid?.columnApi?.autoSizeAllColumns(true);
       } else if (this.gridMode === 'fitToSpace') {
         // Reinit current saved columns sizes when user fit grid to space
         delete this.cellsSizes[this.id!];
@@ -684,7 +684,7 @@ export class AgGridComponent
     delete this.cellsSizes[this.id!];
     this.ls.set(LS.CELL_AG_GRID, this.cellsSizes);
 
-    this.gridOptions.columnApi?.autoSizeAllColumns(true);
+    this.agGrid?.columnApi?.autoSizeAllColumns(true);
     this.saveGridModes(this.gridMode);
 
     // Restore state but without affecting column sizes (already handled by autoSizeAllColumns)
@@ -725,7 +725,7 @@ export class AgGridComponent
    */
   saveState(_grid: SortChangedEvent) {
     const state = {
-      sortState: this.gridOptions?.columnApi?.getColumnState(),
+      sortState: this.agGrid?.columnApi?.getColumnState(),
     };
     this.ls.set(LS.OPTIONS_AG_GRID + '_' + this.id?.toUpperCase(), state);
   }
@@ -734,18 +734,13 @@ export class AgGridComponent
    * Restores the saved state of the grid from local storage.
    */
   restoreState() {
-    // setTimeout(() => {
     if (this.id) {
       const PREV_STATE = this.ls.get(
         LS.OPTIONS_AG_GRID + '_' + this.id.toUpperCase(),
       );
       const state = (PREV_STATE && PREV_STATE) || {};
 
-      if (
-        this.displayedColumns &&
-        state.sortState &&
-        this.gridOptions.columnApi
-      ) {
+      if (this.displayedColumns && state.sortState && this.agGrid?.api) {
         // First reorder state according to displayed columns order
         const sortedState: any = [];
         for (let i = 0; i < this.displayedColumns.length; i++) {
@@ -763,7 +758,7 @@ export class AgGridComponent
           state.sortState[i] && delete state.sortState[i].width;
           state.sortState[i] && delete state.sortState[i].hide;
         }
-        this.gridOptions.columnApi.applyColumnState({
+        this.agGrid?.columnApi?.applyColumnState({
           state: state.sortState,
           applyOrder: true,
         });
@@ -780,6 +775,5 @@ export class AgGridComponent
     }
 
     this.selectNode(this.selectedVariable);
-    // });
   }
 }

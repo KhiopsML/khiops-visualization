@@ -100,7 +100,7 @@ export function getCompositionDisplayedColumns(
       {
         headerName: translate.get('GLOBAL.PART_DETAILS'),
         field: 'partDetails',
-        cellRendererFramework: IconCellComponent,
+        cellRenderer: IconCellComponent,
         cellRendererParams: {
           icon: 'add_box',
           action: (e: ICellRendererParams) => {

@@ -123,7 +123,7 @@ export class AgGridService {
           resizable: true,
           hide: col.show === false,
           width: options.cellsSizes?.[options.gridId!]?.[col.field],
-          cellRendererFramework: col.cellRendererFramework,
+          cellRenderer: col.cellRenderer,
           cellRendererParams: col.cellRendererParams,
           cellClass: (params: any) => {
             const alignmentClass =

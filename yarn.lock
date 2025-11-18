@@ -2,24 +2,24 @@
 # yarn lockfile v1
 
 
-"@ag-grid-community/angular@29.3.5":
-  version "29.3.5"
-  resolved "https://registry.yarnpkg.com/@ag-grid-community/angular/-/angular-29.3.5.tgz#75c6f507baaf083a663303c220a842a238eb7fbd"
-  integrity sha512-XFUg21KxkPhfj4HwGBe6ZzTbpsT9IW7GxwibjW9xo0/244vHGP1S/qglex8GPbXRp5tDtRxSqyS13DnKiCI7dw==
+"@ag-grid-community/angular@30":
+  version "30.2.1"
+  resolved "https://registry.yarnpkg.com/@ag-grid-community/angular/-/angular-30.2.1.tgz#1dd72bcc70184f1d0f6ab8c33cf7b7b0d50949ca"
+  integrity sha512-3txsRAfzu1kBldZqyv0HofvEg+GcEcNBDxyFhg7/RwkkmNpVo752CBoJfGnWzltTMwvda9fK7esvDztHoUjEZQ==
   dependencies:
     tslib "^2.3.0"
 
-"@ag-grid-community/client-side-row-model@29.3.5":
-  version "29.3.5"
-  resolved "https://registry.yarnpkg.com/@ag-grid-community/client-side-row-model/-/client-side-row-model-29.3.5.tgz#3895a778195bca17f86d0e7f90f80b207a283d8e"
-  integrity sha512-+uA28LTAummyYdZbEDys+cTECPn1Po1f6vX9QZOK9gpZdNzSpGjd3Vc1SKR/2brR6XMGlPeSRsX+FPZmG9uvHQ==
+"@ag-grid-community/client-side-row-model@30":
+  version "30.2.1"
+  resolved "https://registry.yarnpkg.com/@ag-grid-community/client-side-row-model/-/client-side-row-model-30.2.1.tgz#88c0b2d17555c16316c34f7ef22f4642f1f75d2a"
+  integrity sha512-LeFAsq2RuDXwjoUVLqlUgBYTHyCbyQozaQ4JY8SzBEABc8bOanIfsY3YONUckn+KWtRUrH5nGYA8bBeGrc20MQ==
   dependencies:
-    "@ag-grid-community/core" "~29.3.5"
+    "@ag-grid-community/core" "~30.2.1"
 
-"@ag-grid-community/core@29.3.5", "@ag-grid-community/core@~29.3.5":
-  version "29.3.5"
-  resolved "https://registry.yarnpkg.com/@ag-grid-community/core/-/core-29.3.5.tgz#f6fd10f5a612290c4dfbc8a78adc2af587008c99"
-  integrity sha512-r86bOCscnKVtaYyKqlN2UCtfbjf4UcmxHfVuXzJ94iN8Jy3iiQVrbQnbNArnjR589Bt/1VR/m+SdAMsOLcdpag==
+"@ag-grid-community/core@30", "@ag-grid-community/core@~30.2.1":
+  version "30.2.1"
+  resolved "https://registry.yarnpkg.com/@ag-grid-community/core/-/core-30.2.1.tgz#9e4dcc4178ae2821ea3e4a637e5538a5455ae4d3"
+  integrity sha512-jGRBfRFsLwxch8GJGjbVI2FVbB+/fy1s4mm8//+kOkcPFlq4BbLFELvU4Kupwk1YkhduxUC50GTYyFzmF0rSIQ==
 
 "@algolia/abtesting@1.1.0":
   version "1.1.0"
