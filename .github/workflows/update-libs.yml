@@ -31,8 +31,8 @@ jobs:
           # Install npm-check-updates
           npm install -g npm-check-updates
 
-          # Update all dependencies except @ag-grid-community/*
-          ncu -u --reject "@ag-grid-community/*"
+          # Update all dependencies
+          ncu -u
 
           # Install updated dependencies
           yarn install
@@ -46,7 +46,7 @@ jobs:
           body: |
             Automated dependency update.
 
-            This PR updates all dependencies in `package.json` and `yarn.lock` except for `@ag-grid-community/*` packages.
+            This PR updates all dependencies in `package.json` and `yarn.lock`.
 
             Please review and merge if all checks pass.
           branch: chore/update-dependencies
