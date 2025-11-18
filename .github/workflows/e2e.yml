@@ -14,10 +14,14 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      - name: Build
+        run: |
+          yarn install
+          yarn build:webcomponents
+
       - name: Cypress run
         uses: cypress-io/github-action@v6
         with:
-          build: yarn build:webcomponents
           start: yarn start
           wait-on: 'http://localhost:4200'
 
