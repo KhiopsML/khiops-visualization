@@ -1,4 +1,4 @@
-import * as d3 from 'd3';
+import { forceSimulation, forceCollide, forceLink, forceManyBody } from 'd3';
 import { ILayer } from '../layerstack/layer';
 import { ILayerView } from '../layerstack/layer';
 import { ILayerArgs } from '../layerstack/layer';
@@ -58,12 +58,11 @@ export class LabelForceLayer implements ILayer {
     this.args = args;
     this.name = args.name;
 
-    this.simulation = d3
-      .forceSimulation()
+    this.simulation = forceSimulation()
       .alphaTarget(0.001)
-      .force('link', d3.forceLink().strength(-0.05))
-      .force('charge', d3.forceManyBody().strength(-0.05))
-      .force('collide', d3.forceCollide().strength(0.0025).radius(0.18)) // .18
+      .force('link', forceLink().strength(-0.05))
+      .force('charge', forceManyBody().strength(-0.05))
+      .force('collide', forceCollide().strength(0.0025).radius(0.18)) // .18
       .stop();
   }
 

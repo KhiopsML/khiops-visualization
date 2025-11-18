@@ -1,4 +1,4 @@
-import * as d3 from 'd3';
+import { pointer, Delaunay } from 'd3';
 import { ILayer } from '../layerstack/layer';
 import { ILayerView } from '../layerstack/layer';
 import { ILayerArgs } from '../layerstack/layer';
@@ -212,7 +212,7 @@ export class InteractionLayer2 implements ILayer {
     for (let i = 0; i < changedTouches.length; ++i) {
       const t = changedTouches[i];
       const pid = t.identifier;
-      const m = ArrtoC(d3.pointer(t, this.view.parent.node()));
+      const m = ArrtoC(pointer(t, this.view.parent.node()));
 
       update = this[eventName](pid, m) || update;
     }
@@ -430,7 +430,7 @@ export class InteractionLayer2 implements ILayer {
       d.cache.re,
       d.cache.im,
     ]);
-    const delaunay = d3.Delaunay.from(points);
+    const delaunay = Delaunay.from(points);
     const index = delaunay.find(m.re, m.im);
     const n = index >= 0 ? clickableNodes[index] : undefined;
 
@@ -443,7 +443,7 @@ export class InteractionLayer2 implements ILayer {
   }
 
   private currMousePosAsArr = (event) =>
-    d3.pointer(event, this.view.parent.node());
+    pointer(event, this.view.parent.node());
   private currMousePosAsC = (event) => ArrtoC(this.currMousePosAsArr(event));
   private findNodeByCell = (event) => {
     var m = this.currMousePosAsArr(event);
@@ -456,7 +456,7 @@ export class InteractionLayer2 implements ILayer {
       d.cache.re,
       d.cache.im,
     ]);
-    const delaunay = d3.Delaunay.from(points);
+    const delaunay = Delaunay.from(points);
     const index = delaunay.find(m[0], m[1]);
     return index >= 0 ? clickableNodes[index] : undefined;
   };
@@ -467,7 +467,7 @@ export class InteractionLayer2 implements ILayer {
         d.cache.re,
         d.cache.im,
       ]);
-    const delaunay = d3.Delaunay.from(points);
+    const delaunay = Delaunay.from(points);
     const voronoiDiagram = delaunay.voronoi([-2, -2, 2, 2]);
     const findIndex = delaunay.find(m.re, m.im);
     const find =

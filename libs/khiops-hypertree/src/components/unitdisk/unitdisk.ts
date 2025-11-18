@@ -1,4 +1,4 @@
-import * as d3 from 'd3';
+import { Delaunay, type Voronoi } from 'd3';
 import { N } from '../../models/n/n';
 import { C, CktoCp, CptoCk } from '../../models/transformation/hyperbolic-math';
 import { CmulR } from '../../models/transformation/hyperbolic-math';
@@ -19,7 +19,7 @@ export interface IUnitDisk {
   args: UnitDiskArgs;
 
   cache;
-  voronoiLayout: d3.Voronoi<N>;
+  voronoiLayout: Voronoi<N>;
   layerStack: LayerStack;
   navParameter?: UnitDisk;
   isDraging?: boolean;
@@ -43,7 +43,7 @@ export class UnitDisk implements IUnitDisk {
   public view: UnitDiskView;
   public args: UnitDiskArgs;
   public cache: TransformationCache;
-  public voronoiLayout: d3.Voronoi<N>;
+  public voronoiLayout: Voronoi<N>;
 
   public layerStack: LayerStack;
   public pinchcenter: C;
@@ -94,7 +94,7 @@ export class UnitDisk implements IUnitDisk {
       .append('circle')
       .attr('r', this.args.clipRadius);
 
-    this.voronoiLayout = d3.Delaunay.from<N>(
+    this.voronoiLayout = Delaunay.from<N>(
       [],
       (d) => {
         console.assert(typeof d.cache.re === 'number');
@@ -121,7 +121,7 @@ export class UnitDiskNav implements IUnitDisk {
   public cache; // redircteds NOT xD to view.cache
   public layerStack;
 
-  get voronoiLayout(): d3.Voronoi<N> {
+  get voronoiLayout(): Voronoi<N> {
     return this.mainView.voronoiLayout;
   }
 
@@ -206,9 +206,12 @@ export class UnitDiskNav implements IUnitDisk {
             }),
           );
 
-          const points: [number, number][] = cache.unculledNodes.map((d) => [d.cache.re, d.cache.im]);
+          const points: [number, number][] = cache.unculledNodes.map((d) => [
+            d.cache.re,
+            d.cache.im,
+          ]);
           if (points.length > 0) {
-            const delaunay = d3.Delaunay.from(points);
+            const delaunay = Delaunay.from(points);
             cache.voronoiDiagram = delaunay.voronoi([-2, -2, 2, 2]);
             cache.cells = Array.from(cache.voronoiDiagram.cellPolygons());
           } else {

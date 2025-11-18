@@ -1,4 +1,4 @@
-import * as d3 from 'd3';
+import { hierarchy, type HierarchyNode } from 'd3';
 import { HTML } from '../../ducd/';
 import { clone } from '../../ducd/';
 import { HypertreeArgs } from '../../models/hypertree/model';
@@ -312,7 +312,7 @@ export class Hypertree {
     var t2 = performance.now();
     var ncount = 1;
     globelhtid++;
-    this.data = <N & d3.HierarchyNode<N>>d3.hierarchy(d3h).each((n: any) => {
+    this.data = <N & HierarchyNode<N>>hierarchy(d3h).each((n: any) => {
       n.globelhtid = globelhtid;
       n.mergeId = ncount++;
       n.data = n.data || {};

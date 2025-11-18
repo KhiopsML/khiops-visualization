@@ -38,7 +38,7 @@ import { COMPONENT_TYPES } from '@khiops-library/enum/component-types';
 import { BIG_CHART_SIZE } from '@khiops-library/config/global';
 import { ZoomToolsEventsService } from '@khiops-library/components/zoom-tools/zoom-tools.service';
 import { VariableScaleSettingsService } from '@khiops-visualization/providers/variable-scale-settings.service';
-
+import { Selection } from 'd3';
 @Component({
   selector: 'app-histogram',
   templateUrl: './histogram.component.html',
@@ -52,7 +52,7 @@ export class HistogramComponent extends SelectableComponent implements OnInit {
   private chart!: ElementRef;
 
   public componentType = COMPONENT_TYPES.HISTOGRAM; // needed to copy datas
-  private svg?: d3.Selection<SVGElement, unknown, HTMLElement, any> | any;
+  private svg?: Selection<SVGElement, unknown, HTMLElement, any> | any;
   private resizeSubject = new Subject<ResizedEvent>();
 
   // Outputs

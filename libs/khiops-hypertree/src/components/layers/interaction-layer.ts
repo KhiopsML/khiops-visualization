@@ -1,4 +1,4 @@
-import * as d3 from 'd3';
+import { pointer, Delaunay, timer } from 'd3';
 import { ILayer } from '../layerstack/layer';
 import { ILayerView } from '../layerstack/layer';
 import { ILayerArgs } from '../layerstack/layer';
@@ -33,15 +33,20 @@ export class InteractionLayer implements ILayer {
     style: () => {},
   };
 
-  currMousePosAsArr = (event) => d3.pointer(event, this.view.parent.node());
+  currMousePosAsArr = (event) => pointer(event, this.view.parent.node());
   currMousePosAsC = (event) => ArrtoC(this.currMousePosAsArr(event));
   findNodeByCell = (event) => {
     var m = this.currMousePosAsArr(event);
-    const clickableNodes = this.view.unitdisk.cache.unculledNodes.filter((n: any) => n.precalc && n.precalc.clickable);
+    const clickableNodes = this.view.unitdisk.cache.unculledNodes.filter(
+      (n: any) => n.precalc && n.precalc.clickable,
+    );
     if (clickableNodes.length === 0) return undefined;
 
-    const points: [number, number][] = clickableNodes.map((d) => [d.cache.re, d.cache.im]);
-    const delaunay = d3.Delaunay.from(points);
+    const points: [number, number][] = clickableNodes.map((d) => [
+      d.cache.re,
+      d.cache.im,
+    ]);
+    const delaunay = Delaunay.from(points);
     const index = delaunay.find(m[0], m[1]);
     return index >= 0 ? clickableNodes[index] : undefined;
   };
@@ -55,11 +60,7 @@ export class InteractionLayer implements ILayer {
       .on('zoom', (event) => {
         console.assert(event);
 
-        if (
-          event &&
-          event.sourceEvent &&
-          event.sourceEvent.type === 'wheel'
-        ) {
+        if (event && event.sourceEvent && event.sourceEvent.type === 'wheel') {
           const mΔ = event.sourceEvent.deltaY;
           const λΔ = ((mΔ / 100) * 2 * Math.PI) / 16;
           const oldλp = this.view.unitdisk.args.transformation.state.λ;
@@ -122,7 +123,9 @@ export class InteractionLayer implements ILayer {
       .append('circle')
       .attr('class', 'mouse-circle')
       .attr('r', this.args.mouseRadius)
-      .on('dblclick', (event, d) => this.onDblClick(event, this.findNodeByCell(event)))
+      .on('dblclick', (event, d) =>
+        this.onDblClick(event, this.findNodeByCell(event)),
+      )
       .on('mousemove', (event, d) =>
         htapi.setPathHead(hoverpath, this.findNodeByCell(event)),
       )
@@ -159,7 +162,7 @@ export class InteractionLayer implements ILayer {
   };
 
   private onDragEnd = (n: N, s: C, e: C) => {
-    const ti3 = d3.timer(() => {
+    const ti3 = timer(() => {
       ti3.stop();
       this.view.hypertree.args.objects.traces.length = 0;
       this.view.hypertree.update.transformation();
@@ -187,7 +190,7 @@ export class InteractionLayer implements ILayer {
       initR = md.r,
       step = 1,
       steps = 20;
-    this.animationTimer = d3.timer(() => {
+    this.animationTimer = timer(() => {
       md.r = initR * (1 - sigmoid(step++ / steps));
       if (step > steps) {
         this.cancelAnimationTimer();

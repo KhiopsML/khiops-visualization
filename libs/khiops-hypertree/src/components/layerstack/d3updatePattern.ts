@@ -1,5 +1,6 @@
 import { N } from '../../models/n/n';
 import { ILayer } from './layer';
+import { type Selection } from 'd3';
 
 export interface D3UpdatePatternArgs {
   parent: any;
@@ -26,7 +27,7 @@ export class D3UpdatePattern {
     style: () => this.elements.call(this.args.updateColor),
   };
 
-  private mainSvgGroup: d3.Selection<SVGElement, N, SVGElement, undefined>;
+  private mainSvgGroup: Selection<SVGElement, N, SVGElement, undefined>;
   private elements: any;
 
   constructor(args: D3UpdatePatternArgs) {
