@@ -14,20 +14,12 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Install dependencies (skip Cypress binary)
-        run: |
-          CYPRESS_INSTALL_BINARY=0 yarn install
-
-      - name: Build
-        run: |
-          yarn build:webcomponents
-
       - name: Cypress run
         uses: cypress-io/github-action@v6
         with:
+          build: yarn build:webcomponents
           start: yarn start
           wait-on: 'http://localhost:4200'
-          install: true
 
       - name: Archive test results
         if: always()
