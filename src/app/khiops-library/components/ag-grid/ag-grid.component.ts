@@ -289,7 +289,7 @@ export class AgGridComponent
    * This method is typically used to filter out entries that are currently active.
    */
   public hideActiveEntries() {
-    this.gridOptions?.api?.deselectAll();
+    this.agGrid?.api?.deselectAll();
   }
 
   /**
@@ -358,8 +358,8 @@ export class AgGridComponent
   selectNode(selectedVariable: any) {
     if (selectedVariable && this.agGrid?.api) {
       // unselect previous
-      if (this.gridOptions.api) {
-        this.gridOptions.api.deselectAll();
+      if (this.agGrid?.api) {
+        this.agGrid.api.deselectAll();
       }
       if (Array.isArray(selectedVariable)) {
         // multiple selection
@@ -408,12 +408,12 @@ export class AgGridComponent
             if (!node.isSelected()) {
               node.setSelected(true);
               // Get the page of selected node
-              if (this.gridOptions.api) {
+              if (this.agGrid?.api) {
                 let pageToSelect =
                   (node.rowIndex ?? 0) /
-                  this.gridOptions.api.paginationGetPageSize();
+                  this.agGrid.api.paginationGetPageSize();
                 pageToSelect = Math.floor(pageToSelect);
-                this.gridOptions.api.paginationGoToPage(pageToSelect);
+                this.agGrid.api.paginationGoToPage(pageToSelect);
               }
               this.agGrid?.api.ensureIndexVisible(node.rowIndex ?? 0);
             }
@@ -579,10 +579,9 @@ export class AgGridComponent
       }
 
       // Block keyboard navigation at table ends
-      const pageSize: number =
-        this.gridOptions?.api?.paginationGetPageSize() || 0;
+      const pageSize: number = this.agGrid?.api?.paginationGetPageSize() || 0;
       const currentPage: number =
-        this.gridOptions?.api?.paginationGetCurrentPage() || 0;
+        this.agGrid?.api?.paginationGetCurrentPage() || 0;
       if (nextRowIndex !== undefined && typeof nextRowIndex === 'number') {
         if (
           currentPage * pageSize <= nextRowIndex &&
