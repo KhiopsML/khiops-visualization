@@ -23,12 +23,13 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 22
+          cache: 'yarn'
 
-      - name: yarn install
+      - name: Install dependencies (skip Cypress)
         run: |
-          yarn install
+          CYPRESS_INSTALL_BINARY=0 yarn install
 
-      - name: yarn test
+      - name: Run unit tests
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
