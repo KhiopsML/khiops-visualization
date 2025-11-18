@@ -63,9 +63,9 @@
     "singleQuote": true
   },
   "dependencies": {
-    "@ag-grid-community/angular": "32",
-    "@ag-grid-community/client-side-row-model": "32",
-    "@ag-grid-community/core": "32",
+    "@ag-grid-community/angular": "32.3.9",
+    "@ag-grid-community/client-side-row-model": "32.3.9",
+    "@ag-grid-community/core": "32.3.9",
     "@angular/animations": "20.3.12",
     "@angular/cdk": "20.2.13",
     "@angular/common": "20.3.12",
@@ -127,7 +127,7 @@
     "source-map-explorer": "2.5.3",
     "ts-node": "10.9.2",
     "typescript": "5.9.3",
-    "webpack-bundle-analyzer": "4.10.2"
+    "webpack-bundle-analyzer": "5.0.0"
   },
   "resolutions": {
     "vite": "7.1.12",
