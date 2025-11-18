@@ -9,7 +9,7 @@
   "description": "Khiops Visualization component. Contains the code of Visualization and Covisualization tools",
   "repository": {
     "type": "git",
-    "url": "https://github.com/KhiopsML/khiops-visualization.git"
+    "url": "git+https://github.com/KhiopsML/khiops-visualization.git"
   },
   "bugs": {
     "url": "https://github.com/KhiopsML/khiops-visualization/issues"
