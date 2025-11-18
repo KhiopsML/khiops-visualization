@@ -63,9 +63,9 @@
     "singleQuote": true
   },
   "dependencies": {
-    "@ag-grid-community/angular": "31",
-    "@ag-grid-community/client-side-row-model": "31",
-    "@ag-grid-community/core": "31",
+    "@ag-grid-community/angular": "32",
+    "@ag-grid-community/client-side-row-model": "32",
+    "@ag-grid-community/core": "32",
     "@angular/animations": "20.3.12",
     "@angular/cdk": "20.2.13",
     "@angular/common": "20.3.12",

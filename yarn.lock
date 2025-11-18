@@ -2,26 +2,27 @@
 # yarn lockfile v1
 
 
-"@ag-grid-community/angular@31":
-  version "31.3.4"
-  resolved "https://registry.yarnpkg.com/@ag-grid-community/angular/-/angular-31.3.4.tgz#7747dd4eff3219782f5bbd928da96f76019bce59"
-  integrity sha512-fbYkMohMJZs7H+9+E8mnAlPe+N3Hb0mg/bDrZRjQ/gXJSXCdPE2jaff7MpEZGuO/2ZijxCZZicH+dcFj0DPEcw==
+"@ag-grid-community/angular@32":
+  version "32.3.9"
+  resolved "https://registry.yarnpkg.com/@ag-grid-community/angular/-/angular-32.3.9.tgz#c45290e43e735b968568e36b9e2b0c8caaba243a"
+  integrity sha512-vQ3zGp0NBjdm88886u15kpn9D8FmvoWmK2ysvVEfLO9upPaIE3n9QYPeTpHwmj1Hzheu26PHO/lycOZi9oQpVQ==
   dependencies:
     tslib "^2.3.0"
 
-"@ag-grid-community/client-side-row-model@31":
-  version "31.3.4"
-  resolved "https://registry.yarnpkg.com/@ag-grid-community/client-side-row-model/-/client-side-row-model-31.3.4.tgz#0827b8f832f49e266f90e01e6131830d4f8029e5"
-  integrity sha512-lbrbhwSoY1/N2CiOQBa322gVnrhyrbzyG7cvbOef3itAiaLUzQ03PWBw09d9mj+/0hnqMs386ZuGX15FWJaTqQ==
+"@ag-grid-community/client-side-row-model@32":
+  version "32.3.9"
+  resolved "https://registry.yarnpkg.com/@ag-grid-community/client-side-row-model/-/client-side-row-model-32.3.9.tgz#2ea3ace240bdfcda244329fb462f6a9878da151a"
+  integrity sha512-/x6gPhxn6c/QQSmDuNf81xrBNc3TKGymmokznvXPPf4tAXeLZn5kF0cW3sGa52XyqZcIsYFQvLkI+pCsX+I4ng==
   dependencies:
-    "@ag-grid-community/core" "31.3.4"
+    "@ag-grid-community/core" "32.3.9"
     tslib "^2.3.0"
 
-"@ag-grid-community/core@31", "@ag-grid-community/core@31.3.4":
-  version "31.3.4"
-  resolved "https://registry.yarnpkg.com/@ag-grid-community/core/-/core-31.3.4.tgz#11572ab8415f3b1f3427f4e870d1cce13ae94008"
-  integrity sha512-Fz7P4lMAYDo9rG6jOA8OXlAXta/4E+PiCdjT7M9OloaXAJtU47oO4f3VKV7rdbVCC8SGSo0cBCateddQTAFCNQ==
+"@ag-grid-community/core@32", "@ag-grid-community/core@32.3.9":
+  version "32.3.9"
+  resolved "https://registry.yarnpkg.com/@ag-grid-community/core/-/core-32.3.9.tgz#72e65c0768b0a06b480f0aa695fd1e1ba1ee5518"
+  integrity sha512-oZeAEPgaJVMzfKqbAPCyadcN5+iy+tjvhRLqEYJdBxtLgW/s2s0qXcXQvnrz7eUMD3Z7h3BQRVt2h/p0T6Ox/w==
   dependencies:
+    ag-charts-types "10.3.9"
     tslib "^2.3.0"
 
 "@algolia/abtesting@1.1.0":
@@ -3280,6 +3281,11 @@ adjust-sourcemap-loader@^4.0.0:
   dependencies:
     loader-utils "^2.0.0"
     regex-parser "^2.2.11"
+
+ag-charts-types@10.3.9:
+  version "10.3.9"
+  resolved "https://registry.yarnpkg.com/ag-charts-types/-/ag-charts-types-10.3.9.tgz#427ea2961153789594709c2d7372fd2163ac46d1"
+  integrity sha512-drcRiJVencliC8LnRwk4MmeQDNNBg5GzmOoLFihO3/k0CUK0VF/N+2nc7iFozwaNG0btSB9vAhYuJLjqHMtRrQ==
 
 agent-base@^7.1.0, agent-base@^7.1.2:
   version "7.1.4"

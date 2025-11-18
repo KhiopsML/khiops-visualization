@@ -110,4 +110,11 @@
   ::ng-deep .ag-right-aligned-header .ag-header-cell-label {
     justify-content: flex-end !important;
   }
+
+  // Hide the "press space" message by targeting the ag-grid's accessibility messages
+  ::ng-deep .ag-aria-description-container,
+  ::ng-deep .ag-row[aria-description*='press space'],
+  ::ng-deep .ag-cell[aria-description*='press space'] {
+    display: none !important;
+  }
 }

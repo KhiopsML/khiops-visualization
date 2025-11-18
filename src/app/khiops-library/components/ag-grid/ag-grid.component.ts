@@ -255,7 +255,7 @@ export class AgGridComponent
 
       if (this.gridMode === 'fitToContent') {
         // Apply fit to content
-        this.agGrid?.columnApi?.autoSizeAllColumns(true);
+        this.agGrid?.api?.autoSizeAllColumns(true);
       } else if (this.gridMode === 'fitToSpace') {
         // Reinit current saved columns sizes when user fit grid to space
         delete this.cellsSizes[this.id!];
@@ -436,13 +436,6 @@ export class AgGridComponent
    */
   updateTable() {
     if (this.displayedColumns && this.inputDatas) {
-      // Update columns at any changes to update sort and other ...
-      this.columnDefs = [];
-      // Reset column defs in case of show/hide colum to reorder
-      if (this.agGrid?.api) {
-        this.agGrid.api.setColumnDefs(this.columnDefs);
-      }
-
       // Use AgGridService to create column definitions with automatic alignment
       this.columnDefs = this.agGridService.createColumnDefs(
         this.displayedColumns,
@@ -459,12 +452,18 @@ export class AgGridComponent
         this.inputDatas,
         this.displayedColumns,
       );
-    }
 
-    // Update grid data
-    if (this.agGrid?.api) {
-      this.agGrid.api.setColumnDefs(this.columnDefs);
-      this.agGrid.api.setRowData(this.rowData);
+      // Update grid data - in v32 we need to use the api methods when available
+      if (this.agGrid?.api) {
+        this.agGrid.api.setGridOption('columnDefs', this.columnDefs);
+        this.agGrid.api.setGridOption('rowData', this.rowData);
+      } else {
+        // Fallback for when api is not ready yet
+        if (this.agGrid) {
+          this.agGrid.columnDefs = this.columnDefs;
+          this.agGrid.rowData = this.rowData;
+        }
+      }
     }
   }
 
@@ -543,7 +542,9 @@ export class AgGridComponent
    */
   search() {
     // this.trackerService.trackEvent('click', 'search');
-    this.agGrid?.api.setQuickFilter(this.searchInput || '');
+    if (this.agGrid?.api) {
+      this.agGrid.api.setGridOption('quickFilterText', this.searchInput || '');
+    }
     if (this.searchInput) {
       this.ls.set(
         LS.OPTIONS_AG_GRID_SEARCH + '_' + this.id?.toUpperCase(),
@@ -683,7 +684,7 @@ export class AgGridComponent
     delete this.cellsSizes[this.id!];
     this.ls.set(LS.CELL_AG_GRID, this.cellsSizes);
 
-    this.agGrid?.columnApi?.autoSizeAllColumns(true);
+    this.agGrid?.api?.autoSizeAllColumns(true);
     this.saveGridModes(this.gridMode);
 
     // Restore state but without affecting column sizes (already handled by autoSizeAllColumns)
@@ -724,7 +725,7 @@ export class AgGridComponent
    */
   saveState(_grid: SortChangedEvent) {
     const state = {
-      sortState: this.agGrid?.columnApi?.getColumnState(),
+      sortState: this.agGrid?.api?.getColumnState(),
     };
     this.ls.set(LS.OPTIONS_AG_GRID + '_' + this.id?.toUpperCase(), state);
   }
@@ -757,7 +758,7 @@ export class AgGridComponent
           state.sortState[i] && delete state.sortState[i].width;
           state.sortState[i] && delete state.sortState[i].hide;
         }
-        this.agGrid?.columnApi?.applyColumnState({
+        this.agGrid?.api?.applyColumnState({
           state: state.sortState,
           applyOrder: true,
         });
