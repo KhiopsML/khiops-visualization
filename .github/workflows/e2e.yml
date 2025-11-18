@@ -14,9 +14,9 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Install with fallback
+      - name: Install dependencies (skip Cypress binary)
         run: |
-          yarn install || (echo "Retrying with different mirror..." && CYPRESS_DOWNLOAD_MIRROR=https://cdn.cypress.io/desktop yarn install)
+          CYPRESS_INSTALL_BINARY=0 yarn install
 
       - name: Build
         run: |
@@ -27,6 +27,7 @@ jobs:
         with:
           start: yarn start
           wait-on: 'http://localhost:4200'
+          install: true
 
       - name: Archive test results
         if: always()
