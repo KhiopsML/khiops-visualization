@@ -14,9 +14,12 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      - name: Install with fallback
+        run: |
+          yarn install || (echo "Retrying with different mirror..." && CYPRESS_DOWNLOAD_MIRROR=https://cdn.cypress.io/desktop yarn install)
+
       - name: Build
         run: |
-          yarn install
           yarn build:webcomponents
 
       - name: Cypress run
