@@ -10,6 +10,7 @@ import {
   CmulR,
 } from '../../models/transformation/hyperbolic-math';
 import { πify, sigmoid } from '../../models/transformation/hyperbolic-math';
+import { zoom } from 'd3';
 
 export interface InteractionLayerArgs extends ILayerArgs {
   mouseRadius;
@@ -55,8 +56,7 @@ export class InteractionLayer implements ILayer {
     var dragStartPoint = null;
     var dragStartElement = null;
     let lasttransform = null;
-    var zoom = d3
-      .zoom() // zoomevents: start, end, mulitiple,
+    var zoom = zoom() // zoomevents: start, end, mulitiple,
       .on('zoom', (event) => {
         console.assert(event);
 

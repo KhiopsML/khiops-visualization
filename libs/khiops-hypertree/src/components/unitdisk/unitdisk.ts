@@ -1,4 +1,4 @@
-import { Delaunay, type Voronoi } from 'd3';
+import { Delaunay, select, type Voronoi } from 'd3';
 import { N } from '../../models/n/n';
 import { C, CktoCp, CptoCk } from '../../models/transformation/hyperbolic-math';
 import { CmulR } from '../../models/transformation/hyperbolic-math';
@@ -82,8 +82,7 @@ export class UnitDisk implements IUnitDisk {
   };
 
   private updateParent() {
-    this.mainsvg = d3
-      .select(this.view.parent)
+    this.mainsvg = select(this.view.parent)
       .append('g')
       .attr('class', this.view.className)
       .attr('transform', this.view.position);
