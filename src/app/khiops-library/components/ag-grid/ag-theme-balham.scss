@@ -48,15 +48,22 @@
   ::-webkit-scrollbar-thumb {
     background: var(--scrollbar, #eee);
     border: none;
-    border-radius: 5px;
+    border-radius: 0; // Removed border radius as requested
+    min-height: 80px; // Minimum height for vertical scrollbar thumb
 
     &:hover {
       background: var(--bg-color-40, #bbb);
     }
   }
 
+  // Specific styling for vertical scrollbar thumb
+  ::-webkit-scrollbar:vertical ::-webkit-scrollbar-thumb {
+    min-height: 80px;
+  }
+
   ::-webkit-scrollbar-track {
     background: var(--bg-color, #fff);
+    border-radius: 0; // Also remove border radius from track
   }
 
   // Custom cell types for Khiops data visualization
