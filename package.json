@@ -29,7 +29,7 @@
   "scripts": {
     "build": "ng build",
     "buildHyperTree": "./scripts/buildHyperTree.sh",
-    "build:stats": "ng build --stats-json --source-map --output-hashing none && npm run stats:webpack-bundle-analyzer & npm run stats:source-map-explorer",
+    "build:stats": "ng build --stats-json --source-map --output-hashing none && yarn stats:webpack-bundle-analyzer & yarn stats:source-map-explorer",
     "build:webcomponents": "./scripts/build.sh",
     "buildDev:webcomponents": "./scripts/build-dev-watch.sh",
     "quickbuild:webcomponents": "./scripts/quickbuild.sh",

@@ -9135,7 +9135,7 @@ weak-lru-cache@^1.2.2:
   resolved "https://registry.yarnpkg.com/weak-lru-cache/-/weak-lru-cache-1.2.2.tgz#fdbb6741f36bae9540d12f480ce8254060dccd19"
   integrity sha512-DEAoo25RfSYMuTGc9vPJzZcZullwIqRDSI9LOy+fkCJPi6hykCnfKaXTuPBDuXAUcqHXyOgFtHNp/kB2FjYHbw==
 
-webpack-bundle-analyzer@5.0.0:
+webpack-bundle-analyzer@^5.0.0:
   version "5.0.0"
   resolved "https://registry.yarnpkg.com/webpack-bundle-analyzer/-/webpack-bundle-analyzer-5.0.0.tgz#23595576f196d7d6af70236c4550a72035131962"
   integrity sha512-iPQjqb5lYMsLUHjQT2NnanDXr8s61lVVBfIbvHfx1Akj+xZveW1lkJXRhbwbq737lUzd7EDRuN8fhxWGD5L4vw==
