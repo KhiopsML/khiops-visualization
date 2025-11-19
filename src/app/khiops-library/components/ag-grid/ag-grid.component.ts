@@ -116,7 +116,7 @@ export class AgGridComponent
     domLayout: 'normal',
     headerHeight: 40,
     // Add virtualization performance settings
-    rowBuffer: 50, // Number of extra rows to render outside the viewport
+    rowBuffer: 20, // Number of extra rows to render outside the viewport
     suppressRowVirtualisation: false, // Ensure row virtualization is enabled
     suppressColumnVirtualisation: false, // Ensure column virtualization is enabled
   };
