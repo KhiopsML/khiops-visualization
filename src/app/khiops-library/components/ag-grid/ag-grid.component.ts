@@ -570,17 +570,10 @@ export class AgGridComponent
         }
       }
 
-      // Block keyboard navigation at table ends
-      const pageSize: number = this.agGrid?.api?.paginationGetPageSize() || 0;
-      const currentPage: number =
-        this.agGrid?.api?.paginationGetCurrentPage() || 0;
       if (nextRowIndex !== undefined && typeof nextRowIndex === 'number') {
-        if (
-          currentPage * pageSize <= nextRowIndex &&
-          nextRowIndex < (currentPage + 1) * pageSize
-        ) {
+        const totalRowCount = this.agGrid?.api?.getDisplayedRowCount() || 0;
+        if (nextRowIndex >= 0 && nextRowIndex < totalRowCount) {
           this.selectNodeFromIndex(nextRowIndex);
-          // this.selectListItem.emit(this.agGrid.api.getSelectedNodes()[0].data);
           this.selectListItem.emit(
             this.agGrid?.api.getDisplayedRowAtIndex(nextRowIndex)?.data,
           );
