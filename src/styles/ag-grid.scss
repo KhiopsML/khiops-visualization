@@ -123,12 +123,6 @@ ag-grid-angular {
   display: flex;
   margin-left: 2px;
 }
-.ag-sort-ascending-icon {
-  margin-top: 5px;
-}
-.ag-sort-descending-icon {
-  margin-top: 8px;
-}
 
 .ag-theme-balham .ag-icon-asc:before {
   // content: '⏶' !important;
@@ -165,8 +159,6 @@ ag-grid-angular {
   // content: "\21E5";
   content: url('data:image/svg+xml, 	%3Csvg%20width%3D%2218px%22%20height%3D%2218px%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%3Cpath%20fill-rule%3D%22evenodd%22%20clip-rule%3D%22evenodd%22%20d%3D%22M8.715%206.36694L14.405%2010.6669C14.7769%2010.9319%2014.9977%2011.3603%2014.9977%2011.8169C14.9977%2012.2736%2014.7769%2012.702%2014.405%2012.9669L8.715%2017.6669C8.23425%2018.0513%207.58151%2018.1412%207.01475%2017.9011C6.44799%2017.6611%206.05842%2017.1297%206%2016.5169V7.51694C6.05842%206.90422%206.44799%206.37281%207.01475%206.13275C7.58151%205.89269%208.23425%205.9826%208.715%206.36694Z%22%20stroke%3D%22%23999999%22%20stroke-width%3D%221.5%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%2F%3E%3Cpath%20d%3D%22M18%206.01697V18.017%22%20stroke%3D%22%23999999%22%20stroke-width%3D%221.5%22%20stroke-linecap%3D%22round%22%2F%3E%3C%2Fsvg%3E');
 }
-
-
 
 /**
   

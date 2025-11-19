@@ -145,3 +145,25 @@
     --ag-font-size: 0.85em;
   }
 }
+.ag-header-group-cell-label,
+.ag-cell-label-container {
+  padding: 0px 0px 5px 0;
+}
+
+// Ensure sort indicator stays on the right of the label text (not the cell)
+.ag-right-aligned-header .ag-header-cell-label {
+  flex-direction: row-reverse;
+  justify-content: flex-end; // Align content to the right
+
+  .ag-sort-indicator-container {
+    order: -1 !important; // Force to be first in reverse order (appears after text)
+    flex-shrink: 0 !important;
+    margin-left: 4px !important; // Small gap between text and icon
+    margin-right: 0 !important;
+    position: static !important; // Reset any absolute positioning
+  }
+}
+
+.ag-sort-indicator-icon {
+  margin-top: -4px !important;
+}
