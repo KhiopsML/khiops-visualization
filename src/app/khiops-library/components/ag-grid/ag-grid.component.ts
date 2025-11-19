@@ -108,6 +108,7 @@ export class AgGridComponent
     suppressColumnMoveAnimation: true,
     animateRows: false,
     rowHeight: 34,
+    suppressPaginationPanel: true,
   };
 
   private cellsSizes: DynamicI = {};

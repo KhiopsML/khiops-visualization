@@ -153,13 +153,11 @@
     [navigateToNextCell]="keyboardNavigation"
     (gridReady)="onGridReady($event)"
     [suppressRowClickSelection]="suppressRowClickSelection"
-    [paginationPageSize]="paginationSize"
     [gridOptions]="gridOptions"
     (columnResized)="onColumnResized($event)"
     (sortChanged)="onSortChanged($event)"
     (cellClicked)="onCellClicked($event)"
     [rowSelection]="rowSelection"
-    [pagination]="shouldShowPagination"
     [modules]="modules"
   >
   </ag-grid-angular>
