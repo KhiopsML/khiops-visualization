@@ -10,7 +10,6 @@ export const covisualizationCommonEnvironment = {
     LS_ID: 'KHIOPS_COVISUALIZATION_',
     DEBUG_SOFTWARE_LABEL: 'KC',
     MATRIX_CONTRAST: 10,
-    PAGINATION_SIZE: 100,
     LIMIT_GRAPH_DATAS: 40,
     MAX_GRAPH_SCALE: 400,
     DEFAULT_GRAPH_SCALE: 100,

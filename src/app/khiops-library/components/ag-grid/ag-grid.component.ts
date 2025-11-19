@@ -76,7 +76,6 @@ export class AgGridComponent
   @Input() public showFullscreenBtn = true;
   @Input() public showSearch = true;
   @Input() public displayCount = false;
-  @Input() public paginationSize: number | undefined;
   @Input() public rowSelection = 'single';
   @Input() private showLineSelection = true;
   @Input() private selectedVariable: any; // Can be any types of data
@@ -103,7 +102,7 @@ export class AgGridComponent
   public isSmallDiv: boolean = false;
 
   public gridOptions = <GridOptions>{
-    suppressAnimationFrame: true,
+    suppressAnimationFrame: false, // Changed to false to enable proper virtualization
     enableBrowserTooltips: true,
     suppressColumnMoveAnimation: true,
     animateRows: false,
@@ -116,6 +115,10 @@ export class AgGridComponent
     suppressScrollWhenPopupsAreOpen: false,
     domLayout: 'normal',
     headerHeight: 40,
+    // Add virtualization performance settings
+    rowBuffer: 50, // Number of extra rows to render outside the viewport
+    suppressRowVirtualisation: false, // Ensure row virtualization is enabled
+    suppressColumnVirtualisation: false, // Ensure column virtualization is enabled
   };
 
   private cellsSizes: DynamicI = {};
@@ -138,7 +141,6 @@ export class AgGridComponent
   ) {
     super(selectableService, ngzone, configService);
     this.AppConfig = this.khiopsLibraryService.getAppConfig().common;
-    this.paginationSize = this.AppConfig.GLOBAL.PAGINATION_SIZE;
 
     this.title = this.translate.get('GLOBAL.VARIABLES') || this.title;
 
@@ -211,7 +213,6 @@ export class AgGridComponent
     if (changes.inputDatas?.currentValue) {
       // We must update table always, even if content do not changed, to update header informations
       this.updateTable();
-      this.checkToggleAgGridVisibility();
     }
     if (changes.selectedVariable?.currentValue) {
       // always do it in case of shortdesc change
@@ -306,35 +307,6 @@ export class AgGridComponent
    */
   public showActiveEntries() {
     this.selectNode(this.selectedVariable);
-  }
-
-  /**
-   * Checks and toggles the visibility of the AG Grid component based on the input data length
-   * and pagination size. If the visibility state changes, it temporarily hides and then shows
-   * the AG Grid component to trigger a re-render.
-   */
-  checkToggleAgGridVisibility() {
-    const previousState = this.shouldShowPagination;
-    this.shouldShowPagination =
-      (this.inputDatas && this.inputDatas.length > this.paginationSize!) ||
-      false;
-
-    // Update grid options based on pagination state
-    if (this.shouldShowPagination) {
-      this.gridOptions.pagination = true;
-      this.gridOptions.paginationPageSize = this.paginationSize;
-      this.gridOptions.domLayout = 'normal';
-    } else {
-      this.gridOptions.pagination = false;
-      this.gridOptions.domLayout = 'normal';
-    }
-
-    if (previousState !== this.shouldShowPagination) {
-      this.agGridVisible = false;
-      setTimeout(() => {
-        this.agGridVisible = true;
-      }, 0);
-    }
   }
 
   /**
