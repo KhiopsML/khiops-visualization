@@ -3,12 +3,15 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.doVoronoiStuff = doVoronoiStuff;
 exports.setHoverNodeCache = setHoverNodeCache;
 exports.doLabelStuff = doLabelStuff;
-const d3 = require("d3");
+const d3_1 = require("d3");
 function doVoronoiStuff(ud, cache) {
     const clickableNodes = cache.unculledNodes.filter((n) => n.precalc.clickable);
-    const points = clickableNodes.map((d) => [d.cache.re, d.cache.im]);
+    const points = clickableNodes.map((d) => [
+        d.cache.re,
+        d.cache.im,
+    ]);
     if (points.length > 0) {
-        const delaunay = d3.Delaunay.from(points);
+        const delaunay = d3_1.Delaunay.from(points);
         cache.voronoiDiagram = delaunay.voronoi([-2, -2, 2, 2]);
         cache.cells = Array.from(cache.voronoiDiagram.cellPolygons());
     }

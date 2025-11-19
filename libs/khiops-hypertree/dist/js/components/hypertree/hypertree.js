@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Frame = exports.Transition = exports.Hypertree = void 0;
-const d3 = require("d3");
+const d3_1 = require("d3");
 const ducd_1 = require("../../ducd/");
 const ducd_2 = require("../../ducd/");
 const n_layouts_1 = require("../../models/n/n-layouts");
@@ -247,7 +247,7 @@ class Hypertree {
         var t2 = performance.now();
         var ncount = 1;
         globelhtid++;
-        this.data = d3.hierarchy(d3h).each((n) => {
+        this.data = (0, d3_1.hierarchy)(d3h).each((n) => {
             n.globelhtid = globelhtid;
             n.mergeId = ncount++;
             n.data = n.data || {};

@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.LabelForceLayer = void 0;
-const d3 = require("d3");
+const d3_1 = require("d3");
 const d3updatePattern_1 = require("../layerstack/d3updatePattern");
 const hyperbolic_math_1 = require("../../models/transformation/hyperbolic-math");
 const hyperbolic_math_2 = require("../../models/transformation/hyperbolic-math");
@@ -36,12 +36,11 @@ class LabelForceLayer {
         this.view = view;
         this.args = args;
         this.name = args.name;
-        this.simulation = d3
-            .forceSimulation()
+        this.simulation = (0, d3_1.forceSimulation)()
             .alphaTarget(0.001)
-            .force('link', d3.forceLink().strength(-0.05))
-            .force('charge', d3.forceManyBody().strength(-0.05))
-            .force('collide', d3.forceCollide().strength(0.0025).radius(0.18)) // .18
+            .force('link', (0, d3_1.forceLink)().strength(-0.05))
+            .force('charge', (0, d3_1.forceManyBody)().strength(-0.05))
+            .force('collide', (0, d3_1.forceCollide)().strength(0.0025).radius(0.18)) // .18
             .stop();
     }
     labelSetUpdate() {

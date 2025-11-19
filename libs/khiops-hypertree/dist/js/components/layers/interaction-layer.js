@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.InteractionLayer = void 0;
-const d3 = require("d3");
+const d3_1 = require("d3");
 const hyperbolic_math_1 = require("../../models/transformation/hyperbolic-math");
 const hyperbolic_math_2 = require("../../models/transformation/hyperbolic-math");
 const hyperbolic_math_3 = require("../../models/transformation/hyperbolic-math");
@@ -14,15 +14,18 @@ class InteractionLayer {
             transformation: () => { },
             style: () => { },
         };
-        this.currMousePosAsArr = (event) => d3.pointer(event, this.view.parent.node());
+        this.currMousePosAsArr = (event) => (0, d3_1.pointer)(event, this.view.parent.node());
         this.currMousePosAsC = (event) => (0, hyperbolic_math_2.ArrtoC)(this.currMousePosAsArr(event));
         this.findNodeByCell = (event) => {
             var m = this.currMousePosAsArr(event);
             const clickableNodes = this.view.unitdisk.cache.unculledNodes.filter((n) => n.precalc && n.precalc.clickable);
             if (clickableNodes.length === 0)
                 return undefined;
-            const points = clickableNodes.map((d) => [d.cache.re, d.cache.im]);
-            const delaunay = d3.Delaunay.from(points);
+            const points = clickableNodes.map((d) => [
+                d.cache.re,
+                d.cache.im,
+            ]);
+            const delaunay = d3_1.Delaunay.from(points);
             const index = delaunay.find(m[0], m[1]);
             return index >= 0 ? clickableNodes[index] : undefined;
         };
@@ -50,7 +53,7 @@ class InteractionLayer {
             }
         };
         this.onDragEnd = (n, s, e) => {
-            const ti3 = d3.timer(() => {
+            const ti3 = (0, d3_1.timer)(() => {
                 ti3.stop();
                 this.view.hypertree.args.objects.traces.length = 0;
                 this.view.hypertree.update.transformation();
@@ -102,13 +105,10 @@ class InteractionLayer {
         var dragStartPoint = null;
         var dragStartElement = null;
         let lasttransform = null;
-        var zoom = d3
-            .zoom() // zoomevents: start, end, mulitiple,
+        var zoom = zoom() // zoomevents: start, end, mulitiple,
             .on('zoom', (event) => {
             console.assert(event);
-            if (event &&
-                event.sourceEvent &&
-                event.sourceEvent.type === 'wheel') {
+            if (event && event.sourceEvent && event.sourceEvent.type === 'wheel') {
                 const mΔ = event.sourceEvent.deltaY;
                 const λΔ = ((mΔ / 100) * 2 * Math.PI) / 16;
                 const oldλp = this.view.unitdisk.args.transformation.state.λ;
@@ -163,7 +163,7 @@ class InteractionLayer {
             return;
         this.onDragStart(n, m);
         var md = (0, hyperbolic_math_1.CktoCp)(m), initR = md.r, step = 1, steps = 20;
-        this.animationTimer = d3.timer(() => {
+        this.animationTimer = (0, d3_1.timer)(() => {
             md.r = initR * (1 - (0, hyperbolic_math_3.sigmoid)(step++ / steps));
             if (step > steps) {
                 this.cancelAnimationTimer();

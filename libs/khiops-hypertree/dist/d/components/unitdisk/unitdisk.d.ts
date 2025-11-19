@@ -1,4 +1,4 @@
-import * as d3 from 'd3';
+import { type Voronoi } from 'd3';
 import { N } from '../../models/n/n';
 import { C } from '../../models/transformation/hyperbolic-math';
 import { TransformationCache } from '../../models/transformation/hyperbolic-transformation';
@@ -9,7 +9,7 @@ export interface IUnitDisk {
     view: UnitDiskView;
     args: UnitDiskArgs;
     cache: any;
-    voronoiLayout: d3.Voronoi<N>;
+    voronoiLayout: Voronoi<N>;
     layerStack: LayerStack;
     navParameter?: UnitDisk;
     isDraging?: boolean;
@@ -28,7 +28,7 @@ export declare class UnitDisk implements IUnitDisk {
     view: UnitDiskView;
     args: UnitDiskArgs;
     cache: TransformationCache;
-    voronoiLayout: d3.Voronoi<N>;
+    voronoiLayout: Voronoi<N>;
     layerStack: LayerStack;
     pinchcenter: C;
     isDraging: boolean;
@@ -53,7 +53,7 @@ export declare class UnitDiskNav implements IUnitDisk {
     args: UnitDiskArgs;
     cache: any;
     layerStack: any;
-    get voronoiLayout(): d3.Voronoi<N>;
+    get voronoiLayout(): Voronoi<N>;
     mainView: UnitDisk;
     navBackground: UnitDisk;
     navParameter: UnitDisk;

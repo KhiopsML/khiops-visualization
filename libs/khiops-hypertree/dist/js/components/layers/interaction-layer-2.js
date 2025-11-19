@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.InteractionLayer2 = void 0;
-const d3 = require("d3");
+const d3_1 = require("d3");
 const hyperbolic_math_1 = require("../../models/transformation/hyperbolic-math");
 const hyperbolic_math_2 = require("../../models/transformation/hyperbolic-math");
 const hyperbolic_math_3 = require("../../models/transformation/hyperbolic-math");
@@ -23,7 +23,7 @@ class InteractionLayer2 {
         this.nopinch = null;
         this.pinchcenter = null;
         this.pinchPreservingNode = null;
-        this.currMousePosAsArr = (event) => d3.pointer(event, this.view.parent.node());
+        this.currMousePosAsArr = (event) => (0, d3_1.pointer)(event, this.view.parent.node());
         this.currMousePosAsC = (event) => (0, hyperbolic_math_2.ArrtoC)(this.currMousePosAsArr(event));
         this.findNodeByCell = (event) => {
             var m = this.currMousePosAsArr(event);
@@ -34,7 +34,7 @@ class InteractionLayer2 {
                 d.cache.re,
                 d.cache.im,
             ]);
-            const delaunay = d3.Delaunay.from(points);
+            const delaunay = d3_1.Delaunay.from(points);
             const index = delaunay.find(m[0], m[1]);
             return index >= 0 ? clickableNodes[index] : undefined;
         };
@@ -43,7 +43,7 @@ class InteractionLayer2 {
                 d.cache.re,
                 d.cache.im,
             ]);
-            const delaunay = d3.Delaunay.from(points);
+            const delaunay = d3_1.Delaunay.from(points);
             const voronoiDiagram = delaunay.voronoi([-2, -2, 2, 2]);
             const findIndex = delaunay.find(m.re, m.im);
             const find = findIndex >= 0
@@ -186,7 +186,7 @@ class InteractionLayer2 {
         for (let i = 0; i < changedTouches.length; ++i) {
             const t = changedTouches[i];
             const pid = t.identifier;
-            const m = (0, hyperbolic_math_2.ArrtoC)(d3.pointer(t, this.view.parent.node()));
+            const m = (0, hyperbolic_math_2.ArrtoC)((0, d3_1.pointer)(t, this.view.parent.node()));
             update = this[eventName](pid, m) || update;
         }
         requestAnimationFrame(() => {
@@ -347,7 +347,7 @@ class InteractionLayer2 {
             d.cache.re,
             d.cache.im,
         ]);
-        const delaunay = d3.Delaunay.from(points);
+        const delaunay = d3_1.Delaunay.from(points);
         const index = delaunay.find(m.re, m.im);
         const n = index >= 0 ? clickableNodes[index] : undefined;
         if (!this.view.hypertree.isAnimationRunning())

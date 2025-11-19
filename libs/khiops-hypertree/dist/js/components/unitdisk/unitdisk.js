@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.UnitDiskNav = exports.UnitDisk = void 0;
-const d3 = require("d3");
+const d3_1 = require("d3");
 const hyperbolic_math_1 = require("../../models/transformation/hyperbolic-math");
 const hyperbolic_math_2 = require("../../models/transformation/hyperbolic-math");
 const hyperbolic_math_3 = require("../../models/transformation/hyperbolic-math");
@@ -40,8 +40,7 @@ class UnitDisk {
         this.update.parent();
     }
     updateParent() {
-        this.mainsvg = d3
-            .select(this.view.parent)
+        this.mainsvg = (0, d3_1.select)(this.view.parent)
             .append('g')
             .attr('class', this.view.className)
             .attr('transform', this.view.position);
@@ -50,7 +49,7 @@ class UnitDisk {
             .attr('id', 'circle-clip' + this.args.clipRadius)
             .append('circle')
             .attr('r', this.args.clipRadius);
-        this.voronoiLayout = d3.Delaunay.from([], (d) => {
+        this.voronoiLayout = d3_1.Delaunay.from([], (d) => {
             console.assert(typeof d.cache.re === 'number');
             return d.cache.re;
         }, (d) => {
@@ -161,9 +160,12 @@ class UnitDiskNav {
                     θ: args.transformation.state.λ * 2 * Math.PI,
                     r: -spr,
                 }));
-                const points = cache.unculledNodes.map((d) => [d.cache.re, d.cache.im]);
+                const points = cache.unculledNodes.map((d) => [
+                    d.cache.re,
+                    d.cache.im,
+                ]);
                 if (points.length > 0) {
-                    const delaunay = d3.Delaunay.from(points);
+                    const delaunay = d3_1.Delaunay.from(points);
                     cache.voronoiDiagram = delaunay.voronoi([-2, -2, 2, 2]);
                     cache.cells = Array.from(cache.voronoiDiagram.cellPolygons());
                 }
