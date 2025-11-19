@@ -24,11 +24,11 @@ import {
   TreeDetails,
   TreePreparationVariableStatistic,
 } from '@khiops-visualization/interfaces/tree-preparation-report';
-import { VariableDetail } from '@khiops-visualization/interfaces/app-datas';
 import { Observable, take } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { selectedNodesSelector } from '@khiops-visualization/selectors/tree-preparation.selector';
 import { TASKS } from '@khiops-library/enum/tasks';
+import { VariableDetail } from '@khiops-visualization/interfaces/shared-interfaces';
 
 @Injectable({
   providedIn: 'root',

@@ -4,12 +4,12 @@
  * at https://spdx.org/licenses/BSD-3-Clause-Clear.html or see the "LICENSE" file for more details.
  */
 
+import cloneDeep from 'lodash-es/cloneDeep';
+import { AppConfig } from '../../../environments/environment';
 import {
   DimensionVisualization,
   VariableDetail,
-} from '@khiops-visualization/interfaces/app-datas';
-import cloneDeep from 'lodash-es/cloneDeep';
-import { AppConfig } from '../../../environments/environment';
+} from '@khiops-visualization/interfaces/shared-interfaces';
 
 export class VariableDetailsModel {
   dataGrid!: {

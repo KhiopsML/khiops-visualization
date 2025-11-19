@@ -25,13 +25,10 @@ import { TreeNodeModel } from '@khiops-visualization/model/tree-node.model';
 import { PreparationVariableModel } from '@khiops-visualization/model/preparation-variable.model';
 import { TreePreparationVariableModel } from '@khiops-visualization/model/tree-preparation-variable.model';
 import { DistributionChartDatasModel } from '@khiops-visualization/model/distribution-chart-datas.model';
-import {
-  DimensionVisualization,
-  VariableDetail,
-} from '@khiops-visualization/interfaces/app-datas';
 import { VariableModel } from '@khiops-visualization/model/variable.model';
 import { Variable2dModel } from '@khiops-visualization/model/variable-2d.model';
 import { REPORT } from '@khiops-library/enum/report';
+import { DimensionVisualization, VariableDetail } from '@khiops-visualization/interfaces/shared-interfaces';
 
 @Injectable({
   providedIn: 'root',

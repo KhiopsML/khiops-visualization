@@ -5,9 +5,9 @@
  */
 
 import { UtilsService } from '@khiops-library/providers/utils.service';
-import { TargetValues } from '@khiops-visualization/interfaces/app-datas';
 import { TreeChildNode } from '@khiops-visualization/interfaces/tree-preparation-report';
 import { TreePreparationDatasModel } from './tree-preparation-datas.model';
+import { TargetValues } from '@khiops-visualization/interfaces/shared-interfaces';
 
 export class TreeNodeModel implements TreeChildNode {
   id: string | undefined;

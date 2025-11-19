@@ -8,8 +8,8 @@ import { REPORT } from '@khiops-library/enum/report';
 import { TYPES } from '@khiops-library/enum/types';
 import { VARIABLE_TYPES } from '@khiops-library/enum/variable-types';
 import { UtilsService } from '@khiops-library/providers/utils.service';
-import { VariableDetail } from '@khiops-visualization/interfaces/app-datas';
 import { PreparationVariableStatistic } from '@khiops-visualization/interfaces/preparation-report';
+import { VariableDetail } from '@khiops-visualization/interfaces/shared-interfaces';
 import { TextPreparationVariableStatistic } from '@khiops-visualization/interfaces/text-preparation-report';
 import { TreePreparationVariableStatistic } from '@khiops-visualization/interfaces/tree-preparation-report';
 

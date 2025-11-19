@@ -9,7 +9,7 @@ import {
   ValueGroup,
 } from '@khiops-covisualization/interfaces/app-datas';
 import { TYPES } from '@khiops-library/enum/types';
-import { DimensionVisualization } from '@khiops-visualization/interfaces/app-datas';
+import { DimensionVisualization } from '@khiops-visualization/interfaces/shared-interfaces';
 import clone from 'lodash-es/clone';
 
 export class DimensionVisualizationModel implements DimensionVisualization {

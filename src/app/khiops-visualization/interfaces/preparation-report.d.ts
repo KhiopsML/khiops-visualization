@@ -4,7 +4,7 @@
  * at https://spdx.org/licenses/BSD-3-Clause-Clear.html or see the "LICENSE" file for more details.
  */
 
-import { VariableDetail } from './app-datas';
+import { VariableDetail } from './shared-interfaces';
 
 export interface PreparationReport {
   reportType: string;
@@ -79,22 +79,4 @@ export interface PreparationVariableStatistic {
   sparseMissingNumber?: number; // unused var
 }
 
-export interface ModlHistograms {
-  histogramNumber: number;
-  interpretableHistogramNumber: number;
-  truncationEpsilon: number;
-  removedSingularIntervalNumber: number;
-  granularities: number[];
-  intervalNumbers: number[];
-  peakIntervalNumbers: number[];
-  spikeIntervalNumbers: number[];
-  emptyIntervalNumbers: number[];
-  levels: number[];
-  informationRates: number[];
-  histograms: Histogram[];
-}
 
-export interface Histogram {
-  bounds: number[];
-  frequencies: number[];
-}

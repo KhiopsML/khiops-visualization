@@ -8,7 +8,7 @@ import {
   DataGrid,
   LiftCurve,
   RecCurve,
-} from './app-datas';
+} from './shared-interfaces';
 
 export interface TrainEvaluationReport {
   reportType: string;

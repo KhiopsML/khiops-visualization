@@ -6,10 +6,9 @@
 
 import {
   DataGrid,
-  DimensionVisualization,
   LiftCurve,
   RecCurve,
-} from './app-datas';
+} from './shared-interfaces';
 
 export interface TestEvaluationReport {
   reportType: string;

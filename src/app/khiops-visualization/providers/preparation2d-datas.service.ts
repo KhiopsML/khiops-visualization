@@ -29,15 +29,11 @@ import { MatrixModeI } from '@khiops-library/interfaces/matrix-mode';
 import { MatrixValuesModel } from '@khiops-library/model/matrix-value.model';
 import { VariablePairStatistics } from '@khiops-visualization/interfaces/bivariate-preparation-report';
 import { DimensionVisualizationModel } from '@khiops-library/model/dimension.visualization.model';
-import {
-  DimensionVisualization,
-  InputValues,
-  VariableDetail,
-} from '@khiops-visualization/interfaces/app-datas';
 import { MatrixDatasModel } from '@khiops-library/model/matrix-datas.model';
 import { MATRIX_MODES } from '@khiops-library/enum/matrix-modes';
 import { VARIABLE_TYPES } from '@khiops-library/enum/variable-types';
 import isEqual from 'lodash-es/isEqual';
+import { DimensionVisualization, InputValues, VariableDetail } from '@khiops-visualization/interfaces/shared-interfaces';
 
 @Injectable({
   providedIn: 'root',

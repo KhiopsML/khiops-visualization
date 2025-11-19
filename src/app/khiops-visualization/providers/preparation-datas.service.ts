@@ -28,8 +28,8 @@ import { TextPreparationVariableStatistic } from '@khiops-visualization/interfac
 import { TrainedPredictorModel } from '@khiops-visualization/model/trained-predictor.model';
 import { PreparationVariableStatistic } from '@khiops-visualization/interfaces/preparation-report';
 import { TreePreparationVariableStatistic } from '@khiops-visualization/interfaces/tree-preparation-report';
-import { VariableDetail } from '@khiops-visualization/interfaces/app-datas';
 import { AppConfig } from '../../../environments/environment';
+import { VariableDetail } from '@khiops-visualization/interfaces/shared-interfaces';
 
 @Injectable({
   providedIn: 'root',
