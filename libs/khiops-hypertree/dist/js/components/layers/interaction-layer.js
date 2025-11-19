@@ -105,7 +105,7 @@ class InteractionLayer {
         var dragStartPoint = null;
         var dragStartElement = null;
         let lasttransform = null;
-        var zoom = zoom() // zoomevents: start, end, mulitiple,
+        var zoomBehavior = (0, d3_1.zoom)() // zoomevents: start, end, mulitiple,
             .on('zoom', (event) => {
             console.assert(event);
             if (event && event.sourceEvent && event.sourceEvent.type === 'wheel') {
@@ -155,7 +155,7 @@ class InteractionLayer {
             .on('dblclick', (event, d) => this.onDblClick(event, this.findNodeByCell(event)))
             .on('mousemove', (event, d) => htapi.setPathHead(hoverpath, this.findNodeByCell(event)))
             .on('mouseout', (event, d) => htapi.setPathHead(hoverpath, undefined))
-            .call(zoom)
+            .call(zoomBehavior)
             .on('dblclick.zoom', null);
     }
     animateTo(n, m) {

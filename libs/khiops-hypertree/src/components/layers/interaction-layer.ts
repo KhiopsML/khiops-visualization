@@ -1,4 +1,4 @@
-import { pointer, Delaunay, timer } from 'd3';
+import { pointer, Delaunay, timer, zoom } from 'd3';
 import { ILayer } from '../layerstack/layer';
 import { ILayerView } from '../layerstack/layer';
 import { ILayerArgs } from '../layerstack/layer';
@@ -10,7 +10,6 @@ import {
   CmulR,
 } from '../../models/transformation/hyperbolic-math';
 import { πify, sigmoid } from '../../models/transformation/hyperbolic-math';
-import { zoom } from 'd3';
 
 export interface InteractionLayerArgs extends ILayerArgs {
   mouseRadius;
@@ -56,7 +55,7 @@ export class InteractionLayer implements ILayer {
     var dragStartPoint = null;
     var dragStartElement = null;
     let lasttransform = null;
-    var zoom = zoom() // zoomevents: start, end, mulitiple,
+    var zoomBehavior = zoom() // zoomevents: start, end, mulitiple,
       .on('zoom', (event) => {
         console.assert(event);
 
@@ -130,7 +129,7 @@ export class InteractionLayer implements ILayer {
         htapi.setPathHead(hoverpath, this.findNodeByCell(event)),
       )
       .on('mouseout', (event, d) => htapi.setPathHead(hoverpath, undefined))
-      .call(zoom)
+      .call(zoomBehavior)
       .on('dblclick.zoom', null);
   }
 

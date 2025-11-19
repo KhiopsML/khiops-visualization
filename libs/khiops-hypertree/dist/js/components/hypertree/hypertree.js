@@ -38,6 +38,11 @@ class Hypertree {
             },
             updateNodesVisualization: () => {
                 return new Promise((ok, err) => {
+                    if (!this.data) {
+                        console.warn('updateNodesVisualization called before data initialization');
+                        ok();
+                        return;
+                    }
                     const previousPosition = JSON.parse(JSON.stringify(this.args.geometry.transformation.state.P));
                     this.updateWeights_();
                     this.update.transformation();
@@ -285,6 +290,10 @@ class Hypertree {
         this.findInitλ_();
     }
     updateWeights_() {
+        if (!this.data) {
+            console.warn('updateWeights_ called with undefined data');
+            return;
+        }
         this.sum(this.data, this.args.layout.weight, 'layoutWeight');
         this.sum(this.data, this.args.filter.weightFilter.weight, 'cullingWeight');
         this.sum(this.data, this.args.layout.weight, 'visWeight');
@@ -294,6 +303,10 @@ class Hypertree {
                 (Math.log2(this.data.precalc.visWeight || this.data.children.length) || 1)));
     }
     sum(data, value, target) {
+        if (!data || !data.eachAfter) {
+            console.warn('sum called with invalid data:', data);
+            return;
+        }
         data.eachAfter((node) => {
             let sum = +value(node) || 0;
             const children = node.children;
