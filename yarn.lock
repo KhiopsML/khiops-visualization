@@ -25,6 +25,11 @@
     ag-charts-types "10.3.9"
     tslib "^2.3.0"
 
+"@ag-grid-community/styles@32.3.9":
+  version "32.3.9"
+  resolved "https://registry.yarnpkg.com/@ag-grid-community/styles/-/styles-32.3.9.tgz#a754cad9ab8414cd89605113a926e9d05a189702"
+  integrity sha512-uPNR5EXeQqAIC0gohmY7CJ97cTIA/JtNSqAUzJ8AdVZcz4dbk9JJIl9DRFUYL+qWhMY+fUSTw2a+Yi6aOGSs8A==
+
 "@algolia/abtesting@1.1.0":
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/@algolia/abtesting/-/abtesting-1.1.0.tgz#32c84876956727dcdca8df03c567f12fb39edf0d"
@@ -9135,7 +9140,7 @@ weak-lru-cache@^1.2.2:
   resolved "https://registry.yarnpkg.com/weak-lru-cache/-/weak-lru-cache-1.2.2.tgz#fdbb6741f36bae9540d12f480ce8254060dccd19"
   integrity sha512-DEAoo25RfSYMuTGc9vPJzZcZullwIqRDSI9LOy+fkCJPi6hykCnfKaXTuPBDuXAUcqHXyOgFtHNp/kB2FjYHbw==
 
-webpack-bundle-analyzer@^5.0.0:
+webpack-bundle-analyzer@5.0.0:
   version "5.0.0"
   resolved "https://registry.yarnpkg.com/webpack-bundle-analyzer/-/webpack-bundle-analyzer-5.0.0.tgz#23595576f196d7d6af70236c4550a72035131962"
   integrity sha512-iPQjqb5lYMsLUHjQT2NnanDXr8s61lVVBfIbvHfx1Akj+xZveW1lkJXRhbwbq737lUzd7EDRuN8fhxWGD5L4vw==

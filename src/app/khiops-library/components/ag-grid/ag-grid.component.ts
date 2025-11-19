@@ -109,6 +109,13 @@ export class AgGridComponent
     animateRows: false,
     rowHeight: 34,
     suppressPaginationPanel: true,
+    rowModelType: 'clientSide',
+    pagination: false,
+    suppressHorizontalScroll: false,
+    suppressScrollOnNewData: false,
+    suppressScrollWhenPopupsAreOpen: false,
+    domLayout: 'normal',
+    headerHeight: 40,
   };
 
   private cellsSizes: DynamicI = {};
@@ -311,11 +318,22 @@ export class AgGridComponent
     this.shouldShowPagination =
       (this.inputDatas && this.inputDatas.length > this.paginationSize!) ||
       false;
+
+    // Update grid options based on pagination state
+    if (this.shouldShowPagination) {
+      this.gridOptions.pagination = true;
+      this.gridOptions.paginationPageSize = this.paginationSize;
+      this.gridOptions.domLayout = 'normal';
+    } else {
+      this.gridOptions.pagination = false;
+      this.gridOptions.domLayout = 'normal';
+    }
+
     if (previousState !== this.shouldShowPagination) {
       this.agGridVisible = false;
       setTimeout(() => {
         this.agGridVisible = true;
-      });
+      }, 0);
     }
   }
 
