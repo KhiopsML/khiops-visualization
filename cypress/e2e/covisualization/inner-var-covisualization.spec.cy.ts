@@ -41,7 +41,7 @@ describe('Test Plan for Khiops Covisualization', () => {
         cy.get('.close-btn').first().click();
         cy.wait(200);
 
-        cy.get('#85').click();
+        cy.get('#85').click(); // click on root node B1
         cy.wait(200);
 
         cy.get('#cluster-composition-1', { includeShadowDom: true }).contains(
