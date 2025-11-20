@@ -38,8 +38,10 @@ export class InAppOverlayContainer extends OverlayContainer {
   }
 
   getRootElement(): Element | null {
-    return this.configService
-      .getRootElementDom()
-      .querySelector('app-home-layout');
+    const rootElementDom = this.configService.getRootElementDom();
+    if (!rootElementDom) {
+      return null;
+    }
+    return rootElementDom.querySelector('app-home-layout');
   }
 }

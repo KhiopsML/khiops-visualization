@@ -28,12 +28,39 @@ import { VisualizationDatas } from './interfaces/app-datas';
 import { ConfigModel } from '@khiops-library/model/config.model';
 import { InAppOverlayContainer } from '@khiops-library/overlay/in-app-overlay-provider';
 import { AppConfig } from '../../environments/environment';
+import { LayoutService } from '@khiops-library/providers/layout.service';
+import { KhiopsLibraryService } from '@khiops-library/providers/khiops-library.service';
+import { Ls } from '@khiops-library/providers/ls.service';
+import { PreparationDatasService } from './providers/preparation-datas.service';
+import { Preparation2dDatasService } from './providers/preparation2d-datas.service';
+import { TreePreparationDatasService } from './providers/tree-preparation-datas.service';
+import { ModelingDatasService } from './providers/modeling-datas.service';
+import { EvaluationDatasService } from './providers/evaluation-datas.service';
+import { DistributionDatasService } from './providers/distribution-datas.service';
+import { ProjectDatasService } from './providers/project-datas.service';
 @Component({
   selector: 'app-root-visualization',
   styleUrls: ['./app.component.scss'],
   templateUrl: './app.component.html',
   encapsulation: ViewEncapsulation.ShadowDom,
   standalone: false,
+  providers: [
+    AppService,
+    SaveService,
+    FileLoaderService,
+    ConfigService,
+    InAppOverlayContainer,
+    LayoutService,
+    KhiopsLibraryService,
+    Ls,
+    PreparationDatasService,
+    Preparation2dDatasService,
+    TreePreparationDatasService,
+    ModelingDatasService,
+    EvaluationDatasService,
+    DistributionDatasService,
+    ProjectDatasService,
+  ],
 })
 export class AppComponent implements AfterViewInit {
   appdatas: VisualizationDatas | undefined;
@@ -55,9 +82,13 @@ export class AppComponent implements AfterViewInit {
     private trackerService: TrackerService,
     private fileLoaderService: FileLoaderService,
     private element: ElementRef,
+    private ls: Ls,
   ) {
-    // Set LS_ID first before any initialization that uses localStorage
-    AppService.Ls.setLsId(AppConfig.visualizationCommon.GLOBAL.LS_ID);
+    // Set LS_ID with unique instance identifier to prevent collision between tabs
+    const instanceId = `${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
+    const lsId = `${AppConfig.visualizationCommon.GLOBAL.LS_ID}_${instanceId}`;
+    this.ls.setLsId(lsId);
+    AppService.Ls = this.ls;
     // Now we can safely initialize the app service
     this.appService.initialize();
   }
@@ -71,12 +102,14 @@ export class AppComponent implements AfterViewInit {
     ) => {
       // Set data into ngzone to detect change into another context (electron for instance)
       this.ngzone.run(() => {
-        this.clean();
+        // Don't clean, just set the new data
         // @ts-ignore
         this.appdatas = {
           ...datas,
         };
         this.element.nativeElement.value = datas;
+        // Set data to both services - appService manages the data state
+        this.appService.setFileDatas(datas);
         this.fileLoaderService.setDatas(datas);
       });
     };
@@ -108,7 +141,7 @@ export class AppComponent implements AfterViewInit {
 
     setTimeout(() => {
       AppService.Ls.getAll().then(() => {
-        this.appService.initialize();
+        // Don't reinitialize as it clears data - just init tracker
         this.trackerService.initTracker();
       });
 
