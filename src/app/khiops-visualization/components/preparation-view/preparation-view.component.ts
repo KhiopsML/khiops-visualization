@@ -4,7 +4,7 @@
  * at https://spdx.org/licenses/BSD-3-Clause-Clear.html or see the "LICENSE" file for more details.
  */
 
-import { Component, Input } from '@angular/core';
+import { Component, Input, ViewContainerRef } from '@angular/core';
 import { PreparationDatasService } from '../../providers/preparation-datas.service';
 import { SelectableTabComponent } from '@khiops-library/components/selectable-tab/selectable-tab.component';
 import { ModelingDatasService } from '@khiops-visualization/providers/modeling-datas.service';
@@ -59,6 +59,7 @@ export class PreparationViewComponent extends SelectableTabComponent {
     private layoutService: LayoutService,
     private modelingDatasService: ModelingDatasService,
     private distributionService: DistributionService,
+    private viewContainerRef: ViewContainerRef,
   ) {
     super();
 
@@ -128,6 +129,7 @@ export class PreparationViewComponent extends SelectableTabComponent {
 
   onShowLevelDistributionGraph(datas: VariableModel[]) {
     const config = new MatDialogConfig();
+    config.viewContainerRef = this.viewContainerRef;
     config.maxWidth = 'unset';
     config.width = AppConfig.visualizationCommon.LEVEL_DISTRIBUTION_GRAPH.WIDTH;
     config.height =
