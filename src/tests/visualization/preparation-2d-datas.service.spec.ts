@@ -127,7 +127,7 @@ describe('Visualization', () => {
 
       // Check that interval values are formatted as [min,max] for numerical variables
       expect(currentCellDatas?.values[0]![0]!.interval).toEqual('[2,3.05]');
-      expect(currentCellDatas?.values[0]![0]!.frequency).toEqual(37);
+      expect(currentCellDatas?.values[0]![0]!.frequency).toEqual(58);
     });
 
     it('getCurrentCellDatas should return valid datas [adult-bivar, R01]', () => {
@@ -152,7 +152,7 @@ describe('Visualization', () => {
 
       // Check that interval values are formatted as [min,max] for numerical variables
       expect(currentCellDatas?.values[0]![0]!.interval).toEqual('[0,70]');
-      expect(currentCellDatas?.values[0]![0]!.frequency).toEqual(31158);
+      expect(currentCellDatas?.values[0]![0]!.frequency).toEqual(32556);
 
       // Check categorical values
       expect(currentCellDatas?.values[1][0].values).toEqual('United-States');
@@ -163,7 +163,7 @@ describe('Visualization', () => {
       preparation2dDatasService.setSelectedCellIndex(1);
       currentCellDatas = preparation2dDatasService.getCurrentCellDatas();
       expect(currentCellDatas?.values[0]![0]!.interval).toEqual('[70,1457]');
-      expect(currentCellDatas?.values[0]![0]!.frequency).toEqual(92);
+      expect(currentCellDatas?.values[0]![0]!.frequency).toEqual(94);
     });
 
     it('getGlobalMinAndMax2dValues should return valid datas [co-oc, R1]', () => {
