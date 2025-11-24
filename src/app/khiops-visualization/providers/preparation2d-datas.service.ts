@@ -33,7 +33,11 @@ import { MatrixDatasModel } from '@khiops-library/model/matrix-datas.model';
 import { MATRIX_MODES } from '@khiops-library/enum/matrix-modes';
 import { VARIABLE_TYPES } from '@khiops-library/enum/variable-types';
 import isEqual from 'lodash-es/isEqual';
-import { DimensionVisualization, InputValues, VariableDetail } from '@khiops-visualization/interfaces/shared-interfaces';
+import {
+  DimensionVisualization,
+  InputValues,
+  VariableDetail,
+} from '@khiops-visualization/interfaces/shared-interfaces';
 
 @Injectable({
   providedIn: 'root',
@@ -455,6 +459,7 @@ export class Preparation2dDatasService {
           xName,
           isCurrentDefaultGroup,
           xType,
+          'x', // Pass axis identifier
         );
         const datasY = this.computeCellDatasByAxis(
           selectedCell.yaxisPartValues || [],
@@ -462,6 +467,7 @@ export class Preparation2dDatasService {
           yName,
           isCurrentDefaultGroup,
           yType,
+          'y', // Pass axis identifier
         );
         if (this.preparation2dDatas?.currentCellDatas) {
           this.preparation2dDatas.currentCellDatas.values = [datasX, datasY];
@@ -482,6 +488,7 @@ export class Preparation2dDatasService {
    * @param variableName - The name of the variable.
    * @param isCurrentDefaultGroup - True if the current group is the default group, otherwise false.
    * @param variableType - The type of the variable (numerical or categorical).
+   * @param axis - The axis identifier ('x' for X axis, 'y' for Y axis).
    */
   computeCellDatasByAxis(
     axisPartValues: number[] | string,
@@ -489,6 +496,7 @@ export class Preparation2dDatasService {
     variableName: string,
     isCurrentDefaultGroup: boolean,
     variableType?: string,
+    axis?: string,
   ) {
     const datasAxis: any = [];
     if (axisPartValues) {
@@ -505,10 +513,35 @@ export class Preparation2dDatasService {
             JSON.stringify(axisPartValues);
         }
         if (displayedColumns[1]?.field === 'frequency') {
-          // For numerical variables, we need to get the frequency from the cell data
-          // This will be calculated from the selected cell's frequency
-          datasAxis[0][displayedColumns[1].field] =
-            this.getSelectedCell()?.cellFreq;
+          // For numerical variables, we need to sum the frequencies of all cells
+          // that share the same axis part values
+          const selectedCell = this.getSelectedCell();
+          const matrixCells =
+            this.preparation2dDatas?.matrixDatas?.matrixCellDatas;
+
+          if (selectedCell && matrixCells && axis) {
+            let totalFrequency = 0;
+
+            if (axis === 'x') {
+              // Sum frequencies of all cells with the same xaxisPartValues
+              const xAxisPart = selectedCell.xaxisPart;
+              totalFrequency = matrixCells
+                .filter((cell) => cell.xaxisPart === xAxisPart)
+                .reduce((sum, cell) => sum + (cell.cellFreq || 0), 0);
+            } else if (axis === 'y') {
+              // Sum frequencies of all cells with the same yaxisPartValues
+              const yAxisPart = selectedCell.yaxisPart;
+              totalFrequency = matrixCells
+                .filter((cell) => cell.yaxisPart === yAxisPart)
+                .reduce((sum, cell) => sum + (cell.cellFreq || 0), 0);
+            }
+
+            datasAxis[0][displayedColumns[1].field] = totalFrequency;
+          } else {
+            // Fallback to cell frequency if matrix cells are not available
+            datasAxis[0][displayedColumns[1].field] =
+              selectedCell?.cellFreq || 0;
+          }
         }
       } else {
         // For categorical variables or other cases, keep the original behavior
