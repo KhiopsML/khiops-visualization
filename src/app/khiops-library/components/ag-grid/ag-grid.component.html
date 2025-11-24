@@ -72,7 +72,7 @@
           mat-icon-button
           (click)="removeSearch()"
           color="primary"
-          [hidden]="!searchInput"
+          [hidden]="!showSearch"
           *ngIf="this.searchFormVisible"
         >
           <mat-icon fxFlexFill fxLayoutAlign="center center">close</mat-icon>
