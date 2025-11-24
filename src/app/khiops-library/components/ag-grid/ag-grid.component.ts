@@ -43,6 +43,7 @@ import { KEYBOARD } from '@khiops-library/enum/keyboard';
 import { GridCheckboxEventI } from '@khiops-library/interfaces/events';
 import { DynamicI } from '@khiops-library/interfaces/globals';
 import { AgGridService } from '@khiops-library/components/ag-grid/ag-grid.service';
+import { AgGridLoadingOverlayComponent } from '@khiops-library/components/ag-grid/ag-grid-loading-overlay.component';
 
 ModuleRegistry.registerModules([ClientSideRowModelModule]);
 
@@ -119,6 +120,7 @@ export class AgGridComponent
     rowBuffer: 20, // Number of extra rows to render outside the viewport
     suppressRowVirtualisation: false, // Ensure row virtualization is enabled
     suppressColumnVirtualisation: false, // Ensure column virtualization is enabled
+    loadingOverlayComponent: AgGridLoadingOverlayComponent,
   };
 
   private cellsSizes: DynamicI = {};

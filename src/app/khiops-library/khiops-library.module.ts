@@ -53,6 +53,7 @@ import { GraphHeaderComponent } from './components/graph-header/graph-header.com
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatrixComponent } from './components/matrix/matrix.component';
 import { AgGridComponent } from './components/ag-grid/ag-grid.component';
+import { AgGridLoadingOverlayComponent } from './components/ag-grid/ag-grid-loading-overlay.component';
 import { MatrixTooltipComponent } from './components/matrix-tooltip/matrix-tooltip.component';
 import { CheckboxCellComponent } from './components/ag-grid/checkbox-cell/checkbox-cell.component';
 import { IconCellComponent } from './components/ag-grid/icon-cell/icon-cell.component';
@@ -148,6 +149,7 @@ import { MenuFocusSelectedDirective } from './directives/menu-focus-selected.dir
     InformationsBlockComponent,
     MatrixComponent,
     AgGridComponent,
+    AgGridLoadingOverlayComponent,
     MatrixTooltipComponent,
     MatrixToggleComponent,
     MatrixModeComponent,
@@ -217,6 +219,7 @@ import { MenuFocusSelectedDirective } from './directives/menu-focus-selected.dir
     InformationsBlockComponent,
     MatrixComponent,
     AgGridComponent,
+    AgGridLoadingOverlayComponent,
     MatrixTooltipComponent,
     MatrixToggleComponent,
     GraphOptionsMenuComponent,
