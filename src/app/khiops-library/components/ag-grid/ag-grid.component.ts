@@ -212,8 +212,9 @@ export class AgGridComponent
         }
       }
     }
-    if (changes.inputDatas?.currentValue) {
+    if (changes.inputDatas) {
       // We must update table always, even if content do not changed, to update header informations
+      // Check for the presence of the change, not just the currentValue, to handle undefined values
       this.updateTable();
     }
     if (changes.selectedVariable?.currentValue) {
@@ -457,6 +458,9 @@ export class AgGridComponent
           this.agGrid.rowData = this.rowData;
         }
       }
+    } else {
+      // Clear the grid when inputDatas is undefined or empty
+      this.rowData = [];
     }
   }
 
