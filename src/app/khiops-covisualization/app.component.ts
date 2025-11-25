@@ -30,14 +30,7 @@ import { CovisualizationDatas } from './interfaces/app-datas';
 import { ConfigModel } from '@khiops-library/model/config.model';
 import { SaveService } from './providers/save.service';
 import { InAppOverlayContainer } from '@khiops-library/overlay/in-app-overlay-provider';
-import { LayoutService } from '@khiops-library/providers/layout.service';
-import { KhiopsLibraryService } from '@khiops-library/providers/khiops-library.service';
 import { Ls } from '@khiops-library/providers/ls.service';
-import { DimensionsDatasService } from './providers/dimensions-datas.service';
-import { ProjectDatasService } from './providers/project-datas.service';
-import { EventsService } from './providers/events.service';
-import { ViewManagerService } from './providers/view-manager.service';
-import { ImportExtDatasService } from './providers/import-ext-datas.service';
 
 @Component({
   selector: 'app-root-covisualization',
@@ -45,22 +38,6 @@ import { ImportExtDatasService } from './providers/import-ext-datas.service';
   templateUrl: './app.component.html',
   encapsulation: ViewEncapsulation.ShadowDom,
   standalone: false,
-  providers: [
-    AppService,
-    SaveService,
-    FileLoaderService,
-    ConfigService,
-    TreenodesService,
-    InAppOverlayContainer,
-    LayoutService,
-    KhiopsLibraryService,
-    Ls,
-    DimensionsDatasService,
-    ProjectDatasService,
-    EventsService,
-    ViewManagerService,
-    ImportExtDatasService,
-  ],
 })
 export class AppComponent implements AfterViewInit {
   appdatas: CovisualizationDatas | undefined;

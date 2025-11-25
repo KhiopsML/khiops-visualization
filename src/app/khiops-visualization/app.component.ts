@@ -28,39 +28,13 @@ import { VisualizationDatas } from './interfaces/app-datas';
 import { ConfigModel } from '@khiops-library/model/config.model';
 import { InAppOverlayContainer } from '@khiops-library/overlay/in-app-overlay-provider';
 import { AppConfig } from '../../environments/environment';
-import { LayoutService } from '@khiops-library/providers/layout.service';
-import { KhiopsLibraryService } from '@khiops-library/providers/khiops-library.service';
 import { Ls } from '@khiops-library/providers/ls.service';
-import { PreparationDatasService } from './providers/preparation-datas.service';
-import { Preparation2dDatasService } from './providers/preparation2d-datas.service';
-import { TreePreparationDatasService } from './providers/tree-preparation-datas.service';
-import { ModelingDatasService } from './providers/modeling-datas.service';
-import { EvaluationDatasService } from './providers/evaluation-datas.service';
-import { DistributionDatasService } from './providers/distribution-datas.service';
-import { ProjectDatasService } from './providers/project-datas.service';
 @Component({
   selector: 'app-root-visualization',
   styleUrls: ['./app.component.scss'],
   templateUrl: './app.component.html',
   encapsulation: ViewEncapsulation.ShadowDom,
   standalone: false,
-  providers: [
-    AppService,
-    SaveService,
-    FileLoaderService,
-    ConfigService,
-    InAppOverlayContainer,
-    LayoutService,
-    KhiopsLibraryService,
-    Ls,
-    PreparationDatasService,
-    Preparation2dDatasService,
-    TreePreparationDatasService,
-    ModelingDatasService,
-    EvaluationDatasService,
-    DistributionDatasService,
-    ProjectDatasService,
-  ],
 })
 export class AppComponent implements AfterViewInit {
   appdatas: VisualizationDatas | undefined;

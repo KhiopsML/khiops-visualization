@@ -107,11 +107,7 @@ import { ChangeScaleDialogComponent } from './components/commons/change-scale-di
     StoreModule.forRoot({ TreePreparationState: treePreparationReducer }),
     EffectsModule.forRoot([TreePreparationEffects]),
   ],
-  providers: [
-    InAppOverlayContainer,
-    // make sure that InAppOverlayContainer and OverlayContainer share the same instance
-    { provide: OverlayContainer, useExisting: InAppOverlayContainer },
-  ],
+  providers: [{ provide: OverlayContainer, useClass: InAppOverlayContainer }],
   exports: [AppComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
