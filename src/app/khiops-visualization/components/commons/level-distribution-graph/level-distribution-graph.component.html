@@ -28,7 +28,7 @@
         [id]="graphIdContainer + '-close-btn'"
         color="primary"
         class="screenshot-hide"
-        matDialogClose
+        (click)="closeDialog()"
         mat-icon-button
         fxLayoutAlign="center center"
       >

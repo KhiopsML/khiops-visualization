@@ -54,7 +54,6 @@ import { DataTypeSelectorComponent } from './components/commons/data-type-select
 import { LevelDistributionButtonComponent } from './components/commons/level-distribution-button/level-distribution-button.component';
 import { ChangeScaleButtonComponent } from './components/commons/change-scale-button/change-scale-button.component';
 import { ChangeScaleDialogComponent } from './components/commons/change-scale-dialog/change-scale-dialog.component';
-import { DialogWrapperComponent } from './components/commons/dialog-wrapper/dialog-wrapper.component';
 
 @NgModule({
   declarations: [
@@ -92,7 +91,6 @@ import { DialogWrapperComponent } from './components/commons/dialog-wrapper/dial
     LevelDistributionButtonComponent,
     ChangeScaleButtonComponent,
     ChangeScaleDialogComponent,
-    DialogWrapperComponent,
     AppComponent,
   ],
   imports: [

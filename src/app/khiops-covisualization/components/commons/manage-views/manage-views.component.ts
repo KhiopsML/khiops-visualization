@@ -6,7 +6,7 @@
 
 import { Component } from '@angular/core';
 import { AppService } from '@khiops-covisualization/providers/app.service';
-import { MatDialogRef } from '@angular/material/dialog';
+import { DialogService } from '@khiops-library/providers/dialog.service';
 import { ViewLayoutVO } from '@khiops-covisualization/model/view-layout.model';
 import cloneDeep from 'lodash-es/cloneDeep';
 import { ViewManagerService } from '@khiops-covisualization/providers/view-manager.service';
@@ -28,7 +28,7 @@ export class ManageViewsComponent {
   constructor(
     private appService: AppService,
     private viewManagerService: ViewManagerService,
-    private dialogRef: MatDialogRef<ManageViewsComponent>,
+    private dialogService: DialogService,
   ) {
     this.viewsLayout = cloneDeep(this.viewManagerService.getViewsLayout());
     this.isContextView = this.appService.getActiveTabIndex() === 1;
@@ -37,11 +37,11 @@ export class ManageViewsComponent {
 
   onClickOnSave() {
     this.viewManagerService.saveViewsLayout(this.viewsLayout);
-    this.dialogRef.close();
+    this.dialogService.closeDialog();
   }
 
   onClickOnCancel() {
-    this.dialogRef.close();
+    this.dialogService.closeDialog();
   }
 
   toggleDimension(dimensionLayout: DimensionViewLayoutModel) {
