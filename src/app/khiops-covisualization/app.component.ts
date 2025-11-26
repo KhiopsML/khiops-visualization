@@ -31,6 +31,20 @@ import { ConfigModel } from '@khiops-library/model/config.model';
 import { SaveService } from './providers/save.service';
 import { InAppOverlayContainer } from '@khiops-library/overlay/in-app-overlay-provider';
 import { Ls } from '@khiops-library/providers/ls.service';
+import { KhiopsLibraryService } from '@khiops-library/providers/khiops-library.service';
+import { LayoutService } from '@khiops-library/providers/layout.service';
+import { AnnotationService } from './providers/annotation.service';
+import { ClustersService } from './providers/clusters.service';
+import { CompositionService } from './providers/composition.service';
+import { DimensionsDatasService } from './providers/dimensions-datas.service';
+import { EventsService } from './providers/events.service';
+import { HierarchyService } from './providers/hierarchy.service';
+import { ImportExtDatasService } from './providers/import-ext-datas.service';
+import { ProjectDatasService } from './providers/project-datas.service';
+import { VariableSearchService } from './providers/variable-search.service';
+import { ViewManagerService } from './providers/view-manager.service';
+import { Overlay, OverlayContainer } from '@angular/cdk/overlay';
+import { CopyDatasService } from '@khiops-library/providers/copy-datas.service';
 
 @Component({
   selector: 'app-root-covisualization',
@@ -38,6 +52,34 @@ import { Ls } from '@khiops-library/providers/ls.service';
   templateUrl: './app.component.html',
   encapsulation: ViewEncapsulation.ShadowDom,
   standalone: false,
+  providers: [
+    AnnotationService,
+    ClustersService,
+    CompositionService,
+    EventsService,
+    HierarchyService,
+    VariableSearchService,
+    AppService,
+    SaveService,
+    TreenodesService,
+    DimensionsDatasService,
+    ProjectDatasService,
+    ViewManagerService,
+    ImportExtDatasService,
+
+    // Lib services
+    ConfigService,
+    CopyDatasService,
+    FileLoaderService,
+    Ls,
+    KhiopsLibraryService,
+    LayoutService,
+
+    // Overlay
+    InAppOverlayContainer,
+    { provide: OverlayContainer, useExisting: InAppOverlayContainer },
+    Overlay,
+  ],
 })
 export class AppComponent implements AfterViewInit {
   appdatas: CovisualizationDatas | undefined;

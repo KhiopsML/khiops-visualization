@@ -29,12 +29,54 @@ import { ConfigModel } from '@khiops-library/model/config.model';
 import { InAppOverlayContainer } from '@khiops-library/overlay/in-app-overlay-provider';
 import { AppConfig } from '../../environments/environment';
 import { Ls } from '@khiops-library/providers/ls.service';
+import { KhiopsLibraryService } from '@khiops-library/providers/khiops-library.service';
+import { LayoutService } from '@khiops-library/providers/layout.service';
+import { DistributionDatasService } from './providers/distribution-datas.service';
+import { EvaluationDatasService } from './providers/evaluation-datas.service';
+import { ModelingDatasService } from './providers/modeling-datas.service';
+import { PreparationDatasService } from './providers/preparation-datas.service';
+import { Preparation2dDatasService } from './providers/preparation2d-datas.service';
+import { ProjectDatasService } from './providers/project-datas.service';
+import { TreePreparationDatasService } from './providers/tree-preparation-datas.service';
+import { Overlay, OverlayContainer } from '@angular/cdk/overlay';
+import { EnrichDatasService } from './providers/enrich-datas.service';
+import { VariableScaleSettingsService } from './providers/variable-scale-settings.service';
+import { Distribution2dDatasService } from './providers/distribution2d-datas.service';
+import { CopyDatasService } from '@khiops-library/providers/copy-datas.service';
 @Component({
   selector: 'app-root-visualization',
   styleUrls: ['./app.component.scss'],
   templateUrl: './app.component.html',
   encapsulation: ViewEncapsulation.ShadowDom,
   standalone: false,
+  providers: [
+    AppService,
+    SaveService,
+    InAppOverlayContainer,
+    Distribution2dDatasService,
+    VariableScaleSettingsService,
+    EnrichDatasService,
+    PreparationDatasService,
+    Preparation2dDatasService,
+    TreePreparationDatasService,
+    ModelingDatasService,
+    EvaluationDatasService,
+    DistributionDatasService,
+    ProjectDatasService,
+
+    // Lib services
+    ConfigService,
+    CopyDatasService,
+    FileLoaderService,
+    Ls,
+    KhiopsLibraryService,
+    LayoutService,
+
+    // Overlay
+    InAppOverlayContainer,
+    { provide: OverlayContainer, useClass: InAppOverlayContainer },
+    Overlay,
+  ],
 })
 export class AppComponent implements AfterViewInit {
   appdatas: VisualizationDatas | undefined;
