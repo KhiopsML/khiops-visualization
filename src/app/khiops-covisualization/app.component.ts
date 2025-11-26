@@ -45,6 +45,7 @@ import { VariableSearchService } from './providers/variable-search.service';
 import { ViewManagerService } from './providers/view-manager.service';
 import { Overlay, OverlayContainer } from '@angular/cdk/overlay';
 import { CopyDatasService } from '@khiops-library/providers/copy-datas.service';
+import { DialogService } from '@khiops-library/providers/dialog.service';
 
 @Component({
   selector: 'app-root-covisualization',
@@ -70,6 +71,7 @@ import { CopyDatasService } from '@khiops-library/providers/copy-datas.service';
     // Lib services
     ConfigService,
     CopyDatasService,
+    DialogService,
     FileLoaderService,
     Ls,
     KhiopsLibraryService,

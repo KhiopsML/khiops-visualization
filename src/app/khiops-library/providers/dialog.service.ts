@@ -17,9 +17,7 @@ export interface DialogConfigI {
   panelClass?: string;
 }
 
-@Injectable({
-  providedIn: 'root',
-})
+@Injectable()
 export class DialogService {
   private dialogContentSubject = new BehaviorSubject<DialogContentI>({
     type: 'none',
@@ -39,9 +37,9 @@ export class DialogService {
    * @param data optional data to pass to the component
    */
   openDialog<T>(
-    componentType: Type<T>, 
-    config?: DialogConfigI, 
-    data?: any
+    componentType: Type<T>,
+    config?: DialogConfigI,
+    data?: any,
   ): ComponentRef<T> | undefined {
     this.dialogContentSubject.next({
       type: 'component',

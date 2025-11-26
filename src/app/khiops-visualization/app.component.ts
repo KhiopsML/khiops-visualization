@@ -43,6 +43,7 @@ import { EnrichDatasService } from './providers/enrich-datas.service';
 import { VariableScaleSettingsService } from './providers/variable-scale-settings.service';
 import { Distribution2dDatasService } from './providers/distribution2d-datas.service';
 import { CopyDatasService } from '@khiops-library/providers/copy-datas.service';
+import { DialogService } from '@khiops-library/providers/dialog.service';
 @Component({
   selector: 'app-root-visualization',
   styleUrls: ['./app.component.scss'],
@@ -67,6 +68,7 @@ import { CopyDatasService } from '@khiops-library/providers/copy-datas.service';
     // Lib services
     ConfigService,
     CopyDatasService,
+    DialogService,
     FileLoaderService,
     Ls,
     KhiopsLibraryService,
