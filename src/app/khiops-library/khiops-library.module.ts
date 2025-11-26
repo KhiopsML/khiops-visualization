@@ -80,6 +80,7 @@ import { MatrixContrastSettingComponent } from './components/matrix-contrast-set
 import { NumberPrecisionComponent } from './components/number-precision/number-precision.component';
 import { ScalePersistenceSettingComponent } from './components/scale-persistence-setting/scale-persistence-setting.component';
 import { MenuFocusSelectedDirective } from './directives/menu-focus-selected.directive';
+import { DialogComponent } from './components/dialog/dialog.component';
 
 @NgModule({
   imports: [
@@ -162,9 +163,11 @@ import { MenuFocusSelectedDirective } from './directives/menu-focus-selected.dir
     ImportFileLoaderComponent,
     ProjectSummaryComponent,
     MenuFocusSelectedDirective,
+    DialogComponent,
   ],
   providers: [ConfigService, TranslateService],
   exports: [
+    DialogComponent,
     NumberPrecisionComponent,
     MatrixContrastSettingComponent,
     ScalePersistenceSettingComponent,

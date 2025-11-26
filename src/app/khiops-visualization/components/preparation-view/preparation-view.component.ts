@@ -4,16 +4,14 @@
  * at https://spdx.org/licenses/BSD-3-Clause-Clear.html or see the "LICENSE" file for more details.
  */
 
-import { Component, Input, ViewContainerRef } from '@angular/core';
+import {
+  Component,
+  Input,
+} from '@angular/core';
 import { PreparationDatasService } from '../../providers/preparation-datas.service';
 import { SelectableTabComponent } from '@khiops-library/components/selectable-tab/selectable-tab.component';
 import { ModelingDatasService } from '@khiops-visualization/providers/modeling-datas.service';
-import {
-  MatDialog,
-  MatDialogRef,
-  MatDialogConfig,
-} from '@angular/material/dialog';
-import { LevelDistributionGraphComponent } from '../commons/level-distribution-graph/level-distribution-graph.component';
+import { DialogService } from '@khiops-library/providers/dialog.service';
 import { TranslateService } from '@ngstack/translate';
 import { GridColumnsI } from '@khiops-library/interfaces/grid-columns';
 import { REPORT } from '@khiops-library/enum/report';
@@ -28,7 +26,6 @@ import { SplitGutterInteractionEvent } from 'angular-split';
 import { DynamicI } from '@khiops-library/interfaces/globals';
 import { GridDatasI } from '@khiops-library/interfaces/grid-datas';
 import { getPreparationVariablesGridColumns } from './preparation-view.config';
-import { AppConfig } from '../../../../environments/environment';
 
 @Component({
   selector: 'app-preparation-view',
@@ -55,11 +52,10 @@ export class PreparationViewComponent extends SelectableTabComponent {
     private preparationDatasService: PreparationDatasService,
     private translate: TranslateService,
     private trackerService: TrackerService,
-    private dialog: MatDialog,
     private layoutService: LayoutService,
     private modelingDatasService: ModelingDatasService,
     private distributionService: DistributionService,
-    private viewContainerRef: ViewContainerRef,
+    private dialogService: DialogService,
   ) {
     super();
 
@@ -128,15 +124,12 @@ export class PreparationViewComponent extends SelectableTabComponent {
   }
 
   onShowLevelDistributionGraph(datas: VariableModel[]) {
-    const config = new MatDialogConfig();
-    config.viewContainerRef = this.viewContainerRef;
-    config.maxWidth = 'unset';
-    config.width = AppConfig.visualizationCommon.LEVEL_DISTRIBUTION_GRAPH.WIDTH;
-    config.height =
-      AppConfig.visualizationCommon.LEVEL_DISTRIBUTION_GRAPH.HEIGHT;
-    const dialogRef: MatDialogRef<LevelDistributionGraphComponent> =
-      this.dialog.open(LevelDistributionGraphComponent, config);
-    dialogRef.componentInstance.datas = datas;
+    // Show the level distribution dialog using the DialogService
+    this.dialogService.showLevelDistributionDialog({
+      datas: datas,
+      levelDistributionTitle: undefined,
+      distributionType: 'level',
+    });
   }
 
   onShowLevelDistributionFromButton() {

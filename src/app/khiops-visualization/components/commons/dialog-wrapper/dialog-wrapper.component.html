@@ -1,0 +1,21 @@
+<div 
+  class="dialog-wrapper" 
+  [class.active]="(dialogContent$ | async)?.type !== 'none'"
+  fxLayout="row" 
+  fxFlexFill 
+  fxLayoutAlign="center center"
+  *ngIf="(dialogContent$ | async) as dialogContent"
+>
+  <div class="dialog-overlay" fxFlexFill (click)="closeDialog()" *ngIf="dialogContent.type !== 'none'"></div>
+  <div class="dialog-content" fxLayout="column" *ngIf="dialogContent.type !== 'none'">
+    <!-- Level Distribution Dialog -->
+    <app-level-distribution-graph
+      #levelDistributionGraph
+      *ngIf="dialogContent.type === 'levelDistribution'"
+      [datas]="dialogContent.data?.datas"
+      [levelDistributionTitle]="dialogContent.data?.levelDistributionTitle"
+      [distributionType]="dialogContent.data?.distributionType"
+      fxFlexFill
+    ></app-level-distribution-graph>
+  </div>
+</div>

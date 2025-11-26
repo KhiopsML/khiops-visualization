@@ -1,0 +1,12 @@
+<div class="kl-dialog" fxLayout="row" fxFlexFill fxLayoutAlign="center center" *ngIf="(dialogContent$ | async) as dialogContent" [ngSwitch]="dialogContent.type">
+  <div class="dialog-overlay" fxFlexFill (click)="closeDialog()"></div>
+  <div class="dialog-content" fxLayout="column">
+    <!-- Level Distribution Dialog -->
+    <div *ngSwitchCase="'levelDistribution'" fxFlexFill fxLayout="column">
+      <ng-container #levelDistributionContent></ng-container>
+    </div>
+    <!-- Empty dialog when no type is set -->
+    <ng-container *ngSwitchDefault>
+    </ng-container>
+  </div>
+</div>
