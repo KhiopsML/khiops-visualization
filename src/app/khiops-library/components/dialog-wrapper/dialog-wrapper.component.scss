@@ -1,5 +1,5 @@
 .kl-dialog-wrapper {
-  position: fixed;
+  position: absolute;
   top: 0;
   left: 0;
   width: 100%;
@@ -16,7 +16,7 @@
 }
 
 .dialog-overlay {
-  position: fixed;
+  position: absolute;
   top: 0;
   left: 0;
   width: 100%;
@@ -33,6 +33,7 @@
   max-height: 90%;
   z-index: 1000;
   overflow: hidden;
+  
   pointer-events: auto;
   display: flex;
   flex-direction: column;
