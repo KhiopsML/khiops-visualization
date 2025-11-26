@@ -48,7 +48,7 @@ import { treePreparationReducer } from './reducers/tree-preparation.reducer';
 import { StoreModule } from '@ngrx/store';
 import { TreePreparationEffects } from './effects/tree-preparation.effect';
 import { EffectsModule } from '@ngrx/effects';
-import { OverlayContainer } from '@angular/cdk/overlay';
+import { Overlay, OverlayContainer } from '@angular/cdk/overlay';
 import { InAppOverlayContainer } from '../khiops-library/overlay/in-app-overlay-provider';
 import { DataTypeSelectorComponent } from './components/commons/data-type-selector/data-type-selector.component';
 import { LevelDistributionButtonComponent } from './components/commons/level-distribution-button/level-distribution-button.component';
@@ -107,7 +107,11 @@ import { ChangeScaleDialogComponent } from './components/commons/change-scale-di
     StoreModule.forRoot({ TreePreparationState: treePreparationReducer }),
     EffectsModule.forRoot([TreePreparationEffects]),
   ],
-  providers: [{ provide: OverlayContainer, useClass: InAppOverlayContainer }],
+  providers: [
+    InAppOverlayContainer,
+    { provide: OverlayContainer, useExisting: InAppOverlayContainer },
+    Overlay,
+  ],
   exports: [AppComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })

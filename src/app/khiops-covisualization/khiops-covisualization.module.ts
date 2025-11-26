@@ -35,7 +35,7 @@ import { AgGridModule } from '@ag-grid-community/angular';
 import { UserSettingsComponent } from './components/commons/user-settings/user-settings.component';
 import { ExternalDatasComponent } from './components/commons/external-datas/external-datas.component';
 import { HierarchyDetailsComponent } from './components/commons/hierarchy-details/hierarchy-details.component';
-import { OverlayContainer } from '@angular/cdk/overlay';
+import { Overlay, OverlayContainer } from '@angular/cdk/overlay';
 import { InAppOverlayContainer } from '../khiops-library/overlay/in-app-overlay-provider';
 import { CompositionDetailedPartsComponent } from './components/commons/composition-detailed-parts/composition-detailed-parts.component';
 import { VariableSearchDialogComponent } from './components/commons/variable-search-dialog/variable-search-dialog.component';
@@ -88,7 +88,11 @@ import { UnfoldHierarchyInfoRateGraphComponent } from './components/commons/unfo
     AgGridModule,
     HttpClientModule,
   ],
-  providers: [{ provide: OverlayContainer, useClass: InAppOverlayContainer }],
+  providers: [
+    InAppOverlayContainer,
+    { provide: OverlayContainer, useExisting: InAppOverlayContainer },
+    Overlay,
+  ],
   exports: [AppComponent, VariableSearchDialogComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
