@@ -26,6 +26,7 @@ import { SplitGutterInteractionEvent } from 'angular-split';
 import { DynamicI } from '@khiops-library/interfaces/globals';
 import { GridDatasI } from '@khiops-library/interfaces/grid-datas';
 import { getPreparationVariablesGridColumns } from './preparation-view.config';
+import { LevelDistributionGraphComponent } from '../commons/level-distribution-graph/level-distribution-graph.component';
 
 @Component({
   selector: 'app-preparation-view',
@@ -124,12 +125,19 @@ export class PreparationViewComponent extends SelectableTabComponent {
   }
 
   onShowLevelDistributionGraph(datas: VariableModel[]) {
-    // Show the level distribution dialog using the DialogService
-    this.dialogService.showLevelDistributionDialog({
-      datas: datas,
-      levelDistributionTitle: undefined,
-      distributionType: 'level',
-    });
+    this.dialogService.openDialog(
+      LevelDistributionGraphComponent,
+      {
+        width: '90vw',
+        height: '90vh',
+        maxWidth: 'unset',
+      },
+      {
+        datas: datas,
+        levelDistributionTitle: undefined,
+        distributionType: 'level',
+      }
+    );
   }
 
   onShowLevelDistributionFromButton() {

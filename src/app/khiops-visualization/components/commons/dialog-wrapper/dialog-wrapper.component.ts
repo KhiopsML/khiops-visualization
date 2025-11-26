@@ -1,7 +1,13 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { 
+  Component, 
+  OnInit, 
+  ViewChild, 
+  ViewContainerRef, 
+  ComponentRef, 
+  OnDestroy 
+} from '@angular/core';
 import { DialogService, DialogContentI } from '@khiops-library/providers/dialog.service';
-import { Observable } from 'rxjs';
-import { LevelDistributionGraphComponent } from '../level-distribution-graph/level-distribution-graph.component';
+import { Observable, Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-dialog-wrapper',
@@ -9,18 +15,61 @@ import { LevelDistributionGraphComponent } from '../level-distribution-graph/lev
   styleUrls: ['./dialog-wrapper.component.scss'],
   standalone: false,
 })
-export class DialogWrapperComponent implements OnInit {
+export class DialogWrapperComponent implements OnInit, OnDestroy {
   public dialogContent$: Observable<DialogContentI>;
 
-  @ViewChild('levelDistributionGraph', { static: false })
-  levelDistributionGraph?: LevelDistributionGraphComponent;
+  @ViewChild('dynamicComponentContainer', { read: ViewContainerRef, static: false })
+  dynamicComponentContainer?: ViewContainerRef;
+
+  private componentRef?: ComponentRef<any>;
+  private subscription?: Subscription;
 
   constructor(private dialogService: DialogService) {
     this.dialogContent$ = this.dialogService.dialogContent$;
   }
 
   ngOnInit(): void {
-    // Dialog service is initialized in constructor
+    this.subscription = this.dialogContent$.subscribe((content) => {
+      console.log('🚀 Dialog content changed:', content);
+      
+      if (content.type === 'component' && content.componentType) {
+        // Wait for view to be ready
+        setTimeout(() => {
+          if (this.dynamicComponentContainer && content.componentType) {
+            console.log('✅ Container found, creating component');
+            // Clear previous component
+            this.clearDynamicComponent();
+            
+            // Create new component dynamically
+            this.componentRef = this.dynamicComponentContainer.createComponent(content.componentType);
+            console.log('✅ Component created:', this.componentRef.instance);
+            
+            // Pass data to component if it exists
+            if (content.data && this.componentRef.instance) {
+              Object.assign(this.componentRef.instance, content.data);
+              console.log('✅ Data assigned:', content.data);
+            }
+            
+            // Trigger change detection
+            this.componentRef.changeDetectorRef.detectChanges();
+            
+            // Set component reference in service for cleanup
+            this.dialogService.setComponentRef(this.componentRef);
+          } else {
+            console.error('❌ dynamicComponentContainer not found!');
+          }
+        }, 0);
+      } else if (content.type === 'none') {
+        this.clearDynamicComponent();
+      }
+    });
+  }
+
+  ngOnDestroy(): void {
+    if (this.subscription) {
+      this.subscription.unsubscribe();
+    }
+    this.clearDynamicComponent();
   }
 
   /**
@@ -31,9 +80,15 @@ export class DialogWrapperComponent implements OnInit {
   }
 
   /**
-   * Track dialog type for ngIf
+   * Clear the dynamic component
    */
-  trackDialogType(_index: number, dialogContent: DialogContentI): string {
-    return dialogContent.type;
+  private clearDynamicComponent(): void {
+    if (this.componentRef) {
+      this.componentRef.destroy();
+      this.componentRef = undefined;
+    }
+    if (this.dynamicComponentContainer) {
+      this.dynamicComponentContainer.clear();
+    }
   }
 }
