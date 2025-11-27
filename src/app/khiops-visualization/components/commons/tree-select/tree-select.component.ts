@@ -23,27 +23,17 @@ import { TranslateService } from '@ngstack/translate';
 import { TreeNodeModel } from '@khiops-visualization/model/tree-node.model';
 import { COMPONENT_TYPES } from '@khiops-library/enum/component-types';
 import { firstValueFrom, Observable } from 'rxjs';
-import { Store } from '@ngrx/store';
-import {
-  initSelectedNodes,
-  selectNodesFromId,
-} from '@khiops-visualization/actions/tree-preparation.action';
-import {
-  selectedNodesSelector,
-  selectedNodeSelector,
-} from '@khiops-visualization/selectors/tree-preparation.selector';
-import { TreePreparationState } from '@khiops-visualization/model/tree-preparation-datas.model';
+import { TreePreparationStore } from '@khiops-visualization/stores/tree-preparation.store';
 
 @Component({
-    selector: 'app-tree-select',
-    templateUrl: './tree-select.component.html',
-    styleUrls: ['./tree-select.component.scss'],
-    standalone: false
+  selector: 'app-tree-select',
+  templateUrl: './tree-select.component.html',
+  styleUrls: ['./tree-select.component.scss'],
+  standalone: false
 })
 export class TreeSelectComponent
   extends SelectableComponent
-  implements AfterViewInit, OnChanges
-{
+  implements AfterViewInit, OnChanges {
   @Input() public dimensionTree?: [TreeNodeModel];
 
   public componentType = COMPONENT_TYPES.KV_TREE; // needed to copy datas
@@ -60,11 +50,11 @@ export class TreeSelectComponent
     public override configService: ConfigService,
     public translate: TranslateService,
     private snackBar: MatSnackBar,
-    private store: Store<{ TreePreparationState: TreePreparationState }>,
+    private store: TreePreparationStore,
   ) {
     super(selectableService, ngzone, configService);
-    this.selectedNodes$ = this.store.select(selectedNodesSelector);
-    this.selectedNode$ = this.store.select(selectedNodeSelector);
+    this.selectedNodes$ = this.store.selectedNodes$;
+    this.selectedNode$ = this.store.selectedNode$;
   }
 
   ngOnChanges(changes: SimpleChanges) {
@@ -107,17 +97,15 @@ export class TreeSelectComponent
       );
 
       this.tree.on('init', async () => {
-        this.store.dispatch(initSelectedNodes());
+        this.store.initSelectedNodes();
       });
 
       this.tree.on('select', (e: any) => {
         // Do ngzone to emit event
         this.ngzone.run(() => {
-          this.store.dispatch(
-            selectNodesFromId({
-              id: e.data.id,
-            }),
-          );
+          this.store.selectNodesFromId({
+            id: e.data.id,
+          });
         });
       });
       this.tree.on('error', (e: any) => {

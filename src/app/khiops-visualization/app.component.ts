@@ -50,6 +50,8 @@ import { HistogramService } from './components/commons/histogram/histogram.servi
 import { HistogramUIService } from './components/commons/histogram/histogram.ui.service';
 import { HistogramRendererService } from './components/commons/histogram/histogram-renderer.service';
 import { CooccurrenceMatrixConfigService } from './components/commons/cooccurrence-matrix/cooccurrence-matrix-config.service';
+import { TreePreparationStore } from './stores/tree-preparation.store';
+
 @Component({
   selector: 'app-root-visualization',
   styleUrls: ['./app.component.scss'],
@@ -93,6 +95,9 @@ import { CooccurrenceMatrixConfigService } from './components/commons/cooccurren
     InAppOverlayContainer,
     { provide: OverlayContainer, useClass: InAppOverlayContainer },
     Overlay,
+
+    // NgRx ComponentStore - provided at component level for multi-instance support
+    TreePreparationStore,
   ],
 })
 export class AppComponent implements AfterViewInit {

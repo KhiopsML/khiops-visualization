@@ -18,7 +18,6 @@ import { VariableModel } from '@khiops-visualization/model/variable.model';
 import { DistributionDatasModel } from '@khiops-visualization/model/distribution-datas.model';
 import {
   TreePreparationDatasModel,
-  TreePreparationState,
 } from '@khiops-visualization/model/tree-preparation-datas.model';
 import { TreePreparationVariableModel } from '@khiops-visualization/model/tree-preparation-variable.model';
 import { TrackerService } from '@khiops-library/providers/tracker.service';
@@ -30,13 +29,8 @@ import { REPORT } from '@khiops-library/enum/report';
 import { SplitGutterInteractionEvent } from 'angular-split';
 import { DynamicI } from '@khiops-library/interfaces/globals';
 import { TreeNodeModel } from '@khiops-visualization/model/tree-node.model';
-import { selectNodesFromIndex } from '@khiops-visualization/actions/tree-preparation.action';
-import { Store } from '@ngrx/store';
+import { TreePreparationStore } from '@khiops-visualization/stores/tree-preparation.store';
 import { Observable } from 'rxjs';
-import {
-  selectedNodeSelector,
-  selectedNodesSelector,
-} from '@khiops-visualization/selectors/tree-preparation.selector';
 import { getTreePreparationVariablesGridColumns } from './tree-preparation-view.config';
 import { DialogService } from '@khiops-library/providers/dialog.service';
 
@@ -76,14 +70,14 @@ export class TreePreparationViewComponent extends SelectableTabComponent {
     private distributionDatasService: DistributionDatasService,
     private modelingDatasService: ModelingDatasService,
     private layoutService: LayoutService,
-    private store: Store<{ TreePreparationState: TreePreparationState }>,
+    private store: TreePreparationStore,
     private distributionService: DistributionService,
     private dialogService: DialogService,
   ) {
     super();
 
-    this.selectedNodes$ = this.store.select(selectedNodesSelector);
-    this.selectedNode$ = this.store.select(selectedNodeSelector);
+    this.selectedNodes$ = this.store.selectedNodes$;
+    this.selectedNode$ = this.store.selectedNode$;
 
     this.variablesDisplayedColumns = getTreePreparationVariablesGridColumns(
       this.translate,
@@ -114,7 +108,7 @@ export class TreePreparationViewComponent extends SelectableTabComponent {
     );
     this.distributionDatas = this.distributionDatasService.getDatas();
 
-    this.selectedNode$?.subscribe((selectedNode) => {
+    this.selectedNode$?.subscribe((selectedNode: TreeNodeModel | undefined) => {
       if (selectedNode?._id) {
         let [index, _nodesToSelect] =
           this.treePreparationDatasService.getNodesLinkedToOneNode(
@@ -171,11 +165,9 @@ export class TreePreparationViewComponent extends SelectableTabComponent {
     // Keep in memory to keep bar charts index on type change
     this.selectedBarIndex = index;
 
-    this.store.dispatch(
-      selectNodesFromIndex({
-        index: this.selectedBarIndex,
-      }),
-    );
+    this.store.selectNodesFromIndex({
+      index: this.selectedBarIndex,
+    });
   }
 
   /**

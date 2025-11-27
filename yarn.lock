@@ -2063,6 +2063,13 @@
     "@napi-rs/nice-win32-ia32-msvc" "1.1.1"
     "@napi-rs/nice-win32-x64-msvc" "1.1.1"
 
+"@ngrx/component-store@^20.1.0":
+  version "20.1.0"
+  resolved "https://registry.yarnpkg.com/@ngrx/component-store/-/component-store-20.1.0.tgz#ea1a783a43e9c4d490cb691a314cab9b61845b87"
+  integrity sha512-hInHO7bwyxlUfJTSgdZ+8i0aiE3Ll0D5Y5qGy1heebrNG1Y3nrmLaGh1Yeq/dXeXJiN4Z9owEro+BaCfGOEn+Q==
+  dependencies:
+    tslib "^2.0.0"
+
 "@ngrx/effects@20.1.0":
   version "20.1.0"
   resolved "https://registry.yarnpkg.com/@ngrx/effects/-/effects-20.1.0.tgz#e8947a0840dc76d289eafcaa929113ab303335ea"
