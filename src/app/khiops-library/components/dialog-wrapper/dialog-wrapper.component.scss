@@ -57,7 +57,7 @@
 }
 
 .dialog-body {
-  flex: 1;
+  flex-basis: auto !important;
   overflow: auto;
   padding: 0;
 }

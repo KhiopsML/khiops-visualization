@@ -1,5 +1,5 @@
 import { Injectable, Type, ComponentRef } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, Observable, Subject } from 'rxjs';
 
 export interface DialogContentI {
   type: 'component' | 'none';
@@ -17,6 +17,11 @@ export interface DialogConfigI {
   panelClass?: string;
 }
 
+export interface DialogRef<T = any> {
+  afterClosed(): Observable<T>;
+  close(result?: T): void;
+}
+
 @Injectable()
 export class DialogService {
   private dialogContentSubject = new BehaviorSubject<DialogContentI>({
@@ -27,6 +32,7 @@ export class DialogService {
     this.dialogContentSubject.asObservable();
 
   private componentRef?: ComponentRef<any>;
+  private afterClosedSubject = new Subject<any>();
 
   constructor() {}
 
@@ -40,24 +46,37 @@ export class DialogService {
     componentType: Type<T>,
     config?: DialogConfigI,
     data?: any,
-  ): ComponentRef<T> | undefined {
+  ): DialogRef<any> {
+    // Reset the subject for new dialog
+    this.afterClosedSubject = new Subject<any>();
+
     this.dialogContentSubject.next({
       type: 'component',
       componentType: componentType,
       data: data,
       config: config || {},
     });
-    return this.componentRef as ComponentRef<T>;
+
+    // Return a DialogRef object
+    return {
+      afterClosed: () => this.afterClosedSubject.asObservable(),
+      close: (result?: any) => this.closeDialog(result),
+    };
   }
 
   /**
    * Close the dialog
    */
-  closeDialog(): void {
+  closeDialog(result?: any): void {
     if (this.componentRef) {
       this.componentRef.destroy();
       this.componentRef = undefined;
     }
+
+    // Emit the result and complete the subject
+    this.afterClosedSubject.next(result);
+    this.afterClosedSubject.complete();
+
     this.dialogContentSubject.next({
       type: 'none',
     });

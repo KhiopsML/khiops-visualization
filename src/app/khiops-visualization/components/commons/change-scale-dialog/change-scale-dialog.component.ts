@@ -5,11 +5,11 @@
  */
 
 import { Component, OnInit } from '@angular/core';
-import { MatDialogRef } from '@angular/material/dialog';
 import { LS } from '@khiops-library/enum/ls';
 import { HistogramType } from '../histogram/histogram.type';
 import { AppService } from '@khiops-visualization/providers/app.service';
 import { TYPES } from '@khiops-library/enum/types';
+import { DialogService } from '@khiops-library/providers/dialog.service';
 
 export interface ScaleSettings {
   xScale: TYPES.LINEAR | TYPES.LOGARITHMIC;
@@ -26,7 +26,7 @@ export class ChangeScaleDialogComponent implements OnInit {
   xScale: TYPES.LINEAR | TYPES.LOGARITHMIC = TYPES.LINEAR;
   yScale: TYPES.LINEAR | TYPES.LOGARITHMIC = TYPES.LINEAR;
 
-  constructor(private dialogRef: MatDialogRef<ChangeScaleDialogComponent>) {}
+  constructor(private dialogService: DialogService) {}
 
   ngOnInit(): void {
     // Initialize with current scale settings from local storage
@@ -41,7 +41,7 @@ export class ChangeScaleDialogComponent implements OnInit {
   }
 
   onCancel(): void {
-    this.dialogRef.close();
+    this.dialogService.closeDialog();
   }
 
   onApply(): void {
@@ -49,6 +49,6 @@ export class ChangeScaleDialogComponent implements OnInit {
       xScale: this.xScale,
       yScale: this.yScale,
     };
-    this.dialogRef.close(scaleSettings);
+    this.dialogService.closeDialog(scaleSettings);
   }
 }

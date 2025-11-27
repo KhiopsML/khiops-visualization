@@ -5,8 +5,6 @@
  */
 
 import { Component } from '@angular/core';
-import { MatDialogConfig } from '@angular/material/dialog';
-import { MatDialog } from '@angular/material/dialog';
 import {
   ChangeScaleDialogComponent,
   ScaleSettings,
@@ -16,6 +14,7 @@ import { HistogramType } from '../histogram/histogram.type';
 import { AppService } from '@khiops-visualization/providers/app.service';
 import { DistributionDatasService } from '@khiops-visualization/providers/distribution-datas.service';
 import { ScaleChangeEventsService } from '@khiops-visualization/providers/scale-change-events.service';
+import { DialogService } from '@khiops-library/providers/dialog.service';
 
 @Component({
   selector: 'app-change-scale-button',
@@ -25,17 +24,19 @@ import { ScaleChangeEventsService } from '@khiops-visualization/providers/scale-
 })
 export class ChangeScaleButtonComponent {
   constructor(
-    private dialog: MatDialog,
+    private dialogService: DialogService,
     private distributionDatasService: DistributionDatasService,
     private scaleChangeEventsService: ScaleChangeEventsService,
   ) {}
 
   openChangeScaleDialog() {
-    const config = new MatDialogConfig();
-    config.width = '400px';
-    config.disableClose = false;
-
-    const dialogRef = this.dialog.open(ChangeScaleDialogComponent, config);
+    const dialogRef = this.dialogService.openDialog(
+      ChangeScaleDialogComponent,
+      {
+        width: '400px',
+        height: 'auto',
+      },
+    );
 
     dialogRef.afterClosed().subscribe((result: ScaleSettings | undefined) => {
       if (result) {

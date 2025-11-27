@@ -1,5 +1,6 @@
 #change-scale-dialog-comp {
-  margin-top: 1rem;
+  margin-top: 2rem;
+  margin-bottom: 2rem;
   min-width: 350px;
   padding: 0;
 
@@ -9,6 +10,7 @@
 
   .scale-options {
     margin-bottom: 2rem;
+    padding: 0 2rem;
 
     .scale-group {
       margin-bottom: 1.5rem;
@@ -32,8 +34,8 @@
     }
   }
 
-  mat-dialog-actions {
-    margin-top: 1rem;
+  .dialog-actions {
+    margin-right: 2rem;
 
     button {
       margin-left: 0.5rem;
