@@ -4,15 +4,18 @@
  * at https://spdx.org/licenses/BSD-3-Clause-Clear.html or see the "LICENSE" file for more details.
  */
 
-import { 
-  Component, 
-  OnInit, 
-  ViewChild, 
-  ViewContainerRef, 
-  ComponentRef, 
-  OnDestroy 
+import {
+  Component,
+  OnInit,
+  ViewChild,
+  ViewContainerRef,
+  ComponentRef,
+  OnDestroy,
 } from '@angular/core';
-import { DialogService, DialogContentI } from '@khiops-library/providers/dialog.service';
+import {
+  DialogService,
+  DialogContentI,
+} from '@khiops-library/providers/dialog.service';
 import { Observable, Subscription } from 'rxjs';
 
 @Component({
@@ -24,7 +27,10 @@ import { Observable, Subscription } from 'rxjs';
 export class DialogWrapperComponent implements OnInit, OnDestroy {
   public dialogContent$: Observable<DialogContentI>;
 
-  @ViewChild('dynamicComponentContainer', { read: ViewContainerRef, static: false })
+  @ViewChild('dynamicComponentContainer', {
+    read: ViewContainerRef,
+    static: false,
+  })
   dynamicComponentContainer?: ViewContainerRef;
 
   private componentRef?: ComponentRef<any>;
@@ -36,40 +42,38 @@ export class DialogWrapperComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.subscription = this.dialogContent$.subscribe((content) => {
-      console.log('🚀 Dialog content changed:', content);
-      
       if (content.type === 'component' && content.componentType) {
         // Wait for view to be ready
         setTimeout(() => {
           if (this.dynamicComponentContainer && content.componentType) {
-            console.log('✅ Container found, creating component');
             // Clear previous component
             this.clearDynamicComponent();
-            
+
             // Create new component dynamically
-            this.componentRef = this.dynamicComponentContainer.createComponent(content.componentType);
-            console.log('✅ Component created:', this.componentRef.instance);
-            
+            this.componentRef = this.dynamicComponentContainer.createComponent(
+              content.componentType,
+            );
+
             // Set component host element to fill available space
-            const hostElement = this.componentRef.location.nativeElement as HTMLElement;
+            const hostElement = this.componentRef.location
+              .nativeElement as HTMLElement;
             hostElement.style.height = '100%';
             hostElement.style.width = '100%';
             hostElement.style.display = 'flex';
             hostElement.style.flexDirection = 'column';
-            
+
             // Pass data to component if it exists
             if (content.data && this.componentRef.instance) {
               Object.assign(this.componentRef.instance, content.data);
-              console.log('✅ Data assigned:', content.data);
             }
-            
+
             // Trigger change detection
             this.componentRef.changeDetectorRef.detectChanges();
-            
+
             // Set component reference in service for cleanup
             this.dialogService.setComponentRef(this.componentRef);
           } else {
-            console.error('❌ dynamicComponentContainer not found!');
+            console.error('dynamicComponentContainer not found!');
           }
         }, 0);
       } else if (content.type === 'none') {
