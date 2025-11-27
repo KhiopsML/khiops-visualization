@@ -4,10 +4,7 @@
  * at https://spdx.org/licenses/BSD-3-Clause-Clear.html or see the "LICENSE" file for more details.
  */
 
-import {
-  Component,
-  Input,
-} from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { PreparationDatasService } from '../../providers/preparation-datas.service';
 import { SelectableTabComponent } from '@khiops-library/components/selectable-tab/selectable-tab.component';
 import { ModelingDatasService } from '@khiops-visualization/providers/modeling-datas.service';
@@ -127,16 +124,10 @@ export class PreparationViewComponent extends SelectableTabComponent {
   onShowLevelDistributionGraph(datas: VariableModel[]) {
     this.dialogService.openDialog(
       LevelDistributionGraphComponent,
-      {
-        width: '90vw',
-        height: '90vh',
-        maxWidth: 'unset',
-      },
+      {},
       {
         datas: datas,
-        levelDistributionTitle: undefined,
-        distributionType: 'level',
-      }
+      },
     );
   }
 

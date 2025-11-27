@@ -5,11 +5,6 @@
  */
 
 import { Component } from '@angular/core';
-import {
-  MatDialog,
-  MatDialogRef,
-  MatDialogConfig,
-} from '@angular/material/dialog';
 import { ModelingDatasService } from '@khiops-visualization/providers/modeling-datas.service';
 import { PreparationDatasService } from '@khiops-visualization/providers/preparation-datas.service';
 import { SelectableTabComponent } from '@khiops-library/components/selectable-tab/selectable-tab.component';
@@ -31,7 +26,7 @@ import { DistributionService } from '@khiops-visualization/providers/distributio
 import { LevelDistributionGraphComponent } from '@khiops-visualization/components/commons/level-distribution-graph/level-distribution-graph.component';
 import { TrainedPredictorModel } from '@khiops-visualization/model/trained-predictor.model';
 import { VisualizationDatas } from '@khiops-visualization/interfaces/app-datas';
-import { AppConfig } from '../../../../environments/environment';
+import { DialogService } from '@khiops-library/providers/dialog.service';
 
 @Component({
   selector: 'app-modeling-view',
@@ -58,7 +53,7 @@ export class ModelingViewComponent extends SelectableTabComponent {
     private modelingDatasService: ModelingDatasService,
     private trackerService: TrackerService,
     private preparation2dDatasService: Preparation2dDatasService,
-    private dialog: MatDialog,
+    private dialogService: DialogService,
     private preparationDatasService: PreparationDatasService,
     private treePreparationDatasService: TreePreparationDatasService,
     private layoutService: LayoutService,
@@ -192,15 +187,14 @@ export class ModelingViewComponent extends SelectableTabComponent {
     datas: VariableModel[],
     distributionType: 'level' | 'importance',
   ) {
-    const config = new MatDialogConfig();
-    config.maxWidth = 'unset';
-    config.width = AppConfig.visualizationCommon.LEVEL_DISTRIBUTION_GRAPH.WIDTH;
-    config.height =
-      AppConfig.visualizationCommon.LEVEL_DISTRIBUTION_GRAPH.HEIGHT;
-    const dialogRef: MatDialogRef<LevelDistributionGraphComponent> =
-      this.dialog.open(LevelDistributionGraphComponent, config);
-    dialogRef.componentInstance.datas = datas;
-    dialogRef.componentInstance.distributionType = distributionType;
+    this.dialogService.openDialog(
+      LevelDistributionGraphComponent,
+      {},
+      {
+        datas: datas,
+        distributionType: distributionType,
+      },
+    );
   }
 
   /**

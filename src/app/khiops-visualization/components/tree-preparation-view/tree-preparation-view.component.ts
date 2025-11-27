@@ -7,11 +7,6 @@
 import { Component, ViewChild } from '@angular/core';
 import { SelectableTabComponent } from '@khiops-library/components/selectable-tab/selectable-tab.component';
 import { ModelingDatasService } from '@khiops-visualization/providers/modeling-datas.service';
-import {
-  MatDialog,
-  MatDialogRef,
-  MatDialogConfig,
-} from '@angular/material/dialog';
 import { LevelDistributionGraphComponent } from '../commons/level-distribution-graph/level-distribution-graph.component';
 import { VariableGraphDetailsComponent } from '../commons/variable-graph-details/variable-graph-details.component';
 import { TreePreparationDatasService } from '@khiops-visualization/providers/tree-preparation-datas.service';
@@ -43,7 +38,7 @@ import {
   selectedNodesSelector,
 } from '@khiops-visualization/selectors/tree-preparation.selector';
 import { getTreePreparationVariablesGridColumns } from './tree-preparation-view.config';
-import { AppConfig } from '../../../../environments/environment';
+import { DialogService } from '@khiops-library/providers/dialog.service';
 
 @Component({
   selector: 'app-tree-preparation-view',
@@ -76,7 +71,6 @@ export class TreePreparationViewComponent extends SelectableTabComponent {
   constructor(
     private preparationDatasService: PreparationDatasService,
     private treePreparationDatasService: TreePreparationDatasService,
-    private dialog: MatDialog,
     private translate: TranslateService,
     private trackerService: TrackerService,
     private distributionDatasService: DistributionDatasService,
@@ -84,6 +78,7 @@ export class TreePreparationViewComponent extends SelectableTabComponent {
     private layoutService: LayoutService,
     private store: Store<{ TreePreparationState: TreePreparationState }>,
     private distributionService: DistributionService,
+    private dialogService: DialogService,
   ) {
     super();
 
@@ -153,14 +148,13 @@ export class TreePreparationViewComponent extends SelectableTabComponent {
   }
 
   onShowLevelDistributionGraph(datas: VariableModel[]) {
-    const config = new MatDialogConfig();
-    config.maxWidth = 'unset';
-    config.width = AppConfig.visualizationCommon.LEVEL_DISTRIBUTION_GRAPH.WIDTH;
-    config.height =
-      AppConfig.visualizationCommon.LEVEL_DISTRIBUTION_GRAPH.HEIGHT;
-    const dialogRef: MatDialogRef<LevelDistributionGraphComponent> =
-      this.dialog.open(LevelDistributionGraphComponent, config);
-    dialogRef.componentInstance.datas = datas;
+    this.dialogService.openDialog(
+      LevelDistributionGraphComponent,
+      {},
+      {
+        datas: datas,
+      },
+    );
   }
 
   onShowLevelDistributionFromButton() {
