@@ -61,7 +61,6 @@ import { ChangeScaleDialogComponent } from './components/commons/change-scale-di
     ProjectLogsComponent,
     GravityCellComponent,
     HistogramTooltipComponent,
-    AppComponent,
     HomeLayoutComponent,
     PreparationViewComponent,
     TreePreparationViewComponent,

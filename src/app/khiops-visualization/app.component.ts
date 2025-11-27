@@ -57,6 +57,7 @@ import { CooccurrenceMatrixConfigService } from './components/commons/cooccurren
   encapsulation: ViewEncapsulation.ShadowDom,
   standalone: false,
   providers: [
+    // Global services
     AppService,
     SaveService,
     InAppOverlayContainer,
