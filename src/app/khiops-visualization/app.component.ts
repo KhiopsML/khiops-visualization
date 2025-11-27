@@ -44,6 +44,12 @@ import { VariableScaleSettingsService } from './providers/variable-scale-setting
 import { Distribution2dDatasService } from './providers/distribution2d-datas.service';
 import { CopyDatasService } from '@khiops-library/providers/copy-datas.service';
 import { DialogService } from '@khiops-library/providers/dialog.service';
+import { TargetLiftGraphService } from './components/commons/target-lift-graph/target-lift-graph.service';
+import { TreeHyperService } from './components/commons/tree-hyper/tree-hyper.service';
+import { HistogramService } from './components/commons/histogram/histogram.service';
+import { HistogramUIService } from './components/commons/histogram/histogram.ui.service';
+import { HistogramRendererService } from './components/commons/histogram/histogram-renderer.service';
+import { CooccurrenceMatrixConfigService } from './components/commons/cooccurrence-matrix/cooccurrence-matrix-config.service';
 @Component({
   selector: 'app-root-visualization',
   styleUrls: ['./app.component.scss'],
@@ -64,6 +70,14 @@ import { DialogService } from '@khiops-library/providers/dialog.service';
     EvaluationDatasService,
     DistributionDatasService,
     ProjectDatasService,
+
+    // Components services
+    TargetLiftGraphService,
+    TreeHyperService,
+    HistogramService,
+    HistogramUIService,
+    HistogramRendererService,
+    CooccurrenceMatrixConfigService,
 
     // Lib services
     ConfigService,
