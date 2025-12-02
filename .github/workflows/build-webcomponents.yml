@@ -1,6 +1,8 @@
 name: Build WebComponents Bundle
 
 on:
+  push:
+  pull_request:
   workflow_dispatch:
     inputs:
       branch:
@@ -25,7 +27,8 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '20'
+          node-version: 22
+          cache: 'yarn'
 
       - name: Install dependencies
         run: yarn install
@@ -97,19 +100,17 @@ jobs:
       - name: Copy bundle to docs/dist
         run: cp dist/khiops-webcomponent/khiops-webcomponents.bundle.js docs/dist/
 
-      - name: Commit and push changes
-        run: |
-          git config --local user.email "stephane.bouget@orange.com"
-          git config --local user.name "Stéphane Bouget"
-
-          # Pull latest changes before committing
-          git pull origin ${{ inputs.branch || 'master' }}
-
-          # Force add the file even if it's in gitignore
-          git add -f docs/dist/khiops-webcomponents.bundle.js
-          if git diff --staged --quiet; then
-            echo "No changes to commit"
-          else
-            git commit -m "Generate khiops-webcomponents.bundle.js"
-            git push
-          fi
+      - name: Deploy to Netlify
+        uses: nwtgck/actions-netlify@v3.0
+        with:
+          publish-dir: './docs'
+          production-branch: master
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          deploy-message: 'Deploy WebComponents Bundle from GitHub Actions'
+          enable-pull-request-comment: false
+          enable-commit-comment: true
+          overwrites-pull-request-comment: true
+        env:
+          NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
+          NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
+        timeout-minutes: 5
