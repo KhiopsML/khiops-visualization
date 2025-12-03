@@ -12,10 +12,7 @@ import { UtilsService } from '@khiops-library/providers/utils.service';
 import { TreePreparationVariableModel } from '../model/tree-preparation-variable.model';
 import { TreeNodeModel } from '../model/tree-node.model';
 import { TREE_COLORS } from '@khiops-visualization/config/colors';
-import {
-  TreePreparationDatasModel,
-  TreePreparationState,
-} from '../model/tree-preparation-datas.model';
+import { TreePreparationDatasModel } from '../model/tree-preparation-datas.model';
 import { GridDatasI } from '@khiops-library/interfaces/grid-datas';
 import { PreparationDatasService } from './preparation-datas.service';
 import { REPORT } from '@khiops-library/enum/report';
@@ -25,8 +22,7 @@ import {
   TreePreparationVariableStatistic,
 } from '@khiops-visualization/interfaces/tree-preparation-report';
 import { Observable, take } from 'rxjs';
-import { Store } from '@ngrx/store';
-import { selectedNodesSelector } from '@khiops-visualization/selectors/tree-preparation.selector';
+import { TreePreparationStore } from '../stores/tree-preparation.store';
 import { TASKS } from '@khiops-library/enum/tasks';
 import { VariableDetail } from '@khiops-visualization/interfaces/shared-interfaces';
 
@@ -42,9 +38,11 @@ export class TreePreparationDatasService {
     private preparationDatasService: PreparationDatasService,
     private translate: TranslateService,
     private appService: AppService,
-    private store: Store<{ TreePreparationState: TreePreparationState }>,
+    private store: TreePreparationStore,
   ) {
-    this.selectedNodes$ = this.store.select(selectedNodesSelector);
+    this.selectedNodes$ = this.store.selectedNodes$;
+    // Link the store with this service to avoid circular dependency
+    this.store.setService(this);
   }
 
   /**
@@ -466,12 +464,11 @@ export class TreePreparationDatasService {
       displayedColumns: [],
     };
 
-    // Take selected nodes from app store with selector
+    // Take selected nodes from component store
     let selectedNodes: TreeNodeModel[] = [];
-    this.store
-      .select(selectedNodesSelector)
+    this.store.selectedNodes$
       .pipe(take(1))
-      .subscribe((nodes) => (selectedNodes = nodes));
+      .subscribe((nodes: TreeNodeModel[]) => (selectedNodes = nodes));
 
     if (selectedNodes?.[0]) {
       treeLeafRules.displayedColumns = [
@@ -579,7 +576,7 @@ export class TreePreparationDatasService {
     ) {
       const details =
         appDatas?.treePreparationReport?.variablesDetailedStatistics?.[
-          this.treePreparationDatas.selectedVariable.rank
+        this.treePreparationDatas.selectedVariable.rank
         ];
       this.treePreparationDatas.classesCount =
         details?.inputValues?.values.length || 0;

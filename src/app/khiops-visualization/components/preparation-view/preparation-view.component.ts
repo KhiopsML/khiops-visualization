@@ -8,12 +8,7 @@ import { Component, Input } from '@angular/core';
 import { PreparationDatasService } from '../../providers/preparation-datas.service';
 import { SelectableTabComponent } from '@khiops-library/components/selectable-tab/selectable-tab.component';
 import { ModelingDatasService } from '@khiops-visualization/providers/modeling-datas.service';
-import {
-  MatDialog,
-  MatDialogRef,
-  MatDialogConfig,
-} from '@angular/material/dialog';
-import { LevelDistributionGraphComponent } from '../commons/level-distribution-graph/level-distribution-graph.component';
+import { DialogService } from '@khiops-library/providers/dialog.service';
 import { TranslateService } from '@ngstack/translate';
 import { GridColumnsI } from '@khiops-library/interfaces/grid-columns';
 import { REPORT } from '@khiops-library/enum/report';
@@ -28,7 +23,7 @@ import { SplitGutterInteractionEvent } from 'angular-split';
 import { DynamicI } from '@khiops-library/interfaces/globals';
 import { GridDatasI } from '@khiops-library/interfaces/grid-datas';
 import { getPreparationVariablesGridColumns } from './preparation-view.config';
-import { AppConfig } from '../../../../environments/environment';
+import { LevelDistributionGraphComponent } from '../commons/level-distribution-graph/level-distribution-graph.component';
 
 @Component({
   selector: 'app-preparation-view',
@@ -55,10 +50,10 @@ export class PreparationViewComponent extends SelectableTabComponent {
     private preparationDatasService: PreparationDatasService,
     private translate: TranslateService,
     private trackerService: TrackerService,
-    private dialog: MatDialog,
     private layoutService: LayoutService,
     private modelingDatasService: ModelingDatasService,
     private distributionService: DistributionService,
+    private dialogService: DialogService,
   ) {
     super();
 
@@ -127,14 +122,13 @@ export class PreparationViewComponent extends SelectableTabComponent {
   }
 
   onShowLevelDistributionGraph(datas: VariableModel[]) {
-    const config = new MatDialogConfig();
-    config.maxWidth = 'unset';
-    config.width = AppConfig.visualizationCommon.LEVEL_DISTRIBUTION_GRAPH.WIDTH;
-    config.height =
-      AppConfig.visualizationCommon.LEVEL_DISTRIBUTION_GRAPH.HEIGHT;
-    const dialogRef: MatDialogRef<LevelDistributionGraphComponent> =
-      this.dialog.open(LevelDistributionGraphComponent, config);
-    dialogRef.componentInstance.datas = datas;
+    this.dialogService.openDialog(
+      LevelDistributionGraphComponent,
+      {},
+      {
+        datas: datas,
+      },
+    );
   }
 
   onShowLevelDistributionFromButton() {

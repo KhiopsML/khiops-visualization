@@ -30,6 +30,22 @@ import { CovisualizationDatas } from './interfaces/app-datas';
 import { ConfigModel } from '@khiops-library/model/config.model';
 import { SaveService } from './providers/save.service';
 import { InAppOverlayContainer } from '@khiops-library/overlay/in-app-overlay-provider';
+import { Ls } from '@khiops-library/providers/ls.service';
+import { KhiopsLibraryService } from '@khiops-library/providers/khiops-library.service';
+import { LayoutService } from '@khiops-library/providers/layout.service';
+import { AnnotationService } from './providers/annotation.service';
+import { ClustersService } from './providers/clusters.service';
+import { CompositionService } from './providers/composition.service';
+import { DimensionsDatasService } from './providers/dimensions-datas.service';
+import { EventsService } from './providers/events.service';
+import { HierarchyService } from './providers/hierarchy.service';
+import { ImportExtDatasService } from './providers/import-ext-datas.service';
+import { ProjectDatasService } from './providers/project-datas.service';
+import { VariableSearchService } from './providers/variable-search.service';
+import { ViewManagerService } from './providers/view-manager.service';
+import { Overlay, OverlayContainer } from '@angular/cdk/overlay';
+import { CopyDatasService } from '@khiops-library/providers/copy-datas.service';
+import { DialogService } from '@khiops-library/providers/dialog.service';
 
 @Component({
   selector: 'app-root-covisualization',
@@ -37,6 +53,35 @@ import { InAppOverlayContainer } from '@khiops-library/overlay/in-app-overlay-pr
   templateUrl: './app.component.html',
   encapsulation: ViewEncapsulation.ShadowDom,
   standalone: false,
+  providers: [
+    AnnotationService,
+    ClustersService,
+    CompositionService,
+    EventsService,
+    HierarchyService,
+    VariableSearchService,
+    AppService,
+    SaveService,
+    TreenodesService,
+    DimensionsDatasService,
+    ProjectDatasService,
+    ViewManagerService,
+    ImportExtDatasService,
+
+    // Lib services
+    ConfigService,
+    CopyDatasService,
+    DialogService,
+    FileLoaderService,
+    Ls,
+    KhiopsLibraryService,
+    LayoutService,
+
+    // Overlay
+    InAppOverlayContainer,
+    { provide: OverlayContainer, useExisting: InAppOverlayContainer },
+    Overlay,
+  ],
 })
 export class AppComponent implements AfterViewInit {
   appdatas: CovisualizationDatas | undefined;
@@ -60,9 +105,13 @@ export class AppComponent implements AfterViewInit {
     private treenodesService: TreenodesService,
     private saveService: SaveService,
     private element: ElementRef,
+    private ls: Ls,
   ) {
-    // Set LS_ID first before any initialization that uses localStorage
-    AppService.Ls.setLsId(AppConfig.covisualizationCommon.GLOBAL.LS_ID);
+    // Set LS_ID with unique instance identifier to prevent collision between tabs
+    const instanceId = `${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
+    const lsId = `${AppConfig.covisualizationCommon.GLOBAL.LS_ID}_${instanceId}`;
+    this.ls.setLsId(lsId);
+    AppService.Ls = this.ls;
     // Now we can safely initialize the app service
     this.appService.initialize();
   }
@@ -74,10 +123,13 @@ export class AppComponent implements AfterViewInit {
     this.element.nativeElement.setDatas = (datas: CovisualizationDatas) => {
       // Set data into ngzone to detect change into another context (electron for instance)
       this.ngzone.run(() => {
+        // Don't clean, just set the new data
         this.appdatas = {
           ...datas,
         };
         this.element.nativeElement.value = datas;
+        // Set data to both services - appService manages the data state
+        this.appService.setFileDatas(datas);
         this.fileLoaderService.setDatas(datas);
       });
     };
@@ -141,7 +193,7 @@ export class AppComponent implements AfterViewInit {
 
     setTimeout(() => {
       AppService.Ls.getAll().then(() => {
-        this.appService.initialize();
+        // Don't reinitialize as it clears data - just init tracker
         this.trackerService.initTracker();
       });
 

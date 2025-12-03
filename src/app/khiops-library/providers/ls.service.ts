@@ -14,7 +14,7 @@ import { UtilsService } from './utils.service';
 export class Ls {
   public LS_ID: string = '';
 
-  lsDatas: any = undefined;
+  lsDatas: any = {};
 
   constructor(private configService: ConfigService) {}
 

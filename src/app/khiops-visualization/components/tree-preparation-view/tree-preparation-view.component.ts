@@ -7,11 +7,6 @@
 import { Component, ViewChild } from '@angular/core';
 import { SelectableTabComponent } from '@khiops-library/components/selectable-tab/selectable-tab.component';
 import { ModelingDatasService } from '@khiops-visualization/providers/modeling-datas.service';
-import {
-  MatDialog,
-  MatDialogRef,
-  MatDialogConfig,
-} from '@angular/material/dialog';
 import { LevelDistributionGraphComponent } from '../commons/level-distribution-graph/level-distribution-graph.component';
 import { VariableGraphDetailsComponent } from '../commons/variable-graph-details/variable-graph-details.component';
 import { TreePreparationDatasService } from '@khiops-visualization/providers/tree-preparation-datas.service';
@@ -23,7 +18,6 @@ import { VariableModel } from '@khiops-visualization/model/variable.model';
 import { DistributionDatasModel } from '@khiops-visualization/model/distribution-datas.model';
 import {
   TreePreparationDatasModel,
-  TreePreparationState,
 } from '@khiops-visualization/model/tree-preparation-datas.model';
 import { TreePreparationVariableModel } from '@khiops-visualization/model/tree-preparation-variable.model';
 import { TrackerService } from '@khiops-library/providers/tracker.service';
@@ -35,15 +29,10 @@ import { REPORT } from '@khiops-library/enum/report';
 import { SplitGutterInteractionEvent } from 'angular-split';
 import { DynamicI } from '@khiops-library/interfaces/globals';
 import { TreeNodeModel } from '@khiops-visualization/model/tree-node.model';
-import { selectNodesFromIndex } from '@khiops-visualization/actions/tree-preparation.action';
-import { Store } from '@ngrx/store';
+import { TreePreparationStore } from '@khiops-visualization/stores/tree-preparation.store';
 import { Observable } from 'rxjs';
-import {
-  selectedNodeSelector,
-  selectedNodesSelector,
-} from '@khiops-visualization/selectors/tree-preparation.selector';
 import { getTreePreparationVariablesGridColumns } from './tree-preparation-view.config';
-import { AppConfig } from '../../../../environments/environment';
+import { DialogService } from '@khiops-library/providers/dialog.service';
 
 @Component({
   selector: 'app-tree-preparation-view',
@@ -76,19 +65,19 @@ export class TreePreparationViewComponent extends SelectableTabComponent {
   constructor(
     private preparationDatasService: PreparationDatasService,
     private treePreparationDatasService: TreePreparationDatasService,
-    private dialog: MatDialog,
     private translate: TranslateService,
     private trackerService: TrackerService,
     private distributionDatasService: DistributionDatasService,
     private modelingDatasService: ModelingDatasService,
     private layoutService: LayoutService,
-    private store: Store<{ TreePreparationState: TreePreparationState }>,
+    private store: TreePreparationStore,
     private distributionService: DistributionService,
+    private dialogService: DialogService,
   ) {
     super();
 
-    this.selectedNodes$ = this.store.select(selectedNodesSelector);
-    this.selectedNode$ = this.store.select(selectedNodeSelector);
+    this.selectedNodes$ = this.store.selectedNodes$;
+    this.selectedNode$ = this.store.selectedNode$;
 
     this.variablesDisplayedColumns = getTreePreparationVariablesGridColumns(
       this.translate,
@@ -119,7 +108,7 @@ export class TreePreparationViewComponent extends SelectableTabComponent {
     );
     this.distributionDatas = this.distributionDatasService.getDatas();
 
-    this.selectedNode$?.subscribe((selectedNode) => {
+    this.selectedNode$?.subscribe((selectedNode: TreeNodeModel | undefined) => {
       if (selectedNode?._id) {
         let [index, _nodesToSelect] =
           this.treePreparationDatasService.getNodesLinkedToOneNode(
@@ -153,14 +142,13 @@ export class TreePreparationViewComponent extends SelectableTabComponent {
   }
 
   onShowLevelDistributionGraph(datas: VariableModel[]) {
-    const config = new MatDialogConfig();
-    config.maxWidth = 'unset';
-    config.width = AppConfig.visualizationCommon.LEVEL_DISTRIBUTION_GRAPH.WIDTH;
-    config.height =
-      AppConfig.visualizationCommon.LEVEL_DISTRIBUTION_GRAPH.HEIGHT;
-    const dialogRef: MatDialogRef<LevelDistributionGraphComponent> =
-      this.dialog.open(LevelDistributionGraphComponent, config);
-    dialogRef.componentInstance.datas = datas;
+    this.dialogService.openDialog(
+      LevelDistributionGraphComponent,
+      {},
+      {
+        datas: datas,
+      },
+    );
   }
 
   onShowLevelDistributionFromButton() {
@@ -177,11 +165,9 @@ export class TreePreparationViewComponent extends SelectableTabComponent {
     // Keep in memory to keep bar charts index on type change
     this.selectedBarIndex = index;
 
-    this.store.dispatch(
-      selectNodesFromIndex({
-        index: this.selectedBarIndex,
-      }),
-    );
+    this.store.selectNodesFromIndex({
+      index: this.selectedBarIndex,
+    });
   }
 
   /**

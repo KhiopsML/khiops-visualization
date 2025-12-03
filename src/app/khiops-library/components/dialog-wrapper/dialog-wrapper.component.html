@@ -1,0 +1,30 @@
+<div
+  class="kl-dialog-wrapper"
+  [class.active]="(dialogContent$ | async)?.type !== 'none'"
+  fxLayout="row"
+  fxFlexFill
+  fxLayoutAlign="center center"
+  *ngIf="dialogContent$ | async as dialogContent"
+>
+  <div
+    class="dialog-overlay"
+    fxFlexFill
+    (click)="closeDialog()"
+    *ngIf="dialogContent.type !== 'none'"
+  ></div>
+  <div
+    class="dialog-content"
+    fxLayout="column"
+    *ngIf="dialogContent.type !== 'none'"
+    [style.width]="dialogContent.config?.width"
+    [style.height]="dialogContent.config?.height"
+    [style.max-width]="dialogContent.config?.maxWidth"
+    [style.max-height]="dialogContent.config?.maxHeight"
+    [class]="dialogContent.config?.panelClass"
+  >
+    <!-- Dynamic Component Container -->
+    <div class="dialog-body" fxFlex *ngIf="dialogContent.componentType">
+      <ng-container #dynamicComponentContainer></ng-container>
+    </div>
+  </div>
+</div>

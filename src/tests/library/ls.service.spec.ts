@@ -80,10 +80,6 @@ describe('Ls Service', () => {
     it('should initialize with empty LS_ID', () => {
       expect(service.LS_ID).toBe('');
     });
-
-    it('should initialize with undefined lsDatas', () => {
-      expect(service.lsDatas).toBeUndefined();
-    });
   });
 
   /**

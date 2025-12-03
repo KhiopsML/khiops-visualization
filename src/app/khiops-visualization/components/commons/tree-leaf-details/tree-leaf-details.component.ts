@@ -19,15 +19,13 @@ import { TreePreparationDatasService } from '@khiops-visualization/providers/tre
 import { GridDatasI } from '@khiops-library/interfaces/grid-datas';
 import {
   TreePreparationDatasModel,
-  TreePreparationState,
 } from '@khiops-visualization/model/tree-preparation-datas.model';
 import { DistributionDatasModel } from '@khiops-visualization/model/distribution-datas.model';
 import { UtilsService } from '@khiops-library/providers/utils.service';
 import { ChartToggleValuesI } from '@khiops-visualization/interfaces/chart-toggle-values';
 import { TreeNodeModel } from '@khiops-visualization/model/tree-node.model';
-import { Store } from '@ngrx/store';
+import { TreePreparationStore } from '@khiops-visualization/stores/tree-preparation.store';
 import { Observable } from 'rxjs';
-import { selectedNodeSelector } from '@khiops-visualization/selectors/tree-preparation.selector';
 
 @Component({
   selector: 'app-tree-leaf-details',
@@ -53,9 +51,9 @@ export class TreeLeafDetailsComponent implements OnInit, OnChanges {
     public translate: TranslateService,
     private treePreparationDatasService: TreePreparationDatasService,
     private distributionDatasService: DistributionDatasService,
-    private store: Store<{ TreePreparationState: TreePreparationState }>,
+    private store: TreePreparationStore,
   ) {
-    this.selectedNode$ = this.store.select(selectedNodeSelector);
+    this.selectedNode$ = this.store.selectedNode$;
   }
 
   ngOnInit() {

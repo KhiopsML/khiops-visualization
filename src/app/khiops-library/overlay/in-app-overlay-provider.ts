@@ -3,7 +3,6 @@ import { OverlayContainer } from '@angular/cdk/overlay';
 import { ConfigService } from '@khiops-library/providers/config.service';
 import { Platform } from '@angular/cdk/platform';
 
-
 @Injectable({ providedIn: 'root' })
 export class InAppOverlayContainer extends OverlayContainer {
   constructor(
@@ -38,8 +37,10 @@ export class InAppOverlayContainer extends OverlayContainer {
   }
 
   getRootElement(): Element | null {
-    return this.configService
-      .getRootElementDom()
-      .querySelector('app-home-layout');
+    const rootElementDom = this.configService.getRootElementDom();
+    if (!rootElementDom) {
+      return null;
+    }
+    return rootElementDom.querySelector('app-home-layout');
   }
 }

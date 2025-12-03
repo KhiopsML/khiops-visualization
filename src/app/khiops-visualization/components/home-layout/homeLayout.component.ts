@@ -52,6 +52,7 @@ export class HomeLayoutComponent implements OnInit {
   public opened = false;
   public selectedTab: Object | undefined;
   public isCompatibleJson?: boolean;
+  public showWelcomeMessage: boolean = false;
 
   @ViewChild('fileLoader', {
     static: false,
@@ -90,11 +91,18 @@ export class HomeLayoutComponent implements OnInit {
   }
 
   checkEmptyMessageVisibility(): boolean {
-    return !this.appDatas || UtilsService.isEmpty(this.appDatas);
+    return (
+      this.showWelcomeMessage &&
+      (!this.appDatas || UtilsService.isEmpty(this.appDatas))
+    );
   }
 
   ngOnInit() {
     this.trackerService.trackEvent('page_view', 'visit', this.appVersion);
+    // Display welcome message after 500ms delay
+    setTimeout(() => {
+      this.showWelcomeMessage = true;
+    }, 500);
   }
 
   ngAfterViewInit() {

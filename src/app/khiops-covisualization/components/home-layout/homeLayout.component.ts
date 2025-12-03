@@ -67,6 +67,7 @@ export class HomeLayoutComponent implements OnInit, OnDestroy {
   public openContextView = false;
   public selectedTab: Object | undefined;
   public isCompatibleJson: boolean = false;
+  public showWelcomeMessage: boolean = false;
 
   private tabsMenu: MatTabGroup | undefined; // Hack to override click on tab
   @ViewChild('tabsMenu', {
@@ -135,6 +136,10 @@ export class HomeLayoutComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.trackerService.trackEvent('page_view', 'axis');
     this.trackerService.trackEvent('page_view', 'visit', this.appVersion);
+    // Display welcome message after 500ms delay
+    setTimeout(() => {
+      this.showWelcomeMessage = true;
+    }, 500);
   }
 
   ngAfterViewInit() {
@@ -151,7 +156,10 @@ export class HomeLayoutComponent implements OnInit, OnDestroy {
   }
 
   checkEmptyMessageVisibility(): boolean {
-    return !this.appDatas || UtilsService.isEmpty(this.appDatas);
+    return (
+      this.showWelcomeMessage &&
+      (!this.appDatas || UtilsService.isEmpty(this.appDatas))
+    );
   }
 
   ngOnDestroy() {
