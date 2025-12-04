@@ -5,24 +5,26 @@ on:
       - '**'
   workflow_dispatch:
 
-permissions:
-  contents: read
-  id-token: write
-  attestations: write
-
 jobs:
-  sbom:
+  build:
     runs-on: ubuntu-latest
+    permissions:
+      id-token: write
+      contents: read
+      attestations: write
 
     steps:
-      - name: Check out Git repository
+      - name: Checkout
         uses: actions/checkout@v4
-
-      - name: Anchore SBOM Action
-        id: sbom
-        uses: anchore/sbom-action@v0.20.10
-
-      - name: Attest SBOM
-        uses: actions/attest-sbom@v3.0.0
+      - name: Build artifact
+        run: make my-app
+      - name: Generate SBOM
+        uses: anchore/sbom-action@v0
         with:
-          sbom-path: sbom.spdx.json
+          format: 'spdx-json'
+          output-file: 'sbom.spdx.json'
+      - name: Attest
+        uses: actions/attest-sbom@v3
+        with:
+          subject-path: '${{ github.workspace }}/dist/'
+          sbom-path: 'sbom.spdx.json'
