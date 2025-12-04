@@ -25,4 +25,4 @@ jobs:
       - name: Attest SBOM
         uses: actions/attest-sbom@v3.0.0
         with:
-          sbom-path: ${{ steps.sbom.outputs.sbom }}
+          sbom-path: sbom.spdx.json
