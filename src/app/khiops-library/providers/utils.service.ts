@@ -1489,6 +1489,10 @@ export class UtilsService {
 
     if (this.isObject(target) && this.isObject(source)) {
       for (const key in source) {
+        // Guard against prototype pollution by checking own properties only
+        if (!Object.prototype.hasOwnProperty.call(source, key)) {
+          continue;
+        }
         if (this.isObject(source[key])) {
           if (!target[key]) {
             Object.assign(target, {

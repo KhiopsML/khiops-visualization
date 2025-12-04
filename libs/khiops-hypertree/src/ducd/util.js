@@ -27,6 +27,10 @@ exports.mergeDeep = (target, source) => {
       (exports.isArray(target) && exports.isArray(source)),
   );
   for (const key in source) {
+    // Guard against prototype pollution by checking own properties only
+    if (!Object.prototype.hasOwnProperty.call(source, key)) {
+      continue;
+    }
     if (exports.isObject(source[key])) {
       // console.debug('merging Object: ', key);
       target[key] = exports.mergeDeep(
