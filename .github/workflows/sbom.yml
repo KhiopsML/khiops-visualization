@@ -1,0 +1,19 @@
+name: SBOM Generation
+on: [push, pull_request]
+
+jobs:
+  sbom:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Generate SBOM
+        uses: anchore/sbom-action@v0
+        with:
+          path: ./
+          format: spdx-json
+
+      - name: Scan for vulnerabilities
+        uses: anchore/grype-action@v1
+        with:
+          image: my-app:latest
