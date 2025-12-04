@@ -1,19 +1,28 @@
-name: SBOM Generation
-on: [push, pull_request]
+name: SBOM
+on:
+  push:
+    branches:
+      - '**'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  id-token: write
+  attestations: write
 
 jobs:
   sbom:
     runs-on: ubuntu-latest
+
     steps:
-      - uses: actions/checkout@v3
+      - name: Check out Git repository
+        uses: actions/checkout@v4
 
-      - name: Generate SBOM
-        uses: anchore/sbom-action@v0
-        with:
-          path: ./
-          format: spdx-json
+      - name: Anchore SBOM Action
+        id: sbom
+        uses: anchore/sbom-action@v0.20.10
 
-      - name: Scan for vulnerabilities
-        uses: anchore/grype-action@v1
+      - name: Attest SBOM
+        uses: actions/attest-sbom@v3.0.0
         with:
-          image: my-app:latest
+          sbom-path: ${{ steps.sbom.outputs.sbom }}
