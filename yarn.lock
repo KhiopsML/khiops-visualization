@@ -3037,6 +3037,18 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@ngrx/component-store@npm:^20.1.0":
+  version: 20.1.0
+  resolution: "@ngrx/component-store@npm:20.1.0"
+  dependencies:
+    tslib: "npm:^2.0.0"
+  peerDependencies:
+    "@angular/core": ^20.0.0
+    rxjs: ^6.5.3 || ^7.5.0
+  checksum: 10c0/98b1f829e7ff707a3366987b210df3bfbe25f4b790a17b09a8d32aac416e66b8c26fa20a2c3ab9b3e40e1f9c51e9eeb179c62ddf44acce33516bf7728ee3c86a
+  languageName: node
+  linkType: hard
+
 "@ngrx/effects@npm:20.1.0":
   version: 20.1.0
   resolution: "@ngrx/effects@npm:20.1.0"
@@ -12972,6 +12984,7 @@ __metadata:
     "@angular/platform-browser-dynamic": "npm:20.3.15"
     "@angular/router": "npm:20.3.15"
     "@cypress/schematic": "npm:4.3.0"
+    "@ngrx/component-store": "npm:^20.1.0"
     "@ngrx/effects": "npm:20.1.0"
     "@ngrx/store": "npm:20.1.0"
     "@ngstack/translate": "npm:10.0.0"
