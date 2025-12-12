@@ -6,6 +6,8 @@ on:
   workflow_dispatch:
 permissions:
   contents: read
+  id-token: write
+  attestations: write
 
 jobs:
   cypress-run:
@@ -18,6 +20,17 @@ jobs:
         run: |
           yarn install
           yarn build:webcomponents
+
+      - name: Generate SBOM
+        uses: anchore/sbom-action@v0
+        with:
+          format: 'spdx-json'
+          output-file: 'sbom.spdx.json'
+      - name: Attest
+        uses: actions/attest-sbom@v3
+        with:
+          subject-path: '${{ github.workspace }}/dist/'
+          sbom-path: 'sbom.spdx.json'
 
       - name: Cypress run
         uses: cypress-io/github-action@v6

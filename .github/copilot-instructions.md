@@ -48,41 +48,33 @@ This is the Khiops Visualization NPM Component - an Angular application that pro
 - If you catch yourself writing in French, immediately correct to English
 - This applies to ALL code-related content without exception
 
-**Testing Philosophy:**
+**commit messages**:
+feat: Addition of a new feature.
+Ex: feat: add the date filter for search
 
-- Don't write unit tests before verifying your changes work
-- Write precise, explicit unit tests with exact inputs/outputs
-- Avoid generic matchers like `toHaveBeenCalled()` or `toBeGreaterThan()`
-- Example: `expect(method(a, b, c)).toEqual(expectedResult)`
+fix: Bug fix.
+Ex: fix: fix pagination on the product list
 
-## Architecture Patterns
+chore: Miscellaneous tasks without functional changes (maintenance).
+Ex: chore: update dependencies
 
-**Module Structure:**
+refactor: Code modification without behavior change (improvement, reorganization).
+Ex: refactor: simplify validation logic
 
-- Each major feature has its own module (`khiops-visualization.module.ts`, `khiops-covisualization.module.ts`)
-- Shared components live in `khiops-library/` with extensive Material Design imports
+docs: Changes related to documentation.
+Ex: docs: add installation procedure
 
-**File Organization:**
+style: Changes that do not impact the code (formatting, indentation, prettier).
+Ex: style: fix formatting
 
-- Components: `components/` (feature-specific) vs `khiops-library/components/` (shared)
-- Services: `providers/` directories contain business logic
-- Tests: Separate `/src/tests/` directory mirrors `/src/app/` structure
-- Mock data: `/src/assets/mocks/` for sample Khiops analysis files
+test: Addition or modification of tests.
+Ex: test: add unit tests for the Button component
 
-**Build System:**
+perf: Performance improvement.
+Ex: perf: optimize the SQL query
 
-- Custom build scripts handle CSS extraction and Material Design prefixing
-- Web components require special bundling (polyfills + styles + main → single file)
-- Gulp handles custom library builds (`libs/khiops-hypertree/gulpfile.js`)
+build: Changes affecting the build system or dependencies.
+Ex: build: update webpack
 
-**Environment Configuration:**
-
-- Environment files split into visualization/covisualization common configs
-- Cypress integration flag: `(window as any).Cypress` detection pattern
-
-**Key Integration Points:**
-
-- Custom overlay container for Material dialogs (`InAppOverlayContainer`)
-- D3 hypertree integration via custom elements schema
-- AG-Grid for data tables with custom cell renderers
-- Angular Split for resizable panels
+ci: Changes related to CI/CD.
+Ex: ci: add GitHub Actions workflow for testing
