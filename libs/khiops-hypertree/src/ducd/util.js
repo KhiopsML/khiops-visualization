@@ -26,17 +26,30 @@ exports.mergeDeep = (target, source) => {
     (exports.isObject(target) && exports.isObject(source)) ||
       (exports.isArray(target) && exports.isArray(source)),
   );
+
+  // List of dangerous property names that could lead to prototype pollution
+  const dangerousKeys = ['__proto__', 'constructor', 'prototype'];
+
   for (const key in source) {
     // Guard against prototype pollution by checking own properties only
     if (!Object.prototype.hasOwnProperty.call(source, key)) {
       continue;
     }
+
+    // Block dangerous property names to prevent prototype pollution
+    if (dangerousKeys.includes(key)) {
+      continue;
+    }
+
     if (exports.isObject(source[key])) {
       // console.debug('merging Object: ', key);
-      target[key] = exports.mergeDeep(
-        target[key] || Object.create(Object.getPrototypeOf(source[key])),
-        source[key],
-      );
+      // Only merge recursively if the target also has this property as an object
+      if (target.hasOwnProperty(key) && exports.isObject(target[key])) {
+        target[key] = exports.mergeDeep(target[key], source[key]);
+      } else {
+        // Create a new object to avoid prototype chain pollution
+        target[key] = exports.mergeDeep({}, source[key]);
+      }
     } else if (exports.isArray(source[key])) {
       // console.debug('merging Array: ', key);
       target[key] = exports.mergeDeep(target[key] || [], source[key]);
