@@ -6649,13 +6649,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"document-register-element@npm:1.14.10":
-  version: 1.14.10
-  resolution: "document-register-element@npm:1.14.10"
-  checksum: 10c0/7252a5f3ee9190353ed642f4f7967c4134bea7587656dca85051e77c3a9a54f587f6f3f702ab467f3a2397ed756d15207f3c00f462ccf685f462d38d4694e348
-  languageName: node
-  linkType: hard
-
 "dom-serialize@npm:^2.2.1":
   version: 2.2.1
   resolution: "dom-serialize@npm:2.2.1"
@@ -12991,7 +12984,6 @@ __metadata:
     chart.js: "npm:4.5.1"
     cypress: "npm:15.7.1"
     d3: "npm:7.9.0"
-    document-register-element: "npm:1.14.10"
     fast-equals: "npm:5.3.4"
     file-saver: "npm:2.0.5"
     html2canvas: "npm:1.4.1"
