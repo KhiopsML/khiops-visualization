@@ -25,6 +25,12 @@
           [message]="'NO_DATAS.WELCOME'"
         >
         </kl-no-data>
+        <mat-spinner
+          diameter="40"
+          *ngIf="!checkEmptyMessageVisibility()"
+          color="accent"
+          mode="indeterminate"
+        ></mat-spinner>
         <div fxFlexFill [hidden]="!isCompatibleJson">
           <mat-tab-group
             #mainTabGroup

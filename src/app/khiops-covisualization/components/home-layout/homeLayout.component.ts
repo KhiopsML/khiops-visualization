@@ -157,6 +157,7 @@ export class HomeLayoutComponent implements OnInit, OnDestroy {
 
   checkEmptyMessageVisibility(): boolean {
     return (
+      !this.configService.isElectron &&
       this.showWelcomeMessage &&
       (!this.appDatas || UtilsService.isEmpty(this.appDatas))
     );

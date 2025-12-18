@@ -53,7 +53,7 @@ export class HomeLayoutComponent implements OnInit {
   public selectedTab: Object | undefined;
   public isCompatibleJson?: boolean;
   public showWelcomeMessage: boolean = false;
-
+  
   @ViewChild('fileLoader', {
     static: false,
   })
@@ -92,6 +92,7 @@ export class HomeLayoutComponent implements OnInit {
 
   checkEmptyMessageVisibility(): boolean {
     return (
+      !this.configService.isElectron &&
       this.showWelcomeMessage &&
       (!this.appDatas || UtilsService.isEmpty(this.appDatas))
     );
@@ -102,7 +103,7 @@ export class HomeLayoutComponent implements OnInit {
     // Display welcome message after 500ms delay
     setTimeout(() => {
       this.showWelcomeMessage = true;
-    }, 500);
+    }, 1000);
   }
 
   ngAfterViewInit() {
