@@ -17,6 +17,7 @@
 # Only exists if Bazel was run
 /bazel-out
 /.yarn/*
+**/.yarn/*
 
 # dependencies
 /node_modules

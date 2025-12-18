@@ -71,7 +71,12 @@
       </as-split>
     </as-split-area>
     <as-split-area [size]="sizes.row[1]">
+      <kl-no-data
+        *ngIf="variablesDatas?.length === 0"
+        [message]="'NO_DATAS.NO_INFORMATIVE_TEXT_VARIABLES'"
+      ></kl-no-data>
       <as-split
+        *ngIf="variablesDatas?.length > 0"
         direction="horizontal"
         (dragEnd)="onSplitDragEnd($event, 'row1Col')"
       >

@@ -19,6 +19,7 @@ export function getVisualizationMockFile(): string {
   // let urlKV = 'Regression_AllReports_PreparationOnly.json';
   // let urlKV = 'missing-zero.json';
   // let urlKV = 'C1000_AllReports.json';
+  // let urlKV = 'AnalysisResults-NoDataText.khj';
   // let urlKV = 'C100_AllReports.json';
   // let urlKV = 'AdultRegressionAllReports.json';
   // let urlKV = 'onlyEvaluationReport.json';
