@@ -13,6 +13,7 @@ import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { StoreModule } from '@ngrx/store';
 import { TreeNodeModel } from '@khiops-visualization/model/tree-node.model';
 import { TreeChildNode } from '@khiops-visualization/interfaces/tree-preparation-report';
+import { TreePreparationStore } from '@khiops-visualization/stores/tree-preparation.store';
 import { TreePreparationDatasModel } from '@khiops-visualization/model/tree-preparation-datas.model';
 
 describe('Visualization - Tree Preparation Regression - Simple Tests', () => {
@@ -24,6 +25,7 @@ describe('Visualization - Tree Preparation Regression - Simple Tests', () => {
       imports: [HttpClientTestingModule, StoreModule.forRoot({})],
       providers: [
         TreePreparationDatasService,
+        TreePreparationStore,
         AppService,
         PreparationDatasService,
         TranslateService,
