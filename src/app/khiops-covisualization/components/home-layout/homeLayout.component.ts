@@ -18,11 +18,6 @@ import { TranslateService } from '@ngstack/translate';
 import { SelectableService } from '@khiops-library/components/selectable/selectable.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { DimensionsDatasService } from '@khiops-covisualization/providers/dimensions-datas.service';
-import {
-  MatDialogRef,
-  MatDialog,
-  MatDialogConfig,
-} from '@angular/material/dialog';
 import { ImportExtDatasService } from '@khiops-covisualization/providers/import-ext-datas.service';
 import { LoadExtDatasComponent } from '../commons/load-ext-datas/load-ext-datas.component';
 import { EventsService } from '@khiops-covisualization/providers/events.service';
@@ -35,6 +30,7 @@ import { TrackerService } from '../../../khiops-library/providers/tracker.servic
 import { ViewManagerService } from '@khiops-covisualization/providers/view-manager.service';
 import { FileLoaderService } from '@khiops-library/providers/file-loader.service';
 import { CovisualizationDatas } from '@khiops-covisualization/interfaces/app-datas';
+import { DialogService } from '@khiops-library/providers/dialog.service';
 
 @Component({
   selector: 'app-home-layout',
@@ -85,7 +81,6 @@ export class HomeLayoutComponent implements OnInit, OnDestroy {
   constructor(
     private configService: ConfigService,
     private appService: AppService,
-    private dialogRef: MatDialog,
     private translate: TranslateService,
     private snackBar: MatSnackBar,
     private trackerService: TrackerService,
@@ -95,7 +90,7 @@ export class HomeLayoutComponent implements OnInit, OnDestroy {
     private viewManagerService: ViewManagerService,
     private treenodesService: TreenodesService,
     private eventsService: EventsService,
-    private dialog: MatDialog,
+    private dialogService: DialogService,
     private fileLoaderService: FileLoaderService,
   ) {
     if (pjson) {
@@ -254,7 +249,7 @@ export class HomeLayoutComponent implements OnInit, OnDestroy {
 
   private initializeHome(datas?: CovisualizationDatas) {
     // Close dialogs when opening new file #148
-    this.dialogRef.closeAll();
+    this.dialogService.closeDialog();
 
     this.isCompatibleJson = this.appService.isCompatibleJson(datas!);
     const isCollidingJson = this.appService.isCollidingJson(datas!);
@@ -317,18 +312,16 @@ export class HomeLayoutComponent implements OnInit, OnDestroy {
   }
 
   private openLoadExternalDataDialog() {
-    const config = new MatDialogConfig();
-    config.panelClass = 'hidden';
-    config.backdropClass = 'hidden';
-    const dialogRef: MatDialogRef<LoadExtDatasComponent> = this.dialog.open(
-      LoadExtDatasComponent,
-      config,
-    );
-    dialogRef.disableClose = true;
+    this.dialogService.openDialog(LoadExtDatasComponent, {
+      width: AppConfig.covisualizationCommon.MANAGE_VIEWS.WIDTH,
+      maxWidth: AppConfig.covisualizationCommon.MANAGE_VIEWS.MAX_WIDTH,
+      height: '500px',
+      disableClose: true,
+    });
   }
 
   closeFile() {
-    this.dialogRef.closeAll();
+    this.dialogService.closeDialog();
     this.fileLoader?.closeFile();
   }
 

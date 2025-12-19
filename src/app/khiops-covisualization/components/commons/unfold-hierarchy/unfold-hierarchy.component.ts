@@ -6,7 +6,6 @@
 
 import { Component, HostListener, OnInit } from '@angular/core';
 import { DimensionsDatasService } from '@khiops-covisualization/providers/dimensions-datas.service';
-import { MatDialogRef } from '@angular/material/dialog';
 import { KhiopsLibraryService } from '@khiops-library/providers/khiops-library.service';
 import { TranslateService } from '@ngstack/translate';
 import cloneDeep from 'lodash-es/cloneDeep';
@@ -29,6 +28,7 @@ import {
   getInfoPerClusterChartOptions,
 } from './unfold-hierarchy.config';
 import { ChartOptions } from 'chart.js';
+import { DialogService } from '@khiops-library/providers/dialog.service';
 
 @Component({
   selector: 'app-unfold-hierarchy',
@@ -67,8 +67,8 @@ export class UnfoldHierarchyComponent implements OnInit {
     private snackBar: MatSnackBar,
     private treenodesService: TreenodesService,
     private clustersService: ClustersService,
+    private dialogService: DialogService,
     private khiopsLibraryService: KhiopsLibraryService,
-    private dialogRef: MatDialogRef<UnfoldHierarchyComponent>,
   ) {
     this.borderColor = '#000000';
 
@@ -240,7 +240,7 @@ export class UnfoldHierarchyComponent implements OnInit {
       );
       this.hierarchyService.unfoldHierarchy(this.currentUnfoldHierarchy);
       this.loadingHierarchy = false;
-      this.dialogRef.close();
+      this.dialogService.closeDialog();
     }); // do not freeze during computing
   }
 
@@ -248,7 +248,7 @@ export class UnfoldHierarchyComponent implements OnInit {
     this.treenodesService.updateCurrentHierarchyClustersCount(
       this.previousHierarchyRank,
     );
-    this.dialogRef.close();
+    this.dialogService.closeDialog();
   }
 
   increaseUnfoldHierarchy() {

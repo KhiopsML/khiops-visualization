@@ -32,6 +32,7 @@ export class HeaderManageViewComponent {
     this.dialogService.openDialog(ManageViewsComponent, {
       width: AppConfig.covisualizationCommon.MANAGE_VIEWS.WIDTH,
       maxWidth: AppConfig.covisualizationCommon.MANAGE_VIEWS.MAX_WIDTH,
+      height: 'auto',
     });
   }
 
@@ -39,6 +40,7 @@ export class HeaderManageViewComponent {
     this.dialogService.openDialog(ImportExtDatasListComponent, {
       width: AppConfig.covisualizationCommon.MANAGE_VIEWS.WIDTH,
       maxWidth: AppConfig.covisualizationCommon.MANAGE_VIEWS.MAX_WIDTH,
+      height: '550px',
       disableClose: true,
     });
   }

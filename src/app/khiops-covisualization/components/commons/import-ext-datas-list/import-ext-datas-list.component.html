@@ -19,22 +19,19 @@
       *ngIf="!isLoadingDatas"
       id="import-ext-datas-content"
       fxLayout="column"
-      fxFlexFill
       fxLayoutAlign="start center"
     >
       <div
         *ngIf="importedDatas && importedDatas.values"
         id="import-ext-datas-list-table"
         class="kl-card"
-        fxFlexFill
         fxLayout="column"
         fxLayoutAlign="start center"
       >
-        <h1 fxFlexFill class="small-title">
+        <h1 class="small-title">
           {{ 'GLOBAL.IMPORTED_EXTERNAL_DATA' | translate }}
         </h1>
         <kl-ag-grid
-          fxFlexFill
           [showSearch]="false"
           [showLineSelection]="false"
           [suppressRowClickSelection]="true"

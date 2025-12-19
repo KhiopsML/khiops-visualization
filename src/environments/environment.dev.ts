@@ -8,7 +8,7 @@ import { covisualizationCommonEnvironment } from './covisualization-common';
 import { visualizationCommonEnvironment } from './visualization-common';
 
 export const AppConfig = {
-  debugFile: false,
+  debugFile: true,
   production: false,
   environment: 'DEV',
   visualizationCommon: visualizationCommonEnvironment,
