@@ -97,6 +97,16 @@ export class DialogWrapperComponent implements OnInit, OnDestroy {
   }
 
   /**
+   * Handle backdrop click with disableClose check
+   */
+  onBackdropClick(): void {
+    const currentContent = this.dialogService.getDialogContent();
+    if (!currentContent.config?.disableClose) {
+      this.closeDialog();
+    }
+  }
+
+  /**
    * Clear the dynamic component
    */
   private clearDynamicComponent(): void {
