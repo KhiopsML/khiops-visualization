@@ -72,7 +72,7 @@
     "@angular/common": "20.3.15",
     "@angular/compiler": "20.3.15",
     "@angular/core": "20.3.15",
-    "@angular/elements": "21.0.5",
+    "@angular/elements": "21.0.6",
     "@angular/flex-layout": "15.0.0-beta.42",
     "@angular/forms": "20.3.15",
     "@angular/material": "20.2.14",
