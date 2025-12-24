@@ -9,6 +9,35 @@ import '../../support/commands';
 import '../../utils/utils';
 
 describe('Test External Data Import in Khiops Covisualization', () => {
+  // test: Load a file with pre-configured savedDatas.importedDatas
+  // The external data should be loaded automatically from the saved path (Electron mode)
+  const fileNameWithSavedDatas = 'check-ext-datas-e2e.json';
+
+  it(`should auto-load external data from savedDatas for ${fileNameWithSavedDatas}`, () => {
+    cy.initViews();
+
+    cy.loadFile('covisualization', fileNameWithSavedDatas);
+
+    // Wait for the file to be loaded - check that tabs are visible
+    cy.get('.mat-mdc-tab', { timeout: 20000 }).should(
+      'have.length.greaterThan',
+      0,
+    );
+
+    // Wait for the external data to be loaded automatically from savedDatas
+    cy.wait(3000);
+
+    // Select a node that has the external data (e.g., "Bachelors")
+    cy.get('app-composition', { timeout: 10000 })
+      .contains('Bachelors')
+      .click({ force: true });
+
+    // Verify that app-external-datas component displays "This text is standard"
+    cy.get('app-external-datas', { timeout: 15000 })
+      .should('exist')
+      .and('contain.text', 'This text is standard');
+  });
+
   // Mock external data content matching the expected format
   const mockExternalDataContent = `education\tAn example of text
 Bachelors\tThis text is standard
@@ -103,7 +132,7 @@ Some-college\tMore text
 
       // Wait for the LoadExtDatasComponent dialog to appear and finish loading
       // This dialog loads the saved external data and then closes automatically
-      cy.wait(3000);
+      cy.wait(1000);
 
       // Wait for all dialogs to be closed
       cy.get('app-import-ext-datas-list', { timeout: 10000 }).should(

@@ -63,6 +63,19 @@ export class ConfigService {
     return this.getConfig().appSource === 'ELECTRON';
   }
 
+  set isElectron(value: boolean) {
+    this.getConfig().appSource = value
+      ? 'ELECTRON'
+      : this.getConfig().appSource;
+  }
+
+  get isE2eTesting(): boolean {
+    return this.getConfig().isE2eTesting === true;
+  }
+
+  set isE2eTesting(value: boolean) {
+    this.getConfig().isE2eTesting = value;
+  }
   /**
    * Checks if the application is using Electron for storage.
    * @returns True if the storage is 'ELECTRON', otherwise false.

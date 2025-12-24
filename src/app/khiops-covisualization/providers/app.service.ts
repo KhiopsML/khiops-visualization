@@ -16,6 +16,7 @@ import {
 } from '@khiops-covisualization/interfaces/app-datas';
 import { UtilsService } from '@khiops-library/providers/utils.service';
 import { LS } from '@khiops-library/enum/ls';
+import { ConfigService } from '@khiops-library/providers/config.service';
 
 @Injectable({
   providedIn: 'root',
@@ -31,6 +32,7 @@ export class AppService {
     private khiopsLibraryService: KhiopsLibraryService,
     private ls: Ls,
     private layoutService: LayoutService,
+    private configService: ConfigService,
   ) {
     // Render Ls static methods with current instance
     AppService.Ls = this.ls;
@@ -191,5 +193,23 @@ export class AppService {
       ...AppConfig.covisualizationCommon,
     };
     this.khiopsLibraryService.setAppConfig(AppConfig);
+  }
+
+  /**
+   * Detects if the application is running in an E2E testing environment
+   */
+  detectE2ETestingEnvironment() {
+    try {
+      if (
+        typeof window !== 'undefined' &&
+        // @ts-ignore
+        (window.Cypress || window.process?.versions?.electron)
+      ) {
+        this.configService.isElectron = true;
+        this.configService.isE2eTesting = true;
+      }
+    } catch (error) {
+      console.error('Error detecting E2E testing environment:', error);
+    }
   }
 }
