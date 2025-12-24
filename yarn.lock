@@ -3389,10 +3389,10 @@ angular-resizable-element@8.0.0:
   dependencies:
     tslib "^2.3.0"
 
-angular-resize-event-package@3.7.0:
-  version "3.7.0"
-  resolved "https://registry.yarnpkg.com/angular-resize-event-package/-/angular-resize-event-package-3.7.0.tgz#f3f05f9688033231225665d4ee4e3ecf6c230f0d"
-  integrity sha512-ZQvu1S2KQFHAHu8XtS/rIZC5P4Y4B1k3yKKQWQWqOi0ajRsX63RmNSs807NQEWmA3tT9hRE//1DxWq5Rw+rnwg==
+angular-resize-event-package@3.8.0:
+  version "3.8.0"
+  resolved "https://registry.yarnpkg.com/angular-resize-event-package/-/angular-resize-event-package-3.8.0.tgz#4541dc4a0332557124a02204b4a2fab46529319b"
+  integrity sha512-iAgCATeRWQ8myMm1E+sW/j84rc501zJDKDheiySRCzHMUc9y3uUPu9+KKRFkFokgqmIzDAo6SH/o8imNQGxAgQ==
   dependencies:
     tslib "^2.8.1"
 
