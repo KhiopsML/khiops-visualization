@@ -112,7 +112,12 @@
     <button mat-stroked-button (click)="onClickOnCancel()">
       {{ 'GLOBAL.CANCEL' | translate }}
     </button>
-    <button mat-flat-button (click)="onClickOnSave()" color="primary">
+    <button
+      id="import-ext-datas-save-btn"
+      mat-flat-button
+      (click)="onClickOnSave()"
+      color="primary"
+    >
       {{ 'GLOBAL.LOAD_DATAS' | translate }}
     </button>
   </div>
