@@ -373,10 +373,10 @@
   dependencies:
     tslib "^2.3.0"
 
-"@angular/elements@21.0.5":
-  version "21.0.5"
-  resolved "https://registry.yarnpkg.com/@angular/elements/-/elements-21.0.5.tgz#720ec2881770b12a2517a5c4e7f8554fdaa96228"
-  integrity sha512-g7CDpYEgVS9AdqKD1g26eQRzN3UE2PVS++LazJZQtVYgiiwgfyQ+cOJMVTMU0oz7Mgw/bWjC/gYTtp9rNX2GLw==
+"@angular/elements@21.0.6":
+  version "21.0.6"
+  resolved "https://registry.yarnpkg.com/@angular/elements/-/elements-21.0.6.tgz#73c2baf38e200350a652010e068c88864cd309f4"
+  integrity sha512-hnzdrzCxpSTXem3GxNvJErqBUTYYnK+sk+ucUniCTmuJELbTdjp+1QDH9T1w7pzDr+zNdf8x+ATILftop4HDNA==
   dependencies:
     tslib "^2.3.0"
 
