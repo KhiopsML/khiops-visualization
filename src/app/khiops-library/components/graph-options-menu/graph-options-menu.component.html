@@ -1,11 +1,11 @@
-<div class="graph-options-menu-comp">
+<div class="graph-options-menu-comp screenshot-hide">
   <button
     mat-stroked-button
     color="primary"
     [matMenuTriggerFor]="graphOptionsTypes"
   >
     {{ graphOptions?.selected | translate }}
-    <em class="screenshot-hide"><mat-icon>keyboard_arrow_down</mat-icon> </em>
+    <em><mat-icon>keyboard_arrow_down</mat-icon> </em>
   </button>
   <mat-menu #graphOptionsTypes>
     <button

@@ -9,8 +9,7 @@
   <div
     id="graph-header-comp"
     fxLayoutAlign="start center"
-    class="comp-header"
-    class="scrollbar-thin"
+    class="scrollbar-thin screenshot-hide"
     fxLayout="row"
   >
     <div fxLayout="column" fxFlex fxLayoutAlign="start start">
@@ -21,7 +20,7 @@
         fxLayout="row"
         fxLayoutAlign="start center"
         fxFlex
-        class="graph-header-tools screenshot-hide"
+        class="graph-header-tools"
       >
         <mat-checkbox
           [checked]="visualization.purity"
@@ -37,13 +36,8 @@
         </mat-checkbox>
       </div>
     </div>
-    <div
-      fxLayoutAlign="start start"
-      fxLayout="row"
-      class="graph-header-tools screenshot-hide"
-    >
+    <div fxLayoutAlign="start start" fxLayout="row" class="graph-header-tools">
       <app-select-toggle-button
-        class="screenshot-hide"
         *ngIf="
           distributionDatas &&
           distributionDatas.targetDistributionDisplayedValues
