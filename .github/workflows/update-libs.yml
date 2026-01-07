@@ -31,8 +31,8 @@ jobs:
           # Install npm-check-updates
           npm install -g npm-check-updates
 
-          # Update all dependencies
-          ncu -u
+          # Update minor and patch versions only (not major)
+          ncu -u --target minor
 
           # Install updated dependencies
           yarn install
