@@ -102,6 +102,9 @@ export class HomeLayoutComponent implements OnInit, OnDestroy {
       this.appVersion = pjson.version;
     }
 
+    // Detect E2E testing environment
+    this.appService.detectE2ETestingEnvironment();
+
     this.importedDatasChangedSub =
       this.eventsService.importedDatasChanged.subscribe((dimName) => {
         if (dimName?.[0]) {

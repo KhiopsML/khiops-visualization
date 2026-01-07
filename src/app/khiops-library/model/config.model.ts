@@ -16,4 +16,5 @@ export class ConfigModel {
   onCopyImage!: Function;
   onSendEvent!: Function;
   readLocalFile?: Function;
+  isE2eTesting?: boolean;
 }
