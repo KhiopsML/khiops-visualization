@@ -1296,13 +1296,14 @@
     tunnel-agent "^0.6.0"
     uuid "^8.3.2"
 
-"@cypress/schematic@4.3.0":
-  version "4.3.0"
-  resolved "https://registry.yarnpkg.com/@cypress/schematic/-/schematic-4.3.0.tgz#eb2ed569a5dccbeb187914ec59a2b43134ca2593"
-  integrity sha512-GEPMQM2xC5HcE191g87QMgrfsDacB0KDmeZzQ4dwKNLL4/22fmBeRs9YX4p6kX3T6VGJGvvJU4gXkAxXCkUuZQ==
+"@cypress/schematic@5.0.0":
+  version "5.0.0"
+  resolved "https://registry.yarnpkg.com/@cypress/schematic/-/schematic-5.0.0.tgz#dbe31049abc71228718d6dd01936ea606dc2de26"
+  integrity sha512-z8+myDqT4SONCBvNI+cFzhADFCOOsSOcfp6mxMx4FxMMpyeaYbUNUCZlt886UnjnSsL5BWSX7WNJLhPptewKVw==
   dependencies:
     jsonc-parser "^3.3.1"
     rxjs "~7.8.2"
+    semver "^7.7.3"
 
 "@cypress/xvfb@^1.2.4":
   version "1.2.4"
@@ -8079,7 +8080,7 @@ semver@^6.3.0, semver@^6.3.1:
   resolved "https://registry.yarnpkg.com/semver/-/semver-6.3.1.tgz#556d2ef8689146e46dcea4bfdd095f3434dffcb4"
   integrity sha512-BR7VvDCVHO+q2xBEWskxS6DJE1qRnb7DxzUrogb71CWoSficBxYsiAGd+Kl0mmq/MprG9yArRkyrQxTO6XjMzA==
 
-semver@^7.0.0, semver@^7.1.1, semver@^7.3.5, semver@^7.5.3, semver@^7.5.4, semver@^7.6.2:
+semver@^7.0.0, semver@^7.1.1, semver@^7.3.5, semver@^7.5.3, semver@^7.5.4, semver@^7.6.2, semver@^7.7.3:
   version "7.7.3"
   resolved "https://registry.yarnpkg.com/semver/-/semver-7.7.3.tgz#4b5f4143d007633a8dc671cd0a6ef9147b8bb946"
   integrity sha512-SdsKMrI9TdgjdweUSR9MweHA4EJ8YxHn8DFaDisvhVlUOe4BF1tLD7GAj0lIqWVl+dPb/rExr0Btby5loQm20Q==
