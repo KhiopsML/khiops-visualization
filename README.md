@@ -15,8 +15,6 @@
 
 **🌐 [Khiops Visualization Live Demo](https://khiopsml.github.io/khiops-visualization/)**
 
-**🌐 [Khiops Covisualization Live Demo](https://khiopsml.github.io/khiops-visualization/covisualization.html)**
-
 ---
 
 ## 📖 Table of Contents
