@@ -129,7 +129,7 @@ src/
 
 The current development versions are accessible here:
 
-- [DEV VERSION Visualization](https://khiopsml.github.io/khiops-visualization/dev.html)
+- [DEV VERSION Visualization](https://khiopsml.github.io/khiops-visualization/?v=dev)
 
 ## 🧪 Testing
 

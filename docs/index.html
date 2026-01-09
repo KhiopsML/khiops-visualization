@@ -47,9 +47,15 @@
       // Load script for a specific version
       function loadScript(version) {
         const scriptElement = document.getElementById('dynamic-script');
-        const url = version
-          ? `https://unpkg.com/khiops-visualization@${version}/khiops-webcomponents.bundle.js`
-          : 'https://unpkg.com/khiops-visualization/khiops-webcomponents.bundle.js';
+        let url;
+        
+        if (version === 'dev') {
+          url = `./dist/khiops-webcomponents.bundle.js?v=${Math.random()}`;
+        } else if (version) {
+          url = `https://unpkg.com/khiops-visualization@${version}/khiops-webcomponents.bundle.js`;
+        } else {
+          url = 'https://unpkg.com/khiops-visualization/khiops-webcomponents.bundle.js';
+        }
 
         // Remove old script
         if (scriptElement.src) {
@@ -75,21 +81,35 @@
         const versions = await fetchVersions();
 
         if (versions.length === 0) {
-          select.innerHTML =
-            '<option value="">Failed to load versions</option>';
+          select.innerHTML = '<option value="">Failed to load versions</option>';
           return;
         }
 
-        // Populate select with versions
-        select.innerHTML = versions
+        // Build options with dev at top
+        let optionsHTML = '<option value="dev">dev (branch master)</option>';
+        optionsHTML += '<option disabled>──────────</option>';
+        optionsHTML += versions
           .map(
             (version) =>
               `<option value="${version}">${version}${version === versions[0] ? ' (latest)' : ''}</option>`,
           )
           .join('');
+        
+        select.innerHTML = optionsHTML;
 
-        // Set current version to latest
-        currentVersion = versions[0];
+        // Check URL parameter first
+        const urlParams = new URLSearchParams(window.location.search);
+        const versionParam = urlParams.get('v');
+        
+        if (versionParam === 'dev') {
+          currentVersion = 'dev';
+        } else if (versionParam && versions.includes(versionParam)) {
+          currentVersion = versionParam;
+        } else {
+          // Default to latest NPM version
+          currentVersion = versions[0];
+        }
+        
         select.value = currentVersion;
 
         // Add change event listener
@@ -106,14 +126,6 @@
               window.location.href.split('?')[0] + '?' + urlParams.toString();
           }
         });
-
-        // Load the selected version from URL or default to latest
-        const urlParams = new URLSearchParams(window.location.search);
-        const versionParam = urlParams.get('v');
-        if (versionParam && versions.includes(versionParam)) {
-          currentVersion = versionParam;
-          select.value = currentVersion;
-        }
 
         // Load component from URL parameter
         const componentParam = urlParams.get('component');
