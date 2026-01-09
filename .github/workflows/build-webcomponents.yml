@@ -1,6 +1,7 @@
 name: Build WebComponents Bundle
 
 on:
+  push:
   workflow_dispatch:
     inputs:
       branch:
