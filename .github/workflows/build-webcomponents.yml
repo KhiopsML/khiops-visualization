@@ -96,18 +96,26 @@ jobs:
         run: mkdir -p docs/dist
 
       - name: Copy bundle to docs/dist
-        run: cp dist/khiops-webcomponent/khiops-webcomponents.bundle.js docs/dist/
+        run: |
+          echo "Removing old bundle if exists..."
+          rm -f docs/dist/khiops-webcomponents.bundle.js
+          echo "Copying new bundle..."
+          cp dist/khiops-webcomponent/khiops-webcomponents.bundle.js docs/dist/
+          echo "Verifying bundle size and modification time:"
+          ls -lh docs/dist/khiops-webcomponents.bundle.js
+          echo "First 100 bytes of bundle:"
+          head -c 100 docs/dist/khiops-webcomponents.bundle.js
 
       - name: Commit and push changes
         run: |
           git config --local user.email "stephane.bouget@orange.com"
           git config --local user.name "Stéphane Bouget"
 
-          # Pull latest changes before committing
-          git pull origin ${{ inputs.branch || 'master' }}
-
-          # Force add the file even if it's in gitignore
+          # Force add the new file (even if in gitignore) BEFORE pulling
           git add -f docs/dist/khiops-webcomponents.bundle.js
+          
+          # Pull with strategy to keep our version of the bundle
+          git pull --no-rebase --strategy-option=ours origin ${{ inputs.branch || 'master' }}
           if git diff --staged --quiet; then
             echo "No changes to commit"
           else
