@@ -167,7 +167,7 @@ export class AgGridService {
         // Add value formatter if app config is provided
         if (options.appConfig) {
           gridCol.valueFormatter = (params: any) => {
-            if (!params.value) {
+            if (params.value === null || params.value === undefined || params.value === '') {
               return '';
             }
             const formatted = UtilsService.getPrecisionNumber(
@@ -179,7 +179,7 @@ export class AgGridService {
 
           // Add value getter to ensure search uses formatted values
           gridCol.valueGetter = (params: any) => {
-            if (!params.data || !params.data[col.field]) {
+            if (!params.data || params.data[col.field] === null || params.data[col.field] === undefined) {
               return false;
             }
             const rawValue = params.data[col.field];
