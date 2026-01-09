@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Khiops DEV version</title>
+    <link rel="stylesheet" href="./common-header.css" />
+  </head>
+  <body>
+    <div id="header">
+      <div id="tabs">
+        <button class="tab active" data-component="visualization">
+          Khiops Visualization
+        </button>
+        <button class="tab" data-component="covisualization">
+          Khiops Covisualization
+        </button>
+      </div>
+      <div id="version-selector">
+        <span>DEV VERSION</span>
+      </div>
+    </div>
+    <div id="container"></div>
+
+    <script src="./common-tabs.js"></script>
+    <script>
+      // Load the webcomponents bundle with cache busting
+      const script = document.createElement('script');
+      script.src = `./dist/khiops-webcomponents.bundle.js?v=${Math.random()}`;
+
+      // Wait for the script to load before initializing
+      script.onload = function () {
+        initializeComponent();
+      };
+
+      script.onerror = function () {
+        console.error('Failed to load khiops-webcomponents.bundle.js');
+      };
+
+      document.head.appendChild(script);
+
+      // Initialize on DOM ready
+      document.addEventListener('DOMContentLoaded', function () {
+        initTabs();
+        recreateComponent(); // Create initial component
+      });
+    </script>
+  </body>
+</html>

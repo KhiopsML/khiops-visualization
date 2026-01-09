@@ -4,85 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Khiops-visualization demo</title>
-    <style>
-      html,
-      body {
-        margin: 0;
-        padding: 0;
-        height: 100%;
-        width: 100%;
-        display: flex;
-        flex-direction: column;
-      }
-      #header {
-        background-color: #2c3e50;
-        color: white;
-        padding: 0;
-        display: flex;
-        align-items: center;
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-      }
-      #tabs {
-        display: flex;
-        gap: 0;
-        flex: 1;
-      }
-      .tab {
-        padding: 12px 24px;
-        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        font-size: 14px;
-        font-weight: 500;
-        cursor: pointer;
-        background-color: #34495e;
-        border: none;
-        color: rgba(255, 255, 255, 0.7);
-        transition: all 0.3s ease;
-        border-bottom: 3px solid transparent;
-      }
-      .tab:hover {
-        background-color: #3d566e;
-        color: white;
-      }
-      .tab.active {
-        background-color: #2c3e50;
-        color: white;
-        border-bottom-color: #3498db;
-      }
-      #version-selector {
-        display: flex;
-        align-items: center;
-        gap: 10px;
-        padding: 0 20px;
-        border-left: 1px solid #34495e;
-      }
-      #version-selector label {
-        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        font-size: 14px;
-        font-weight: 500;
-        white-space: nowrap;
-      }
-      #version-select {
-        padding: 6px 10px;
-        border-radius: 4px;
-        border: 1px solid #34495e;
-        background-color: #34495e;
-        color: white;
-        font-size: 14px;
-        cursor: pointer;
-        outline: none;
-        min-width: 150px;
-      }
-      #version-select:hover {
-        background-color: #3d566e;
-      }
-      #version-select:focus {
-        border-color: #3498db;
-      }
-      #container {
-        flex: 1;
-        position: relative;
-      }
-    </style>
+    <link rel="stylesheet" href="./common-header.css" />
   </head>
   <body>
     <div id="header">
@@ -103,22 +25,9 @@
     </div>
     <div id="container"></div>
     <script id="dynamic-script"></script>
+    <script src="./common-tabs.js"></script>
     <script>
       let currentVersion = null;
-      let currentComponent = 'visualization';
-
-      const componentConfig = {
-        visualization: {
-          tagName: 'khiops-visualization',
-          demoFile: './demo-visualization.json',
-          hasConfig: true,
-        },
-        covisualization: {
-          tagName: 'khiops-covisualization',
-          demoFile: './demo-covisualization.json',
-          hasConfig: false,
-        },
-      };
 
       // Fetch available versions from NPM registry
       async function fetchVersions() {
@@ -149,13 +58,13 @@
           newScript.id = 'dynamic-script';
           newScript.src = url;
           newScript.onload = () => {
-            setTimeout(initializeComponent, 500);
+            recreateComponent();
           };
           document.body.appendChild(newScript);
         } else {
           scriptElement.src = url;
           scriptElement.onload = () => {
-            setTimeout(initializeComponent, 500);
+            recreateComponent();
           };
         }
       }
@@ -191,6 +100,7 @@
             // Reload page without cache
             const urlParams = new URLSearchParams(window.location.search);
             urlParams.set('v', selectedVersion);
+            urlParams.set('component', currentComponent);
             urlParams.set('t', Date.now());
             window.location.href =
               window.location.href.split('?')[0] + '?' + urlParams.toString();
@@ -215,91 +125,12 @@
         loadScript(currentVersion);
       }
 
-      // Initialize tabs
-      function initTabs() {
-        const tabs = document.querySelectorAll('.tab');
-        tabs.forEach((tab) => {
-          tab.addEventListener('click', function () {
-            const component = this.getAttribute('data-component');
-            if (component !== currentComponent) {
-              currentComponent = component;
-              updateActiveTab();
-              recreateComponent();
-            }
-          });
-        });
-      }
-
-      // Update active tab styling
-      function updateActiveTab() {
-        const tabs = document.querySelectorAll('.tab');
-        tabs.forEach((tab) => {
-          if (tab.getAttribute('data-component') === currentComponent) {
-            tab.classList.add('active');
-          } else {
-            tab.classList.remove('active');
-          }
-        });
-      }
-
-      // Recreate component based on current selection
-      function recreateComponent() {
-        const container = document.getElementById('container');
-        const config = componentConfig[currentComponent];
-
-        // Clear container
-        container.innerHTML = '';
-
-        // Create new component
-        const element = document.createElement(config.tagName);
-        element.id = 'kv1';
-        element.style.width = '100%';
-        element.style.height = '100%';
-        container.appendChild(element);
-
-        // Wait a bit for component to be ready
-        setTimeout(initializeComponent, 500);
-      }
-
-      // Wait for the script to load before initializing
-      function initializeComponent() {
-        loadDemoData();
-      }
-
       // For external CDN script, use DOMContentLoaded as fallback
       // but add additional check for component availability
       document.addEventListener('DOMContentLoaded', function () {
         initTabs();
-        recreateComponent(); // Create initial component
         initVersionSelector();
       });
-
-      async function loadDemoData() {
-        try {
-          const config = componentConfig[currentComponent];
-          const response = await fetch(config.demoFile);
-          const data = await response.json();
-
-          const element = document.querySelector(config.tagName);
-          if (element && typeof element.clean === 'function') {
-            element.clean();
-            element.setDatas(data);
-            if (config.hasConfig) {
-              element.setConfig({
-                showOpenFileBtn: true,
-              });
-            }
-          } else if (!element) {
-            console.error(`${config.tagName} element not found`);
-          } else {
-            console.error(
-              'element.clean is not a function - component not fully initialized',
-            );
-          }
-        } catch (error) {
-          console.error('Error loading demo data:', error);
-        }
-      }
     </script>
   </body>
 </html>
