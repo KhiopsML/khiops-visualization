@@ -23,10 +23,19 @@ function initTabs() {
       if (component !== currentComponent) {
         currentComponent = component;
         updateActiveTab();
+        updateUrlParams();
         recreateComponent();
       }
     });
   });
+}
+
+// Update URL parameters when component changes
+function updateUrlParams() {
+  const urlParams = new URLSearchParams(window.location.search);
+  urlParams.set('component', currentComponent);
+  const newUrl = window.location.pathname + '?' + urlParams.toString();
+  window.history.pushState({ component: currentComponent }, '', newUrl);
 }
 
 // Update active tab styling
