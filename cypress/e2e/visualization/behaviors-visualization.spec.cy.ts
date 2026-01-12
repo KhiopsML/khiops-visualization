@@ -100,10 +100,15 @@ describe('Behaviors Test Plan for Khiops Visualization', () => {
         cy.get('.mat-mdc-tab:contains("Text preparation")').first().click();
         cy.wait(500);
 
-        // check that 3nd .ag-row contains  .ag-row-selected
+        // check that first .ag-row contains .ag-row-selected
         cy.get('#preparation-variables-list')
           .find('.ag-row:eq(0)')
           .should('have.class', 'ag-row-selected');
+
+        // check that 3th .ag-cell-value (level) contains 0 #347
+        cy.get('#preparation-variables-list')
+          .find('.ag-row:eq(2) .ag-cell-value')
+          .should('contain', '0');
 
         // Move to the first matrix cell
         cy.get('#matrix-selected').should('be.visible').trigger('mousemove', {
