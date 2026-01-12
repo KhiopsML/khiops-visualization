@@ -561,7 +561,7 @@ export class MatrixComponent extends SelectableComponent implements OnChanges {
           }
         }
 
-        // Do not draw top level selection matrix il nodes are not collapsed
+        // Do not draw top level selection matrix if nodes are not collapsed
         if (
           this.matrixFreqsValues.length !== this.selectedCells.length &&
           (this.selectedNodes?.[0]?.parentCluster ||
@@ -575,8 +575,13 @@ export class MatrixComponent extends SelectableComponent implements OnChanges {
           const cell: CellModel = new CellModel();
           cell.xCanvas = 0;
           cell.yCanvas = 0;
-          cell.wCanvas = this.matrixCtx.canvas.width;
-          cell.hCanvas = this.matrixCtx.canvas.height;
+
+          cell.wCanvas = this.isAxisInverted
+            ? this.matrixCtx.canvas.height
+            : this.matrixCtx.canvas.width;
+          cell.hCanvas = this.isAxisInverted
+            ? this.matrixCtx.canvas.width
+            : this.matrixCtx.canvas.height;
           this.drawSelectedCell(cell);
         }
       }
