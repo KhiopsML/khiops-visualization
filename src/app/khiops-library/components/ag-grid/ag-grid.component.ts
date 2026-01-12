@@ -441,7 +441,6 @@ export class AgGridComponent
         },
       );
 
-
       // Update grid data - in v32 we need to use the api methods when available
       if (this.agGrid?.api) {
         this.agGrid.api.setGridOption('columnDefs', this.columnDefs);

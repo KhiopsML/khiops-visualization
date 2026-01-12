@@ -164,33 +164,29 @@ export class AgGridService {
           comparator: this.createComparator(),
         };
 
-        // Add value formatter if app config is provided
-        if (options.appConfig) {
-          gridCol.valueFormatter = (params: any) => {
-            if (params.value === null || params.value === undefined || params.value === '') {
-              return '';
-            }
-            const formatted = UtilsService.getPrecisionNumber(
-              params.value,
-              options.appConfig.GLOBAL.TO_FIXED,
-            );
-            return String(formatted);
-          };
+        // PERFORMANCE: Use cellRenderer instead of valueFormatter/valueGetter
+        // cellRenderer is only called for VISIBLE cells (thanks to virtualization)
+        // This allows formatting without impacting sort performance on 60k+ rows
+        if (options.appConfig && !col.cellRenderer) {
+          const isNumericColumn = cellAlignment === 'right';
 
-          // Add value getter to ensure search uses formatted values
-          gridCol.valueGetter = (params: any) => {
-            if (!params.data || params.data[col.field] === null || params.data[col.field] === undefined) {
-              return false;
-            }
-            const rawValue = params.data[col.field];
-            if (options.appConfig) {
-              return UtilsService.getPrecisionNumber(
-                rawValue,
+          if (isNumericColumn) {
+            // Only format numeric columns to preserve performance
+            gridCol.cellRenderer = (params: any) => {
+              if (
+                params.value === null ||
+                params.value === undefined ||
+                params.value === ''
+              ) {
+                return '';
+              }
+              const formatted = UtilsService.getPrecisionNumber(
+                params.value,
                 options.appConfig.GLOBAL.TO_FIXED,
               );
-            }
-            return rawValue;
-          };
+              return String(formatted);
+            };
+          }
         }
 
         columnDefs.push(gridCol);
@@ -202,27 +198,31 @@ export class AgGridService {
 
   /**
    * Creates a comparator function for AG Grid columns that handles both numeric and string values
+   * PERFORMANCE OPTIMIZED: Uses fast comparison methods for large datasets (60k+ rows)
    * @returns Comparator function for AG Grid
    */
   createComparator() {
     return (a: any, b: any) => {
-      const result = a - b;
-      if (isNaN(result)) {
-        if (!a || a === '' || a === 'undefined') {
-          a = '0';
-        }
-        if (!b || b === '' || b === 'undefined') {
-          b = '0';
-        }
-        return a
-          .toString()
-          .trim()
-          .localeCompare(b.toString().trim(), undefined, {
-            numeric: true,
-          });
-      } else {
-        return result;
+      // Handle null/undefined/empty values
+      if (a == null || a === '') a = '';
+      if (b == null || b === '') b = '';
+
+      // Try numeric comparison first (fastest)
+      const numA = Number(a);
+      const numB = Number(b);
+
+      if (!isNaN(numA) && !isNaN(numB)) {
+        return numA - numB;
       }
+
+      // String comparison - use simple comparison for performance
+      // localeCompare with numeric:true is VERY slow on 60k+ rows
+      const strA = String(a);
+      const strB = String(b);
+
+      if (strA < strB) return -1;
+      if (strA > strB) return 1;
+      return 0;
     };
   }
 
