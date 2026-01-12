@@ -52,7 +52,9 @@
         if (version === 'dev') {
           url = `./dist/khiops-webcomponents.bundle.js?v=${Math.random()}`;
         } else if (version) {
-          url = `https://unpkg.com/khiops-visualization@${version}/khiops-webcomponents.bundle.js`;
+          // Encode version to prevent XSS
+          const encodedVersion = encodeURIComponent(version);
+          url = `https://unpkg.com/khiops-visualization@${encodedVersion}/khiops-webcomponents.bundle.js`;
         } else {
           url = 'https://unpkg.com/khiops-visualization/khiops-webcomponents.bundle.js';
         }
