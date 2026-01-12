@@ -146,7 +146,7 @@
   </div>
   <ag-grid-angular
     fxFlex
-    *ngIf="rowData.length !== 0 && this.agGridVisible"
+    *ngIf="inputDatas?.length !== 0 && this.agGridVisible"
     [context]="context"
     #agGrid
     class="ag-theme-balham"
@@ -161,5 +161,5 @@
     [modules]="modules"
   >
   </ag-grid-angular>
-  <kl-no-data fxFlex *ngIf="rowData.length === 0"></kl-no-data>
+  <kl-no-data fxFlex *ngIf="inputDatas?.length === 0"></kl-no-data>
 </div>
