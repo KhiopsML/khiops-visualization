@@ -99,9 +99,9 @@ export class MatrixComponent extends SelectableComponent implements OnChanges {
   public tooltipCell: CellModel | undefined;
   public tooltipPosition:
     | {
-        x: number;
-        y: number;
-      }
+      x: number;
+      y: number;
+    }
     | undefined;
 
   private conditionalOnContextChangedSub: Subscription;
@@ -123,6 +123,13 @@ export class MatrixComponent extends SelectableComponent implements OnChanges {
   private currentMouseX: number = 0;
   private currentMouseY: number = 0;
   private isDrawing = false;
+
+  // Multi-cell selection with Ctrl+Click+Drag
+  private isMultiSelecting = false;
+  private multiSelectStartCell: CellModel | undefined;
+  private multiSelectCurrentCell: CellModel | undefined;
+  private mouseDownHandler!: (event: MouseEvent) => void;
+  private mouseUpHandler!: (event: MouseEvent) => void;
 
   constructor(
     private ls: Ls,
@@ -155,11 +162,31 @@ export class MatrixComponent extends SelectableComponent implements OnChanges {
 
     this.clickOnCellHandler = (event: MouseEvent) => this.clickOnCell(event);
 
-    this.mouseoutHandler = (_event: Event) => this.hideTooltip();
+    this.mouseoutHandler = (_event: Event) => {
+      this.hideTooltip();
+      // Cancel multi-selection if mouse leaves the matrix
+      if (this.isMultiSelecting) {
+        this.isMultiSelecting = false;
+        this.multiSelectStartCell = undefined;
+        this.multiSelectCurrentCell = undefined;
+        this.cleanSelectedDomContext();
+        this.drawSelectedNodes();
+      }
+    };
     this.mousemoveHandler = (event: MouseEvent) => {
       this.currentEvent = event;
       this.showTooltip(event);
+      // Handle multi-selection drag
+      if (this.isMultiSelecting && this.multiSelectStartCell) {
+        const currentCell = this.getCurrentCell(event);
+        if (currentCell && currentCell !== this.multiSelectCurrentCell) {
+          this.multiSelectCurrentCell = currentCell;
+          this.drawMultiSelectionPreview();
+        }
+      }
     };
+    this.mouseDownHandler = (event: MouseEvent) => this.onMouseDown(event);
+    this.mouseUpHandler = (event: MouseEvent) => this.onMouseUp(event);
     this.wheelHandler = (event: WheelEvent) => {
       this.currentEvent = event;
     };
@@ -498,6 +525,24 @@ export class MatrixComponent extends SelectableComponent implements OnChanges {
         this.wheelHandler,
         { passive: true },
       );
+      this.matrixSelectedDiv.nativeElement.removeEventListener(
+        'mousedown',
+        this.mouseDownHandler,
+      );
+      this.matrixSelectedDiv.nativeElement.addEventListener(
+        'mousedown',
+        this.mouseDownHandler,
+        { passive: true },
+      );
+      this.matrixSelectedDiv.nativeElement.removeEventListener(
+        'mouseup',
+        this.mouseUpHandler,
+      );
+      this.matrixSelectedDiv.nativeElement.addEventListener(
+        'mouseup',
+        this.mouseUpHandler,
+        { passive: true },
+      );
     }
 
     if (this.matrixArea?.nativeElement) {
@@ -517,6 +562,11 @@ export class MatrixComponent extends SelectableComponent implements OnChanges {
   }
 
   private clickOnCell(event: MouseEvent) {
+    // Skip normal click if multi-selection was just completed
+    if (this.isMultiSelecting) {
+      return;
+    }
+
     // Hack to prevent event emit if user pan matrix
     if (!this.isPaning || this.isPaning === undefined) {
       this.isPaning = false;
@@ -725,12 +775,12 @@ export class MatrixComponent extends SelectableComponent implements OnChanges {
         if (
           y > this.inputDatas.matrixCellDatas[i].yCanvas &&
           y <
-            this.inputDatas.matrixCellDatas[i].yCanvas +
-              this.inputDatas.matrixCellDatas[i].hCanvas &&
+          this.inputDatas.matrixCellDatas[i].yCanvas +
+          this.inputDatas.matrixCellDatas[i].hCanvas &&
           x > this.inputDatas.matrixCellDatas[i].xCanvas &&
           x <
-            this.inputDatas.matrixCellDatas[i].xCanvas +
-              this.inputDatas.matrixCellDatas[i].wCanvas
+          this.inputDatas.matrixCellDatas[i].xCanvas +
+          this.inputDatas.matrixCellDatas[i].wCanvas
         ) {
           return this.inputDatas.matrixCellDatas[i];
         }
@@ -804,5 +854,136 @@ export class MatrixComponent extends SelectableComponent implements OnChanges {
         this.xAxisLabel,
         this.yAxisLabel,
       );
+  }
+
+  /**
+   * Handle mouse down event - start multi-selection if Ctrl is pressed
+   */
+  private onMouseDown(event: MouseEvent) {
+    if (event.ctrlKey && this.isKhiopsCovisu) {
+      const cell = this.getCurrentCell(event);
+      if (cell) {
+        this.isMultiSelecting = true;
+        this.multiSelectStartCell = cell;
+        this.multiSelectCurrentCell = cell;
+        this.cleanSelectedDomContext();
+        this.drawMultiSelectionPreview();
+      }
+    }
+  }
+
+  /**
+   * Handle mouse up event - finalize multi-selection
+   */
+  private onMouseUp(_event: MouseEvent) {
+    if (this.isMultiSelecting && this.multiSelectStartCell && this.multiSelectCurrentCell) {
+      // Get all cells in the rectangular selection
+      const selectedCells = this.getCellsInRect(
+        this.multiSelectStartCell,
+        this.multiSelectCurrentCell,
+      );
+
+      if (selectedCells.length > 0) {
+        this.selectedCells = selectedCells;
+        this.cleanSelectedDomContext();
+
+        // Draw the final selection with solid border (bounding box)
+        this.drawMultiCellSelection(selectedCells);
+
+        // Find common parent and emit event
+        if (selectedCells.length === 1) {
+          // Single cell - emit normally
+          setTimeout(() => {
+            this.cellSelected.emit({
+              datas: selectedCells[0],
+            });
+          });
+        } else {
+          // Multiple cells - emit with selected cells, let container find common parent
+          setTimeout(() => {
+            this.cellSelected.emit({
+              datas: selectedCells[0], // First cell as reference
+              multiSelection: true,
+              selectedCells: selectedCells,
+            });
+          });
+        }
+      }
+
+      // Reset multi-selection state after a short delay to prevent click event
+      setTimeout(() => {
+        this.isMultiSelecting = false;
+        this.multiSelectStartCell = undefined;
+        this.multiSelectCurrentCell = undefined;
+      }, 50);
+    } else {
+      this.isMultiSelecting = false;
+      this.multiSelectStartCell = undefined;
+      this.multiSelectCurrentCell = undefined;
+    }
+  }
+
+  /**
+   * Draw a dashed preview rectangle during multi-selection drag
+   */
+  private drawMultiSelectionPreview() {
+    if (!this.multiSelectStartCell || !this.multiSelectCurrentCell) return;
+
+    this.cleanSelectedDomContext();
+    this.matrixRendererService.drawTempSelectionRect(
+      this.matrixSelectedCtx,
+      this.multiSelectStartCell,
+      this.multiSelectCurrentCell,
+    );
+  }
+
+  /**
+   * Draw the final multi-cell selection - draw each cell individually
+   */
+  private drawMultiCellSelection(cells: CellModel[]) {
+    if (cells.length === 0) return;
+
+    // Draw each selected cell individually
+    for (const cell of cells) {
+      this.drawSelectedCell(cell);
+    }
+  }
+
+  /**
+   * Get all cells within a rectangular area defined by two corner cells
+   */
+  private getCellsInRect(startCell: CellModel, endCell: CellModel): CellModel[] {
+    if (!this.inputDatas?.matrixCellDatas) return [];
+
+    // Find the bounding rectangle
+    const minX = Math.min(startCell.xCanvas, endCell.xCanvas);
+    const maxX = Math.max(
+      startCell.xCanvas + startCell.wCanvas,
+      endCell.xCanvas + endCell.wCanvas,
+    );
+    const minY = Math.min(startCell.yCanvas, endCell.yCanvas);
+    const maxY = Math.max(
+      startCell.yCanvas + startCell.hCanvas,
+      endCell.yCanvas + endCell.hCanvas,
+    );
+
+    const cellsInRect: CellModel[] = [];
+
+    for (const cell of this.inputDatas.matrixCellDatas) {
+      // Cell center must be within selection
+      const cellCenterX = cell.xCanvas + cell.wCanvas / 2;
+      const cellCenterY = cell.yCanvas + cell.hCanvas / 2;
+
+      if (
+        cellCenterX >= minX &&
+        cellCenterX <= maxX &&
+        cellCenterY >= minY &&
+        cellCenterY <= maxY
+      ) {
+        cellsInRect.push(cell);
+      }
+    }
+
+    return cellsInRect;
   }
 }

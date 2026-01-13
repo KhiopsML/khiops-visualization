@@ -21,7 +21,7 @@ export class MatrixRendererService {
   private canvasPattern: HTMLCanvasElement | undefined;
   private innerVariableFilterPattern: HTMLCanvasElement | undefined;
 
-  constructor() {}
+  constructor() { }
 
   /**
    * Cleans the main matrix canvas context
@@ -364,6 +364,41 @@ export class MatrixRendererService {
         cell.hCanvas,
       );
     }
+  }
+
+  /**
+   * Draws a temporary dashed selection rectangle during multi-cell selection drag
+   * @param matrixSelectedCtx Selected cells canvas context
+   * @param startCell Starting cell of the selection
+   * @param endCell Current end cell of the selection
+   */
+  drawTempSelectionRect(
+    matrixSelectedCtx: CanvasRenderingContext2D,
+    startCell: CellModel,
+    endCell: CellModel,
+  ): void {
+    if (!startCell || !endCell) return;
+
+    // Calculate bounding rectangle from startCell to endCell
+    const x = Math.min(startCell.xCanvas, endCell.xCanvas);
+    const y = Math.min(startCell.yCanvas, endCell.yCanvas);
+    const w =
+      Math.max(
+        startCell.xCanvas + startCell.wCanvas,
+        endCell.xCanvas + endCell.wCanvas,
+      ) - x;
+    const h =
+      Math.max(
+        startCell.yCanvas + startCell.hCanvas,
+        endCell.yCanvas + endCell.hCanvas,
+      ) - y;
+
+    // Draw dashed rectangle
+    matrixSelectedCtx.setLineDash([5, 5]);
+    matrixSelectedCtx.strokeStyle = '#000000';
+    matrixSelectedCtx.lineWidth = 2;
+    matrixSelectedCtx.strokeRect(x, y, w, h);
+    matrixSelectedCtx.setLineDash([]); // Reset to solid line
   }
 
   /**
