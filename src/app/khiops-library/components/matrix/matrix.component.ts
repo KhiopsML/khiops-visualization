@@ -178,7 +178,12 @@ export class MatrixComponent extends SelectableComponent implements OnChanges {
     };
     this.mousemoveHandler = (event: MouseEvent) => {
       this.currentEvent = event;
-      this.showTooltip(event);
+
+      // Don't show tooltip during multi-selection
+      if (!this.isMultiSelecting) {
+        this.showTooltip(event);
+      }
+
       // Handle multi-selection drag
       if (this.isMultiSelecting && this.multiSelectStartCell) {
         const currentCell = this.getCurrentCell(event);
@@ -202,7 +207,7 @@ export class MatrixComponent extends SelectableComponent implements OnChanges {
     };
   }
 
-  @HostListener('window:resize', ['$event'])
+  @HostListener('window:resize')
   sizeChange() {
     if (!this.isFirstResize) {
       this.drawMatrix();
@@ -870,6 +875,7 @@ export class MatrixComponent extends SelectableComponent implements OnChanges {
         this.isMultiSelecting = true;
         this.multiSelectStartCell = cell;
         this.multiSelectCurrentCell = cell;
+        this.hideTooltip(); // Hide tooltip when multi-selection starts
         this.cleanSelectedDomContext();
         this.drawMultiSelectionPreview();
       }
