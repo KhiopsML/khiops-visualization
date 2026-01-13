@@ -145,15 +145,127 @@ export class MatrixContainerComponent implements OnInit, OnDestroy, OnChanges {
     );
   }
 
-  onCellSelected(event: { datas: CellModel }) {
-    this.treenodesService.setSelectedNode(
-      event.datas.xnamePart ?? '',
-      event.datas.xaxisPart ?? '',
+  onCellSelected(event: {
+    datas: CellModel;
+    multiSelection?: boolean;
+    selectedCells?: CellModel[];
+  }) {
+    if (event.multiSelection && event.selectedCells && event.selectedCells.length > 1) {
+      // Multi-cell selection - find common parent via hierarchy traversal
+      const xnamePart = event.datas.xnamePart ?? '';
+      const ynamePart = event.datas.ynamePart ?? '';
+
+      // Find common parent for X axis
+      const xAxisParts = this.getUniqueAxisParts(event.selectedCells, 'xaxisPart');
+      const commonParentX = this.findCommonParentNode(xAxisParts, xnamePart);
+
+      // Find common parent for Y axis
+      const yAxisParts = this.getUniqueAxisParts(event.selectedCells, 'yaxisPart');
+      const commonParentY = this.findCommonParentNode(yAxisParts, ynamePart);
+
+      this.treenodesService.setSelectedNode(xnamePart, commonParentX);
+      this.treenodesService.setSelectedNode(ynamePart, commonParentY);
+    } else {
+      // Single cell selection - normal behavior
+      this.treenodesService.setSelectedNode(
+        event.datas.xnamePart ?? '',
+        event.datas.xaxisPart ?? '',
+      );
+      this.treenodesService.setSelectedNode(
+        event.datas.ynamePart ?? '',
+        event.datas.yaxisPart ?? '',
+      );
+    }
+  }
+
+  /**
+   * Get unique axis parts from selected cells
+   */
+  private getUniqueAxisParts(
+    cells: CellModel[],
+    axisPartKey: 'xaxisPart' | 'yaxisPart',
+  ): string[] {
+    const parts = new Set<string>();
+    for (const cell of cells) {
+      const part = cell[axisPartKey];
+      if (part) parts.add(part);
+    }
+    return Array.from(parts);
+  }
+
+  /**
+   * Find the common parent node for multiple axis parts by traversing the hierarchy
+   * Uses parentCluster to find the lowest common ancestor
+   */
+  private findCommonParentNode(
+    axisParts: string[],
+    dimensionName: string,
+  ): string {
+    if (axisParts.length === 0) return '';
+    if (axisParts.length === 1) return axisParts[0]!;
+
+    // Get the first node and find its ancestors
+    const firstNode = this.treenodesService.getNodeFromDimensionTree(
+      dimensionName,
+      axisParts[0]!,
     );
-    this.treenodesService.setSelectedNode(
-      event.datas.ynamePart ?? '',
-      event.datas.yaxisPart ?? '',
-    );
+    if (!firstNode) return axisParts[0]!;
+
+    // Build ancestor chain for first node
+    let currentAncestor = firstNode.parentCluster;
+
+    // Check if all other parts share this ancestor (or are its descendants)
+    while (currentAncestor) {
+      let allShareAncestor = true;
+
+      for (let i = 1; i < axisParts.length; i++) {
+        const node = this.treenodesService.getNodeFromDimensionTree(
+          dimensionName,
+          axisParts[i]!,
+        );
+        if (!node) {
+          allShareAncestor = false;
+          break;
+        }
+
+        // Check if this node has the same parent or is under the same ancestor
+        if (node.parentCluster !== currentAncestor) {
+          // Check if currentAncestor is an ancestor of this node
+          let nodeAncestor = node.parentCluster;
+          let found = false;
+          while (nodeAncestor) {
+            if (nodeAncestor === currentAncestor) {
+              found = true;
+              break;
+            }
+            // Get parent of this ancestor
+            const ancestorNode = this.treenodesService.getNodeFromDimensionTree(
+              dimensionName,
+              nodeAncestor,
+            );
+            nodeAncestor = ancestorNode?.parentCluster || '';
+          }
+          if (!found) {
+            allShareAncestor = false;
+            break;
+          }
+        }
+      }
+
+      if (allShareAncestor) {
+        return currentAncestor;
+      }
+
+      // Move up to the parent's parent
+      const ancestorNode = this.treenodesService.getNodeFromDimensionTree(
+        dimensionName,
+        currentAncestor,
+      );
+      currentAncestor = ancestorNode?.parentCluster || '';
+    }
+
+    // If no common ancestor found, return the first part
+    return axisParts[0]!;
   }
 
   onMatrixAxisInverted() {

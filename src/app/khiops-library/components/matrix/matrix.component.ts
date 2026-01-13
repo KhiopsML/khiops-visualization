@@ -33,6 +33,7 @@ import { LS } from '@khiops-library/enum/ls';
 import { Ls } from '@khiops-library/providers/ls.service';
 import { MatrixUtilsService } from './matrix.utils.service';
 import { MatrixRendererService } from './matrix.renderer.service';
+import { MatrixSelectionService } from './matrix-selection.service';
 import { DynamicI } from '@khiops-library/interfaces/globals';
 import { ZoomToolsEventsService } from '../zoom-tools/zoom-tools.service';
 
@@ -58,6 +59,7 @@ export class MatrixComponent extends SelectableComponent implements OnChanges {
   @Input() public matrixFilterOption: string = ''; // For matrix filter option (cluster or inner variables)
   @Input() public hasInnerVariables: boolean = false; // Whether inner variables are available in the data
   @Input() public showExpectedFrequency?: boolean = false;
+  @Input() public dimensionsClusters: TreeNodeModel[][] = []; // For hierarchy-based selection expansion (KC use case)
 
   @Output() private matrixAxisInverted: EventEmitter<any> = new EventEmitter();
   @Output() private cellSelected: EventEmitter<any> = new EventEmitter();
@@ -124,6 +126,13 @@ export class MatrixComponent extends SelectableComponent implements OnChanges {
   private currentMouseY: number = 0;
   private isDrawing = false;
 
+  // Multi-cell selection with Ctrl+Click+Drag
+  private isMultiSelecting = false;
+  private multiSelectStartCell: CellModel | undefined;
+  private multiSelectCurrentCell: CellModel | undefined;
+  private mouseDownHandler!: (event: MouseEvent) => void;
+  private mouseUpHandler!: (event: MouseEvent) => void;
+
   constructor(
     private ls: Ls,
     public override selectableService: SelectableService,
@@ -133,6 +142,7 @@ export class MatrixComponent extends SelectableComponent implements OnChanges {
     public override configService: ConfigService,
     private khiopsLibraryService: KhiopsLibraryService,
     private matrixRendererService: MatrixRendererService,
+    private matrixSelectionService: MatrixSelectionService,
   ) {
     super(selectableService, ngzone, configService);
 
@@ -155,11 +165,32 @@ export class MatrixComponent extends SelectableComponent implements OnChanges {
 
     this.clickOnCellHandler = (event: MouseEvent) => this.clickOnCell(event);
 
-    this.mouseoutHandler = (_event: Event) => this.hideTooltip();
+    this.mouseoutHandler = (_event: Event) => {
+      this.hideTooltip();
+      // Cancel multi-selection if mouse leaves the matrix
+      if (this.isMultiSelecting) {
+        this.isMultiSelecting = false;
+        this.multiSelectStartCell = undefined;
+        this.multiSelectCurrentCell = undefined;
+        this.cleanSelectedDomContext();
+        this.drawSelectedNodes();
+      }
+    };
     this.mousemoveHandler = (event: MouseEvent) => {
       this.currentEvent = event;
       this.showTooltip(event);
+      // Handle multi-selection drag
+      if (this.isMultiSelecting && this.multiSelectStartCell) {
+        const currentCell = this.getCurrentCell(event);
+        if (currentCell && currentCell !== this.multiSelectCurrentCell) {
+          this.multiSelectCurrentCell = currentCell;
+          // Expand selection based on hierarchy
+          this.drawMultiSelectionPreviewWithHierarchy();
+        }
+      }
     };
+    this.mouseDownHandler = (event: MouseEvent) => this.onMouseDown(event);
+    this.mouseUpHandler = (event: MouseEvent) => this.onMouseUp(event);
     this.wheelHandler = (event: WheelEvent) => {
       this.currentEvent = event;
     };
@@ -498,6 +529,24 @@ export class MatrixComponent extends SelectableComponent implements OnChanges {
         this.wheelHandler,
         { passive: true },
       );
+      this.matrixSelectedDiv.nativeElement.removeEventListener(
+        'mousedown',
+        this.mouseDownHandler,
+      );
+      this.matrixSelectedDiv.nativeElement.addEventListener(
+        'mousedown',
+        this.mouseDownHandler,
+        { passive: true },
+      );
+      this.matrixSelectedDiv.nativeElement.removeEventListener(
+        'mouseup',
+        this.mouseUpHandler,
+      );
+      this.matrixSelectedDiv.nativeElement.addEventListener(
+        'mouseup',
+        this.mouseUpHandler,
+        { passive: true },
+      );
     }
 
     if (this.matrixArea?.nativeElement) {
@@ -517,6 +566,11 @@ export class MatrixComponent extends SelectableComponent implements OnChanges {
   }
 
   private clickOnCell(event: MouseEvent) {
+    // Skip normal click if multi-selection was just completed
+    if (this.isMultiSelecting) {
+      return;
+    }
+
     // Hack to prevent event emit if user pan matrix
     if (!this.isPaning || this.isPaning === undefined) {
       this.isPaning = false;
@@ -805,4 +859,163 @@ export class MatrixComponent extends SelectableComponent implements OnChanges {
         this.yAxisLabel,
       );
   }
+
+  /**
+   * Handle mouse down event - start multi-selection if Ctrl is pressed
+   */
+  private onMouseDown(event: MouseEvent) {
+    if (event.ctrlKey && this.isKhiopsCovisu) {
+      const cell = this.getCurrentCell(event);
+      if (cell) {
+        this.isMultiSelecting = true;
+        this.multiSelectStartCell = cell;
+        this.multiSelectCurrentCell = cell;
+        this.cleanSelectedDomContext();
+        this.drawMultiSelectionPreview();
+      }
+    }
+  }
+
+  /**
+   * Handle mouse up event - finalize multi-selection
+   */
+  private onMouseUp(_event: MouseEvent) {
+    if (
+      this.isMultiSelecting &&
+      this.multiSelectStartCell &&
+      this.multiSelectCurrentCell
+    ) {
+      // Use hierarchy-expanded cells if available, otherwise fall back to simple rectangle
+      let selectedCells: CellModel[];
+      if (this.hierarchyExpandedCells.length > 0) {
+        selectedCells = this.hierarchyExpandedCells;
+      } else {
+        selectedCells = this.matrixSelectionService.getCellsInRect(
+          this.multiSelectStartCell,
+          this.multiSelectCurrentCell,
+          this.inputDatas.matrixCellDatas,
+        );
+      }
+
+      if (selectedCells.length > 0) {
+        this.selectedCells = selectedCells;
+        this.cleanSelectedDomContext();
+
+        // Draw the final selection with solid border for each cell
+        this.drawMultiCellSelection(selectedCells);
+
+        // Find common parent and emit event
+        if (selectedCells.length === 1) {
+          // Single cell - emit normally
+          setTimeout(() => {
+            this.cellSelected.emit({
+              datas: selectedCells[0],
+            });
+          });
+        } else {
+          // Multiple cells - emit with selected cells, let container find common parent
+          setTimeout(() => {
+            this.cellSelected.emit({
+              datas: selectedCells[0], // First cell as reference
+              multiSelection: true,
+              selectedCells: selectedCells,
+            });
+          });
+        }
+      }
+
+      // Reset multi-selection state after a short delay to prevent click event
+      setTimeout(() => {
+        this.isMultiSelecting = false;
+        this.multiSelectStartCell = undefined;
+        this.multiSelectCurrentCell = undefined;
+        this.hierarchyExpandedCells = [];
+      }, 50);
+    } else {
+      this.isMultiSelecting = false;
+      this.multiSelectStartCell = undefined;
+      this.multiSelectCurrentCell = undefined;
+    }
+  }
+
+  /**
+   * Draw a dashed preview rectangle during multi-selection drag
+   */
+  private drawMultiSelectionPreview() {
+    if (!this.multiSelectStartCell || !this.multiSelectCurrentCell) return;
+
+    this.cleanSelectedDomContext();
+    this.matrixRendererService.drawTempSelectionRect(
+      this.matrixSelectedCtx,
+      this.multiSelectStartCell,
+      this.multiSelectCurrentCell,
+    );
+  }
+
+  /**
+   * Draw the final multi-cell selection - draw each cell individually
+   */
+  private drawMultiCellSelection(cells: CellModel[]) {
+    if (cells.length === 0) return;
+
+    // Draw each selected cell individually
+    for (const cell of cells) {
+      this.drawSelectedCell(cell);
+    }
+  }
+
+  /**
+   * Draw multi-selection preview with hierarchy-based expansion
+   * When cells from different parent nodes are selected, expand to include all children of the common ancestor
+   */
+  private drawMultiSelectionPreviewWithHierarchy() {
+    if (!this.multiSelectStartCell || !this.multiSelectCurrentCell) return;
+
+    // Get cells in the rectangular selection
+    const rectCells = this.matrixSelectionService.getCellsInRect(
+      this.multiSelectStartCell,
+      this.multiSelectCurrentCell,
+      this.inputDatas.matrixCellDatas || [],
+    );
+
+    if (rectCells.length === 0) {
+      this.cleanSelectedDomContext();
+      return;
+    }
+
+    // If no hierarchy data available, fall back to simple rectangle selection
+    if (!this.dimensionsClusters || this.dimensionsClusters.length < 2) {
+      this.cleanSelectedDomContext();
+      this.matrixRendererService.drawTempSelectionRect(
+        this.matrixSelectedCtx,
+        this.multiSelectStartCell,
+        this.multiSelectCurrentCell,
+      );
+      return;
+    }
+
+    // Expand selection based on hierarchy for both axes
+    const expandedCells =
+      this.matrixSelectionService.expandSelectionToHierarchy(
+        rectCells,
+        this.dimensionsClusters,
+        this.inputDatas.matrixCellDatas || [],
+      );
+
+    // Store for use in mouseUp
+    this.hierarchyExpandedCells = expandedCells;
+
+    // Draw dashed borders for all expanded cells
+    this.cleanSelectedDomContext();
+    for (const cell of expandedCells) {
+      this.matrixRendererService.drawTempSelectionRect(
+        this.matrixSelectedCtx,
+        cell,
+        cell,
+      );
+    }
+  }
+
+  // Storage for hierarchy-expanded cells during drag
+  private hierarchyExpandedCells: CellModel[] = [];
 }
