@@ -5,6 +5,7 @@
  */
 
 import { Component, Input, EventEmitter, Output } from '@angular/core';
+import * as htmlToImage from 'html-to-image';
 import html2canvas from 'html2canvas';
 // @ts-ignore
 import { saveAs } from 'file-saver';
@@ -100,21 +101,35 @@ export class HeaderToolsComponent {
 
           this.rePaintGraph(currentDiv);
 
-          // convert div screenshot to canvas
-          html2canvas(currentDiv, { scale: 1.1 })
-            .then((canvas) => {
-              canvas
-                ?.getContext('2d')
-                ?.getImageData(0, 0, canvas.width, canvas.height);
+          // convert div screenshot to png
+          const isHyperTree =
+            currentSelectedArea.componentType === COMPONENT_TYPES.HYPER_TREE;
+          const capturePromise = isHyperTree
+            ? html2canvas(currentDiv, {
+                scale: 1.0,
+                backgroundColor: '#ffffff',
+                useCORS: true,
+                allowTaint: true,
+              }).then((canvas) => canvas.toDataURL('image/png'))
+            : htmlToImage.toPng(currentDiv, {
+                quality: 0.95,
+                backgroundColor: '#ffffff',
+                style: {
+                  overflow: 'hidden',
+                },
+              });
 
+          capturePromise
+            .then((dataUrl) => {
               if (!this.configService.getConfig().onCopyImage) {
-                canvas.toBlob((blob) => {
-                  saveAs(blob, currentSelectedArea.id + '.png');
-                });
+                // Convert dataUrl to blob for file download
+                fetch(dataUrl)
+                  .then((res) => res.blob())
+                  .then((blob) => {
+                    saveAs(blob, currentSelectedArea.id + '.png');
+                  });
               } else {
-                this.configService
-                  .getConfig()
-                  .onCopyImage(canvas.toDataURL('image/jpeg'));
+                this.configService.getConfig().onCopyImage(dataUrl);
               }
 
               if (this.eltsToHide?.[0]) {
