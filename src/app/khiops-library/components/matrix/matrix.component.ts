@@ -58,6 +58,7 @@ export class MatrixComponent extends SelectableComponent implements OnChanges {
   @Input() public matrixFilterOption: string = ''; // For matrix filter option (cluster or inner variables)
   @Input() public hasInnerVariables: boolean = false; // Whether inner variables are available in the data
   @Input() public showExpectedFrequency?: boolean = false;
+  @Input() public dimensionsClusters: TreeNodeModel[][] = []; // For hierarchy-based selection expansion (KC use case)
 
   @Output() private matrixAxisInverted: EventEmitter<any> = new EventEmitter();
   @Output() private cellSelected: EventEmitter<any> = new EventEmitter();
@@ -99,9 +100,9 @@ export class MatrixComponent extends SelectableComponent implements OnChanges {
   public tooltipCell: CellModel | undefined;
   public tooltipPosition:
     | {
-      x: number;
-      y: number;
-    }
+        x: number;
+        y: number;
+      }
     | undefined;
 
   private conditionalOnContextChangedSub: Subscription;
@@ -181,7 +182,8 @@ export class MatrixComponent extends SelectableComponent implements OnChanges {
         const currentCell = this.getCurrentCell(event);
         if (currentCell && currentCell !== this.multiSelectCurrentCell) {
           this.multiSelectCurrentCell = currentCell;
-          this.drawMultiSelectionPreview();
+          // Expand selection based on hierarchy
+          this.drawMultiSelectionPreviewWithHierarchy();
         }
       }
     };
@@ -775,12 +777,12 @@ export class MatrixComponent extends SelectableComponent implements OnChanges {
         if (
           y > this.inputDatas.matrixCellDatas[i].yCanvas &&
           y <
-          this.inputDatas.matrixCellDatas[i].yCanvas +
-          this.inputDatas.matrixCellDatas[i].hCanvas &&
+            this.inputDatas.matrixCellDatas[i].yCanvas +
+              this.inputDatas.matrixCellDatas[i].hCanvas &&
           x > this.inputDatas.matrixCellDatas[i].xCanvas &&
           x <
-          this.inputDatas.matrixCellDatas[i].xCanvas +
-          this.inputDatas.matrixCellDatas[i].wCanvas
+            this.inputDatas.matrixCellDatas[i].xCanvas +
+              this.inputDatas.matrixCellDatas[i].wCanvas
         ) {
           return this.inputDatas.matrixCellDatas[i];
         }
@@ -876,18 +878,27 @@ export class MatrixComponent extends SelectableComponent implements OnChanges {
    * Handle mouse up event - finalize multi-selection
    */
   private onMouseUp(_event: MouseEvent) {
-    if (this.isMultiSelecting && this.multiSelectStartCell && this.multiSelectCurrentCell) {
-      // Get all cells in the rectangular selection
-      const selectedCells = this.getCellsInRect(
-        this.multiSelectStartCell,
-        this.multiSelectCurrentCell,
-      );
+    if (
+      this.isMultiSelecting &&
+      this.multiSelectStartCell &&
+      this.multiSelectCurrentCell
+    ) {
+      // Use hierarchy-expanded cells if available, otherwise fall back to simple rectangle
+      let selectedCells: CellModel[];
+      if (this.hierarchyExpandedCells.length > 0) {
+        selectedCells = this.hierarchyExpandedCells;
+      } else {
+        selectedCells = this.getCellsInRect(
+          this.multiSelectStartCell,
+          this.multiSelectCurrentCell,
+        );
+      }
 
       if (selectedCells.length > 0) {
         this.selectedCells = selectedCells;
         this.cleanSelectedDomContext();
 
-        // Draw the final selection with solid border (bounding box)
+        // Draw the final selection with solid border for each cell
         this.drawMultiCellSelection(selectedCells);
 
         // Find common parent and emit event
@@ -915,6 +926,7 @@ export class MatrixComponent extends SelectableComponent implements OnChanges {
         this.isMultiSelecting = false;
         this.multiSelectStartCell = undefined;
         this.multiSelectCurrentCell = undefined;
+        this.hierarchyExpandedCells = [];
       }, 50);
     } else {
       this.isMultiSelecting = false;
@@ -952,7 +964,10 @@ export class MatrixComponent extends SelectableComponent implements OnChanges {
   /**
    * Get all cells within a rectangular area defined by two corner cells
    */
-  private getCellsInRect(startCell: CellModel, endCell: CellModel): CellModel[] {
+  private getCellsInRect(
+    startCell: CellModel,
+    endCell: CellModel,
+  ): CellModel[] {
     if (!this.inputDatas?.matrixCellDatas) return [];
 
     // Find the bounding rectangle
@@ -985,5 +1000,196 @@ export class MatrixComponent extends SelectableComponent implements OnChanges {
     }
 
     return cellsInRect;
+  }
+
+  /**
+   * Draw multi-selection preview with hierarchy-based expansion
+   * When cells from different parent nodes are selected, expand to include all children of the common ancestor
+   */
+  private drawMultiSelectionPreviewWithHierarchy() {
+    if (!this.multiSelectStartCell || !this.multiSelectCurrentCell) return;
+
+    // Get cells in the rectangular selection
+    const rectCells = this.getCellsInRect(
+      this.multiSelectStartCell,
+      this.multiSelectCurrentCell,
+    );
+
+    if (rectCells.length === 0) {
+      this.cleanSelectedDomContext();
+      return;
+    }
+
+    // If no hierarchy data available, fall back to simple rectangle selection
+    if (!this.dimensionsClusters || this.dimensionsClusters.length < 2) {
+      this.cleanSelectedDomContext();
+      this.matrixRendererService.drawTempSelectionRect(
+        this.matrixSelectedCtx,
+        this.multiSelectStartCell,
+        this.multiSelectCurrentCell,
+      );
+      return;
+    }
+
+    // Expand selection based on hierarchy for both axes
+    const expandedCells = this.expandSelectionToHierarchy(rectCells);
+
+    // Store for use in mouseUp
+    this.hierarchyExpandedCells = expandedCells;
+
+    // Draw dashed borders for all expanded cells
+    this.cleanSelectedDomContext();
+    for (const cell of expandedCells) {
+      this.matrixRendererService.drawTempSelectionRect(
+        this.matrixSelectedCtx,
+        cell,
+        cell,
+      );
+    }
+  }
+
+  // Storage for hierarchy-expanded cells during drag
+  private hierarchyExpandedCells: CellModel[] = [];
+
+  /**
+   * Expand selection to include all cells from the common ancestor hierarchy
+   */
+  private expandSelectionToHierarchy(cells: CellModel[]): CellModel[] {
+    if (cells.length <= 1) return cells;
+
+    // Get unique axis parts for X and Y
+    const xAxisParts = new Set<string>();
+    const yAxisParts = new Set<string>();
+    for (const cell of cells) {
+      if (cell.xaxisPart) xAxisParts.add(cell.xaxisPart);
+      if (cell.yaxisPart) yAxisParts.add(cell.yaxisPart);
+    }
+
+    // Find the common parent for X axis and get all its children
+    const xPartsArray = Array.from(xAxisParts);
+    const expandedXParts = this.getExpandedAxisParts(xPartsArray, 0);
+
+    // Find the common parent for Y axis and get all its children
+    const yPartsArray = Array.from(yAxisParts);
+    const expandedYParts = this.getExpandedAxisParts(yPartsArray, 1);
+
+    // Filter all matrix cells to include only those in expanded parts
+    const expandedCells: CellModel[] = [];
+    if (this.inputDatas?.matrixCellDatas) {
+      for (const cell of this.inputDatas.matrixCellDatas) {
+        if (
+          expandedXParts.has(cell.xaxisPart ?? '') &&
+          expandedYParts.has(cell.yaxisPart ?? '')
+        ) {
+          expandedCells.push(cell);
+        }
+      }
+    }
+
+    return expandedCells;
+  }
+
+  /**
+   * Get expanded axis parts based on common parent hierarchy
+   * Returns all leaf cluster names that should be selected given the input parts
+   */
+  private getExpandedAxisParts(
+    axisParts: string[],
+    dimensionIndex: number,
+  ): Set<string> {
+    if (axisParts.length === 0) return new Set();
+    if (axisParts.length === 1) return new Set(axisParts);
+
+    const clusters = this.dimensionsClusters[dimensionIndex];
+    if (!clusters || clusters.length === 0) {
+      return new Set(axisParts);
+    }
+
+    // Find the common parent of all selected parts
+    const commonParent = this.findLowestCommonAncestor(axisParts, clusters);
+
+    if (!commonParent) {
+      return new Set(axisParts);
+    }
+
+    // Get all leaf children of the common parent
+    const commonParentNode = clusters.find((c) => c.name === commonParent);
+    if (commonParentNode) {
+      commonParentNode.getChildrenList();
+      if (
+        commonParentNode.childrenLeafList &&
+        commonParentNode.childrenLeafList.length > 0
+      ) {
+        return new Set(commonParentNode.childrenLeafList);
+      }
+    }
+
+    return new Set(axisParts);
+  }
+
+  /**
+   * Find the lowest common ancestor of multiple cluster names
+   */
+  private findLowestCommonAncestor(
+    clusterNames: string[],
+    clusters: TreeNodeModel[],
+  ): string | null {
+    if (clusterNames.length === 0) return null;
+    if (clusterNames.length === 1) {
+      const node = clusters.find((c) => c.name === clusterNames[0]);
+      return node?.parentCluster || null;
+    }
+
+    // Build ancestor chain for each cluster
+    const ancestorChains: string[][] = [];
+    for (const name of clusterNames) {
+      const chain = this.getAncestorChain(name, clusters);
+      ancestorChains.push(chain);
+    }
+
+    // Find the lowest common ancestor (first shared ancestor from the bottom)
+    if (ancestorChains.length === 0) return null;
+
+    // Start from the first chain and find common ancestors with all others
+    const firstChain = ancestorChains[0]!;
+    for (const ancestor of firstChain) {
+      let isCommon = true;
+      for (let i = 1; i < ancestorChains.length; i++) {
+        if (!ancestorChains[i]!.includes(ancestor)) {
+          isCommon = false;
+          break;
+        }
+      }
+      if (isCommon) {
+        return ancestor;
+      }
+    }
+
+    return null;
+  }
+
+  /**
+   * Get the ancestor chain for a cluster (from immediate parent up to root)
+   */
+  private getAncestorChain(
+    clusterName: string,
+    clusters: TreeNodeModel[],
+  ): string[] {
+    const chain: string[] = [];
+    let currentName = clusterName;
+
+    while (currentName) {
+      const node = clusters.find((c) => c.name === currentName);
+      if (!node) break;
+
+      if (node.parentCluster) {
+        chain.push(node.parentCluster);
+        currentName = node.parentCluster;
+      } else {
+        break;
+      }
+    }
+
+    return chain;
   }
 }
