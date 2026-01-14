@@ -5,6 +5,7 @@
  */
 
 import { Injectable } from '@angular/core';
+import { UtilsService } from '@khiops-library/providers/utils.service';
 
 export enum MatrixCursorType {
   POINTER = 'cursor-pointer',
@@ -20,6 +21,7 @@ export class MatrixCursorService {
   private isMouseDown = false;
   private isPaning = false;
   private containerElement: HTMLElement | null = null;
+  private isMac = false;
 
   private keyDownHandler: ((event: KeyboardEvent) => void) | null = null;
   private keyUpHandler: ((event: KeyboardEvent) => void) | null = null;
@@ -31,17 +33,21 @@ export class MatrixCursorService {
    */
   initialize(container: HTMLElement, updateCallback: () => void): void {
     this.containerElement = container;
+    this.isMac = UtilsService.isMac();
+
+    // Key to listen for based on platform
+    const modifierKey = this.isMac ? 'Meta' : 'Control';
 
     // Create keyboard event handlers
     this.keyDownHandler = (event: KeyboardEvent) => {
-      if (event.key === 'Control' && !this.isCtrlPressed) {
+      if (event.key === modifierKey && !this.isCtrlPressed) {
         this.isCtrlPressed = true;
         updateCallback();
       }
     };
 
     this.keyUpHandler = (event: KeyboardEvent) => {
-      if (event.key === 'Control' && this.isCtrlPressed) {
+      if (event.key === modifierKey && this.isCtrlPressed) {
         this.isCtrlPressed = false;
         updateCallback();
       }

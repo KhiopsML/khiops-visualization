@@ -37,6 +37,7 @@ import { MatrixSelectionService } from './matrix-selection.service';
 import { MatrixCursorService } from './matrix.cursor.service';
 import { DynamicI } from '@khiops-library/interfaces/globals';
 import { ZoomToolsEventsService } from '../zoom-tools/zoom-tools.service';
+import { UtilsService } from '@khiops-library/providers/utils.service';
 
 @Component({
   selector: 'kl-matrix',
@@ -908,7 +909,12 @@ export class MatrixComponent extends SelectableComponent implements OnChanges {
     this.matrixCursorService.onMouseDown();
     this.updateCursor();
 
-    if ((event.ctrlKey || event.metaKey) && this.isKhiopsCovisu) {
+    // Check for the correct modifier key based on platform
+    const isModifierPressed = UtilsService.isMac()
+      ? event.metaKey
+      : event.ctrlKey;
+
+    if (isModifierPressed && this.isKhiopsCovisu) {
       const cell = this.getCurrentCell(event);
       if (cell) {
         this.isMultiSelecting = true;

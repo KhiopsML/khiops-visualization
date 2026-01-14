@@ -15,6 +15,14 @@ import isObject from 'lodash-es/isObject';
 })
 export class UtilsService {
   /**
+   * Checks if the current platform is macOS.
+   * @returns `true` if the platform is macOS, otherwise `false`.
+   */
+  static isMac() {
+    return navigator.platform.toUpperCase().indexOf('MAC') >= 0;
+  }
+
+  /**
    * Generates an array of numbers with logarithmic spacing between a minimum and maximum value.
    *
    * @param minValue - The minimum value of the range. If negative, the resulting values will also be negative.
