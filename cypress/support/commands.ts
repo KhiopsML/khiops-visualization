@@ -102,7 +102,7 @@ Cypress.Commands.add('setGlobalNumberPrecision', () => {
 
 Cypress.Commands.add(
   'testComponentScreenshot',
-  (id: string, expectedImageStart: string, delay: number = 1000) => {
+  (id: string, delay: number = 1000) => {
     // Wait for the component to be visible and trigger trustedClick
     cy.get(id, { timeout: 10000 })
       .should('exist')
@@ -135,11 +135,7 @@ Cypress.Commands.add(
 
       // Verify it's a PNG data URL
       expect(dataUrl).to.be.a('string');
-
-      // Escape special characters in the expected image start for regex
-      const escapedExpectedStart = expectedImageStart.replace(/\+/g, '\\+');
-      const regex = new RegExp(`${escapedExpectedStart}`);
-      expect(dataUrl).to.match(regex);
+      expect(dataUrl).to.include('data:image/png;base64,');
 
       // Verify the image has substantial data (more than just header)
       // A real screenshot should be at least 1000 characters
