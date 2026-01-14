@@ -29,6 +29,7 @@ declare global {
       initViews(): Chainable<Element>;
       checkCanvasIsNotEmpty(canvasSelector: string): Chainable<Element>;
       setGlobalNumberPrecision(): Chainable<Element>;
+      testComponentScreenshot(id: string): Chainable<Element>;
     }
   }
 }
