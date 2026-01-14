@@ -56,10 +56,17 @@
       width: 100%;
       position: relative;
       background-color: white;
-      cursor: pointer;
 
-      &.panning {
+      &.cursor-pointer {
+        cursor: pointer;
+      }
+
+      &.cursor-move {
         cursor: move;
+      }
+
+      &.cursor-cell {
+        cursor: cell;
       }
 
       #matrix {

@@ -34,6 +34,7 @@ import { Ls } from '@khiops-library/providers/ls.service';
 import { MatrixUtilsService } from './matrix.utils.service';
 import { MatrixRendererService } from './matrix.renderer.service';
 import { MatrixSelectionService } from './matrix-selection.service';
+import { MatrixCursorService } from './matrix.cursor.service';
 import { DynamicI } from '@khiops-library/interfaces/globals';
 import { ZoomToolsEventsService } from '../zoom-tools/zoom-tools.service';
 
@@ -115,7 +116,6 @@ export class MatrixComponent extends SelectableComponent implements OnChanges {
   private isFirstResize = true;
   private zoom = 1;
   private unpanzoom: any;
-  private isPaning = false;
   private currentEvent: MouseEvent | undefined;
   private zoomFactor = 0.5;
   private lastScrollPosition: {
@@ -143,6 +143,7 @@ export class MatrixComponent extends SelectableComponent implements OnChanges {
     private khiopsLibraryService: KhiopsLibraryService,
     private matrixRendererService: MatrixRendererService,
     private matrixSelectionService: MatrixSelectionService,
+    private matrixCursorService: MatrixCursorService,
   ) {
     super(selectableService, ngzone, configService);
 
@@ -224,10 +225,22 @@ export class MatrixComponent extends SelectableComponent implements OnChanges {
     this.zoomToolsEventsService.zoomReset$.subscribe(() => {
       this.onClickOnResetZoom();
     });
+
+    // Initialize cursor management
+    setTimeout(() => {
+      if (this.matrixContainerDiv?.nativeElement) {
+        this.matrixCursorService.initialize(
+          this.matrixContainerDiv.nativeElement,
+          () => this.updateCursor(),
+        );
+        this.updateCursor();
+      }
+    });
   }
 
   override ngOnDestroy() {
     this.conditionalOnContextChangedSub.unsubscribe();
+    this.matrixCursorService.destroy();
   }
 
   @HostListener('window:keyup', ['$event'])
@@ -443,8 +456,8 @@ export class MatrixComponent extends SelectableComponent implements OnChanges {
         (e: { dz: number; dx: number; dy: number }) => {
           // Set panning cursor when drag starts
           if (e.dx !== 0 || e.dy !== 0) {
-            this.isPaning = true;
-            this.matrixContainerDiv?.nativeElement.classList.add('panning');
+            this.matrixCursorService.setPaning(true);
+            this.updateCursor();
           }
           if (e.dz) {
             if (e.dz > 0) {
@@ -458,7 +471,7 @@ export class MatrixComponent extends SelectableComponent implements OnChanges {
             }
           }
           if (this.zoom !== 1) {
-            this.isPaning = true;
+            this.matrixCursorService.setPaning(true);
           }
         },
       );
@@ -472,6 +485,9 @@ export class MatrixComponent extends SelectableComponent implements OnChanges {
    */
   private handlePan(dx: number, dy: number): void {
     if (this.matrixArea?.nativeElement) {
+      this.matrixCursorService.setPaning(true);
+      this.updateCursor();
+
       this.matrixArea.nativeElement.scrollLeft =
         this.matrixArea.nativeElement.scrollLeft - dx;
       this.matrixArea.nativeElement.scrollTop =
@@ -582,9 +598,10 @@ export class MatrixComponent extends SelectableComponent implements OnChanges {
     }
 
     // Hack to prevent event emit if user pan matrix
-    if (!this.isPaning || this.isPaning === undefined) {
-      this.isPaning = false;
-      this.matrixContainerDiv?.nativeElement.classList.remove('panning');
+    const isPaning = this.matrixCursorService.isMouseButtonDown();
+    if (!isPaning || isPaning === undefined) {
+      this.matrixCursorService.setPaning(false);
+      this.updateCursor();
       this.cleanSelectedDomContext();
 
       const clicked = this.getCurrentCell(event);
@@ -597,8 +614,8 @@ export class MatrixComponent extends SelectableComponent implements OnChanges {
         });
       });
     } else {
-      this.isPaning = false;
-      this.matrixContainerDiv?.nativeElement.classList.remove('panning');
+      this.matrixCursorService.setPaning(false);
+      this.updateCursor();
     }
   }
 
@@ -873,9 +890,19 @@ export class MatrixComponent extends SelectableComponent implements OnChanges {
   }
 
   /**
+   * Update cursor based on current state using cursor service
+   */
+  private updateCursor() {
+    this.matrixCursorService.updateCursor(this.isKhiopsCovisu);
+  }
+
+  /**
    * Handle mouse down event - start multi-selection if Ctrl is pressed
    */
   private onMouseDown(event: MouseEvent) {
+    this.matrixCursorService.onMouseDown();
+    this.updateCursor();
+
     if (event.ctrlKey && this.isKhiopsCovisu) {
       const cell = this.getCurrentCell(event);
       if (cell) {
@@ -893,6 +920,9 @@ export class MatrixComponent extends SelectableComponent implements OnChanges {
    * Handle mouse up event - finalize multi-selection
    */
   private onMouseUp(_event: MouseEvent) {
+    this.matrixCursorService.onMouseUp();
+    this.updateCursor();
+
     if (
       this.isMultiSelecting &&
       this.multiSelectStartCell &&
