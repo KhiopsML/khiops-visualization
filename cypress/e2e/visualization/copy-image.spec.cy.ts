@@ -6,7 +6,7 @@
 // @ts-nocheck
 import '../../support/commands';
 
-describe('Test Plan for Khiops Covisualization', () => {
+describe('Copy images Test Plan for Khiops Visualization', () => {
   const files = ['ALLREPORTS_Std_Iris_AnalysisResults.khj'];
 
   files.forEach((fileName) => {
@@ -37,11 +37,69 @@ describe('Test Plan for Khiops Covisualization', () => {
         cy.testComponentScreenshot('#preparation-description-block-derivation');
         cy.testComponentScreenshot('#preparation-current-interval');
 
+        cy.get('.mat-mdc-tab:contains("Text preparation")').first().click();
+        cy.wait(500);
+        cy.testComponentScreenshot('#preparation-informations-block-summary');
+        cy.testComponentScreenshot('#preparation-target-variable-stats');
+        cy.testComponentScreenshot(
+          '#preparation-informations-block-informations',
+        );
+        cy.testComponentScreenshot('#preparation-variables-list');
+        cy.testComponentScreenshot('#distribution-graph0');
+        cy.testComponentScreenshot('#target-distribution-graph0');
+        cy.testComponentScreenshot('#preparation-description-block-variable');
+        cy.testComponentScreenshot('#preparation-description-block-derivation');
+        cy.testComponentScreenshot('#preparation-current-interval');
+
         cy.get('.mat-mdc-tab:contains("Tree preparation")').first().click();
         cy.wait(500);
+        cy.testComponentScreenshot(
+          '#tree-preparation-informations-block-summary',
+        );
+        cy.testComponentScreenshot('#tree-preparation-target-variable-stats');
+        cy.testComponentScreenshot(
+          '#tree-preparation-informations-block-informations',
+        );
+        cy.testComponentScreenshot('#tree-preparation-variables-list');
+        cy.testComponentScreenshot('#distribution-graph0');
+        cy.testComponentScreenshot('#target-distribution-graph0');
+        cy.testComponentScreenshot('#target-distribution-graph1');
         cy.testComponentScreenshot('#tree-preparation-select');
         cy.testComponentScreenshot('#tree-details-comp');
         cy.testComponentScreenshot('#tree-preparation-hyper');
+
+        cy.get('.mat-mdc-tab:contains("Preparation 2D")').first().click();
+        cy.wait(500);
+        cy.testComponentScreenshot(
+          '#preparation-2d-informations-block-summary',
+        );
+        cy.testComponentScreenshot('#preparation-2d-target-variable-stats');
+        cy.testComponentScreenshot('#preparation-2d-variables-list');
+        cy.testComponentScreenshot('#cooccurrence-matrix-comp');
+        cy.testComponentScreenshot('#preparation-2d-target-distribution-graph');
+        cy.testComponentScreenshot('#preparation-2d-current-cell-x');
+        cy.testComponentScreenshot('#preparation-2d-current-cell-y');
+
+        cy.get('.mat-mdc-tab:contains("Modeling")').first().click();
+        cy.wait(500);
+        cy.testComponentScreenshot('#modeling-informations-block-summary');
+        cy.testComponentScreenshot('#modeling-target-variable-stats');
+        cy.testComponentScreenshot('#modeling-informations-block-informations');
+        cy.testComponentScreenshot('#modeling-variables-list');
+        cy.testComponentScreenshot('#distribution-graph0');
+        cy.testComponentScreenshot('#target-distribution-graph0');
+        cy.testComponentScreenshot('#preparation-current-interval');
+
+        cy.get('.mat-mdc-tab:contains("Evaluation")').first().click();
+        cy.wait(500);
+        cy.testComponentScreenshot('#evaluation-types-summary');
+        cy.testComponentScreenshot('#evaluation-predictor-evaluations');
+        cy.testComponentScreenshot('#evaluation-lift-curves');
+        cy.testComponentScreenshot('#evaluation-confusion-matrix');
+
+        cy.get('.mat-mdc-tab:contains("Project")').first().click();
+        cy.wait(500);
+        cy.testComponentScreenshot('#project-logs');
       });
     });
   });
