@@ -454,6 +454,11 @@ export class MatrixComponent extends SelectableComponent implements OnChanges {
       this.unpanzoom = panzoom(
         this.matrixContainerDiv?.nativeElement,
         (e: { dz: number; dx: number; dy: number }) => {
+          // Disable panning if CTRL is pressed (for cell selection)
+          if (!this.matrixCursorService.isPanningAllowed()) {
+            return;
+          }
+
           // Set panning cursor when drag starts
           if (e.dx !== 0 || e.dy !== 0) {
             this.matrixCursorService.setPaning(true);

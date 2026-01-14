@@ -114,6 +114,13 @@ export class MatrixCursorService {
   }
 
   /**
+   * Check if panning is allowed (not allowed when CTRL is pressed)
+   */
+  isPanningAllowed(): boolean {
+    return !this.isCtrlPressed;
+  }
+
+  /**
    * Update cursor based on current state
    * Priority: CTRL+drag > mouse down + pan > CTRL key state
    * @param isKhiopsCovisu Whether this is Khiops Covisualization (enables cell cursor)
