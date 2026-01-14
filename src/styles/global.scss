@@ -241,6 +241,15 @@ app-home-layout {
   }
 }
 
+hr {
+  width: 20px;
+  border: 0;
+  height: 1px;
+  background: var(--bg-color-40);
+  margin-bottom: 15px;
+  margin-top: 10px;
+}
+
 .bar {
   &.active,
   &:hover {

@@ -80,6 +80,7 @@ import { MatrixContrastSettingComponent } from './components/matrix-contrast-set
 import { NumberPrecisionComponent } from './components/number-precision/number-precision.component';
 import { ScalePersistenceSettingComponent } from './components/scale-persistence-setting/scale-persistence-setting.component';
 import { MenuFocusSelectedDirective } from './directives/menu-focus-selected.directive';
+import { KeyboardTooltipComponent } from './components/keyboard-tooltip/keyboard-tooltip.component';
 
 @NgModule({
   imports: [
@@ -122,6 +123,7 @@ import { MenuFocusSelectedDirective } from './directives/menu-focus-selected.dir
     }),
   ],
   declarations: [
+    KeyboardTooltipComponent,
     NumberPrecisionComponent,
     MatrixContrastSettingComponent,
     ScalePersistenceSettingComponent,
@@ -165,6 +167,7 @@ import { MenuFocusSelectedDirective } from './directives/menu-focus-selected.dir
   ],
   providers: [ConfigService, TranslateService],
   exports: [
+    KeyboardTooltipComponent,
     NumberPrecisionComponent,
     MatrixContrastSettingComponent,
     ScalePersistenceSettingComponent,

@@ -184,6 +184,7 @@
     "MAX_NB_OF_CLUSTER": "Max Number of Cluster",
     "FOLD_UNFOLD": "Fold / Unfold",
     "TOGGLE_ZERO": "Show / Hide zeros exceptions",
+    "MULTI_SELECTION_TIPS": "Hold Ctrl + click on the matrix to select multiple areas",
     "TYPE_ANNOTATION": "Type an annotation",
     "STATISTICS": "Statistics",
     "INTERVAL": "Interval",
