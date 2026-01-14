@@ -18,15 +18,13 @@ describe('Test Plan for Khiops Covisualization', () => {
       cy.readFile('./src/assets/mocks/kv/' + fileName).then(() => {
         cy.wait(500);
 
-        cy.get('.mat-mdc-tab:contains("Preparation")').first().click();
-        cy.wait(500);
-
         // Create spy once for all screenshot tests
         cy.window().then((win) => {
           cy.spy(win, 'fetch').as('fetchSpy');
         });
 
-        // Test the informations block component screenshot
+        cy.get('.mat-mdc-tab:contains("Preparation")').first().click();
+        cy.wait(500);
         cy.testComponentScreenshot('#preparation-informations-block-summary');
         cy.testComponentScreenshot('#preparation-target-variable-stats');
         cy.testComponentScreenshot(
@@ -38,6 +36,12 @@ describe('Test Plan for Khiops Covisualization', () => {
         cy.testComponentScreenshot('#preparation-description-block-variable');
         cy.testComponentScreenshot('#preparation-description-block-derivation');
         cy.testComponentScreenshot('#preparation-current-interval');
+
+        cy.get('.mat-mdc-tab:contains("Tree preparation")').first().click();
+        cy.wait(500);
+        cy.testComponentScreenshot('#tree-preparation-select');
+        cy.testComponentScreenshot('#tree-details-comp');
+        cy.testComponentScreenshot('#tree-preparation-hyper');
       });
     });
   });
