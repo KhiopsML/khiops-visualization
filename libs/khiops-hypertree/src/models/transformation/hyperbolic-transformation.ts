@@ -70,7 +70,7 @@ export class PanTransformation implements Transformation<N> {
   onDragEnd = (m: C) => (this.dST = undefined);
   isMoving = () => this.dST !== undefined;
   onDragP = (s: C, e: C) =>
-    CassignC(this.state.P, maxR(CaddC(this.dST.P, CsubC(e, s)), 0.95));
+    CassignC(this.state.P, maxR(CaddC(this.dST.P, (s && e) ? CsubC(e, s) : { re: 0, im: 0 }), 0.95));
   onDragθ = (s: C, e: C) => CassignC(this.state.θ, setR(e, 1));
   onDragλ = (l: number) => (this.state.λ = l);
 }

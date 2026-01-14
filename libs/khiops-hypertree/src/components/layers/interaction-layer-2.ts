@@ -478,6 +478,10 @@ export class InteractionLayer2 implements ILayer {
   };
 
   private dist(a: C, b: C) {
+    // Add null checks to prevent reading properties of null
+    if (!a || !b) {
+      return 0;
+    }
     const diff = CsubC(a, b);
     return Math.sqrt(diff.re * diff.re + diff.im * diff.im);
   }

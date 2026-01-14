@@ -167,7 +167,8 @@ export class InteractionLayer implements ILayer {
       this.view.hypertree.update.transformation();
     }, 500);
 
-    var dc = CsubC(s, e);
+    // Add null checks to prevent reading properties of null
+    var dc = (s && e) ? CsubC(s, e) : { re: 0, im: 0 };
     var dist = Math.sqrt(dc.re * dc.re + dc.im * dc.im);
 
     if (dist < 0.006) this.onClick(null, n, e);

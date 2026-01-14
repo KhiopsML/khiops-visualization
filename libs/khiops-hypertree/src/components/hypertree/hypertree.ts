@@ -633,7 +633,8 @@ export class Hypertree {
     duration = 750,
   ): void {
     const initTS = clone(this.args.geometry.transformation.state);
-    const way = CsubC(initTS.P, newP);
+    // Add null checks to prevent reading properties of null
+    const way = (initTS.P && newP) ? CsubC(initTS.P, newP) : { re: 0, im: 0 };
     new Animation({
       name: 'animateTo',
       resolve: resolve,
