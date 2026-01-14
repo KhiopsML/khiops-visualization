@@ -5,6 +5,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Khiops-visualization demo</title>
     <link rel="stylesheet" href="./common-header.css" />
+    <style>
+      @keyframes spin {
+        0% {
+          transform: rotate(0deg);
+        }
+        100% {
+          transform: rotate(360deg);
+        }
+      }
+    </style>
   </head>
   <body>
     <div id="header">
@@ -24,6 +34,36 @@
       </div>
     </div>
     <div id="container"></div>
+    <div
+      id="loading-indicator"
+      style="
+        display: none;
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        text-align: center;
+        z-index: 1000;
+      "
+    >
+      <div
+        style="
+          border: 4px solid #f3f3f3;
+          border-top: 4px solid #3498db;
+          border-radius: 50%;
+          width: 40px;
+          height: 40px;
+          animation: spin 1s linear infinite;
+          margin: 0 auto 20px;
+        "
+      ></div>
+      <p
+        id="loading-text"
+        style="font-family: Arial, sans-serif; color: #666; font-size: 16px"
+      >
+        Loading Khiops components...
+      </p>
+    </div>
     <script id="dynamic-script"></script>
     <script src="./common-tabs.js"></script>
     <script>
@@ -46,9 +86,22 @@
 
       // Load script for a specific version
       function loadScript(version) {
+        // Update loading text with version info
+        const loadingText = document.getElementById('loading-text');
+        if (version === 'dev') {
+          loadingText.textContent = 'Loading Khiops version development (dev)';
+        } else if (version) {
+          loadingText.textContent = `Loading Khiops version ${version}`;
+        } else {
+          loadingText.textContent = 'Loading Khiops latest version';
+        }
+
+        // Show loading indicator
+        document.getElementById('loading-indicator').style.display = 'block';
+
         const scriptElement = document.getElementById('dynamic-script');
         let url;
-        
+
         if (version === 'dev') {
           url = `./dist/khiops-webcomponents.bundle.js?v=${Math.random()}`;
         } else if (version) {
@@ -56,7 +109,8 @@
           const encodedVersion = encodeURIComponent(version);
           url = `https://unpkg.com/khiops-visualization@${encodedVersion}/khiops-webcomponents.bundle.js`;
         } else {
-          url = 'https://unpkg.com/khiops-visualization/khiops-webcomponents.bundle.js';
+          url =
+            'https://unpkg.com/khiops-visualization/khiops-webcomponents.bundle.js';
         }
 
         // Remove old script
@@ -66,12 +120,14 @@
           newScript.id = 'dynamic-script';
           newScript.src = url;
           newScript.onload = () => {
+            document.getElementById('loading-indicator').style.display = 'none';
             recreateComponent();
           };
           document.body.appendChild(newScript);
         } else {
           scriptElement.src = url;
           scriptElement.onload = () => {
+            document.getElementById('loading-indicator').style.display = 'none';
             recreateComponent();
           };
         }
@@ -83,7 +139,8 @@
         const versions = await fetchVersions();
 
         if (versions.length === 0) {
-          select.innerHTML = '<option value="">Failed to load versions</option>';
+          select.innerHTML =
+            '<option value="">Failed to load versions</option>';
           return;
         }
 
@@ -96,13 +153,13 @@
               `<option value="${version}">${version}${version === versions[0] ? ' (latest)' : ''}</option>`,
           )
           .join('');
-        
+
         select.innerHTML = optionsHTML;
 
         // Check URL parameter first
         const urlParams = new URLSearchParams(window.location.search);
         const versionParam = urlParams.get('v');
-        
+
         if (versionParam === 'dev') {
           currentVersion = 'dev';
         } else if (versionParam && versions.includes(versionParam)) {
@@ -111,7 +168,7 @@
           // Default to latest NPM version
           currentVersion = versions[0];
         }
-        
+
         select.value = currentVersion;
 
         // Add change event listener
