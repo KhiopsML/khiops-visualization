@@ -908,7 +908,7 @@ export class MatrixComponent extends SelectableComponent implements OnChanges {
     this.matrixCursorService.onMouseDown();
     this.updateCursor();
 
-    if (event.ctrlKey && this.isKhiopsCovisu) {
+    if ((event.ctrlKey || event.metaKey) && this.isKhiopsCovisu) {
       const cell = this.getCurrentCell(event);
       if (cell) {
         this.isMultiSelecting = true;
