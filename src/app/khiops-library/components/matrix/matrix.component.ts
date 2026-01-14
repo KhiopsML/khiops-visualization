@@ -441,6 +441,11 @@ export class MatrixComponent extends SelectableComponent implements OnChanges {
       this.unpanzoom = panzoom(
         this.matrixContainerDiv?.nativeElement,
         (e: { dz: number; dx: number; dy: number }) => {
+          // Set panning cursor when drag starts
+          if (e.dx !== 0 || e.dy !== 0) {
+            this.isPaning = true;
+            this.matrixContainerDiv?.nativeElement.classList.add('panning');
+          }
           if (e.dz) {
             if (e.dz > 0) {
               this.onClickOnZoomOut();
@@ -579,6 +584,7 @@ export class MatrixComponent extends SelectableComponent implements OnChanges {
     // Hack to prevent event emit if user pan matrix
     if (!this.isPaning || this.isPaning === undefined) {
       this.isPaning = false;
+      this.matrixContainerDiv?.nativeElement.classList.remove('panning');
       this.cleanSelectedDomContext();
 
       const clicked = this.getCurrentCell(event);
@@ -592,6 +598,7 @@ export class MatrixComponent extends SelectableComponent implements OnChanges {
       });
     } else {
       this.isPaning = false;
+      this.matrixContainerDiv?.nativeElement.classList.remove('panning');
     }
   }
 

@@ -58,6 +58,10 @@
       background-color: white;
       cursor: pointer;
 
+      &.panning {
+        cursor: move;
+      }
+
       #matrix {
         position: absolute;
         top: 0;
