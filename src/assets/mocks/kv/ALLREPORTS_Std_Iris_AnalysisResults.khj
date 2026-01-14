@@ -20,8 +20,8 @@
 		{
 			"taskName": "Data preparation",
 			"messages": [
-				"warning : Decision Tree variable creation : No enough memory to build trees (needs extra 99.4 MB)",
-				"warning : Decision Tree variable creation : Cannot build trees with 27 variables"
+				"error : Decision Tree variable creation : No enough memory to build trees (needs extra 99.4 MB)",
+				"error : Decision Tree variable creation : Cannot build trees with 27 variables"
 			]
 		}
 	],
