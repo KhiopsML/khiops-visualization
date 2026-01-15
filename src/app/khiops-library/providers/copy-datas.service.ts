@@ -254,7 +254,7 @@ export class CopyDatasService {
     const maxLength = Math.max(...datasets.map((ds: any) => ds.data.length));
 
     // Header row
-    formattedDatas += 'Size\t';
+    formattedDatas += selectedArea.chartOptions.scales.x.title.text + '\t';
     for (let i = 0; i < datasets.length; i++) {
       formattedDatas += datasets[i].label + '\t';
     }

@@ -14,6 +14,7 @@ import { TranslateModule, TranslateService } from '@ngstack/translate';
 import { DynamicI } from '@khiops-library/interfaces/globals';
 import { AppConfig } from '../../environments/environment';
 import { COMPONENT_TYPES } from '@khiops-library/enum/component-types';
+import { ChartOptions } from 'chart.js';
 
 describe('CopyDatasService', () => {
   let service: CopyDatasService;
@@ -328,13 +329,16 @@ describe('CopyDatasService', () => {
       const patched = {
         ...mockSelectedArea,
         targetLiftAllGraph: mockSelectedArea.datas,
+        chartOptions: {
+          scales: { x: { title: { text: 'Population %' } } },
+        },
       };
       const result = service.getNdLineChart(patched);
 
       // Check title
       expect(result).toContain('Line Chart');
       // Check header row (tab separated)
-      expect(result).toContain('Size\tSeries1\tSeries2');
+      expect(result).toContain('Population %\tSeries1\tSeries2');
       // Check a few data rows (tab separated)
       expect(result).toContain('0\t10\t5');
       expect(result).toContain('1\t15\t');
@@ -1149,6 +1153,9 @@ describe('CopyDatasService - Real Data Tests', () => {
       const patched = {
         ...liftCurveData,
         targetLiftAllGraph: liftCurveData.datas,
+        chartOptions: {
+          scales: { x: { title: { text: 'Size' } } },
+        },
       };
       const result = service.getNdLineChart(patched);
 

@@ -17,9 +17,21 @@ import { COMPONENT_TYPES } from '@khiops-library/enum/component-types';
   standalone: false,
 })
 export class UnfoldHierarchyInfoRateGraphComponent extends SelectableComponent {
-  @Input() infoPerCluster: ChartDatasModel | undefined;
-  @Input() colorSetInfoPerCluster: ChartColorsSetI | undefined;
-  @Input() infoPerClusterChartOptions: ChartOptions | undefined;
+  private _infoPerCluster: ChartDatasModel | undefined;
+  datas: ChartDatasModel | undefined;
 
-  public componentType = COMPONENT_TYPES.LINE_CHART; // needed to copy datas
+  @Input()
+  set infoPerCluster(value: ChartDatasModel | undefined) {
+    this._infoPerCluster = value;
+    this.datas = value; // Automatic assignment
+  }
+
+  get infoPerCluster(): ChartDatasModel | undefined {
+    return this._infoPerCluster;
+  }
+
+  @Input() colorSetInfoPerCluster: ChartColorsSetI | undefined;
+  @Input() chartOptions: ChartOptions | undefined;
+
+  public componentType = COMPONENT_TYPES.ND_LINE_CHART; // needed to copy datas
 }

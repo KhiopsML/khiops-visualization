@@ -58,7 +58,7 @@
               fxFlexFill
               [infoPerCluster]="infoPerCluster"
               [colorSetInfoPerCluster]="colorSetInfoPerCluster"
-              [infoPerClusterChartOptions]="infoPerClusterChartOptions"
+              [chartOptions]="infoPerClusterChartOptions"
             ></kl-unfold-hierarchy-info-rate-graph>
           </as-split-area>
           <as-split-area fxLayout="column">
@@ -69,9 +69,7 @@
               [colorSetClusterPerDim]="colorSetClusterPerDim"
               [clustersPerDimDatas]="clustersPerDimDatas"
               [selectedLineChartItem]="selectedLineChartItem"
-              [clustersPerDimDatasChartOptions]="
-                clustersPerDimDatasChartOptions
-              "
+              [chartOptions]="clustersPerDimDatasChartOptions"
               (legendItemClicked)="highlightChartLine($event)"
             ></kl-unfold-hierarchy-clusters-graph>
           </as-split-area>

@@ -20,13 +20,26 @@ import { ChartOptions } from 'chart.js';
 export class UnfoldHierarchyClustersGraphComponent extends SelectableComponent {
   @Input() legend: { series: { name: string }[] }[] | undefined;
   @Input() colorSetClusterPerDim: ChartColorsSetI | undefined;
-  @Input() clustersPerDimDatas: ChartDatasModel | undefined;
+
+  private _clustersPerDimDatas: ChartDatasModel | undefined;
+  datas: ChartDatasModel | undefined;
+
+  @Input()
+  set clustersPerDimDatas(value: ChartDatasModel | undefined) {
+    this._clustersPerDimDatas = value;
+    this.datas = value; // Automatic assignment
+  }
+
+  get clustersPerDimDatas(): ChartDatasModel | undefined {
+    return this._clustersPerDimDatas;
+  }
+
   @Input() selectedLineChartItem = '';
-  @Input() clustersPerDimDatasChartOptions: ChartOptions | undefined;
+  @Input() chartOptions: ChartOptions | undefined;
 
   @Output() legendItemClicked = new EventEmitter<any>();
 
-  public componentType = COMPONENT_TYPES.LINE_CHART; // needed to copy datas
+  public componentType = COMPONENT_TYPES.ND_LINE_CHART; // needed to copy datas
 
   highlightChartLine(event: any) {
     this.legendItemClicked.emit(event);
