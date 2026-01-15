@@ -50,7 +50,7 @@ export class TargetLiftGraphComponent
   public isFullscreen = false;
   public componentType = COMPONENT_TYPES.ND_LINE_CHART; // needed to copy datas
   public title?: string; // for copy graph datas
-  public targetLiftAllGraph?: ChartDatasModel; // for copy graph datas
+  public datas?: ChartDatasModel; // for copy graph datas
   public titleWithoutDetails?: string;
   public chartOptions: ChartOptions;
 
@@ -107,7 +107,7 @@ export class TargetLiftGraphComponent
     // Update component properties with computed data
     this.targetLift = computedData.targetLift;
     this.targetLiftGraph = computedData.targetLiftGraph;
-    this.targetLiftAllGraph = computedData.targetLiftAllGraph;
+    this.datas = computedData.targetLiftAllGraph;
     this.colorSet = computedData.colorSet;
     this.title = computedData.title;
     this.titleWithoutDetails = computedData.titleWithoutDetails;

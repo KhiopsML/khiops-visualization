@@ -244,8 +244,24 @@ export class CopyDatasService {
       formattedDatas += selectedArea.title + '\n';
     }
 
-    // Prepare headers: first column is "Size" (or index), then dataset labels
-    const datasets = selectedArea.targetLiftAllGraph.datasets;
+    // Always prefer .datasets if present (actual runtime structure)
+    let datasets;
+    if (
+      selectedArea.targetLiftAllGraph &&
+      Array.isArray(selectedArea.targetLiftAllGraph.datasets)
+    ) {
+      datasets = selectedArea.targetLiftAllGraph.datasets;
+    } else if (Array.isArray(selectedArea.targetLiftAllGraph)) {
+      // Fallback: old format
+      datasets = selectedArea.targetLiftAllGraph.map((s: any) => ({
+        label: s.name,
+        data: (s.series || []).map((v: any) =>
+          v && typeof v.value !== 'undefined' ? v.value : null,
+        ),
+      }));
+    } else {
+      datasets = [];
+    }
     if (!datasets || datasets.length === 0) {
       return formattedDatas;
     }

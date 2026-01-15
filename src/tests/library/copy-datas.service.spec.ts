@@ -308,25 +308,37 @@ describe('CopyDatasService', () => {
    */
   describe('getNdLineChart', () => {
     it('should format multi-dimensional line chart data correctly', () => {
+      // Use datas.datasets as targetLiftAllGraph and check for tab-separated output
       const mockSelectedArea = {
         title: 'Line Chart',
-        targetLiftAllGraph: [
-          {
-            name: 'Series1',
-            series: [{ value: 10 }, { value: 15 }, { value: 20 }],
-          },
-          {
-            name: 'Series2',
-            series: [{ value: 5 }, null, { value: 25 }],
-          },
-        ],
+        datas: {
+          datasets: [
+            {
+              label: 'Series1',
+              data: [10, 15, 20],
+            },
+            {
+              label: 'Series2',
+              data: [5, null, 25],
+            },
+          ],
+        },
       };
+      // Patch for test: pass datas.datasets as targetLiftAllGraph
+      const patched = {
+        ...mockSelectedArea,
+        targetLiftAllGraph: mockSelectedArea.datas,
+      };
+      const result = service.getNdLineChart(patched);
 
-      const result = service.getNdLineChart(mockSelectedArea);
-
+      // Check title
       expect(result).toContain('Line Chart');
-      expect(result).toContain('Series1\t10\t15\t20');
-      expect(result).toContain('Series2\t5\t\t25'); // null value should be empty tab
+      // Check header row (tab separated)
+      expect(result).toContain('Size\tSeries1\tSeries2');
+      // Check a few data rows (tab separated)
+      expect(result).toContain('0\t10\t5');
+      expect(result).toContain('1\t15\t');
+      expect(result).toContain('2\t20\t25');
     });
   });
 
@@ -1115,52 +1127,40 @@ describe('CopyDatasService - Real Data Tests', () => {
    */
   describe('Real Line Chart Data', () => {
     it('should format lift curve data correctly', () => {
+      // Adapted to datas.datasets format and tab-separated checks
       const liftCurveData = {
         componentType: 'ndLineChart',
         title: 'Lift Curves',
-        targetLiftAllGraph: [
-          {
-            name: 'more',
-            series: [
-              { value: 1.0 },
-              { value: 2.87 },
-              { value: 2.45 },
-              { value: 2.12 },
-              { value: 1.89 },
-              { value: 1.67 },
-              { value: 1.45 },
-              { value: 1.23 },
-              { value: 1.11 },
-              { value: 1.0 },
-            ],
-          },
-          {
-            name: 'less',
-            series: [
-              { value: 1.0 },
-              { value: 0.34 },
-              { value: 0.56 },
-              { value: 0.72 },
-              { value: 0.84 },
-              { value: 0.91 },
-              { value: 0.96 },
-              { value: 0.98 },
-              { value: 0.99 },
-              { value: 1.0 },
-            ],
-          },
-        ],
+        datas: {
+          datasets: [
+            {
+              label: 'more',
+              data: [1.0, 2.87, 2.45, 2.12, 1.89, 1.67, 1.45, 1.23, 1.11, 1.0],
+            },
+            {
+              label: 'less',
+              data: [1.0, 0.34, 0.56, 0.72, 0.84, 0.91, 0.96, 0.98, 0.99, 1.0],
+            },
+          ],
+        },
       };
 
-      const result = service.getNdLineChart(liftCurveData);
+      // Patch getNdLineChart to accept datas.datasets for this test
+      const patched = {
+        ...liftCurveData,
+        targetLiftAllGraph: liftCurveData.datas,
+      };
+      const result = service.getNdLineChart(patched);
 
+      // Check title
       expect(result).toContain('Lift Curves');
-      expect(result).toContain(
-        'more\t1\t2.87\t2.45\t2.12\t1.89\t1.67\t1.45\t1.23\t1.11\t1',
-      );
-      expect(result).toContain(
-        'less\t1\t0.34\t0.56\t0.72\t0.84\t0.91\t0.96\t0.98\t0.99\t1',
-      );
+      // Check header row (tab separated)
+      expect(result).toContain('Size\tmore\tless');
+      // Check a few data rows (tab separated)
+      expect(result).toContain('0\t1\t1');
+      expect(result).toContain('1\t2.87\t0.34');
+      expect(result).toContain('2\t2.45\t0.56');
+      expect(result).toContain('9\t1\t1');
     });
   });
 
