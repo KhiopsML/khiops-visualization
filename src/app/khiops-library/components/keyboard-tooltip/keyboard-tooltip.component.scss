@@ -1,17 +1,22 @@
+.keyboard-tooltip-wrapper {
+  display: inline-block;
+  cursor: pointer;
+  margin-top: 5px;
+  width: calc(100% - 9px);
+  margin-left: 5px;
+}
+
 #keyboard-tooltip {
   border: 1px solid var(--primary-10);
   border-radius: 3px;
   border-bottom: 4px solid var(--primary-20);
   padding: 2px 2px 7px 3px;
   font-size: 9px;
-  margin-right: 5px;
-  cursor: pointer;
-  margin-top: 5px;
-  margin-left: 5px;
   font-family: monospace !important;
+  pointer-events: none;
 }
 
-#keyboard-tooltip:hover {
-  margin-top: 8px;
+.keyboard-tooltip-wrapper:hover #keyboard-tooltip {
+  transform: translateY(3px);
   border-bottom: 2px solid var(--primary-20);
 }

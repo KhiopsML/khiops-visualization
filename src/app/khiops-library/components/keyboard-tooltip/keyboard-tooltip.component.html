@@ -1,3 +1,5 @@
-<div id="keyboard-tooltip" matTooltip="{{ tooltip | translate }}">
-  {{ displayKey }}
+<div class="keyboard-tooltip-wrapper" [matTooltip]="tooltip | translate">
+  <div id="keyboard-tooltip">
+    {{ displayKey }}
+  </div>
 </div>
