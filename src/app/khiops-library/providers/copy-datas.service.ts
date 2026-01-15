@@ -48,6 +48,10 @@ export class CopyDatasService {
    * @param selectedArea - The area containing the data to copy.
    */
   copyDatasToClipboard(selectedArea: DynamicI) {
+    console.log(
+      '🚀 ~ CopyDatasService ~ copyDatasToClipboard ~ selectedArea:',
+      selectedArea,
+    );
     // console.log(
     //   '​CopyDatasService -> copyDatasToClipboard -> selectedArea',
     //   selectedArea,
@@ -240,19 +244,29 @@ export class CopyDatasService {
       formattedDatas += selectedArea.title + '\n';
     }
 
-    // CONTENT
-    for (let i = 0; i < selectedArea.targetLiftAllGraph.length; i++) {
-      formattedDatas += selectedArea.targetLiftAllGraph[i].name + '\t';
-      for (
-        let j = 0;
-        j < selectedArea.targetLiftAllGraph[i].series.length;
-        j++
-      ) {
-        if (selectedArea.targetLiftAllGraph[i].series[j]) {
-          formattedDatas +=
-            this.formatNumberWithPrecision(
-              selectedArea.targetLiftAllGraph[i].series[j].value,
-            ) + '\t';
+    // Prepare headers: first column is "Size" (or index), then dataset labels
+    const datasets = selectedArea.targetLiftAllGraph.datasets;
+    if (!datasets || datasets.length === 0) {
+      return formattedDatas;
+    }
+
+    // Find the maximum data length among all datasets
+    const maxLength = Math.max(...datasets.map((ds: any) => ds.data.length));
+
+    // Header row
+    formattedDatas += 'Size\t';
+    for (let i = 0; i < datasets.length; i++) {
+      formattedDatas += datasets[i].label + '\t';
+    }
+    formattedDatas += '\n';
+
+    // Data rows
+    for (let row = 0; row < maxLength; row++) {
+      formattedDatas += this.formatNumberWithPrecision(row) + '\t';
+      for (let col = 0; col < datasets.length; col++) {
+        const value = datasets[col].data[row];
+        if (value !== undefined && value !== null) {
+          formattedDatas += this.formatNumberWithPrecision(value) + '\t';
         } else {
           formattedDatas += '\t';
         }
