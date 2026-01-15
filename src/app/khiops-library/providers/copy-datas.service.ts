@@ -11,6 +11,7 @@ import { UtilsService } from './utils.service';
 import { DynamicI } from '@khiops-library/interfaces/globals';
 import { TreeChildNode } from '@khiops-visualization/interfaces/tree-preparation-report';
 import { AppConfig } from '../../../environments/environment';
+import { COMPONENT_TYPES } from '@khiops-library/enum/component-types';
 
 @Injectable({
   providedIn: 'root',
@@ -54,41 +55,40 @@ export class CopyDatasService {
     let formattedDatas: string = '';
 
     switch (selectedArea.componentType) {
-      case 'histogram':
+      case COMPONENT_TYPES.HISTOGRAM:
         formattedDatas = this.getKvHistogramDatas(selectedArea);
         break;
-      case 'hyptree':
+      case COMPONENT_TYPES.HYPER_TREE:
         formattedDatas = this.getKvTreeDatas(selectedArea);
         break;
-      case 'kvtree':
+      case COMPONENT_TYPES.KV_TREE:
         formattedDatas = this.getKvTreeDatas(selectedArea);
         break;
-      case 'tree':
+      case COMPONENT_TYPES.TREE:
         formattedDatas = this.getTreeDatas(selectedArea);
         break;
-      case 'table':
-      case 'grid':
+      case COMPONENT_TYPES.GRID:
         formattedDatas = this.getTableDatas(selectedArea);
         break;
-      case 'descriptions':
+      case COMPONENT_TYPES.DESCRIPTIONS:
         formattedDatas = this.getDescriptionsDatas(selectedArea);
         break;
-      case 'informations':
+      case COMPONENT_TYPES.INFORMATIONS:
         formattedDatas = this.getInformationsDatas(selectedArea);
         break;
-      case 'ndBarChart':
+      case COMPONENT_TYPES.ND_BAR_CHART:
         formattedDatas = this.getNdBarChartDatas(selectedArea);
         break;
-      case '1dBarChart':
+      case COMPONENT_TYPES.BAR_CHART:
         formattedDatas = this.get1dBarChartDatas(selectedArea);
         break;
-      case 'ndLineChart':
+      case COMPONENT_TYPES.ND_LINE_CHART:
         formattedDatas = this.getNdLineChart(selectedArea);
         break;
-      case 'matrix':
+      case COMPONENT_TYPES.MATRIX:
         formattedDatas = this.getMatrixDatas(selectedArea);
         break;
-      case 'external-datas':
+      case COMPONENT_TYPES.EXTERNAL_DATAS:
         formattedDatas = this.getExternalDatas(selectedArea);
         break;
     }

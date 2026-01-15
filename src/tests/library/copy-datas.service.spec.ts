@@ -13,6 +13,7 @@ import { UtilsService } from '@khiops-library/providers/utils.service';
 import { TranslateModule, TranslateService } from '@ngstack/translate';
 import { DynamicI } from '@khiops-library/interfaces/globals';
 import { AppConfig } from '../../environments/environment';
+import { COMPONENT_TYPES } from '@khiops-library/enum/component-types';
 
 describe('CopyDatasService', () => {
   let service: CopyDatasService;
@@ -96,7 +97,7 @@ describe('CopyDatasService', () => {
 
     it('should handle table component type', () => {
       mockSelectedArea = {
-        componentType: 'table',
+        componentType: COMPONENT_TYPES.GRID,
         title: 'Test Table',
         displayedColumns: [
           { field: 'name', headerName: 'Name', show: true },
@@ -963,7 +964,7 @@ describe('CopyDatasService - Real Data Tests', () => {
   describe('Real Table Data', () => {
     it('should format variable statistics table correctly', () => {
       const variableStatsTable: DynamicI = {
-        componentType: 'table',
+        componentType: COMPONENT_TYPES.GRID,
         title: 'Variable Statistics',
         displayedColumns: [
           { field: 'name', headerName: 'Variable Name', show: true },
