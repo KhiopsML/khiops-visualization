@@ -262,19 +262,4 @@ export class VariableSearchDialogComponent
       searchInput: currentSearchInput,
     });
   }
-
-  /**
-   * Triggers a click event to enable copy functionality
-   */
-  private triggerClickEvent() {
-    const trustedClick = new CustomEvent('trustedClick', {
-      bubbles: true,
-      cancelable: true,
-      composed: true,
-    });
-    const element = this.configService
-      .getRootElementDom()
-      .querySelector('#' + this.id);
-    element?.dispatchEvent(trustedClick);
-  }
 }

@@ -4,44 +4,50 @@
   #manageViews
   fxLayout="column"
 >
-  <div
-    fxLayout="row"
-    id="composition-detailed-parts-header"
-    fxLayoutAlign="center center"
-  >
-    <h2 fxFlex>{{ 'GLOBAL.PART_DETAILS' | translate | uppercase }}</h2>
-    <button
-      class="grey-btn"
-      mat-icon-button
-      matTooltip="{{ 'GLOBAL.CLOSE' | translate }}"
-      (click)="onClickOnClose()"
-    >
-      <mat-icon fxFlexFill fxLayoutAlign="center center">close</mat-icon>
-    </button>
-  </div>
-  <div
-    id="composition-detailed-parts-content"
-    fxLayout="column"
-    fxFlexFill
-    fxLayoutAlign="start center"
-  >
+  <!-- important parent div for copy image -->
+  <div fxLayout="column" fxFlex>
     <div
-      *ngIf="detailedDatas && detailedDatas.values"
-      id="composition-detailed-parts-list-table"
-      fxFlexFill
+      fxLayout="row"
+      id="composition-detailed-parts-header"
+      fxLayoutAlign="center center"
+    >
+      <h2 fxFlex>{{ 'GLOBAL.PART_DETAILS' | translate | uppercase }}</h2>
+      <div class="comp-header-tools screenshot-hide" fxLayout="row">
+        <kl-header-tools [showMenu]="false"></kl-header-tools>
+      </div>
+      <button
+        class="grey-btn"
+        mat-icon-button
+        matTooltip="{{ 'GLOBAL.CLOSE' | translate }}"
+        (click)="onClickOnClose()"
+      >
+        <mat-icon fxFlexFill fxLayoutAlign="center center">close</mat-icon>
+      </button>
+    </div>
+    <div
+      id="composition-detailed-parts-content"
       fxLayout="column"
+      fxFlex
       fxLayoutAlign="start center"
     >
-      <kl-ag-grid
+      <div
+        *ngIf="detailedDatas && detailedDatas.values"
+        id="composition-detailed-parts-list-table"
         fxFlexFill
-        [showSearch]="false"
-        [showLineSelection]="false"
-        [showColumnsSelection]="false"
-        [inputDatas]="detailedDatas.values"
-        [title]="''"
-        [displayedColumns]="detailedDatas.displayedColumns"
+        fxLayout="column"
+        fxLayoutAlign="start center"
       >
-      </kl-ag-grid>
+        <kl-ag-grid
+          fxFlexFill
+          [showSearch]="false"
+          [showLineSelection]="false"
+          [showColumnsSelection]="false"
+          [inputDatas]="detailedDatas.values"
+          [title]="''"
+          [displayedColumns]="detailedDatas.displayedColumns"
+        >
+        </kl-ag-grid>
+      </div>
     </div>
   </div>
 </div>

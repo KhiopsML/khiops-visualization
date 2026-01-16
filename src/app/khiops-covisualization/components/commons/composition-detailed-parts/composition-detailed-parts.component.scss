@@ -1,14 +1,9 @@
 #composition-detailed-parts-comp {
-  padding-bottom: 2.5em;
-
   #composition-detailed-parts-header {
     height: 68px;
 
     h2 {
-      margin-left: 1em;
-    }
-
-    button {
+      margin-right: 1em;
       margin-left: 1em;
     }
   }
@@ -38,4 +33,8 @@
       overflow-x: hidden;
     }
   }
+}
+
+#composition-detailed-parts-comp.selected::before {
+  border: none !important;
 }

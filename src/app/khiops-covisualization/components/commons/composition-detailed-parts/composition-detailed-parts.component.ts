@@ -4,11 +4,15 @@
  * at https://spdx.org/licenses/BSD-3-Clause-Clear.html or see the "LICENSE" file for more details.
  */
 
-import { Component } from '@angular/core';
+import { AfterViewInit, Component, NgZone } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
 import { CompositionModel } from '@khiops-covisualization/model/composition.model';
+import { SelectableComponent } from '@khiops-library/components/selectable/selectable.component';
+import { SelectableService } from '@khiops-library/components/selectable/selectable.service';
+import { COMPONENT_TYPES } from '@khiops-library/enum/component-types';
 import { TYPES } from '@khiops-library/enum/types';
 import { GridDatasI } from '@khiops-library/interfaces/grid-datas';
+import { ConfigService } from '@khiops-library/providers/config.service';
 import { TranslateService } from '@ngstack/translate';
 
 @Component({
@@ -17,19 +21,39 @@ import { TranslateService } from '@ngstack/translate';
   styleUrls: ['./composition-detailed-parts.component.scss'],
   standalone: false,
 })
-export class CompositionDetailedPartsComponent {
+export class CompositionDetailedPartsComponent
+  extends SelectableComponent
+  implements AfterViewInit
+{
   detailedDatas: GridDatasI | undefined;
   detailedParts: CompositionModel | undefined;
 
+  // Properties needed for kl-header-tools functionality
+  public componentType = COMPONENT_TYPES.GRID; // needed to copy datas
+  public override id: string = 'composition-detailed-parts-comp';
+
   constructor(
+    public override selectableService: SelectableService,
+    public override ngzone: NgZone,
+    public override configService: ConfigService,
     public translate: TranslateService,
     private dialogRef: MatDialogRef<CompositionDetailedPartsComponent>,
   ) {
+    super(selectableService, ngzone, configService);
     // Initialize with default columns, will be updated in ngOnInit based on data type
     this.detailedDatas = {
       displayedColumns: [],
       values: [],
     };
+  }
+
+  override ngAfterViewInit() {
+    super.ngAfterViewInit();
+
+    setTimeout(() => {
+      // Trigger click event for copy functionality
+      this.triggerClickEvent();
+    }, 250);
   }
 
   ngOnInit() {

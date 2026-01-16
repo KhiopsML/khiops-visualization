@@ -19,9 +19,9 @@ import { ConfigService } from '@khiops-library/providers/config.service';
 import { Subscription } from 'rxjs';
 
 @Component({
-    template: '',
-    changeDetection: ChangeDetectionStrategy.OnPush,
-    standalone: false
+  template: '',
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: false,
 })
 export class SelectableComponent
   extends WatchResizeComponent
@@ -73,8 +73,25 @@ export class SelectableComponent
     }
   }
 
-  @HostListener('trustedClick', ['$event'])
+  @HostListener('trustedClick')
   trustedClick() {
     this.selectableService.setSelectedArea(this);
+  }
+
+  /**
+   * Triggers a click event to enable copy functionality
+   * @param elt Optional HTML element to dispatch the event on
+   * Otherwise, uses the component's id to find the element
+   */
+  public triggerClickEvent(elt?: HTMLElement) {
+    const trustedClick = new CustomEvent('trustedClick', {
+      bubbles: true,
+      cancelable: true,
+      composed: true,
+    });
+    const element =
+      elt ??
+      this.configService.getRootElementDom().querySelector('#' + this.id);
+    element?.dispatchEvent(trustedClick);
   }
 }
