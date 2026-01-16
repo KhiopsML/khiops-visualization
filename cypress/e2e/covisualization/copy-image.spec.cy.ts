@@ -45,6 +45,16 @@ describe('Copy images Test Plan for Khiops Covisualization', () => {
           cy.testComponentScreenshot('#unfold-hierarchy-table');
           cy.testComponentScreenshot('#unfold-hierarchy-info-rate');
           cy.testComponentScreenshot('#unfold-hierarchy-clusters-graph');
+
+          // Variable Search Dialog
+          cy.get('.variable-search-button-comp').first().click({ force: true });
+          cy.wait(500);
+          cy.testComponentScreenshot('#variable-search-dialog-comp');
+
+          // Composition Detailed Parts
+          cy.get('.kl-icon-cell-comp-btn').first().click({ force: true });
+          cy.wait(500);
+          cy.testComponentScreenshot('#composition-detailed-parts-comp');
         });
       });
     });
