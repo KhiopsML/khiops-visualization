@@ -704,5 +704,178 @@ describe('Visualization', () => {
 
       expect(intervalDatas).toEqual(jasmine.objectContaining(expectedRes));
     });
+
+    // Tests for isFilteredVariables method
+    it('isFilteredVariables should return false when no preparation report data exists', () => {
+      appService.setFileDatas(undefined);
+      preparationDatasService.initialize();
+
+      const result =
+        preparationDatasService.isFilteredVariables('preparationReport');
+      expect(result).toBe(false);
+    });
+
+    it('isFilteredVariables should return false when evaluatedVariables is undefined', () => {
+      const fileDatas = {
+        preparationReport: {
+          summary: {
+            // evaluatedVariables is undefined
+          },
+          variablesStatistics: [{ rank: 'R01' }, { rank: 'R02' }],
+        },
+      };
+      appService.setFileDatas(fileDatas);
+      preparationDatasService.initialize();
+
+      const result =
+        preparationDatasService.isFilteredVariables('preparationReport');
+      expect(result).toBe(false);
+    });
+
+    it('isFilteredVariables should return false when evaluatedVariables is 0', () => {
+      const fileDatas = {
+        preparationReport: {
+          summary: {
+            evaluatedVariables: 0,
+          },
+          variablesStatistics: [{ rank: 'R01' }],
+        },
+      };
+      appService.setFileDatas(fileDatas);
+      preparationDatasService.initialize();
+
+      const result =
+        preparationDatasService.isFilteredVariables('preparationReport');
+      expect(result).toBe(false);
+    });
+
+    it('isFilteredVariables should return true when variablesStatistics is missing but evaluatedVariables > 0', () => {
+      const fileDatas = {
+        preparationReport: {
+          summary: {
+            evaluatedVariables: 20,
+          },
+          // variablesStatistics is missing
+        },
+      };
+      appService.setFileDatas(fileDatas);
+      preparationDatasService.initialize();
+
+      const result =
+        preparationDatasService.isFilteredVariables('preparationReport');
+      expect(result).toBe(true);
+    });
+
+    it('isFilteredVariables should return true when evaluatedVariables > variablesStatistics.length', () => {
+      const fileDatas = {
+        preparationReport: {
+          summary: {
+            evaluatedVariables: 15,
+          },
+          variablesStatistics: [{ rank: 'R01' }, { rank: 'R02' }], // length = 2
+        },
+      };
+      appService.setFileDatas(fileDatas);
+      preparationDatasService.initialize();
+
+      const result =
+        preparationDatasService.isFilteredVariables('preparationReport');
+      expect(result).toBe(true);
+    });
+
+    it('isFilteredVariables should return false when evaluatedVariables <= variablesStatistics.length', () => {
+      const fileDatas = {
+        preparationReport: {
+          summary: {
+            evaluatedVariables: 2,
+          },
+          variablesStatistics: [{ rank: 'R01' }, { rank: 'R02' }], // length = 2
+        },
+      };
+      appService.setFileDatas(fileDatas);
+      preparationDatasService.initialize();
+
+      const result =
+        preparationDatasService.isFilteredVariables('preparationReport');
+      expect(result).toBe(false);
+    });
+
+    it('isFilteredVariables should return false when evaluatedVariables < variablesStatistics.length', () => {
+      const fileDatas = {
+        preparationReport: {
+          summary: {
+            evaluatedVariables: 1,
+          },
+          variablesStatistics: [
+            { rank: 'R01' },
+            { rank: 'R02' },
+            { rank: 'R03' },
+          ], // length = 3
+        },
+      };
+      appService.setFileDatas(fileDatas);
+      preparationDatasService.initialize();
+
+      const result =
+        preparationDatasService.isFilteredVariables('preparationReport');
+      expect(result).toBe(false);
+    });
+
+    it('isFilteredVariables should handle empty variablesStatistics array', () => {
+      const fileDatas = {
+        preparationReport: {
+          summary: {
+            evaluatedVariables: 5,
+          },
+          variablesStatistics: [], // empty array
+        },
+      };
+      appService.setFileDatas(fileDatas);
+      preparationDatasService.initialize();
+
+      const result =
+        preparationDatasService.isFilteredVariables('preparationReport');
+      expect(result).toBe(true);
+    });
+
+    it('isFilteredVariables should work with textPreparation source', () => {
+      const fileDatas = {
+        textPreparationReport: {
+          summary: {
+            evaluatedVariables: 10,
+          },
+          variablesStatistics: [{ rank: 'R01' }, { rank: 'R02' }], // length = 2
+        },
+      };
+      appService.setFileDatas(fileDatas);
+      preparationDatasService.initialize();
+
+      const result = preparationDatasService.isFilteredVariables(
+        'textPreparationReport',
+      );
+      expect(result).toBe(true);
+    });
+
+    it('isFilteredVariables should work with treePreparation source', () => {
+      const fileDatas = {
+        treePreparationReport: {
+          summary: {
+            evaluatedVariables: 3,
+          },
+          variablesStatistics: [
+            { rank: 'R01' },
+            { rank: 'R02' },
+            { rank: 'R03' },
+          ], // length = 3
+        },
+      };
+      appService.setFileDatas(fileDatas);
+      preparationDatasService.initialize();
+
+      const result = preparationDatasService.isFilteredVariables(
+        'treePreparationReport',
+      );
+      expect(result).toBe(false);
+    });
   });
 });

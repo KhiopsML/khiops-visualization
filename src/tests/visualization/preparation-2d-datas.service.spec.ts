@@ -761,5 +761,130 @@ describe('Visualization', () => {
       );
       expect(invalidVar).toBeUndefined();
     });
+
+    // Tests for isFilteredVariables method
+    it('isFilteredVariables should return false when no bivariate report data exists', () => {
+      appService.setFileDatas(undefined);
+      preparation2dDatasService.initialize();
+
+      const result = preparation2dDatasService.isFilteredVariables();
+      expect(result).toBe(false);
+    });
+
+    it('isFilteredVariables should return false when evaluatedVariablePairs is undefined', () => {
+      const fileDatas = {
+        bivariatePreparationReport: {
+          summary: {
+            // evaluatedVariablePairs is undefined
+          },
+          variablesPairsStatistics: [{ rank: 'R01' }, { rank: 'R02' }],
+        },
+      };
+      appService.setFileDatas(fileDatas);
+      preparation2dDatasService.initialize();
+
+      const result = preparation2dDatasService.isFilteredVariables();
+      expect(result).toBe(false);
+    });
+
+    it('isFilteredVariables should return false when evaluatedVariablePairs is 0', () => {
+      const fileDatas = {
+        bivariatePreparationReport: {
+          summary: {
+            evaluatedVariablePairs: 0,
+          },
+          variablesPairsStatistics: [{ rank: 'R01' }],
+        },
+      };
+      appService.setFileDatas(fileDatas);
+      preparation2dDatasService.initialize();
+
+      const result = preparation2dDatasService.isFilteredVariables();
+      expect(result).toBe(false);
+    });
+
+    it('isFilteredVariables should return true when variablesPairsStatistics is missing but evaluatedVariablePairs > 0', () => {
+      const fileDatas = {
+        bivariatePreparationReport: {
+          summary: {
+            evaluatedVariablePairs: 20,
+          },
+          // variablesPairsStatistics is missing
+        },
+      };
+      appService.setFileDatas(fileDatas);
+      preparation2dDatasService.initialize();
+
+      const result = preparation2dDatasService.isFilteredVariables();
+      expect(result).toBe(true);
+    });
+
+    it('isFilteredVariables should return true when evaluatedVariablePairs > variablesPairsStatistics.length', () => {
+      const fileDatas = {
+        bivariatePreparationReport: {
+          summary: {
+            evaluatedVariablePairs: 15,
+          },
+          variablesPairsStatistics: [{ rank: 'R01' }, { rank: 'R02' }], // length = 2
+        },
+      };
+      appService.setFileDatas(fileDatas);
+      preparation2dDatasService.initialize();
+
+      const result = preparation2dDatasService.isFilteredVariables();
+      expect(result).toBe(true);
+    });
+
+    it('isFilteredVariables should return false when evaluatedVariablePairs <= variablesPairsStatistics.length', () => {
+      const fileDatas = {
+        bivariatePreparationReport: {
+          summary: {
+            evaluatedVariablePairs: 2,
+          },
+          variablesPairsStatistics: [{ rank: 'R01' }, { rank: 'R02' }], // length = 2
+        },
+      };
+      appService.setFileDatas(fileDatas);
+      preparation2dDatasService.initialize();
+
+      const result = preparation2dDatasService.isFilteredVariables();
+      expect(result).toBe(false);
+    });
+
+    it('isFilteredVariables should return false when evaluatedVariablePairs < variablesPairsStatistics.length', () => {
+      const fileDatas = {
+        bivariatePreparationReport: {
+          summary: {
+            evaluatedVariablePairs: 1,
+          },
+          variablesPairsStatistics: [
+            { rank: 'R01' },
+            { rank: 'R02' },
+            { rank: 'R03' },
+          ], // length = 3
+        },
+      };
+      appService.setFileDatas(fileDatas);
+      preparation2dDatasService.initialize();
+
+      const result = preparation2dDatasService.isFilteredVariables();
+      expect(result).toBe(false);
+    });
+
+    it('isFilteredVariables should handle empty variablesPairsStatistics array', () => {
+      const fileDatas = {
+        bivariatePreparationReport: {
+          summary: {
+            evaluatedVariablePairs: 5,
+          },
+          variablesPairsStatistics: [], // empty array
+        },
+      };
+      appService.setFileDatas(fileDatas);
+      preparation2dDatasService.initialize();
+
+      const result = preparation2dDatasService.isFilteredVariables();
+      expect(result).toBe(true);
+    });
   });
 });
