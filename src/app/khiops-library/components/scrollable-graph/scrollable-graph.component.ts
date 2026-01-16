@@ -22,9 +22,9 @@ import { SelectableService } from '../selectable/selectable.service';
 import { ConfigService } from '@khiops-library/providers/config.service';
 
 @Component({
-    template: '',
-    changeDetection: ChangeDetectionStrategy.OnPush,
-    standalone: false
+  template: '',
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: false,
 })
 export class ScrollableGraphComponent
   extends SelectableComponent
@@ -52,7 +52,7 @@ export class ScrollableGraphComponent
     this.onScroll = this.onScroll.bind(this);
   }
 
-  @HostListener('window:resize', ['$event'])
+  @HostListener('window:resize')
   keyEvent() {
     this.resizeGraph();
   }
