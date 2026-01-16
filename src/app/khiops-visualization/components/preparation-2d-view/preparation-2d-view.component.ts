@@ -52,6 +52,7 @@ export class Preparation2dViewComponent extends SelectableTabComponent {
   public levelDistributionTitle: string = '';
   public override tabIndex = 2; // managed by selectable-tab component
   public variablesDisplayedColumns: GridColumnsI[] = [];
+  public showFilteredVariablesWarning: boolean = false;
 
   constructor(
     private preparationDatasService: PreparationDatasService,
@@ -74,6 +75,8 @@ export class Preparation2dViewComponent extends SelectableTabComponent {
     this.sizes = this.layoutService.getViewSplitSizes('preparation2dView');
     this.informationsDatas =
       this.preparation2dDatasService.getInformationsDatas();
+    this.showFilteredVariablesWarning =
+      this.preparation2dDatasService.isFilteredVariables();
     this.summaryDatas = this.preparationDatasService.getSummaryDatas();
     this.targetVariableStatsDatas =
       this.preparationDatasService.getTargetVariableStatsDatas();

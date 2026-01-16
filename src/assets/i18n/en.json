@@ -1,4 +1,4 @@
-{
+﻿{
   "TITLE": {
     "PROJECT": "Project infos",
     "PREPARATION": "Preparation",
@@ -242,6 +242,8 @@
     "SELECTED_VARIABLES_PAIRS": "Selected variables pairs",
     "DISCRETIZATION": "Discretization",
     "VALUE_GROUPING": "Value grouping",
+    "FILTERED_VARIABLES_WARNING": "Only the variables selected in the Selective Naive Bayes predictor are displayed",
+    "FILTERED_VARIABLES_WARNING_TOOLTIP": "To see all variables, set to false the Khiops option \"Keep selected variables only\" in Parameter pane",
     "VARIABLES": "Variables",
     "DELTA_LEVEL_DISTRIBUTION": "Delta level distribution",
     "LEVEL_DISTRIBUTION": "Level distribution",
@@ -543,22 +545,22 @@
         "NAME": "Terminal cluster in the current hierarchy",
         "FATHER": "Father cluster of the current cluster",
         "FREQUENCY": "Number of items belonging to the current cluster",
-        "INTEREST": "The “Interest” of a cluster is a value between 0 and 1: clusters with a interest close to 1 are the most informative",
+        "INTEREST": "The â€œInterestâ€ of a cluster is a value between 0 and 1: clusters with a interest close to 1 are the most informative",
         "HIERARCHICAL_LEVEL": "Normalized measure between 0 (all is folded) and 1 (all is unfolded); it represents the information kept for the current unfolding of the hierarchy and can be interpreted as a distance to the root cluster",
         "SIZE": "The number of different items that belong to this cluster",
-        "RANK": "The column “Rank” provides the ordering of the clusters in the hierarchy view."
+        "RANK": "The column â€œRankâ€ provides the ordering of the clusters in the hierarchy view."
       },
       "COMPOSITION": {
         "TITLE": "This view presents all value items which are grouped in the cluster currently selected",
-        "CLUSTER": "The column “Cluster” contains the cluster visible in the hierarchy that contains the item.",
+        "CLUSTER": "The column â€œClusterâ€ contains the cluster visible in the hierarchy that contains the item.",
         "TERMINAL_CLUSTER": "Contain the terminal cluster that owns this item",
-        "RANK": "The column “Rank” provides the  ordering of the items in the hierarchy view.",
+        "RANK": "The column â€œRankâ€ provides the  ordering of the items in the hierarchy view.",
         "TYPICALITY": "Interest measure of the value within its cluster, between 0 (least representative) and 1 (most representative)",
         "VALUE": "Value of the item",
-        "FREQUENCY": "The “Frequency” of an item is its number of occurrences in the cluster",
+        "FREQUENCY": "The â€œFrequencyâ€ of an item is its number of occurrences in the cluster",
         "INNER_VARIABLE": "Name of numerical or categorical variable of the Variables axis for Instances * Variables coclustering",
         "PART": "Value of the part ( intervals or modalities)",
-        "EXPECTED_FREQUENCY": "provides an estimate.\nCluster size filtered by context × proportion of each value in the original cluster"
+        "EXPECTED_FREQUENCY": "provides an estimate.\nCluster size filtered by context Ã— proportion of each value in the original cluster"
       },
       "EXTERNAL_DATAS": {
         "TITLE": "Integrate external data associated to each cluster element. The selection of an item in the composition view display the corresponding data in this view. There are 3 types of data fields: textual, numerical and categorical. The display is optimized according to the data type. Several fields can be associated for each item."

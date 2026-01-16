@@ -990,4 +990,30 @@ export class Preparation2dDatasService {
     return !!this.appService.appDatas?.bivariatePreparationReport
       ?.variablesPairsStatistics?.[0];
   }
+
+  /**
+   * Checks if variable pairs have been filtered for the bivariate preparation report.
+   * This happens when "keep selected variables only" option is enabled in Khiops.
+   * Compares evaluatedVariablePairs from summary with actual variablesPairsStatistics array length.
+   * @returns {boolean} True if variable pairs have been filtered, false otherwise.
+   */
+  isFilteredVariables(): boolean {
+    const reportData = this.appService.appDatas?.bivariatePreparationReport;
+    if (!reportData) {
+      return false;
+    }
+
+    const evaluatedVariablePairs = reportData.summary?.evaluatedVariablePairs;
+    // If no evaluated variable pairs, nothing could have been filtered
+    if (evaluatedVariablePairs === undefined || evaluatedVariablePairs === 0) {
+      return false;
+    }
+
+    // Treat missing or undefined variablesPairsStatistics as length 0
+    const variablesPairsStatisticsLength =
+      reportData.variablesPairsStatistics?.length ?? 0;
+
+    // If evaluatedVariablePairs is greater than the array length, variable pairs have been filtered
+    return evaluatedVariablePairs > variablesPairsStatisticsLength;
+  }
 }

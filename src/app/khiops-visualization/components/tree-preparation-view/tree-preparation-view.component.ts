@@ -69,6 +69,7 @@ export class TreePreparationViewComponent extends SelectableTabComponent {
   public distributionDatas?: DistributionDatasModel;
   public variablesDisplayedColumns: GridColumnsI[] = [];
   public override tabIndex = 5; // managed by selectable-tab component
+  public showFilteredVariablesWarning: boolean = false;
 
   selectedNodes$: Observable<TreeNodeModel[]>;
   selectedNode$: Observable<TreeNodeModel | undefined>;
@@ -106,6 +107,8 @@ export class TreePreparationViewComponent extends SelectableTabComponent {
     this.informationsDatas = this.preparationDatasService.getInformationsDatas(
       this.preparationSource,
     );
+    this.showFilteredVariablesWarning =
+      this.preparationDatasService.isFilteredVariables(this.preparationSource);
     this.targetVariableStatsDatas =
       this.preparationDatasService.getTargetVariableStatsDatas(
         this.preparationSource,

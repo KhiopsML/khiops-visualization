@@ -702,4 +702,32 @@ export class PreparationDatasService {
       return this.getAvailablePreparationReport();
     }
   }
+
+  /**
+   * Checks if variables have been filtered for the specified preparation source.
+   * This happens when "keep selected variables only" option is enabled in Khiops.
+   * Compares evaluatedVariables from summary with actual variablesStatistics array length.
+   * @param {string} preparationSource - The source of the preparation data.
+   * @returns {boolean} True if variables have been filtered, false otherwise.
+   */
+  isFilteredVariables(preparationSource: string): boolean {
+    // @ts-ignore
+    const reportData = this.appService.appDatas?.[preparationSource];
+    if (!reportData) {
+      return false;
+    }
+
+    const evaluatedVariables = reportData.summary?.evaluatedVariables;
+    // If no evaluated variables, nothing could have been filtered
+    if (evaluatedVariables === undefined || evaluatedVariables === 0) {
+      return false;
+    }
+
+    // Treat missing or undefined variablesStatistics as length 0
+    const variablesStatisticsLength =
+      reportData.variablesStatistics?.length ?? 0;
+
+    // If evaluatedVariables is greater than the array length, variables have been filtered
+    return evaluatedVariables > variablesStatisticsLength;
+  }
 }

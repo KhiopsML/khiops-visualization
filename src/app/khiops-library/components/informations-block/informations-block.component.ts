@@ -41,6 +41,7 @@ export class InformationsBlockComponent
   @Input() public inputDatas: InfosDatasI[] | undefined;
   @Input() public title: string = '';
   @Input() public icon = 'tune';
+  @Input() public showFilteredVariablesWarning: boolean = false;
   public componentType = COMPONENT_TYPES.INFORMATIONS; // needed to copy datas
   public gaugeSize: number = 0;
 

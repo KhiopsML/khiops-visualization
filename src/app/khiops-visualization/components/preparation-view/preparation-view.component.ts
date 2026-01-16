@@ -50,6 +50,7 @@ export class PreparationViewComponent extends SelectableTabComponent {
   public targetVariableStatsInformations?: InfosDatasI[];
   public override tabIndex = 1; // managed by selectable-tab component
   public variablesDisplayedColumns: GridColumnsI[] = [];
+  public showFilteredVariablesWarning: boolean = false;
 
   constructor(
     private preparationDatasService: PreparationDatasService,
@@ -83,6 +84,8 @@ export class PreparationViewComponent extends SelectableTabComponent {
     this.informationsDatas = this.preparationDatasService.getInformationsDatas(
       this.preparationSource,
     );
+    this.showFilteredVariablesWarning =
+      this.preparationDatasService.isFilteredVariables(this.preparationSource);
     this.targetVariableStatsDatas =
       this.preparationDatasService.getTargetVariableStatsDatas();
     this.targetVariableStatsInformations =
