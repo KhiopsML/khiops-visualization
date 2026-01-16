@@ -38,7 +38,13 @@ describe('Copy images Test Plan for Khiops Covisualization', () => {
 
           cy.testComponentScreenshot('#matrix-container-comp-wrapper');
 
-          // TODO Check unfold hierarchy components
+          // Open unfold Hierarchy view
+          cy.get('.button-unfold-hierarchy').click();
+          cy.wait(500);
+
+          cy.testComponentScreenshot('#unfold-hierarchy-table');
+          cy.testComponentScreenshot('#unfold-hierarchy-info-rate');
+          cy.testComponentScreenshot('#unfold-hierarchy-clusters-graph');
         });
       });
     });

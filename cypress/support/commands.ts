@@ -112,7 +112,7 @@ Cypress.Commands.add('testComponentScreenshot', (id: string) => {
 
   cy.wait(100);
 
-  cy.get('#header-tools-copy-image-button').click();
+  cy.get('#header-tools-copy-image-button').first().click({ force: true });
 
   // Verify the snackbar success message appears
   cy.get('.mat-mdc-snack-bar-container')

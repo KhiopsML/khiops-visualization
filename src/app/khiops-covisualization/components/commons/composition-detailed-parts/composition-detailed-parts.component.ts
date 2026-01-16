@@ -11,7 +11,6 @@ import { SelectableComponent } from '@khiops-library/components/selectable/selec
 import { SelectableService } from '@khiops-library/components/selectable/selectable.service';
 import { COMPONENT_TYPES } from '@khiops-library/enum/component-types';
 import { TYPES } from '@khiops-library/enum/types';
-import { GridDatasI } from '@khiops-library/interfaces/grid-datas';
 import { ConfigService } from '@khiops-library/providers/config.service';
 import { TranslateService } from '@ngstack/translate';
 
@@ -25,7 +24,18 @@ export class CompositionDetailedPartsComponent
   extends SelectableComponent
   implements AfterViewInit
 {
-  detailedDatas: GridDatasI | undefined;
+  /**
+   * Columns configuration for data copy functionality
+   * Maps grid columns to copy-friendly format with headerName and field properties
+   */
+  public displayedColumns: any[] = [];
+
+  /**
+   * Data source for the copy functionality
+   * Contains the actual row data to be copied
+   */
+  public inputDatas?: any[];
+
   detailedParts: CompositionModel | undefined;
 
   // Properties needed for kl-header-tools functionality
@@ -40,11 +50,6 @@ export class CompositionDetailedPartsComponent
     private dialogRef: MatDialogRef<CompositionDetailedPartsComponent>,
   ) {
     super(selectableService, ngzone, configService);
-    // Initialize with default columns, will be updated in ngOnInit based on data type
-    this.detailedDatas = {
-      displayedColumns: [],
-      values: [],
-    };
   }
 
   override ngAfterViewInit() {
@@ -59,8 +64,7 @@ export class CompositionDetailedPartsComponent
   ngOnInit() {
     if (this.detailedParts?.innerVariableType === TYPES.NUMERICAL) {
       // For numerical variables: Interval and Frequency columns
-      if (!this.detailedDatas) return;
-      this.detailedDatas.displayedColumns = [
+      this.displayedColumns = [
         {
           headerName: this.translate.get('GLOBAL.INTERVAL'),
           field: 'interval',
@@ -71,7 +75,7 @@ export class CompositionDetailedPartsComponent
         },
       ];
 
-      this.detailedDatas.values = (this.detailedParts?.partDetails || []).map(
+      this.inputDatas = (this.detailedParts?.partDetails || []).map(
         (part, index) => ({
           interval: part,
           frequency: this.detailedParts?.partFrequencies?.[index],
@@ -79,8 +83,7 @@ export class CompositionDetailedPartsComponent
       );
     } else {
       // For categorical variables: Modality and Frequency columns
-      if (!this.detailedDatas) return;
-      this.detailedDatas.displayedColumns = [
+      this.displayedColumns = [
         {
           headerName: this.translate.get('GLOBAL.MODALITY'),
           field: 'modality',
@@ -93,7 +96,7 @@ export class CompositionDetailedPartsComponent
 
       // Use valueGroups for categorical data
       if (this.detailedParts?.valueGroups?.values) {
-        this.detailedDatas.values = this.detailedParts.valueGroups.values.map(
+        this.inputDatas = this.detailedParts.valueGroups.values.map(
           (value: string, index: number) => ({
             modality: value,
             frequency:

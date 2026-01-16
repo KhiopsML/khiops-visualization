@@ -16,7 +16,7 @@
         <kl-header-tools [showMenu]="false"></kl-header-tools>
       </div>
       <button
-        class="grey-btn"
+        class="grey-btn screenshot-hide"
         mat-icon-button
         matTooltip="{{ 'GLOBAL.CLOSE' | translate }}"
         (click)="onClickOnClose()"
@@ -31,7 +31,7 @@
       fxLayoutAlign="start center"
     >
       <div
-        *ngIf="detailedDatas && detailedDatas.values"
+        *ngIf="inputDatas && inputDatas.length > 0"
         id="composition-detailed-parts-list-table"
         fxFlexFill
         fxLayout="column"
@@ -42,9 +42,9 @@
           [showSearch]="false"
           [showLineSelection]="false"
           [showColumnsSelection]="false"
-          [inputDatas]="detailedDatas.values"
+          [inputDatas]="inputDatas"
           [title]="''"
-          [displayedColumns]="detailedDatas.displayedColumns"
+          [displayedColumns]="displayedColumns"
         >
         </kl-ag-grid>
       </div>
