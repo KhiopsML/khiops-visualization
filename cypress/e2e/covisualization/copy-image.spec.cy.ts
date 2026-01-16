@@ -7,7 +7,7 @@
 import '../../support/commands';
 
 describe('Copy images Test Plan for Khiops Covisualization', () => {
-  const files = ['check-ext-datas.json'];
+  let files = ['check-ext-datas.json'];
 
   describe('Copy images Test Plan for Khiops CoVisualization', () => {
     files.forEach((fileName) => {
@@ -17,7 +17,7 @@ describe('Copy images Test Plan for Khiops Covisualization', () => {
         cy.loadFile('covisualization', fileName);
 
         cy.readFile('./src/assets/mocks/kc/' + fileName).then(() => {
-          cy.wait(500);
+          cy.wait(250);
 
           // Create spy once for all screenshot tests
           cy.window().then((win) => {
@@ -25,7 +25,7 @@ describe('Copy images Test Plan for Khiops Covisualization', () => {
           });
 
           cy.get('.mat-mdc-tab:contains("Axis")').first().click();
-          cy.wait(500);
+          cy.wait(250);
 
           cy.testComponentScreenshot('#hierarchy-details-comp-0');
           cy.testComponentScreenshot('#cluster-details-grid-0');
@@ -40,20 +40,51 @@ describe('Copy images Test Plan for Khiops Covisualization', () => {
 
           // Open unfold Hierarchy view
           cy.get('.button-unfold-hierarchy').click();
-          cy.wait(500);
+          cy.wait(250);
 
           cy.testComponentScreenshot('#unfold-hierarchy-table');
           cy.testComponentScreenshot('#unfold-hierarchy-info-rate');
           cy.testComponentScreenshot('#unfold-hierarchy-clusters-graph');
 
-          // Variable Search Dialog
+          cy.get('.button-confirm-hierarchy').first().click({ force: true });
+        });
+      });
+    });
+  });
+
+  files = ['Coclustering-IV-Glass.khcj'];
+  describe('Copy images Test Plan for Khiops CoVisualization inner variables', () => {
+    files.forEach((fileName) => {
+      it(`Check values for ${fileName}`, () => {
+        cy.initViews();
+
+        cy.loadFile('covisualization', fileName);
+
+        cy.readFile('./src/assets/mocks/kc/' + fileName).then(() => {
+          cy.wait(250);
+
+          // Create spy once for all screenshot tests
+          cy.window().then((win) => {
+            cy.spy(win, 'fetch').as('fetchSpy');
+          });
+
+          cy.get('.mat-mdc-tab:contains("Axis")').first().click();
+          cy.wait(250);
+
+          // // Variable Search Dialog
           cy.get('.variable-search-button-comp').first().click({ force: true });
-          cy.wait(500);
+          cy.wait(250);
           cy.testComponentScreenshot('#variable-search-dialog-comp');
 
+          cy.get('.close-btn').first().click({ force: true });
+          cy.wait(250);
+
+          cy.get('.kl-grid-btn-fit-columns').eq(3).click({ force: true });
+          cy.wait(250);
+
           // Composition Detailed Parts
-          cy.get('.kl-icon-cell-comp-btn').first().click({ force: true });
-          cy.wait(500);
+          cy.get('.kl-icon-cell-comp-btn').eq(0).click({ force: true });
+          cy.wait(250);
           cy.testComponentScreenshot('#composition-detailed-parts-comp');
         });
       });
