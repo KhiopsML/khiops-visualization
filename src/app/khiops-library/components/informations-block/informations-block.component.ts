@@ -74,7 +74,7 @@ export class InformationsBlockComponent
     super.ngOnDestroy();
   }
 
-  @HostListener('window:resize', ['$event'])
+  @HostListener('window:resize')
   onResize() {
     this.updateGaugeSize();
   }
