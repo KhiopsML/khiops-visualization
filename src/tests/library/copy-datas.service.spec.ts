@@ -447,14 +447,67 @@ describe('CopyDatasService', () => {
   describe('getExternalDatas', () => {
     it('should format external data correctly', () => {
       const mockSelectedArea = {
-        inputValue: 'TestInput',
-        externalData: 'External data content here',
+        externalData: {
+          'Variable Statistics': [
+            { key: 'Mean', value: '25.5' },
+            { key: 'Standard Deviation', value: '12.3' },
+            { key: 'Min Value', value: '0' },
+            { key: 'Max Value', value: '100' },
+          ],
+          'Distribution Info': [
+            { key: 'Skewness', value: '0.85' },
+            { key: 'Kurtosis', value: '2.14' },
+          ],
+        },
       };
 
       const result = service.getExternalDatas(mockSelectedArea);
 
-      expect(result).toContain('MOCKED_TRANSLATION');
-      expect(result).toContain('External data content here');
+      expect(result).toContain('Variable Statistics:');
+      expect(result).toContain('Mean\t25.5');
+      expect(result).toContain('Standard Deviation\t12.3');
+      expect(result).toContain('Distribution Info:');
+      expect(result).toContain('Skewness\t0.85');
+      expect(result).toContain('Kurtosis\t2.14');
+    });
+
+    it('should handle empty external data', () => {
+      const mockSelectedArea = {
+        externalData: {},
+      };
+
+      const result = service.getExternalDatas(mockSelectedArea);
+
+      expect(result).toBe('');
+    });
+
+    it('should handle non-object external data', () => {
+      const mockSelectedArea = {
+        externalData: 'not an object',
+      };
+
+      const result = service.getExternalDatas(mockSelectedArea);
+
+      expect(result).toBe('');
+    });
+
+    it('should handle arrays without key-value structure', () => {
+      const mockSelectedArea = {
+        externalData: {
+          'Invalid Data': [
+            { noKey: 'value1' },
+            { key: 'validKey' }, // missing value
+            { value: 'validValue' }, // missing key
+            { key: 'Valid Key', value: 'Valid Value' },
+          ],
+        },
+      };
+
+      const result = service.getExternalDatas(mockSelectedArea);
+
+      expect(result).toContain('Invalid Data:');
+      expect(result).toContain('Valid Key\tValid Value');
+      expect(result).not.toContain('value1');
     });
   });
 
@@ -1206,22 +1259,31 @@ describe('CopyDatasService - Real Data Tests', () => {
   describe('Real External Data', () => {
     it('should format variable external data correctly', () => {
       const externalDataInfo = {
-        componentType: 'external-datas',
-        inputValue: 'education',
-        externalData: `education = Bachelors | Masters | Doctorate
-Bachelors: Bachelor's degree
-Masters: Master's degree  
-Doctorate: Doctorate degree
-...additional education levels...`,
+        externalData: {
+          'Education Variable Details': [
+            { key: 'Type', value: 'Categorical' },
+            { key: 'Values', value: 'Bachelors | Masters | Doctorate' },
+            { key: 'Missing values', value: '0' },
+            { key: 'Mode', value: 'Bachelors' },
+          ],
+          'Value Descriptions': [
+            { key: 'Bachelors', value: "Bachelor's degree" },
+            { key: 'Masters', value: "Master's degree" },
+            { key: 'Doctorate', value: 'Doctorate degree' },
+          ],
+        },
       };
 
       const result = service.getExternalDatas(externalDataInfo);
 
-      expect(result).toContain('External data of education');
-      expect(result).toContain('education = Bachelors | Masters | Doctorate');
-      expect(result).toContain("Bachelors: Bachelor's degree");
-      expect(result).toContain("Masters: Master's degree");
-      expect(result).toContain('Doctorate: Doctorate degree');
+      expect(result).toContain('Education Variable Details:');
+      expect(result).toContain('Type\tCategorical');
+      expect(result).toContain('Values\tBachelors | Masters | Doctorate');
+      expect(result).toContain('Mode\tBachelors');
+      expect(result).toContain('Value Descriptions:');
+      expect(result).toContain("Bachelors\tBachelor's degree");
+      expect(result).toContain("Masters\tMaster's degree");
+      expect(result).toContain('Doctorate\tDoctorate degree');
     });
   });
 
