@@ -150,6 +150,7 @@ describe('Copy images Test Plan for Khiops Visualization', () => {
         // Project Tab Screenshots
         cy.get('.mat-mdc-tab:contains("Project")').first().click();
         cy.wait(500);
+        cy.testComponentScreenshot('#project-summary-comp');
         cy.testComponentScreenshot('#project-logs');
       });
     });
