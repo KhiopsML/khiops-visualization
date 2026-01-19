@@ -71,7 +71,7 @@ export class TreeHyperComponent
   };
   private options: any;
   private ht?: Hypertree;
-  private treePreparationDatas?: TreePreparationDatasModel;
+  public treePreparationDatas?: TreePreparationDatasModel;
   public distributionDatas?: DistributionDatasModel;
 
   selectedNodes$: Observable<TreeNodeModel[]>;

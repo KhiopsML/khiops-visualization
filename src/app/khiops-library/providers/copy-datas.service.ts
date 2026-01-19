@@ -9,7 +9,6 @@ import { Injectable } from '@angular/core';
 import { TranslateService } from '@ngstack/translate';
 import { UtilsService } from './utils.service';
 import { DynamicI } from '@khiops-library/interfaces/globals';
-import { TreeChildNode } from '@khiops-visualization/interfaces/tree-preparation-report';
 import { AppConfig } from '../../../environments/environment';
 import { COMPONENT_TYPES } from '@khiops-library/enum/component-types';
 
@@ -411,9 +410,8 @@ export class CopyDatasService {
   getKvTreeDatas(selectedArea: DynamicI) {
     let formattedDatas = '';
 
-    const currentDatas: TreeChildNode[] =
-      selectedArea.treePreparationDatasService.treePreparationDatas
-        .selectedFlattenTree;
+    // Flatten the tree structure from dimensionTree
+    const currentDatas = this.flattenDimensionTree(selectedArea.dimensionTree);
 
     // TITLE
     formattedDatas += this.translate.get('GLOBAL.DECISION_TREE') + '\n';
@@ -427,13 +425,47 @@ export class CopyDatasService {
     // CONTENT
     for (let i = 0; i < currentDatas.length; i++) {
       const data = currentDatas[i];
-      formattedDatas += data!.nodeId + '\t';
-      formattedDatas += data!.type ? data!.type + '\t' : '\t';
-      formattedDatas += data!.variable ? data!.variable + '\n' : '\n';
+      formattedDatas += data.nodeId + '\t';
+      formattedDatas += data.type ? data.type + '\t' : '\t';
+      formattedDatas += data.variable ? data.variable + '\n' : '\n';
       // formattedDatas += currentDatas[i].partition ? currentDatas[i].partition.toString() + '\n' : '\n';
     }
 
     return formattedDatas;
+  }
+
+  /**
+   * Flattens a recursive dimension tree structure into a flat array.
+   *
+   * @param dimensionTree - The tree structure to flatten.
+   * @returns A flattened array of tree nodes.
+   */
+  private flattenDimensionTree(dimensionTree: any[]): any[] {
+    const flattenedNodes: any[] = [];
+
+    const traverse = (nodes: any[]) => {
+      for (const node of nodes) {
+        // Add current node to flattened array
+        flattenedNodes.push({
+          nodeId: node.nodeId,
+          type: node.type,
+          variable: node.variable,
+        });
+
+        // Recursively traverse child nodes - prioritize childNodes over children to avoid duplication
+        if (node.childNodes && node.childNodes.length > 0) {
+          traverse(node.childNodes);
+        } else if (node.children && node.children.length > 0) {
+          traverse(node.children);
+        }
+      }
+    };
+
+    if (dimensionTree && dimensionTree.length > 0) {
+      traverse(dimensionTree);
+    }
+
+    return flattenedNodes;
   }
 
   /**
