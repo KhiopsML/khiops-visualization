@@ -92,6 +92,10 @@ describe('Copy images Test Plan for Khiops Visualization', () => {
         cy.testComponentScreenshot('#tree-details-comp');
         cy.testComponentScreenshot('#tree-preparation-hyper');
 
+        cy.get('.mat-mdc-tab:contains("Leaf rules")').first().click();
+        cy.wait(500);
+        cy.testComponentScreenshot('#tree-leaf-rules-comp');
+
         // Preparation 2D Tab Screenshots
         cy.get('.mat-mdc-tab:contains("Preparation 2D")').first().click();
         cy.wait(500);
