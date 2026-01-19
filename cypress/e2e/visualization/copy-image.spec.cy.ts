@@ -116,6 +116,10 @@ describe('Copy images Test Plan for Khiops Visualization', () => {
         cy.testComponentScreenshot('#preparation-2d-current-cell-x');
         cy.testComponentScreenshot('#preparation-2d-current-cell-y');
 
+        cy.get('.mat-mdc-tab:contains("Cells")').first().click();
+        cy.wait(500);
+        cy.testComponentScreenshot('#cooccurrence-matrix-cells-container');
+
         // Modeling Tab Screenshots
         cy.get('.mat-mdc-tab:contains("Modeling")').first().click();
         cy.wait(500);
@@ -126,6 +130,14 @@ describe('Copy images Test Plan for Khiops Visualization', () => {
         cy.testComponentScreenshot('#distribution-graph0');
         cy.testComponentScreenshot('#target-distribution-graph0');
         cy.testComponentScreenshot('#preparation-current-interval');
+
+        cy.get('.level-distribution-btn').eq(1).click({ force: true });
+        cy.wait(250);
+        cy.testComponentScreenshot('#importance-distribution-graph-comp');
+        cy.get('#importance-distribution-graph-close-btn')
+          .first()
+          .click({ force: true });
+        cy.wait(250);
 
         // Evaluation Tab Screenshots
         cy.get('.mat-mdc-tab:contains("Evaluation")').first().click();
