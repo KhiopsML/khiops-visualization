@@ -1,0 +1,6 @@
+Inner variable - Al
+Interval	Frequency	
+]-inf,0.905]	27	
+]0.905,1.435]	93	
+]1.435,1.775]	53	
+]1.775,+inf[	41	

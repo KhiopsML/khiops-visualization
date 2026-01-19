@@ -6,10 +6,10 @@
 // @ts-nocheck
 import '../../support/commands';
 
-describe('Copy images Test Plan for Khiops Covisualization', () => {
+describe('Copy datas Test Plan for Khiops Covisualization', () => {
   let files = ['check-ext-datas.json'];
 
-  describe('Copy images Test Plan for Khiops CoVisualization', () => {
+  describe('Copy datas Test Plan for Khiops CoVisualization', () => {
     files.forEach((fileName) => {
       it(`Check values for ${fileName}`, () => {
         cy.initViews();
@@ -18,11 +18,6 @@ describe('Copy images Test Plan for Khiops Covisualization', () => {
 
         cy.readFile('./src/assets/mocks/kc/' + fileName).then(() => {
           cy.wait(250);
-
-          // Create spy once for all screenshot tests
-          cy.window().then((win) => {
-            cy.spy(win, 'fetch').as('fetchSpy');
-          });
 
           cy.get('.mat-mdc-tab:contains("Axis")').first().click();
           cy.wait(250);
@@ -104,42 +99,29 @@ describe('Copy images Test Plan for Khiops Covisualization', () => {
     });
   });
 
-  // files = ['Coclustering-IV-Glass.khcj'];
-  // describe('Copy images Test Plan for Khiops CoVisualization inner variables', () => {
-  //   files.forEach((fileName) => {
-  //     it(`Check values for ${fileName}`, () => {
-  //       cy.initViews();
+  files = ['Coclustering-IV-Glass.khcj'];
+  describe('Copy datas Test Plan for Khiops CoVisualization inner variables', () => {
+    files.forEach((fileName) => {
+      it(`Check values for ${fileName}`, () => {
+        cy.initViews();
 
-  //       cy.loadFile('covisualization', fileName);
+        cy.loadFile('covisualization', fileName);
 
-  //       cy.readFile('./src/assets/mocks/kc/' + fileName).then(() => {
-  //         cy.wait(250);
+        cy.readFile('./src/assets/mocks/kc/' + fileName).then(() => {
+          cy.wait(250);
 
-  //         // Create spy once for all screenshot tests
-  //         cy.window().then((win) => {
-  //           cy.spy(win, 'fetch').as('fetchSpy');
-  //         });
+          cy.get('.mat-mdc-tab:contains("Axis")').first().click();
+          cy.wait(250);
 
-  //         cy.get('.mat-mdc-tab:contains("Axis")').first().click();
-  //         cy.wait(250);
-
-  //         // // Variable Search Dialog
-  //         cy.get('.variable-search-button-comp').first().click({ force: true });
-  //         cy.wait(250);
-  //         cy.testComponentScreenshot('#variable-search-dialog-comp');
-
-  //         cy.get('.close-btn').first().click({ force: true });
-  //         cy.wait(250);
-
-  //         cy.get('.kl-grid-btn-fit-columns').eq(3).click({ force: true });
-  //         cy.wait(250);
-
-  //         // Composition Detailed Parts
-  //         cy.get('.kl-icon-cell-comp-btn').eq(0).click({ force: true });
-  //         cy.wait(250);
-  //         cy.testComponentScreenshot('#composition-detailed-parts-comp');
-  //       });
-  //     });
-  //   });
-  // });
+          // // Variable Search Dialog
+          cy.get('.variable-search-button-comp').first().click({ force: true });
+          cy.wait(250);
+          cy.testComponentCopyDatas(
+            '#variable-search-dialog-comp',
+            'kc-variable-search-dialog-comp.txt',
+          );
+        });
+      });
+    });
+  });
 });
