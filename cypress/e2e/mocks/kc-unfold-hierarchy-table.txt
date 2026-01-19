@@ -1,0 +1,4 @@
+Nb of clusters per dimension
+Dimension	Number of Cluster	Max Number of Cluster	Fold / Unfold	
+"occupation"	9	9	true	
+"education"	9	9	true	

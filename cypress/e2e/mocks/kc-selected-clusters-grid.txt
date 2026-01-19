@@ -1,4 +1,4 @@
 Selected clusters
 Name	Current Cluster	Nb Clusters	
-Instance index	{140, 141, 76, ...}	8	
-Variables	{Al ]-inf,0.905], K ]0.01,0.415], RI ]1.51917,+inf[, ...}	17	
+occupation	edited name	9	
+education	editedname	9	

@@ -81,24 +81,24 @@ describe('Copy images Test Plan for Khiops Covisualization', () => {
             'kc-matrix-container-comp-wrapper.txt',
           );
 
-          // cy.testComponentScreenshot('#cluster-annotation-0');
-          // cy.testComponentScreenshot('#cluster-distribution-0');
-          // cy.testComponentScreenshot('#hierarchy-details-comp-1');
-          // cy.testComponentScreenshot('#cluster-details-grid-1');
-          // cy.testComponentScreenshot('#cluster-annotation-1');
-          // cy.testComponentScreenshot('#cluster-distribution-1');
+          // Open unfold Hierarchy view
+          cy.get('.button-unfold-hierarchy').click();
+          cy.wait(250);
 
-          // cy.testComponentScreenshot('#matrix-container-comp-wrapper');
+          cy.testComponentCopyDatas(
+            '#unfold-hierarchy-table',
+            'kc-unfold-hierarchy-table.txt',
+          );
+          cy.testComponentCopyDatas(
+            '#unfold-hierarchy-info-rate',
+            'kc-unfold-hierarchy-info-rate.txt',
+          );
+          cy.testComponentCopyDatas(
+            '#unfold-hierarchy-clusters-graph',
+            'kc-unfold-hierarchy-clusters-graph.txt',
+          );
 
-          // // Open unfold Hierarchy view
-          // cy.get('.button-unfold-hierarchy').click();
-          // cy.wait(250);
-
-          // cy.testComponentScreenshot('#unfold-hierarchy-table');
-          // cy.testComponentScreenshot('#unfold-hierarchy-info-rate');
-          // cy.testComponentScreenshot('#unfold-hierarchy-clusters-graph');
-
-          // cy.get('.button-confirm-hierarchy').first().click({ force: true });
+          cy.get('.button-confirm-hierarchy').first().click({ force: true });
         });
       });
     });
