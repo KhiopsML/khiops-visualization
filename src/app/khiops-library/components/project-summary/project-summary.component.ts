@@ -10,10 +10,9 @@ import { FileLoaderService } from '@khiops-library/providers/file-loader.service
 import { InfosDatasI } from '@khiops-library/interfaces/infos-datas';
 
 @Component({
-    selector: 'app-project-summary',
-    templateUrl: './project-summary.component.html',
-    styleUrls: ['./project-summary.component.scss'],
-    standalone: false
+  selector: 'kl-project-summary',
+  templateUrl: './project-summary.component.html',
+  standalone: false,
 })
 export class ProjectSummaryComponent implements OnInit {
   private fileLoadedSub?: Subscription;
