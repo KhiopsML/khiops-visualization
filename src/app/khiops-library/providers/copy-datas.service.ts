@@ -380,11 +380,24 @@ export class CopyDatasService {
   getExternalDatas(selectedArea: any) {
     let formattedDatas = '';
 
-    formattedDatas +=
-      this.translate.get('GLOBAL.EXTERNAL_DATA_OF', {
-        value: selectedArea.inputValue,
-      }) + '\n';
-    formattedDatas += selectedArea.externalData + '\n';
+    // Iterate through all dynamic keys in externalData
+    if (
+      selectedArea.externalData &&
+      typeof selectedArea.externalData === 'object'
+    ) {
+      Object.keys(selectedArea.externalData).forEach((dynamicKey) => {
+        formattedDatas += `\n${dynamicKey}:\n`;
+
+        const dataArray = selectedArea.externalData[dynamicKey];
+        if (Array.isArray(dataArray)) {
+          dataArray.forEach((item) => {
+            if (item.key && item.value) {
+              formattedDatas += `${item.key}\t${item.value}\n`;
+            }
+          });
+        }
+      });
+    }
 
     return formattedDatas;
   }
