@@ -35,7 +35,9 @@ describe('Copy images Test Plan for Khiops Covisualization', () => {
           cy.testComponentScreenshot('#cluster-details-grid-1');
           cy.testComponentScreenshot('#cluster-annotation-1');
           cy.testComponentScreenshot('#cluster-distribution-1');
+          cy.testComponentScreenshot('#external-datas-1');
 
+          cy.testComponentScreenshot('#selected-clusters-grid');
           cy.testComponentScreenshot('#matrix-container-comp-wrapper');
 
           // Open unfold Hierarchy view
