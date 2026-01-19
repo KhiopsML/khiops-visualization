@@ -1,0 +1,2 @@
+Interval of SepalWidth	Frequency	
+[2,3.05]	56	

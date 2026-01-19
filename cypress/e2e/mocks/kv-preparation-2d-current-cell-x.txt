@@ -1,0 +1,2 @@
+Interval of SepalLength	Frequency	
+[4.3,5.75]	53	

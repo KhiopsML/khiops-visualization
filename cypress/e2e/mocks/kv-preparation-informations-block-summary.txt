@@ -1,0 +1,9 @@
+Summary
+Dictionary	Iris	
+Database	../../../datasets/Iris/Iris.txt	
+Target variable	Class	
+Instances	105	
+Learning task	Classification analysis	
+Sample percentage	70	
+Sampling mode	Include sample	
+Evaluated variables	4	

@@ -1,0 +1,4 @@
+
+Selection details : L1
+Node Id	Values	Frequencies	
+L1	[Iris-setosa]	[38]	

@@ -1,0 +1,7 @@
+Summary
+Project file	./assets/mocks/kv/ALLREPORTS_Std_Iris_AnalysisResults.khj	
+Database	../../../datasets/Iris/Iris.txt	
+Learning task	Classification analysis	
+Target variable	Class	
+Instances	105	
+Variables	4	

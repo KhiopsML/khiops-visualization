@@ -1,0 +1,4 @@
+PetalWidth	0.658351	
+PetalLength	0.616938	
+SepalLength	0.327175	
+SepalWidth	0.112	

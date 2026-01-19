@@ -1,0 +1,5 @@
+Confusion matrix of Selective Naive Bayes
+Target	Iris-setosa	Iris-versicolor	Iris-virginica	
+$Iris-setosa	38	0	0	
+$Iris-versicolor	0	31	1	
+$Iris-virginica	0	1	34	

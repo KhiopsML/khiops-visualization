@@ -1,0 +1,3 @@
+Target distribution
+Probabilities	
+30.434783	60.869565	8.6956522	

@@ -1,0 +1,4 @@
+Evaluation type
+Type	Dictionary	Instances	
+Train	Iris	105	
+Test	Iris	45	

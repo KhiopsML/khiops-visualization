@@ -1,0 +1,6 @@
+Variables
+Rank	Name	Level	Parts	Values	Type	
+R1	"PetalWidth"	0.658351	3	21	Numerical	
+R2	"PetalLength"	0.616938	4	36	Numerical	
+R3	"SepalLength"	0.327175	3	31	Numerical	
+R4	"SepalWidth"	0.112	3	23	Numerical	

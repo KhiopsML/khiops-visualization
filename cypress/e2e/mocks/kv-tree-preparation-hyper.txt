@@ -1,0 +1,7 @@
+Decision tree
+Node	Type	Variable
+L0	Numerical	PetalWidth
+L1		
+L2	Numerical	PetalLength
+L3		
+L4		

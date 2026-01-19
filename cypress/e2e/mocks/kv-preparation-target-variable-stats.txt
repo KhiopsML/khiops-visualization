@@ -1,0 +1,3 @@
+Global target distribution
+Iris-setosa	Iris-versicolor	Iris-virginica	
+36.190476	30.47619	33.333333	

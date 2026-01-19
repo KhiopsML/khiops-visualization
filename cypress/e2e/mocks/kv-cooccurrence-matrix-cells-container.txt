@@ -1,0 +1,6 @@
+Cells of SepalLength x SepalWidth
+Cell id	SepalLength	SepalWidth	Frequency	Coverage	
+0	[4.3,5.75]	[2,3.05]	23	0.21904762	
+2	[4.3,5.75]	]3.05,4.4]	30	0.28571429	
+1	]5.75,7.7]	[2,3.05]	33	0.31428571	
+3	]5.75,7.7]	]3.05,4.4]	19	0.18095238	

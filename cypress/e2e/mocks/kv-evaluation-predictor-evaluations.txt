@@ -1,0 +1,6 @@
+Predictor evaluations
+type	name	accuracy	compression	auc	robustness	gini	
+Train	"Selective Naive Bayes"	0.980952	0.933329	0.997868		0.995736	
+Train	"Optimal"	1	1	1		1	
+Test	"Selective Naive Bayes"	0.955556	0.851977	0.984362	0.98646514	0.96872400	
+Test	"Optimal"	1	1	1	1	1	

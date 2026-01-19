@@ -1,0 +1,3 @@
+Leaf rules : L1
+Variable	Type	Partition	
+PetalWidth	Numerical	[0.1, 0.75]	

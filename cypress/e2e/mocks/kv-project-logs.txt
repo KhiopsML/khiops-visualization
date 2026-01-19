@@ -1,0 +1,8 @@
+Logs
+Task	Gravity	Message	
+Data preparation	warning	Decision Tree variable creation : No enough memory to build trees (needs extra 99.4 MB)	
+Data preparation	warning	Decision Tree variable creation : Cannot build trees with 27 variables	
+Data preparation		Decision Tree variable creation : No enough memory to build trees (needs extra 99.4 MB)	
+Data preparation		Decision Tree variable creation : Cannot build trees with 27 variables	
+Data preparation	error	Decision Tree variable creation : No enough memory to build trees (needs extra 99.4 MB)	
+Data preparation	error	Decision Tree variable creation : Cannot build trees with 27 variables	
