@@ -7,10 +7,10 @@
   <div fxLayout="column" fxFlexFill fxLayoutAlign="start start" class="kl-card">
     <kl-file-loader *ngIf="!isElectron"> </kl-file-loader>
     <div id="project-view-comp-table" fxFlexFill fxLayout="row">
-      <app-project-summary
+      <kl-project-summary
         [projectDatasService]="projectDatasService"
-        fxFlex
-      ></app-project-summary>
+        fxFlexFill
+      ></kl-project-summary>
     </div>
   </div>
 </div>

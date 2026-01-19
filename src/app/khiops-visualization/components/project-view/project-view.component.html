@@ -13,10 +13,10 @@
           fxLayoutAlign="start start"
           fxLayout="row"
         >
-          <app-project-summary
-            fxFlex
+          <kl-project-summary
+            fxFlexFill
             [projectDatasService]="projectDatasService"
-          ></app-project-summary>
+          ></kl-project-summary>
         </div>
         <kl-file-loader *ngIf="(debugFile && !isElectron) || showOpenFileBtn">
         </kl-file-loader>
