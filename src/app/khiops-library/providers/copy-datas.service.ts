@@ -97,6 +97,13 @@ export class CopyDatasService {
         break;
     }
 
+    // Keep copied datas for cypress e2e tests
+    // @ts-ignore
+    if (window.Cypress) {
+      // @ts-ignore
+      window.lastCopiedData = formattedDatas;
+    }
+
     // Create temp textarea to make copy
     if (!this.configService.getConfig().onCopyData) {
       const selBox = document.createElement('textarea');

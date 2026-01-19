@@ -1,0 +1,9 @@
+editedname	1 608	
+{Masters}	884	
+{Prof-school, Doctorate}	718	
+{HS-grad}	764	
+{11th, 10th, 9th, ...}	319	
+{7th-8th, 5th-6th, 1st-4th, ...}	104	
+{Some-college}	991	
+{Assoc-voc}	220	
+{Assoc-acdm}	192	

@@ -1,0 +1,9 @@
+edited name	1 608	
+{Exec-managerial}	1 287	
+{Machine-op-inspct, Transport-moving, Handlers-cleaners}	168	
+{Craft-repair}	212	
+{Other-service}	145	
+{Farming-fishing, Priv-house-serv}	81	
+{Adm-clerical, Protective-serv}	566	
+{Sales}	827	
+{Tech-support}	225	

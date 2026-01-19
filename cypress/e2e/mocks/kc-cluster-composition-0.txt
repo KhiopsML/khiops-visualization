@@ -1,0 +1,4 @@
+Composition
+Cluster	Typicality	Value	Frequency	
+edited name	1	Prof-specialty	5 787	
+edited name	0.00278259	Armed-Forces	13	

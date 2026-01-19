@@ -1,0 +1,11 @@
+education x occupation
+	editedname	{Masters}	{Prof-school, Doctorate}	{HS-grad}	{11th, 10th, 9th, ...}	{7th-8th, 5th-6th, 1st-4th, ...}	{Some-college}	{Assoc-voc}	{Assoc-acdm}	
+edited name	1 608	884	718	764	319	104	991	220	192	
+{Exec-managerial}	1 287	505	95	793	96	25	859	158	155	
+{Machine-op-inspct, Transport-moving, Handlers-cleaners}	168	17	6	2 446	761	212	870	137	72	
+{Craft-repair}	212	20	7	1 917	465	119	841	249	107	
+{Other-service}	145	24	8	1 177	583	117	760	93	70	
+{Farming-fishing, Priv-house-serv}	81	10	5	434	151	94	190	66	16	
+{Adm-clerical, Protective-serv}	566	73	10	1 572	186	19	1 410	223	221	
+{Sales}	827	129	22	1 053	301	30	1 023	103	139	
+{Tech-support}	225	35	6	174	16	4	275	125	77	

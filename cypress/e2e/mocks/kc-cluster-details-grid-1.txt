@@ -1,0 +1,11 @@
+Current clusters
+Name	Size	Frequency	Interest	
+"editedname"	1	5 119	0.962215	
+"{Masters}"	1	1 697	0.911231	
+"{Prof-school, Doctorate}"	2	877	0.841216	
+"{HS-grad}"	1	10 330	1	
+"{11th, 10th, 9th, ...}"	4	2 878	0.814339	
+"{7th-8th, 5th-6th, 1st-4th, ...}"	4	724	0.459961	
+"{Some-college}"	1	7 219	0.659754	
+"{Assoc-voc}"	1	1 374	0.393142	
+"{Assoc-acdm}"	1	1 049	0.329699	

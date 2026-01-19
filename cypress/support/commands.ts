@@ -100,6 +100,51 @@ Cypress.Commands.add('setGlobalNumberPrecision', () => {
   });
 });
 
+Cypress.Commands.add(
+  'testComponentCopyDatas',
+  (id: string, mockFileName: string) => {
+    // Wait for the component to be visible and trigger trustedClick
+    cy.get(id, { timeout: 1000 })
+      .should('exist')
+      .should('be.visible')
+      .trigger('trustedClick');
+
+    // Verify the component is selected (has selected class)
+    cy.get(id).should('have.class', 'selected');
+
+    cy.window().then((win) => {
+      cy.get('#header-tools-copy-datas-button').first().click({ force: true });
+      cy.window()
+        .its('lastCopiedData')
+        .then((clipboardText) => {
+          // Verify the snackbar success message appears
+          cy.get('.mat-mdc-snack-bar-container')
+            .should('be.visible')
+            .and('contain', 'copied');
+
+          // Read the expected content from the mock file
+          cy.readFile(`cypress/e2e/mocks/${mockFileName}`, 'utf8').then(
+            (expectedContent) => {
+              const normalizeContent = (text) => {
+                // Normalize line endings and remove trailing spaces
+                return text
+                  .replace(/\r\n/g, '\n') // Normalize line endings to \n
+                  .replace(/\r/g, '\n') // Convert \r to \n
+                  .replace(/\s+$/gm, '') // Remove trailing spaces at end of lines
+                  .trim(); // Remove leading and trailing spaces
+              };
+
+              const normalizedClipboard = normalizeContent(clipboardText);
+              const normalizedExpected = normalizeContent(expectedContent);
+
+              expect(normalizedClipboard).to.equal(normalizedExpected);
+            },
+          );
+        });
+    });
+  },
+);
+
 Cypress.Commands.add('testComponentScreenshot', (id: string) => {
   // Wait for the component to be visible and trigger trustedClick
   cy.get(id, { timeout: 10000 })

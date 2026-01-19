@@ -1,0 +1,3 @@
+Composition
+Cluster	Typicality	Value	Frequency	
+editedname	1	Bachelors	5 119	
