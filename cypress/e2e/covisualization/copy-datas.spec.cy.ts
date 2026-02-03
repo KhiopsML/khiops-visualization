@@ -24,6 +24,7 @@ describe('Copy datas Test Plan for Khiops Covisualization', () => {
 
           // Open statistics panels
           cy.get('.hierarchy-infos-button').eq(0).click({ force: true });
+          cy.wait(250);
 
           cy.testComponentCopyDatas(
             '#hierarchy-details-comp-0',
