@@ -9,12 +9,13 @@ import { ProjectDatasService } from '@khiops-covisualization/providers/project-d
 import { SelectableTabComponent } from '@khiops-library/components/selectable-tab/selectable-tab.component';
 import { ConfigService } from '@khiops-library/providers/config.service';
 import { TrackerService } from '@khiops-library/providers/tracker.service';
+import { AppConfig } from '../../../../environments/environment';
 
 @Component({
-    selector: 'app-project-view',
-    templateUrl: './project-view.component.html',
-    styleUrls: ['./project-view.component.scss'],
-    standalone: false
+  selector: 'app-project-view',
+  templateUrl: './project-view.component.html',
+  styleUrls: ['./project-view.component.scss'],
+  standalone: false,
 })
 export class ProjectViewComponent
   extends SelectableTabComponent
@@ -23,6 +24,8 @@ export class ProjectViewComponent
   // managed by selectable-tab component
   override tabIndex = 0;
   isElectron: boolean = false;
+  public debugFile = AppConfig.debugFile;
+  public showOpenFileBtn: boolean | undefined = false;
 
   constructor(
     private trackerService: TrackerService,
@@ -35,5 +38,6 @@ export class ProjectViewComponent
 
   ngOnInit() {
     this.trackerService.trackEvent('page_view', 'project');
+    this.showOpenFileBtn = this.configService.getConfig().showOpenFileBtn;
   }
 }

@@ -1,12 +1,25 @@
 #project-view-comp {
   display: inline-table !important;
-  background: var(--bg-color) !important;
-  kl-file-loader {
-    margin-right: 20px;
-    position: absolute;
-    right: 0;
+  position: relative;
+
+  #project-view-comp-file-loader {
+    padding: 1rem 0.5rem !important;
+    h1 {
+      mat-icon {
+        margin-right: 0.4em !important;
+        margin-top: -3px !important;
+        font-size: 21px !important;
+      }
+    }
+    kl-file-loader {
+      display: flex;
+      margin-left: 15px;
+    }
   }
+
   #project-view-comp-table {
+    margin: auto;
+    height: auto;
     display: flex;
     flex-direction: column;
     padding: 0.5rem;

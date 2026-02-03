@@ -4,23 +4,45 @@
   fxFlexFill
   fxLayoutAlign="start start"
 >
-  <as-split direction="vertical" (dragEnd)="onSplitDragEnd($event, 'row')">
-    <as-split-area [size]="sizes?.row[0]" class="kl-card">
-      <div fxLayout="column" fxFlexFill fxLayoutAlign="start start">
-        <div
-          id="project-view-comp-table"
+  <as-split
+    fxFlex
+    direction="vertical"
+    (dragEnd)="onSplitDragEnd($event, 'row')"
+  >
+    <as-split-area [size]="sizes?.row[0]">
+      <as-split fxFlex direction="horizontal" disabled="true" unit="pixel">
+        <as-split-area
+          fxLayout="column"
+          class="kl-card"
           fxFlexFill
           fxLayoutAlign="start start"
-          fxLayout="row"
         >
-          <kl-project-summary
+          <div
+            id="project-view-comp-table"
             fxFlexFill
-            [projectDatasService]="projectDatasService"
-          ></kl-project-summary>
-        </div>
-        <kl-file-loader *ngIf="(debugFile && !isElectron) || showOpenFileBtn">
-        </kl-file-loader>
-      </div>
+            fxLayoutAlign="start start"
+            fxLayout="row"
+          >
+            <kl-project-summary
+              fxFlexFill
+              [projectDatasService]="projectDatasService"
+            ></kl-project-summary>
+          </div>
+        </as-split-area>
+        <as-split-area
+          [size]="180"
+          class="kl-card"
+          id="project-view-comp-file-loader"
+          *ngIf="(debugFile && !isElectron) || showOpenFileBtn"
+        >
+          <!-- Header -->
+          <h1 fxLayout="row" fxLayoutAlign="start start">
+            <mat-icon>folder_open</mat-icon>
+            {{ 'GLOBAL.LOAD_DATAS' | translate }}
+          </h1>
+          <kl-file-loader> </kl-file-loader>
+        </as-split-area>
+      </as-split>
     </as-split-area>
     <as-split-area [size]="sizes?.row[1]" class="kl-card">
       <app-project-logs></app-project-logs>

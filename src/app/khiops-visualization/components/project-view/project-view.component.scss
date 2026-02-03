@@ -2,10 +2,19 @@
   display: inline-table !important;
   position: relative;
 
-  kl-file-loader {
-    margin-right: 20px;
-    position: absolute;
-    right: 0;
+  #project-view-comp-file-loader {
+    padding: 1rem 0.5rem !important;
+    h1 {
+      mat-icon {
+        margin-right: 0.4em !important;
+        margin-top: -3px !important;
+        font-size: 21px !important;
+      }
+    }
+    kl-file-loader {
+      display: flex;
+      margin-left: 15px;
+    }
   }
 
   #project-view-comp-table {

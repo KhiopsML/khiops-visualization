@@ -4,13 +4,37 @@
   fxFlexFill
   fxLayoutAlign="start start"
 >
-  <div fxLayout="column" fxFlexFill fxLayoutAlign="start start" class="kl-card">
-    <kl-file-loader *ngIf="!isElectron"> </kl-file-loader>
-    <div id="project-view-comp-table" fxFlexFill fxLayout="row">
-      <kl-project-summary
-        [projectDatasService]="projectDatasService"
+  <as-split fxFlex direction="horizontal" disabled="true" unit="pixel">
+    <as-split-area
+      fxLayout="column"
+      class="kl-card"
+      fxFlexFill
+      fxLayoutAlign="start start"
+    >
+      <div
+        id="project-view-comp-table"
         fxFlexFill
-      ></kl-project-summary>
-    </div>
-  </div>
+        fxLayoutAlign="start start"
+        fxLayout="row"
+      >
+        <kl-project-summary
+          fxFlexFill
+          [projectDatasService]="projectDatasService"
+        ></kl-project-summary>
+      </div>
+    </as-split-area>
+    <as-split-area
+      [size]="180"
+      class="kl-card"
+      id="project-view-comp-file-loader"
+      *ngIf="(debugFile && !isElectron) || showOpenFileBtn"
+    >
+      <!-- Header -->
+      <h1 fxLayout="row" fxLayoutAlign="start start">
+        <mat-icon>folder_open</mat-icon>
+        {{ 'GLOBAL.LOAD_DATAS' | translate }}
+      </h1>
+      <kl-file-loader> </kl-file-loader>
+    </as-split-area>
+  </as-split>
 </div>
