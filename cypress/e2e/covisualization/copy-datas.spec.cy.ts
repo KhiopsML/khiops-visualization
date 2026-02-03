@@ -115,7 +115,9 @@ describe('Copy datas Test Plan for Khiops Covisualization', () => {
 
           // // Variable Search Dialog
           cy.get('.variable-search-button-comp').first().click({ force: true });
-          cy.wait(250);
+          cy.get('#variable-search-dialog-comp', { timeout: 5000 })
+            .should('exist')
+            .should('be.visible');
           cy.testComponentCopyDatas(
             '#variable-search-dialog-comp',
             'kc-variable-search-dialog-comp.txt',
