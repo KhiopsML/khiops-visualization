@@ -22,6 +22,9 @@ describe('Copy datas Test Plan for Khiops Covisualization', () => {
           cy.get('.mat-mdc-tab:contains("Axis")').first().click();
           cy.wait(250);
 
+          // Open statistics panels
+          cy.get('.hierarchy-infos-button').eq(0).click({ force: true });
+
           cy.testComponentCopyDatas(
             '#hierarchy-details-comp-0',
             'kc-hierarchy-details-comp-0.txt',
