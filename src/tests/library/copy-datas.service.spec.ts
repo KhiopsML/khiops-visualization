@@ -516,49 +516,36 @@ describe('CopyDatasService', () => {
    */
   describe('getKvTreeDatas', () => {
     it('should format key-value tree data correctly', () => {
-      const mockTreeService = {
-        treePreparationDatas: {
-          selectedFlattenTree: [
-            {
-              nodeId: 'N1',
-              type: 'Leaf',
-              variable: 'Variable1',
-            },
-            {
-              nodeId: 'N2',
-              type: 'Branch',
-              variable: 'Variable2',
-            },
-          ],
-        },
-      };
-
-      const mockSelectedArea: DynamicI = {
-        treePreparationDatasService: mockTreeService,
+      const mockSelectedArea = {
+        dimensionTree: [
+          {
+            nodeId: 'N1',
+            type: 'Leaf',
+            variable: 'Variable1',
+          },
+          {
+            nodeId: 'N2',
+            type: 'Branch',
+            variable: 'Variable2',
+          },
+        ],
       };
 
       const result = service.getKvTreeDatas(mockSelectedArea);
 
-      expect(result).toContain('MOCKED_TRANSLATION'); // Decision tree title
       expect(result).toContain('N1\tLeaf\tVariable1');
       expect(result).toContain('N2\tBranch\tVariable2');
     });
 
     it('should handle nodes with missing properties', () => {
-      const mockTreeService = {
-        treePreparationDatas: {
-          selectedFlattenTree: [
-            {
-              nodeId: 'N1',
-              type: null,
-              variable: null,
-            },
-          ],
-        },
-      };
-
-      const mockSelectedArea: DynamicI = {
-        treePreparationDatasService: mockTreeService,
+      const mockSelectedArea = {
+        dimensionTree: [
+          {
+            nodeId: 'N1',
+            type: null,
+            variable: null,
+          },
+        ],
       };
 
       const result = service.getKvTreeDatas(mockSelectedArea);
@@ -1118,51 +1105,44 @@ describe('CopyDatasService - Real Data Tests', () => {
    */
   describe('Real Tree Data', () => {
     it('should format decision tree data correctly', () => {
-      const mockTreeService = {
-        treePreparationDatas: {
-          selectedFlattenTree: [
-            {
-              nodeId: 'R',
-              type: 'InternalNode',
-              variable: 'marital-status',
-            },
-            {
-              nodeId: 'R1',
-              type: 'InternalNode',
-              variable: 'capital-gain',
-            },
-            {
-              nodeId: 'R2',
-              type: 'InternalNode',
-              variable: 'education-num',
-            },
-            {
-              nodeId: 'R11',
-              type: 'Leaf',
-              variable: null,
-            },
-            {
-              nodeId: 'R12',
-              type: 'Leaf',
-              variable: null,
-            },
-            {
-              nodeId: 'R21',
-              type: 'Leaf',
-              variable: null,
-            },
-            {
-              nodeId: 'R22',
-              type: 'Leaf',
-              variable: null,
-            },
-          ],
-        },
-      };
-
-      const treeData: DynamicI = {
-        componentType: 'kvtree',
-        treePreparationDatasService: mockTreeService,
+      const treeData = {
+        dimensionTree: [
+          {
+            nodeId: 'R',
+            type: 'InternalNode',
+            variable: 'marital-status',
+          },
+          {
+            nodeId: 'R1',
+            type: 'InternalNode',
+            variable: 'capital-gain',
+          },
+          {
+            nodeId: 'R2',
+            type: 'InternalNode',
+            variable: 'education-num',
+          },
+          {
+            nodeId: 'R11',
+            type: 'Leaf',
+            variable: null,
+          },
+          {
+            nodeId: 'R12',
+            type: 'Leaf',
+            variable: null,
+          },
+          {
+            nodeId: 'R21',
+            type: 'Leaf',
+            variable: null,
+          },
+          {
+            nodeId: 'R22',
+            type: 'Leaf',
+            variable: null,
+          },
+        ],
       };
 
       const result = service.getKvTreeDatas(treeData);
