@@ -22,6 +22,10 @@ describe('Copy datas Test Plan for Khiops Covisualization', () => {
           cy.get('.mat-mdc-tab:contains("Axis")').first().click();
           cy.wait(250);
 
+          // Open statistics panels
+          cy.get('.hierarchy-infos-button').eq(0).click({ force: true });
+          cy.wait(250);
+
           cy.testComponentCopyDatas(
             '#hierarchy-details-comp-0',
             'kc-hierarchy-details-comp-0.txt',
@@ -115,7 +119,9 @@ describe('Copy datas Test Plan for Khiops Covisualization', () => {
 
           // // Variable Search Dialog
           cy.get('.variable-search-button-comp').first().click({ force: true });
-          cy.wait(250);
+          cy.get('#variable-search-dialog-comp', { timeout: 5000 })
+            .should('exist')
+            .should('be.visible');
           cy.testComponentCopyDatas(
             '#variable-search-dialog-comp',
             'kc-variable-search-dialog-comp.txt',
