@@ -103,7 +103,7 @@
   "devDependencies": {
     "@angular-devkit/build-angular": "20.3.14",
     "@angular/build": "20.3.14",
-    "@angular/cli": "21.0.5",
+    "@angular/cli": "21.1.0",
     "@angular/compiler-cli": "20.3.16",
     "@cypress/schematic": "5.0.0",
     "@types/cypress": "1.1.6",
