@@ -56,12 +56,6 @@
     "addHeader": "ts-node scripts/add-header.js",
     "updateVersions": "ncu -u --target minor"
   },
-  "prettier": {
-    "trailingComma": "all",
-    "tabWidth": 2,
-    "semi": true,
-    "singleQuote": true
-  },
   "dependencies": {
     "@ag-grid-community/angular": "32.3.9",
     "@ag-grid-community/client-side-row-model": "32.3.9",
