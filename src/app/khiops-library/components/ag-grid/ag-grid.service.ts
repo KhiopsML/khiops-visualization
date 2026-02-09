@@ -11,7 +11,7 @@ import { DynamicI } from '@khiops-library/interfaces/globals';
 import { UtilsService } from '@khiops-library/providers/utils.service';
 
 @Injectable({
-  providedIn: 'root',
+  providedIn: 'root'
 })
 export class AgGridService {
   /**
@@ -54,7 +54,7 @@ export class AgGridService {
   getCellAlignment(
     inputDatas: any[],
     columnField: string,
-    threshold: number = 0.7,
+    threshold: number = 0.7
   ): 'left' | 'right' {
     if (!inputDatas || inputDatas.length === 0) {
       return 'left';
@@ -101,7 +101,7 @@ export class AgGridService {
       cellsSizes?: DynamicI;
       gridId?: string;
       appConfig?: any;
-    } = {},
+    } = {}
   ): ColDef[] {
     const columnDefs: ColDef[] = [];
 
@@ -125,6 +125,7 @@ export class AgGridService {
           width: options.cellsSizes?.[options.gridId!]?.[col.field],
           cellRenderer: col.cellRenderer,
           cellRendererParams: col.cellRendererParams,
+          cellDataType: 'text', // Force all cells to be treated as text to prevent automatic checkbox rendering
           cellClass: (params: any) => {
             const alignmentClass =
               cellAlignment === 'right'
@@ -161,7 +162,7 @@ export class AgGridService {
               ? `${alignmentClass} ${customHeaderClass}`
               : alignmentClass;
           },
-          comparator: this.createComparator(),
+          comparator: this.createComparator()
         };
 
         // PERFORMANCE: Use cellRenderer instead of valueFormatter/valueGetter
@@ -182,7 +183,7 @@ export class AgGridService {
               }
               const formatted = UtilsService.getPrecisionNumber(
                 params.value,
-                options.appConfig.GLOBAL.TO_FIXED,
+                options.appConfig.GLOBAL.TO_FIXED
               );
               return String(formatted);
             };
@@ -234,7 +235,7 @@ export class AgGridService {
    */
   analyzeAndEnhanceColumns(
     inputDatas: any[],
-    displayedColumns: GridColumnsI[],
+    displayedColumns: GridColumnsI[]
   ): GridColumnsI[] {
     return displayedColumns.map((col) => {
       const alignment = this.getCellAlignment(inputDatas, col.field);
@@ -244,7 +245,7 @@ export class AgGridService {
         ...col,
         // Add custom properties for better handling
         _detectedType: alignment === 'right' ? 'numeric' : 'text',
-        _alignment: alignment,
+        _alignment: alignment
       } as GridColumnsI & { _detectedType: string; _alignment: string };
     });
   }
@@ -292,7 +293,7 @@ export class AgGridService {
       headerClass:
         alignment === 'right'
           ? 'ag-right-aligned-header'
-          : 'ag-left-aligned-header',
+          : 'ag-left-aligned-header'
     };
   }
 }
