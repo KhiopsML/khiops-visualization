@@ -10,6 +10,7 @@ export class ConfigModel {
   showLogo?: boolean;
   appSource!: string;
   storage: string = 'DEFAULT';
+  lsId: string = '';
   trackerId?: string;
   onFileOpen!: Function;
   onCopyData!: Function;

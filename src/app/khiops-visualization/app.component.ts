@@ -98,28 +98,30 @@ export class AppComponent implements AfterViewInit {
       });
     };
     this.element.nativeElement.setConfig = (config: ConfigModel) => {
-      this.configService.setConfig(config);
-    };
-    this.element.nativeElement.clean = () => {
-      this.ngzone.run(() => {
-        this.clean();
-      });
-    };
+      AppService.Ls.setLsId(config.lsId);
 
-    setTimeout(() => {
+      this.configService.setConfig(config);
+
       AppService.Ls.getAll().then(() => {
-        this.appService.initialize();
+        // Initialize with preserveData=true to avoid clearing existing app data
+        this.appService.initialize(true);
         this.trackerService.initTracker();
       });
 
       // Force the creation of the overlay container
       // when reinstantiating the visualization component #32
       this.overlayContainer.createContainer();
-    });
+    };
+    this.element.nativeElement.clean = () => {
+      this.ngzone.run(() => {
+        this.clean();
+      });
+    };
   }
 
   clean() {
     this.appdatas = undefined;
-    this.appService.initialize();
+    // Don't preserve data when explicitly cleaning
+    this.appService.initialize(false);
   }
 }

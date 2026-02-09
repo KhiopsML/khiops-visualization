@@ -123,7 +123,18 @@ export class AppComponent implements AfterViewInit {
       return this.saveService.constructSavedJson(collapsedNodes, true);
     };
     this.element.nativeElement.setConfig = (config: ConfigModel) => {
+      AppService.Ls.setLsId(config.lsId);
       this.configService.setConfig(config);
+
+      AppService.Ls.getAll().then(() => {
+        // Initialize with preserveData=true to avoid clearing existing app data
+        this.appService.initialize(true);
+        this.trackerService.initTracker();
+      });
+
+      // Force the creation of the overlay container
+      // when reinstantiating the visualization component #32
+      this.overlayContainer.createContainer();
     };
     this.element.nativeElement.snack = (
       title: string,
@@ -138,16 +149,5 @@ export class AppComponent implements AfterViewInit {
       });
     };
     this.element.nativeElement.clean = () => (this.appdatas = undefined);
-
-    setTimeout(() => {
-      AppService.Ls.getAll().then(() => {
-        this.appService.initialize();
-        this.trackerService.initTracker();
-      });
-
-      // Force the creation of the overlay container
-      // when reinstantiating the visualization component #32
-      this.overlayContainer.createContainer();
-    });
   }
 }

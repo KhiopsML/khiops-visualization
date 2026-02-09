@@ -65,18 +65,23 @@ export class AppService {
   /**
    * Initializes the application by setting global configuration variables,
    * initializing the layout service, and setting initial data structures.
+   * @param preserveData - Whether to preserve existing app data during initialization
    */
-  initialize() {
+  initialize(preserveData: boolean = false) {
     this.resetSearch();
     this.initGlobalConfigVariables();
     this.layoutService.initialize(VIEW_LAYOUT);
-    this._appDatas = {
-      datas: undefined,
-    };
 
-    this._initialDatas = {
-      datas: undefined,
-    };
+    // Only reset data if not preserving existing data
+    if (!preserveData) {
+      this._appDatas = {
+        datas: undefined,
+      };
+
+      this._initialDatas = {
+        datas: undefined,
+      };
+    }
   }
 
   resetSearch() {
