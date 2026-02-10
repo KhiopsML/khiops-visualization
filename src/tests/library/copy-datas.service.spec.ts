@@ -383,8 +383,8 @@ describe('CopyDatasService', () => {
 
       const result = service.getNdBarChartDatas(mockSelectedArea);
 
-      expect(result).toContain('Cat1\t\t20');
-      expect(result).toContain('Cat2\t15\t');
+      expect(result).toContain('Cat1\t0\t20');
+      expect(result).toContain('Cat2\t15\t0');
     });
   });
 

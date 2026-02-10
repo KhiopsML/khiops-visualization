@@ -28,7 +28,10 @@ import { DistributionChartDatasModel } from '@khiops-visualization/model/distrib
 import { VariableModel } from '@khiops-visualization/model/variable.model';
 import { Variable2dModel } from '@khiops-visualization/model/variable-2d.model';
 import { REPORT } from '@khiops-library/enum/report';
-import { DimensionVisualization, VariableDetail } from '@khiops-visualization/interfaces/shared-interfaces';
+import {
+  DimensionVisualization,
+  VariableDetail,
+} from '@khiops-visualization/interfaces/shared-interfaces';
 
 @Injectable({
   providedIn: 'root',
@@ -380,8 +383,7 @@ export class DistributionDatasService {
             this.distributionDatas.targetDistributionDisplayedValues?.find(
               (e) => e.name === partitionLabel,
             );
-
-          if (kObj?.show) {
+          if (kObj?.show !== false) {
             if (type === TYPES.PROBABILITIES) {
               currentValue = (el[k] * 100) / currentTotal;
             } else {
@@ -396,16 +398,18 @@ export class DistributionDatasService {
                 currentTotalProba /
                 (modalityCounts.totalProbability[k] || 1);
             }
+            // @ts-ignore
+            currentValue = parseFloat(currentValue); // parseFloat to remove uselesse .0*
+
+            if (currentValue === 0) {
+              // Remove the min height bar when hidden
+              currentValue = undefined;
+            }
           } else {
-            currentValue = 0;
-          }
-          if (currentValue === 0) {
-            // Remove the min height bar when hidden
-            currentValue = null;
+            currentValue = NaN;
           }
           const graphItem: BarModel = new BarModel();
-          // @ts-ignore
-          graphItem.value = parseFloat(currentValue); // parseFloat to remove uselesse .0*
+          graphItem.value = currentValue;
           graphItem.extra.value = el[k];
           currentDataSet.data.push(graphItem.value);
           currentDataSet.extra.push(graphItem);

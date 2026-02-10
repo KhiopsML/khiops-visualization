@@ -47,14 +47,6 @@ export class CopyDatasService {
    * @param selectedArea - The area containing the data to copy.
    */
   copyDatasToClipboard(selectedArea: DynamicI) {
-    console.log(
-      '🚀 ~ CopyDatasService ~ copyDatasToClipboard ~ selectedArea:',
-      selectedArea,
-    );
-    // console.log(
-    //   '​CopyDatasService -> copyDatasToClipboard -> selectedArea',
-    //   selectedArea,
-    // );
     let formattedDatas: string = '';
 
     switch (selectedArea.componentType) {
@@ -303,7 +295,10 @@ export class CopyDatasService {
     }
     if (selectedArea.displayedValues) {
       for (let i = 0; i < selectedArea.displayedValues.length; i++) {
-        formattedDatas += selectedArea.displayedValues[i].name + '\t';
+        const currentValue = selectedArea.displayedValues[i];
+        if (currentValue.show !== false) {
+          formattedDatas += selectedArea.displayedValues[i].name + '\t';
+        }
       }
     }
     formattedDatas += '\n';
@@ -314,13 +309,16 @@ export class CopyDatasService {
         formattedDatas += selectedArea.inputDatas.labels[i] + '\t';
       }
       for (let j = 0; j < selectedArea.inputDatas.datasets.length; j++) {
-        if (selectedArea.inputDatas.datasets[j].data[i]) {
-          formattedDatas +=
-            this.formatNumberWithPrecision(
-              selectedArea.inputDatas.datasets[j].data[i],
-            ) + '\t';
-        } else {
+        const value = selectedArea.inputDatas.datasets[j].data[i];
+        // If value is undefined or null, data was intentionally hidden
+        if (value === undefined || value === null) {
+          formattedDatas += 0 + '\t';
+        } else if (isNaN(value)) {
+          // If value is NaN, display nothing
           formattedDatas += '\t';
+        } else {
+          // Display the formatted value (including 0)
+          formattedDatas += this.formatNumberWithPrecision(value) + '\t';
         }
       }
       formattedDatas += '\n';
