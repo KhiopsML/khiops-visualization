@@ -97,6 +97,10 @@ export class AppComponent implements AfterViewInit {
         });
       });
     };
+    this.element.nativeElement.openSaveBeforeQuitDialog = (cb: Function) => {
+      // For visualization component, quit directly without confirmation
+      cb('reject');
+    };
     this.element.nativeElement.setConfig = (config: ConfigModel) => {
       AppService.Ls.setLsId(config.lsId);
 
