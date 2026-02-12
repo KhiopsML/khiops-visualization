@@ -17,7 +17,7 @@
       <div class="container">
         <kl-header-title [title]="appTitle" *ngIf="showLogo"> </kl-header-title>
         <kl-file-loader #fileLoader [hidden]="true"></kl-file-loader>
-        <div fxFlexFill [hidden]="!isCompatibleJson">
+        <div fxFlexFill [hidden]="!isCompatibleJson || isLoading">
           <mat-tab-group
             #mainTabGroup
             [animationDuration]="0"
