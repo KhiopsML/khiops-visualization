@@ -17,14 +17,6 @@
       <div class="container">
         <kl-header-title [title]="appTitle" *ngIf="showLogo"> </kl-header-title>
         <kl-file-loader #fileLoader [hidden]="true"></kl-file-loader>
-        <kl-no-data
-          id="welcome-message"
-          fxFlexFill
-          fxLayoutAlign="center center"
-          *ngIf="checkEmptyMessageVisibility()"
-          [message]="'NO_DATAS.WELCOME'"
-        >
-        </kl-no-data>
         <div fxFlexFill [hidden]="!isCompatibleJson">
           <mat-tab-group
             #mainTabGroup
