@@ -52,6 +52,7 @@ export class HomeLayoutComponent implements OnInit {
   public opened = false;
   public selectedTab: Object | undefined;
   public isCompatibleJson?: boolean;
+  public isLoading: boolean = true;
 
   @ViewChild('fileLoader', {
     static: false,
@@ -123,6 +124,7 @@ export class HomeLayoutComponent implements OnInit {
   }
 
   private initialize(datas: VisualizationDatas | undefined = undefined) {
+    this.isLoading = true;
     this.isCompatibleJson = false;
     this.currentDatas = datas;
     this.appService.setFileDatas(datas);
@@ -190,6 +192,9 @@ export class HomeLayoutComponent implements OnInit {
       this.selectedTab = undefined;
       this.activeTab = 0;
       this.mainTabGroup.selectedIndex = 0;
+      setTimeout(() => {
+        this.isLoading = false;
+      });
     });
   }
 }

@@ -25,7 +25,7 @@
           [message]="'NO_DATAS.WELCOME'"
         >
         </kl-no-data>
-        <div fxFlexFill [hidden]="!isCompatibleJson">
+        <div fxFlexFill [hidden]="!isCompatibleJson || isLoading">
           <mat-tab-group
             #mainTabGroup
             [animationDuration]="0"
