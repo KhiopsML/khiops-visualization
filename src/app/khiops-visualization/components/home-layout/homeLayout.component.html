@@ -15,7 +15,7 @@
     </mat-sidenav>
     <mat-sidenav-content>
       <div class="container">
-        <kl-header-title [title]="appTitle" *ngIf="showLogo"> </kl-header-title>
+        <kl-header-title [title]="appTitle" *ngIf="showLogo && isCompatibleJson"> </kl-header-title>
         <kl-file-loader #fileLoader [hidden]="true"></kl-file-loader>
         <div fxFlexFill [hidden]="!isCompatibleJson || isLoading">
           <mat-tab-group
