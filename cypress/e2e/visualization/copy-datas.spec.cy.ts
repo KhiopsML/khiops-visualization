@@ -56,6 +56,7 @@ describe('Copy datas Test Plan for Khiops Visualization', () => {
             '#target-distribution-graph0',
             'kv-target-distribution-graph0.txt',
           );
+
           cy.testComponentCopyDatas(
             '#preparation-description-block-variable',
             'kv-preparation-description-block-variable.txt',
@@ -169,6 +170,22 @@ describe('Copy datas Test Plan for Khiops Visualization', () => {
             'kv-project-summary.txt',
           );
           cy.testComponentCopyDatas('#project-logs', 'kv-project-logs.txt');
+
+          // Preparation Tab datas
+          cy.get('.mat-mdc-tab:contains("Preparation")').first().click();
+          cy.wait(500);
+          // Filter target distribution datas
+          cy.get('#select-toggle-button').click({ force: true });
+          cy.wait(250);
+          cy.get('.mat-mdc-checkbox')
+            .contains('Iris-setosa')
+            .first()
+            .click({ force: true });
+          cy.get('body').click(0, 0);
+          cy.testComponentCopyDatas(
+            '#target-distribution-graph0',
+            'kv-target-distribution-graph-filtered.txt',
+          );
         });
       });
     });
