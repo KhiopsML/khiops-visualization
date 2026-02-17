@@ -129,7 +129,7 @@ $_rest: (
 $primary-palette: map.merge(map.get($_palettes, primary), $_rest);
 
 html {
-  color-scheme: light dark;
+  color-scheme: light;
   @include mat.theme(
     (
       color: $primary-palette,
