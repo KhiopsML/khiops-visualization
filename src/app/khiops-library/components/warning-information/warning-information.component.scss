@@ -1,0 +1,15 @@
+.filtered-variables-warning {
+  margin: 10px 10px;
+  padding: 8px 12px;
+  background: var(--warning-bg, #fff3e0);
+  border: 1px solid var(--warning-border, #ffcc80);
+  border-radius: var(--border-radius);
+
+  .warning-text {
+    margin-left: 10px !important;
+    font-size: 0.9em;
+    color: var(--orange-main);
+    font-weight: 500;
+    line-height: 1.3;
+  }
+}

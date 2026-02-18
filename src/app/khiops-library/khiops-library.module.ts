@@ -81,6 +81,7 @@ import { NumberPrecisionComponent } from './components/number-precision/number-p
 import { ScalePersistenceSettingComponent } from './components/scale-persistence-setting/scale-persistence-setting.component';
 import { MenuFocusSelectedDirective } from './directives/menu-focus-selected.directive';
 import { KeyboardTooltipComponent } from './components/keyboard-tooltip/keyboard-tooltip.component';
+import { WarningInformationComponent } from './components/warning-information/warning-information.component';
 
 @NgModule({
   imports: [
@@ -123,6 +124,7 @@ import { KeyboardTooltipComponent } from './components/keyboard-tooltip/keyboard
     }),
   ],
   declarations: [
+    WarningInformationComponent,
     KeyboardTooltipComponent,
     NumberPrecisionComponent,
     MatrixContrastSettingComponent,
@@ -167,6 +169,7 @@ import { KeyboardTooltipComponent } from './components/keyboard-tooltip/keyboard
   ],
   providers: [ConfigService, TranslateService],
   exports: [
+    WarningInformationComponent,
     KeyboardTooltipComponent,
     NumberPrecisionComponent,
     MatrixContrastSettingComponent,
