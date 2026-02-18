@@ -44,6 +44,13 @@
       }
     }
   }
+  // first and last instance of informations-main-values
+  .informations-main-values:first-child {
+    margin-left: 10px !important;
+  }
+  .informations-main-values:last-child {
+    margin-right: 10px !important;
+  }
 
   .gauge-container {
     padding: 0 10px;
