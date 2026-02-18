@@ -17,7 +17,6 @@ import { DistributionDatasService } from '@khiops-visualization/providers/distri
 import { KhiopsLibraryService } from '@khiops-library/providers/khiops-library.service';
 import { SelectableService } from '@khiops-library/components/selectable/selectable.service';
 import { TranslateService } from '@ngstack/translate';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { ScrollableGraphComponent } from '@khiops-library/components/scrollable-graph/scrollable-graph.component';
 import { ChartColorsSetI } from '@khiops-library/interfaces/chart-colors-set';
 import { ChartDatasModel } from '@khiops-library/model/chart-datas.model';
@@ -67,6 +66,7 @@ export class LevelDistributionGraphComponent
   public stepScale: number =
     AppConfig.visualizationCommon.LEVEL_DISTRIBUTION_GRAPH.STEP;
   public chartOptions: ChartOptions;
+  public showTooManyVariablesWarning: boolean = false;
 
   constructor(
     private distributionDatasService: DistributionDatasService,
@@ -74,7 +74,6 @@ export class LevelDistributionGraphComponent
     public override ngzone: NgZone,
     public override configService: ConfigService,
     private translate: TranslateService,
-    private snackBar: MatSnackBar,
     private khiopsLibraryService: KhiopsLibraryService,
     private toPrecision: ToPrecisionPipe,
   ) {
@@ -127,14 +126,7 @@ export class LevelDistributionGraphComponent
       this.inputDatas.labels.length ===
       AppConfig.visualizationCommon.LEVEL_DISTRIBUTION_GRAPH.MAX_VARIABLES
     ) {
-      this.snackBar.open(
-        this.translate.get('SNACKS.TOO_MANY_VARIABLES'),
-        undefined,
-        {
-          duration: 5000,
-          panelClass: 'warning',
-        },
-      );
+      this.showTooManyVariablesWarning = true;
     }
 
     if (

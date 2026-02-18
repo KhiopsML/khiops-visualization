@@ -1,8 +1,14 @@
 <div [id]="id" fxFlexFill #levelGraph>
   <div fxFlexFill fxLayout="column">
     <div fxLayout="row" fxLayoutAlign="start center" class="comp-header">
-      <div fxFlex fxLayout="row" fxLayoutAlign="start center">
+      <div fxFlex fxLayout="column" fxLayoutAlign="start start">
         <h1>{{ levelDistributionTitle }}</h1>
+        <kl-warning-information
+          [show]="showTooManyVariablesWarning"
+          [text]="'SNACKS.TOO_MANY_VARIABLES' | translate"
+          [tooltipText]="'SNACKS.TOO_MANY_VARIABLES' | translate"
+          variant="inline"
+        ></kl-warning-information>
       </div>
       <kl-legend
         [inputDatas]="

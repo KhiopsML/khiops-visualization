@@ -10,10 +10,11 @@ import { Component, Input } from '@angular/core';
   selector: 'kl-warning-information',
   templateUrl: './warning-information.component.html',
   styleUrls: ['./warning-information.component.scss'],
-  standalone: false
+  standalone: false,
 })
 export class WarningInformationComponent {
   @Input() text: string = '';
   @Input() tooltipText: string = '';
   @Input() show: boolean = false;
+  @Input() variant: 'default' | 'inline' = 'default';
 }
