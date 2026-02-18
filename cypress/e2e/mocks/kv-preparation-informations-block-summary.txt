@@ -6,4 +6,4 @@ Instances	105
 Learning task	Classification analysis	
 Sample percentage	70	
 Sampling mode	Include sample	
-Evaluated variables	4	
+Evaluated variables	6	
