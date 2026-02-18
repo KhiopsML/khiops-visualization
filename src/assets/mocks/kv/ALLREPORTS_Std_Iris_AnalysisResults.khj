@@ -260,7 +260,7 @@
 				"values": ["Iris-setosa","Iris-versicolor","Iris-virginica"],
 				"frequencies": [38,32,35]
 			},
-			"evaluatedVariables": 4,
+			"evaluatedVariables": 6,
 			"informativeVariables": 4,
 			"selectedVariables": 2,
 			"featureEngineering": {
