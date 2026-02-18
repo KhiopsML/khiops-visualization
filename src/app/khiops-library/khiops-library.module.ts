@@ -57,6 +57,7 @@ import { AgGridLoadingOverlayComponent } from './components/ag-grid/ag-grid-load
 import { MatrixTooltipComponent } from './components/matrix-tooltip/matrix-tooltip.component';
 import { CheckboxCellComponent } from './components/ag-grid/checkbox-cell/checkbox-cell.component';
 import { IconCellComponent } from './components/ag-grid/icon-cell/icon-cell.component';
+import { IconComponent } from './components/icon/icon.component';
 import { DistributionGraphComponent } from './components/distribution-graph/distribution-graph.component';
 import { ScrollableGraphComponent } from './components/scrollable-graph/scrollable-graph.component';
 import { AgGridModule } from '@ag-grid-community/angular';
@@ -159,6 +160,7 @@ import { WarningInformationComponent } from './components/warning-information/wa
     MatrixModeComponent,
     CheckboxCellComponent,
     IconCellComponent,
+    IconComponent,
     DistributionGraphComponent,
     ScrollableGraphComponent,
     ChartComponent,
@@ -232,6 +234,7 @@ import { WarningInformationComponent } from './components/warning-information/wa
     MatrixModeComponent,
     CheckboxCellComponent,
     IconCellComponent,
+    IconComponent,
     DistributionGraphComponent,
     ChartComponent,
     ImportFileLoaderComponent,
