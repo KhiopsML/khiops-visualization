@@ -1,5 +1,5 @@
 Informations
-Evaluated variables	4	
+Evaluated variables	6	
 Informative variables	4	
 Selected variables	2	
 Discretization	MODL	
