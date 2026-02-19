@@ -1,9 +1,0 @@
-<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" shape-rendering="geometricPrecision">
-  <circle cx="12" cy="12" r="1.5" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/>
-  <line x1="12" y1="10.5" x2="12" y2="5.5" stroke="currentColor" stroke-width="1" stroke-linecap="round"/>
-  <circle cx="12" cy="3.5" r="2" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/>
-  <line x1="10.5" y1="12" x2="5.5" y2="12" stroke="currentColor" stroke-width="1" stroke-linecap="round"/>
-  <circle cx="3.5" cy="12" r="2" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/>
-  <line x1="13.3" y1="13.2" x2="17.2" y2="17.6" stroke="currentColor" stroke-width="1" stroke-linecap="round"/>
-  <circle cx="18.5" cy="19.2" r="2" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/>
-</svg>

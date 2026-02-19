@@ -1,0 +1,89 @@
+export const ICONS: Record<string, string> = {
+  warning: `<svg
+    class="kl-icon"
+    width="22"
+    height="22"
+    viewBox="0 0 512 512"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <path
+      fill="#cd3c14"
+      fill-rule="evenodd"
+      d="M253.5,12.5 L434.5,193.5 C451,210 451,237 434.5,253.5 L253.5,434.5 C237,451 210,451 193.5,434.5 L12.5,253.5 C-4,237 -4,210 12.5,193.5 L193.5,12.5 C210,-4 237,-4 253.5,12.5 Z M223.5,282 C208,282 196.5,293.5 196.5,308.5 C196.5,324 208,335.5 223.5,335.5 C239,335.5 250,324 250,308.5 C250,293.5 239,282 223.5,282 Z M245,116.5 L202,116.5 L202,245 L245,245 L245,116.5 Z"
+      transform="translate(32.552 32.552)"
+    />
+  </svg>`,
+  hypertree: `  <svg
+          class="kl-icon"
+          width="22"
+          height="22"
+          viewBox="0 0 24 24"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+          shape-rendering="geometricPrecision"
+        >
+          <circle
+            cx="12"
+            cy="12"
+            r="1.5"
+            stroke="#cd3c14"
+            stroke-width="1"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          />
+          <line
+            x1="12"
+            y1="10.5"
+            x2="12"
+            y2="5.5"
+            stroke="#cd3c14"
+            stroke-width="1"
+            stroke-linecap="round"
+          />
+          <circle
+            cx="12"
+            cy="3.5"
+            r="2"
+            stroke="#cd3c14"
+            stroke-width="1"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          />
+          <line
+            x1="10.5"
+            y1="12"
+            x2="5.5"
+            y2="12"
+            stroke="#cd3c14"
+            stroke-width="1"
+            stroke-linecap="round"
+          />
+          <circle
+            cx="3.5"
+            cy="12"
+            r="2"
+            stroke="#cd3c14"
+            stroke-width="1"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          />
+          <line
+            x1="13.3"
+            y1="13.2"
+            x2="17.2"
+            y2="17.6"
+            stroke="#cd3c14"
+            stroke-width="1"
+            stroke-linecap="round"
+          />
+          <circle
+            cx="18.5"
+            cy="19.2"
+            r="2"
+            stroke="#cd3c14"
+            stroke-width="1"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          />
+        </svg>`,
+};
