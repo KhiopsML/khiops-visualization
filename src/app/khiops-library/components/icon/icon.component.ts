@@ -5,7 +5,7 @@ import { ICONS } from './icons.list';
 @Component({
   selector: 'kl-icon',
   standalone: false,
-  template: `<span [innerHTML]="svgContent"></span>`,
+  template: `<span style="display: flex;" [innerHTML]="svgContent"></span>`,
 })
 export class IconComponent {
   @Input() set name(value: string) {
