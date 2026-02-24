@@ -31,7 +31,7 @@
     "ordered-read-streams": "2.0.0",
     "sass": "1.93.2",
     "typescript": "5.9.3",
-    "webpack": "5.102.1",
+    "webpack": "5.104.1",
     "webpack-stream": "7.0.0",
     "yargs": "18.0.0"
   }
