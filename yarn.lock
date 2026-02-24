@@ -3045,12 +3045,19 @@
   dependencies:
     "@types/node" "*"
 
-"@types/node@*", "@types/node@25.0.7", "@types/node@>=10.0.0":
+"@types/node@*", "@types/node@>=10.0.0":
   version "25.0.7"
   resolved "https://registry.yarnpkg.com/@types/node/-/node-25.0.7.tgz#afd2f0d34358631a287c6726dabe0c845abc2bae"
   integrity sha512-C/er7DlIZgRJO7WtTdYovjIFzGsz0I95UlMyR9anTb4aCpBSRWe5Jc1/RvLKUfzmOxHPGjSE5+63HgLtndxU4w==
   dependencies:
     undici-types "~7.16.0"
+
+"@types/node@25.3.0":
+  version "25.3.0"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-25.3.0.tgz#749b1bd4058e51b72e22bd41e9eab6ebd0180470"
+  integrity sha512-4K3bqJpXpqfg2XKGK9bpDTc6xO/xoUP/RBWS7AtRMug6zZFaRekiLzjVtAoZMquxoAbzBvy5nxQ7veS5eYzf8A==
+  dependencies:
+    undici-types "~7.18.0"
 
 "@types/qs@*":
   version "6.14.0"
@@ -8882,6 +8889,11 @@ undici-types@~7.16.0:
   resolved "https://registry.yarnpkg.com/undici-types/-/undici-types-7.16.0.tgz#ffccdff36aea4884cbfce9a750a0580224f58a46"
   integrity sha512-Zz+aZWSj8LE6zoxD+xrjh4VfkIG8Ya6LvYkZqtUQGJPZjYl53ypCaUwWqo7eI0x66KBGeRo+mlBEkMSeSZ38Nw==
 
+undici-types@~7.18.0:
+  version "7.18.2"
+  resolved "https://registry.yarnpkg.com/undici-types/-/undici-types-7.18.2.tgz#29357a89e7b7ca4aef3bf0fd3fd0cd73884229e9"
+  integrity sha512-AsuCzffGHJybSaRrmr5eHr81mwJU3kjw6M+uprWvCXiNeN9SOGwQ3Jn8jb8m3Z6izVgknn1R0FTCEAP2QrLY/w==
+
 unicode-canonical-property-names-ecmascript@^2.0.0:
   version "2.0.1"
   resolved "https://registry.yarnpkg.com/unicode-canonical-property-names-ecmascript/-/unicode-canonical-property-names-ecmascript-2.0.1.tgz#cb3173fe47ca743e228216e4a3ddc4c84d628cc2"
@@ -9357,7 +9369,7 @@ zod@4.3.5, "zod@^3.25 || ^4.0":
   resolved "https://registry.yarnpkg.com/zod/-/zod-4.3.5.tgz#aeb269a6f9fc259b1212c348c7c5432aaa474d2a"
   integrity sha512-k7Nwx6vuWx1IJ9Bjuf4Zt1PEllcwe7cls3VNzm4CQ1/hgtFUK2bRNG3rvnpPUhFjmqJKAKtjV576KnUkHocg/g==
 
-zone.js@0.16.0:
-  version "0.16.0"
-  resolved "https://registry.yarnpkg.com/zone.js/-/zone.js-0.16.0.tgz#955b9e28846d76ca2ef7091c8f9e96f35f79e828"
-  integrity sha512-LqLPpIQANebrlxY6jKcYKdgN5DTXyyHAKnnWWjE5pPfEQ4n7j5zn7mOEEpwNZVKGqx3kKKmvplEmoBrvpgROTA==
+zone.js@0.16.1:
+  version "0.16.1"
+  resolved "https://registry.yarnpkg.com/zone.js/-/zone.js-0.16.1.tgz#ca91f0889e46b1c252aab6c75332e36840916227"
+  integrity sha512-dpvY17vxYIW3+bNrP0ClUlaiY0CiIRK3tnoLaGoQsQcY9/I/NpzIWQ7tQNhbV7LacQMpCII6wVzuL3tuWOyfuA==
