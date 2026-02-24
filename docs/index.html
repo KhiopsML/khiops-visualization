@@ -107,10 +107,10 @@
         } else if (version) {
           // Encode version to prevent XSS
           const encodedVersion = encodeURIComponent(version);
-          url = `https://unpkg.com/khiops-visualization@${encodedVersion}/khiops-webcomponents.bundle.js`;
+          url = `https://cdn.jsdelivr.net/npm/khiops-visualization@${encodedVersion}/khiops-webcomponents.bundle.js`;
         } else {
           url =
-            'https://unpkg.com/khiops-visualization/khiops-webcomponents.bundle.js';
+            'https://cdn.jsdelivr.net/npm/khiops-visualization/khiops-webcomponents.bundle.js';
         }
 
         // Remove old script
