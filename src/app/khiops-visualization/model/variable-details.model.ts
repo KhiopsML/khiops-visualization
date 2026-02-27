@@ -28,7 +28,7 @@ export class VariableDetailsModel {
     values: string[];
     frequencies: string[];
   };
-  isLimitedDatas = true;
+  isLimitedDatas!: boolean;
 
   constructor(object: VariableDetail) {
     this.isLimitedDatas = false;

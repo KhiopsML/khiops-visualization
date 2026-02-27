@@ -14,7 +14,11 @@ import {
 } from '@angular/core';
 import { ConfirmDialogComponent } from '@khiops-library/components/confirm-dialog/confirm-dialog.component';
 import { TranslateService } from '@ngstack/translate';
-import { MatDialogRef, MatDialog, MatDialogConfig } from '@angular/material/dialog';
+import {
+  MatDialogRef,
+  MatDialog,
+  MatDialogConfig,
+} from '@angular/material/dialog';
 import { AppService } from './providers/app.service';
 import { ConfigService } from '@khiops-library/providers/config.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -116,7 +120,7 @@ export class AppComponent implements AfterViewInit {
     this.element.nativeElement.constructPrunedDatasToSave = () => {
       const collapsedNodes = this.treenodesService.getSavedCollapsedNodes();
       // #142 Remove collapsed nodes because datas are truncated
-      return this.saveService.constructSavedJson(collapsedNodes, true);
+      return this.saveService.constructSavedJson(collapsedNodes);
     };
     this.element.nativeElement.setConfig = (config: ConfigModel) => {
       AppService.Ls.setLsId(config.lsId);

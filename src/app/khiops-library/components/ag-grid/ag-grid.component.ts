@@ -156,16 +156,15 @@ export class AgGridComponent
 
     try {
       const PREV_CELL_AG_GRID = this.ls.get(LS.CELL_AG_GRID);
-      this.cellsSizes = (PREV_CELL_AG_GRID && PREV_CELL_AG_GRID) || {};
+      this.cellsSizes = PREV_CELL_AG_GRID || {};
     } catch (e) {}
     try {
       const PREV_COLUMNS_AG_GRID = this.ls.get(LS.COLUMNS_AG_GRID);
-      this.visibleColumns =
-        (PREV_COLUMNS_AG_GRID && PREV_COLUMNS_AG_GRID) || {};
+      this.visibleColumns = PREV_COLUMNS_AG_GRID || {};
     } catch (e) {}
     try {
       const PREV_MODES_AG_GRID = this.ls.get(LS.MODES_AG_GRID);
-      this.gridModes = (PREV_MODES_AG_GRID && PREV_MODES_AG_GRID) || {}; // 'fitToSpace' or 'fitToContent'
+      this.gridModes = PREV_MODES_AG_GRID || {}; // 'fitToSpace' or 'fitToContent'
     } catch (e) {}
   }
   override ngAfterViewInit() {
@@ -806,7 +805,7 @@ export class AgGridComponent
       const PREV_STATE = this.ls.get(
         LS.OPTIONS_AG_GRID + '_' + this.id.toUpperCase(),
       );
-      const state = (PREV_STATE && PREV_STATE) || {};
+      const state = PREV_STATE || {};
 
       if (
         this.displayedColumns &&

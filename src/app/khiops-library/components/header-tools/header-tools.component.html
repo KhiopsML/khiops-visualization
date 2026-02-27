@@ -34,13 +34,7 @@
     attr.aria-label="{{ 'GLOBAL.COPY_IMAGE' | translate }}"
   >
     @if (!isCopyingImage) {
-      <mat-icon
-        fxFlexFill
-        fxLayoutAlign="center center"
-        fxFlexFill
-        fxLayoutAlign="center center"
-        >filter</mat-icon
-      >
+      <mat-icon fxFlexFill fxLayoutAlign="center center">filter</mat-icon>
     }
     @if (isCopyingImage) {
       <mat-spinner

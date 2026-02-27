@@ -605,7 +605,7 @@ export class MatrixComponent extends SelectableComponent implements OnChanges {
 
     // Hack to prevent event emit if user pan matrix
     const isPaning = this.matrixCursorService.isMouseButtonDown();
-    if (!isPaning || isPaning === undefined) {
+    if (!isPaning) {
       this.matrixCursorService.setPaning(false);
       this.updateCursor();
       this.cleanSelectedDomContext();

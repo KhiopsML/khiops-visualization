@@ -205,7 +205,7 @@ export class CompositionService {
     isIndiVarCase: boolean,
   ): CompositionModel[] {
     let compositionValues: CompositionModel[] = [];
-    let processedCollapsedChildren = new Set<string>();
+    const processedCollapsedChildren = new Set<string>();
 
     // Process collapsed children for both IndiVar and VarVar cases
     processedCollapsedChildren = this.processCollapsedChildren(

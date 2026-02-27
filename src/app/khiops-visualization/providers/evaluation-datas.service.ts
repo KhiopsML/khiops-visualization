@@ -592,7 +592,7 @@ export class EvaluationDatasService {
     if (currentReport) {
       if (target === null || target === undefined) {
         // Regression case
-        if (currentReport && currentReport.recCurves) {
+        if (currentReport?.recCurves) {
           for (let j = 0; j < currentReport.recCurves.length; j++) {
             const currentSerie: LiftCurveSerieI[] = [];
             for (let k = 0; k < xAxis.length; k = k + 1) {

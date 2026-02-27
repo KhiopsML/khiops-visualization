@@ -24,8 +24,7 @@ describe('CopyDatasService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [TranslateModule.forRoot()],
-  providers: [provideHttpClient()],
-      providers: [CopyDatasService, ConfigService],
+      providers: [provideHttpClient(), CopyDatasService, ConfigService],
     });
 
     service = TestBed.inject(CopyDatasService);
@@ -754,7 +753,7 @@ describe('CopyDatasService - Real Data Tests', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [TranslateModule.forRoot()],
-  providers: [provideHttpClient()],
+      providers: [provideHttpClient()],
       providers: [CopyDatasService, ConfigService],
     });
 

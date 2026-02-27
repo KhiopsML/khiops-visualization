@@ -473,7 +473,7 @@ export class ClustersService {
     selectedDimension: DimensionCovisualizationModel | undefined,
   ): ClusterDetailsModel[] {
     const filteredDimensionsClusters: ClusterDetailsModel[] = [];
-    if (dimensionsTree && selectedDimension && dimensionsTree) {
+    if (dimensionsTree && selectedDimension) {
       const filteredDimensionsClustersDatas = [].concat(
         // @ts-ignore
         this.getCurrentClusterDetailsFromNode(dimensionsTree),

@@ -1,21 +1,21 @@
 import { createSelector, createFeatureSelector } from '@ngrx/store';
 import { TreePreparationState } from '../model/tree-preparation-datas.model';
 
-const TreePreparationState = createFeatureSelector<TreePreparationState>(
+const selectTreePreparationState = createFeatureSelector<TreePreparationState>(
   'TreePreparationState',
 );
 
 export const selectedNodeSelector = createSelector(
-  TreePreparationState,
+  selectTreePreparationState,
   (state: TreePreparationState) => state.selectedNode,
 );
 
 export const selectedNodesSelector = createSelector(
-  TreePreparationState,
+  selectTreePreparationState,
   (state: TreePreparationState) => state.selectedNodes,
 );
 
 export const previousSelectedNodesSelector = createSelector(
-  TreePreparationState,
+  selectTreePreparationState,
   (state: TreePreparationState) => state.previousSelectedNodes,
 );

@@ -144,9 +144,7 @@ export class ClusterDetailsComponent implements OnInit, OnChanges, OnDestroy {
           this.nodeToSelect = this.getFirstNodeLeaf(this.nodeToSelect);
         }
       } else {
-        if (this.nodeToSelect.isLeaf || this.nodeToSelect.isCollapsed) {
-          this.nodeToSelect = this.nodeToSelect;
-        } else {
+        if (!(this.nodeToSelect.isLeaf || this.nodeToSelect.isCollapsed)) {
           this.nodeToSelect = this.getFirstNodeLeaf(this.nodeToSelect);
         }
       }

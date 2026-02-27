@@ -145,10 +145,7 @@ export class SaveService {
    * @param {boolean} [isReduced=false] - Flag indicating whether to reduce the data.
    * @returns {CovisualizationDatas} - The constructed saved JSON data.
    */
-  constructSavedJson(
-    collapsedNodesInput?: DynamicI,
-    isReduced = false,
-  ): CovisualizationDatas {
+  constructSavedJson(collapsedNodesInput?: DynamicI): CovisualizationDatas {
     let newJson = this.constructDatasToSave(collapsedNodesInput);
     if (collapsedNodesInput) {
       // Here we are going to modify the coclusteringReport, so we need to perform a deep clone
@@ -161,11 +158,6 @@ export class SaveService {
       newJson = this.truncateJsonPartition(newJson);
       newJson = this.truncateJsonCells(newJson);
       newJson = this.updateSummariesCells(newJson);
-
-      if (!collapsedNodesInput || isReduced) {
-        // Remove collapsed nodes and selected nodes because they have been reduced
-        delete newJson.savedDatas.collapsedNodes;
-      }
     }
 
     // delete datasToSave.savedDatas.selectedNodes; // do not do that to keep context selection

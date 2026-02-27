@@ -43,8 +43,8 @@ describe('Visualization', () => {
     beforeEach(() => {
       TestBed.configureTestingModule({
         imports: [TranslateModule.forRoot()],
-  providers: [provideHttpClient()],
         providers: [
+          provideHttpClient(),
           provideMockStore({ initialState: {} }),
           DistributionDatasService,
           PreparationDatasService,
