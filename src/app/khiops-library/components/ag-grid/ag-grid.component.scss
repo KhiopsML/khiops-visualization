@@ -32,14 +32,14 @@
         margin-left: 10px;
         border: 1px solid var(--primary);
         max-height: 32px;
-        min-width: 36px;
+        min-width: 34px;
 
         button {
           height: 32px;
           width: 34px;
           margin: 0;
           display: flex;
-          padding: 8px !important;
+          padding: 8px 6px !important;
         }
 
         ::-webkit-input-placeholder {

@@ -7,10 +7,14 @@
   >
     <div
       id="graph-header-comp"
+      fxLayout="row"
       fxLayoutAlign="start center"
       class="scrollbar-thin"
     >
-      <h1 fxFlex>{{ 'GLOBAL.DECISION_TREE' | translate }}</h1>
+      <h1 fxLayoutAlign="start center" fxFlex>
+        <kl-icon name="decisiontree" />
+        <span fxFlex>{{ 'GLOBAL.DECISION_TREE' | translate }}</span>
+      </h1>
       <kl-btn-fullscreen
         class="screenshot-hide"
         (toggleFullscreen)="onToggleFullscreen($event)"
