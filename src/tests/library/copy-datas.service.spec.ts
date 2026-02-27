@@ -61,7 +61,7 @@ describe('CopyDatasService', () => {
         style: {},
         focus: jasmine.createSpy('focus'),
         select: jasmine.createSpy('select'),
-      } as any);
+      } as unknown as HTMLElement);
 
       spyOn(document.body, 'appendChild').and.stub();
       spyOn(document.body, 'removeChild').and.stub();
