@@ -3,13 +3,14 @@
   fxFlexFill
   class="annotation-comp selected-area-inner-div"
 >
-  <h1
-    *ngIf="selectedNode"
-    class="small-title"
-    title="{{ 'TOOLTIPS.AXIS.ANNOTATION.TITLE' | translate }}"
-  >
-    {{ title }}
-  </h1>
+  @if (selectedNode) {
+    <h1
+      class="small-title"
+      title="{{ 'TOOLTIPS.AXIS.ANNOTATION.TITLE' | translate }}"
+    >
+      {{ title }}
+    </h1>
+  }
   <textarea
     placeholder="{{ 'GLOBAL.TYPE_ANNOTATION' | translate }}"
     [ngModel]="value"

@@ -5,11 +5,11 @@
  */
 // @ts-nocheck
 
-import { setupAxisTests } from 'cypress/setups/axis-tests';
+import { setupAxisTests } from '../../setups/axis-tests';
 import '../../support/commands';
 import '../../utils/utils';
-import { setupContextTests } from 'cypress/setups/context-tests';
-import { setupHierarchyTests } from 'cypress/setups/hierarchy-tests';
+import { setupContextTests } from '../../setups/context-tests';
+import { setupHierarchyTests } from '../../setups/hierarchy-tests';
 
 describe('Test Khiops Covisualization sample files', () => {
   const files = [

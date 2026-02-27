@@ -26,22 +26,28 @@
         </em>
       </button>
       <mat-menu #selectDimension>
-        <button
-          mat-menu-item
-          *ngFor="let dimension of dimensions; let i = index"
-          [class.selected-item]="dimension.name === selectedDimension?.name"
-          (click)="changeSelectedDimension(dimension, i)"
-        >
-          {{ dimension.name }}
-        </button>
+        @for (
+          dimension of dimensions;
+          track dimension.name || $index;
+          let i = $index
+        ) {
+          <button
+            mat-menu-item
+            [class.selected-item]="dimension.name === selectedDimension?.name"
+            (click)="changeSelectedDimension(dimension, i)"
+          >
+            {{ dimension.name }}
+          </button>
+        }
       </mat-menu>
     </div>
-    <mat-spinner
-      diameter="20"
-      color="accent"
-      mode="indeterminate"
-      *ngIf="dimensionsDatasService.dimensionsDatas?.isLoading"
-    ></mat-spinner>
+    @if (dimensionsDatasService.dimensionsDatas?.isLoading) {
+      <mat-spinner
+        diameter="20"
+        color="accent"
+        mode="indeterminate"
+      ></mat-spinner>
+    }
     <app-variable-search-button
       [selectedDimension]="selectedDimension"
     ></app-variable-search-button>
@@ -59,56 +65,67 @@
     <!-- Slot for custom header tools -->
     <ng-content select="[slot=header-tools]"></ng-content>
   </div>
-  <div
-    class="hierarchy-select-content"
-    *ngIf="showStats"
-    [@slideInOut]
-    fxLayoutAlign="start start"
-    fxLayout="column"
-  >
-    <table class="stats-table">
-      <tr>
-        <td>{{ 'GLOBAL.TYPE' | translate }}</td>
-        <td>
-          <strong>{{ selectedTreeCluster?.dimensionType }}</strong>
-        </td>
-      </tr>
-      <tr *ngIf="selectedTreeCluster?.isNumerical">
-        <td>{{ 'GLOBAL.INTERVALS' | translate }}</td>
-        <td>
-          <strong>{{ selectedTreeCluster?.intervals }}</strong>
-        </td>
-      </tr>
-      <tr *ngIf="selectedTreeCluster?.isCategorical">
-        <td>{{ 'GLOBAL.CLUSTERS' | translate }}</td>
-        <td>
-          <strong>{{ selectedTreeCluster?.intervals }}</strong>
-        </td>
-      </tr>
-      <tr *ngIf="selectedDimension?.isNumerical">
-        <td>{{ 'GLOBAL.INTERVAL' | translate }}</td>
-        <td>
-          <strong>{{ selectedTreeCluster?.interval }}</strong>
-        </td>
-      </tr>
-      <tr *ngIf="selectedDimension?.isCategorical">
-        <td>{{ 'GLOBAL.CLUSTER' | translate }}</td>
-        <td>
-          <strong>{{ selectedTreeCluster?.interval }}</strong>
-        </td>
-      </tr>
-      <tr *ngIf="selectedTreeCluster?.isCategorical">
-        <td>{{ 'GLOBAL.CLUSTER_LENGTH' | translate }}</td>
-        <td>
-          <strong>{{ selectedTreeCluster?.nbClusters }}</strong>
-        </td>
-      </tr>
-      <tr>
-        <td>{{ 'GLOBAL.FREQUENCY' | translate }}</td>
-        <td>
-          <strong>{{ selectedTreeCluster?.frequency }}</strong>
-        </td>
-      </tr>
-    </table>
-  </div>
+  @if (showStats) {
+    <div
+      class="hierarchy-select-content"
+      [@slideInOut]
+      fxLayoutAlign="start start"
+      fxLayout="column"
+    >
+      <table class="stats-table">
+        <tr>
+          <td>{{ 'GLOBAL.TYPE' | translate }}</td>
+          <td>
+            <strong>{{ selectedTreeCluster?.dimensionType }}</strong>
+          </td>
+        </tr>
+        @if (selectedTreeCluster?.isNumerical) {
+          <tr>
+            <td>{{ 'GLOBAL.INTERVALS' | translate }}</td>
+            <td>
+              <strong>{{ selectedTreeCluster?.intervals }}</strong>
+            </td>
+          </tr>
+        }
+        @if (selectedTreeCluster?.isCategorical) {
+          <tr>
+            <td>{{ 'GLOBAL.CLUSTERS' | translate }}</td>
+            <td>
+              <strong>{{ selectedTreeCluster?.intervals }}</strong>
+            </td>
+          </tr>
+        }
+        @if (selectedDimension?.isNumerical) {
+          <tr>
+            <td>{{ 'GLOBAL.INTERVAL' | translate }}</td>
+            <td>
+              <strong>{{ selectedTreeCluster?.interval }}</strong>
+            </td>
+          </tr>
+        }
+        @if (selectedDimension?.isCategorical) {
+          <tr>
+            <td>{{ 'GLOBAL.CLUSTER' | translate }}</td>
+            <td>
+              <strong>{{ selectedTreeCluster?.interval }}</strong>
+            </td>
+          </tr>
+        }
+        @if (selectedTreeCluster?.isCategorical) {
+          <tr>
+            <td>{{ 'GLOBAL.CLUSTER_LENGTH' | translate }}</td>
+            <td>
+              <strong>{{ selectedTreeCluster?.nbClusters }}</strong>
+            </td>
+          </tr>
+        }
+        <tr>
+          <td>{{ 'GLOBAL.FREQUENCY' | translate }}</td>
+          <td>
+            <strong>{{ selectedTreeCluster?.frequency }}</strong>
+          </td>
+        </tr>
+      </table>
+    </div>
+  }
 </div>

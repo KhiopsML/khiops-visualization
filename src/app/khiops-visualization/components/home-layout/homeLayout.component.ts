@@ -19,7 +19,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatDialog } from '@angular/material/dialog';
 import { TreePreparationDatasService } from '@khiops-visualization/providers/tree-preparation-datas.service';
 import { KhiopsLibraryService } from '@khiops-library/providers/khiops-library.service';
-import pjson from 'package.json';
+import pjson from '../../../../../package.json';
 import { ConfigService } from '@khiops-library/providers/config.service';
 import { UtilsService } from '@khiops-library/providers/utils.service';
 import { TrackerService } from '../../../khiops-library/providers/tracker.service';

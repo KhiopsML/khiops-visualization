@@ -15,15 +15,16 @@
     <em class="screenshot-hide"><mat-icon>keyboard_arrow_down</mat-icon> </em>
   </button>
   <mat-menu #matrixModesTypes>
-    <button
-      mat-menu-item
-      *ngFor="let opt of matrixModes.types"
-      [class.selected-item]="opt.mode === matrixModes.selected?.mode"
-      (click)="changeMatrixMode(opt)"
-    >
-      <span [title]="opt.tooltip || ''">
-        {{ opt.title | translate }}
-      </span>
-    </button>
+    @for (opt of matrixModes.types; track opt.mode || $index) {
+      <button
+        mat-menu-item
+        [class.selected-item]="opt.mode === matrixModes.selected?.mode"
+        (click)="changeMatrixMode(opt)"
+      >
+        <span [title]="opt.tooltip || ''">
+          {{ (opt.title || '') | translate }}
+        </span>
+      </button>
+    }
   </mat-menu>
 </div>

@@ -5,7 +5,7 @@
  */
 
 import { Injectable } from '@angular/core';
-import pjson from 'package.json';
+import pjson from '../../../../../package.json';
 
 @Injectable({
   providedIn: 'root',

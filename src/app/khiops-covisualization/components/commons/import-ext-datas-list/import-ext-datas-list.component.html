@@ -1,60 +1,65 @@
 <div id="import-ext-datas-list-comp" fxFlexFill #manageViews fxLayout="column">
-  <div *ngIf="!importExtDatas" fxFlexFill>
-    <div
-      fxLayout="row"
-      id="import-ext-datas-header"
-      fxLayoutAlign="center center"
-    >
-      <h2 fxFlex>{{ 'GLOBAL.EXTERNAL_DATA' | translate | uppercase }}</h2>
-      <button
-        class="grey-btn"
-        mat-icon-button
-        matTooltip="{{ 'GLOBAL.CLOSE' | translate }}"
-        (click)="onClickOnClose()"
-      >
-        <mat-icon fxFlexFill fxLayoutAlign="center center">close</mat-icon>
-      </button>
-    </div>
-    <div
-      *ngIf="!isLoadingDatas"
-      id="import-ext-datas-content"
-      fxLayout="column"
-      fxFlexFill
-      fxLayoutAlign="start center"
-    >
+  @if (!importExtDatas) {
+    <div fxFlexFill>
       <div
-        *ngIf="importedDatas && importedDatas.values"
-        id="import-ext-datas-list-table"
-        class="kl-card"
-        fxFlexFill
-        fxLayout="column"
-        fxLayoutAlign="start center"
+        fxLayout="row"
+        id="import-ext-datas-header"
+        fxLayoutAlign="center center"
       >
-        <h1 fxFlexFill class="small-title">
-          {{ 'GLOBAL.IMPORTED_EXTERNAL_DATA' | translate }}
-        </h1>
-        <kl-ag-grid
-          fxFlexFill
-          [showSearch]="false"
-          [showLineSelection]="false"
-          [suppressRowClickSelection]="true"
-          [showColumnsSelection]="false"
-          [inputDatas]="importedDatas.values"
-          [title]="''"
-          [displayedColumns]="importedDatas.displayedColumns"
+        <h2 fxFlex>{{ 'GLOBAL.EXTERNAL_DATA' | translate | uppercase }}</h2>
+        <button
+          class="grey-btn"
+          mat-icon-button
+          matTooltip="{{ 'GLOBAL.CLOSE' | translate }}"
+          (click)="onClickOnClose()"
         >
-        </kl-ag-grid>
+          <mat-icon fxFlexFill fxLayoutAlign="center center">close</mat-icon>
+        </button>
       </div>
-      <kl-import-file-loader
-        fxFlexFill
-        (datasLoaded)="datasLoaded($event)"
-      ></kl-import-file-loader>
+      @if (!isLoadingDatas) {
+        <div
+          id="import-ext-datas-content"
+          fxLayout="column"
+          fxFlexFill
+          fxLayoutAlign="start center"
+        >
+          @if (importedDatas && importedDatas.values) {
+            <div
+              id="import-ext-datas-list-table"
+              class="kl-card"
+              fxFlexFill
+              fxLayout="column"
+              fxLayoutAlign="start center"
+            >
+              <h1 fxFlexFill class="small-title">
+                {{ 'GLOBAL.IMPORTED_EXTERNAL_DATA' | translate }}
+              </h1>
+              <kl-ag-grid
+                fxFlexFill
+                [showSearch]="false"
+                [showLineSelection]="false"
+                [enableClickSelection]="false"
+                [showColumnsSelection]="false"
+                [inputDatas]="importedDatas.values"
+                [title]="''"
+                [displayedColumns]="importedDatas.displayedColumns"
+              >
+              </kl-ag-grid>
+            </div>
+          }
+          <kl-import-file-loader
+            fxFlexFill
+            (datasLoaded)="datasLoaded($event)"
+          ></kl-import-file-loader>
+        </div>
+      }
     </div>
-  </div>
-  <app-import-ext-datas
-    *ngIf="importExtDatas && !isLoadingDatas"
-    [importExtDatas]="importExtDatas"
-    (closeImport)="closeImport()"
-  >
-  </app-import-ext-datas>
+  }
+  @if (importExtDatas && !isLoadingDatas) {
+    <app-import-ext-datas
+      [importExtDatas]="importExtDatas"
+      (closeImport)="closeImport()"
+    >
+    </app-import-ext-datas>
+  }
 </div>

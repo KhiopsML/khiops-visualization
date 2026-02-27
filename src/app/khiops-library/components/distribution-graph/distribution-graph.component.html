@@ -1,42 +1,42 @@
 <div id="distribution-graph-comp" fxLayout="column" fxFlexFill>
-  <div *ngIf="inputDatas" fxFlexFill fxLayout="column">
-    <div fxLayout="row" fxLayoutAlign="end center" class="comp-header">
-      <div
-        fxFlex
-        fxLayout="row"
-        fxLayoutAlign="start center"
-        *ngIf="!hideGraphOptions"
-      >
-        <h2 title="{{ 'TOOLTIPS.DISTRIBUTION.TITLE' | translate }}">
-          {{ dynamicTitle | translate }}
-        </h2>
+  @if (inputDatas) {
+    <div fxFlexFill fxLayout="column">
+      <div fxLayout="row" fxLayoutAlign="end center" class="comp-header">
+        @if (!hideGraphOptions) {
+          <div fxFlex fxLayout="row" fxLayoutAlign="start center">
+            <h2 title="{{ 'TOOLTIPS.DISTRIBUTION.TITLE' | translate }}">
+              {{ dynamicTitle | translate }}
+            </h2>
+          </div>
+        }
+        @if (shouldShowLegend) {
+          <kl-legend
+            [inputDatas]="inputDatas"
+            [type]="'chart-1d'"
+            [colorSet]="colorSet"
+          ></kl-legend>
+        }
+        @if (!hideGraphOptions) {
+          <div class="comp-header-tools screenshot-hide" fxLayout="row">
+            <kl-graph-options-menu
+              [graphOptions]="graphOptions"
+              (graphOptionsChange)="changeGraphType($event)"
+            ></kl-graph-options-menu>
+          </div>
+        }
       </div>
-      <kl-legend
-        *ngIf="shouldShowLegend"
-        [inputDatas]="inputDatas"
-        [type]="'chart-1d'"
+      <kl-chart
+        id="{{ 'distribution-graph-comp-' + position }}"
+        [chartOptions]="chartOptions"
+        [canvasIdContainer]="'distribution-chart-' + position"
+        (selectBarIndex)="onSelectBarChanged($event)"
         [colorSet]="colorSet"
-      ></kl-legend>
-      <div
-        class="comp-header-tools screenshot-hide"
-        fxLayout="row"
-        *ngIf="!hideGraphOptions"
-      >
-        <kl-graph-options-menu
-          [graphOptions]="graphOptions"
-          (graphOptionsChange)="changeGraphType($event)"
-        ></kl-graph-options-menu>
-      </div>
+        [inputDatas]="inputDatas"
+        [activeEntries]="activeEntries"
+      ></kl-chart>
     </div>
-    <kl-chart
-      id="{{ 'distribution-graph-comp-' + position }}"
-      [chartOptions]="chartOptions"
-      [canvasIdContainer]="'distribution-chart-' + position"
-      (selectBarIndex)="onSelectBarChanged($event)"
-      [colorSet]="colorSet"
-      [inputDatas]="inputDatas"
-      [activeEntries]="activeEntries"
-    ></kl-chart>
-  </div>
-  <kl-no-data fxFlexFill *ngIf="!inputDatas"></kl-no-data>
+  }
+  @if (!inputDatas) {
+    <kl-no-data fxFlexFill></kl-no-data>
+  }
 </div>

@@ -1,80 +1,73 @@
 <div id="unfold-hierarchy-comp" fxFlexFill #unfoldHierarchy fxLayout="row">
-  <div
-    fxLayout="column"
-    fxFlexFill
-    fxLayoutAlign="center center"
-    *ngIf="!clustersPerDimDatas || loadingHierarchy"
-  >
-    <mat-spinner
-      diameter="40"
-      color="accent"
-      mode="indeterminate"
-    ></mat-spinner>
-  </div>
-  <div
-    fxFlexFill
-    fxLayout="column"
-    *ngIf="clustersPerDimDatas && !loadingHierarchy"
-  >
-    <kl-unfold-hierarchy-header
-      (cancel)="onClickOnCancel()"
-      (save)="onClickOnSave()"
-    ></kl-unfold-hierarchy-header>
-
-    <as-split id="unfold-hierarchy-content" direction="horizontal">
-      <as-split-area fxLayout="column">
-        <kl-unfold-hierarchy-settings
-          [currentUnfoldHierarchy]="currentUnfoldHierarchy"
-          [hierarchyDatas]="hierarchyDatas"
-          [currentCellsPerCluster]="currentCellsPerCluster"
-          [currentInformationPerCluster]="currentInformationPerCluster"
-          [cyInput]="cyInput"
-          (hierarchyChanged)="onHierarchyChanged($event)"
-          (increase)="increaseUnfoldHierarchy()"
-          (decrease)="decreaseUnfoldHierarchy()"
-          (cyInputSet)="setCypressInput($event)"
-        ></kl-unfold-hierarchy-settings>
-
-        <kl-ag-grid
-          fxFlex
-          id="unfold-hierarchy-table"
-          class="kl-card"
-          [showSearch]="false"
-          [showColumnsSelection]="false"
-          [inputDatas]="dimensions"
-          [title]="unfoldHierarchyTableTitle"
-          (gridCheckboxChanged)="onGridCheckboxChanged($event)"
-          [showLineSelection]="false"
-          [suppressRowClickSelection]="true"
-          [showColumnsSelection]="false"
-          [displayedColumns]="hierarchyDisplayedColumns"
-        ></kl-ag-grid>
-      </as-split-area>
-      <as-split-area fxLayout="column">
-        <as-split direction="vertical" disabled="true">
-          <as-split-area fxLayout="column">
-            <kl-unfold-hierarchy-info-rate-graph
-              id="unfold-hierarchy-info-rate"
-              fxFlexFill
-              [infoPerCluster]="infoPerCluster"
-              [colorSetInfoPerCluster]="colorSetInfoPerCluster"
-              [chartOptions]="infoPerClusterChartOptions"
-            ></kl-unfold-hierarchy-info-rate-graph>
-          </as-split-area>
-          <as-split-area fxLayout="column">
-            <kl-unfold-hierarchy-clusters-graph
-              id="unfold-hierarchy-clusters-graph"
-              fxFlexFill
-              [legend]="legend"
-              [colorSetClusterPerDim]="colorSetClusterPerDim"
-              [clustersPerDimDatas]="clustersPerDimDatas"
-              [selectedLineChartItem]="selectedLineChartItem"
-              [chartOptions]="clustersPerDimDatasChartOptions"
-              (legendItemClicked)="highlightChartLine($event)"
-            ></kl-unfold-hierarchy-clusters-graph>
-          </as-split-area>
-        </as-split>
-      </as-split-area>
-    </as-split>
-  </div>
+  @if (!clustersPerDimDatas || loadingHierarchy) {
+    <div fxLayout="column" fxFlexFill fxLayoutAlign="center center">
+      <mat-spinner
+        diameter="40"
+        color="accent"
+        mode="indeterminate"
+      ></mat-spinner>
+    </div>
+  }
+  @if (clustersPerDimDatas && !loadingHierarchy) {
+    <div fxFlexFill fxLayout="column">
+      <kl-unfold-hierarchy-header
+        (cancel)="onClickOnCancel()"
+        (save)="onClickOnSave()"
+      ></kl-unfold-hierarchy-header>
+      <as-split id="unfold-hierarchy-content" direction="horizontal">
+        <as-split-area fxLayout="column">
+          <kl-unfold-hierarchy-settings
+            [currentUnfoldHierarchy]="currentUnfoldHierarchy"
+            [hierarchyDatas]="hierarchyDatas"
+            [currentCellsPerCluster]="currentCellsPerCluster"
+            [currentInformationPerCluster]="currentInformationPerCluster"
+            [cyInput]="cyInput"
+            (hierarchyChanged)="onHierarchyChanged($event)"
+            (increase)="increaseUnfoldHierarchy()"
+            (decrease)="decreaseUnfoldHierarchy()"
+            (cyInputSet)="setCypressInput($event)"
+          ></kl-unfold-hierarchy-settings>
+          <kl-ag-grid
+            fxFlex
+            id="unfold-hierarchy-table"
+            class="kl-card"
+            [showSearch]="false"
+            [showColumnsSelection]="false"
+            [inputDatas]="dimensions"
+            [title]="unfoldHierarchyTableTitle"
+            (gridCheckboxChanged)="onGridCheckboxChanged($event)"
+            [showLineSelection]="false"
+            [enableClickSelection]="false"
+            [showColumnsSelection]="false"
+            [displayedColumns]="hierarchyDisplayedColumns"
+          ></kl-ag-grid>
+        </as-split-area>
+        <as-split-area fxLayout="column">
+          <as-split direction="vertical" disabled="true">
+            <as-split-area fxLayout="column">
+              <kl-unfold-hierarchy-info-rate-graph
+                id="unfold-hierarchy-info-rate"
+                fxFlexFill
+                [infoPerCluster]="infoPerCluster"
+                [colorSetInfoPerCluster]="colorSetInfoPerCluster"
+                [chartOptions]="infoPerClusterChartOptions"
+              ></kl-unfold-hierarchy-info-rate-graph>
+            </as-split-area>
+            <as-split-area fxLayout="column">
+              <kl-unfold-hierarchy-clusters-graph
+                id="unfold-hierarchy-clusters-graph"
+                fxFlexFill
+                [legend]="legend"
+                [colorSetClusterPerDim]="colorSetClusterPerDim"
+                [clustersPerDimDatas]="clustersPerDimDatas"
+                [selectedLineChartItem]="selectedLineChartItem"
+                [chartOptions]="clustersPerDimDatasChartOptions"
+                (legendItemClicked)="highlightChartLine($event)"
+              ></kl-unfold-hierarchy-clusters-graph>
+            </as-split-area>
+          </as-split>
+        </as-split-area>
+      </as-split>
+    </div>
+  }
 </div>

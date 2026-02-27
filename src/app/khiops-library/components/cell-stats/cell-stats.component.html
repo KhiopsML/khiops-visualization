@@ -4,20 +4,24 @@
   fxFlexFill
   fxLayoutAlign="center center"
 >
-  <div *ngIf="cellStats" class="cell-stats-content">
-    <b>{{ 'GLOBAL.CELL_STATS' | translate }}</b>
-    <span title="{{ 'TOOLTIPS.MATRIX.CELL_STATS_FREQUENCY' | translate }}"
-      >F= {{ cellStats.F | toPrecision }}</span
-    >
-    <span
-      title="{{
-        'TOOLTIPS.MATRIX.CELL_STATS_EXPECTED_FREQUENCY' | translate
-      }}"
-      >EF= {{ cellStats.EF | toPrecision }}</span
-    >
-    <span *ngIf="cellStats.I">I= {{ cellStats.I | toPrecision }}</span>
-    <span *ngIf="cellStats.Total"
-      >Total= {{ cellStats.Total | toPrecision }}
-    </span>
-  </div>
+  @if (cellStats) {
+    <div class="cell-stats-content">
+      <b>{{ 'GLOBAL.CELL_STATS' | translate }}</b>
+      <span title="{{ 'TOOLTIPS.MATRIX.CELL_STATS_FREQUENCY' | translate }}"
+        >F= {{ cellStats.F | toPrecision }}</span
+      >
+      <span
+        title="{{
+          'TOOLTIPS.MATRIX.CELL_STATS_EXPECTED_FREQUENCY' | translate
+        }}"
+        >EF= {{ cellStats.EF | toPrecision }}</span
+      >
+      @if (cellStats.I) {
+        <span>I= {{ cellStats.I | toPrecision }}</span>
+      }
+      @if (cellStats.Total) {
+        <span>Total= {{ cellStats.Total | toPrecision }} </span>
+      }
+    </div>
+  }
 </div>

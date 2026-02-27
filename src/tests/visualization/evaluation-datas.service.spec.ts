@@ -8,7 +8,7 @@
 import { TestBed } from '@angular/core/testing';
 
 import { EvaluationDatasService } from '@khiops-visualization/providers/evaluation-datas.service';
-import { HttpClientModule } from '@angular/common/http';
+import { provideHttpClient } from '@angular/common/http';
 import { AppService } from '@khiops-visualization/providers/app.service';
 import { TranslateModule } from '@ngstack/translate';
 
@@ -19,7 +19,8 @@ describe('Visualization', () => {
   describe('EvaluationDatasService', () => {
     beforeEach(() => {
       TestBed.configureTestingModule({
-        imports: [HttpClientModule, TranslateModule.forRoot()],
+        imports: [TranslateModule.forRoot()],
+  providers: [provideHttpClient()],
       });
 
       // Inject services

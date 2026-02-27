@@ -1,24 +1,23 @@
 <div class="legend-comp" [ngClass]="position">
-  <div
-    class="legend scrollbar-thin"
-    *ngIf="legend && legend.length !== 0"
-    tabindex="0"
-  >
-    <div
-      *ngFor="let data of legend"
-      class="legend-item"
-      fxLayout="row"
-      fxLayoutAlign="start center"
-      (click)="selectLegendItem(data.name)"
-      [ngClass]="{ 'legend-selected': selectedItem === data.name }"
-      title="{{ tooltip || data.name }}"
-    >
-      <div
-        class="square"
-        [style.background-color]="data.color"
-        [style.border-color]="data.borderColor"
-      ></div>
-      <span>{{ data.shortname }}</span>
+  @if (legend && legend.length !== 0) {
+    <div class="legend scrollbar-thin" tabindex="0">
+      @for (data of legend; track data.value || data.title || $index) {
+        <div
+          class="legend-item"
+          fxLayout="row"
+          fxLayoutAlign="start center"
+          (click)="selectLegendItem(data.name)"
+          [ngClass]="{ 'legend-selected': selectedItem === data.name }"
+          title="{{ tooltip || data.name }}"
+        >
+          <div
+            class="square"
+            [style.background-color]="data.color"
+            [style.border-color]="data.borderColor"
+          ></div>
+          <span>{{ data.shortname }}</span>
+        </div>
+      }
     </div>
-  </div>
+  }
 </div>

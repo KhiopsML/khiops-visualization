@@ -6,7 +6,7 @@
 
 // @ts-nocheck
 import { TestBed } from '@angular/core/testing';
-import { HttpClientModule } from '@angular/common/http';
+import { provideHttpClient } from '@angular/common/http';
 import { CopyDatasService } from '@khiops-library/providers/copy-datas.service';
 import { ConfigService } from '@khiops-library/providers/config.service';
 import { UtilsService } from '@khiops-library/providers/utils.service';
@@ -23,7 +23,8 @@ describe('CopyDatasService', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [HttpClientModule, TranslateModule.forRoot()],
+      imports: [TranslateModule.forRoot()],
+  providers: [provideHttpClient()],
       providers: [CopyDatasService, ConfigService],
     });
 
@@ -752,7 +753,8 @@ describe('CopyDatasService - Real Data Tests', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [HttpClientModule, TranslateModule.forRoot()],
+      imports: [TranslateModule.forRoot()],
+  providers: [provideHttpClient()],
       providers: [CopyDatasService, ConfigService],
     });
 

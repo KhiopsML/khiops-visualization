@@ -6,7 +6,7 @@
 // @ts-nocheck
 
 import { TestBed } from '@angular/core/testing';
-import { HttpClientModule } from '@angular/common/http';
+import { provideHttpClient } from '@angular/common/http';
 import { TranslateModule } from '@ngstack/translate';
 import { VariableSearchService } from '../../app/khiops-covisualization/providers/variable-search.service';
 import { CompositionService } from '../../app/khiops-covisualization/providers/composition.service';
@@ -23,7 +23,8 @@ describe('coVisualization', () => {
   describe('VariableSearchService', () => {
     beforeEach(() => {
       TestBed.configureTestingModule({
-        imports: [HttpClientModule, TranslateModule.forRoot()],
+        imports: [TranslateModule.forRoot()],
+  providers: [provideHttpClient()],
       });
 
       // Inject services

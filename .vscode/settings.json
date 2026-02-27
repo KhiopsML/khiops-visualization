@@ -1,8 +1,9 @@
-﻿{
+{
     "typescript.tsdk": "node_modules\\typescript\\lib",
     "typescript.preferences.includePackageJsonAutoImports": "on",
     "typescript.suggest.autoImports": true,
     "files.associations": {
         "*.spec.ts": "typescript"
-    }
+    },
+    "angular.enable-strict-mode-prompt": false
 }

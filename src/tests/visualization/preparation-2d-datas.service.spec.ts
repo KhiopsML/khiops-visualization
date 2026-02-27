@@ -7,7 +7,7 @@
 // @ts-nocheck
 import { TestBed } from '@angular/core/testing';
 
-import { HttpClientModule } from '@angular/common/http';
+import { provideHttpClient } from '@angular/common/http';
 import { TranslateModule } from '@ngstack/translate';
 import { Preparation2dDatasService } from '../../app/khiops-visualization/providers/preparation2d-datas.service';
 import { AppService } from '../../app/khiops-visualization/providers/app.service';
@@ -23,7 +23,8 @@ describe('Visualization', () => {
   describe('Preparation2dDatasService', () => {
     beforeEach(() => {
       TestBed.configureTestingModule({
-        imports: [HttpClientModule, TranslateModule.forRoot()],
+        imports: [TranslateModule.forRoot()],
+  providers: [provideHttpClient()],
       });
 
       // Inject services

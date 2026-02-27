@@ -14,70 +14,73 @@
       </app-user-settings>
     </mat-sidenav>
     <mat-sidenav-content>
-      <kl-header-title [title]="appTitle" *ngIf="showLogo && isCompatibleJson"> </kl-header-title>
+      @if (showLogo && isCompatibleJson) {
+        <kl-header-title [title]="appTitle"> </kl-header-title>
+      }
       <div class="container" [hidden]="isCompatibleJson" fxLayout="column">
         <kl-file-loader #fileLoader [hidden]="true"></kl-file-loader>
       </div>
-      <div *ngIf="isCompatibleJson" class="container" fxLayout="column">
-        <mat-tab-group
-          #tabsMenu
-          id="main-tab-group"
-          [animationDuration]="0"
-          mat-align-tabs="center"
-          color="primary"
-          [@.disabled]="true"
-          [selectedIndex]="activeTab"
-          (selectedTabChange)="onSelectedTabChanged($event)"
-        >
-          <mat-tab label="{{ 'TITLE.AXIS' | translate }}">
-            <ng-template matTabLabel>
-              <label title="{{ 'TOOLTIPS.TABS.AXIS' | translate }}">{{
-                'TITLE.AXIS' | translate
-              }}</label>
-            </ng-template>
-          </mat-tab>
-          <mat-tab
-            *ngIf="isContextDimensions"
-            label="{{ 'TITLE.CONTEXT' | translate }}"
+      @if (isCompatibleJson) {
+        <div class="container" fxLayout="column">
+          <mat-tab-group
+            #tabsMenu
+            id="main-tab-group"
+            [animationDuration]="0"
+            mat-align-tabs="center"
+            color="primary"
+            [@.disabled]="true"
+            [selectedIndex]="activeTab"
+            (selectedTabChange)="onSelectedTabChanged($event)"
           >
-            <ng-template matTabLabel>
-              <label title="{{ 'TOOLTIPS.TABS.CONTEXT' | translate }}">{{
-                'TITLE.CONTEXT' | translate
-              }}</label>
-            </ng-template>
-          </mat-tab>
-          <mat-tab
-            label="{{ 'TITLE.PROJECT' | translate }}"
-            *ngIf="showProjectTab"
+            <mat-tab label="{{ 'TITLE.AXIS' | translate }}">
+              <ng-template matTabLabel>
+                <label title="{{ 'TOOLTIPS.TABS.AXIS' | translate }}">{{
+                  'TITLE.AXIS' | translate
+                }}</label>
+              </ng-template>
+            </mat-tab>
+            @if (isContextDimensions) {
+              <mat-tab label="{{ 'TITLE.CONTEXT' | translate }}">
+                <ng-template matTabLabel>
+                  <label title="{{ 'TOOLTIPS.TABS.CONTEXT' | translate }}">{{
+                    'TITLE.CONTEXT' | translate
+                  }}</label>
+                </ng-template>
+              </mat-tab>
+            }
+            @if (showProjectTab) {
+              <mat-tab label="{{ 'TITLE.PROJECT' | translate }}">
+                <ng-template matTabLabel>
+                  <label title="{{ 'TOOLTIPS.TABS.PROJECT' | translate }}">{{
+                    'TITLE.PROJECT' | translate
+                  }}</label>
+                </ng-template>
+              </mat-tab>
+            }
+          </mat-tab-group>
+          <app-project-view
+            [hidden]="!showProjectView()"
+            [selectedTab]="selectedTab"
+          ></app-project-view>
+          <app-axis-view
+            [hidden]="!showAxisView()"
+            [selectedTab]="selectedTab"
+            [openContextView]="openContextView"
           >
-            <ng-template matTabLabel>
-              <label title="{{ 'TOOLTIPS.TABS.PROJECT' | translate }}">{{
-                'TITLE.PROJECT' | translate
-              }}</label>
-            </ng-template>
-          </mat-tab>
-        </mat-tab-group>
-        <app-project-view
-          [hidden]="!showProjectView()"
-          [selectedTab]="selectedTab"
-        ></app-project-view>
-        <app-axis-view
-          [hidden]="!showAxisView()"
-          [selectedTab]="selectedTab"
-          [openContextView]="openContextView"
-        >
-        </app-axis-view>
-      </div>
+          </app-axis-view>
+        </div>
+      }
       <div id="header-right" layout="row" fxLayoutAlign="center center">
-        <app-header-manage-view
-          *ngIf="showAxisView() && isCompatibleJson"
-        ></app-header-manage-view>
-        <kl-header-tools
-          fxFlex
-          *ngIf="isCompatibleJson"
-          (toggleNavDrawerChanged)="onToggleNavDrawerChanged($event)"
-        >
-        </kl-header-tools>
+        @if (showAxisView() && isCompatibleJson) {
+          <app-header-manage-view></app-header-manage-view>
+        }
+        @if (isCompatibleJson) {
+          <kl-header-tools
+            fxFlex
+            (toggleNavDrawerChanged)="onToggleNavDrawerChanged($event)"
+          >
+          </kl-header-tools>
+        }
       </div>
     </mat-sidenav-content>
   </mat-sidenav-container>

@@ -7,7 +7,7 @@
 import { TestBed } from '@angular/core/testing';
 
 import { PreparationDatasService } from '@khiops-visualization/providers/preparation-datas.service';
-import { HttpClientModule } from '@angular/common/http';
+import { provideHttpClient } from '@angular/common/http';
 import { CopyDatasService } from '@khiops-library/providers/copy-datas.service';
 import { TranslateModule } from '@ngstack/translate';
 import { AppConfig } from '../../environments/environment';
@@ -19,7 +19,8 @@ describe('Visualization', () => {
   describe('PreparationDatasService', () => {
     beforeEach(() => {
       TestBed.configureTestingModule({
-        imports: [HttpClientModule, TranslateModule.forRoot()],
+        imports: [TranslateModule.forRoot()],
+  providers: [provideHttpClient()],
       });
 
       // Inject services

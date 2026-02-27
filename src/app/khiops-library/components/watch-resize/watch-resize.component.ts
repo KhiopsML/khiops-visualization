@@ -50,11 +50,12 @@ export class WatchResizeComponent implements AfterViewInit {
             });
           });
         });
-        this.el = this.configService
-          .getRootElementDom()
-          .querySelector<HTMLElement>('#' + this.id);
-        if (this.el) {
-          observer.observe(this.el);
+        const rootElement = this.configService.getRootElementDom();
+        if (rootElement) {
+          this.el = rootElement.querySelector<HTMLElement>('#' + this.id);
+          if (this.el) {
+            observer.observe(this.el);
+          }
         }
       }
     });

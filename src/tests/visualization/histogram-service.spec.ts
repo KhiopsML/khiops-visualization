@@ -6,7 +6,7 @@
 // @ts-nocheck
 
 import { TestBed } from '@angular/core/testing';
-import { HttpClientModule } from '@angular/common/http';
+import { provideHttpClient } from '@angular/common/http';
 import { HistogramService } from '@khiops-visualization/components/commons/histogram/histogram.service';
 import { AppService } from '@khiops-visualization/providers/app.service';
 import { DistributionDatasService } from '@khiops-visualization/providers/distribution-datas.service';
@@ -42,7 +42,8 @@ describe('Visualization', () => {
   describe('Histogram datas', () => {
     beforeEach(() => {
       TestBed.configureTestingModule({
-        imports: [HttpClientModule, TranslateModule.forRoot()],
+        imports: [TranslateModule.forRoot()],
+  providers: [provideHttpClient()],
         providers: [
           provideMockStore({ initialState: {} }),
           DistributionDatasService,

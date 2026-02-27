@@ -3,10 +3,10 @@
     id="selected-clusters-grid"
     fxFlexFill
     [selectedVariable]="activeClusters"
-    [rowSelection]="'multiple'"
+    [rowSelection]="{ mode: 'multiRow', enableClickSelection: false, checkboxes: false, headerCheckbox: false }"
     titleTooltip="{{ 'TOOLTIPS.AXIS.SELECTED_CLUSTERS.TITLE' | translate }}"
     [showSearch]="false"
-    [suppressRowClickSelection]="true"
+    [enableClickSelection]="false"
     [showColumnsSelection]="false"
     [inputDatas]="selectedClusters"
     [title]="title"

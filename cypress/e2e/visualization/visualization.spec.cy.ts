@@ -7,11 +7,11 @@
 import '../../support/commands';
 import '../../utils/utils';
 import { setupPreparationTests } from '../../setups/preparation-tests';
-import { setupPreparation2dTests } from 'cypress/setups/preparation-2d-tests';
-import { setupModelingTests } from 'cypress/setups/modeling-tests';
-import { setupEvaluationTests } from 'cypress/setups/evaluation-tests';
-import { setupTextPreparationTests } from 'cypress/setups/text-preparation-tests.';
-import { setupTreePreparationTests } from 'cypress/setups/tree-preparation-tests';
+import { setupPreparation2dTests } from '../../setups/preparation-2d-tests';
+import { setupModelingTests } from '../../setups/modeling-tests';
+import { setupEvaluationTests } from '../../setups/evaluation-tests';
+import { setupTextPreparationTests } from '../../setups/text-preparation-tests';
+import { setupTreePreparationTests } from '../../setups/tree-preparation-tests';
 
 describe('Test Khiops Visualization sample files', () => {
   const files = [

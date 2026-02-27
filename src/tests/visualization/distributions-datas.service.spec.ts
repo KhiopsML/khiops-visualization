@@ -7,7 +7,7 @@
 import { TestBed } from '@angular/core/testing';
 
 import { DistributionDatasService } from '@khiops-visualization/providers/distribution-datas.service';
-import { HttpClientModule } from '@angular/common/http';
+import { provideHttpClient } from '@angular/common/http';
 import { AppService } from '@khiops-visualization/providers/app.service';
 import { PreparationDatasService } from '@khiops-visualization/providers/preparation-datas.service';
 import { TreePreparationDatasService } from '@khiops-visualization/providers/tree-preparation-datas.service';
@@ -26,8 +26,9 @@ describe('Visualization', () => {
   describe('DistributionDatasService', () => {
     beforeEach(() => {
       TestBed.configureTestingModule({
-        imports: [HttpClientModule, TranslateModule.forRoot()],
+        imports: [TranslateModule.forRoot()],
         providers: [
+          provideHttpClient(),
           provideMockStore({ initialState: {} }),
           DistributionDatasService,
           PreparationDatasService,

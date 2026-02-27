@@ -1,94 +1,101 @@
-<div
-  class="app-histogram"
-  *ngIf="datas"
-  fxFlexFill
-  fxLayout="column"
-  (resized)="onResized($event)"
->
+@if (datas) {
   <div
+    class="app-histogram"
+    fxFlexFill
     fxLayout="column"
-    class="histogram-loading-indicator"
-    fxLayoutAlign="center center"
-    *ngIf="isLoading"
+    (resized)="onResized($event)"
   >
-    <mat-spinner
-      diameter="30"
-      color="accent"
-      mode="indeterminate"
-    ></mat-spinner>
-    <span>{{ 'GLOBAL.BIG_FILES_LOADING_WARNING' | translate }}</span>
-  </div>
-  <div fxLayout="row" fxLayoutAlign="end center" class="comp-header">
-    <div fxFlexFill class="scrollbar-thin">
-      <div fxFlex fxLayout="row" fxLayoutAlign="start center">
-        <h2 fxFlex title="{{ 'TOOLTIPS.DISTRIBUTION.TITLE' | translate }}">
-          {{ 'GLOBAL.DENSITY' | translate }}
-        </h2>
-        <div
-          class="app-histogram-slider screenshot-hide"
-          fxFlex
-          style="width: 100%"
-          *ngIf="histogramNumber > 1"
-        >
-          <span> {{ 'GLOBAL.INTERPRETABLE_HISTOGRAM' | translate }}</span>
-          <mat-slider
-            [max]="histogramNumber - 1"
-            [min]="0"
-            [step]="1"
-            style="width: 100%"
-          >
-            <input
-              [(ngModel)]="defaultInterpretableHistogramNumber"
-              matSliderThumb
-            />
-          </mat-slider>
-          <mat-slider
-            [max]="histogramNumber - 1"
-            [min]="0"
-            [step]="1"
-            (input)="
-              onInterpretableHistogramChanged($event?.target?.['valueAsNumber'])
-            "
-            style="width: 100%"
-          >
-            <input [(ngModel)]="interpretableHistogramNumber" matSliderThumb />
-          </mat-slider>
+    @if (isLoading) {
+      <div
+        fxLayout="column"
+        class="histogram-loading-indicator"
+        fxLayoutAlign="center center"
+      >
+        <mat-spinner
+          diameter="30"
+          color="accent"
+          mode="indeterminate"
+        ></mat-spinner>
+        <span>{{ 'GLOBAL.BIG_FILES_LOADING_WARNING' | translate }}</span>
+      </div>
+    }
+    <div fxLayout="row" fxLayoutAlign="end center" class="comp-header">
+      <div fxFlexFill class="scrollbar-thin">
+        <div fxFlex fxLayout="row" fxLayoutAlign="start center">
+          <h2 fxFlex title="{{ 'TOOLTIPS.DISTRIBUTION.TITLE' | translate }}">
+            {{ 'GLOBAL.DENSITY' | translate }}
+          </h2>
+          @if (histogramNumber > 1) {
+            <div
+              class="app-histogram-slider screenshot-hide"
+              fxFlex
+              style="width: 100%"
+            >
+              <span> {{ 'GLOBAL.INTERPRETABLE_HISTOGRAM' | translate }}</span>
+              <mat-slider
+                [max]="histogramNumber - 1"
+                [min]="0"
+                [step]="1"
+                style="width: 100%"
+              >
+                <input
+                  [(ngModel)]="defaultInterpretableHistogramNumber"
+                  matSliderThumb
+                />
+              </mat-slider>
+              <mat-slider
+                [max]="histogramNumber - 1"
+                [min]="0"
+                [step]="1"
+                (input)="
+                  onInterpretableHistogramChanged(
+                    $event?.target?.['valueAsNumber']
+                  )
+                "
+                style="width: 100%"
+              >
+                <input
+                  [(ngModel)]="interpretableHistogramNumber"
+                  matSliderThumb
+                />
+              </mat-slider>
+            </div>
+          }
+        </div>
+        <div class="comp-header-tools" fxLayout="row">
+          <kl-graph-options-menu
+            [graphOptions]="graphOptionsX"
+            (graphOptionsChange)="changeGraphTypeX($event)"
+          ></kl-graph-options-menu>
+          <kl-graph-options-menu
+            [graphOptions]="graphOptionsY"
+            (graphOptionsChange)="changeGraphTypeY($event)"
+          ></kl-graph-options-menu>
         </div>
       </div>
-      <div class="comp-header-tools" fxLayout="row">
-        <kl-graph-options-menu
-          [graphOptions]="graphOptionsX"
-          (graphOptionsChange)="changeGraphTypeX($event)"
-        ></kl-graph-options-menu>
-        <kl-graph-options-menu
-          [graphOptions]="graphOptionsY"
-          (graphOptionsChange)="changeGraphTypeY($event)"
-        ></kl-graph-options-menu>
+    </div>
+    <div id="histogram-container" #histogramContainer>
+      <div
+        fxFlexFill
+        (wheel)="onWheel($event)"
+        (mousedown)="onMouseDown($event)"
+        (mousemove)="onMouseMove($event)"
+        (mouseup)="onMouseUp($event)"
+      >
+        <canvas id="histogram-canvas" fxFlex> </canvas>
+        <canvas id="histogram-canvas-hover" fxFlex> </canvas>
+        <canvas id="histogram-canvas-selected" fxFlex> </canvas>
+        <div #chart id="histogram-chart" fxFlexFill></div>
+        <app-histogram-tooltip
+          [title]="tooltipTitle"
+          [body]="tooltipBody"
+          [canvasW]="w"
+          [posX]="tooltipPosX"
+          [posY]="tooltipPosY"
+          [display]="tooltipDisplay"
+        >
+        </app-histogram-tooltip>
       </div>
     </div>
   </div>
-
-  <div id="histogram-container" #histogramContainer>
-    <div
-      fxFlexFill
-      (wheel)="onWheel($event)"
-      (mousedown)="onMouseDown($event)"
-      (mousemove)="onMouseMove($event)"
-      (mouseup)="onMouseUp($event)"
-    >
-      <canvas id="histogram-canvas" fxFlex> </canvas>
-      <canvas id="histogram-canvas-hover" fxFlex> </canvas>
-      <canvas id="histogram-canvas-selected" fxFlex> </canvas>
-      <div #chart id="histogram-chart" fxFlexFill></div>
-      <app-histogram-tooltip
-        [title]="tooltipTitle"
-        [body]="tooltipBody"
-        [canvasW]="w"
-        [posX]="tooltipPosX"
-        [posY]="tooltipPosY"
-        [display]="tooltipDisplay"
-      >
-      </app-histogram-tooltip>
-    </div>
-  </div>
-</div>
+}

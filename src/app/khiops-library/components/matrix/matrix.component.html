@@ -1,10 +1,11 @@
 <div id="matrix-comp" fxFlexFill fxLayout="column">
-  <kl-matrix-tooltip
-    *ngIf="matrixDiv"
-    [cell]="tooltipCell"
-    [position]="tooltipPosition"
-    [showExpectedFrequency]="showExpectedFrequency"
-  ></kl-matrix-tooltip>
+  @if (matrixDiv) {
+    <kl-matrix-tooltip
+      [cell]="tooltipCell"
+      [position]="tooltipPosition"
+      [showExpectedFrequency]="showExpectedFrequency"
+    ></kl-matrix-tooltip>
+  }
   <div
     id="matrix-loading"
     fxLayout="column"
@@ -18,38 +19,38 @@
       mode="indeterminate"
     ></mat-spinner>
   </div>
-  <kl-cell-stats
-    *ngIf="isKhiopsCovisu"
-    [selectedCells]="selectedCells"
-  ></kl-cell-stats>
+  @if (isKhiopsCovisu) {
+    <kl-cell-stats [selectedCells]="selectedCells"></kl-cell-stats>
+  }
   <div fxLayout="row" fxFlex>
     <div fxLayout="column" id="matrix-comp-left">
       <kl-zoom-tools></kl-zoom-tools>
-      <hr *ngIf="isKhiopsCovisu" />
-      <kl-keyboard-tooltip
-        *ngIf="isKhiopsCovisu"
-        key="CTRL"
-        tooltip="GLOBAL.MULTI_SELECTION_TIPS"
-      >
-      </kl-keyboard-tooltip>
+      @if (isKhiopsCovisu) {
+        <hr />
+      }
+      @if (isKhiopsCovisu) {
+        <kl-keyboard-tooltip key="CTRL" tooltip="GLOBAL.MULTI_SELECTION_TIPS">
+        </kl-keyboard-tooltip>
+      }
       <div fxFlex id="y-axis" fxLayoutAlign="center center">
         <span class="axis-matrix" title="{{ yAxisLabel }}">{{
           yAxisLabel
         }}</span>
       </div>
-      <button
-        class="screenshot-hide"
-        *ngIf="graphMode?.mode === 'MUTUAL_INFO' && !isKhiopsCovisu"
-        mat-icon-button
-        matTooltip="{{ 'GLOBAL.TOGGLE_ZERO' | translate }}"
-        (click)="onClickOnToggleZeros()"
-        [ngClass]="['toggle-zero', 'toggled-' + isZerosToggled]"
-        attr.aria-label="{{ 'GLOBAL.TOGGLE_ZERO' | translate }}"
-      >
-        <mat-icon fxFlexFill fxLayoutAlign="center center">{{
-          isZerosToggled ? 'visibility' : 'visibility_off'
-        }}</mat-icon>
-      </button>
+      @if (graphMode?.mode === 'MUTUAL_INFO' && !isKhiopsCovisu) {
+        <button
+          class="screenshot-hide"
+          mat-icon-button
+          matTooltip="{{ 'GLOBAL.TOGGLE_ZERO' | translate }}"
+          (click)="onClickOnToggleZeros()"
+          [ngClass]="['toggle-zero', 'toggled-' + isZerosToggled]"
+          attr.aria-label="{{ 'GLOBAL.TOGGLE_ZERO' | translate }}"
+        >
+          <mat-icon fxFlexFill fxLayoutAlign="center center">{{
+            isZerosToggled ? 'visibility' : 'visibility_off'
+          }}</mat-icon>
+        </button>
+      }
       <button
         class="screenshot-hide"
         mat-icon-button

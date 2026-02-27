@@ -29,19 +29,20 @@
             ></kl-project-summary>
           </div>
         </as-split-area>
-        <as-split-area
-          [size]="180"
-          class="kl-card"
-          id="project-view-comp-file-loader"
-          *ngIf="(debugFile && !isElectron) || showOpenFileBtn"
-        >
-          <!-- Header -->
-          <h1 fxLayout="row" fxLayoutAlign="start start">
-            <mat-icon>folder_open</mat-icon>
-            {{ 'GLOBAL.LOAD_DATAS' | translate }}
-          </h1>
-          <kl-file-loader> </kl-file-loader>
-        </as-split-area>
+        @if ((debugFile && !isElectron) || showOpenFileBtn) {
+          <as-split-area
+            [size]="180"
+            class="kl-card"
+            id="project-view-comp-file-loader"
+          >
+            <!-- Header -->
+            <h1 fxLayout="row" fxLayoutAlign="start start">
+              <mat-icon>folder_open</mat-icon>
+              {{ 'GLOBAL.LOAD_DATAS' | translate }}
+            </h1>
+            <kl-file-loader> </kl-file-loader>
+          </as-split-area>
+        }
       </as-split>
     </as-split-area>
     <as-split-area [size]="sizes?.row[1]" class="kl-card">

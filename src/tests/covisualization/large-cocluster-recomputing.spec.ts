@@ -8,7 +8,7 @@
 import { TestBed } from '@angular/core/testing';
 import { AppService } from '@khiops-covisualization/providers/app.service';
 import { DimensionsDatasService } from '@khiops-covisualization/providers/dimensions-datas.service';
-import { HttpClientModule } from '@angular/common/http';
+import { provideHttpClient } from '@angular/common/http';
 import { TreenodesService } from '@khiops-covisualization/providers/treenodes.service';
 import { DimensionsDatasModel } from '@khiops-covisualization/model/dimensions-data.model';
 import { AppConfig } from '../../environments/environment';
@@ -23,7 +23,8 @@ describe('CoVisualization', () => {
   describe('Loading large coclustering [10.1.1_id_feat_nospace_Coclustering.json]', () => {
     beforeEach(() => {
       TestBed.configureTestingModule({
-        imports: [HttpClientModule, TranslateModule.forRoot()],
+        imports: [TranslateModule.forRoot()],
+  providers: [provideHttpClient()],
       });
 
       // Inject services

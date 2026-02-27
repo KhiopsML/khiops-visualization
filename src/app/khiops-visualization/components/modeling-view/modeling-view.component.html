@@ -1,172 +1,172 @@
 <div id="modeling-view-comp" fxFlexFill>
-  <div
-    fxLayout="column"
-    fxFlexFill
-    fxLayoutAlign="center center"
-    *ngIf="loadingView"
-  >
-    <mat-spinner
-      diameter="40"
-      color="accent"
-      mode="indeterminate"
-    ></mat-spinner>
-  </div>
-  <as-split
-    *ngIf="!loadingView"
-    direction="vertical"
-    (dragEnd)="onSplitDragEnd($event, 'row')"
-  >
-    <as-split-area [size]="sizes?.row[0]">
-      <as-split
-        direction="horizontal"
-        (dragEnd)="onSplitDragEnd($event, 'row0Col')"
-      >
-        <as-split-area [size]="sizes?.row0Col[0]" class="kl-card">
-          <kl-informations-block
-            id="modeling-informations-block-summary"
-            title="{{ 'GLOBAL.SUMMARY' | translate }}"
-            [inputDatas]="summaryDatas"
-          ></kl-informations-block>
-        </as-split-area>
-        <as-split-area [size]="sizes?.row0Col[1]" class="kl-card">
-          <app-target-variable-stats
-            *ngIf="targetVariableStatsDatas"
-            id="modeling-target-variable-stats"
-            fxFlexFill
-            [inputDatas]="targetVariableStatsDatas"
-          >
-          </app-target-variable-stats>
-          <kl-no-data
-            fxFlexFill
-            *ngIf="
-              !targetVariableStatsDatas && !targetVariableStatsInformations
-            "
-            [message]="'NO_DATAS.NO_VARIABLE_DETAILS'"
-          >
-          </kl-no-data>
-          <kl-informations-block
-            id="preparation-informations-block-summary"
-            *ngIf="targetVariableStatsInformations && !targetVariableStatsDatas"
-            title="{{ 'GLOBAL.TARGET_VARIABLE_STATS' | translate }}"
-            [inputDatas]="targetVariableStatsInformations"
-          ></kl-informations-block>
-        </as-split-area>
-        <as-split-area [size]="sizes?.row0Col[2]">
-          <as-split direction="vertical" disabled unit="pixel">
-            <as-split-area class="kl-card">
-              <kl-informations-block
-                id="modeling-informations-block-informations"
-                title="{{ 'GLOBAL.TRAINED_PREDICTORS' | translate }}"
-                icon="subject"
-                [inputDatas]="trainedPredictorsSummaryDatas"
-              ></kl-informations-block>
-            </as-split-area>
-            <as-split-area [size]="50" class="kl-card">
-              <app-change-scale-button fxFlexFill></app-change-scale-button>
-            </as-split-area>
-          </as-split>
-        </as-split-area>
-      </as-split>
-    </as-split-area>
-
-    <as-split-area [size]="sizes?.row[1]">
-      <app-select-trained-predictor
-        [inputDatas]="trainedPredictors"
-        (selectedPredictorChanged)="onSelectedPredictorChanged($event)"
-      ></app-select-trained-predictor>
-
-      <as-split
-        class="trained-predictor-details-container"
-        direction="horizontal"
-        (dragEnd)="onSplitDragEnd($event, 'row1Col')"
-      >
-        <as-split-area [size]="sizes?.row1Col[0]">
-          <as-split
-            *ngIf="modelingDatas?.trainedPredictorsListDatas"
-            direction="vertical"
-            (dragEnd)="onSplitDragEnd($event, 'row1Col0Row')"
-          >
-            <as-split-area class="variables-list-container kl-card">
-              <kl-ag-grid
-                id="modeling-variables-list"
-                class="variables-list"
-                #agGridRef
+  @if (loadingView) {
+    <div fxLayout="column" fxFlexFill fxLayoutAlign="center center">
+      <mat-spinner
+        diameter="40"
+        color="accent"
+        mode="indeterminate"
+      ></mat-spinner>
+    </div>
+  }
+  @if (!loadingView) {
+    <as-split direction="vertical" (dragEnd)="onSplitDragEnd($event, 'row')">
+      <as-split-area [size]="sizes?.row[0]">
+        <as-split
+          direction="horizontal"
+          (dragEnd)="onSplitDragEnd($event, 'row0Col')"
+        >
+          <as-split-area [size]="sizes?.row0Col[0]" class="kl-card">
+            <kl-informations-block
+              id="modeling-informations-block-summary"
+              title="{{ 'GLOBAL.SUMMARY' | translate }}"
+              [inputDatas]="summaryDatas"
+            ></kl-informations-block>
+          </as-split-area>
+          <as-split-area [size]="sizes?.row0Col[1]" class="kl-card">
+            @if (targetVariableStatsDatas) {
+              <app-target-variable-stats
+                id="modeling-target-variable-stats"
                 fxFlexFill
-                titleTooltip="{{
-                  'TOOLTIPS.MODELING.VARIABLES.TITLE' | translate
-                }}"
-                [showSearch]="true"
-                [watchResize]="true"
-                [displayCount]="true"
-                [selectedVariable]="modelingDatas?.selectedVariable"
-                (selectListItem)="onSelectListItemChanged($event)"
-                [showLineSelection]="true"
-                [showColumnsSelection]="true"
-                [inputDatas]="modelingDatas?.trainedPredictorsListDatas"
-                [displayedColumns]="trainedPredictorsDisplayedColumns"
+                [inputDatas]="targetVariableStatsDatas"
               >
-                <app-level-distribution-button
-                  *ngIf="hasLevelData()"
-                  slot="header-tools"
-                  distributionType="level"
-                  [isSmallDiv]="agGridRef.isSmallDiv"
-                  [searchFormVisible]="agGridRef.searchFormVisible"
-                  (openLevelDistribution)="onShowLevelDistributionFromButton()"
-                >
-                </app-level-distribution-button>
-                <app-level-distribution-button
-                  *ngIf="hasImportanceData()"
-                  slot="header-tools"
-                  distributionType="importance"
-                  [isSmallDiv]="agGridRef.isSmallDiv"
-                  [searchFormVisible]="agGridRef.searchFormVisible"
-                  (openLevelDistribution)="
-                    onShowImportanceDistributionFromButton()
-                  "
-                >
-                </app-level-distribution-button>
-              </kl-ag-grid>
-            </as-split-area>
-          </as-split>
-          <kl-no-data
-            fxFlexFill
-            *ngIf="!modelingDatas?.trainedPredictorsListDatas"
-            [message]="'NO_DATAS.NO_PREDICTORS_DETAILS'"
-          ></kl-no-data>
-        </as-split-area>
-        <as-split-area [size]="sizes?.row1Col[1]">
-          <app-var-details-preparation
-            [preparationSource]="preparationSource"
-            *ngIf="
+              </app-target-variable-stats>
+            }
+            @if (
+              !targetVariableStatsDatas && !targetVariableStatsInformations
+            ) {
+              <kl-no-data fxFlexFill [message]="'NO_DATAS.NO_VARIABLE_DETAILS'">
+              </kl-no-data>
+            }
+            @if (targetVariableStatsInformations && !targetVariableStatsDatas) {
+              <kl-informations-block
+                id="preparation-informations-block-summary"
+                title="{{ 'GLOBAL.TARGET_VARIABLE_STATS' | translate }}"
+                [inputDatas]="targetVariableStatsInformations"
+              ></kl-informations-block>
+            }
+          </as-split-area>
+          <as-split-area [size]="sizes?.row0Col[2]">
+            <as-split direction="vertical" disabled unit="pixel">
+              <as-split-area class="kl-card">
+                <kl-informations-block
+                  id="modeling-informations-block-informations"
+                  title="{{ 'GLOBAL.TRAINED_PREDICTORS' | translate }}"
+                  icon="subject"
+                  [inputDatas]="trainedPredictorsSummaryDatas"
+                ></kl-informations-block>
+              </as-split-area>
+              <as-split-area [size]="50" class="kl-card">
+                <app-change-scale-button fxFlexFill></app-change-scale-button>
+              </as-split-area>
+            </as-split>
+          </as-split-area>
+        </as-split>
+      </as-split-area>
+      <as-split-area [size]="sizes?.row[1]">
+        <app-select-trained-predictor
+          [inputDatas]="trainedPredictors"
+          (selectedPredictorChanged)="onSelectedPredictorChanged($event)"
+        ></app-select-trained-predictor>
+        <as-split
+          class="trained-predictor-details-container"
+          direction="horizontal"
+          (dragEnd)="onSplitDragEnd($event, 'row1Col')"
+        >
+          <as-split-area [size]="sizes?.row1Col[0]">
+            @if (modelingDatas?.trainedPredictorsListDatas) {
+              <as-split
+                direction="vertical"
+                (dragEnd)="onSplitDragEnd($event, 'row1Col0Row')"
+              >
+                <as-split-area class="variables-list-container kl-card">
+                  <kl-ag-grid
+                    id="modeling-variables-list"
+                    class="variables-list"
+                    #agGridRef
+                    fxFlexFill
+                    titleTooltip="{{
+                      'TOOLTIPS.MODELING.VARIABLES.TITLE' | translate
+                    }}"
+                    [showSearch]="true"
+                    [watchResize]="true"
+                    [displayCount]="true"
+                    [selectedVariable]="modelingDatas?.selectedVariable"
+                    (selectListItem)="onSelectListItemChanged($event)"
+                    [showLineSelection]="true"
+                    [showColumnsSelection]="true"
+                    [inputDatas]="modelingDatas?.trainedPredictorsListDatas"
+                    [displayedColumns]="trainedPredictorsDisplayedColumns"
+                  >
+                    @if (hasLevelData()) {
+                      <app-level-distribution-button
+                        slot="header-tools"
+                        distributionType="level"
+                        [isSmallDiv]="agGridRef.isSmallDiv"
+                        [searchFormVisible]="agGridRef.searchFormVisible"
+                        (openLevelDistribution)="
+                          onShowLevelDistributionFromButton()
+                        "
+                      >
+                      </app-level-distribution-button>
+                    }
+                    @if (hasImportanceData()) {
+                      <app-level-distribution-button
+                        slot="header-tools"
+                        distributionType="importance"
+                        [isSmallDiv]="agGridRef.isSmallDiv"
+                        [searchFormVisible]="agGridRef.searchFormVisible"
+                        (openLevelDistribution)="
+                          onShowImportanceDistributionFromButton()
+                        "
+                      >
+                      </app-level-distribution-button>
+                    }
+                  </kl-ag-grid>
+                </as-split-area>
+              </as-split>
+            }
+            @if (!modelingDatas?.trainedPredictorsListDatas) {
+              <kl-no-data
+                fxFlexFill
+                [message]="'NO_DATAS.NO_PREDICTORS_DETAILS'"
+              ></kl-no-data>
+            }
+          </as-split-area>
+          <as-split-area [size]="sizes?.row1Col[1]">
+            @if (
               modelingDatas?.selectedVariable?.variableType === 'preparation' ||
               modelingDatas?.selectedVariable?.variableType ===
                 'text-preparation'
-            "
-          >
-          </app-var-details-preparation>
-          <app-var-details-preparation-2d
-            *ngIf="
+            ) {
+              <app-var-details-preparation
+                [preparationSource]="preparationSource"
+              >
+              </app-var-details-preparation>
+            }
+            @if (
               modelingDatas?.selectedVariable?.variableType === 'preparation-2d'
-            "
-          >
-          </app-var-details-preparation-2d>
-          <app-var-details-tree-preparation
-            *ngIf="
+            ) {
+              <app-var-details-preparation-2d> </app-var-details-preparation-2d>
+            }
+            @if (
               modelingDatas?.selectedVariable?.variableType ===
               'tree-preparation'
-            "
-          >
-          </app-var-details-tree-preparation>
-          <kl-no-data
-            fxFlexFill
-            *ngIf="
+            ) {
+              <app-var-details-tree-preparation>
+              </app-var-details-tree-preparation>
+            }
+            @if (
               !modelingDatas?.trainedPredictorsListDatas ||
               !modelingDatas?.selectedVariable
-            "
-            [message]="'NO_DATAS.NO_PREDICTORS_DETAILS'"
-          ></kl-no-data>
-        </as-split-area>
-      </as-split>
-    </as-split-area>
-  </as-split>
+            ) {
+              <kl-no-data
+                fxFlexFill
+                [message]="'NO_DATAS.NO_PREDICTORS_DETAILS'"
+              ></kl-no-data>
+            }
+          </as-split-area>
+        </as-split>
+      </as-split-area>
+    </as-split>
+  }
 </div>

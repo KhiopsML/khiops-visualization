@@ -8,7 +8,7 @@
 import { TestBed } from '@angular/core/testing';
 
 import { ModelingDatasService } from '@khiops-visualization/providers/modeling-datas.service';
-import { HttpClientModule } from '@angular/common/http';
+import { provideHttpClient } from '@angular/common/http';
 import { AppService } from '@khiops-visualization/providers/app.service';
 import { PreparationDatasService } from '@khiops-visualization/providers/preparation-datas.service';
 import { REPORT } from '@khiops-library/enum/report';
@@ -22,7 +22,8 @@ describe('Visualization', () => {
   describe('ModelingDatasService', () => {
     beforeEach(() => {
       TestBed.configureTestingModule({
-        imports: [HttpClientModule, TranslateModule.forRoot()],
+        imports: [TranslateModule.forRoot()],
+  providers: [provideHttpClient()],
       });
 
       // Inject services

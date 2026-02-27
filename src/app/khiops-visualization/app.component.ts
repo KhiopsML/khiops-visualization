@@ -13,11 +13,7 @@ import {
   NgZone,
 } from '@angular/core';
 import { TranslateService } from '@ngstack/translate';
-import {
-  MatDialogRef,
-  MatDialog,
-  MatDialogConfig,
-} from '@angular/material/dialog';
+import { MatDialogRef, MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { ConfirmDialogComponent } from '@khiops-library/components/confirm-dialog/confirm-dialog.component';
 import { AppService } from './providers/app.service';
 import { ConfigService } from '@khiops-library/providers/config.service';

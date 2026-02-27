@@ -1,11 +1,12 @@
-<div
-  *ngIf="show"
-  class="kl-warning-information"
-  [ngClass]="{ inline: variant === 'inline' }"
-  fxLayout="row"
-  fxLayoutAlign="start center"
-  [matTooltip]="tooltipText"
->
-  <kl-icon name="warning" />
-  <span class="warning-text">{{ text }}</span>
-</div>
+@if (show) {
+  <div
+    class="kl-warning-information"
+    [ngClass]="{ inline: variant === 'inline' }"
+    fxLayout="row"
+    fxLayoutAlign="start center"
+    [matTooltip]="tooltipText"
+  >
+    <kl-icon name="warning" />
+    <span class="warning-text">{{ text }}</span>
+  </div>
+}

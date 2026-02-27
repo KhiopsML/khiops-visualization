@@ -4,25 +4,24 @@
   fxLayoutAlign="start start"
   fxLayout="column"
 >
-  <h1
-    *ngIf="currentExternalDatasTitle && currentExternalDatas?.length > 0"
-    class="small-title"
-  >
-    {{
-      'GLOBAL.EXTERNAL_DATA_OF'
-        | translate: { value: currentExternalDatasTitle }
-    }}
-  </h1>
-  <div fxLayout="column" *ngFor="let datas of currentExternalDatas">
-    <div fxLayout="row">
-      <pre class="external-datas-text" *ngFor="let data of datas">{{
-        data.value
-      }}</pre>
+  @if (currentExternalDatasTitle && currentExternalDatas?.length > 0) {
+    <h1 class="small-title">
+      {{
+        'GLOBAL.EXTERNAL_DATA_OF'
+          | translate: { value: currentExternalDatasTitle }
+      }}
+    </h1>
+  }
+  @for (datas of currentExternalDatas; track $index) {
+    <div fxLayout="column">
+      <div fxLayout="row">
+        @for (data of datas; track data.value) {
+          <pre class="external-datas-text">{{ data.value }}</pre>
+        }
+      </div>
     </div>
-  </div>
-  <kl-no-data
-    fxFlexFill
-    *ngIf="currentExternalDatas.length === 0"
-    [message]="getNoDatasMessage()"
-  ></kl-no-data>
+  }
+  @if (currentExternalDatas.length === 0) {
+    <kl-no-data fxFlexFill [message]="getNoDatasMessage()"></kl-no-data>
+  }
 </div>

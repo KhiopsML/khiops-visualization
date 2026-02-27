@@ -1,58 +1,67 @@
-<div
-  fxLayout="column"
-  id="tree-hyper-comp"
-  fxFlex
-  [ngClass]="{ fullscreen: isFullscreen }"
-  #hyperTree
-  *ngIf="dimensionTree"
->
+@if (dimensionTree) {
   <div
-    id="graph-header-comp"
-    fxLayoutAlign="start center"
-    class="scrollbar-thin screenshot-hide"
-    fxLayout="row"
+    fxLayout="column"
+    id="tree-hyper-comp"
+    fxFlex
+    [ngClass]="{ fullscreen: isFullscreen }"
+    #hyperTree
   >
-    <div fxLayout="column" fxFlex fxLayoutAlign="start start">
-      <h1 fxFlex fxLayoutAlign="start center">
-        <kl-icon name="hypertree" />
-        {{ 'GLOBAL.HYPER_TREE' | translate }}
-      </h1>
+    <div
+      id="graph-header-comp"
+      fxLayoutAlign="start center"
+      class="scrollbar-thin screenshot-hide"
+      fxLayout="row"
+    >
+      <div fxLayout="column" fxFlex fxLayoutAlign="start start">
+        <h1 fxFlex fxLayoutAlign="start center">
+          <kl-icon name="hypertree" />
+          {{ 'GLOBAL.HYPER_TREE' | translate }}
+        </h1>
+        <div
+          fxLayout="row"
+          fxLayoutAlign="start center"
+          fxFlex
+          class="graph-header-tools"
+        >
+          <mat-checkbox
+            [checked]="visualization.purity"
+            (change)="togglePurityVisualization($event.checked)"
+          >
+            {{ 'GLOBAL.DISPLAY_PURITY_BY_OPACITY' | translate }}
+          </mat-checkbox>
+          <mat-checkbox
+            [checked]="visualization.population"
+            (change)="togglePopulationVisualization($event.checked)"
+          >
+            {{ 'GLOBAL.DISPLAY_LEAF_SIZES_BY_POPULATION' | translate }}
+          </mat-checkbox>
+        </div>
+      </div>
       <div
+        fxLayoutAlign="start start"
         fxLayout="row"
-        fxLayoutAlign="start center"
-        fxFlex
         class="graph-header-tools"
       >
-        <mat-checkbox
-          [checked]="visualization.purity"
-          (change)="togglePurityVisualization($event.checked)"
-        >
-          {{ 'GLOBAL.DISPLAY_PURITY_BY_OPACITY' | translate }}
-        </mat-checkbox>
-        <mat-checkbox
-          [checked]="visualization.population"
-          (change)="togglePopulationVisualization($event.checked)"
-        >
-          {{ 'GLOBAL.DISPLAY_LEAF_SIZES_BY_POPULATION' | translate }}
-        </mat-checkbox>
-      </div>
-    </div>
-    <div fxLayoutAlign="start start" fxLayout="row" class="graph-header-tools">
-      <app-select-toggle-button
-        *ngIf="
+        @if (
           distributionDatas &&
           distributionDatas.targetDistributionDisplayedValues
-        "
-        [displayedValues]="distributionDatas.targetDistributionDisplayedValues"
-        (selectToggleButtonChanged)="onSelectToggleButtonChanged($event)"
-        [buttonTitle]="buttonTitle"
-      >
-      </app-select-toggle-button>
-
-      <kl-btn-fullscreen (toggleFullscreen)="onToggleFullscreen($event)">
-      </kl-btn-fullscreen>
+        ) {
+          <app-select-toggle-button
+            [displayedValues]="
+              distributionDatas.targetDistributionDisplayedValues
+            "
+            (selectToggleButtonChanged)="onSelectToggleButtonChanged($event)"
+            [buttonTitle]="buttonTitle"
+          >
+          </app-select-toggle-button>
+        }
+        <kl-btn-fullscreen (toggleFullscreen)="onToggleFullscreen($event)">
+        </kl-btn-fullscreen>
+      </div>
     </div>
+    <div id="hyperTree"></div>
   </div>
-  <div id="hyperTree"></div>
-</div>
-<kl-no-data fxFlex *ngIf="!dimensionTree"></kl-no-data>
+}
+@if (!dimensionTree) {
+  <kl-no-data fxFlex></kl-no-data>
+}

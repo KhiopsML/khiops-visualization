@@ -95,9 +95,8 @@ export class HeaderToolsComponent {
         }
 
         setTimeout(() => {
-          const currentDiv: any = this.configService
-            .getRootElementDom()
-            .querySelector('#' + currentSelectedArea.id)?.firstChild;
+          const rootElement = this.configService.getRootElementDom();
+          const currentDiv: any = rootElement?.querySelector('#' + currentSelectedArea.id)?.firstChild;
 
           this.rePaintGraph(currentDiv);
 
@@ -234,14 +233,12 @@ export class HeaderToolsComponent {
       currentSelectedArea.componentType === COMPONENT_TYPES.ND_BAR_CHART
     ) {
       if (currentSelectedArea.graphIdContainer) {
-        let chartContainer: any = this.configService
-          .getRootElementDom()
-          .querySelector('#' + currentSelectedArea.graphIdContainer);
+        const rootElement = this.configService.getRootElementDom();
+        const chartContainer: any = rootElement?.querySelector('#' + currentSelectedArea.graphIdContainer);
         return chartContainer?.componentInstance;
       } else {
-        return this.configService
-          .getRootElementDom()
-          .querySelector('#' + currentSelectedArea.id);
+        const rootElement = this.configService.getRootElementDom();
+        return rootElement?.querySelector('#' + currentSelectedArea.id);
       }
     } else if (
       currentSelectedArea.componentType === COMPONENT_TYPES.GRID ||

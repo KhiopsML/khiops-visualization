@@ -6,15 +6,10 @@
 
 import { ConfigService } from './providers/config.service';
 import { NgModule } from '@angular/core';
-import { LibVersionComponent } from './components/lib-version/lib-version.component';
-import { SelectableComponent } from './components/selectable/selectable.component';
-import { FileLoaderComponent } from './components/file-loader/file-loader.component';
-import { HeaderToolsComponent } from './components/header-tools/header-tools.component';
-import { InformationsBlockComponent } from './components/informations-block/informations-block.component';
-import { HttpClientModule } from '@angular/common/http';
-import { FlexLayoutModule } from '@angular/flex-layout';
-import { HotkeyModule } from 'angular2-hotkeys';
-import { ResizableModule } from 'angular-resizable-element';
+import { CommonModule } from '@angular/common';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+
+// Angular Material imports - using specific paths for Angular 21
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatButtonModule } from '@angular/material/button';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
@@ -30,7 +25,6 @@ import { MatMenuModule } from '@angular/material/menu';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
-import { MatRippleModule } from '@angular/material/core';
 import { MatSelectModule } from '@angular/material/select';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatSliderModule } from '@angular/material/slider';
@@ -40,8 +34,22 @@ import { MatTableModule } from '@angular/material/table';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatTooltipModule } from '@angular/material/tooltip';
-import { CommonModule } from '@angular/common';
+import { MatRippleModule } from '@angular/material/core';
+
+// Third-party modules
+import { FlexLayoutModule } from '@angular/flex-layout';
+import { HotkeyModule } from 'angular2-hotkeys';
+import { ResizableModule } from 'angular-resizable-element';
 import { TranslateModule, TranslateService } from '@ngstack/translate';
+import { AgGridModule } from '@ag-grid-community/angular';
+import { AngularSplitModule } from 'angular-split';
+
+// Component imports
+import { LibVersionComponent } from './components/lib-version/lib-version.component';
+import { SelectableComponent } from './components/selectable/selectable.component';
+import { FileLoaderComponent } from './components/file-loader/file-loader.component';
+import { HeaderToolsComponent } from './components/header-tools/header-tools.component';
+import { InformationsBlockComponent } from './components/informations-block/informations-block.component';
 import { ToPrecisionPipe } from './pipes/to-precision.pipe';
 import { HeaderTitleComponent } from './components/header-title/header-title.component';
 import { NoDataComponent } from './components/no-data/no-data.component';
@@ -50,7 +58,6 @@ import { SelectableTabComponent } from './components/selectable-tab/selectable-t
 import { CellStatsComponent } from './components/cell-stats/cell-stats.component';
 import { GaugeComponent } from './components/gauge/gauge.component';
 import { GraphHeaderComponent } from './components/graph-header/graph-header.component';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatrixComponent } from './components/matrix/matrix.component';
 import { AgGridComponent } from './components/ag-grid/ag-grid.component';
 import { AgGridLoadingOverlayComponent } from './components/ag-grid/ag-grid-loading-overlay.component';
@@ -60,7 +67,6 @@ import { IconCellComponent } from './components/ag-grid/icon-cell/icon-cell.comp
 import { IconComponent } from './components/icon/icon.component';
 import { DistributionGraphComponent } from './components/distribution-graph/distribution-graph.component';
 import { ScrollableGraphComponent } from './components/scrollable-graph/scrollable-graph.component';
-import { AgGridModule } from '@ag-grid-community/angular';
 import { ChartComponent } from './components/chart/chart.component';
 import { RowIdentifierPipe } from './pipes/row-identifie.pipe';
 import { ImportFileLoaderComponent } from './components/import-file-loader/import-file-loader.component';
@@ -71,10 +77,8 @@ import { BtnFullscreenComponent } from './components/btn-fullscreen/btn-fullscre
 import { MatrixToggleComponent } from './components/matrix-toggle/matrix-toggle.component';
 import { MatrixModeComponent } from './components/matrix-mode/matrix-mode.component';
 import { GraphOptionsMenuComponent } from './components/graph-options-menu/graph-options-menu.component';
-import EnTransaltion from '../../assets/i18n/en.json';
 import { ProjectSummaryComponent } from './components/project-summary/project-summary.component';
 import { ZoomToolsComponent } from './components/zoom-tools/zoom-tools.component';
-import { AngularSplitModule } from 'angular-split';
 import { NpmVersionComponent } from './components/npm-version/npm-version.component';
 import { ClearLsComponent } from './components/clear-ls/clear-ls.component';
 import { MatrixContrastSettingComponent } from './components/matrix-contrast-setting/matrix-contrast-setting.component';
@@ -84,10 +88,15 @@ import { MenuFocusSelectedDirective } from './directives/menu-focus-selected.dir
 import { KeyboardTooltipComponent } from './components/keyboard-tooltip/keyboard-tooltip.component';
 import { WarningInformationComponent } from './components/warning-information/warning-information.component';
 
+// Translation data
+import EnTransaltion from '../../assets/i18n/en.json';
 @NgModule({
   imports: [
+    // Core Angular modules first
+    FormsModule,
+    ReactiveFormsModule,
     CommonModule,
-    HttpClientModule,
+    // Angular Material modules
     MatSlideToggleModule,
     MatBadgeModule,
     MatTableModule,
@@ -101,7 +110,6 @@ import { WarningInformationComponent } from './components/warning-information/wa
     MatButtonModule,
     MatTooltipModule,
     MatFormFieldModule,
-    FlexLayoutModule,
     MatSelectModule,
     MatMenuModule,
     MatSidenavModule,
@@ -112,12 +120,13 @@ import { WarningInformationComponent } from './components/warning-information/wa
     MatPaginatorModule,
     MatRippleModule,
     MatSliderModule,
-    AgGridModule,
-    FormsModule,
-    ReactiveFormsModule,
     MatButtonToggleModule,
     MatDialogModule,
+    // Third-party modules
+    FlexLayoutModule,
+    AgGridModule,
     ResizableModule,
+    AngularSplitModule,
     HotkeyModule.forRoot(),
     TranslateModule.forRoot({
       activeLang: 'en',
@@ -164,52 +173,28 @@ import { WarningInformationComponent } from './components/warning-information/wa
     DistributionGraphComponent,
     ScrollableGraphComponent,
     ChartComponent,
-    RowIdentifierPipe,
     ImportFileLoaderComponent,
     ProjectSummaryComponent,
     MenuFocusSelectedDirective,
   ],
-  providers: [ConfigService, TranslateService],
+  providers: [
+    ConfigService, 
+    TranslateService,
+    // Add Angular Material providers
+    // These will be automatically provided but we ensure they're available
+  ],
   exports: [
+    // Export all components and pipes for reuse
     WarningInformationComponent,
     KeyboardTooltipComponent,
     NumberPrecisionComponent,
-    MatrixContrastSettingComponent,
+    MatrixContrastSettingComponent,  
     ScalePersistenceSettingComponent,
     ClearLsComponent,
     NpmVersionComponent,
+    ZoomToolsComponent, // Add missing component
     LibraryComponent,
-    CommonModule,
-    HttpClientModule,
-    MatTableModule,
-    MatProgressSpinnerModule,
-    MatProgressBarModule,
-    MatBadgeModule,
-    MatTabsModule,
-    MatSlideToggleModule,
-    MatSnackBarModule,
-    MatGridListModule,
-    MatSortModule,
-    MatToolbarModule,
-    MatButtonModule,
-    MatTooltipModule,
-    MatFormFieldModule,
-    FlexLayoutModule,
-    MatSelectModule,
-    MatMenuModule,
-    MatSidenavModule,
-    MatCheckboxModule,
-    MatInputModule,
-    MatExpansionModule,
-    MatIconModule,
-    MatPaginatorModule,
-    MatSliderModule,
-    FormsModule,
-    MatButtonToggleModule,
-    MatDialogModule,
-    MatRippleModule,
-    AngularSplitModule,
-    TranslateModule,
+    CellStatsComponent,
     WatchResizeComponent,
     SelectableComponent,
     ConfirmDialogComponent,
@@ -223,7 +208,6 @@ import { WarningInformationComponent } from './components/warning-information/wa
     GaugeComponent,
     BtnFullscreenComponent,
     GraphHeaderComponent,
-    ToPrecisionPipe,
     InformationsBlockComponent,
     MatrixComponent,
     AgGridComponent,
@@ -236,10 +220,48 @@ import { WarningInformationComponent } from './components/warning-information/wa
     IconCellComponent,
     IconComponent,
     DistributionGraphComponent,
+    ScrollableGraphComponent,
     ChartComponent,
     ImportFileLoaderComponent,
     ProjectSummaryComponent,
+    // Pipes
+    ToPrecisionPipe,
+    RowIdentifierPipe,
+    // Directives
     MenuFocusSelectedDirective,
+    // Modules for re-export
+    CommonModule,
+    FormsModule,
+    ReactiveFormsModule,
+    FlexLayoutModule,
+    TranslateModule,
+    AngularSplitModule,
+    // Angular Material modules
+    MatTableModule,
+    MatProgressSpinnerModule,
+    MatProgressBarModule,
+    MatBadgeModule,
+    MatTabsModule,
+    MatSlideToggleModule,
+    MatSnackBarModule,
+    MatGridListModule,
+    MatSortModule,
+    MatToolbarModule,
+    MatButtonModule,
+    MatTooltipModule,
+    MatFormFieldModule,
+    MatSelectModule,
+    MatMenuModule,
+    MatSidenavModule,
+    MatCheckboxModule,
+    MatInputModule,
+    MatExpansionModule,
+    MatIconModule,
+    MatPaginatorModule,
+    MatSliderModule,
+    MatButtonToggleModule,
+    MatDialogModule,
+    MatRippleModule,
   ],
 })
 export class KhiopsLibraryModule {

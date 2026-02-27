@@ -5,7 +5,7 @@
  */
 // @ts-nocheck
 
-import { UtilsService } from '@khiops-library/providers/utils.service';
+import { UtilsService } from '../../src/app/khiops-library/providers/utils.service';
 import '../utils/utils';
 
 export function setupTreePreparationTests(datas, testsValues) {

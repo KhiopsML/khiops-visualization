@@ -91,6 +91,9 @@ export class ChartManagerService {
     hostElement?: HTMLElement,
   ): boolean {
     const searchContext = hostElement || this.configService.getRootElementDom();
+    if (!searchContext) {
+      return false;
+    }
     const ctx = <ChartJs.ChartItem>(
       searchContext.querySelector<HTMLElement>('#' + canvasIdContainer)
     );

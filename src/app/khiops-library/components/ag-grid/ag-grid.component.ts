@@ -34,6 +34,7 @@ import {
   GridReadyEvent,
   SortChangedEvent,
   NavigateToNextCellParams,
+  RowSelectionOptions,
 } from '@ag-grid-community/core';
 import { ClientSideRowModelModule } from '@ag-grid-community/client-side-row-model';
 import { COMPONENT_TYPES } from '@khiops-library/enum/component-types';
@@ -67,7 +68,6 @@ export class AgGridComponent
   })
   private searchInputEl: ElementRef | undefined;
 
-  @Input() public suppressRowClickSelection = false;
   @Input() public inputDatas: any[] | undefined; // Can be any types of datas
   @Input() public displayedColumns: GridColumnsI[] | undefined;
   @Input() public override id: string | undefined = undefined;
@@ -77,7 +77,15 @@ export class AgGridComponent
   @Input() public showFullscreenBtn = true;
   @Input() public showSearch = true;
   @Input() public displayCount = false;
-  @Input() public rowSelection = 'single';
+  @Input() public rowSelection:
+    | 'single'
+    | 'multiple'
+    | RowSelectionOptions<any> = {
+    mode: 'singleRow',
+    enableClickSelection: true,
+    checkboxes: false,
+  };
+  @Input() public enableClickSelection = true;
   @Input() private showLineSelection = true;
   @Input() private selectedVariable: any; // Can be any types of data
   @Input() public showFullSearch = false;
@@ -168,12 +176,15 @@ export class AgGridComponent
       this.searchFormVisible = true;
     }
     setTimeout(() => {
+      // Set the rowSelection configuration using new AG Grid v32+ API
+      this.setRowSelectionConfig();
+
       // Only auto-fit if there's no saved grid mode or if the mode is fitToSpace
       if (
-        this.agGrid &&
+        this.isGridApiAvailable() &&
         (!this.gridModes[this.id!] || this.gridModes[this.id!] === 'fitToSpace')
       ) {
-        this.agGrid?.api?.sizeColumnsToFit();
+        this.agGrid!.api.sizeColumnsToFit();
       }
       this.updateColumnFilterBadge();
 
@@ -231,9 +242,14 @@ export class AgGridComponent
     this.divWidth = width;
     this.checkIsSmallDiv();
 
-    if (this.agGrid?.api && this.gridMode === 'fitToSpace' /*&& width*/) {
+    if (
+      this.isGridApiAvailable() &&
+      this.gridMode === 'fitToSpace' /*&& width*/
+    ) {
       setTimeout(() => {
-        this.agGrid?.api?.sizeColumnsToFit();
+        if (this.isGridApiAvailable()) {
+          this.agGrid!.api.sizeColumnsToFit();
+        }
       });
     }
   }
@@ -267,19 +283,25 @@ export class AgGridComponent
 
       if (this.gridMode === 'fitToContent') {
         // Apply fit to content
-        this.agGrid?.api?.autoSizeAllColumns(true);
+        if (this.isGridApiAvailable()) {
+          this.agGrid!.api.autoSizeAllColumns(true);
+        }
       } else if (this.gridMode === 'fitToSpace') {
         // Reinit current saved columns sizes when user fit grid to space
         delete this.cellsSizes[this.id!];
         this.ls.set(LS.CELL_AG_GRID, this.cellsSizes);
 
-        this.agGrid?.api?.sizeColumnsToFit();
+        if (this.isGridApiAvailable()) {
+          this.agGrid!.api.sizeColumnsToFit();
+        }
       } else {
         // Fallback to fitToSpace if mode is unknown or corrupted
         this.gridMode = 'fitToSpace';
         delete this.cellsSizes[this.id!];
         this.ls.set(LS.CELL_AG_GRID, this.cellsSizes);
-        this.agGrid?.api?.sizeColumnsToFit();
+        if (this.isGridApiAvailable()) {
+          this.agGrid!.api.sizeColumnsToFit();
+        }
         this.saveGridModes(this.gridMode);
       }
 
@@ -301,7 +323,9 @@ export class AgGridComponent
    * This method is typically used to filter out entries that are currently active.
    */
   public hideActiveEntries() {
-    this.agGrid?.api?.deselectAll();
+    if (this.isGridApiAvailable()) {
+      this.agGrid!.api.deselectAll();
+    }
   }
 
   /**
@@ -350,11 +374,9 @@ export class AgGridComponent
    *                           If it is a single object, only one node will be selected.
    */
   selectNode(selectedVariable: any) {
-    if (selectedVariable && this.agGrid?.api) {
+    if (selectedVariable && this.isGridApiAvailable()) {
       // unselect previous
-      if (this.agGrid?.api) {
-        this.agGrid.api.deselectAll();
-      }
+      this.agGrid!.api.deselectAll();
       if (Array.isArray(selectedVariable)) {
         // multiple selection
         for (let i = 0; i < selectedVariable.length; i++) {
@@ -374,19 +396,23 @@ export class AgGridComponent
    * @param nodeIndex - The index of the node to be selected.
    */
   selectNodeFromIndex(nodeIndex: number) {
-    if (nodeIndex !== undefined && this.showLineSelection) {
-      if (this.agGrid?.api) {
-        this.agGrid.api.forEachNode((node) => {
-          if (nodeIndex === node.rowIndex) {
-            node.setSelected(true);
-            // Get the page of selected node
-            // let pageToSelect = node.rowIndex / this.gridOptions.api.paginationGetPageSize();
-            // pageToSelect = Math.ceil(pageToSelect) - 1; // -1 to begin at 0
-            // this.gridOptions.api.paginationGoToPage(pageToSelect);
-            this.agGrid?.api.ensureIndexVisible(node.rowIndex || 0);
+    if (
+      nodeIndex !== undefined &&
+      this.showLineSelection &&
+      this.isGridApiAvailable()
+    ) {
+      this.agGrid!.api.forEachNode((node) => {
+        if (nodeIndex === node.rowIndex) {
+          node.setSelected(true);
+          // Get the page of selected node
+          // let pageToSelect = node.rowIndex / this.gridOptions.api.paginationGetPageSize();
+          // pageToSelect = Math.ceil(pageToSelect) - 1; // -1 to begin at 0
+          // this.gridOptions.api.paginationGoToPage(pageToSelect);
+          if (this.isGridApiAvailable()) {
+            this.agGrid!.api.ensureIndexVisible(node.rowIndex || 0);
           }
-        });
-      }
+        }
+      });
     }
   }
 
@@ -395,25 +421,28 @@ export class AgGridComponent
    * @param nodeId - The ID of the node to be selected.
    */
   selectNodeFromId(nodeId: string) {
-    if (nodeId !== undefined && this.showLineSelection) {
-      if (this.agGrid?.api) {
-        this.agGrid.api.forEachNode((node) => {
-          if (nodeId.toString() === node.data['_id']) {
-            if (!node.isSelected()) {
-              node.setSelected(true);
-              // Get the page of selected node
-              if (this.agGrid?.api) {
-                let pageToSelect =
-                  (node.rowIndex ?? 0) /
-                  this.agGrid.api.paginationGetPageSize();
-                pageToSelect = Math.floor(pageToSelect);
-                this.agGrid.api.paginationGoToPage(pageToSelect);
-              }
-              this.agGrid?.api.ensureIndexVisible(node.rowIndex ?? 0);
+    if (
+      nodeId !== undefined &&
+      this.showLineSelection &&
+      this.isGridApiAvailable()
+    ) {
+      this.agGrid!.api.forEachNode((node) => {
+        if (nodeId.toString() === node.data['_id']) {
+          if (!node.isSelected()) {
+            node.setSelected(true);
+            // Get the page of selected node
+            if (this.isGridApiAvailable()) {
+              let pageToSelect =
+                (node.rowIndex ?? 0) / this.agGrid!.api.paginationGetPageSize();
+              pageToSelect = Math.floor(pageToSelect);
+              this.agGrid!.api.paginationGoToPage(pageToSelect);
+            }
+            if (this.isGridApiAvailable()) {
+              this.agGrid!.api.ensureIndexVisible(node.rowIndex ?? 0);
             }
           }
-        });
-      }
+        }
+      });
     }
   }
 
@@ -423,6 +452,46 @@ export class AgGridComponent
    */
   toggleGridCheckbox(e: GridCheckboxEventI) {
     this.gridCheckboxChanged.emit(e);
+  }
+
+  /**
+   * Check if the grid API is available and not destroyed
+   */
+  private isGridApiAvailable(): boolean {
+    return !!(this.agGrid?.api && !this.agGrid.api.isDestroyed());
+  }
+
+  /**
+   * Sets the row selection configuration using the new AG Grid v32+ API
+   */
+  private setRowSelectionConfig() {
+    if (this.isGridApiAvailable()) {
+      const rowSelectionConfig = this.getRowSelectionConfig();
+      this.agGrid!.api.setGridOption('rowSelection', rowSelectionConfig);
+    }
+  }
+
+  /**
+   * Gets the row selection configuration object for AG Grid v32+
+   */
+  private getRowSelectionConfig():
+    | 'single'
+    | 'multiple'
+    | RowSelectionOptions<any> {
+    // Handle legacy object format or new object format
+    if (typeof this.rowSelection === 'object' && this.rowSelection !== null) {
+      return this.rowSelection as RowSelectionOptions<any>;
+    }
+
+    // Convert legacy string format to new object format
+    const mode = this.rowSelection === 'multiple' ? 'multiRow' : 'singleRow';
+
+    return {
+      mode: mode,
+      enableClickSelection: this.enableClickSelection,
+      checkboxes: false, // Disable checkboxes to maintain previous behavior
+      headerCheckbox: false, // Disable header checkbox
+    } as RowSelectionOptions<any>;
   }
 
   /**
@@ -442,9 +511,12 @@ export class AgGridComponent
       );
 
       // Update grid data - in v32 we need to use the api methods when available
-      if (this.agGrid?.api) {
-        this.agGrid.api.setGridOption('columnDefs', this.columnDefs);
-        this.agGrid.api.setGridOption('rowData', this.inputDatas);
+      if (this.isGridApiAvailable()) {
+        this.agGrid!.api.setGridOption('columnDefs', this.columnDefs);
+        this.agGrid!.api.setGridOption('rowData', this.inputDatas);
+        // Also update row selection config when table is updated
+        const rowSelectionConfig = this.getRowSelectionConfig();
+        this.agGrid!.api.setGridOption('rowSelection', rowSelectionConfig);
       } else {
         // Fallback for when api is not ready yet
         if (this.agGrid) {
@@ -533,8 +605,8 @@ export class AgGridComponent
    */
   search() {
     // this.trackerService.trackEvent('click', 'search');
-    if (this.agGrid?.api) {
-      this.agGrid.api.setGridOption('quickFilterText', this.searchInput || '');
+    if (this.isGridApiAvailable()) {
+      this.agGrid!.api.setGridOption('quickFilterText', this.searchInput || '');
     }
     if (this.searchInput) {
       this.ls.set(
@@ -571,11 +643,17 @@ export class AgGridComponent
       }
 
       if (nextRowIndex !== undefined && typeof nextRowIndex === 'number') {
-        const totalRowCount = this.agGrid?.api?.getDisplayedRowCount() || 0;
-        if (nextRowIndex >= 0 && nextRowIndex < totalRowCount) {
+        const totalRowCount = this.isGridApiAvailable()
+          ? this.agGrid!.api.getDisplayedRowCount()
+          : 0;
+        if (
+          nextRowIndex >= 0 &&
+          nextRowIndex < totalRowCount &&
+          this.isGridApiAvailable()
+        ) {
           this.selectNodeFromIndex(nextRowIndex);
           this.selectListItem.emit(
-            this.agGrid?.api.getDisplayedRowAtIndex(nextRowIndex)?.data,
+            this.agGrid!.api.getDisplayedRowAtIndex(nextRowIndex)?.data,
           );
         }
       }
@@ -650,7 +728,9 @@ export class AgGridComponent
 
     this.saveGridModes(this.gridMode);
     setTimeout(() => {
-      this.agGrid?.api?.sizeColumnsToFit();
+      if (this.isGridApiAvailable()) {
+        this.agGrid!.api.sizeColumnsToFit();
+      }
     });
 
     // Restore state but without affecting column sizes (already handled by sizeColumnsToFit)
@@ -668,7 +748,9 @@ export class AgGridComponent
     delete this.cellsSizes[this.id!];
     this.ls.set(LS.CELL_AG_GRID, this.cellsSizes);
 
-    this.agGrid?.api?.autoSizeAllColumns(true);
+    if (this.isGridApiAvailable()) {
+      this.agGrid!.api.autoSizeAllColumns(true);
+    }
     this.saveGridModes(this.gridMode);
 
     // Restore state but without affecting column sizes (already handled by autoSizeAllColumns)
@@ -696,8 +778,8 @@ export class AgGridComponent
        * it could be that some of this apis will change in future releases
        */
       setTimeout(() => {
-        if (!this.cellsSizes[this.id!]) {
-          this.agGrid?.api?.sizeColumnsToFit();
+        if (!this.cellsSizes[this.id!] && this.isGridApiAvailable()) {
+          this.agGrid!.api.sizeColumnsToFit();
         }
       });
     }
@@ -709,7 +791,9 @@ export class AgGridComponent
    */
   saveState(_grid: SortChangedEvent) {
     const state = {
-      sortState: this.agGrid?.api?.getColumnState(),
+      sortState: this.isGridApiAvailable()
+        ? this.agGrid!.api.getColumnState()
+        : null,
     };
     this.ls.set(LS.OPTIONS_AG_GRID + '_' + this.id?.toUpperCase(), state);
   }
@@ -724,7 +808,11 @@ export class AgGridComponent
       );
       const state = (PREV_STATE && PREV_STATE) || {};
 
-      if (this.displayedColumns && state.sortState && this.agGrid?.api) {
+      if (
+        this.displayedColumns &&
+        state.sortState &&
+        this.isGridApiAvailable()
+      ) {
         // First reorder state according to displayed columns order
         const sortedState: any = [];
         for (let i = 0; i < this.displayedColumns.length; i++) {
@@ -742,7 +830,7 @@ export class AgGridComponent
           state.sortState[i] && delete state.sortState[i].width;
           state.sortState[i] && delete state.sortState[i].hide;
         }
-        this.agGrid?.api?.applyColumnState({
+        this.agGrid!.api.applyColumnState({
           state: state.sortState,
           applyOrder: true,
         });

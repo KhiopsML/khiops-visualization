@@ -223,14 +223,11 @@ export class VariableGraphDetailsComponent
         ? '#target-distribution-graph' + this.position
         : '#distribution-graph' + this.position;
 
-    this.configService
-      .getRootElementDom()
-      .querySelector(compToSelect)
-      ?.dispatchEvent(trustedClickEvent);
-    this.configService
-      .getRootElementDom()
-      .querySelector('#app-histogram')
-      ?.dispatchEvent(trustedClickEvent);
+    const rootElement = this.configService.getRootElementDom();
+    if (rootElement) {
+      rootElement.querySelector(compToSelect)?.dispatchEvent(trustedClickEvent);
+      rootElement.querySelector('#app-histogram')?.dispatchEvent(trustedClickEvent);
+    }
   }
 
   onScaleValueChanged(value: number) {

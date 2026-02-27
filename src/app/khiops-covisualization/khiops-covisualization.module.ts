@@ -7,10 +7,9 @@
 import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
 import { AppComponent } from './app.component';
 import { HomeLayoutComponent } from './components/home-layout/homeLayout.component';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { KhiopsLibraryModule } from '@khiops-library/khiops-library.module';
 import { AxisViewComponent } from './components/axis-view/axis-view.component';
@@ -44,6 +43,7 @@ import { MatrixInnerVariablesFilterComponent } from './components/commons/matrix
 import { UnfoldHierarchyHeaderComponent } from './components/commons/unfold-hierarchy-header/unfold-hierarchy-header.component';
 import { UnfoldHierarchyClustersGraphComponent } from './components/commons/unfold-hierarchy-clusters-graph/unfold-hierarchy-clusters-graph.component';
 import { UnfoldHierarchyInfoRateGraphComponent } from './components/commons/unfold-hierarchy-info-rate-graph/unfold-hierarchy-info-rate-graph.component';
+import { provideHttpClient } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -80,15 +80,15 @@ import { UnfoldHierarchyInfoRateGraphComponent } from './components/commons/unfo
   ],
   imports: [
     CommonModule,
-    BrowserAnimationsModule,
     KhiopsLibraryModule,
     FlexLayoutModule,
     FormsModule,
     ReactiveFormsModule,
     AgGridModule,
-    HttpClientModule,
   ],
   providers: [
+    provideAnimationsAsync(),
+    provideHttpClient(),
     InAppOverlayContainer,
     // make sure that InAppOverlayContainer and OverlayContainer share the same instance
     { provide: OverlayContainer, useExisting: InAppOverlayContainer },

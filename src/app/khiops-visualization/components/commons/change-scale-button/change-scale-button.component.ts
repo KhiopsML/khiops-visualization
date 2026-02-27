@@ -5,8 +5,7 @@
  */
 
 import { Component } from '@angular/core';
-import { MatDialogConfig } from '@angular/material/dialog';
-import { MatDialog } from '@angular/material/dialog';
+import { MatDialogConfig, MatDialog } from '@angular/material/dialog';
 import {
   ChangeScaleDialogComponent,
   ScaleSettings,
