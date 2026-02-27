@@ -1339,14 +1339,26 @@ describe('CopyDatasService - Real Data Tests', () => {
    * Test formatNumberWithPrecision method
    */
   describe('formatNumberWithPrecision', () => {
+    let originalAppConfigCommon: any;
+
+    beforeAll(() => {
+      // Snapshot original AppConfig.common so it can be restored after these tests
+      originalAppConfigCommon = (AppConfig.common as any);
+    });
+
     beforeEach(() => {
       // Reset AppConfig.common before each test in this specific describe block
       (AppConfig.common as any) = {};
     });
 
     afterEach(() => {
-      // Restore precision to 8 for other tests
-      (AppConfig.common as any) = { GLOBAL: { TO_FIXED: 8 } };
+      // Ensure AppConfig.common does not leak state between tests in this block
+      (AppConfig.common as any) = {};
+    });
+
+    afterAll(() => {
+      // Restore original AppConfig.common for other tests
+      (AppConfig.common as any) = originalAppConfigCommon;
     });
 
     it('should format number with precision 2', () => {
