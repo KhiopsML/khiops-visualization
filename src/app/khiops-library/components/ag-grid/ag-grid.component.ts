@@ -80,7 +80,11 @@ export class AgGridComponent
   @Input() public rowSelection:
     | 'single'
     | 'multiple'
-    | RowSelectionOptions<any> = 'single';
+    | RowSelectionOptions<any> = {
+    mode: 'singleRow',
+    enableClickSelection: true,
+    checkboxes: false,
+  };
   @Input() public enableClickSelection = true;
   @Input() private showLineSelection = true;
   @Input() private selectedVariable: any; // Can be any types of data
