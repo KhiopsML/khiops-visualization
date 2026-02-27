@@ -7,10 +7,10 @@
 import { CommonModule } from '@angular/common';
 import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
+import { provideHttpClient } from '@angular/common/http';
 import { AppComponent } from './app.component';
 import { HomeLayoutComponent } from './components/home-layout/homeLayout.component';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { PreparationViewComponent } from './components/preparation-view/preparation-view.component';
 import { Preparation2dViewComponent } from './components/preparation-2d-view/preparation-2d-view.component';
 import { ModelingViewComponent } from './components/modeling-view/modeling-view.component';
@@ -91,25 +91,27 @@ import { ChangeScaleDialogComponent } from './components/commons/change-scale-di
     LevelDistributionButtonComponent,
     ChangeScaleButtonComponent,
     ChangeScaleDialogComponent,
-    AppComponent,
   ],
   imports: [
     CommonModule,
     BrowserModule,
-    BrowserAnimationsModule,
-    KhiopsLibraryModule,
-    AgGridModule,
-    FlexLayoutModule,
     FormsModule,
     ReactiveFormsModule,
-    HttpClientModule,
+    KhiopsLibraryModule, // This imports all the Material modules through exports
+    AgGridModule,
+    FlexLayoutModule,
     AngularResizeEventModule,
     StoreModule.forRoot({ TreePreparationState: treePreparationReducer }),
     EffectsModule.forRoot([TreePreparationEffects]),
   ],
   providers: [
-    InAppOverlayContainer,
-    // make sure that InAppOverlayContainer and OverlayContainer share the same instance
+    provideAnimationsAsync(),
+    provideHttpClient(),
+    {
+      provide: InAppOverlayContainer,
+      useClass: InAppOverlayContainer
+    },
+    // Make sure that InAppOverlayContainer and OverlayContainer share the same instance
     { provide: OverlayContainer, useExisting: InAppOverlayContainer },
   ],
   exports: [AppComponent],

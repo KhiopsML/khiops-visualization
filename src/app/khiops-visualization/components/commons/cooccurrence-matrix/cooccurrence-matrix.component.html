@@ -55,34 +55,35 @@
                   >
                   </kl-matrix-mode>
                 </div>
-                <div
-                  fxLayout="row"
-                  fxLayoutAlign="start center"
-                  *ngIf="matrixTargets.selected"
-                >
-                  <h2>{{ 'GLOBAL.TARGET' | translate }}</h2>
-                  <button
-                    class="button-accent"
-                    mat-stroked-button
-                    color="accent"
-                    [matMenuTriggerFor]="matrixSelectTargets"
-                  >
-                    {{ matrixTargets.selected }}
-                    <em class="screenshot-hide"
-                      ><mat-icon>keyboard_arrow_down</mat-icon>
-                    </em>
-                  </button>
-                  <mat-menu #matrixSelectTargets>
+                @if (matrixTargets.selected) {
+                  <div fxLayout="row" fxLayoutAlign="start center">
+                    <h2>{{ 'GLOBAL.TARGET' | translate }}</h2>
                     <button
-                      mat-menu-item
-                      *ngFor="let target of matrixTargets.targets"
-                      [class.selected-item]="target === matrixTargets.selected"
-                      (click)="changeMatrixTarget(target)"
+                      class="button-accent"
+                      mat-stroked-button
+                      color="accent"
+                      [matMenuTriggerFor]="matrixSelectTargets"
                     >
-                      {{ target }}
+                      {{ matrixTargets.selected }}
+                      <em class="screenshot-hide"
+                        ><mat-icon>keyboard_arrow_down</mat-icon>
+                      </em>
                     </button>
-                  </mat-menu>
-                </div>
+                    <mat-menu #matrixSelectTargets>
+                      @for (target of matrixTargets.targets; track target) {
+                        <button
+                          mat-menu-item
+                          [class.selected-item]="
+                            target === matrixTargets.selected
+                          "
+                          (click)="changeMatrixTarget(target)"
+                        >
+                          {{ target }}
+                        </button>
+                      }
+                    </mat-menu>
+                  </div>
+                }
               </div>
             </div>
             <kl-matrix

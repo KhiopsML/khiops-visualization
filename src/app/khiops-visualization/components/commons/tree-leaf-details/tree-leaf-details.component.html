@@ -1,10 +1,7 @@
 <div id="tree-leaf-details-comp" fxFlexFill fxLayout="column">
-  <kl-no-data
-    fxFlexFill
-    fxLayoutAlign="center center"
-    *ngIf="!selectedNode?.isLeaf"
-  >
-  </kl-no-data>
+  @if (!selectedNode?.isLeaf) {
+    <kl-no-data fxFlexFill fxLayoutAlign="center center"> </kl-no-data>
+  }
   <mat-tab-group
     [animationDuration]="0"
     fxFlexFill
@@ -43,51 +40,53 @@
             >
             </app-target-distribution-graph>
 
-            <div
-              id="tree-node-infos"
-              fxLayout="row"
-              fxLayoutAlign="start center"
-              class="comp-header"
-              *ngIf="selectedNode?.isLeaf"
-            >
-              <div fxLayout="row" fxLayoutAlign="start center">
-                <h2>
-                  {{ 'GLOBAL.POPULATION' | translate }} :
-                  {{ populationCount }}
-                </h2>
+            @if (selectedNode?.isLeaf) {
+              <div
+                id="tree-node-infos"
+                fxLayout="row"
+                fxLayoutAlign="start center"
+                class="comp-header"
+              >
+                <div fxLayout="row" fxLayoutAlign="start center">
+                  <h2>
+                    {{ 'GLOBAL.POPULATION' | translate }} :
+                    {{ populationCount }}
+                  </h2>
+                </div>
+                <div fxLayout="row" fxLayoutAlign="start center">
+                  <h2
+                    title="{{
+                      'TOOLTIPS.TREE_PREPARATION.PURITY.TITLE' | translate
+                    }}"
+                  >
+                    {{ 'GLOBAL.PURITY' | translate }} :
+                    {{ selectedNode?.purity | toPrecision }}
+                  </h2>
+                </div>
               </div>
-              <div fxLayout="row" fxLayoutAlign="start center">
-                <h2
-                  title="{{
-                    'TOOLTIPS.TREE_PREPARATION.PURITY.TITLE' | translate
-                  }}"
-                >
-                  {{ 'GLOBAL.PURITY' | translate }} :
-                  {{ selectedNode?.purity | toPrecision }}
-                </h2>
-              </div>
-            </div>
+            }
           </div>
         </div>
       </ng-template>
     </mat-tab>
     <mat-tab label="{{ 'GLOBAL.LEAF_RULES' | translate }}">
       <ng-template matTabContent>
-        <kl-ag-grid
-          *ngIf="treeLeafRules && treeLeafRules.values"
-          id="tree-leaf-rules-comp"
-          class="variables-list"
-          fxFlexFill
-          [showSearch]="false"
-          [displayCount]="false"
-          [showLineSelection]="true"
-          [title]="treeLeafRules.title"
-          [showColumnsSelection]="true"
-          [selectedVariable]="selectedNode$ | async"
-          [inputDatas]="treeLeafRules.values"
-          [displayedColumns]="treeLeafRules.displayedColumns"
-        >
-        </kl-ag-grid>
+        @if (treeLeafRules && treeLeafRules.values) {
+          <kl-ag-grid
+            id="tree-leaf-rules-comp"
+            class="variables-list"
+            fxFlexFill
+            [showSearch]="false"
+            [displayCount]="false"
+            [showLineSelection]="true"
+            [title]="treeLeafRules.title"
+            [showColumnsSelection]="true"
+            [selectedVariable]="selectedNode$ | async"
+            [inputDatas]="treeLeafRules.values"
+            [displayedColumns]="treeLeafRules.displayedColumns"
+          >
+          </kl-ag-grid>
+        }
       </ng-template>
     </mat-tab>
   </mat-tab-group>

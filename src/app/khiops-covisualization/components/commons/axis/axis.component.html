@@ -1,102 +1,108 @@
-<div class="axis-comp" fxFlexFill *ngIf="axisLayout && dimensionsDatas">
-  <as-split
-    direction="horizontal"
-    (dragEnd)="onSplitDragEnd($event, sizeId)"
-    fxFlexFill
-  >
-    <as-split-area
-      *ngIf="axisLayout.isHierarchyChecked"
-      [size]="sizes?.[sizeId]?.[column0Index]"
-      order="1"
-      [visible]="axisLayout.isHierarchyChecked"
-      class="kl-card"
+@if (axisLayout && dimensionsDatas) {
+  <div class="axis-comp" fxFlexFill>
+    <as-split
+      direction="horizontal"
+      (dragEnd)="onSplitDragEnd($event, sizeId)"
+      fxFlexFill
     >
-      <app-hierarchy-details
-        [position]="position"
-        [selectedNode]="dimensionsDatas.selectedNodes[position]"
-        [selectedDimension]="dimensionsDatas.selectedDimensions[position]"
-        [dimensionsTree]="dimensionsDatas.dimensionsTrees[position]"
-        [dimensions]="dimensionsDatas.selectedDimensions"
-      ></app-hierarchy-details>
-    </as-split-area>
-    <as-split-area
-      [size]="sizes?.[sizeId]?.[column1Index]"
-      class="app-cluster-details-container kl-card"
-      order="2"
-      *ngIf="axisLayout.isClustersChecked"
-    >
-      <app-cluster-details
-        [position]="position"
-        [selectedNode]="dimensionsDatas.selectedNodes[position]"
-        [dimensionsTree]="dimensionsDatas.dimensionsTrees[position]"
-        [selectedDimension]="dimensionsDatas.selectedDimensions[position]"
-      ></app-cluster-details>
-    </as-split-area>
-    <as-split-area
-      [size]="sizes?.[sizeId]?.[column2Index]"
-      order="3"
-      *ngIf="axisLayout.isAnnotationChecked || axisLayout.isCompositionChecked"
-    >
-      <as-split direction="vertical" fxFlexFill>
+      @if (axisLayout.isHierarchyChecked) {
         <as-split-area
-          [size]="30"
+          [size]="sizes?.[sizeId]?.[column0Index]"
           order="1"
-          *ngIf="axisLayout.isAnnotationChecked"
+          [visible]="axisLayout.isHierarchyChecked"
           class="kl-card"
         >
-          <app-annotation
-            [attr.id]="'cluster-annotation-' + position"
+          <app-hierarchy-details
             [position]="position"
-            [selectedDimension]="dimensionsDatas.selectedDimensions[position]"
             [selectedNode]="dimensionsDatas.selectedNodes[position]"
-          ></app-annotation>
+            [selectedDimension]="dimensionsDatas.selectedDimensions[position]"
+            [dimensionsTree]="dimensionsDatas.dimensionsTrees[position]"
+            [dimensions]="dimensionsDatas.selectedDimensions"
+          ></app-hierarchy-details>
         </as-split-area>
+      }
+      @if (axisLayout.isClustersChecked) {
         <as-split-area
-          [size]="70"
-          order="1"
-          *ngIf="axisLayout.isCompositionChecked"
+          [size]="sizes?.[sizeId]?.[column1Index]"
+          class="app-cluster-details-container kl-card"
+          order="2"
+        >
+          <app-cluster-details
+            [position]="position"
+            [selectedNode]="dimensionsDatas.selectedNodes[position]"
+            [dimensionsTree]="dimensionsDatas.dimensionsTrees[position]"
+            [selectedDimension]="dimensionsDatas.selectedDimensions[position]"
+          ></app-cluster-details>
+        </as-split-area>
+      }
+      @if (axisLayout.isAnnotationChecked || axisLayout.isCompositionChecked) {
+        <as-split-area [size]="sizes?.[sizeId]?.[column2Index]" order="3">
+          <as-split direction="vertical" fxFlexFill>
+            @if (axisLayout.isAnnotationChecked) {
+              <as-split-area [size]="30" order="1" class="kl-card">
+                <app-annotation
+                  [attr.id]="'cluster-annotation-' + position"
+                  [position]="position"
+                  [selectedDimension]="
+                    dimensionsDatas.selectedDimensions[position]
+                  "
+                  [selectedNode]="dimensionsDatas.selectedNodes[position]"
+                ></app-annotation>
+              </as-split-area>
+            }
+            @if (axisLayout.isCompositionChecked) {
+              <as-split-area [size]="70" order="1" class="kl-card">
+                <app-composition
+                  [position]="position"
+                  [selectedDimension]="
+                    dimensionsDatas.selectedDimensions[position]
+                  "
+                  [selectedNode]="dimensionsDatas.selectedNodes[position]"
+                  (selectedCompositionChanged)="
+                    selectedCompositionChanged($event)
+                  "
+                ></app-composition>
+              </as-split-area>
+            }
+          </as-split>
+        </as-split-area>
+      }
+      @if (axisLayout.isExternalDataChecked) {
+        <as-split-area
+          [size]="sizes?.[sizeId]?.[column3Index]"
+          order="4"
           class="kl-card"
         >
-          <app-composition
+          <app-external-datas
+            [attr.id]="'external-datas-' + position"
+            title="{{ 'TOOLTIPS.AXIS.EXTERNAL_DATAS.TITLE' | translate }}"
             [position]="position"
             [selectedDimension]="dimensionsDatas.selectedDimensions[position]"
-            [selectedNode]="dimensionsDatas.selectedNodes[position]"
-            (selectedCompositionChanged)="selectedCompositionChanged($event)"
-          ></app-composition>
+            [selectedComposition]="selectedComposition"
+            [externalData]="
+              dimensionsDatas.selectedNodes[position]?.externalData
+            "
+          >
+          </app-external-datas>
         </as-split-area>
-      </as-split>
-    </as-split-area>
-    <as-split-area
-      [size]="sizes?.[sizeId]?.[column3Index]"
-      order="4"
-      *ngIf="axisLayout.isExternalDataChecked"
-      class="kl-card"
-    >
-      <app-external-datas
-        [attr.id]="'external-datas-' + position"
-        title="{{ 'TOOLTIPS.AXIS.EXTERNAL_DATAS.TITLE' | translate }}"
-        [position]="position"
-        [selectedDimension]="dimensionsDatas.selectedDimensions[position]"
-        [selectedComposition]="selectedComposition"
-        [externalData]="dimensionsDatas.selectedNodes[position]?.externalData"
-      >
-      </app-external-datas>
-    </as-split-area>
-    <as-split-area
-      [size]="sizes?.[sizeId]?.[column4Index]"
-      order="5"
-      *ngIf="
+      }
+      @if (
         axisLayout.isDistributionChecked && (position === 0 || position === 1)
-      "
-      class="kl-card"
-    >
-      <app-variable-graph-details
-        [position]="invertedPosition"
-        [selectedDimensions]="dimensionsDatas.selectedDimensions"
-        [dimensionsTree]="dimensionsDatas.dimensionsTrees[position]"
-        [selectedNode]="dimensionsDatas.selectedNodes[invertedPosition]"
-      >
-      </app-variable-graph-details>
-    </as-split-area>
-  </as-split>
-</div>
+      ) {
+        <as-split-area
+          [size]="sizes?.[sizeId]?.[column4Index]"
+          order="5"
+          class="kl-card"
+        >
+          <app-variable-graph-details
+            [position]="invertedPosition"
+            [selectedDimensions]="dimensionsDatas.selectedDimensions"
+            [dimensionsTree]="dimensionsDatas.dimensionsTrees[position]"
+            [selectedNode]="dimensionsDatas.selectedNodes[invertedPosition]"
+          >
+          </app-variable-graph-details>
+        </as-split-area>
+      }
+    </as-split>
+  </div>
+}

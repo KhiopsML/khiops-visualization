@@ -6,7 +6,7 @@
 // @ts-nocheck
 
 import { TestBed } from '@angular/core/testing';
-import { HttpClientModule } from '@angular/common/http';
+import { provideHttpClient } from '@angular/common/http';
 import { TranslateModule } from '@ngstack/translate';
 import { MATRIX_MODES } from '@khiops-library/enum/matrix-modes';
 import { MatrixUtilsService } from '@khiops-library/components/matrix/matrix.utils.service';
@@ -17,7 +17,8 @@ describe('Visualization', () => {
   describe('Matrix Datas : [iris2d file] check matrix values', () => {
     beforeEach(() => {
       TestBed.configureTestingModule({
-        imports: [HttpClientModule, TranslateModule.forRoot()],
+        imports: [TranslateModule.forRoot()],
+  providers: [provideHttpClient()],
       });
     });
 

@@ -5,12 +5,7 @@
  */
 
 import { Component, OnInit, ViewChild, OnDestroy, Input } from '@angular/core';
-import {
-  MatTabGroup,
-  MatTabHeader,
-  MatTab,
-  MatTabChangeEvent,
-} from '@angular/material/tabs';
+import { MatTabGroup, MatTabHeader, MatTab, MatTabChangeEvent } from '@angular/material/tabs';
 import { AppConfig } from '../../../../environments/environment';
 import { FileLoaderComponent } from '@khiops-library/components/file-loader/file-loader.component';
 import { AppService } from '@khiops-covisualization/providers/app.service';
@@ -18,15 +13,11 @@ import { TranslateService } from '@ngstack/translate';
 import { SelectableService } from '@khiops-library/components/selectable/selectable.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { DimensionsDatasService } from '@khiops-covisualization/providers/dimensions-datas.service';
-import {
-  MatDialogRef,
-  MatDialog,
-  MatDialogConfig,
-} from '@angular/material/dialog';
+import { MatDialogRef, MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { ImportExtDatasService } from '@khiops-covisualization/providers/import-ext-datas.service';
 import { LoadExtDatasComponent } from '../commons/load-ext-datas/load-ext-datas.component';
 import { EventsService } from '@khiops-covisualization/providers/events.service';
-import pjson from 'package.json';
+import pjson from '../../../../../package.json';
 import { TreenodesService } from '@khiops-covisualization/providers/treenodes.service';
 import { ConfigService } from '@khiops-library/providers/config.service';
 import { UtilsService } from '@khiops-library/providers/utils.service';

@@ -5,48 +5,54 @@
   (resized)="onResized($event)"
   [ngClass]="{ fullscreen: isFullscreen }"
 >
-  <div *ngIf="inputDatas" fxFlexFill fxLayout="column">
-    <div fxLayout="row" fxLayoutAlign="start center" class="comp-header">
-      <div fxFlex fxLayout="row" fxLayoutAlign="start center">
-        <h2 title="{{ titleTooltip }}">{{ title }}</h2>
-      </div>
-      <kl-legend
-        [inputDatas]="displayedValues"
-        [type]="'chart-nd-dynamic'"
-        [colorSet]="colorSet"
-      ></kl-legend>
-      <div
-        class="comp-header-tools screenshot-hide"
-        [fxLayout]="isSmallDiv ? 'column' : 'row'"
-      >
-        <app-select-toggle-button
-          *ngIf="displayedValues"
-          [displayedValues]="displayedValues"
-          (selectToggleButtonChanged)="onSelectToggleButtonChanged($event)"
-          [buttonTitle]="buttonTitle"
+  @if (inputDatas) {
+    <div fxFlexFill fxLayout="column">
+      <div fxLayout="row" fxLayoutAlign="start center" class="comp-header">
+        <div fxFlex fxLayout="row" fxLayoutAlign="start center">
+          <h2 title="{{ titleTooltip }}">{{ title }}</h2>
+        </div>
+        <kl-legend
+          [inputDatas]="displayedValues"
+          [type]="'chart-nd-dynamic'"
+          [colorSet]="colorSet"
+        ></kl-legend>
+        <div
+          class="comp-header-tools screenshot-hide"
+          [fxLayout]="isSmallDiv ? 'column' : 'row'"
         >
-        </app-select-toggle-button>
-        <kl-graph-options-menu
-          [graphOptions]="graphOptions"
-          (graphOptionsChange)="changeGraphType($event)"
-        ></kl-graph-options-menu>
+          @if (displayedValues) {
+            <app-select-toggle-button
+              [displayedValues]="displayedValues"
+              (selectToggleButtonChanged)="onSelectToggleButtonChanged($event)"
+              [buttonTitle]="buttonTitle"
+            >
+            </app-select-toggle-button>
+          }
+          <kl-graph-options-menu
+            [graphOptions]="graphOptions"
+            (graphOptionsChange)="changeGraphType($event)"
+          ></kl-graph-options-menu>
+        </div>
+        @if (showFullscreenBtn) {
+          <kl-btn-fullscreen
+            class="screenshot-hide"
+            (toggleFullscreen)="onToggleFullscreen($event)"
+          >
+          </kl-btn-fullscreen>
+        }
       </div>
-      <kl-btn-fullscreen
-        class="screenshot-hide"
-        *ngIf="showFullscreenBtn"
-        (toggleFullscreen)="onToggleFullscreen($event)"
-      >
-      </kl-btn-fullscreen>
+      <kl-chart
+        id="{{ 'target-distribution-graph-comp-' + position }}"
+        [chartOptions]="chartOptions"
+        [canvasIdContainer]="'target-distribution-chart-' + position"
+        (selectBarIndex)="onSelectBarChanged($event)"
+        [colorSet]="colorSet"
+        [inputDatas]="inputDatas"
+        [activeEntries]="activeEntries"
+      ></kl-chart>
     </div>
-    <kl-chart
-      id="{{ 'target-distribution-graph-comp-' + position }}"
-      [chartOptions]="chartOptions"
-      [canvasIdContainer]="'target-distribution-chart-' + position"
-      (selectBarIndex)="onSelectBarChanged($event)"
-      [colorSet]="colorSet"
-      [inputDatas]="inputDatas"
-      [activeEntries]="activeEntries"
-    ></kl-chart>
-  </div>
-  <kl-no-data fxFlexFill *ngIf="!inputDatas"></kl-no-data>
+  }
+  @if (!inputDatas) {
+    <kl-no-data fxFlexFill></kl-no-data>
+  }
 </div>

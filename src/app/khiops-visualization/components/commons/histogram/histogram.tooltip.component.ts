@@ -9,18 +9,23 @@ import { Component, Input, OnChanges, OnDestroy } from '@angular/core';
 @Component({
   selector: 'app-histogram-tooltip',
   template: `
-    <div
-      [ngStyle]="{
-        'left.px': this.computeXPos(),
-        'top.px': this.computeYPos(),
-      }"
-      class="tooltip"
-      [class.visible]="display"
-      *ngIf="shouldShow"
-    >
-      <p class="title" [innerHTML]="title" *ngIf="title"></p>
-      <p [innerHTML]="body" *ngIf="body"></p>
-    </div>
+    @if (shouldShow) {
+      <div
+        [ngStyle]="{
+          'left.px': this.computeXPos(),
+          'top.px': this.computeYPos(),
+        }"
+        class="tooltip"
+        [class.visible]="display"
+      >
+        @if (title) {
+          <p class="title" [innerHTML]="title"></p>
+        }
+        @if (body) {
+          <p [innerHTML]="body"></p>
+        }
+      </div>
+    }
   `,
   styles: [
     `

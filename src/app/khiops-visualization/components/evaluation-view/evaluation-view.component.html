@@ -1,116 +1,114 @@
 <div id="evaluation-view-comp" fxFlexFill>
-  <div
-    fxLayout="column"
-    fxFlexFill
-    fxLayoutAlign="center center"
-    *ngIf="loadingView"
-  >
-    <mat-spinner
-      diameter="40"
-      color="accent"
-      mode="indeterminate"
-    ></mat-spinner>
-  </div>
-  <as-split
-    *ngIf="!loadingView"
-    direction="horizontal"
-    (dragEnd)="onSplitDragEnd($event, 'col')"
-  >
-    <as-split-area [size]="sizes.col[0]">
-      <as-split
-        direction="vertical"
-        (dragEnd)="onSplitDragEnd($event, 'col0Row')"
-      >
-        <as-split-area
-          class="variables-list-container kl-card"
-          [size]="sizes.col0Row[0]"
+  @if (loadingView) {
+    <div fxLayout="column" fxFlexFill fxLayoutAlign="center center">
+      <mat-spinner
+        diameter="40"
+        color="accent"
+        mode="indeterminate"
+      ></mat-spinner>
+    </div>
+  }
+  @if (!loadingView) {
+    <as-split direction="horizontal" (dragEnd)="onSplitDragEnd($event, 'col')">
+      <as-split-area [size]="sizes.col[0]">
+        <as-split
+          direction="vertical"
+          (dragEnd)="onSplitDragEnd($event, 'col0Row')"
         >
-          <kl-ag-grid
-            id="evaluation-types-summary"
-            class="variables-list"
-            [showSearch]="false"
-            [displayCount]="false"
-            titleTooltip="{{ 'TOOLTIPS.EVALUATION.TYPES.TITLE' | translate }}"
-            [selectedVariable]="evaluationDatas.selectedEvaluationTypeVariable"
-            (selectListItem)="onSelectEvaluationTypeChanged($event)"
-            [showLineSelection]="true"
-            [showColumnsSelection]="false"
-            [inputDatas]="evaluationDatas.evaluationTypesSummary?.values"
-            [title]="evaluationDatas.evaluationTypesSummary?.title"
-            [displayedColumns]="
-              evaluationDatas.evaluationTypesSummary?.displayedColumns
-            "
+          <as-split-area
+            class="variables-list-container kl-card"
+            [size]="sizes.col0Row[0]"
           >
-          </kl-ag-grid>
-        </as-split-area>
-        <as-split-area
-          class="variables-list-container kl-card"
-          [size]="sizes.col0Row[1]"
-        >
-          <kl-ag-grid
-            id="evaluation-predictor-evaluations"
-            class="variables-list"
-            [showSearch]="false"
-            [displayCount]="false"
-            titleTooltip="{{
-              'TOOLTIPS.EVALUATION.EVALUATIONS.TITLE' | translate
-            }}"
-            [showLineSelection]="true"
-            [showColumnsSelection]="false"
-            [inputDatas]="evaluationDatas.predictorEvaluations?.values"
-            [title]="evaluationDatas.predictorEvaluations?.title"
-            [displayedColumns]="
-              evaluationDatas.predictorEvaluations?.displayedColumns
-            "
-            [selectedVariable]="
-              evaluationDatas.selectedPredictorEvaluationVariable
-            "
-            (selectListItem)="onSelectPredictorEvaluationChanged($event)"
-          >
-          </kl-ag-grid>
-        </as-split-area>
-      </as-split>
-    </as-split-area>
-    <as-split-area [size]="sizes.col[1]">
-      <as-split
-        direction="vertical"
-        (dragEnd)="onSplitDragEnd($event, 'col1Row')"
-      >
-        <as-split-area [size]="sizes.col1Row[0]" class="kl-card">
-          <app-target-lift-graph
-            id="evaluation-lift-curves"
-            [selectedVariable]="
-              evaluationDatas.selectedPredictorEvaluationVariable
-            "
-          >
-          </app-target-lift-graph>
-        </as-split-area>
-        <as-split-area
-          *ngIf="evaluationDatas.confusionMatrix"
-          class="variables-list-container kl-card"
-          [size]="sizes.col1Row[1]"
-        >
-          <kl-ag-grid
-            id="evaluation-confusion-matrix"
-            class="variables-list"
-            [showSearch]="false"
-            [displayCount]="false"
-            [showLineSelection]="true"
-            [showColumnsSelection]="false"
-            [inputDatas]="evaluationDatas.confusionMatrix.values"
-            [title]="evaluationDatas.confusionMatrix.title"
-            [displayedColumns]="
-              evaluationDatas.confusionMatrix.displayedColumns
-            "
-          >
-            <app-data-type-selector
-              slot="header-tools"
-              (dataTypeChanged)="onDataTypeChanged($event)"
+            <kl-ag-grid
+              id="evaluation-types-summary"
+              class="variables-list"
+              [showSearch]="false"
+              [displayCount]="false"
+              titleTooltip="{{ 'TOOLTIPS.EVALUATION.TYPES.TITLE' | translate }}"
+              [selectedVariable]="
+                evaluationDatas.selectedEvaluationTypeVariable
+              "
+              (selectListItem)="onSelectEvaluationTypeChanged($event)"
+              [showLineSelection]="true"
+              [showColumnsSelection]="false"
+              [inputDatas]="evaluationDatas.evaluationTypesSummary?.values"
+              [title]="evaluationDatas.evaluationTypesSummary?.title"
+              [displayedColumns]="
+                evaluationDatas.evaluationTypesSummary?.displayedColumns
+              "
             >
-            </app-data-type-selector>
-          </kl-ag-grid>
-        </as-split-area>
-      </as-split>
-    </as-split-area>
-  </as-split>
+            </kl-ag-grid>
+          </as-split-area>
+          <as-split-area
+            class="variables-list-container kl-card"
+            [size]="sizes.col0Row[1]"
+          >
+            <kl-ag-grid
+              id="evaluation-predictor-evaluations"
+              class="variables-list"
+              [showSearch]="false"
+              [displayCount]="false"
+              titleTooltip="{{
+                'TOOLTIPS.EVALUATION.EVALUATIONS.TITLE' | translate
+              }}"
+              [showLineSelection]="true"
+              [showColumnsSelection]="false"
+              [inputDatas]="evaluationDatas.predictorEvaluations?.values"
+              [title]="evaluationDatas.predictorEvaluations?.title"
+              [displayedColumns]="
+                evaluationDatas.predictorEvaluations?.displayedColumns
+              "
+              [selectedVariable]="
+                evaluationDatas.selectedPredictorEvaluationVariable
+              "
+              (selectListItem)="onSelectPredictorEvaluationChanged($event)"
+            >
+            </kl-ag-grid>
+          </as-split-area>
+        </as-split>
+      </as-split-area>
+      <as-split-area [size]="sizes.col[1]">
+        <as-split
+          direction="vertical"
+          (dragEnd)="onSplitDragEnd($event, 'col1Row')"
+        >
+          <as-split-area [size]="sizes.col1Row[0]" class="kl-card">
+            <app-target-lift-graph
+              id="evaluation-lift-curves"
+              [selectedVariable]="
+                evaluationDatas.selectedPredictorEvaluationVariable
+              "
+            >
+            </app-target-lift-graph>
+          </as-split-area>
+          @if (evaluationDatas.confusionMatrix) {
+            <as-split-area
+              class="variables-list-container kl-card"
+              [size]="sizes.col1Row[1]"
+            >
+              <kl-ag-grid
+                id="evaluation-confusion-matrix"
+                class="variables-list"
+                [showSearch]="false"
+                [displayCount]="false"
+                [showLineSelection]="true"
+                [showColumnsSelection]="false"
+                [inputDatas]="evaluationDatas.confusionMatrix.values"
+                [title]="evaluationDatas.confusionMatrix.title"
+                [displayedColumns]="
+                  evaluationDatas.confusionMatrix.displayedColumns
+                "
+              >
+                <app-data-type-selector
+                  slot="header-tools"
+                  (dataTypeChanged)="onDataTypeChanged($event)"
+                >
+                </app-data-type-selector>
+              </kl-ag-grid>
+            </as-split-area>
+          }
+        </as-split>
+      </as-split-area>
+    </as-split>
+  }
 </div>

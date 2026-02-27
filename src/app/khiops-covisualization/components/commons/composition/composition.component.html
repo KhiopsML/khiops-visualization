@@ -1,24 +1,26 @@
 <div class="composition-comp" fxLayout="column" fxFlexFill>
-  <kl-ag-grid
-    *ngIf="selectedDimension?.isCategorical"
-    fxFlexFill
-    titleTooltip="{{ 'TOOLTIPS.AXIS.COMPOSITION.TITLE' | translate }}"
-    [attr.id]="'cluster-composition-' + position"
-    [id]="'cluster-composition-' + position"
-    [showSearch]="true"
-    [watchResize]="true"
-    [showColumnsSelection]="true"
-    [inputDatas]="compositionValues"
-    [title]="title"
-    (selectListItem)="onSelectRowChanged($event)"
-    [selectedVariable]="selectedComposition"
-    [displayedColumns]="compositionDisplayedColumns"
-  ></kl-ag-grid>
-  <kl-no-data
-    fxFlexFill
-    fxLayoutAlign="center center"
-    *ngIf="!selectedDimension?.isCategorical"
-    [message]="'NO_DATAS.NO_COMPOSITION_FOR_NUMERICAL'"
-  >
-  </kl-no-data>
+  @if (selectedDimension?.isCategorical) {
+    <kl-ag-grid
+      fxFlexFill
+      titleTooltip="{{ 'TOOLTIPS.AXIS.COMPOSITION.TITLE' | translate }}"
+      [attr.id]="'cluster-composition-' + position"
+      [id]="'cluster-composition-' + position"
+      [showSearch]="true"
+      [watchResize]="true"
+      [showColumnsSelection]="true"
+      [inputDatas]="compositionValues"
+      [title]="title"
+      (selectListItem)="onSelectRowChanged($event)"
+      [selectedVariable]="selectedComposition"
+      [displayedColumns]="compositionDisplayedColumns"
+    ></kl-ag-grid>
+  }
+  @if (!selectedDimension?.isCategorical) {
+    <kl-no-data
+      fxFlexFill
+      fxLayoutAlign="center center"
+      [message]="'NO_DATAS.NO_COMPOSITION_FOR_NUMERICAL'"
+    >
+    </kl-no-data>
+  }
 </div>

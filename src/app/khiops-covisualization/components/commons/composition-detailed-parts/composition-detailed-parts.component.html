@@ -30,24 +30,25 @@
       fxFlex
       fxLayoutAlign="start center"
     >
-      <div
-        *ngIf="inputDatas && inputDatas.length > 0"
-        id="composition-detailed-parts-list-table"
-        fxFlexFill
-        fxLayout="column"
-        fxLayoutAlign="start center"
-      >
-        <kl-ag-grid
+      @if (inputDatas && inputDatas.length > 0) {
+        <div
+          id="composition-detailed-parts-list-table"
           fxFlexFill
-          [showSearch]="false"
-          [showLineSelection]="false"
-          [showColumnsSelection]="false"
-          [inputDatas]="inputDatas"
-          [title]="''"
-          [displayedColumns]="displayedColumns"
+          fxLayout="column"
+          fxLayoutAlign="start center"
         >
-        </kl-ag-grid>
-      </div>
+          <kl-ag-grid
+            fxFlexFill
+            [showSearch]="false"
+            [showLineSelection]="false"
+            [showColumnsSelection]="false"
+            [inputDatas]="inputDatas"
+            [title]="''"
+            [displayedColumns]="displayedColumns"
+          >
+          </kl-ag-grid>
+        </div>
+      }
     </div>
   </div>
 </div>

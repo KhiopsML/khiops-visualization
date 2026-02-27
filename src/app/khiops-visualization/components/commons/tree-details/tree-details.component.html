@@ -1,17 +1,20 @@
-<kl-ag-grid
-  *ngIf="treeDetails && treeDetails.values"
-  id="tree-details-comp"
-  class="variables-list"
-  fxFlexFill
-  [showSearch]="false"
-  [displayCount]="false"
-  [showLineSelection]="true"
-  [title]="treeDetails.title"
-  [showColumnsSelection]="true"
-  (selectListItem)="onSelectListItemChanged($event)"
-  [selectedVariable]="selectedNode$ | async"
-  [inputDatas]="treeDetails.values"
-  [displayedColumns]="treeDetails.displayedColumns"
->
-</kl-ag-grid>
-<kl-no-data fxFlex *ngIf="!(treeDetails && treeDetails.values)"></kl-no-data>
+@if (treeDetails && treeDetails.values) {
+  <kl-ag-grid
+    id="tree-details-comp"
+    class="variables-list"
+    fxFlexFill
+    [showSearch]="false"
+    [displayCount]="false"
+    [showLineSelection]="true"
+    [title]="treeDetails.title"
+    [showColumnsSelection]="true"
+    (selectListItem)="onSelectListItemChanged($event)"
+    [selectedVariable]="selectedNode$ | async"
+    [inputDatas]="treeDetails.values"
+    [displayedColumns]="treeDetails.displayedColumns"
+  >
+  </kl-ag-grid>
+}
+@if (!(treeDetails && treeDetails.values)) {
+  <kl-no-data fxFlex></kl-no-data>
+}

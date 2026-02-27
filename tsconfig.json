@@ -2,10 +2,11 @@
 {
   "compileOnSave": false,
   "compilerOptions": {
+    "rootDir": "..",
     "outDir": "./dist/out-tsc",
     "sourceMap": true,
     "declaration": false,
-    "moduleResolution": "node",
+    "moduleResolution": "bundler",
     "resolveJsonModule": true,
     "emitDecoratorMetadata": true,
     "importHelpers": true,
@@ -23,7 +24,6 @@
     "strict": true,
     "noImplicitOverride": true,
     "noFallthroughCasesInSwitch": true,
-    "baseUrl": "./",
     "target": "ES2022",
     "allowJs": true,
     "typeRoots": ["node_modules/@types"],
@@ -36,17 +36,15 @@
       "@khiops-visualization/*": ["./src/app/khiops-visualization/*"],
       "@khiops-covisualization/*": ["./src/app/khiops-covisualization/*"],
       "khiops-visualization-components": [
-        "dist/khiops-visualization-components/khiops-visualization-components",
-        "dist/khiops-visualization-components"
+        "./dist/khiops-visualization-components/khiops-visualization-components",
+        "./dist/khiops-visualization-components"
       ],
       "stream": ["./node_modules/stream-browserify"]
     }
   },
   "exclude": ["node_modules", "./libs", "dist", "**/*.spec.ts"],
   "angularCompilerOptions": {
-    "enableIvy": true,
     "strictTemplates": false,
-    "fullTemplateTypeCheck": true,
     "strictInjectionParameters": true
   }
 }

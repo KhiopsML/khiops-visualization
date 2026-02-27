@@ -1,107 +1,107 @@
-<as-split
-  id="app-var-details-preparation-2d-comp"
-  *ngIf="
-    preparation2dDatas?.selectedVariable &&
-    !preparation2dDatas?.selectedVariable?.noCorrelation
-  "
-  direction="vertical"
-  (dragEnd)="onSplitDragEnd($event, 'row1Col1Row')"
->
-  <as-split-area [size]="sizes.row1Col1Row[0]" fxLayout="column" class="">
-    <as-split
-      direction="vertical"
-      (dragEnd)="onSplitDragEnd($event, 'row1Col1Row0Col')"
-    >
-      <as-split-area
-        class="variables-list-container kl-card"
-        [size]="sizes.row1Col1Row0Col[0]"
+@if (
+  preparation2dDatas?.selectedVariable &&
+  !preparation2dDatas?.selectedVariable?.noCorrelation
+) {
+  <as-split
+    id="app-var-details-preparation-2d-comp"
+    direction="vertical"
+    (dragEnd)="onSplitDragEnd($event, 'row1Col1Row')"
+  >
+    <as-split-area [size]="sizes.row1Col1Row[0]" fxLayout="column" class="">
+      <as-split
+        direction="vertical"
+        (dragEnd)="onSplitDragEnd($event, 'row1Col1Row0Col')"
       >
-        <app-cooccurrence-matrix
-          fxFlexFill
-          id="cooccurrence-matrix-comp-container"
-          fxFlex="1 1 100%"
-          (selectCellRowChanged)="onSelectCellRowChanged()"
-          [selectedVariable]="preparation2dDatas?.selectedVariable"
+        <as-split-area
+          class="variables-list-container kl-card"
+          [size]="sizes.row1Col1Row0Col[0]"
         >
-        </app-cooccurrence-matrix>
-      </as-split-area>
-      <as-split-area
-        *ngIf="
+          <app-cooccurrence-matrix
+            fxFlexFill
+            id="cooccurrence-matrix-comp-container"
+            fxFlex="1 1 100%"
+            (selectCellRowChanged)="onSelectCellRowChanged()"
+            [selectedVariable]="preparation2dDatas?.selectedVariable"
+          >
+          </app-cooccurrence-matrix>
+        </as-split-area>
+        @if (
           preparation2dDatas?.selectedVariable?.name1 &&
           preparation2dDatas?.selectedVariable?.name2 &&
           distribution2dDatas &&
           distribution2dDatas.targetDistributionGraphDatas &&
           distribution2dDatas.targetDistributionGraphDatas.datasets
-        "
-        [size]="sizes.row1Col1Row0Col[1]"
-        class="variables-list-container kl-card"
-      >
-        <app-target-distribution-graph
-          #targetDistributionGraph
-          fxFlex="1 1 100%"
-          [showFullscreenBtn]="true"
-          titleTooltip="{{
-            'TOOLTIPS.PREPARATION_2D.TARGET_DISTRIBUTION.TITLE' | translate
-          }}"
-          id="preparation-2d-target-distribution-graph"
-          [inputDatas]="distribution2dDatas.targetDistributionGraphDatas"
-          [variableType]="preparation2dDatas?.selectedVariable?.type"
-          [scaleValue]="scaleValue"
-          (graphTypeChanged)="onTargetDistributionGraphTypeChanged($event)"
-        >
-        </app-target-distribution-graph>
-      </as-split-area>
-    </as-split>
-  </as-split-area>
-  <as-split-area
-    class="variables-list-container"
-    [size]="sizes.row1Col1Row[1]"
-    fxLayout="row"
-  >
-    <as-split direction="horizontal">
-      <as-split-area class="variables-list-container kl-card">
-        <kl-ag-grid
-          id="preparation-2d-current-cell-x"
-          class="variables-list"
-          [title]="''"
-          [showSearch]="false"
-          [displayCount]="false"
-          [showLineSelection]="true"
-          [showColumnsSelection]="false"
-          [inputDatas]="preparation2dDatas?.currentCellDatas?.values?.[0]"
-          [displayedColumns]="
-            preparation2dDatas?.currentCellDatas?.displayedColumns?.[0]
-          "
-        >
-        </kl-ag-grid>
-      </as-split-area>
-      <as-split-area class="variables-list-container kl-card">
-        <kl-ag-grid
-          id="preparation-2d-current-cell-y"
-          class="variables-list"
-          [title]="''"
-          [showSearch]="false"
-          [displayCount]="false"
-          [showLineSelection]="true"
-          [showColumnsSelection]="false"
-          [inputDatas]="preparation2dDatas?.currentCellDatas?.values?.[1]"
-          [displayedColumns]="
-            preparation2dDatas?.currentCellDatas?.displayedColumns?.[1]
-          "
-        >
-        </kl-ag-grid>
-      </as-split-area>
-    </as-split>
-  </as-split-area>
-</as-split>
-<div
-  class="kl-card"
-  fxFlex
-  *ngIf="
-    (preparation2dDatas?.selectedVariable &&
-      preparation2dDatas?.selectedVariable?.noCorrelation) ||
-    !preparation2dDatas?.selectedVariable
-  "
->
-  <kl-no-data fxFlexFill> </kl-no-data>
-</div>
+        ) {
+          <as-split-area
+            [size]="sizes.row1Col1Row0Col[1]"
+            class="variables-list-container kl-card"
+          >
+            <app-target-distribution-graph
+              #targetDistributionGraph
+              fxFlex="1 1 100%"
+              [showFullscreenBtn]="true"
+              titleTooltip="{{
+                'TOOLTIPS.PREPARATION_2D.TARGET_DISTRIBUTION.TITLE' | translate
+              }}"
+              id="preparation-2d-target-distribution-graph"
+              [inputDatas]="distribution2dDatas.targetDistributionGraphDatas"
+              [variableType]="preparation2dDatas?.selectedVariable?.type"
+              [scaleValue]="scaleValue"
+              (graphTypeChanged)="onTargetDistributionGraphTypeChanged($event)"
+            >
+            </app-target-distribution-graph>
+          </as-split-area>
+        }
+      </as-split>
+    </as-split-area>
+    <as-split-area
+      class="variables-list-container"
+      [size]="sizes.row1Col1Row[1]"
+      fxLayout="row"
+    >
+      <as-split direction="horizontal">
+        <as-split-area class="variables-list-container kl-card">
+          <kl-ag-grid
+            id="preparation-2d-current-cell-x"
+            class="variables-list"
+            [title]="''"
+            [showSearch]="false"
+            [displayCount]="false"
+            [showLineSelection]="true"
+            [showColumnsSelection]="false"
+            [inputDatas]="preparation2dDatas?.currentCellDatas?.values?.[0]"
+            [displayedColumns]="
+              preparation2dDatas?.currentCellDatas?.displayedColumns?.[0]
+            "
+          >
+          </kl-ag-grid>
+        </as-split-area>
+        <as-split-area class="variables-list-container kl-card">
+          <kl-ag-grid
+            id="preparation-2d-current-cell-y"
+            class="variables-list"
+            [title]="''"
+            [showSearch]="false"
+            [displayCount]="false"
+            [showLineSelection]="true"
+            [showColumnsSelection]="false"
+            [inputDatas]="preparation2dDatas?.currentCellDatas?.values?.[1]"
+            [displayedColumns]="
+              preparation2dDatas?.currentCellDatas?.displayedColumns?.[1]
+            "
+          >
+          </kl-ag-grid>
+        </as-split-area>
+      </as-split>
+    </as-split-area>
+  </as-split>
+}
+@if (
+  (preparation2dDatas?.selectedVariable &&
+    preparation2dDatas?.selectedVariable?.noCorrelation) ||
+  !preparation2dDatas?.selectedVariable
+) {
+  <div class="kl-card" fxFlex>
+    <kl-no-data fxFlexFill> </kl-no-data>
+  </div>
+}

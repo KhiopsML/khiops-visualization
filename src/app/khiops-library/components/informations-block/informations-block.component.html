@@ -1,73 +1,77 @@
-<div
-  class="informations-block-comp"
-  fxFlexFill
-  fxLayoutAlign="start start"
-  fxLayout="column"
-  *ngIf="inputDatas"
-  tabindex="0"
->
-  <!-- Header -->
-  <h1 fxLayout="row" fxLayoutAlign="start center">
-    <mat-icon>{{ icon }}</mat-icon>
-    {{ title }}
-  </h1>
-
-  <!-- Main metrics display -->
-  <div fxLayout="row" class="metrics-container">
-    <!-- Metric displays for instances and evaluated variables -->
-    <div
-      *ngFor="let data of metricData"
-      fxFlex
-      fxLayoutAlign="center center"
-      class="informations-main-values"
-    >
-      <div fxFlex fxLayout="column">
-        <span fxLayoutAlign="center center" fxFlex class="metric-value">{{
-          data.value | toPrecision
-        }}</span>
-        <strong>{{ data.title | translate }}</strong>
-      </div>
-    </div>
-
-    <!-- Gauge display for sample percentage -->
-    <div
-      *ngIf="gaugeData"
-      fxFlex
-      class="informations-main-values gauge-container"
-      fxLayoutAlign="center center"
-    >
-      <div fxLayoutAlign="start center" fxLayout="row">
-        <kl-gauge
-          [value]="getPercentageValue(gaugeData.value)"
-          [size]="gaugeSize"
+@if (inputDatas) {
+  <div
+    class="informations-block-comp"
+    fxFlexFill
+    fxLayoutAlign="start start"
+    fxLayout="column"
+    tabindex="0"
+  >
+    <!-- Header -->
+    <h1 fxLayout="row" fxLayoutAlign="start center">
+      <mat-icon>{{ icon }}</mat-icon>
+      {{ title }}
+    </h1>
+    <!-- Main metrics display -->
+    <div fxLayout="row" class="metrics-container">
+      <!-- Metric displays for instances and evaluated variables -->
+      @for (data of metricData; track data) {
+        <div
+          fxFlex
+          fxLayoutAlign="center center"
+          class="informations-main-values"
         >
-        </kl-gauge>
-
-        <strong>{{ gaugeData.title | translate }}</strong>
-      </div>
+          <div fxFlex fxLayout="column">
+            <span fxLayoutAlign="center center" fxFlex class="metric-value">{{
+              data.value | toPrecision
+            }}</span>
+            <strong>{{ data.title | translate }}</strong>
+          </div>
+        </div>
+      }
+      <!-- Gauge display for sample percentage -->
+      @if (gaugeData) {
+        <div
+          fxFlex
+          class="informations-main-values gauge-container"
+          fxLayoutAlign="center center"
+        >
+          <div fxLayoutAlign="start center" fxLayout="row">
+            <kl-gauge
+              [value]="getPercentageValue(gaugeData.value)"
+              [size]="gaugeSize"
+            >
+            </kl-gauge>
+            <strong>{{ gaugeData.title | translate }}</strong>
+          </div>
+        </div>
+      }
     </div>
+    <!-- Warning message when variables have been filtered -->
+    <kl-warning-information
+      [show]="showFilteredVariablesWarning"
+      [text]="'GLOBAL.FILTERED_VARIABLES_WARNING' | translate"
+      [tooltipText]="'GLOBAL.FILTERED_VARIABLES_WARNING_TOOLTIP' | translate"
+    ></kl-warning-information>
+    <!-- Table for additional information -->
+    @if (tableData.length > 0) {
+      <table>
+        @for (data of tableData; track data) {
+          <tr>
+            <th>
+              <strong>{{ data.title | translate }}</strong>
+            </th>
+            <td scope="col">
+              <em [ngClass]="{ 'important-badge': data.isImportant }">
+                {{ data.value | toPrecision }}
+              </em>
+            </td>
+          </tr>
+        }
+      </table>
+    }
   </div>
+}
 
-  <!-- Warning message when variables have been filtered -->
-  <kl-warning-information
-    [show]="showFilteredVariablesWarning"
-    [text]="'GLOBAL.FILTERED_VARIABLES_WARNING' | translate"
-    [tooltipText]="'GLOBAL.FILTERED_VARIABLES_WARNING_TOOLTIP' | translate"
-  ></kl-warning-information>
-
-  <!-- Table for additional information -->
-  <table *ngIf="tableData.length > 0">
-    <tr *ngFor="let data of tableData">
-      <th>
-        <strong>{{ data.title | translate }}</strong>
-      </th>
-      <td scope="col">
-        <em [ngClass]="{ 'important-badge': data.isImportant }">
-          {{ data.value | toPrecision }}
-        </em>
-      </td>
-    </tr>
-  </table>
-</div>
-
-<kl-no-data fxFlexFill *ngIf="!inputDatas"></kl-no-data>
+@if (!inputDatas) {
+  <kl-no-data fxFlexFill></kl-no-data>
+}

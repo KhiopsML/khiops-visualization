@@ -24,25 +24,27 @@
         >{{ selectAllCheckboxText }}</mat-checkbox
       >
     </button>
-    <button
-      mat-menu-item
-      class="mat-menu-item-checkbox checkbox-select"
-      *ngFor="let opt of currentItemsToShow; let i = index"
-      (click)="$event.stopPropagation()"
-    >
-      <mat-checkbox
-        [checked]="opt.show"
-        (change)="toggleGraphOptionValue($event, opt)"
-        >{{ opt.name }}</mat-checkbox
+    @for (opt of currentItemsToShow; track opt; let i = $index) {
+      <button
+        mat-menu-item
+        class="mat-menu-item-checkbox checkbox-select"
+        (click)="$event.stopPropagation()"
       >
-    </button>
-    <mat-paginator
-      *ngIf="displayedValues?.length > pageSize"
-      (page)="onPageChange($event)"
-      (click)="$event.stopPropagation()"
-      [length]="displayedValues?.length"
-      [pageSize]="pageSize"
-    >
-    </mat-paginator>
+        <mat-checkbox
+          [checked]="opt.show"
+          (change)="toggleGraphOptionValue($event, opt)"
+          >{{ opt.name }}</mat-checkbox
+        >
+      </button>
+    }
+    @if (displayedValues?.length > pageSize) {
+      <mat-paginator
+        (page)="onPageChange($event)"
+        (click)="$event.stopPropagation()"
+        [length]="displayedValues?.length"
+        [pageSize]="pageSize"
+      >
+      </mat-paginator>
+    }
   </mat-menu>
 </div>

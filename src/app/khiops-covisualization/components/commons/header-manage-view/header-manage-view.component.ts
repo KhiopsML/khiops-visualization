@@ -5,11 +5,7 @@
  */
 
 import { Component } from '@angular/core';
-import {
-  MatDialogRef,
-  MatDialog,
-  MatDialogConfig,
-} from '@angular/material/dialog';
+import { MatDialogRef, MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { AppConfig } from '../../../../../environments/environment';
 import { UnfoldHierarchyComponent } from '../unfold-hierarchy/unfold-hierarchy.component';
 import { ManageViewsComponent } from '../manage-views/manage-views.component';

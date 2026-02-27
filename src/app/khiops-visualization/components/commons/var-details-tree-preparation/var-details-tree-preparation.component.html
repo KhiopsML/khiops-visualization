@@ -9,18 +9,19 @@
       (dragEnd)="onSplitDragEnd($event, 'row1Col1Row0Col')"
     >
       <as-split-area [size]="sizes.row1Col1Row0Col[0]">
-        <app-variable-graph-details
-          #appVariableGraphDetails
-          *ngIf="treePreparationDatas?.selectedVariable"
-          [preparationSource]="'treePreparationReport'"
-          [selectedVariable]="treePreparationDatas?.selectedVariable"
-          [selectedGraphItemIndex]="selectedBarIndex"
-          (selectedItemChanged)="onSelectedGraphItemChanged($event)"
-          (interpretableHistogramChanged)="onSelectedGraphItemChanged($event)"
-          fxFlex="1 1 100%"
-          [showTargetDistributionGraph]="true"
-        >
-        </app-variable-graph-details>
+        @if (treePreparationDatas?.selectedVariable) {
+          <app-variable-graph-details
+            #appVariableGraphDetails
+            [preparationSource]="'treePreparationReport'"
+            [selectedVariable]="treePreparationDatas?.selectedVariable"
+            [selectedGraphItemIndex]="selectedBarIndex"
+            (selectedItemChanged)="onSelectedGraphItemChanged($event)"
+            (interpretableHistogramChanged)="onSelectedGraphItemChanged($event)"
+            fxFlex="1 1 100%"
+            [showTargetDistributionGraph]="true"
+          >
+          </app-variable-graph-details>
+        }
       </as-split-area>
     </as-split>
   </as-split-area>

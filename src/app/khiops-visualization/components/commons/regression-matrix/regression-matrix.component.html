@@ -1,47 +1,48 @@
 <div id="regression-matrix-comp" fxFlexFill fxLayout="column">
-  <div
-    fxFlexFill
-    fxLayout="column"
-    *ngIf="preparation2dDatas?.matrixDatas"
-    [ngClass]="{ fullscreen: isFullscreen }"
-  >
-    <div fxLayout="row" fxLayoutAlign="start center" class="comp-header">
-      <div fxFlex fxLayout="row" fxLayoutAlign="start center">
+  @if (preparation2dDatas?.matrixDatas) {
+    <div fxFlexFill fxLayout="column" [ngClass]="{ fullscreen: isFullscreen }">
+      <div fxLayout="row" fxLayoutAlign="start center" class="comp-header">
         <div fxFlex fxLayout="row" fxLayoutAlign="start center">
-          <h2 title="{{ 'TOOLTIPS.PREPARATION.REG_MATRIX.TITLE' | translate }}">
-            {{ 'GLOBAL.TARGET_VALUES' | translate }}
-          </h2>
-          <kl-matrix-mode [matrixModes]="matrixModes"> </kl-matrix-mode>
-        </div>
-        <div fxLayout="row" fxLayoutAlign="end center">
-          <kl-matrix-toggle
+          <div fxFlex fxLayout="row" fxLayoutAlign="start center">
+            <h2
+              title="{{ 'TOOLTIPS.PREPARATION.REG_MATRIX.TITLE' | translate }}"
+            >
+              {{ 'GLOBAL.TARGET_VALUES' | translate }}
+            </h2>
+            <kl-matrix-mode [matrixModes]="matrixModes"> </kl-matrix-mode>
+          </div>
+          <div fxLayout="row" fxLayoutAlign="end center">
+            <kl-matrix-toggle
+              class="screenshot-hide"
+              [matrixOptions]="matrixOptions"
+            ></kl-matrix-toggle>
+          </div>
+          <kl-btn-fullscreen
             class="screenshot-hide"
-            [matrixOptions]="matrixOptions"
-          ></kl-matrix-toggle>
+            (toggleFullscreen)="onToggleFullscreen($event)"
+          >
+          </kl-btn-fullscreen>
         </div>
-        <kl-btn-fullscreen
-          class="screenshot-hide"
-          (toggleFullscreen)="onToggleFullscreen($event)"
-        >
-        </kl-btn-fullscreen>
       </div>
+      <kl-matrix
+        #matrix
+        fxFlex
+        fxLayout="row"
+        [id]="'regression-matrix-comp'"
+        (cellSelected)="onCellSelected($event)"
+        [isAxisInverted]="preparation2dDatas?.isAxisInverted"
+        (matrixAxisInverted)="onMatrixAxisInverted()"
+        [selectedCell]="preparation2dDatas?.selectedCell"
+        [inputDatas]="preparation2dDatas?.matrixDatas"
+        [graphType]="matrixOptions.selected"
+        [minMaxValues]="minMaxValues"
+        [graphMode]="matrixModes.selected"
+        [showExpectedFrequency]="false"
+      >
+      </kl-matrix>
     </div>
-    <kl-matrix
-      #matrix
-      fxFlex
-      fxLayout="row"
-      [id]="'regression-matrix-comp'"
-      (cellSelected)="onCellSelected($event)"
-      [isAxisInverted]="preparation2dDatas?.isAxisInverted"
-      (matrixAxisInverted)="onMatrixAxisInverted()"
-      [selectedCell]="preparation2dDatas?.selectedCell"
-      [inputDatas]="preparation2dDatas?.matrixDatas"
-      [graphType]="matrixOptions.selected"
-      [minMaxValues]="minMaxValues"
-      [graphMode]="matrixModes.selected"
-      [showExpectedFrequency]="false"
-    >
-    </kl-matrix>
-  </div>
-  <kl-no-data fxFlex *ngIf="!preparation2dDatas?.matrixDatas"></kl-no-data>
+  }
+  @if (!preparation2dDatas?.matrixDatas) {
+    <kl-no-data fxFlex></kl-no-data>
+  }
 </div>

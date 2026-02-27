@@ -8,7 +8,7 @@
 import { TestBed } from '@angular/core/testing';
 import { AppService } from '@khiops-visualization/providers/app.service';
 import { Preparation2dDatasService } from '@khiops-visualization/providers/preparation2d-datas.service';
-import { HttpClientModule } from '@angular/common/http';
+import { provideHttpClient } from '@angular/common/http';
 import { PreparationDatasService } from '@khiops-visualization/providers/preparation-datas.service';
 import { REPORT } from '@khiops-library/enum/report';
 import { TranslateModule } from '@ngstack/translate';
@@ -24,7 +24,8 @@ describe('Visualization', () => {
   describe('Matrix Datas : empty first partition regression case (MISSING) [OI_AllReports file]', () => {
     beforeEach(() => {
       TestBed.configureTestingModule({
-        imports: [HttpClientModule, TranslateModule.forRoot()],
+        imports: [TranslateModule.forRoot()],
+  providers: [provideHttpClient()],
       });
 
       // Inject services
@@ -69,7 +70,8 @@ describe('Visualization', () => {
   describe('Matrix Datas : NO target [bi2 file]', () => {
     beforeEach(() => {
       TestBed.configureTestingModule({
-        imports: [HttpClientModule, TranslateModule.forRoot()],
+        imports: [TranslateModule.forRoot()],
+  providers: [provideHttpClient()],
       });
 
       // Inject services

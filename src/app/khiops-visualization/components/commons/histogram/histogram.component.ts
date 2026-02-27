@@ -139,17 +139,12 @@ export class HistogramComponent extends SelectableComponent implements OnInit {
     // Keep a ref of instance
     this.chart.nativeElement.componentInstance = this;
 
-    this.histogramCanvas = this.configService
-      .getRootElementDom()
-      .querySelector('#histogram-canvas');
-
-    this.histogramSelectedCanvas = this.configService
-      .getRootElementDom()
-      .querySelector('#histogram-canvas-selected');
-
-    this.histogramHoverCanvas = this.configService
-      .getRootElementDom()
-      .querySelector('#histogram-canvas-hover');
+    const rootElement = this.configService.getRootElementDom();
+    if (rootElement) {
+      this.histogramCanvas = rootElement.querySelector('#histogram-canvas');
+      this.histogramSelectedCanvas = rootElement.querySelector('#histogram-canvas-selected');
+      this.histogramHoverCanvas = rootElement.querySelector('#histogram-canvas-hover');
+    }
 
     this.histogramSelectedCanvas?.addEventListener(
       'click',

@@ -1,16 +1,17 @@
 <div class="chart-comp" (keyup)="onKeyUp($event)" tabindex="-1">
-  <div
-    fxLayout="column"
-    class="kl-chart-loading-indicator"
-    fxLayoutAlign="center center"
-    *ngIf="isLoading"
-  >
-    <mat-spinner
-      diameter="40"
-      color="accent"
-      mode="indeterminate"
-    ></mat-spinner>
-  </div>
+  @if (isLoading) {
+    <div
+      fxLayout="column"
+      class="kl-chart-loading-indicator"
+      fxLayoutAlign="center center"
+    >
+      <mat-spinner
+        diameter="40"
+        color="accent"
+        mode="indeterminate"
+      ></mat-spinner>
+    </div>
+  }
   <div class="kl-chart-comp">
     <canvas id="{{ canvasIdContainer }}"></canvas>
   </div>

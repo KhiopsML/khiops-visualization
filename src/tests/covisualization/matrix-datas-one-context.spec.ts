@@ -8,7 +8,7 @@
 import { TestBed } from '@angular/core/testing';
 import { AppService } from '@khiops-covisualization/providers/app.service';
 import { DimensionsDatasService } from '@khiops-covisualization/providers/dimensions-datas.service';
-import { HttpClientModule } from '@angular/common/http';
+import { provideHttpClient } from '@angular/common/http';
 import { TranslateModule } from '@ngstack/translate';
 import { MATRIX_MODES } from '@khiops-library/enum/matrix-modes';
 import { MatrixUtilsService } from '@khiops-library/components/matrix/matrix.utils.service';
@@ -23,7 +23,8 @@ describe('CoVisualization', () => {
   describe('Matrix Datas : One Context [zero-except file]', () => {
     beforeEach(() => {
       TestBed.configureTestingModule({
-        imports: [HttpClientModule, TranslateModule.forRoot()],
+        imports: [TranslateModule.forRoot()],
+  providers: [provideHttpClient()],
       });
 
       // Inject services
@@ -107,7 +108,8 @@ describe('CoVisualization', () => {
   describe('Matrix Datas : one Context [zero-except file] check proba values without folding', () => {
     beforeEach(() => {
       TestBed.configureTestingModule({
-        imports: [HttpClientModule, TranslateModule.forRoot()],
+        imports: [TranslateModule.forRoot()],
+  providers: [provideHttpClient()],
       });
 
       // Inject services
@@ -147,7 +149,8 @@ describe('CoVisualization', () => {
   describe('Matrix Datas : one Context [zero-except file] check proba values with folding', () => {
     beforeEach(() => {
       TestBed.configureTestingModule({
-        imports: [HttpClientModule, TranslateModule.forRoot()],
+        imports: [TranslateModule.forRoot()],
+  providers: [provideHttpClient()],
       });
 
       // Inject services
@@ -186,7 +189,8 @@ describe('CoVisualization', () => {
   describe('Matrix Datas : one Context [adultmissing file] check rev proba values with complex folding', () => {
     beforeEach(() => {
       TestBed.configureTestingModule({
-        imports: [HttpClientModule, TranslateModule.forRoot()],
+        imports: [TranslateModule.forRoot()],
+  providers: [provideHttpClient()],
       });
 
       // Inject services
@@ -229,7 +233,8 @@ describe('CoVisualization', () => {
   describe('Matrix Datas : one Context [adultmissing file] 4 cells folding check Hellinger "C3" values with complex folding', () => {
     beforeEach(() => {
       TestBed.configureTestingModule({
-        imports: [HttpClientModule, TranslateModule.forRoot()],
+        imports: [TranslateModule.forRoot()],
+  providers: [provideHttpClient()],
       });
 
       // Inject services
@@ -278,7 +283,8 @@ describe('CoVisualization', () => {
   describe('Matrix Datas : one Context [adultmissing file] 4 cells folding check Hellinger "Less" values with complex folding', () => {
     beforeEach(() => {
       TestBed.configureTestingModule({
-        imports: [HttpClientModule, TranslateModule.forRoot()],
+        imports: [TranslateModule.forRoot()],
+  providers: [provideHttpClient()],
       });
 
       // Inject services
@@ -327,7 +333,8 @@ describe('CoVisualization', () => {
   describe('Matrix Datas : one Context [adultmissing file] 4 cells folding check Mutual information "Less" values with complex folding', () => {
     beforeEach(() => {
       TestBed.configureTestingModule({
-        imports: [HttpClientModule, TranslateModule.forRoot()],
+        imports: [TranslateModule.forRoot()],
+  providers: [provideHttpClient()],
       });
 
       // Inject services

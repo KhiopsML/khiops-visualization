@@ -14,14 +14,15 @@
       {{ selectedPredictor }} <em><mat-icon>keyboard_arrow_down</mat-icon> </em>
     </button>
     <mat-menu #trainedPredictors>
-      <button
-        mat-menu-item
-        [class.selected-item]="opt.name === selectedPredictor"
-        *ngFor="let opt of inputDatas"
-        (click)="changeTrainedPredictorsType(opt)"
-      >
-        {{ opt.name }}
-      </button>
+      @for (opt of inputDatas; track opt) {
+        <button
+          mat-menu-item
+          [class.selected-item]="opt.name === selectedPredictor"
+          (click)="changeTrainedPredictorsType(opt)"
+        >
+          {{ opt.name }}
+        </button>
+      }
     </mat-menu>
   </div>
 </div>

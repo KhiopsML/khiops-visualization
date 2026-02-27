@@ -41,24 +41,25 @@
             (selectionChanged)="onInnerVariablesSelectionChanged($event)"
           ></app-matrix-inner-variables-filter>
           <!-- <kl-matrix-toggle
-            class="screenshot-hide"
-            [matrixOptions]="matrixFilterOptions"
-            [lsId]="LS.MATRIX_FILTER_OPTION"
-            (matrixOptionChange)="changeMatrixFilterType($event)"
-          ></kl-matrix-toggle> -->
-          <mat-checkbox
-            color="accent"
-            class="kl-checkbox"
-            *ngIf="dimensionsDatas?.contextDimensionCount"
-            [checked]="dimensionsDatas?.conditionalOnContext"
-            (change)="changeConditionalOnContext()"
-            matTooltipPosition="above"
-            matTooltip="{{
-              'TOOLTIPS.COMMONS.CONDITIONAL_ON_CONTEXT' | translate
-            }}"
-          >
-            {{ 'GLOBAL.CONDITIONAL_ON_CONTEXT' | translate }}</mat-checkbox
-          >
+          class="screenshot-hide"
+          [matrixOptions]="matrixFilterOptions"
+          [lsId]="LS.MATRIX_FILTER_OPTION"
+          (matrixOptionChange)="changeMatrixFilterType($event)"
+        ></kl-matrix-toggle> -->
+          @if (dimensionsDatas?.contextDimensionCount) {
+            <mat-checkbox
+              color="accent"
+              class="kl-checkbox"
+              [checked]="dimensionsDatas?.conditionalOnContext"
+              (change)="changeConditionalOnContext()"
+              matTooltipPosition="above"
+              matTooltip="{{
+                'TOOLTIPS.COMMONS.CONDITIONAL_ON_CONTEXT' | translate
+              }}"
+            >
+              {{ 'GLOBAL.CONDITIONAL_ON_CONTEXT' | translate }}</mat-checkbox
+            >
+          }
           <kl-matrix-toggle
             class="screenshot-hide"
             [matrixOptions]="matrixOptions"

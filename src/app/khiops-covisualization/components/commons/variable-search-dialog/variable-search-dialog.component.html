@@ -22,14 +22,15 @@
             </em>
           </button>
           <mat-menu #selectInnerVariable>
-            <button
-              mat-menu-item
-              *ngFor="let variable of innerVariables; let i = index"
-              [class.selected-item]="variable === selectedInnerVariable"
-              (click)="onInnerVariableSelected(variable)"
-            >
-              {{ variable }}
-            </button>
+            @for (variable of innerVariables; track variable; let i = $index) {
+              <button
+                mat-menu-item
+                [class.selected-item]="variable === selectedInnerVariable"
+                (click)="onInnerVariableSelected(variable)"
+              >
+                {{ variable }}
+              </button>
+            }
           </mat-menu>
         </div>
         <div class="comp-header-tools screenshot-hide" fxLayout="row">

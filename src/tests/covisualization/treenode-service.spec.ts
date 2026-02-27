@@ -8,7 +8,7 @@
 import { TestBed } from '@angular/core/testing';
 import { AppService } from '@khiops-covisualization/providers/app.service';
 import { DimensionsDatasService } from '@khiops-covisualization/providers/dimensions-datas.service';
-import { HttpClientModule } from '@angular/common/http';
+import { provideHttpClient } from '@angular/common/http';
 import { TreenodesService } from '@khiops-covisualization/providers/treenodes.service';
 import { TranslateModule } from '@ngstack/translate';
 import { SaveService } from '../../app/khiops-covisualization/providers/save.service';
@@ -21,7 +21,8 @@ describe('coVisualization', () => {
   describe('Treenode service datas', () => {
     beforeEach(() => {
       TestBed.configureTestingModule({
-        imports: [HttpClientModule, TranslateModule.forRoot()],
+        imports: [TranslateModule.forRoot()],
+  providers: [provideHttpClient()],
       });
 
       // Inject services
@@ -138,7 +139,8 @@ describe('coVisualization', () => {
   describe('Treenode service datas', () => {
     beforeEach(() => {
       TestBed.configureTestingModule({
-        imports: [HttpClientModule, TranslateModule.forRoot()],
+        imports: [TranslateModule.forRoot()],
+  providers: [provideHttpClient()],
       });
 
       // Inject services

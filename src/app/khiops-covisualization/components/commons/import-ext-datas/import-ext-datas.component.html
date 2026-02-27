@@ -9,99 +9,97 @@
     </h2>
   </div>
   <div id="import-ext-datas-content" fxLayout="column" class="kl-card">
-    <div *ngIf="importExtDatas && importExtDatas.datas" fxLayout="column">
-      <div
-        class="import-ext-datas-row"
-        fxLayout="row"
-        fxLayoutAlign="start center"
-      >
-        <h1>{{ translate.get('GLOBAL.EXTERNAL_DATA_FILE') }}</h1>
-      </div>
-
-      <div
-        class="import-ext-datas-row"
-        fxLayout="row"
-        fxLayoutAlign="start center"
-      >
-        <span>{{ 'GLOBAL.JOINT_KEY' | translate }}</span>
-        <div fxLayout="row" fxLayoutAlign="start center">
-          <button
-            class="button-accent"
-            mat-stroked-button
-            color="accent"
-            [matMenuTriggerFor]="joinKeyMenu"
-          >
-            {{ joinKeys.selected
-            }}<em><mat-icon>keyboard_arrow_down</mat-icon> </em>
-          </button>
-          <mat-menu #joinKeyMenu>
+    @if (importExtDatas && importExtDatas.datas) {
+      <div fxLayout="column">
+        <div
+          class="import-ext-datas-row"
+          fxLayout="row"
+          fxLayoutAlign="start center"
+        >
+          <h1>{{ translate.get('GLOBAL.EXTERNAL_DATA_FILE') }}</h1>
+        </div>
+        <div
+          class="import-ext-datas-row"
+          fxLayout="row"
+          fxLayoutAlign="start center"
+        >
+          <span>{{ 'GLOBAL.JOINT_KEY' | translate }}</span>
+          <div fxLayout="row" fxLayoutAlign="start center">
             <button
-              mat-menu-item
-              *ngFor="let key of joinKeys.keys"
-              (click)="changeJoinKey(key)"
+              class="button-accent"
+              mat-stroked-button
+              color="accent"
+              [matMenuTriggerFor]="joinKeyMenu"
             >
-              {{ key }}
+              {{ joinKeys.selected
+              }}<em><mat-icon>keyboard_arrow_down</mat-icon> </em>
             </button>
-          </mat-menu>
+            <mat-menu #joinKeyMenu>
+              @for (key of joinKeys.keys; track key) {
+                <button mat-menu-item (click)="changeJoinKey(key)">
+                  {{ key }}
+                </button>
+              }
+            </mat-menu>
+          </div>
+          <!-- <span>{{ 'GLOBAL.SEPARATOR' | translate }} :</span>
+          <input  name="separatorInput" [(ngModel)]="separatorInput">
+          <span>{{ 'GLOBAL.EMPTY_HT_INSTRUCTIONS' | translate }}</span> -->
         </div>
-        <!-- <span>{{ 'GLOBAL.SEPARATOR' | translate }} :</span>
-				<input  name="separatorInput" [(ngModel)]="separatorInput">
-				<span>{{ 'GLOBAL.EMPTY_HT_INSTRUCTIONS' | translate }}</span> -->
-      </div>
-
-      <div
-        class="import-ext-datas-row"
-        fxLayout="row"
-        fxLayoutAlign="start center"
-      >
-        <span>{{ 'GLOBAL.FIELDS_TO_IMPORT' | translate }}</span>
-        <div fxFlex id="importext-datas-table" fxLayout="column">
-          <kl-ag-grid
-            fxFlex
-            [showSearch]="false"
-            (gridCheckboxChanged)="onGridCheckboxChanged($event)"
-            [showLineSelection]="false"
-            [suppressRowClickSelection]="true"
-            [showColumnsSelection]="false"
-            [inputDatas]="fieldsToImport.values"
-            [title]="''"
-            [displayedColumns]="fieldsToImport.displayedColumns"
-          >
-          </kl-ag-grid>
+        <div
+          class="import-ext-datas-row"
+          fxLayout="row"
+          fxLayoutAlign="start center"
+        >
+          <span>{{ 'GLOBAL.FIELDS_TO_IMPORT' | translate }}</span>
+          <div fxFlex id="importext-datas-table" fxLayout="column">
+            <kl-ag-grid
+              fxFlex
+              [showSearch]="false"
+              (gridCheckboxChanged)="onGridCheckboxChanged($event)"
+              [showLineSelection]="false"
+              [suppressRowClickSelection]="true"
+              [showColumnsSelection]="false"
+              [inputDatas]="fieldsToImport.values"
+              [title]="''"
+              [displayedColumns]="fieldsToImport.displayedColumns"
+            >
+            </kl-ag-grid>
+          </div>
         </div>
-      </div>
-
-      <div
-        class="import-ext-datas-row"
-        fxLayout="row"
-        fxLayoutAlign="start center"
-      >
-        <span>{{ 'GLOBAL.DIMENSION' | translate }}</span>
-        <div fxFlex fxLayout="row" fxLayoutAlign="start center">
-          <button
-            class="button-accent"
-            mat-stroked-button
-            color="accent"
-            [matMenuTriggerFor]="dimensionMenu"
-          >
-            {{ selectedDimension?.name }}
-            <em><mat-icon>keyboard_arrow_down</mat-icon> </em>
-          </button>
-          <mat-menu #dimensionMenu>
+        <div
+          class="import-ext-datas-row"
+          fxLayout="row"
+          fxLayoutAlign="start center"
+        >
+          <span>{{ 'GLOBAL.DIMENSION' | translate }}</span>
+          <div fxFlex fxLayout="row" fxLayoutAlign="start center">
             <button
-              mat-menu-item
-              *ngFor="
-                let dimension of dimensionsDatasService.dimensionsDatas
-                  .dimensions
-              "
-              (click)="changeSelectedDimension(dimension)"
+              class="button-accent"
+              mat-stroked-button
+              color="accent"
+              [matMenuTriggerFor]="dimensionMenu"
             >
-              {{ dimension.name }}
+              {{ selectedDimension?.name }}
+              <em><mat-icon>keyboard_arrow_down</mat-icon> </em>
             </button>
-          </mat-menu>
+            <mat-menu #dimensionMenu>
+              @for (
+                dimension of dimensionsDatasService.dimensionsDatas.dimensions;
+                track dimension
+              ) {
+                <button
+                  mat-menu-item
+                  (click)="changeSelectedDimension(dimension)"
+                >
+                  {{ dimension.name }}
+                </button>
+              }
+            </mat-menu>
+          </div>
         </div>
       </div>
-    </div>
+    }
   </div>
   <div
     id="import-ext-datas-footer"

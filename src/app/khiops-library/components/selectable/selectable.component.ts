@@ -41,15 +41,16 @@ export class SelectableComponent
     this.selectedServiceChangeSub =
       this.selectableService.selectedServiceChange.subscribe((value) => {
         if (this.id && value?.id) {
-          const el = this.configService
-            .getRootElementDom()
-            .querySelector('#' + this.id.toString());
-          if (el) {
-            if (value.id.toString() === this.id.toString()) {
-              el.classList.add('selected');
-            } else {
-              if (el?.classList) {
-                el.classList.remove('selected');
+          const rootElement = this.configService.getRootElementDom();
+          if (rootElement) {
+            const el = rootElement.querySelector('#' + this.id.toString());
+            if (el) {
+              if (value.id.toString() === this.id.toString()) {
+                el.classList.add('selected');
+              } else {
+                if (el?.classList) {
+                  el.classList.remove('selected');
+                }
               }
             }
           }
@@ -89,9 +90,16 @@ export class SelectableComponent
       cancelable: true,
       composed: true,
     });
-    const element =
-      elt ??
-      this.configService.getRootElementDom().querySelector('#' + this.id);
+    let element: HTMLElement | undefined = elt;
+    if (!element) {
+      const rootElement = this.configService.getRootElementDom();
+      if (rootElement) {
+        const foundElement = rootElement.querySelector('#' + this.id);
+        if (foundElement instanceof HTMLElement) {
+          element = foundElement;
+        }
+      }
+    }
     element?.dispatchEvent(trustedClick);
   }
 }

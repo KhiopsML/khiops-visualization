@@ -8,32 +8,39 @@
     <div fxFlex fxLayout="row" fxLayoutAlign="start center">
       <div fxFlex fxLayout="row" fxLayoutAlign="start center">
         <h1>{{ titleWithoutDetails }}</h1>
-        <div fxLayout="row" fxLayoutAlign="start center" *ngIf="targetLift">
-          <button
-            mat-stroked-button
-            title="{{ 'TOOLTIPS.EVALUATION.GAIN_CHART.SELECT' | translate }}"
-            class="button-accent"
-            color="accent"
-            [matMenuTriggerFor]="targetLiftSelect"
-            appMenuFocusSelected
-            [getSelectedIndex]="getSelectedTargetIndex"
-          >
-            {{ targetLift.selected }}
-            <em class="screenshot-hide"
-              ><mat-icon>keyboard_arrow_down</mat-icon>
-            </em>
-          </button>
-          <mat-menu #targetLiftSelect>
+        @if (targetLift) {
+          <div fxLayout="row" fxLayoutAlign="start center">
             <button
-              mat-menu-item
-              *ngFor="let target of targetLift.targets; let i = index"
-              (click)="changeTargetLift(target)"
-              [class.selected-item]="target === targetLift.selected"
+              mat-stroked-button
+              title="{{ 'TOOLTIPS.EVALUATION.GAIN_CHART.SELECT' | translate }}"
+              class="button-accent"
+              color="accent"
+              [matMenuTriggerFor]="targetLiftSelect"
+              appMenuFocusSelected
+              [getSelectedIndex]="getSelectedTargetIndex"
             >
-              {{ target }}
+              {{ targetLift.selected }}
+              <em class="screenshot-hide"
+                ><mat-icon>keyboard_arrow_down</mat-icon>
+              </em>
             </button>
-          </mat-menu>
-        </div>
+            <mat-menu #targetLiftSelect>
+              @for (
+                target of targetLift.targets;
+                track target;
+                let i = $index
+              ) {
+                <button
+                  mat-menu-item
+                  (click)="changeTargetLift(target)"
+                  [class.selected-item]="target === targetLift.selected"
+                >
+                  {{ target }}
+                </button>
+              }
+            </mat-menu>
+          </div>
+        }
       </div>
       <div class="comp-header-tools screenshot-hide" fxLayout="row">
         <app-select-toggle-button
@@ -50,22 +57,19 @@
       </kl-btn-fullscreen>
     </div>
   </div>
-  <div
-    fxFlex
-    fxLayout="column"
-    *ngIf="targetLiftGraph"
-    class="graph-comp-chart-container"
-  >
-    <kl-chart
-      id="level-distribution-graph-canvas"
-      [canvasIdContainer]="'target-lift-chart'"
-      [type]="'line'"
-      [chartOptions]="chartOptions"
-      [colorSet]="colorSet"
-      [inputDatas]="targetLiftGraph"
-    >
-    </kl-chart>
-  </div>
+  @if (targetLiftGraph) {
+    <div fxFlex fxLayout="column" class="graph-comp-chart-container">
+      <kl-chart
+        id="level-distribution-graph-canvas"
+        [canvasIdContainer]="'target-lift-chart'"
+        [type]="'line'"
+        [chartOptions]="chartOptions"
+        [colorSet]="colorSet"
+        [inputDatas]="targetLiftGraph"
+      >
+      </kl-chart>
+    </div>
+  }
   <div class="clear-bottom-graph"></div>
   <kl-legend
     [inputDatas]="evaluationDatas.liftGraphDisplayedValues"

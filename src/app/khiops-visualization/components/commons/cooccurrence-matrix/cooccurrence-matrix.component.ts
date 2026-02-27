@@ -143,9 +143,8 @@ export class CooccurrenceMatrixComponent implements OnChanges, AfterViewInit {
    * @param e The event containing the selected tab index
    */
   onSelectedMatrixTabChanged(e: { index: number }) {
-    const matrixOptionsToggle = this.configService
-      .getRootElementDom()
-      .querySelector<HTMLElement>('#matrix-option-toggle');
+    const rootElement = this.configService.getRootElementDom();
+    const matrixOptionsToggle = rootElement?.querySelector<HTMLElement>('#matrix-option-toggle');
 
     if (e.index === this.CELLS_TAB_INDEX) {
       matrixOptionsToggle!.style.display = 'none';

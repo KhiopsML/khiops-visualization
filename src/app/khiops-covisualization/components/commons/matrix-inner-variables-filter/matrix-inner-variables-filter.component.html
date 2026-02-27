@@ -1,36 +1,39 @@
-<div
-  class="inner-variables-filter"
-  *ngIf="isVisible"
-  fxLayout="row"
-  fxLayoutAlign="start center"
->
-  <mat-form-field appearance="outline">
-    <mat-label>{{ 'GLOBAL.INNER_VARIABLES' | translate }}</mat-label>
-    <mat-select
-      [(value)]="selectedInnerVariables"
-      multiple
-      (selectionChange)="onInnerVariablesSelected($event)"
-    >
-      <!-- Select All option as first item -->
-      <mat-option
-        class="select-all-option"
-        (click)="$event.stopPropagation(); toggleAllInnerVariables()"
+@if (isVisible) {
+  <div
+    class="inner-variables-filter"
+    fxLayout="row"
+    fxLayoutAlign="start center"
+  >
+    <mat-form-field appearance="outline">
+      <mat-label>{{ 'GLOBAL.INNER_VARIABLES' | translate }}</mat-label>
+      <mat-select
+        [(value)]="selectedInnerVariables"
+        multiple
+        (selectionChange)="onInnerVariablesSelected($event)"
       >
-        <mat-checkbox
-          [checked]="allInnerVariablesSelected()"
-          [indeterminate]="someInnerVariablesSelected()"
+        <!-- Select All option as first item -->
+        <mat-option
+          class="select-all-option"
+          (click)="$event.stopPropagation(); toggleAllInnerVariables()"
         >
-          {{ selectAllCheckboxText }}
-        </mat-checkbox>
-      </mat-option>
-
-      <!-- Individual variables -->
-      <mat-option *ngFor="let variable of innerVariables" [value]="variable">
-        <mat-checkbox [checked]="selectedInnerVariables.includes(variable)">{{
-          variable
-        }}</mat-checkbox>
-      </mat-option>
-    </mat-select>
-    <em class="screenshot-hide"><mat-icon>keyboard_arrow_down</mat-icon> </em>
-  </mat-form-field>
-</div>
+          <mat-checkbox
+            [checked]="allInnerVariablesSelected()"
+            [indeterminate]="someInnerVariablesSelected()"
+          >
+            {{ selectAllCheckboxText }}
+          </mat-checkbox>
+        </mat-option>
+        <!-- Individual variables -->
+        @for (variable of innerVariables; track variable) {
+          <mat-option [value]="variable">
+            <mat-checkbox
+              [checked]="selectedInnerVariables.includes(variable)"
+              >{{ variable }}</mat-checkbox
+            >
+          </mat-option>
+        }
+      </mat-select>
+      <em class="screenshot-hide"><mat-icon>keyboard_arrow_down</mat-icon> </em>
+    </mat-form-field>
+  </div>
+}

@@ -14,14 +14,9 @@ import {
 } from '@angular/core';
 import { ConfirmDialogComponent } from '@khiops-library/components/confirm-dialog/confirm-dialog.component';
 import { TranslateService } from '@ngstack/translate';
-import {
-  MatDialogRef,
-  MatDialog,
-  MatDialogConfig,
-} from '@angular/material/dialog';
+import { MatDialogRef, MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { AppService } from './providers/app.service';
 import { ConfigService } from '@khiops-library/providers/config.service';
-import { AppConfig } from 'src/environments/environment';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { TreenodesService } from './providers/treenodes.service';
 import { TrackerService } from '@khiops-library/providers/tracker.service';
@@ -30,6 +25,7 @@ import { CovisualizationDatas } from './interfaces/app-datas';
 import { ConfigModel } from '@khiops-library/model/config.model';
 import { SaveService } from './providers/save.service';
 import { InAppOverlayContainer } from '@khiops-library/overlay/in-app-overlay-provider';
+import { AppConfig } from '../../environments/environment';
 
 @Component({
   selector: 'app-root-covisualization',

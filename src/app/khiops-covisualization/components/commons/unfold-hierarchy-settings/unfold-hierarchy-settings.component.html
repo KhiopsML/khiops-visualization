@@ -58,14 +58,12 @@
         {{ 'GLOBAL.INFORMATION_RATE' | translate }}:
         <em>{{ currentInformationPerCluster | toPrecision: 3 }}%</em>
       </span>
-      <span
-        class="non-info-warning"
-        *ngIf="currentInformationPerCluster === 0"
-        fxLayoutAlign="start center"
-      >
-        {{ 'GLOBAL.NON_INFORMATIVE_COCLUSTERING' | translate }}
-        <mat-icon fxLayoutAlign="center center">warning</mat-icon>
-      </span>
+      @if (currentInformationPerCluster === 0) {
+        <span class="non-info-warning" fxLayoutAlign="start center">
+          {{ 'GLOBAL.NON_INFORMATIVE_COCLUSTERING' | translate }}
+          <mat-icon fxLayoutAlign="center center">warning</mat-icon>
+        </span>
+      }
     </div>
   </div>
 </div>

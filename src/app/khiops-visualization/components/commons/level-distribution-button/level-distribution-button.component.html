@@ -12,5 +12,7 @@
     matTooltip="{{ tooltipKey | translate }}"
     >show_chart</mat-icon
   >
-  <span *ngIf="!isSmallDiv && !searchFormVisible">{{ title }}</span>
+  @if (!isSmallDiv && !searchFormVisible) {
+    <span>{{ title }}</span>
+  }
 </button>

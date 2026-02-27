@@ -13,18 +13,17 @@
     fxLayoutAlign="center center"
     fxLayout="column"
   >
-    <mat-spinner
-      *ngIf="!loadingDatasStatus"
-      diameter="40"
-      color="accent"
-      mode="indeterminate"
-    ></mat-spinner>
-    <mat-progress-bar
-      *ngIf="loadingDatasStatus"
-      mode="determinate"
-      [value]="loadingDatasPercent"
-    >
-    </mat-progress-bar>
+    @if (!loadingDatasStatus) {
+      <mat-spinner
+        diameter="40"
+        color="accent"
+        mode="indeterminate"
+      ></mat-spinner>
+    }
+    @if (loadingDatasStatus) {
+      <mat-progress-bar mode="determinate" [value]="loadingDatasPercent">
+      </mat-progress-bar>
+    }
     <span>{{ loadingDatasStatus }}</span>
   </div>
 </div>

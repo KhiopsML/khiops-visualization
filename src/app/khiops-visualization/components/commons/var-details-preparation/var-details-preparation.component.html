@@ -9,116 +9,111 @@
       (dragEnd)="onSplitDragEnd($event, 'row1Col1Row0Col')"
     >
       <as-split-area class="kl-card" [size]="sizes?.row1Col1Row0Col[0]">
-        <app-variable-graph-details
-          #appVariableGraphDetails
-          *ngIf="preparationDatas?.selectedVariable"
-          [preparationSource]="preparationSource"
-          [selectedVariable]="preparationDatas?.selectedVariable"
-          [selectedGraphItemIndex]="distributionSelectedBarIndex"
-          (selectedItemChanged)="onSelectedGraphItemChanged($event)"
-          (interpretableHistogramChanged)="onSelectedGraphItemChanged($event)"
-          fxFlex="1 1 100%"
-          [showTargetDistributionGraph]="!isRegressionOrExplanatoryAnalysis"
-        >
-        </app-variable-graph-details>
-        <kl-no-data
-          fxFlex
-          *ngIf="!preparationDatas?.selectedVariable"
-        ></kl-no-data>
+        @if (preparationDatas?.selectedVariable) {
+          <app-variable-graph-details
+            #appVariableGraphDetails
+            [preparationSource]="preparationSource"
+            [selectedVariable]="preparationDatas?.selectedVariable"
+            [selectedGraphItemIndex]="distributionSelectedBarIndex"
+            (selectedItemChanged)="onSelectedGraphItemChanged($event)"
+            (interpretableHistogramChanged)="onSelectedGraphItemChanged($event)"
+            fxFlex="1 1 100%"
+            [showTargetDistributionGraph]="!isRegressionOrExplanatoryAnalysis"
+          >
+          </app-variable-graph-details>
+        }
+        @if (!preparationDatas?.selectedVariable) {
+          <kl-no-data fxFlex></kl-no-data>
+        }
       </as-split-area>
-      <as-split-area
-        class="kl-card"
-        *ngIf="isRegressionOrExplanatoryAnalysis"
-        [size]="sizes?.row1Col1Row0Col[1]"
-      >
-        <app-regression-matrix
-          fxFlex="1 1 100%"
-          id="preparation-matrix-comp-container"
-          [preparationSource]="preparationSource"
-          (selectedCellChanged)="onSelectedMatrixCellChanged($event)"
-          [selectedCell]="matrixRegSelectedCell"
-          [selectedVariable]="preparationDatas?.selectedVariable"
-        >
-        </app-regression-matrix>
-      </as-split-area>
+      @if (isRegressionOrExplanatoryAnalysis) {
+        <as-split-area class="kl-card" [size]="sizes?.row1Col1Row0Col[1]">
+          <app-regression-matrix
+            fxFlex="1 1 100%"
+            id="preparation-matrix-comp-container"
+            [preparationSource]="preparationSource"
+            (selectedCellChanged)="onSelectedMatrixCellChanged($event)"
+            [selectedCell]="matrixRegSelectedCell"
+            [selectedVariable]="preparationDatas?.selectedVariable"
+          >
+          </app-regression-matrix>
+        </as-split-area>
+      }
     </as-split>
   </as-split-area>
   <as-split-area
     class="variables-list-container kl-card"
     [size]="sizes?.row1Col1Row[1]"
   >
-    <kl-ag-grid
-      *ngIf="
-        preparationDatas?.currentIntervalDatas?.values &&
-        !isRegressionOrExplanatoryAnalysis
-      "
-      id="preparation-current-interval"
-      class="variables-list"
-      fxFlexFill
-      [showSearch]="true"
-      [displayCount]="false"
-      [showLineSelection]="true"
-      titleTooltip="{{ 'TOOLTIPS.PREPARATION.INTERVAL.TITLE' | translate }}"
-      [title]="preparationDatas?.currentIntervalDatas?.title"
-      [showColumnsSelection]="false"
-      [inputDatas]="preparationDatas?.currentIntervalDatas?.values"
-      [displayedColumns]="
-        preparationDatas?.currentIntervalDatas?.displayedColumns
-      "
-    >
-    </kl-ag-grid>
-    <kl-no-data
-      fxFlex
-      *ngIf="!preparationDatas?.currentIntervalDatas?.values"
-    ></kl-no-data>
-    <as-split
-      direction="horizontal"
-      *ngIf="
-        (!preparationDatas?.currentIntervalDatas?.values &&
-          preparation2dDatas?.currentCellDatas) ||
-        isRegressionOrExplanatoryAnalysis
-      "
-    >
-      <as-split-area class="variables-list-container">
-        <kl-ag-grid
-          id="preparation-2d-current-cell-x"
-          class="variables-list"
-          [title]="''"
-          [showSearch]="true"
-          [displayCount]="false"
-          [showLineSelection]="true"
-          [showColumnsSelection]="false"
-          [inputDatas]="preparation2dDatas?.currentCellDatas.values[0]"
-          [displayedColumns]="
-            preparation2dDatas?.currentCellDatas.displayedColumns[0]
-          "
-        >
-        </kl-ag-grid>
-        <kl-no-data
-          fxFlex
-          *ngIf="!preparation2dDatas?.currentCellDatas.values"
-        ></kl-no-data>
-      </as-split-area>
-      <as-split-area class="variables-list-container">
-        <kl-ag-grid
-          id="preparation-2d-current-cell-y"
-          class="variables-list"
-          [title]="''"
-          [showSearch]="true"
-          [displayCount]="false"
-          [showLineSelection]="true"
-          [showColumnsSelection]="false"
-          [inputDatas]="preparation2dDatas?.currentCellDatas.values[1]"
-          [displayedColumns]="
-            preparation2dDatas?.currentCellDatas.displayedColumns[1]
-          "
-        >
-        </kl-ag-grid>
-        <kl-no-data
-          fxFlex
-          *ngIf="!preparation2dDatas?.currentCellDatas.values"
-        ></kl-no-data>
-      </as-split-area>
-    </as-split>
+    @if (
+      preparationDatas?.currentIntervalDatas?.values &&
+      !isRegressionOrExplanatoryAnalysis
+    ) {
+      <kl-ag-grid
+        id="preparation-current-interval"
+        class="variables-list"
+        fxFlexFill
+        [showSearch]="true"
+        [displayCount]="false"
+        [showLineSelection]="true"
+        titleTooltip="{{ 'TOOLTIPS.PREPARATION.INTERVAL.TITLE' | translate }}"
+        [title]="preparationDatas?.currentIntervalDatas?.title"
+        [showColumnsSelection]="false"
+        [inputDatas]="preparationDatas?.currentIntervalDatas?.values"
+        [displayedColumns]="
+          preparationDatas?.currentIntervalDatas?.displayedColumns
+        "
+      >
+      </kl-ag-grid>
+    }
+    @if (!preparationDatas?.currentIntervalDatas?.values) {
+      <kl-no-data fxFlex></kl-no-data>
+    }
+    @if (
+      (!preparationDatas?.currentIntervalDatas?.values &&
+        preparation2dDatas?.currentCellDatas) ||
+      isRegressionOrExplanatoryAnalysis
+    ) {
+      <as-split direction="horizontal">
+        <as-split-area class="variables-list-container">
+          <kl-ag-grid
+            id="preparation-2d-current-cell-x"
+            class="variables-list"
+            [title]="''"
+            [showSearch]="true"
+            [displayCount]="false"
+            [showLineSelection]="true"
+            [showColumnsSelection]="false"
+            [inputDatas]="preparation2dDatas?.currentCellDatas.values[0]"
+            [displayedColumns]="
+              preparation2dDatas?.currentCellDatas.displayedColumns[0]
+            "
+          >
+          </kl-ag-grid>
+          @if (!preparation2dDatas?.currentCellDatas.values) {
+            <kl-no-data fxFlex></kl-no-data>
+          }
+        </as-split-area>
+        <as-split-area class="variables-list-container">
+          <kl-ag-grid
+            id="preparation-2d-current-cell-y"
+            class="variables-list"
+            [title]="''"
+            [showSearch]="true"
+            [displayCount]="false"
+            [showLineSelection]="true"
+            [showColumnsSelection]="false"
+            [inputDatas]="preparation2dDatas?.currentCellDatas.values[1]"
+            [displayedColumns]="
+              preparation2dDatas?.currentCellDatas.displayedColumns[1]
+            "
+          >
+          </kl-ag-grid>
+          @if (!preparation2dDatas?.currentCellDatas.values) {
+            <kl-no-data fxFlex></kl-no-data>
+          }
+        </as-split-area>
+      </as-split>
+    }
   </as-split-area>
 </as-split>

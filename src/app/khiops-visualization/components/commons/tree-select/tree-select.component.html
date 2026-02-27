@@ -1,24 +1,27 @@
-<div
-  fxLayout="column"
-  *ngIf="dimensionTree"
-  id="tree-select-comp"
-  fxFlex
-  [ngClass]="{ fullscreen: isFullscreen }"
->
+@if (dimensionTree) {
   <div
-    id="graph-header-comp"
-    fxLayoutAlign="start center"
-    class="scrollbar-thin"
+    fxLayout="column"
+    id="tree-select-comp"
+    fxFlex
+    [ngClass]="{ fullscreen: isFullscreen }"
   >
-    <h1 fxFlex>{{ 'GLOBAL.DECISION_TREE' | translate }}</h1>
-    <kl-btn-fullscreen
-      class="screenshot-hide"
-      (toggleFullscreen)="onToggleFullscreen($event)"
+    <div
+      id="graph-header-comp"
+      fxLayoutAlign="start center"
+      class="scrollbar-thin"
     >
-    </kl-btn-fullscreen>
+      <h1 fxFlex>{{ 'GLOBAL.DECISION_TREE' | translate }}</h1>
+      <kl-btn-fullscreen
+        class="screenshot-hide"
+        (toggleFullscreen)="onToggleFullscreen($event)"
+      >
+      </kl-btn-fullscreen>
+    </div>
+    <div id="tree-select-comp-content" fxFlex>
+      <div id="{{ 'tree_0' }}"></div>
+    </div>
   </div>
-  <div id="tree-select-comp-content" fxFlex>
-    <div id="{{ 'tree_0' }}"></div>
-  </div>
-</div>
-<kl-no-data fxFlex *ngIf="!dimensionTree"></kl-no-data>
+}
+@if (!dimensionTree) {
+  <kl-no-data fxFlex></kl-no-data>
+}
