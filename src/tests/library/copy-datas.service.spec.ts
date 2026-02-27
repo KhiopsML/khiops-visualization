@@ -4,7 +4,6 @@
  * at https://spdx.org/licenses/BSD-3-Clause-Clear.html or see the "LICENSE" file for more details.
  */
 
-// @ts-nocheck
 import { TestBed } from '@angular/core/testing';
 import { provideHttpClient } from '@angular/common/http';
 import { CopyDatasService } from '@khiops-library/providers/copy-datas.service';
