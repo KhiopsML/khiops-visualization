@@ -29,14 +29,17 @@
 
 ## 🔍 About
 
-This repository contains the source code for [Khiops Visualization][kv] and [Khiops Covisualization][kc] tools, unified into a single, powerful [npm package][khiopsNpm]. Built with Angular and modern web technologies, it provides comprehensive data visualization capabilities for machine learning analysis.
+This repository contains the source code for **Khiops Visualization** and **Khiops Covisualization** tools, unified into a single, powerful [npm package][khiopsNpm].
+Built with Angular and modern web technologies, it provides comprehensive data visualization capabilities for machine learning analysis.
 
 ---
 
 **Integration Notice:**
 
-- The **khiops-visualization** part of this npm library is integrated in the [kv-electron](https://github.com/KhiopsML/kv-electron) project.
-- The **khiops-covisualization** part is integrated in the [kc-electron](https://github.com/KhiopsML/kc-electron) project.
+- The **khiops-visualization** part of this npm library was previously integrated into the [kv-electron](https://github.com/KhiopsML/kv-electron) project.
+- The **khiops-covisualization** part was previously integrated into the [kc-electron](https://github.com/KhiopsML/kc-electron) project.
+- They have since been unified into a single desktop application:  
+  👉 https://github.com/KhiopsML/khiops-visualization-desktop
 
 ## 🚀 Quick Start
 
