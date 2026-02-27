@@ -1,3 +1,9 @@
+/*
+ * Copyright (c) 2023-2025 Orange. All rights reserved.
+ * This software is distributed under the BSD 3-Clause-clear License, the text of which is available
+ * at https://spdx.org/licenses/BSD-3-Clause-Clear.html or see the "LICENSE" file for more details.
+ */
+
 import { Inject, Injectable, DOCUMENT } from '@angular/core';
 import { OverlayContainer } from '@angular/cdk/overlay';
 import { ConfigService } from '@khiops-library/providers/config.service';
@@ -13,6 +19,10 @@ export class InAppOverlayContainer extends OverlayContainer {
     super(_document, platform);
   }
 
+  /**
+   * Expose the protected method _createContainer to be able to call it from main component
+   * Problem when reinstantiating the visualization component #32
+   */
   public createContainer(): void {
     this._createContainer();
   }
@@ -23,24 +33,18 @@ export class InAppOverlayContainer extends OverlayContainer {
   }
 
   private _appendToRootComponent(): void {
-    // Cast to access protected property
-    const container = (this as any)._containerElement as
-      | HTMLElement
-      | undefined;
-    if (!container) {
+    if (!this._containerElement) {
       return;
     }
     const rootElement = this.getRootElement();
-    if (rootElement && container.parentNode !== rootElement) {
-      rootElement.appendChild(container);
+    if (rootElement && this._containerElement.parentNode !== rootElement) {
+      rootElement.appendChild(this._containerElement);
     }
   }
 
   getRootElement(): Element | null {
-    const rootElement = this.configService.getRootElementDom();
-    if (rootElement) {
-      return rootElement.querySelector('app-home-layout');
-    }
-    return null;
+    return this.configService
+      .getRootElementDom()
+      .querySelector('app-home-layout');
   }
 }
