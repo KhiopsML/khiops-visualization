@@ -26,7 +26,11 @@
         </em>
       </button>
       <mat-menu #selectDimension>
-        @for (dimension of dimensions; track dimension; let i = $index) {
+        @for (
+          dimension of dimensions;
+          track dimension.name || dimension;
+          let i = $index
+        ) {
           <button
             mat-menu-item
             [class.selected-item]="dimension.name === selectedDimension?.name"

@@ -12,10 +12,10 @@
       }}
     </h1>
   }
-  @for (datas of currentExternalDatas; track datas) {
+  @for (datas of currentExternalDatas; track $index) {
     <div fxLayout="column">
       <div fxLayout="row">
-        @for (data of datas; track data) {
+        @for (data of datas; track data.value) {
           <pre class="external-datas-text">{{ data.value }}</pre>
         }
       </div>

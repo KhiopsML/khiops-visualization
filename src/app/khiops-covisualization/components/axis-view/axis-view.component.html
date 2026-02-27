@@ -64,7 +64,7 @@
         >
           @for (
             item of dimensionsDatasService.dimensionsDatas.contextDimensions;
-            track item;
+            track item.name || item;
             let i = $index
           ) {
             <as-split-area

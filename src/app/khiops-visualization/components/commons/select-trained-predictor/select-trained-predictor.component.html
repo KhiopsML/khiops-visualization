@@ -14,7 +14,7 @@
       {{ selectedPredictor }} <em><mat-icon>keyboard_arrow_down</mat-icon> </em>
     </button>
     <mat-menu #trainedPredictors>
-      @for (opt of inputDatas; track opt) {
+      @for (opt of inputDatas; track opt.name) {
         <button
           mat-menu-item
           [class.selected-item]="opt.name === selectedPredictor"

@@ -124,7 +124,7 @@
         <mat-menu #tableColumns>
           @for (
             opt of displayedColumns | rowIdentifierPipe: 'rowIdentifiers';
-            track opt
+            track opt.headerName || opt
           ) {
             <button
               mat-menu-item

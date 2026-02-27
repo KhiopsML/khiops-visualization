@@ -35,7 +35,7 @@
               }}<em><mat-icon>keyboard_arrow_down</mat-icon> </em>
             </button>
             <mat-menu #joinKeyMenu>
-              @for (key of joinKeys.keys; track key) {
+              @for (key of joinKeys.keys; track key.name || key.value || key) {
                 <button mat-menu-item (click)="changeJoinKey(key)">
                   {{ key }}
                 </button>
@@ -86,7 +86,7 @@
             <mat-menu #dimensionMenu>
               @for (
                 dimension of dimensionsDatasService.dimensionsDatas.dimensions;
-                track dimension
+                track dimension.name
               ) {
                 <button
                   mat-menu-item

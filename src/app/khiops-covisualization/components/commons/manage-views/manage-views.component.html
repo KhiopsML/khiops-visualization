@@ -12,7 +12,7 @@
     <div fxLayout="column" fxFlex="80">
       @for (
         dimensionLayout of viewsLayout?.dimensionsViewsLayoutsVO;
-        track dimensionLayout;
+        track dimensionLayout.name || $index;
         let dimIndex = $index
       ) {
         <div>

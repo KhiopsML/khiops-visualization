@@ -14,7 +14,7 @@
     <!-- Main metrics display -->
     <div fxLayout="row" class="metrics-container">
       <!-- Metric displays for instances and evaluated variables -->
-      @for (data of metricData; track data) {
+      @for (data of metricData; track $index) {
         <div
           fxFlex
           fxLayoutAlign="center center"
@@ -55,7 +55,7 @@
     <!-- Table for additional information -->
     @if (tableData.length > 0) {
       <table>
-        @for (data of tableData; track data) {
+        @for (data of tableData; track data.title) {
           <tr>
             <th>
               <strong>{{ data.title | translate }}</strong>

@@ -22,7 +22,7 @@
             </em>
           </button>
           <mat-menu #selectInnerVariable>
-            @for (variable of innerVariables; track variable; let i = $index) {
+            @for (variable of innerVariables; track $index; let i = $index) {
               <button
                 mat-menu-item
                 [class.selected-item]="variable === selectedInnerVariable"

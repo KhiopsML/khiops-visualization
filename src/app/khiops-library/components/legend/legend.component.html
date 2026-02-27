@@ -1,7 +1,7 @@
 <div class="legend-comp" [ngClass]="position">
   @if (legend && legend.length !== 0) {
     <div class="legend scrollbar-thin" tabindex="0">
-      @for (data of legend; track data) {
+      @for (data of legend; track data.value || data.title || $index) {
         <div
           class="legend-item"
           fxLayout="row"

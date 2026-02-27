@@ -24,7 +24,7 @@
         >{{ selectAllCheckboxText }}</mat-checkbox
       >
     </button>
-    @for (opt of currentItemsToShow; track opt; let i = $index) {
+    @for (opt of currentItemsToShow; track opt.name || $index; let i = $index) {
       <button
         mat-menu-item
         class="mat-menu-item-checkbox checkbox-select"
