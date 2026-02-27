@@ -35,7 +35,11 @@ describe('CopyDatasService', () => {
     spyOn(translateService, 'get').and.returnValue('MOCKED_TRANSLATION');
 
     // Set precision to 8 for all tests to maintain compatibility with existing expectations
-    (AppConfig.common as any) = { GLOBAL: { TO_FIXED: 8 } };
+    const commonConfig = AppConfig.common as { GLOBAL?: { TO_FIXED?: number } };
+    if (!commonConfig.GLOBAL) {
+      commonConfig.GLOBAL = {};
+    }
+    commonConfig.GLOBAL.TO_FIXED = 8;
   });
 
   /**
