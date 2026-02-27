@@ -34,6 +34,7 @@ import {
   GridReadyEvent,
   SortChangedEvent,
   NavigateToNextCellParams,
+  RowSelectionOptions,
 } from '@ag-grid-community/core';
 import { ClientSideRowModelModule } from '@ag-grid-community/client-side-row-model';
 import { COMPONENT_TYPES } from '@khiops-library/enum/component-types';
@@ -67,7 +68,6 @@ export class AgGridComponent
   })
   private searchInputEl: ElementRef | undefined;
 
-  @Input() public suppressRowClickSelection = false;
   @Input() public inputDatas: any[] | undefined; // Can be any types of datas
   @Input() public displayedColumns: GridColumnsI[] | undefined;
   @Input() public override id: string | undefined = undefined;
@@ -77,7 +77,11 @@ export class AgGridComponent
   @Input() public showFullscreenBtn = true;
   @Input() public showSearch = true;
   @Input() public displayCount = false;
-  @Input() public rowSelection = 'single';
+  @Input() public rowSelection:
+    | 'single'
+    | 'multiple'
+    | RowSelectionOptions<any> = 'single';
+  @Input() public enableClickSelection = true;
   @Input() private showLineSelection = true;
   @Input() private selectedVariable: any; // Can be any types of data
   @Input() public showFullSearch = false;
@@ -168,6 +172,9 @@ export class AgGridComponent
       this.searchFormVisible = true;
     }
     setTimeout(() => {
+      // Set the rowSelection configuration using new AG Grid v32+ API
+      this.setRowSelectionConfig();
+
       // Only auto-fit if there's no saved grid mode or if the mode is fitToSpace
       if (
         this.agGrid &&
@@ -426,6 +433,39 @@ export class AgGridComponent
   }
 
   /**
+   * Sets the row selection configuration using the new AG Grid v32+ API
+   */
+  private setRowSelectionConfig() {
+    if (this.agGrid?.api) {
+      const rowSelectionConfig = this.getRowSelectionConfig();
+      this.agGrid.api.setGridOption('rowSelection', rowSelectionConfig);
+    }
+  }
+
+  /**
+   * Gets the row selection configuration object for AG Grid v32+
+   */
+  private getRowSelectionConfig():
+    | 'single'
+    | 'multiple'
+    | RowSelectionOptions<any> {
+    // Handle legacy object format or new object format
+    if (typeof this.rowSelection === 'object' && this.rowSelection !== null) {
+      return this.rowSelection as RowSelectionOptions<any>;
+    }
+
+    // Convert legacy string format to new object format
+    const mode = this.rowSelection === 'multiple' ? 'multiRow' : 'singleRow';
+
+    return {
+      mode: mode,
+      enableClickSelection: this.enableClickSelection,
+      checkboxes: false, // Disable checkboxes to maintain previous behavior
+      headerCheckbox: false, // Disable header checkbox
+    } as RowSelectionOptions<any>;
+  }
+
+  /**
    * Updates the table by resetting column definitions and row data.
    */
   updateTable() {
@@ -445,6 +485,9 @@ export class AgGridComponent
       if (this.agGrid?.api) {
         this.agGrid.api.setGridOption('columnDefs', this.columnDefs);
         this.agGrid.api.setGridOption('rowData', this.inputDatas);
+        // Also update row selection config when table is updated
+        const rowSelectionConfig = this.getRowSelectionConfig();
+        this.agGrid.api.setGridOption('rowSelection', rowSelectionConfig);
       } else {
         // Fallback for when api is not ready yet
         if (this.agGrid) {
