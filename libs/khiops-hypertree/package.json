@@ -12,11 +12,12 @@
     "d3": "7.9.0",
     "d3-force-gravity": "1.0.2",
     "glob-parent": "6.0.2",
-    "timers": "0.1.1"
+    "timers": "0.1.1",
+    "minimatch": "10.2.1"
   },
   "devDependencies": {
     "@types/d3": "7.4.3",
-    "@types/node": "24.9.1",
+    "@types/node": "24.10.15",
     "del": "8.0.1",
     "gulp": "5.0.1",
     "gulp-concat": "2.6.1",
@@ -29,9 +30,9 @@
     "gulp-uglifyes": "0.2.1",
     "merge2": "1.4.1",
     "ordered-read-streams": "2.0.0",
-    "sass": "1.93.2",
+    "sass": "1.97.3",
     "typescript": "5.9.3",
-    "webpack": "5.102.1",
+    "webpack": "5.105.3",
     "webpack-stream": "7.0.0",
     "yargs": "18.0.0"
   }
