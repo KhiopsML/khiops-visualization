@@ -28,7 +28,7 @@
       <mat-menu #selectDimension>
         @for (
           dimension of dimensions;
-          track dimension.name || dimension;
+          track dimension.name || $index;
           let i = $index
         ) {
           <button

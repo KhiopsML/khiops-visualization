@@ -70,7 +70,7 @@
                       </em>
                     </button>
                     <mat-menu #matrixSelectTargets>
-                      @for (target of matrixTargets.targets; track target.value || target.name || target) {
+                      @for (target of matrixTargets.targets; track target.value || target.name || $index) {
                         <button
                           mat-menu-item
                           [class.selected-item]="

@@ -15,7 +15,7 @@
     <em class="screenshot-hide"><mat-icon>keyboard_arrow_down</mat-icon> </em>
   </button>
   <mat-menu #matrixModesTypes>
-    @for (opt of matrixModes.types; track opt) {
+    @for (opt of matrixModes.types; track opt.mode || $index) {
       <button
         mat-menu-item
         [class.selected-item]="opt.mode === matrixModes.selected?.mode"
