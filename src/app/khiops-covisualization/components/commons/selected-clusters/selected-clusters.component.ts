@@ -7,13 +7,13 @@
 import {
   Component,
   OnDestroy,
+  OnInit,
   Input,
   SimpleChanges,
   OnChanges,
 } from '@angular/core';
 import { SelectedClusterModel } from '@khiops-covisualization/model/selected-cluster.model';
 import { TreeNodeModel } from '@khiops-covisualization/model/tree-node.model';
-import { DimensionsDatasService } from '@khiops-covisualization/providers/dimensions-datas.service';
 import { EventsService } from '@khiops-covisualization/providers/events.service';
 import { TranslateService } from '@ngstack/translate';
 import { ClustersService } from '@khiops-covisualization/providers/clusters.service';
@@ -28,7 +28,7 @@ import { getClustersDisplayedColumns } from './selected-clusters.config';
   styleUrls: ['./selected-clusters.component.scss'],
   standalone: false,
 })
-export class SelectedClustersComponent implements OnDestroy, OnChanges {
+export class SelectedClustersComponent implements OnInit, OnDestroy, OnChanges {
   @Input() private selectedNodes: TreeNodeModel[] | undefined;
   @Input() selectedDimensions: DimensionCovisualizationModel[] | undefined; // Used to check for dim change
 
@@ -43,7 +43,6 @@ export class SelectedClustersComponent implements OnDestroy, OnChanges {
     private translate: TranslateService,
     private clustersService: ClustersService,
     private eventsService: EventsService,
-    private dimensionsDatasService: DimensionsDatasService,
   ) {
     this.title = this.translate.get('GLOBAL.SELECTED_CLUSTERS');
     this.clustersDisplayedColumns = getClustersDisplayedColumns(this.translate);
@@ -52,6 +51,12 @@ export class SelectedClustersComponent implements OnDestroy, OnChanges {
       this.eventsService.treeSelectedNodeChanged.subscribe(() => {
         this.updateClusterTable();
       });
+  }
+
+  ngOnInit() {
+    // Initial update to handle cases where selectedNodes are already available
+    // This is especially important when hierarchy components are hidden
+    this.updateClusterTable();
   }
 
   ngOnDestroy() {
@@ -66,7 +71,7 @@ export class SelectedClustersComponent implements OnDestroy, OnChanges {
   }
 
   ngOnChanges(changes: SimpleChanges) {
-    if (changes.selectedDimensions) {
+    if (changes.selectedDimensions || changes.selectedNodes) {
       this.updateClusterTable();
     }
   }
@@ -77,14 +82,12 @@ export class SelectedClustersComponent implements OnDestroy, OnChanges {
    * from the clusters service and creating a list of selected clusters.
    */
   private updateClustersInformations() {
-    // Check if all nodes are selected to update to optimize
-    if (
-      this.selectedNodes &&
-      this.selectedNodes.length ===
-        this.dimensionsDatasService.getDimensionCount()
-    ) {
+    // Initialize selectedClusters array
+    this.selectedClusters = [];
+
+    // Check if we have selected nodes to display
+    if (this.selectedNodes && this.selectedNodes.length > 0) {
       const details = this.clustersService.getSelectedClustersDetails();
-      this.selectedClusters = [];
 
       for (let i = 0; i < this.selectedNodes.length; i++) {
         const nodeVO: TreeNodeModel | undefined = this.selectedNodes[i];
@@ -99,30 +102,22 @@ export class SelectedClustersComponent implements OnDestroy, OnChanges {
         }
       }
       this.selectActiveClusters();
+    } else {
+      // If no selected nodes, set empty array to avoid infinite loading
+      this.activeClusters = [];
     }
   }
 
   /**
    * Selects the active clusters from the list of selected clusters.
-   * It determines the positions of the dimensions and adds the corresponding
-   * clusters to the active clusters list.
+   * Simply displays all available selected clusters regardless of hierarchy visibility.
    */
   private selectActiveClusters() {
-    const currentActiveClusters: SelectedClusterModel[] | undefined = [];
-    if (this.selectedClusters) {
-      const firstDimPos =
-        this.dimensionsDatasService.getDimensionPositionFromName(
-          this.selectedClusters[0]?.hierarchy ?? '',
-        );
-      const secondDimPos =
-        this.dimensionsDatasService.getDimensionPositionFromName(
-          this.selectedClusters[1]?.hierarchy ?? '',
-        );
-      this.selectedClusters[firstDimPos] &&
-        currentActiveClusters.push(this.selectedClusters[firstDimPos]);
-      this.selectedClusters[secondDimPos] &&
-        currentActiveClusters.push(this.selectedClusters[secondDimPos]);
-      this.activeClusters = currentActiveClusters;
+    // Display all selected clusters - no need for complex position mapping
+    if (this.selectedClusters && this.selectedClusters.length > 0) {
+      this.activeClusters = [...this.selectedClusters];
+    } else {
+      this.activeClusters = [];
     }
   }
 }

@@ -137,6 +137,9 @@ export class AxisViewComponent
     this.dimensionsDatasService.initSelectedDimensions();
     this.dimensionsDatasService.saveInitialDimension();
     this.dimensionsDatasService.constructDimensionsTrees();
+
+    // Now that dimensions and trees are initialized, restore selected nodes
+    this.treenodesService.restoreSelectedNodes();
   }
 
   /**

@@ -381,23 +381,63 @@ export class TreenodesService {
 
     this.dimensionsDatasService.dimensionsDatas.nodesNames =
       this.appService.getSavedDatas('nodesNames') || {};
-    const savedNodes = this.appService.getSavedDatas('selectedNodes');
-    if (savedNodes) {
-      for (let index = 0; index < savedNodes.length; index++) {
-        const nodeName = savedNodes[index];
-        const dimension =
-          this.dimensionsDatasService.dimensionsDatas.selectedDimensions[index];
-        const node =
-          dimension && this.getNodeFromName(dimension.name, nodeName);
-        if (node) {
-          this.dimensionsDatasService.dimensionsDatas.selectedNodes[index] =
-            node;
-        }
-      }
-    }
+
+    // Restore selectedNodes - but only if dimensions are already initialized
+    this.restoreSelectedNodes();
+
     const savedHierarchy =
       this.appService.getSavedDatas('unfoldHierarchyState') || 0;
     this.setSelectedUnfoldHierarchy(savedHierarchy);
+  }
+
+  /**
+   * Restores selected nodes from saved data.
+   * This method can be called multiple times safely.
+   */
+  restoreSelectedNodes() {
+    const savedNodes = this.appService.getSavedDatas('selectedNodes');
+    const selectedDimensions =
+      this.dimensionsDatasService.dimensionsDatas.selectedDimensions;
+
+    // Only proceed if we have both savedNodes and initialized dimensions
+    if (!savedNodes || !selectedDimensions || selectedDimensions.length === 0) {
+      return;
+    }
+
+    // Initialize selectedNodes array if not already done
+    if (!this.dimensionsDatasService.dimensionsDatas.selectedNodes) {
+      this.dimensionsDatasService.dimensionsDatas.selectedNodes = [];
+    }
+
+    for (
+      let index = 0;
+      index < savedNodes.length && index < selectedDimensions.length;
+      index++
+    ) {
+      // Skip if already processed
+      if (this.dimensionsDatasService.dimensionsDatas.selectedNodes[index]) {
+        continue;
+      }
+
+      const nodeName = savedNodes[index];
+      const dimension = selectedDimensions[index];
+
+      let node = dimension && this.getNodeFromName(dimension.name, nodeName);
+
+      if (node) {
+        this.dimensionsDatasService.dimensionsDatas.selectedNodes[index] = node;
+      } else if (dimension) {
+        // If saved node is not found, select the first available node as fallback
+        const firstNode = this.getFirstAvailableNode(dimension.name);
+        if (firstNode) {
+          this.dimensionsDatasService.dimensionsDatas.selectedNodes[index] =
+            firstNode;
+        }
+      }
+    }
+
+    // Ensure all dimensions have a selected node
+    this.ensureAllDimensionsHaveSelection();
   }
 
   /**
@@ -498,6 +538,60 @@ export class TreenodesService {
       }
     }
     return cloneDeep(nodeVO); // important to clone datas to keep origin immmutable
+  }
+
+  /**
+   * Gets the first available node for a dimension.
+   * Used as fallback when saved node is not found.
+   *
+   * @param {string} dimensionName - The name of the dimension.
+   * @returns {TreeNodeModel} - The first available node or undefined.
+   */
+  getFirstAvailableNode(dimensionName: string): TreeNodeModel | undefined {
+    const currentIndex: number =
+      this.dimensionsDatasService.dimensionsDatas.selectedDimensions.findIndex(
+        (e) => {
+          return dimensionName === e.name;
+        },
+      );
+
+    if (
+      currentIndex !== -1 &&
+      this.dimensionsDatasService.dimensionsDatas.dimensionsClusters[
+        currentIndex
+      ]
+    ) {
+      const firstNode =
+        this.dimensionsDatasService.dimensionsDatas.dimensionsClusters[
+          currentIndex
+        ][0];
+      return firstNode ? cloneDeep(firstNode) : undefined;
+    }
+    return undefined;
+  }
+
+  /**
+   * Ensures all dimensions have a selected node.
+   * Selects the first available node for dimensions without selection.
+   */
+  ensureAllDimensionsHaveSelection(): void {
+    const selectedDimensions =
+      this.dimensionsDatasService.dimensionsDatas.selectedDimensions;
+
+    for (let i = 0; i < selectedDimensions.length; i++) {
+      if (
+        !this.dimensionsDatasService.dimensionsDatas.selectedNodes[i] &&
+        selectedDimensions[i]
+      ) {
+        const firstNode = this.getFirstAvailableNode(
+          selectedDimensions[i]?.name || '',
+        );
+        if (firstNode) {
+          this.dimensionsDatasService.dimensionsDatas.selectedNodes[i] =
+            firstNode;
+        }
+      }
+    }
   }
 
   /**
