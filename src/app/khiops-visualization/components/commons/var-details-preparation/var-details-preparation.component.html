@@ -67,7 +67,11 @@
       </kl-ag-grid>
     }
     @if (!preparationDatas?.currentIntervalDatas?.values) {
-      <kl-no-data fxFlex></kl-no-data>
+      <kl-no-data
+        class="kl-card"
+        fxFlex
+        [message]="getNoDataMessage()"
+      ></kl-no-data>
     }
     @if (
       (!preparationDatas?.currentIntervalDatas?.values &&
@@ -91,7 +95,11 @@
           >
           </kl-ag-grid>
           @if (!preparation2dDatas?.currentCellDatas.values) {
-            <kl-no-data fxFlex></kl-no-data>
+            <kl-no-data
+              class="kl-card"
+              fxFlex
+              [message]="getNoDataMessage()"
+            ></kl-no-data>
           }
         </as-split-area>
         <as-split-area class="variables-list-container">
@@ -110,7 +118,11 @@
           >
           </kl-ag-grid>
           @if (!preparation2dDatas?.currentCellDatas.values) {
-            <kl-no-data fxFlex></kl-no-data>
+            <kl-no-data
+              class="kl-card"
+              fxFlex
+              [message]="getNoDataMessage()"
+            ></kl-no-data>
           }
         </as-split-area>
       </as-split>

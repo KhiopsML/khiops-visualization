@@ -84,4 +84,18 @@ export class VarDetailsPreparation2dComponent {
       this.targetDistributionGraphType,
     );
   }
+
+  /**
+   * Gets the appropriate no-data message for variable details
+   * @returns the translation key for the no-data message
+   */
+  getNoDataMessage(): string | undefined {
+    if (
+      this.preparation2dDatas?.selectedVariable &&
+      this.preparation2dDatas.selectedVariable.level === 0
+    ) {
+      return 'NO_DATAS.NON_INFORMATIVE_VARIABLE';
+    }
+    return undefined;
+  }
 }

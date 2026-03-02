@@ -70,7 +70,10 @@
     "NO_INFORMATIONS_DETAILS": "No informations details.",
     "NO_COMPOSITION_FOR_NUMERICAL": "No composition datas for numerical dimensions",
     "NO_EXTERNAL_DATAS_FOR_NUMERICAL": "No external datas for numerical dimensions",
-    "NO_DATA_FOR_REGRESSION_ANALYSIS": "No data for Regression analysis"
+    "NO_DATA_FOR_REGRESSION_ANALYSIS": "No data for Regression analysis",
+    "NO_EVALUATED_VARIABLES": "No evaluated variables",
+    "NO_SELECTED_VARIABLES": "No selected variables",
+    "NON_INFORMATIVE_VARIABLE": "Non-informative variable"
   },
   "SETTINGS": {
     "NUMBER": "number",
@@ -263,7 +266,7 @@
     "TYPICALITY": "Typicality",
     "HIERARCHICAL_LEVEL": "Hierarchical Level",
     "DERIVATION_RULE": "Derivation rule",
-    "RELEASE_NOTES": "What's new ?",
+    "RELEASE_NOTES": "What\u0027s new ?",
     "BETA": "Beta",
     "CURRENT_INTERVAL": "Current interval",
     "CURRENT_GROUP": "Current group",

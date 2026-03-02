@@ -117,4 +117,18 @@ export class VarDetailsPreparationComponent implements OnInit, OnChanges {
       );
     }
   }
+
+  /**
+   * Gets the appropriate no-data message for interval data
+   * @returns the translation key for the no-data message
+   */
+  getNoDataMessage(): string | undefined {
+    if (
+      this.preparationDatas?.selectedVariable &&
+      this.preparationDatas.selectedVariable.level === 0
+    ) {
+      return 'NO_DATAS.NON_INFORMATIVE_VARIABLE';
+    }
+    return undefined;
+  }
 }

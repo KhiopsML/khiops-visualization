@@ -68,7 +68,9 @@
       <as-split-area [size]="sizes.row[1]">
         @if (variablesDatas?.length === 0) {
           <kl-no-data
-            [message]="'NO_DATAS.NO_INFORMATIVE_TEXT_VARIABLES'"
+            class="kl-card"
+            fxFlex
+            [message]="getNoDataMessage()"
           ></kl-no-data>
         }
         @if (variablesDatas?.length > 0) {
@@ -102,6 +104,7 @@
                     [inputDatas]="variablesDatas"
                     [displayedColumns]="variablesDisplayedColumns"
                     [selectedVariable]="preparationDatas?.selectedVariable"
+                    [noDataMessage]="getNoDataMessage()"
                   >
                     @if (hasLevelData()) {
                       <app-level-distribution-button
@@ -153,9 +156,18 @@
               </as-split>
             </as-split-area>
             <as-split-area [size]="sizes.row1Col[1]">
-              <app-var-details-preparation
-                [preparationSource]="preparationSource"
-              ></app-var-details-preparation>
+              @if (isNonInformativeVariable()) {
+                <kl-no-data
+                  class="kl-card"
+                  fxFlex
+                  [message]="'NO_DATAS.NON_INFORMATIVE_VARIABLE'"
+                ></kl-no-data>
+              }
+              @if (!isNonInformativeVariable()) {
+                <app-var-details-preparation
+                  [preparationSource]="preparationSource"
+                ></app-var-details-preparation>
+              }
             </as-split-area>
           </as-split>
         }

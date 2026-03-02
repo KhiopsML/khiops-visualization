@@ -89,6 +89,7 @@
                     'TOOLTIPS.PREPARATION_2D.VARIABLES.TITLE' | translate
                   }}"
                   [selectedVariable]="preparation2dDatas?.selectedVariable"
+                  [noDataMessage]="getNoDataMessage()"
                 >
                   @if (hasLevelData()) {
                     <app-level-distribution-button
@@ -108,9 +109,18 @@
             </as-split>
           </as-split-area>
           <as-split-area [size]="sizes.row1Col[1]">
-            <app-var-details-preparation-2d
-              fxFlex
-            ></app-var-details-preparation-2d>
+            @if (isNonInformativeVariable()) {
+              <kl-no-data
+                class="kl-card"
+                fxFlex
+                [message]="'NO_DATAS.NON_INFORMATIVE_VARIABLE'"
+              ></kl-no-data>
+            }
+            @if (!isNonInformativeVariable()) {
+              <app-var-details-preparation-2d
+                fxFlex
+              ></app-var-details-preparation-2d>
+            }
           </as-split-area>
         </as-split>
       </as-split-area>

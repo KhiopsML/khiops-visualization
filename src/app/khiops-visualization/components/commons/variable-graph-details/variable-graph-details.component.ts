@@ -359,4 +359,15 @@ export class VariableGraphDetailsComponent
       (this.distributionDatas?.distributionGraphDatas?.labels?.length ?? 0) < 10
     );
   }
+
+  /**
+   * Gets the appropriate no-data message for the variable graph details
+   * @returns the translation key for the no-data message
+   */
+  getNoDataMessage(): string | undefined {
+    if (this.selectedVariable && this.selectedVariable.level === 0) {
+      return 'NO_DATAS.NON_INFORMATIVE_VARIABLE';
+    }
+    return undefined;
+  }
 }

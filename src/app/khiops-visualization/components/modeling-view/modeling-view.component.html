@@ -63,17 +63,30 @@
         </as-split>
       </as-split-area>
       <as-split-area [size]="sizes?.row[1]">
-        <app-select-trained-predictor
-          [inputDatas]="trainedPredictors"
-          (selectedPredictorChanged)="onSelectedPredictorChanged($event)"
-        ></app-select-trained-predictor>
-        <as-split
-          class="trained-predictor-details-container"
-          direction="horizontal"
-          (dragEnd)="onSplitDragEnd($event, 'row1Col')"
-        >
-          <as-split-area [size]="sizes?.row1Col[0]">
-            @if (modelingDatas?.trainedPredictorsListDatas) {
+        @if (!modelingDatas?.trainedPredictorsListDatas) {
+          <div fxLayout="column" fxFlexFill>
+            <app-select-trained-predictor
+              [inputDatas]="trainedPredictors"
+              (selectedPredictorChanged)="onSelectedPredictorChanged($event)"
+            ></app-select-trained-predictor>
+            <kl-no-data
+              fxFlex
+              class="kl-card"
+              [message]="'NO_DATAS.NO_PREDICTORS_DETAILS'"
+            ></kl-no-data>
+          </div>
+        }
+        @if (modelingDatas?.trainedPredictorsListDatas) {
+          <app-select-trained-predictor
+            [inputDatas]="trainedPredictors"
+            (selectedPredictorChanged)="onSelectedPredictorChanged($event)"
+          ></app-select-trained-predictor>
+          <as-split
+            class="trained-predictor-details-container"
+            direction="horizontal"
+            (dragEnd)="onSplitDragEnd($event, 'row1Col')"
+          >
+            <as-split-area [size]="sizes?.row1Col[0]">
               <as-split
                 direction="vertical"
                 (dragEnd)="onSplitDragEnd($event, 'row1Col0Row')"
@@ -124,48 +137,43 @@
                   </kl-ag-grid>
                 </as-split-area>
               </as-split>
-            }
-            @if (!modelingDatas?.trainedPredictorsListDatas) {
-              <kl-no-data
-                fxFlexFill
-                [message]="'NO_DATAS.NO_PREDICTORS_DETAILS'"
-              ></kl-no-data>
-            }
-          </as-split-area>
-          <as-split-area [size]="sizes?.row1Col[1]">
-            @if (
-              modelingDatas?.selectedVariable?.variableType === 'preparation' ||
-              modelingDatas?.selectedVariable?.variableType ===
-                'text-preparation'
-            ) {
-              <app-var-details-preparation
-                [preparationSource]="preparationSource"
-              >
-              </app-var-details-preparation>
-            }
-            @if (
-              modelingDatas?.selectedVariable?.variableType === 'preparation-2d'
-            ) {
-              <app-var-details-preparation-2d> </app-var-details-preparation-2d>
-            }
-            @if (
-              modelingDatas?.selectedVariable?.variableType ===
-              'tree-preparation'
-            ) {
-              <app-var-details-tree-preparation>
-              </app-var-details-tree-preparation>
-            }
-            @if (
-              !modelingDatas?.trainedPredictorsListDatas ||
-              !modelingDatas?.selectedVariable
-            ) {
-              <kl-no-data
-                fxFlexFill
-                [message]="'NO_DATAS.NO_PREDICTORS_DETAILS'"
-              ></kl-no-data>
-            }
-          </as-split-area>
-        </as-split>
+            </as-split-area>
+            <as-split-area [size]="sizes?.row1Col[1]">
+              @if (
+                modelingDatas?.selectedVariable?.variableType ===
+                  'preparation' ||
+                modelingDatas?.selectedVariable?.variableType ===
+                  'text-preparation'
+              ) {
+                <app-var-details-preparation
+                  [preparationSource]="preparationSource"
+                >
+                </app-var-details-preparation>
+              }
+              @if (
+                modelingDatas?.selectedVariable?.variableType ===
+                'preparation-2d'
+              ) {
+                <app-var-details-preparation-2d>
+                </app-var-details-preparation-2d>
+              }
+              @if (
+                modelingDatas?.selectedVariable?.variableType ===
+                'tree-preparation'
+              ) {
+                <app-var-details-tree-preparation>
+                </app-var-details-tree-preparation>
+              }
+              @if (!modelingDatas?.selectedVariable) {
+                <kl-no-data
+                  class="kl-card"
+                  fxFlex
+                  [message]="'NO_DATAS.NO_PREDICTORS_DETAILS'"
+                ></kl-no-data>
+              }
+            </as-split-area>
+          </as-split>
+        }
       </as-split-area>
     </as-split>
   }

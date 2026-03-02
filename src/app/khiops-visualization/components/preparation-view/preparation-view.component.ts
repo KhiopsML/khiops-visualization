@@ -164,4 +164,49 @@ export class PreparationViewComponent extends SelectableTabComponent {
   hasLevelData(): boolean {
     return this.distributionService.hasLevelData(this.variablesDatas || []);
   }
+
+  /**
+   * Checks if the selected variable is non-informative (level = 0)
+   * @returns true if the selected variable has level 0
+   */
+  isNonInformativeVariable(): boolean {
+    const hasLevel0 = this.preparationDatas?.selectedVariable?.level === 0;
+    const hasDetailedStats = this.preparationDatasService.hasDetailedStatistics(
+      this.preparationSource,
+    );
+    return hasLevel0 || !hasDetailedStats;
+  }
+
+  /**
+   * Gets the appropriate no-data message based on evaluated and selected variables
+   * @returns the translation key for the no-data message
+   */
+  getNoDataMessage(): string | undefined {
+    if (!this.informationsDatas || this.informationsDatas.length === 0) {
+      return undefined;
+    }
+
+    // Find evaluatedVariables and selectedVariables from informationsDatas
+    const evaluatedVarInfo = this.informationsDatas.find(
+      (info) => info.title === 'GLOBAL.EVALUATED_VARIABLES',
+    );
+    const selectedVarInfo = this.informationsDatas.find(
+      (info) => info.title === 'GLOBAL.SELECTED_VARIABLES',
+    );
+
+    const evaluatedVariables = evaluatedVarInfo
+      ? Number(evaluatedVarInfo.value)
+      : 0;
+    const selectedVariables = selectedVarInfo
+      ? Number(selectedVarInfo.value)
+      : 0;
+
+    if (evaluatedVariables === 0) {
+      return 'NO_DATAS.NO_EVALUATED_VARIABLES';
+    } else if (selectedVariables === 0) {
+      return 'NO_DATAS.NO_SELECTED_VARIABLES';
+    }
+
+    return undefined;
+  }
 }

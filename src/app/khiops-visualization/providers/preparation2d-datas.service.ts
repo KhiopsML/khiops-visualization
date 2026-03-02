@@ -1016,4 +1016,25 @@ export class Preparation2dDatasService {
     // If evaluatedVariablePairs is greater than the array length, variable pairs have been filtered
     return evaluatedVariablePairs > variablesPairsStatisticsLength;
   }
+
+  /**
+   * Checks if detailed statistics exist for the selected variable pair.
+   * A variable pair is considered non-informative if detailed statistics are not available.
+   * @returns {boolean} True if detailed statistics exist, false otherwise.
+   */
+  hasDetailedStatistics(): boolean {
+    const selectedVar = this.preparation2dDatas?.selectedVariable;
+    if (!selectedVar?.rank) {
+      return false;
+    }
+
+    const variablesPairsDetailedStatistics =
+      this.appService.appDatas?.bivariatePreparationReport
+        ?.variablesPairsDetailedStatistics;
+    if (!variablesPairsDetailedStatistics) {
+      return false;
+    }
+
+    return variablesPairsDetailedStatistics[selectedVar.rank] !== undefined;
+  }
 }

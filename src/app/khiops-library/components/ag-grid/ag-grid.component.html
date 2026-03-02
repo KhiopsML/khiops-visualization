@@ -169,6 +169,6 @@
     </ag-grid-angular>
   }
   @if (inputDatas?.length === 0) {
-    <kl-no-data fxFlex></kl-no-data>
+    <kl-no-data fxFlex [message]="noDataMessage"></kl-no-data>
   }
 </div>

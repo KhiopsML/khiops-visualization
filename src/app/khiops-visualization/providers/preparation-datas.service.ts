@@ -730,4 +730,33 @@ export class PreparationDatasService {
     // If evaluatedVariables is greater than the array length, variables have been filtered
     return evaluatedVariables > variablesStatisticsLength;
   }
+
+  /**
+   * Checks if detailed statistics exist for the selected variable.
+   * A variable is considered non-informative if detailed statistics are not available.
+   * @param {string} preparationSource - The source of the preparation data.
+   * @returns {boolean} True if detailed statistics exist, false otherwise.
+   */
+  hasDetailedStatistics(preparationSource: string): boolean {
+    const selectedVar =
+      this.preparationDatas?.[preparationSource]?.selectedVariable;
+    if (!selectedVar?.rank) {
+      return false;
+    }
+
+    if (
+      // @ts-ignore
+      !this.appService.appDatas?.[preparationSource]
+        ?.variablesDetailedStatistics
+    ) {
+      return false;
+    }
+
+    // @ts-ignore
+    const variablesDetailedStatistics = (this.appService.appDatas as any)[
+      preparationSource
+    ].variablesDetailedStatistics;
+
+    return variablesDetailedStatistics[selectedVar.rank] !== undefined;
+  }
 }

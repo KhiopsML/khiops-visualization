@@ -102,6 +102,7 @@
                   [inputDatas]="variablesDatas"
                   [displayedColumns]="variablesDisplayedColumns"
                   [selectedVariable]="treePreparationDatas?.selectedVariable"
+                  [noDataMessage]="getNoDataMessage()"
                 >
                   @if (hasLevelData()) {
                     <app-level-distribution-button
@@ -118,7 +119,16 @@
                 </kl-ag-grid>
               </as-split-area>
               <as-split-area [size]="sizes.col0Row1Col[1]" class="kl-card">
-                @if (treePreparationDatas?.selectedVariable) {
+                @if (isNonInformativeVariable()) {
+                  <kl-no-data
+                    fxFlex
+                    [message]="'NO_DATAS.NON_INFORMATIVE_VARIABLE'"
+                  ></kl-no-data>
+                }
+                @if (
+                  !isNonInformativeVariable() &&
+                  treePreparationDatas?.selectedVariable
+                ) {
                   <app-variable-graph-details
                     #appVariableGraphDetails
                     [preparationSource]="'treePreparationReport'"
@@ -133,7 +143,10 @@
                   >
                   </app-variable-graph-details>
                 }
-                @if (!treePreparationDatas?.selectedVariable) {
+                @if (
+                  !isNonInformativeVariable() &&
+                  !treePreparationDatas?.selectedVariable
+                ) {
                   <kl-no-data fxFlex></kl-no-data>
                 }
               </as-split-area>

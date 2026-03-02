@@ -646,4 +646,26 @@ export class TreePreparationDatasService {
     }
     return this.treePreparationDatas.treeColorsMap;
   }
+
+  /**
+   * Checks if detailed statistics exist for the selected variable.
+   * A variable is considered non-informative if detailed statistics are not available.
+   * @returns {boolean} True if detailed statistics exist, false otherwise.
+   */
+  hasDetailedStatistics(): boolean {
+    const selectedVar = this.treePreparationDatas?.selectedVariable;
+    if (!selectedVar?.rank) {
+      return false;
+    }
+
+    // @ts-ignore
+    const variablesDetailedStatistics =
+      this.appService.appDatas?.treePreparationReport
+        ?.variablesDetailedStatistics;
+    if (!variablesDetailedStatistics) {
+      return false;
+    }
+
+    return variablesDetailedStatistics[selectedVar.rank] !== undefined;
+  }
 }

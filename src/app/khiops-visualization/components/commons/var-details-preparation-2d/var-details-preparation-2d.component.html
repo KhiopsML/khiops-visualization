@@ -102,6 +102,6 @@
   !preparation2dDatas?.selectedVariable
 ) {
   <div class="kl-card" fxFlex>
-    <kl-no-data fxFlexFill> </kl-no-data>
+    <kl-no-data fxFlexFill [message]="getNoDataMessage()"> </kl-no-data>
   </div>
 }

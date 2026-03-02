@@ -77,6 +77,7 @@ export class AgGridComponent
   @Input() public showFullscreenBtn = true;
   @Input() public showSearch = true;
   @Input() public displayCount = false;
+  @Input() public noDataMessage: string | undefined;
   @Input() public rowSelection:
     | 'single'
     | 'multiple'
