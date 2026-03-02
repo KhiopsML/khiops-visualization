@@ -221,7 +221,6 @@ export class HistogramComponent extends SelectableComponent implements OnInit {
   }
 
   public onInterpretableHistogramChanged(interpretableHistogram: number) {
-    this.interpretableHistogram = interpretableHistogram;
     this.interpretableHistogramChanged.emit(interpretableHistogram);
   }
 

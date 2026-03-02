@@ -661,15 +661,21 @@ export class DistributionDatasService {
     const histogramGraphDetails: HistogramValuesI[] = [];
 
     // modlHistograms is given: there are multiple histograms #238
+    // Get the recommended histogram index: try correct property, fall back to misspelled version,
+    // then default to last histogram as a sensible default
+    const interpretableHistogramNumberFromData =
+      varDatas.modlHistograms.interpretableHistogramNumber ??
+      varDatas.modlHistograms.histogramNumber;
+
     const histogramIndex =
       interpretableHistogramNumber !== undefined
         ? interpretableHistogramNumber
-        : varDatas.modlHistograms.interpretableHistogramNumber - 1;
+        : Math.max(0, interpretableHistogramNumberFromData - 1);
 
     const histogram = varDatas.modlHistograms.histograms[histogramIndex];
 
     this.distributionDatas.defaultInterpretableHistogramNumber =
-      varDatas.modlHistograms.interpretableHistogramNumber;
+      interpretableHistogramNumberFromData;
     this.distributionDatas.interpretableHistogramNumber = histogramIndex;
     this.distributionDatas.histogramNumber =
       varDatas.modlHistograms.histogramNumber;
