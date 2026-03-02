@@ -27,6 +27,7 @@ import {
 import { Observable, take } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { selectedNodesSelector } from '@khiops-visualization/selectors/tree-preparation.selector';
+import { initSelectedNodes } from '@khiops-visualization/actions/tree-preparation.action';
 import { TASKS } from '@khiops-library/enum/tasks';
 import { VariableDetail } from '@khiops-visualization/interfaces/shared-interfaces';
 
@@ -53,6 +54,9 @@ export class TreePreparationDatasService {
    */
   initialize() {
     this.treePreparationDatas = new TreePreparationDatasModel();
+
+    // Reset the store state when loading a new file
+    this.store.dispatch(initSelectedNodes());
 
     // select the first item of the list by default
     if (this.isValid()) {
