@@ -183,10 +183,14 @@ export class TreePreparationDatasService {
         (e: any) =>
           e.variable === this.treePreparationDatas?.selectedVariable?.name,
       );
-      // @ts-ignore
-      const dimDatas: string[][] = dimensions[dimIndex].partition; // in case of tree, partition is never a number
-      const dimDatasIndex = dimDatas.findIndex((e: any) => e.includes(id));
-      return [dimDatasIndex, dimDatas[dimDatasIndex]];
+      const dimension =
+        dimIndex !== undefined ? dimensions?.[dimIndex] : undefined;
+      const dimDatas: string[][] | undefined = dimension?.partition as
+        | string[][]
+        | undefined; // in case of tree, partition is never a number
+      const dimDatasIndex =
+        dimDatas?.findIndex((e: any) => e.includes(id)) || 0;
+      return [dimDatasIndex, dimDatas?.[dimDatasIndex]];
     }
   }
 
