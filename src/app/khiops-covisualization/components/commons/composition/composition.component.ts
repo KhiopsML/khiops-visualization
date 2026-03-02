@@ -32,7 +32,6 @@ import {
   MatDialogConfig,
   MatDialogRef,
 } from '@angular/material/dialog';
-import { AppConfig } from '../../../../../environments/environment.dev';
 import { CompositionDetailedPartsComponent } from '../composition-detailed-parts/composition-detailed-parts.component';
 import { DimensionsDatasService } from '../../../providers/dimensions-datas.service';
 
@@ -179,9 +178,8 @@ export class CompositionComponent implements OnInit, OnDestroy, AfterViewInit {
       this.compositionService.getCompositionDetailedPartsFromId(e.data._id);
 
     const config = new MatDialogConfig();
-    config.width = AppConfig.covisualizationCommon.MANAGE_VIEWS.WIDTH;
-    config.height = AppConfig.covisualizationCommon.MANAGE_VIEWS.HEIGHT;
-    config.maxWidth = AppConfig.covisualizationCommon.MANAGE_VIEWS.MAX_WIDTH;
+    config.width = 600 + 'px';
+    config.height = 400 + 'px';
     config.hasBackdrop = false; // Remove background overlay
     config.panelClass = 'draggable-dialog'; // Add draggable class for styling
     const dialogRef: MatDialogRef<CompositionDetailedPartsComponent> =
