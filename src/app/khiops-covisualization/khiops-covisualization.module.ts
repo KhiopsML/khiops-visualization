@@ -35,7 +35,9 @@ import { UserSettingsComponent } from './components/commons/user-settings/user-s
 import { ExternalDatasComponent } from './components/commons/external-datas/external-datas.component';
 import { HierarchyDetailsComponent } from './components/commons/hierarchy-details/hierarchy-details.component';
 import { OverlayContainer } from '@angular/cdk/overlay';
+import { DragDropModule } from '@angular/cdk/drag-drop';
 import { InAppOverlayContainer } from '../khiops-library/overlay/in-app-overlay-provider';
+import { DraggableDialogDirective } from './components/commons/composition-detailed-parts/draggable-dialog.directive';
 import { CompositionDetailedPartsComponent } from './components/commons/composition-detailed-parts/composition-detailed-parts.component';
 import { VariableSearchDialogComponent } from './components/commons/variable-search-dialog/variable-search-dialog.component';
 import { VariableSearchButtonComponent } from './components/commons/variable-search-button/variable-search-button.component';
@@ -85,6 +87,8 @@ import { provideHttpClient } from '@angular/common/http';
     FormsModule,
     ReactiveFormsModule,
     AgGridModule,
+    DragDropModule,
+    DraggableDialogDirective,
   ],
   providers: [
     provideAnimationsAsync(),

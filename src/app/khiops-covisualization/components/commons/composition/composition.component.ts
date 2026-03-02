@@ -182,6 +182,8 @@ export class CompositionComponent implements OnInit, OnDestroy, AfterViewInit {
     config.width = AppConfig.covisualizationCommon.MANAGE_VIEWS.WIDTH;
     config.height = AppConfig.covisualizationCommon.MANAGE_VIEWS.HEIGHT;
     config.maxWidth = AppConfig.covisualizationCommon.MANAGE_VIEWS.MAX_WIDTH;
+    config.hasBackdrop = false; // Remove background overlay
+    config.panelClass = 'draggable-dialog'; // Add draggable class for styling
     const dialogRef: MatDialogRef<CompositionDetailedPartsComponent> =
       this.dialog.open(CompositionDetailedPartsComponent, config);
     dialogRef.componentInstance.detailedParts = detailedParts;
