@@ -189,9 +189,8 @@ export class TreePreparationDatasService {
       );
       const dimension =
         dimIndex !== undefined ? dimensions?.[dimIndex] : undefined;
-      const dimDatas: string[][] | undefined = dimension?.partition as
-        | string[][]
-        | undefined; // in case of tree, partition is never a number
+      const dimDatas: string[][] | undefined =
+        dimension?.partition as unknown as string[][] | undefined; // in case of tree, partition is never a number
       const dimDatasIndex =
         dimDatas?.findIndex((e: any) => e.includes(id)) || 0;
       return [dimDatasIndex, dimDatas?.[dimDatasIndex]];
