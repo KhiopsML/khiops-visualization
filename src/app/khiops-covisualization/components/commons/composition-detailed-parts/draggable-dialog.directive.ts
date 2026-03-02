@@ -30,8 +30,38 @@ export class DraggableDialogDirective implements OnInit {
       // Add shadow to the dialog
       parent.style.boxShadow = '0 5px 25px rgba(0, 0, 0, 0.3)';
 
-      // Apply drag functionality to the dialog container
-      parent.style.cursor = 'move';
+      // Apply cursor style only to header
+      const header = this.elementRef.nativeElement.querySelector(
+        '#composition-detailed-parts-header',
+      );
+      if (header) {
+        header.style.cursor = 'move';
+      }
+
+      // Allow interaction with background elements
+      // We need to set pointer-events: none on the overlay wrapper
+      // and restore pointer-events: auto on the dialog itself
+      let overlayPane = parent.parentElement;
+      if (overlayPane && overlayPane.classList.contains('cdk-overlay-pane')) {
+        overlayPane.style.pointerEvents = 'auto'; // Ensure pane allows interaction if needed, or inherited
+      }
+      
+      let overlayWrapper = overlayPane?.parentElement;
+      while (overlayWrapper && !overlayWrapper.classList.contains('cdk-global-overlay-wrapper')) {
+        overlayWrapper = overlayWrapper.parentElement;
+      }
+
+      if (overlayWrapper) {
+          overlayWrapper.style.pointerEvents = 'none';
+      }
+      
+      // Ensure the dialog itself captures events
+      parent.style.pointerEvents = 'auto';
+
+      // Ensure the parent has a positioning context so the absolute child is positioned relative to it
+      if (getComputedStyle(parent).position === 'static') {
+        parent.style.position = 'relative';
+      }
 
       // Add drag event listeners manually for better control
       let isDragging = false;
@@ -42,9 +72,6 @@ export class DraggableDialogDirective implements OnInit {
 
       parent.addEventListener('mousedown', (event: MouseEvent) => {
         // Only allow dragging from the header area
-        const header = this.elementRef.nativeElement.querySelector(
-          '#composition-detailed-parts-header',
-        );
         if (!header || !header.contains(event.target as Node)) {
           return;
         }
@@ -78,8 +105,17 @@ export class DraggableDialogDirective implements OnInit {
       resizeHandle.style.right = '0';
       resizeHandle.style.bottom = '0';
       resizeHandle.style.cursor = 'se-resize';
-      resizeHandle.style.backgroundColor = 'transparent';
       resizeHandle.style.zIndex = '1000';
+
+      // Add visual icon (resize grip)
+      resizeHandle.innerHTML = `
+        <svg viewBox="0 0 24 24" width="16" height="16" fill="rgba(0, 0, 0, 0.4)">
+          <path d="M22 22H20V20H22V22ZM22 18H20V16H22V18ZM18 22H16V20H18V22ZM22 14H20V12H22V14ZM14 22H12V20H14V22ZM18 18H16V16H18V18Z"/>
+        </svg>`;
+      resizeHandle.style.display = 'flex';
+      resizeHandle.style.justifyContent = 'flex-end';
+      resizeHandle.style.alignItems = 'flex-end';
+      resizeHandle.style.padding = '2px';
 
       parent.appendChild(resizeHandle);
 
