@@ -60,6 +60,9 @@ export class CompositionComponent implements OnInit, OnDestroy, AfterViewInit {
   private importedDatasChangedSub: Subscription;
   private conditionalOnContextChangedSub: Subscription;
   private contextSelectionChangedSub: Subscription;
+  private currentDetailedPartsDialog:
+    | MatDialogRef<CompositionDetailedPartsComponent>
+    | undefined;
 
   constructor(
     private translate: TranslateService,
@@ -166,9 +169,23 @@ export class CompositionComponent implements OnInit, OnDestroy, AfterViewInit {
     this.contextSelectionChangedSub?.unsubscribe();
     this.selectedComposition = undefined;
     this.selectedCompositionChanged.emit(this.selectedComposition);
+    // Close any open dialog
+    if (this.currentDetailedPartsDialog) {
+      this.currentDetailedPartsDialog.close();
+    }
   }
 
   showDetailedPartsDialog(e: ICellRendererParams) {
+    // Close previous dialog if it exists
+    if (this.currentDetailedPartsDialog) {
+      try {
+        this.currentDetailedPartsDialog.close();
+      } catch (err) {
+        console.warn('Error closing previous dialog:', err);
+      }
+      this.currentDetailedPartsDialog = undefined;
+    }
+
     // get the current composition
     if (!e.data || !e.data._id) {
       return;
@@ -182,10 +199,13 @@ export class CompositionComponent implements OnInit, OnDestroy, AfterViewInit {
     config.height = 400 + 'px';
     config.hasBackdrop = false; // Remove background overlay
     config.panelClass = 'draggable-dialog'; // Add draggable class for styling
-    const dialogRef: MatDialogRef<CompositionDetailedPartsComponent> =
-      this.dialog.open(CompositionDetailedPartsComponent, config);
-    dialogRef.componentInstance.detailedParts = detailedParts;
-    dialogRef.disableClose = false;
+    this.currentDetailedPartsDialog = this.dialog.open(
+      CompositionDetailedPartsComponent,
+      config,
+    );
+    this.currentDetailedPartsDialog.componentInstance.detailedParts =
+      detailedParts;
+    this.currentDetailedPartsDialog.disableClose = false;
   }
 
   onSelectRowChanged(item: CompositionModel) {
