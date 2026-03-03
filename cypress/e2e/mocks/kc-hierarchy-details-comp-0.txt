@@ -2,9 +2,9 @@ Hierarchy	occupation
 
 Type: Categorical
 Clusters: 9
-Cluster: {Prof-specialty, Armed-Forces}
-Values: 2
-Frequency: 5 800
+Cluster: {Exec-managerial}
+Values: 1
+Frequency: 3 973
 
 Name	Parent cluster	Frequency	Interest	Hierarchical Level	Rank	Hierarchical rank
 A1		31 267	0.611016	0	4	2

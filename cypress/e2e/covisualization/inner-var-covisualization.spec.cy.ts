@@ -18,7 +18,8 @@ describe('Test Plan for Khiops Covisualization', () => {
       cy.readFile('./src/assets/mocks/kc/' + fileName).then(() => {
         cy.wait(200);
 
-        cy.get('#cluster-composition-1').contains('MAD_ben_inv');
+        // Check if previous selected nodes are initized
+        cy.get('#cluster-composition-1').contains('Mes_sm_eph');
 
         cy.get('.variable-search-button-comp').first().click();
         cy.wait(200);
