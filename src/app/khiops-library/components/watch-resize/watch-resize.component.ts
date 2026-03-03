@@ -40,7 +40,6 @@ export class WatchResizeComponent implements AfterViewInit {
   ngAfterViewInit(): void {
     setTimeout(() => {
       if (this.watchResize && this.id) {
-        // @ts-ignore
         const observer = new ResizeObserver((entries) => {
           entries.forEach((entry) => {
             this.ngzone.run(() => {

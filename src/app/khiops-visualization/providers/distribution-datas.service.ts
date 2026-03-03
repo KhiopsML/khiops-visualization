@@ -503,7 +503,6 @@ export class DistributionDatasService {
   defineDefaultGroup(dimension: DimensionVisualization) {
     if (dimension?.defaultGroupIndex !== undefined) {
       const partition = dimension.partition[dimension.defaultGroupIndex];
-      // @ts-ignore
       if (partition && partition.length > 0) {
         // @ts-ignore
         partition[partition.length - 1] += ',*';

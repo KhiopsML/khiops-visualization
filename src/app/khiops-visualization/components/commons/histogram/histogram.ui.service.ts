@@ -43,7 +43,6 @@ export class HistogramUIService {
    * @param event - Mouse event containing cursor coordinates
    * @returns Index of the bar at the mouse position, or undefined if none
    */
-  // @ts-ignore
   static getCurrentBarPosition(
     datas: HistogramValuesI[],
     yPadding: number,

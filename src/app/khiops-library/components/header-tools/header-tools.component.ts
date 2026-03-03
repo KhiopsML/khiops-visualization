@@ -96,7 +96,9 @@ export class HeaderToolsComponent {
 
         setTimeout(() => {
           const rootElement = this.configService.getRootElementDom();
-          const currentDiv: any = rootElement?.querySelector('#' + currentSelectedArea.id)?.firstChild;
+          const currentDiv: any = rootElement?.querySelector(
+            '#' + currentSelectedArea.id,
+          )?.firstChild;
 
           this.rePaintGraph(currentDiv);
 
@@ -234,7 +236,9 @@ export class HeaderToolsComponent {
     ) {
       if (currentSelectedArea.graphIdContainer) {
         const rootElement = this.configService.getRootElementDom();
-        const chartContainer: any = rootElement?.querySelector('#' + currentSelectedArea.graphIdContainer);
+        const chartContainer: any = rootElement?.querySelector(
+          '#' + currentSelectedArea.graphIdContainer,
+        );
         return chartContainer?.componentInstance;
       } else {
         const rootElement = this.configService.getRootElementDom();

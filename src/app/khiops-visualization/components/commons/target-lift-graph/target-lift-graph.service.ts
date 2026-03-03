@@ -103,7 +103,6 @@ export class TargetLiftGraphService {
           },
           ticks: {
             callback: function (value: any) {
-              // @ts-ignore
               return Math.round(Number(this.getLabelForValue(value)));
             },
           },

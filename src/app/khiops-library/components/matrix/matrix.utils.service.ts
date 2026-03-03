@@ -709,7 +709,6 @@ export class MatrixUtilsService {
         } else {
           // KC when context or KV with target case (iris2d for example)
 
-          // @ts-ignore
           cell.matrixTotal = matrixTotalsByIndex;
 
           // Compute coverage from total

@@ -43,8 +43,7 @@ Bachelors	This text is standard`,
         console.log(file);
         let reader = new FileReader();
         reader.addEventListener('loadend', async (e) => {
-          // @ts-ignore
-          const datas = e.target.result.toString();
+          const datas = e.target?.result?.toString();
           // @ts-ignore
           resolve(new FileModel(datas, file.path, file));
         });
