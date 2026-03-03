@@ -764,7 +764,6 @@ export class Preparation2dDatasService {
             MatrixUtilsService.getFrequencyAxisValues(
               xDimension,
               yDimension,
-              // @ts-ignore
               variableDatas.dataGrid.cellFrequencies ||
                 variableDatas.dataGrid.cellTargetFrequencies,
             );

@@ -554,7 +554,6 @@ export class PreparationDatasService {
     const summary: any = this.appService.appDatas?.[preparationSource]?.summary;
     if (summary && summary.targetDescriptiveStats) {
       informationsDatas = [];
-      // @ts-ignore
       for (const item in summary.targetDescriptiveStats) {
         if (item) {
           informationsDatas.push({
@@ -752,7 +751,6 @@ export class PreparationDatasService {
       return false;
     }
 
-    // @ts-ignore
     const variablesDetailedStatistics = (this.appService.appDatas as any)[
       preparationSource
     ].variablesDetailedStatistics;
