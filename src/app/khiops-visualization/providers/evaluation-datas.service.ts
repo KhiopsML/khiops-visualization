@@ -460,7 +460,7 @@ export class EvaluationDatasService {
     const xAxis = new Array(1001);
     xAxis[0] = '0';
     for (let i = 1; i < xAxis.length; i++) {
-      xAxis[i] = (Number(xAxis[i - 1]) + 0.001).toFixed(3);
+      xAxis[i] = (Number(xAxis[i - 1]) + 0.1).toFixed(1);
     }
 
     const trainDatas: LiftCurveValuesI[] =
@@ -479,12 +479,6 @@ export class EvaluationDatasService {
     let liftGraphDatas: LiftCurveValuesI[] = [];
     if (trainDatas.length > 0 || testDatas.length > 0) {
       let graphDatas: LiftCurveValuesI[] = [];
-      if (target) {
-        // add population information
-        graphDatas = graphDatas.concat(
-          this.generateRandomLiftDatas(xAxis, 'GLOBAL.POPULATION'),
-        );
-      }
       graphDatas = graphDatas.concat(trainDatas);
       graphDatas = graphDatas.concat(testDatas);
       if (target) {
@@ -600,7 +594,7 @@ export class EvaluationDatasService {
               const currentCurveValue = currentReport.recCurves[j].values[k];
               const xValue = xAxis[k];
               currentSerie.push({
-                name: Number((xValue || 0) * 100),
+                name: Number(xValue || 0),
                 value: Number(currentCurveValue),
               });
             }
@@ -624,7 +618,7 @@ export class EvaluationDatasService {
               const currentCurveValue = currentLiftCurve.curves[j].values[k];
               const xValue = xAxis[k];
               currentSerie.push({
-                name: Number((xValue || 0) * 100),
+                name: Number(xValue || 0),
                 value: Number(currentCurveValue),
               });
             }
@@ -654,8 +648,8 @@ export class EvaluationDatasService {
       // to smooth curve
       const xValue = xAxis[k];
       currentSerie.push({
-        name: (xValue || 0) * 100,
-        value: (xValue || 0) * 100,
+        name: Number(xValue || 0),
+        value: Number(xValue || 0),
       });
     }
     graphDatas.push({

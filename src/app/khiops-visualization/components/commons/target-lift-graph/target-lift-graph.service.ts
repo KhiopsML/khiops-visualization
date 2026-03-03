@@ -227,8 +227,14 @@ export class TargetLiftGraphService {
     if (items[0]) {
       const yValue = items[0].parsed?.y;
       if (yValue !== undefined) {
+        let label: string;
+        if (this.evaluationDatasService.isRegressionAnalysis()) {
+          label = this.translate.get('GLOBAL.POPULATION');
+        } else {
+          label = this.translate.get('GLOBAL.TARGET_MODALITY');
+        }
         result.push(
-          this.translate.get('GLOBAL.TARGET_MODALITY') +
+          label +
             ': ' +
             UtilsService.getPrecisionNumber(yValue, this.numPrecision) +
             '%',
