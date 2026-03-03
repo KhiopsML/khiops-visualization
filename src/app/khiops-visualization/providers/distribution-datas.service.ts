@@ -117,9 +117,9 @@ export class DistributionDatasService {
     this.distributionDatas.setTargetDistributionType(type);
 
     if (this.isValid()) {
+      const appDatas = this.appService.appDatas as Record<string, any>;
       const currentVar: VariableDetail =
-        // @ts-ignore
-        this.appService.appDatas[this.distributionDatas.preparationSource]
+        appDatas[this.distributionDatas.preparationSource]
           .variablesDetailedStatistics[selectedVariable.rank];
 
       if (currentVar) {
@@ -208,9 +208,9 @@ export class DistributionDatasService {
       let currentXAxis: number[][] | string[] | undefined = [
         currentNode.nodeId,
       ];
+      const appDatas = this.appService.appDatas as Record<string, any>;
       const currentVar: VariableDetail =
-        // @ts-ignore
-        this.appService.appDatas[this.distributionDatas.preparationSource]
+        appDatas[this.distributionDatas.preparationSource]
           .variablesDetailedStatistics[selectedVariable.rank];
       const variableDetails: VariableDetailsModel = new VariableDetailsModel(
         currentVar,
@@ -445,9 +445,9 @@ export class DistributionDatasService {
     }
 
     if (this.isValid()) {
+      const appDatas = this.appService.appDatas as Record<string, any>;
       const currentVar: VariableDetail =
-        // @ts-ignore
-        this.appService.appDatas[this.distributionDatas.preparationSource]
+        appDatas[this.distributionDatas.preparationSource]
           .variablesDetailedStatistics[selectedVariable.rank];
       if (currentVar) {
         const variableDetails: VariableDetailsModel = new VariableDetailsModel(
@@ -595,8 +595,8 @@ export class DistributionDatasService {
    * @returns A boolean indicating whether the variable is a big distribution variable.
    */
   isBigDistributionVariable(rank: string) {
-    // @ts-ignore
-    const currentVar = this.appService.appDatas[
+    const appDatas = this.appService.appDatas as Record<string, any>;
+    const currentVar = appDatas[
       this.distributionDatas.preparationSource
     ].variablesStatistics.find((e: any) => e.rank === rank);
     return (
@@ -1057,9 +1057,8 @@ export class DistributionDatasService {
   }
 
   isValid(): boolean {
-    // @ts-ignore
-    return !!this.appService.appDatas?.[
-      this.distributionDatas.preparationSource
-    ]?.variablesDetailedStatistics;
+    const appDatas = this.appService.appDatas as Record<string, any>;
+    return !!appDatas?.[this.distributionDatas.preparationSource]
+      ?.variablesDetailedStatistics;
   }
 }

@@ -111,10 +111,9 @@ export class EvaluationDatasService {
     | TrainEvaluationReport[] {
     this.evaluationDatas.evaluationTypes = [];
 
-    // @ts-ignore
-    Object.keys(this.appService.appDatas).forEach((value: any) => {
-      // @ts-ignore
-      const currentReport = this.appService.appDatas[value];
+    const appDatas = this.appService.appDatas as Record<string, any>;
+    Object.keys(appDatas).forEach((value: any) => {
+      const currentReport = appDatas[value];
       if (currentReport.reportType === 'Evaluation') {
         this.evaluationDatas?.evaluationTypes?.push(currentReport);
       }
