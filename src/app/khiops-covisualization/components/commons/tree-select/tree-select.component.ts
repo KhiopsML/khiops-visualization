@@ -127,7 +127,6 @@ export class TreeSelectComponent
   }
 
   private initTree(selectedNode?: TreeNodeModel) {
-    // @ts-ignore
     this.tree = new TreeView(
       this.dimensionsTree || [],
       this.configService.getRootElementDom(),

@@ -657,7 +657,6 @@ export class TreePreparationDatasService {
       return false;
     }
 
-    // @ts-ignore
     const variablesDetailedStatistics =
       this.appService.appDatas?.treePreparationReport
         ?.variablesDetailedStatistics;
