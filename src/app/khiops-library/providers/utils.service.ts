@@ -886,9 +886,9 @@ export class UtilsService {
       /(-?)(\d*)\.?(\d*)e([+-]\d+)/,
       function (_a, b, c, d, e) {
         return e < 0
-          ? //@ts-ignore
+          ? // @ts-ignore
             b + '0.' + Array(1 - e - c.length).join(0) + c + d
-          : //@ts-ignore
+          : // @ts-ignore
             b + c + d + Array(e - d.length + 1).join(0);
       },
     );
@@ -1674,10 +1674,10 @@ export class UtilsService {
     return this.formatValueGroup(values ?? [])?.reduce((acc, current) => {
       const existing = acc?.find((item) => item[0] === current?.[0]);
       if (existing) {
-        //@ts-ignore
+        // @ts-ignore
         existing[1] = existing[1].concat(current[1]);
       } else {
-        //@ts-ignore
+        // @ts-ignore
         acc?.push(current);
       }
       return acc;
@@ -1713,7 +1713,7 @@ export class UtilsService {
       var newObject = {};
       for (var i = 0; i < length; i++) {
         var key = keys[i];
-        //@ts-ignore
+        // @ts-ignore
         newObject[key] = this.fastestJsonCopyV1(obj[key]);
       }
       return newObject;
@@ -1729,7 +1729,7 @@ export class UtilsService {
     if (Array.isArray(val)) {
       var arr = [];
       var length = val.length;
-      //@ts-ignore
+      // @ts-ignore
       for (var i = 0; i < length; i++) arr.push(this.fastestJsonCopyV2(val[i]));
       return arr;
     } else if (typeof val === 'object') {
@@ -1737,7 +1737,7 @@ export class UtilsService {
       var newObject = {};
       for (var i = keys.length - 1; i > -1; i--) {
         var key = keys[i];
-        //@ts-ignore
+        // @ts-ignore
         newObject[key] = this.fastestJsonCopyV2(val[key]);
       }
       return newObject;

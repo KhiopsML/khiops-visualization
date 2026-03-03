@@ -336,7 +336,7 @@ export class HistogramRendererService {
       xAxis = scaleLog().base(10).domain(domain).range([0, width]);
     }
 
-    //@ts-ignore
+    // @ts-ignore
     const axis: Axis<NumberValue> = axisBottom(xAxis)
       .ticks([xTickCount])
       .tickArguments([xTickCount, '.0e'])

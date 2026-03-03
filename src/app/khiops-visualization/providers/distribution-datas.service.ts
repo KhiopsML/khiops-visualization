@@ -720,7 +720,6 @@ export class DistributionDatasService {
     );
 
     varDatas.dataGrid.dimensions[0]?.partition.forEach(
-      //@ts-ignore
       (partition: number[], i: number) => {
         // partition is always numbers in this case
         if (partition.length !== 0) {
