@@ -41,7 +41,7 @@ export function setupEvaluationTests(datas, testsValues) {
   ) {
     testsValues.Evaluation.push('Cumulative gain chart');
     testsValues.Evaluation.push('Confusion matrix');
-    testsValues.Evaluation.push('Population');
+    testsValues.Evaluation.push('Random');
     testsValues.Evaluation.push('Frequency');
     testsValues.Evaluation.push('gini');
     testsValues.Evaluation.push('accuracy');

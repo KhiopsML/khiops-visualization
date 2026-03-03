@@ -1,4 +1,4 @@
 Selected clusters
 Name	Current Cluster	Nb Clusters	
-occupation	edited name	9	
+occupation	{Exec-managerial}	9	
 education	editedname	9	
