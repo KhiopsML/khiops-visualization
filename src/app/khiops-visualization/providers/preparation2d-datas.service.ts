@@ -800,10 +800,14 @@ export class Preparation2dDatasService {
           if (this.preparation2dDatas) {
             this.preparation2dDatas.matrixDatas = {
               variable: {
-                // @ts-ignore
-                nameX: selectedVariable.name1, // can be undefined in case of regression
-                // @ts-ignore
-                nameY: selectedVariable.name2, // can be undefined in case of regression
+                nameX:
+                  'name1' in selectedVariable
+                    ? selectedVariable.name1
+                    : undefined, // can be undefined in case of regression
+                nameY:
+                  'name2' in selectedVariable
+                    ? selectedVariable.name2
+                    : undefined, // can be undefined in case of regression
                 xParts: xDimension.parts,
                 yParts: yDimension.parts,
               },
