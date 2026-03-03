@@ -96,6 +96,17 @@ export class TargetLiftGraphService {
             display: true,
             text: xAxisLabel,
           },
+          afterBuildTicks: (axis: any) => {
+            axis.ticks = axis.ticks.filter(
+              (tick: any) => tick.value % 100 === 0,
+            );
+          },
+          ticks: {
+            callback: function (value: any) {
+              // @ts-ignore
+              return Math.round(Number(this.getLabelForValue(value)));
+            },
+          },
         },
         y: {
           title: {
@@ -308,11 +319,17 @@ export class TargetLiftGraphService {
 
     if (this.evaluationDatasService.isRegressionAnalysis()) {
       result.push(
-        this.translate.get('GLOBAL.RANK_ERROR') + ': ' + xValue + '%',
+        this.translate.get('GLOBAL.RANK_ERROR') +
+          ': ' +
+          Math.round(Number(xValue)) +
+          '%',
       );
     } else {
       result.push(
-        this.translate.get('GLOBAL.POPULATION') + ': ' + xValue + '%',
+        this.translate.get('GLOBAL.POPULATION') +
+          ': ' +
+          Math.round(Number(xValue)) +
+          '%',
       );
     }
 
