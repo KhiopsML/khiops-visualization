@@ -1,0 +1,42 @@
+/*
+ * Copyright (c) 2023-2025 Orange. All rights reserved.
+ * This software is distributed under the BSD 3-Clause-clear License, the text of which is available
+ * at https://spdx.org/licenses/BSD-3-Clause-Clear.html or see the "LICENSE" file for more details.
+ */
+
+/// Mixin for drag and drop overlay styles
+/// @param {String} $message - The message to display when dragging files
+@mixin drag-drop-overlay($message) {
+  transition: all 0.2s ease-in-out;
+  height: 100%;
+  width: 100%;
+
+  &.drag-over {
+    &::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-color: rgba(0, 0, 0, 0.9);
+      pointer-events: none;
+      z-index: 9998;
+    }
+
+    &::after {
+      content: $message;
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+
+      padding: 16px 24px;
+      border: 1px solid white;
+      border-radius: 4px;
+
+      color: white;
+      pointer-events: none;
+      z-index: 9999;
+      font-size: 18px;
+      font-weight: 500;
+    }
+  }
+}
