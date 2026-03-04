@@ -18,7 +18,7 @@
         margin: 0 20px;
       }
       #open-file-btn {
-        background-color: #4CAF50;
+        background-color: #4caf50;
         border: none;
         color: white;
         padding: 8px 16px;
@@ -47,7 +47,12 @@
         </button>
       </div>
       <div id="file-opener">
-        <input type="file" id="file-input" accept=".khj,.khcj,.json" style="display: none">
+        <input
+          type="file"
+          id="file-input"
+          accept=".khj,.khcj,.json"
+          style="display: none"
+        />
         <button id="open-file-btn">Open File</button>
       </div>
       <div id="version-selector">
@@ -224,16 +229,16 @@
       function initFileOpener() {
         const fileInput = document.getElementById('file-input');
         const openFileBtn = document.getElementById('open-file-btn');
-        
-        openFileBtn.addEventListener('click', function() {
+
+        openFileBtn.addEventListener('click', function () {
           fileInput.click();
         });
-        
-        fileInput.addEventListener('change', function(event) {
+
+        fileInput.addEventListener('change', function (event) {
           const file = event.target.files[0];
           if (file) {
             const reader = new FileReader();
-            reader.onload = function(e) {
+            reader.onload = function (e) {
               try {
                 const fileData = JSON.parse(e.target.result);
                 displayKhiops(fileData);
@@ -246,7 +251,7 @@
           }
         });
       }
-      
+
       // Display Khiops based on file type and switch tabs
       function displayKhiops(fileData) {
         if (fileData) {
@@ -255,32 +260,63 @@
             if (jsonData.tool === 'Khiops') {
               // Switch to visualization tab
               switchToComponent('visualization');
-              
+
+              // First, reset with empty data then load new file
               setTimeout(() => {
-                const visualizationComponent = document.querySelector('khiops-visualization');
-                if (visualizationComponent && typeof visualizationComponent.setDatas === 'function') {
-                  visualizationComponent.setConfig({ showProjectTab: false });
-                  visualizationComponent.setDatas(jsonData);
+                const visualizationComponent = document.querySelector(
+                  'khiops-visualization',
+                );
+                if (
+                  visualizationComponent &&
+                  typeof visualizationComponent.setDatas === 'function'
+                ) {
+                  // Reset with empty data first
+                  visualizationComponent.setDatas({});
+
+                  // Then load new file after a short delay
+                  setTimeout(() => {
+                    visualizationComponent.setConfig({ showProjectTab: false });
+                    visualizationComponent.setDatas(jsonData);
+                  }, 200);
                 } else {
-                  console.error('Visualization component not ready or missing setDatas function');
+                  console.error(
+                    'Visualization component not ready or missing setDatas function',
+                  );
                 }
               }, 1000);
-              
             } else if (jsonData.tool === 'Khiops Coclustering') {
               // Switch to covisualization tab
               switchToComponent('covisualization');
-              
+
+              // First, reset with empty data then load new file
               setTimeout(() => {
-                const covisualizationComponent = document.querySelector('khiops-covisualization');
-                if (covisualizationComponent && typeof covisualizationComponent.setDatas === 'function') {
-                  covisualizationComponent.setConfig({ showProjectTab: false });
-                  covisualizationComponent.setDatas(jsonData);
+                const covisualizationComponent = document.querySelector(
+                  'khiops-covisualization',
+                );
+                if (
+                  covisualizationComponent &&
+                  typeof covisualizationComponent.setDatas === 'function'
+                ) {
+                  // Reset with empty data first
+                  covisualizationComponent.setDatas({});
+
+                  // Then load new file after a short delay
+                  setTimeout(() => {
+                    covisualizationComponent.setConfig({
+                      showProjectTab: false,
+                    });
+                    covisualizationComponent.setDatas(jsonData);
+                  }, 200);
                 } else {
-                  console.error('Covisualization component not ready or missing setDatas function');
+                  console.error(
+                    'Covisualization component not ready or missing setDatas function',
+                  );
                 }
               }, 1000);
             } else {
-              alert('Unknown file type. Expected Khiops or Khiops Coclustering format.');
+              alert(
+                'Unknown file type. Expected Khiops or Khiops Coclustering format.',
+              );
             }
           } catch (error) {
             console.error('Error processing file data:', error);
@@ -288,7 +324,7 @@
           }
         }
       }
-      
+
       // For external CDN script, use DOMContentLoaded as fallback
       // but add additional check for component availability
       document.addEventListener('DOMContentLoaded', function () {
