@@ -15,7 +15,9 @@ export function setupEvaluationTests(datas, testsValues) {
 
   if (datas.trainEvaluationReport?.summary?.instances) {
     testsValues.Evaluation.push(
-      UtilsService.getPrecisionNumber(datas.trainEvaluationReport?.summary?.instances),
+      UtilsService.getPrecisionNumber(
+        datas.trainEvaluationReport?.summary?.instances,
+      ),
     );
   }
 
@@ -41,7 +43,7 @@ export function setupEvaluationTests(datas, testsValues) {
   ) {
     testsValues.Evaluation.push('Cumulative gain chart');
     testsValues.Evaluation.push('Confusion matrix');
-    testsValues.Evaluation.push('Random');
+    testsValues.Evaluation.push('Optimal');
     testsValues.Evaluation.push('Frequency');
     testsValues.Evaluation.push('gini');
     testsValues.Evaluation.push('accuracy');

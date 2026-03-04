@@ -492,6 +492,7 @@ export class EvaluationDatasService {
       if (!this.evaluationDatas.liftGraphDisplayedValues) {
         this.evaluationDatas.liftGraphDisplayedValues = [];
         for (let j = 0; j < graphDatas.length; j++) {
+          // Limit the number of predictors Evaluation tab #11
           this.evaluationDatas.liftGraphDisplayedValues.push({
             name: graphDatas[j]?.name || '',
             show: j < AppConfig.visualizationCommon.GLOBAL.LIFT_CHART_COUNT,
