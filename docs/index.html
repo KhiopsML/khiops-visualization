@@ -14,6 +14,26 @@
           transform: rotate(360deg);
         }
       }
+      #file-opener {
+        margin: 0 20px;
+      }
+      #open-file-btn {
+        background-color: #4CAF50;
+        border: none;
+        color: white;
+        padding: 8px 16px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 14px;
+        margin: 4px 2px;
+        cursor: pointer;
+        border-radius: 4px;
+        transition: background-color 0.3s;
+      }
+      #open-file-btn:hover {
+        background-color: #45a049;
+      }
     </style>
   </head>
   <body>
@@ -25,6 +45,10 @@
         <button class="tab" data-component="covisualization">
           Khiops Covisualization
         </button>
+      </div>
+      <div id="file-opener">
+        <input type="file" id="file-input" accept=".khj,.khcj,.json" style="display: none">
+        <button id="open-file-btn">Open File</button>
       </div>
       <div id="version-selector">
         <label for="version-select">Version:</label>
@@ -196,11 +220,81 @@
         loadScript(currentVersion);
       }
 
+      // File opener functionality
+      function initFileOpener() {
+        const fileInput = document.getElementById('file-input');
+        const openFileBtn = document.getElementById('open-file-btn');
+        
+        openFileBtn.addEventListener('click', function() {
+          fileInput.click();
+        });
+        
+        fileInput.addEventListener('change', function(event) {
+          const file = event.target.files[0];
+          if (file) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+              try {
+                const fileData = JSON.parse(e.target.result);
+                displayKhiops(fileData);
+              } catch (error) {
+                console.error('Error parsing JSON file:', error);
+                alert('Error: Invalid JSON file format');
+              }
+            };
+            reader.readAsText(file);
+          }
+        });
+      }
+      
+      // Display Khiops based on file type and switch tabs
+      function displayKhiops(fileData) {
+        if (fileData) {
+          try {
+            const jsonData = fileData;
+            if (jsonData.tool === 'Khiops') {
+              // Switch to visualization tab
+              switchToComponent('visualization');
+              
+              setTimeout(() => {
+                const visualizationComponent = document.querySelector('khiops-visualization');
+                if (visualizationComponent && typeof visualizationComponent.setDatas === 'function') {
+                  visualizationComponent.setConfig({ showProjectTab: false });
+                  visualizationComponent.setDatas(jsonData);
+                } else {
+                  console.error('Visualization component not ready or missing setDatas function');
+                }
+              }, 1000);
+              
+            } else if (jsonData.tool === 'Khiops Coclustering') {
+              // Switch to covisualization tab
+              switchToComponent('covisualization');
+              
+              setTimeout(() => {
+                const covisualizationComponent = document.querySelector('khiops-covisualization');
+                if (covisualizationComponent && typeof covisualizationComponent.setDatas === 'function') {
+                  covisualizationComponent.setConfig({ showProjectTab: false });
+                  covisualizationComponent.setDatas(jsonData);
+                } else {
+                  console.error('Covisualization component not ready or missing setDatas function');
+                }
+              }, 1000);
+            } else {
+              alert('Unknown file type. Expected Khiops or Khiops Coclustering format.');
+            }
+          } catch (error) {
+            console.error('Error processing file data:', error);
+            alert('Error processing file data');
+          }
+        }
+      }
+      
       // For external CDN script, use DOMContentLoaded as fallback
       // but add additional check for component availability
       document.addEventListener('DOMContentLoaded', function () {
         initTabs();
         initVersionSelector();
+        initFileOpener();
       });
     </script>
   </body>

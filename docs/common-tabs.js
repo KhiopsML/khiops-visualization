@@ -101,3 +101,13 @@ async function loadDemoData() {
     console.error('Error loading demo data:', error);
   }
 }
+
+// Function to programmatically switch to a component
+function switchToComponent(componentName) {
+  if (componentConfig[componentName] && componentName !== currentComponent) {
+    currentComponent = componentName;
+    updateActiveTab();
+    updateUrlParams();
+    recreateComponent();
+  }
+}
