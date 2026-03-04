@@ -7,3 +7,40 @@
 @use '../../styles/theme.scss';
 @use '../../styles/global.scss';
 @use '../../styles/responsive.scss';
+
+// Drag and drop styles
+.mat-app-background {
+  transition: all 0.2s ease-in-out;
+  height: 100%;
+  width: 100%;
+
+  // &.drag-over {
+  &.drag-over {
+    &::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-color: rgba(0, 0, 0, 0.9);
+      pointer-events: none;
+      z-index: 9998;
+    }
+
+    &::after {
+      content: 'Drop your JSON or KHCJ file here';
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+
+      padding: 16px 24px;
+      border: 1px solid white;
+      border-radius: 4px;
+
+      color: white;
+      pointer-events: none;
+      z-index: 9999;
+      font-size: 18px;
+      font-weight: 500;
+    }
+  }
+}

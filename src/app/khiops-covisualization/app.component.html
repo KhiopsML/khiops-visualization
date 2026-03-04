@@ -4,7 +4,16 @@
  * at https://spdx.org/licenses/BSD-3-Clause-Clear.html or see the "LICENSE" file for more details.
  -->
 
-<div #appElement class="mat-app-background" data-color-scheme="orange">
+<div
+  #appElement
+  class="mat-app-background"
+  [class.drag-over]="isDragOver"
+  data-color-scheme="orange"
+  (dragenter)="onDragEnter($event)"
+  (dragover)="onDragOver($event)"
+  (dragleave)="onDragLeave($event)"
+  (drop)="onDrop($event)"
+>
   <app-library></app-library>
   <app-home-layout class="orange-theme" [appDatas]="appdatas"></app-home-layout>
 </div>

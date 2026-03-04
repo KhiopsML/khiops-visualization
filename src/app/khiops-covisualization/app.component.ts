@@ -30,6 +30,7 @@ import { ConfigModel } from '@khiops-library/model/config.model';
 import { SaveService } from './providers/save.service';
 import { InAppOverlayContainer } from '@khiops-library/overlay/in-app-overlay-provider';
 import { AppConfig } from '../../environments/environment';
+import { BaseDragDropComponent } from '@khiops-library/components/base-drag-drop/base-drag-drop.component';
 
 @Component({
   selector: 'app-root-covisualization',
@@ -38,7 +39,10 @@ import { AppConfig } from '../../environments/environment';
   encapsulation: ViewEncapsulation.ShadowDom,
   standalone: false,
 })
-export class AppComponent implements AfterViewInit {
+export class AppComponent
+  extends BaseDragDropComponent
+  implements AfterViewInit
+{
   appdatas: CovisualizationDatas | undefined;
 
   @ViewChild('appElement', {
@@ -48,7 +52,7 @@ export class AppComponent implements AfterViewInit {
 
   constructor(
     private overlayContainer: InAppOverlayContainer,
-    private ngzone: NgZone,
+    ngzone: NgZone,
     private dialogRef: MatDialog,
     private appService: AppService,
     private dialog: MatDialog,
@@ -56,11 +60,12 @@ export class AppComponent implements AfterViewInit {
     private trackerService: TrackerService,
     private configService: ConfigService,
     private translate: TranslateService,
-    private fileLoaderService: FileLoaderService,
+    fileLoaderService: FileLoaderService,
     private treenodesService: TreenodesService,
     private saveService: SaveService,
     private element: ElementRef,
   ) {
+    super(ngzone, fileLoaderService);
     // Set LS_ID first before any initialization that uses localStorage
     AppService.Ls.setLsId(AppConfig.covisualizationCommon.GLOBAL.LS_ID);
     // Now we can safely initialize the app service
