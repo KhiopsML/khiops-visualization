@@ -4,15 +4,13 @@
  * at https://spdx.org/licenses/BSD-3-Clause-Clear.html or see the "LICENSE" file for more details.
  -->
 
-@if (show) {
-  <div
-    class="kl-warning-information"
-    [ngClass]="{ inline: variant === 'inline' }"
-    fxLayout="row"
-    fxLayoutAlign="start center"
-    [matTooltip]="tooltipText"
-  >
-    <kl-icon name="warning" />
-    <span class="warning-text">{{ text }}</span>
-  </div>
-}
+<div
+  class="kl-warning-information"
+  [ngClass]="{ inline: variant === 'inline' }"
+  fxLayout="row"
+  fxLayoutAlign="start center"
+  [matTooltip]="tooltipText"
+>
+  <kl-icon name="warning" />
+  <span class="warning-text">{{ text }}</span>
+</div>

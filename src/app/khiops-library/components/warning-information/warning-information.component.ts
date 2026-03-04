@@ -15,6 +15,5 @@ import { Component, Input } from '@angular/core';
 export class WarningInformationComponent {
   @Input() text: string = '';
   @Input() tooltipText: string = '';
-  @Input() show: boolean = false;
   @Input() variant: 'default' | 'inline' = 'default';
 }
