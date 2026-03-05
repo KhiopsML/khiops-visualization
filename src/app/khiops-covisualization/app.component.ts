@@ -58,14 +58,14 @@ export class AppComponent
     private dialog: MatDialog,
     private snackBar: MatSnackBar,
     private trackerService: TrackerService,
-    private configService: ConfigService,
+    configService: ConfigService,
     private translate: TranslateService,
     fileLoaderService: FileLoaderService,
     private treenodesService: TreenodesService,
     private saveService: SaveService,
     private element: ElementRef,
   ) {
-    super(ngzone, fileLoaderService);
+    super(ngzone, fileLoaderService, configService);
     // Set LS_ID first before any initialization that uses localStorage
     AppService.Ls.setLsId(AppConfig.covisualizationCommon.GLOBAL.LS_ID);
     // Now we can safely initialize the app service

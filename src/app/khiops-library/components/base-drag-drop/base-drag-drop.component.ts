@@ -6,9 +6,12 @@
 
 import { NgZone } from '@angular/core';
 import { FileLoaderService } from '@khiops-library/providers/file-loader.service';
+import { ConfigService } from '@khiops-library/providers/config.service';
 
 /**
- * Abstract base component providing drag and drop functionality for KHCJ and KHJ files
+ * Abstract base component providing drag and drop functionality for KHCJ and KHJ files.
+ * All handlers are no-ops when running inside Electron, which manages DnD at the
+ * desktop-app level (khiops-visualization-desktop).
  */
 export abstract class BaseDragDropComponent {
   isDragOver: boolean = false;
@@ -17,12 +20,16 @@ export abstract class BaseDragDropComponent {
   constructor(
     protected ngzone: NgZone,
     protected fileLoaderService: FileLoaderService,
+    protected configService: ConfigService,
   ) {}
 
   /**
    * Handles drag enter event for file drop
    */
   onDragEnter(event: DragEvent): void {
+    if (this.configService.isElectron) {
+      return;
+    }
     event.preventDefault();
     event.stopPropagation();
     this.dragCounter++;
@@ -35,6 +42,9 @@ export abstract class BaseDragDropComponent {
    * Handles drag over event for file drop
    */
   onDragOver(event: DragEvent): void {
+    if (this.configService.isElectron) {
+      return;
+    }
     event.preventDefault();
     event.stopPropagation();
   }
@@ -43,6 +53,9 @@ export abstract class BaseDragDropComponent {
    * Handles drag leave event for file drop
    */
   onDragLeave(event: DragEvent): void {
+    if (this.configService.isElectron) {
+      return;
+    }
     event.preventDefault();
     event.stopPropagation();
     this.dragCounter--;
@@ -55,6 +68,9 @@ export abstract class BaseDragDropComponent {
    * Handles file drop event
    */
   onDrop(event: DragEvent): void {
+    if (this.configService.isElectron) {
+      return;
+    }
     event.preventDefault();
     event.stopPropagation();
     this.dragCounter = 0;

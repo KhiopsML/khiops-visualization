@@ -54,13 +54,13 @@ export class AppComponent
     private dialog: MatDialog,
     private appService: AppService,
     private translate: TranslateService,
-    private configService: ConfigService,
+    configService: ConfigService,
     private saveService: SaveService,
     private trackerService: TrackerService,
     fileLoaderService: FileLoaderService,
     private element: ElementRef,
   ) {
-    super(ngzone, fileLoaderService);
+    super(ngzone, fileLoaderService, configService);
     // Set LS_ID first before any initialization that uses localStorage
     AppService.Ls.setLsId(AppConfig.visualizationCommon.GLOBAL.LS_ID);
     // Now we can safely initialize the app service
