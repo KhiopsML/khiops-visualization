@@ -4,7 +4,7 @@
 **/dist/
 
 # But keep the dist inside libs/khiops-hypertree
-!/libs/khiops-hypertree/dist/
+# !/libs/khiops-hypertree/dist/
 
 # Allow docs/dist for generated bundles
 !/docs/dist/
