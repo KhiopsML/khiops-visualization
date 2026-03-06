@@ -6,27 +6,24 @@
 
 import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { KhiopsVisualizationModule } from './khiops-visualization/khiops-visualization.module';
-import { KhiopsCovisualizationModule } from './khiops-covisualization/khiops-covisualization.module';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { MatButtonModule } from '@angular/material/button';
 import { provideAngularSplitOptions } from 'angular-split';
 import { EffectsModule } from '@ngrx/effects';
 import { StoreModule } from '@ngrx/store';
+import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 
 @NgModule({
   declarations: [AppComponent],
   imports: [
     BrowserModule,
-    KhiopsVisualizationModule,
-    KhiopsCovisualizationModule,
     AppRoutingModule,
     MatButtonModule,
     StoreModule.forRoot({}),
     EffectsModule.forRoot([]),
   ],
-  providers: [provideAngularSplitOptions({})],
+  providers: [provideAngularSplitOptions({}), provideAnimationsAsync()],
   bootstrap: [AppComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })

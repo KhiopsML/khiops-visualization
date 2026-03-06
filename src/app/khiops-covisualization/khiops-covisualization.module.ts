@@ -9,7 +9,6 @@ import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AppComponent } from './app.component';
 import { HomeLayoutComponent } from './components/home-layout/homeLayout.component';
-import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { KhiopsLibraryModule } from '@khiops-library/khiops-library.module';
 import { AxisViewComponent } from './components/axis-view/axis-view.component';
@@ -93,7 +92,6 @@ import { CovisualizationRoutingModule } from './khiops-covisualization-routing.m
     CovisualizationRoutingModule,
   ],
   providers: [
-    provideAnimationsAsync(),
     provideHttpClient(),
     InAppOverlayContainer,
     // make sure that InAppOverlayContainer and OverlayContainer share the same instance

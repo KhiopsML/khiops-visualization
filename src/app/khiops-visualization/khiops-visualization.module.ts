@@ -10,7 +10,6 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { provideHttpClient } from '@angular/common/http';
 import { AppComponent } from './app.component';
 import { HomeLayoutComponent } from './components/home-layout/homeLayout.component';
-import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { PreparationViewComponent } from './components/preparation-view/preparation-view.component';
 import { Preparation2dViewComponent } from './components/preparation-2d-view/preparation-2d-view.component';
 import { ModelingViewComponent } from './components/modeling-view/modeling-view.component';
@@ -105,7 +104,6 @@ import { VisualizationRoutingModule } from './khiops-visualization-routing.modul
     VisualizationRoutingModule,
   ],
   providers: [
-    provideAnimationsAsync(),
     provideHttpClient(),
     {
       provide: InAppOverlayContainer,

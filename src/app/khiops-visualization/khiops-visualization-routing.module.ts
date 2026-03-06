@@ -9,9 +9,7 @@ import { RouterModule } from '@angular/router';
 import { AppComponent } from './app.component';
 
 @NgModule({
-  imports: [
-    RouterModule.forChild([{ path: 'visualization', component: AppComponent }]),
-  ],
+  imports: [RouterModule.forChild([{ path: '', component: AppComponent }])],
   exports: [RouterModule],
 })
 export class VisualizationRoutingModule {}
