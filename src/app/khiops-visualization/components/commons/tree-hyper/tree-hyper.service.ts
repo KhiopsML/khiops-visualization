@@ -6,7 +6,7 @@
 
 import { Injectable } from '@angular/core';
 import { ChartToggleValuesI } from '@khiops-visualization/interfaces/chart-toggle-values';
-import { N } from '@khiops-hypertree/d/models/n/n';
+import type { N } from '@khiops-hypertree/d/models/n/n';
 import { TreeNodeModel } from '@khiops-visualization/model/tree-node.model';
 import { TreePreparationDatasModel } from '@khiops-visualization/model/tree-preparation-datas.model';
 

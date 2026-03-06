@@ -19,10 +19,9 @@ import {
 import { SelectableComponent } from '@khiops-library/components/selectable/selectable.component';
 import { SelectableService } from '@khiops-library/components/selectable/selectable.service';
 import { TranslateService } from '@ngstack/translate';
-import * as hyt from '@khiops-hypertree/js/d3-hypertree';
 import { UtilsService } from '@khiops-library/providers/utils.service';
 import { TreePreparationDatasService } from '@khiops-visualization/providers/tree-preparation-datas.service';
-import { Hypertree } from '@khiops-hypertree/js/components/hypertree/hypertree';
+import type { Hypertree } from '@khiops-hypertree/js/components/hypertree/hypertree';
 import { DistributionDatasService } from '@khiops-visualization/providers/distribution-datas.service';
 import { TreeNodeModel } from '@khiops-visualization/model/tree-node.model';
 import { ConfigService } from '@khiops-library/providers/config.service';
@@ -31,7 +30,7 @@ import { COMPONENT_TYPES } from '@khiops-library/enum/component-types';
 import { AppService } from '@khiops-visualization/providers/app.service';
 import { LS } from '@khiops-library/enum/ls';
 import { TreeHyperService } from './tree-hyper.service';
-import { N } from '@khiops-hypertree/d/models/n/n';
+import type { N } from '@khiops-hypertree/d/models/n/n';
 import {
   TreePreparationDatasModel,
   TreePreparationState,
@@ -249,8 +248,9 @@ export class TreeHyperComponent
     AppService.Ls.set(LS.SETTING_HYPERTREE_VISU_POPULATION, state);
   }
 
-  private initHyperTree(initView = true) {
+  private async initHyperTree(initView = true) {
     if (this.dimensionTree?.[0]) {
+      const hyt = await import('@khiops-hypertree/js/d3-hypertree');
       this.options = {
         dataloader: (ok: any) => ok(this.dimensionTree?.[0]),
         langInitBFS: (_ht: any, n: N) => (n.precalc.label = n.data.id),
