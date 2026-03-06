@@ -6,7 +6,6 @@
 
 import { Component, Input, EventEmitter, Output } from '@angular/core';
 import * as htmlToImage from 'html-to-image';
-import html2canvas from 'html2canvas';
 // @ts-ignore
 import { saveAs } from 'file-saver';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -105,13 +104,16 @@ export class HeaderToolsComponent {
           // convert div screenshot to png
           const isHyperTree =
             currentSelectedArea.componentType === COMPONENT_TYPES.HYPER_TREE;
+
           const capturePromise = isHyperTree
-            ? html2canvas(currentDiv, {
-                scale: 1.0,
-                backgroundColor: '#ffffff',
-                useCORS: true,
-                allowTaint: true,
-              }).then((canvas) => canvas.toDataURL('image/png'))
+            ? import('html2canvas').then(({ default: html2canvas }) =>
+                html2canvas(currentDiv, {
+                  scale: 1.0,
+                  backgroundColor: '#ffffff',
+                  useCORS: true,
+                  allowTaint: true,
+                }).then((canvas) => canvas.toDataURL('image/png')),
+              )
             : htmlToImage.toPng(currentDiv, {
                 quality: 0.95,
                 backgroundColor: '#ffffff',
