@@ -40,7 +40,6 @@ import { VarDetailsTreePreparationComponent } from './components/commons/var-det
 import { VarDetailsPreparation2dComponent } from './components/commons/var-details-preparation-2d/var-details-preparation-2d.component';
 import { HistogramComponent } from './components/commons/histogram/histogram.component';
 import { AngularResizeEventModule } from 'angular-resize-event-package';
-import { BrowserModule } from '@angular/platform-browser';
 import { HistogramTooltipComponent } from './components/commons/histogram/histogram.tooltip.component';
 import { ProjectLogsComponent } from './components/commons/project-logs/project-logs.component';
 import { GravityCellComponent } from './components/commons/project-logs/gravity-cell/gravity-cell.component';
@@ -54,6 +53,7 @@ import { DataTypeSelectorComponent } from './components/commons/data-type-select
 import { LevelDistributionButtonComponent } from './components/commons/level-distribution-button/level-distribution-button.component';
 import { ChangeScaleButtonComponent } from './components/commons/change-scale-button/change-scale-button.component';
 import { ChangeScaleDialogComponent } from './components/commons/change-scale-dialog/change-scale-dialog.component';
+import { VisualizationRoutingModule } from './khiops-visualization-routing.module';
 
 @NgModule({
   declarations: [
@@ -94,22 +94,22 @@ import { ChangeScaleDialogComponent } from './components/commons/change-scale-di
   ],
   imports: [
     CommonModule,
-    BrowserModule,
     FormsModule,
     ReactiveFormsModule,
     KhiopsLibraryModule, // This imports all the Material modules through exports
     AgGridModule,
     FlexLayoutModule,
     AngularResizeEventModule,
-    StoreModule.forRoot({ TreePreparationState: treePreparationReducer }),
-    EffectsModule.forRoot([TreePreparationEffects]),
+    StoreModule.forFeature('TreePreparationState', treePreparationReducer),
+    EffectsModule.forFeature([TreePreparationEffects]),
+    VisualizationRoutingModule,
   ],
   providers: [
     provideAnimationsAsync(),
     provideHttpClient(),
     {
       provide: InAppOverlayContainer,
-      useClass: InAppOverlayContainer
+      useClass: InAppOverlayContainer,
     },
     // Make sure that InAppOverlayContainer and OverlayContainer share the same instance
     { provide: OverlayContainer, useExisting: InAppOverlayContainer },

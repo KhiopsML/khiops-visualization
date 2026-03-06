@@ -10,18 +10,21 @@ import { KhiopsVisualizationModule } from './khiops-visualization/khiops-visuali
 import { KhiopsCovisualizationModule } from './khiops-covisualization/khiops-covisualization.module';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
-import { MenuComponent } from './khiops-library/components/main-menu/menu.component';
 import { MatButtonModule } from '@angular/material/button';
 import { provideAngularSplitOptions } from 'angular-split';
+import { EffectsModule } from '@ngrx/effects';
+import { StoreModule } from '@ngrx/store';
 
 @NgModule({
-  declarations: [AppComponent, MenuComponent],
+  declarations: [AppComponent],
   imports: [
     BrowserModule,
     KhiopsVisualizationModule,
     KhiopsCovisualizationModule,
     AppRoutingModule,
     MatButtonModule,
+    StoreModule.forRoot({}),
+    EffectsModule.forRoot([]),
   ],
   providers: [provideAngularSplitOptions({})],
   bootstrap: [AppComponent],

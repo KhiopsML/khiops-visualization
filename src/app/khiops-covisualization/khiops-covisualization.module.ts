@@ -46,6 +46,7 @@ import { UnfoldHierarchyHeaderComponent } from './components/commons/unfold-hier
 import { UnfoldHierarchyClustersGraphComponent } from './components/commons/unfold-hierarchy-clusters-graph/unfold-hierarchy-clusters-graph.component';
 import { UnfoldHierarchyInfoRateGraphComponent } from './components/commons/unfold-hierarchy-info-rate-graph/unfold-hierarchy-info-rate-graph.component';
 import { provideHttpClient } from '@angular/common/http';
+import { CovisualizationRoutingModule } from './khiops-covisualization-routing.module';
 
 @NgModule({
   declarations: [
@@ -89,6 +90,7 @@ import { provideHttpClient } from '@angular/common/http';
     AgGridModule,
     DragDropModule,
     DraggableDialogDirective,
+    CovisualizationRoutingModule,
   ],
   providers: [
     provideAnimationsAsync(),
