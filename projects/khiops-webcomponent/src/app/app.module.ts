@@ -6,10 +6,14 @@ import { AppComponent as covisualizationComponent } from '@khiops-covisualizatio
 import { KhiopsCovisualizationModule } from '@khiops-covisualization/khiops-covisualization.module';
 import { KhiopsVisualizationModule } from '@khiops-visualization/khiops-visualization.module';
 import packageInfo from '../../../../package.json';
+import { StoreModule } from '@ngrx/store';
+import { EffectsModule } from '@ngrx/effects';
 
 @NgModule({
   imports: [
     BrowserModule,
+    StoreModule.forRoot({}),
+    EffectsModule.forRoot([]),
     KhiopsVisualizationModule,
     KhiopsCovisualizationModule,
   ],
