@@ -6,8 +6,12 @@ module.exports = {
   entry: './src/d3-hypertree.ts',
   output: {
     path: path.resolve(__dirname, 'dist'),
-    filename: 'd3-hypertree.js',
-    library: 'hyt',
+    filename: 'js/d3-hypertree.js',
+    library: {
+      name: 'hyt',
+      type: 'umd',
+    },
+    globalObject: 'this',
   },
   resolve: {
     extensions: ['.ts', '.js'],

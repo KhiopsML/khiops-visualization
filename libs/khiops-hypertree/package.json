@@ -2,10 +2,10 @@
   "name": "khiops-hypertree",
   "version": "1.1.1",
   "main": "dist/d3-hypertree.js",
-  "types": "dist/d/d3-hypertree.d.js",
+  "types": "dist/js/d3-hypertree.d.ts",
   "scripts": {
     "build:bundle": "webpack --config webpack.config.js",
-    "build:types": "tsc --declaration --emitDeclarationOnly --outDir dist/d/",
+    "build:types": "tsc --declaration --emitDeclarationOnly --outDir dist/js/",
     "build:css": "sass src/components/unitdisk/unitdisk-light.scss dist/d3-hypertree-light.css --style=compressed",
     "build": "yarn build:bundle && yarn build:types && yarn build:css",
     "start": "webpack --config webpack.config.js --watch"

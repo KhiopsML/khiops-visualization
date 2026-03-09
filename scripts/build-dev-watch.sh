@@ -16,3 +16,5 @@ cd dist/khiops-webcomponent
 sed -i -E 's/(--mdc-[^:]*color[^:]*)([^\w-]|:)/--mdc-v2-\1\2/g' main.js
 
 cat polyfills.js styles.js main.js > khiops-webcomponents.bundle.js
+
+$SHELL

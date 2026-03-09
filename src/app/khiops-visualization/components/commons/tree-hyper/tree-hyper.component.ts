@@ -330,7 +330,7 @@ export class TreeHyperComponent
 
       this.ht = new hyt.Hypertree(
         {
-          parent: this.hyperTree?.nativeElement.querySelector('#hyperTree'),
+          parent: this.hyperTree?.nativeElement.querySelector('#hyperTree')!,
         },
         this.options,
       );
