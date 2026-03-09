@@ -18,14 +18,32 @@ yarn install
 ### Build
 
 ```bash
-# Build the library
+# Full build: JS bundle + TypeScript declarations + CSS
 yarn build
+
+# Build only the JS bundle (webpack)
+yarn build:bundle
+
+# Emit TypeScript declaration files to dist/d/
+yarn build:types
+
+# Compile SCSS themes to dist/
+yarn build:css
 ```
+
+The build outputs to `dist/`:
+
+| File                          | Description                             |
+| ----------------------------- | --------------------------------------- |
+| `dist/d3-hypertree.js`        | Bundled library (UMD, exposed as `hyt`) |
+| `dist/d3-hypertree-light.css` | Light theme stylesheet                  |
+| `dist/d/`                     | TypeScript declaration files            |
+| `dist/js/ducd/`               | Utility files                           |
 
 ### Development Mode
 
 ```bash
-# Start development server
+# Watch mode — rebuilds JS bundle on file changes
 yarn start
 ```
 
