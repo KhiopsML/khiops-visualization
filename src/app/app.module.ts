@@ -16,6 +16,7 @@ import { provideAnimationsAsync } from '@angular/platform-browser/animations/asy
 import { TranslateModule, TranslateService } from '@ngstack/translate';
 // Translation data
 import EnTransaltion from '../assets/i18n/en.json';
+import { ConfigService } from '@khiops-library/providers/config.service';
 @NgModule({
   declarations: [AppComponent],
   imports: [
@@ -29,7 +30,11 @@ import EnTransaltion from '../assets/i18n/en.json';
       supportedLangs: ['en'],
     }),
   ],
-  providers: [provideAngularSplitOptions({}), provideAnimationsAsync()],
+  providers: [
+    provideAngularSplitOptions({}),
+    provideAnimationsAsync(),
+    ConfigService,
+  ],
   bootstrap: [AppComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })

@@ -4,7 +4,6 @@
  * at https://spdx.org/licenses/BSD-3-Clause-Clear.html or see the "LICENSE" file for more details.
  */
 
-import { ConfigService } from './providers/config.service';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -178,7 +177,6 @@ import EnTransaltion from '../../assets/i18n/en.json';
     MenuFocusSelectedDirective,
   ],
   providers: [
-    ConfigService, 
     TranslateService,
     // Add Angular Material providers
     // These will be automatically provided but we ensure they're available
@@ -188,7 +186,7 @@ import EnTransaltion from '../../assets/i18n/en.json';
     WarningInformationComponent,
     KeyboardTooltipComponent,
     NumberPrecisionComponent,
-    MatrixContrastSettingComponent,  
+    MatrixContrastSettingComponent,
     ScalePersistenceSettingComponent,
     ClearLsComponent,
     NpmVersionComponent,
