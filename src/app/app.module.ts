@@ -13,7 +13,9 @@ import { provideAngularSplitOptions } from 'angular-split';
 import { EffectsModule } from '@ngrx/effects';
 import { StoreModule } from '@ngrx/store';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
-
+import { TranslateModule, TranslateService } from '@ngstack/translate';
+// Translation data
+import EnTransaltion from '../assets/i18n/en.json';
 @NgModule({
   declarations: [AppComponent],
   imports: [
@@ -22,9 +24,17 @@ import { provideAnimationsAsync } from '@angular/platform-browser/animations/asy
     MatButtonModule,
     StoreModule.forRoot({}),
     EffectsModule.forRoot([]),
+    TranslateModule.forRoot({
+      activeLang: 'en',
+      supportedLangs: ['en'],
+    }),
   ],
   providers: [provideAngularSplitOptions({}), provideAnimationsAsync()],
   bootstrap: [AppComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
-export class AppModule {}
+export class AppModule {
+  constructor(public translate: TranslateService) {
+    translate.use('en', EnTransaltion);
+  }
+}
