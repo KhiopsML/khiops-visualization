@@ -2,10 +2,10 @@
 
 # Ignore all dist folders
 **/dist/
-**/libs/khiops-hypertree/dist/
 
 # But keep the dist inside libs/khiops-hypertree
 # !/libs/khiops-hypertree/dist/
+# edit .git/info/exclude to ignore the dist folder in libs/khiops-hypertree
 
 # Allow docs/dist for generated bundles
 !/docs/dist/
