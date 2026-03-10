@@ -38,6 +38,7 @@ export class VarDetailsTreePreparationComponent {
   public selectedBarIndex = 0;
   public selectedNodes$: Observable<TreeNodeModel[]>;
   public currentIntervalDatas: GridDatasI | undefined;
+  public REPORT = REPORT;
 
   constructor(
     private treePreparationDatasService: TreePreparationDatasService,

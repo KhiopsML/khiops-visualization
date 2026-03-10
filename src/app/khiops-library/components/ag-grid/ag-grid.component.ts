@@ -56,8 +56,7 @@ ModuleRegistry.registerModules([ClientSideRowModelModule]);
 })
 export class AgGridComponent
   extends SelectableComponent
-  implements OnChanges, AfterViewInit
-{
+  implements OnChanges, AfterViewInit {
   @ViewChild('agGrid', {
     static: false,
   })
@@ -71,7 +70,7 @@ export class AgGridComponent
   @Input() public inputDatas: any[] | undefined; // Can be any types of datas
   @Input() public displayedColumns: GridColumnsI[] | undefined;
   @Input() public override id: string | undefined = undefined;
-  @Input() public title: string = '';
+  @Input() public title?: string = '';
   @Input() public titleTooltip: string = '';
   @Input() public showColumnsSelection = true;
   @Input() public showFullscreenBtn = true;
@@ -82,10 +81,10 @@ export class AgGridComponent
     | 'single'
     | 'multiple'
     | RowSelectionOptions<any> = {
-    mode: 'singleRow',
-    enableClickSelection: true,
-    checkboxes: false,
-  };
+      mode: 'singleRow',
+      enableClickSelection: true,
+      checkboxes: false,
+    };
   @Input() public enableClickSelection = true;
   @Input() private showLineSelection = true;
   @Input() private selectedVariable: any; // Can be any types of data
@@ -107,8 +106,8 @@ export class AgGridComponent
   public context: {
     componentParent: AgGridComponent;
   } = {
-    componentParent: this, // used by CheckboxCellComponent
-  };
+      componentParent: this, // used by CheckboxCellComponent
+    };
   public isSmallDiv: boolean = false;
 
   public gridOptions = <GridOptions>{
@@ -158,15 +157,15 @@ export class AgGridComponent
     try {
       const PREV_CELL_AG_GRID = this.ls.get(LS.CELL_AG_GRID);
       this.cellsSizes = PREV_CELL_AG_GRID || {};
-    } catch (e) {}
+    } catch (e) { }
     try {
       const PREV_COLUMNS_AG_GRID = this.ls.get(LS.COLUMNS_AG_GRID);
       this.visibleColumns = PREV_COLUMNS_AG_GRID || {};
-    } catch (e) {}
+    } catch (e) { }
     try {
       const PREV_MODES_AG_GRID = this.ls.get(LS.MODES_AG_GRID);
       this.gridModes = PREV_MODES_AG_GRID || {}; // 'fitToSpace' or 'fitToContent'
-    } catch (e) {}
+    } catch (e) { }
   }
   override ngAfterViewInit() {
     // Call ngAfterViewInit of extend component

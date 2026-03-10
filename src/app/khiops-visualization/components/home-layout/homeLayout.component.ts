@@ -28,6 +28,7 @@ import { Subscription } from 'rxjs';
 import { MatTabChangeEvent, MatTabGroup } from '@angular/material/tabs';
 import { VisualizationDatas } from '@khiops-visualization/interfaces/app-datas';
 import { AppConfig } from '../../../../environments/environment';
+import { REPORT } from '@khiops-library/enum/report';
 
 @Component({
   selector: 'app-home-layout',
@@ -53,6 +54,7 @@ export class HomeLayoutComponent implements OnInit {
   public selectedTab: MatTabChangeEvent | undefined;
   public isCompatibleJson?: boolean;
   public isLoading: boolean = true;
+  public REPORT = REPORT;
 
   @ViewChild('fileLoader', {
     static: false,

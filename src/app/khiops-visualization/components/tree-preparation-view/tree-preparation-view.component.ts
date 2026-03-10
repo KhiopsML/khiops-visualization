@@ -56,8 +56,8 @@ export class TreePreparationViewComponent extends SelectableTabComponent {
     static: false,
   })
   private appVariableGraphDetails!: VariableGraphDetailsComponent;
-  private preparationSource = REPORT.TREE_PREPARATION_REPORT;
 
+  public preparationSource = REPORT.TREE_PREPARATION_REPORT;
   public sizes!: DynamicI;
   public summaryDatas?: InfosDatasI[];
   public informationsDatas?: InfosDatasI[];
