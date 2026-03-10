@@ -51,14 +51,14 @@ export class MatrixComponent extends SelectableComponent implements OnChanges {
   @Input() public contrast: number = 0;
   @Input() private inputDatas: any;
   @Input() private minMaxValues: DynamicI | undefined; // dynamic and complex value object. Regression and cooccurrence matrix purposes
-  @Input() private graphType: string = '';
+  @Input() private graphType?: string = '';
   @Input() private graphTargets: string[] = [];
   @Input() private graphTarget: string = '';
   @Input() private selectedNodes: TreeNodeModel[] | undefined; // KC use case
   @Input() private selectedCell: CellModel | undefined; // KV use case
-  @Input() private contextSelection: number[][] = [];
+  @Input() private contextSelection?: number[][] = [];
   @Input() public selectedInnerVariables: string[] = []; // For inner variables filtering
-  @Input() public matrixFilterOption: string = ''; // For matrix filter option (cluster or inner variables)
+  @Input() public matrixFilterOption?: string = ''; // For matrix filter option (cluster or inner variables)
   @Input() public hasInnerVariables: boolean = false; // Whether inner variables are available in the data
   @Input() public showExpectedFrequency?: boolean = false;
   @Input() public dimensionsClusters: TreeNodeModel[][] = []; // For hierarchy-based selection expansion (KC use case)
@@ -103,9 +103,9 @@ export class MatrixComponent extends SelectableComponent implements OnChanges {
   public tooltipCell: CellModel | undefined;
   public tooltipPosition:
     | {
-        x: number;
-        y: number;
-      }
+      x: number;
+      y: number;
+    }
     | undefined;
 
   private conditionalOnContextChangedSub: Subscription;
@@ -814,12 +814,12 @@ export class MatrixComponent extends SelectableComponent implements OnChanges {
         if (
           y > this.inputDatas.matrixCellDatas[i].yCanvas &&
           y <
-            this.inputDatas.matrixCellDatas[i].yCanvas +
-              this.inputDatas.matrixCellDatas[i].hCanvas &&
+          this.inputDatas.matrixCellDatas[i].yCanvas +
+          this.inputDatas.matrixCellDatas[i].hCanvas &&
           x > this.inputDatas.matrixCellDatas[i].xCanvas &&
           x <
-            this.inputDatas.matrixCellDatas[i].xCanvas +
-              this.inputDatas.matrixCellDatas[i].wCanvas
+          this.inputDatas.matrixCellDatas[i].xCanvas +
+          this.inputDatas.matrixCellDatas[i].wCanvas
         ) {
           return this.inputDatas.matrixCellDatas[i];
         }

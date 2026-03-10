@@ -11,19 +11,19 @@ import { SelectableService } from '@khiops-library/components/selectable/selecta
 import { DimensionCovisualizationModel } from '@khiops-library/model/dimension.covisualization.model';
 import { ConfigService } from '@khiops-library/providers/config.service';
 import { COMPONENT_TYPES } from '../../../../khiops-library/enum/component-types';
+import { DynamicI } from '@khiops-library/interfaces/globals';
 
 @Component({
-    selector: 'app-external-datas',
-    templateUrl: './external-datas.component.html',
-    styleUrls: ['./external-datas.component.scss'],
-    standalone: false
+  selector: 'app-external-datas',
+  templateUrl: './external-datas.component.html',
+  styleUrls: ['./external-datas.component.scss'],
+  standalone: false
 })
 export class ExternalDatasComponent
   extends SelectableComponent
-  implements OnInit
-{
+  implements OnInit {
   @Input() private position: number = 0;
-  @Input() private externalData: any[] | undefined;
+  @Input() private externalData: any[] | DynamicI | undefined;
   @Input() private selectedComposition: CompositionModel | undefined;
   @Input() private selectedDimension: DimensionCovisualizationModel | undefined;
 

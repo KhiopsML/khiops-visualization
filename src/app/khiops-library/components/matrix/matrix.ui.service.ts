@@ -291,7 +291,7 @@ export class MatrixUiService {
     cellDatas: CellModel,
     width: number | undefined,
     height: number | undefined,
-    graphType: string,
+    graphType: string | undefined,
     matrixFilterOption?: string,
   ) {
     if (width && height) {

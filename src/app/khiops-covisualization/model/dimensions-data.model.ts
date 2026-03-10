@@ -32,7 +32,7 @@ export class DimensionsDatasModel {
   // Those variables will be saved into json
   isAxisInverted: boolean = true;
   conditionalOnContext: boolean = true;
-  matrixContrast: number | undefined = undefined;
+  matrixContrast: number = 0;
   matrixOption: string | undefined = undefined;
   matrixFilterOption: string | undefined = undefined;
   matrixMode: number | undefined = undefined;
@@ -40,5 +40,5 @@ export class DimensionsDatasModel {
   annotations: DynamicI = {};
   selectedNodes: TreeNodeModel[] = [];
 
-  constructor() {}
+  constructor() { }
 }
