@@ -47,6 +47,9 @@ jobs:
           yarn install
           yarn build
           cd ../..
+          echo "=== Checking generated types ==="
+          ls libs/khiops-hypertree/dist/d/models/n/ || echo "MISSING: dist/d not generated"
+          ls libs/khiops-hypertree/dist/js/models/n/ || echo "MISSING: dist/js not generated"
 
       - name: Build Angular webcomponent
         run: |
@@ -113,7 +116,7 @@ jobs:
 
           # Force add the new file (even if in gitignore) BEFORE pulling
           git add -f docs/dist/khiops-webcomponents.bundle.js
-          
+
           # Pull with strategy to keep our version of the bundle
           git pull --no-rebase --strategy-option=ours origin ${{ inputs.branch || 'master' }}
           if git diff --staged --quiet; then
