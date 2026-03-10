@@ -21,15 +21,6 @@ jobs:
           yarn install
           yarn build:webcomponents
 
-      - name: Debug build output
-        run: |
-          echo "=== Workspace root ==="
-          ls -la ${{ github.workspace }}
-          echo "=== Checking common output dirs ==="
-          ls -la ${{ github.workspace }}/dist/ 2>/dev/null || echo "No dist/"
-          ls -la ${{ github.workspace }}/build/ 2>/dev/null || echo "No build/"
-          ls -la ${{ github.workspace }}/public/ 2>/dev/null || echo "No public/"
-
       - name: Generate SBOM
         uses: anchore/sbom-action@v0
         with:
@@ -38,7 +29,7 @@ jobs:
       - name: Attest
         uses: actions/attest-sbom@v3
         with:
-          subject-path: '${{ github.workspace }}/dist/'
+          subject-path: '${{ github.workspace }}/dist/visualization-component/'
           sbom-path: 'sbom.spdx.json'
 
       - name: Cypress run

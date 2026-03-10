@@ -11,20 +11,20 @@
     "start": "webpack --config webpack.config.js --watch"
   },
   "dependencies": {
-    "d3": "7.9.0",
-    "d3-force-gravity": "1.0.2",
-    "glob-parent": "6.0.2",
-    "timers": "0.1.1",
-    "minimatch": "10.2.4"
+    "d3": "^7.9.0",
+    "d3-force-gravity": "^1.0.2",
+    "glob-parent": "^6.0.2",
+    "timers": "^0.1.1",
+    "minimatch": "^10.2.4"
   },
   "devDependencies": {
-    "@types/d3": "7.4.3",
-    "@types/node": "25.3.5",
+    "@types/d3": "^7.4.3",
+    "@types/node": "^25.3.5",
     "copy-webpack-plugin": "^12.0.0",
-    "sass": "1.97.3",
+    "sass": "^1.97.3",
     "ts-loader": "^9.5.0",
-    "typescript": "5.9.3",
-    "webpack": "5.105.4",
+    "typescript": "^5.9.3",
+    "webpack": "^5.105.4",
     "webpack-cli": "^5.1.4"
   }
 }
