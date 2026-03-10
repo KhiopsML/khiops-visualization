@@ -34,7 +34,7 @@ export class ScrollableGraphComponent
   @Input() public minScale: number = 0;
   @Input() public inputDatas?: any;
   @Input() public scrollPosition: number = 0;
-  @Input() public scaleValue = 0;
+  @Input() public scaleValue? = 0;
   @Input() public graphIdContainer: any;
 
   @Output() private scrollPositionChanged: EventEmitter<any> =
@@ -144,7 +144,7 @@ export class ScrollableGraphComponent
   }
 
   resizeGraph(firstRender = false) {
-    if (this.inputDatas) {
+    if (this.inputDatas && this.scaleValue !== undefined) {
       const graphWrapper: any = this.configService
         .getRootElementDom()
         .querySelector('#' + this.graphIdContainer);

@@ -69,7 +69,7 @@ export class HistogramComponent extends SelectableComponent implements OnInit {
   @Input() public defaultInterpretableHistogramNumber?: number = 0;
   @Input() public graphOptionsX: DistributionOptionsI | undefined = undefined;
   @Input() public graphOptionsY: DistributionOptionsI | undefined = undefined;
-  @Input() public variableRank?: number; // For scale settings per variable
+  @Input() public variableRank?: string; // For scale settings per variable
 
   private h: number = 0;
   public w: number = 0;
@@ -187,7 +187,6 @@ export class HistogramComponent extends SelectableComponent implements OnInit {
    * Restore scale settings for the current variable if they exist
    */
   private restoreVariableScaleSettings(): void {
-    console.log("🚀 ~ HistogramComponent ~ restoreVariableScaleSettings ~ this.variableRank:", this.variableRank)
     if (this.variableRank !== undefined) {
       // Get variable-specific settings (not global defaults)
       const variableSettings =

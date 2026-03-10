@@ -30,7 +30,7 @@ export class VariableScaleSettingsService {
    * @param settings The scale settings to save
    */
   setVariableScaleSettings(
-    variableRank: number,
+    variableRank: string,
     settings: VariableScaleSettings,
   ): void {
     const key = this.generateVariableKey(variableRank);
@@ -45,7 +45,7 @@ export class VariableScaleSettingsService {
    * @returns The scale settings or undefined if not found
    */
   getVariableScaleSettings(
-    variableRank: number,
+    variableRank: string,
   ): VariableScaleSettings | undefined {
     const key = this.generateVariableKey(variableRank);
     return this.ls.get(key);
@@ -56,7 +56,7 @@ export class VariableScaleSettingsService {
    * @param variableRank The rank of the variable
    * @param xScale The X scale to set
    */
-  setVariableXScale(variableRank: number, xScale: string): void {
+  setVariableXScale(variableRank: string, xScale: string): void {
     this.setVariableScaleSettings(variableRank, { xScale });
   }
 
@@ -65,7 +65,7 @@ export class VariableScaleSettingsService {
    * @param variableRank The rank of the variable
    * @param yScale The Y scale to set
    */
-  setVariableYScale(variableRank: number, yScale: string): void {
+  setVariableYScale(variableRank: string, yScale: string): void {
     this.setVariableScaleSettings(variableRank, { yScale });
   }
 
@@ -74,7 +74,7 @@ export class VariableScaleSettingsService {
    * @param variableRank The rank of the variable
    * @returns The X scale or the default global value if not found
    */
-  getVariableXScale(variableRank: number): string | undefined {
+  getVariableXScale(variableRank: string): string | undefined {
     const settings = this.getVariableScaleSettings(variableRank);
     if (settings?.xScale) {
       return settings.xScale;
@@ -88,7 +88,7 @@ export class VariableScaleSettingsService {
    * @param variableRank The rank of the variable
    * @returns The Y scale or the default global value if not found
    */
-  getVariableYScale(variableRank: number): string | undefined {
+  getVariableYScale(variableRank: string): string | undefined {
     const settings = this.getVariableScaleSettings(variableRank);
     if (settings?.yScale) {
       return settings.yScale;
@@ -100,7 +100,7 @@ export class VariableScaleSettingsService {
   /**
    * Clear scale settings for a specific variable
    */
-  clearVariableScaleSettings(variableRank: number): void {
+  clearVariableScaleSettings(variableRank: string): void {
     const key = this.generateVariableKey(variableRank);
     this.ls.del(key);
   }
@@ -117,7 +117,7 @@ export class VariableScaleSettingsService {
    * @param variableRank The rank of the variable
    * @returns A unique key for the variable
    */
-  private generateVariableKey(variableRank: number): string {
+  private generateVariableKey(variableRank: string): string {
     return `${this.VARIABLE_SCALE_SETTINGS_PREFIX}${variableRank}`;
   }
 }

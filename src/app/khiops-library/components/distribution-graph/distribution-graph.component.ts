@@ -42,15 +42,14 @@ import { ScaleChangeEventsService } from '../../../khiops-visualization/provider
 })
 export class DistributionGraphComponent
   extends ScrollableGraphComponent
-  implements OnInit, OnChanges, OnDestroy
-{
+  implements OnInit, OnChanges, OnDestroy {
   @Input() public position = 0;
   @Input() declare public inputDatas: ChartDatasModel | undefined;
   @Input() public graphOptions: DistributionOptionsI | undefined;
   @Input() public activeEntries: number = 0;
   @Input() public hideGraphOptions = false;
   @Input() public variableType?: string;
-  @Input() public variableRank?: number;
+  @Input() public variableRank?: string;
 
   @Output() private graphTypeChanged: EventEmitter<string> = new EventEmitter();
   @Output() private selectedItemChanged: EventEmitter<number> =
@@ -414,7 +413,7 @@ export class DistributionGraphComponent
 
     return typeof value === 'number'
       ? Math.round(value * this.PERCENTAGE_MULTIPLIER) /
-          this.PERCENTAGE_MULTIPLIER
+      this.PERCENTAGE_MULTIPLIER
       : value;
   }
 
