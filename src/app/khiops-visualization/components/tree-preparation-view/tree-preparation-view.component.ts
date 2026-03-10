@@ -62,7 +62,7 @@ export class TreePreparationViewComponent extends SelectableTabComponent {
   public summaryDatas?: InfosDatasI[];
   public informationsDatas?: InfosDatasI[];
   public targetVariableStatsDatas?: ChartDatasModel;
-  public selectedBarIndex: number | undefined = 0;
+  public selectedBarIndex: number = 0;
   public variablesDatas?: VariableModel[];
   public targetVariableStatsInformations?: InfosDatasI[];
   public treePreparationDatas?: TreePreparationDatasModel;
@@ -128,7 +128,7 @@ export class TreePreparationViewComponent extends SelectableTabComponent {
           this.treePreparationDatasService.getNodesLinkedToOneNode(
             selectedNode._id,
           );
-        this.selectedBarIndex = index;
+        this.selectedBarIndex = index || 0;
       }
     });
   }

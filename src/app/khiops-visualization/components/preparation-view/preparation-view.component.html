@@ -79,7 +79,7 @@
             [message]="getNoDataMessage()"
           ></kl-no-data>
         }
-        @if (variablesDatas?.length > 0) {
+        @if (variablesDatas && variablesDatas.length > 0) {
           <as-split
             direction="horizontal"
             (dragEnd)="onSplitDragEnd($event, 'row1Col')"

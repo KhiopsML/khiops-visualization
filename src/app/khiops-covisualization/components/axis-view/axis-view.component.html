@@ -5,7 +5,7 @@
  -->
 
 <div class="axis-view-comp" fxFlexFill>
-  @if (loadingView || !dimensionsDatasService.dimensionsDatas?.matrixDatas) {
+  @if (loadingView || !dimensionsDatasService.dimensionsDatas.matrixDatas) {
     <div
       class="loading-axis"
       fxLayout="column"
@@ -22,7 +22,7 @@
       }
     </div>
   }
-  @if (!loadingView && dimensionsDatasService.dimensionsDatas?.matrixDatas) {
+  @if (!loadingView && dimensionsDatasService.dimensionsDatas.matrixDatas) {
     <as-split direction="horizontal" (dragEnd)="onSplitDragEnd($event, 'col')">
       <as-split-area id="axis-container" [size]="sizes?.col[0]">
         @if (
@@ -76,15 +76,15 @@
             <as-split-area
               order="i+2"
               [visible]="
-                viewsLayout?.dimensionsViewsLayoutsVO[i + 2] &&
-                viewsLayout?.dimensionsViewsLayoutsVO[i + 2].isChecked
+                viewsLayout?.dimensionsViewsLayoutsVO?.[i + 2] &&
+                viewsLayout?.dimensionsViewsLayoutsVO?.[i + 2]?.isChecked
               "
             >
               <app-axis
                 [sizeId]="'col0Row0Col'"
                 [viewId]="'contextView'"
                 [position]="i + 2"
-                [axisLayout]="viewsLayout?.dimensionsViewsLayoutsVO[i + 2]"
+                [axisLayout]="viewsLayout?.dimensionsViewsLayoutsVO?.[i + 2]"
                 [dimensionsDatas]="dimensionsDatasService.dimensionsDatas"
               >
               </app-axis>
