@@ -64,9 +64,9 @@ export class HistogramComponent extends SelectableComponent implements OnInit {
   // Dynamic values
   @Input() public datas?: HistogramValuesI[];
   @Input() private selectedItem: number = 0;
-  @Input() public histogramNumber: number = 0;
-  @Input() public interpretableHistogramNumber: number = 0;
-  @Input() public defaultInterpretableHistogramNumber: number = 0;
+  @Input() public histogramNumber?: number = 0;
+  @Input() public interpretableHistogramNumber?: number = 0;
+  @Input() public defaultInterpretableHistogramNumber?: number = 0;
   @Input() public graphOptionsX: DistributionOptionsI | undefined = undefined;
   @Input() public graphOptionsY: DistributionOptionsI | undefined = undefined;
   @Input() public variableRank?: number; // For scale settings per variable
@@ -142,8 +142,12 @@ export class HistogramComponent extends SelectableComponent implements OnInit {
     const rootElement = this.configService.getRootElementDom();
     if (rootElement) {
       this.histogramCanvas = rootElement.querySelector('#histogram-canvas');
-      this.histogramSelectedCanvas = rootElement.querySelector('#histogram-canvas-selected');
-      this.histogramHoverCanvas = rootElement.querySelector('#histogram-canvas-hover');
+      this.histogramSelectedCanvas = rootElement.querySelector(
+        '#histogram-canvas-selected',
+      );
+      this.histogramHoverCanvas = rootElement.querySelector(
+        '#histogram-canvas-hover',
+      );
     }
 
     this.histogramSelectedCanvas?.addEventListener(
@@ -183,6 +187,7 @@ export class HistogramComponent extends SelectableComponent implements OnInit {
    * Restore scale settings for the current variable if they exist
    */
   private restoreVariableScaleSettings(): void {
+    console.log("🚀 ~ HistogramComponent ~ restoreVariableScaleSettings ~ this.variableRank:", this.variableRank)
     if (this.variableRank !== undefined) {
       // Get variable-specific settings (not global defaults)
       const variableSettings =
@@ -688,7 +693,7 @@ export class HistogramComponent extends SelectableComponent implements OnInit {
             let middleShift =
               shift -
               ((this.w - 2 * this.xPadding) / this.ratio) *
-                Math.log10(this.rangeXLog.middlewidth || 1);
+              Math.log10(this.rangeXLog.middlewidth || 1);
             domain = [1];
             this.histogramRendererService.drawXAxis(
               this.svg,
@@ -731,14 +736,14 @@ export class HistogramComponent extends SelectableComponent implements OnInit {
             width =
               width -
               ((this.w - 2 * this.xPadding) / this.ratio) *
-                Math.log10(this.rangeXLog.middlewidth || 1) *
-                2;
+              Math.log10(this.rangeXLog.middlewidth || 1) *
+              2;
           } else {
             if (this.rangeXLog.inf) {
               width =
                 width -
                 ((this.w - 2 * this.xPadding) / this.ratio) *
-                  Math.log10(this.rangeXLog.middlewidth || 1);
+                Math.log10(this.rangeXLog.middlewidth || 1);
             }
           }
           this.histogramRendererService.drawXAxis(

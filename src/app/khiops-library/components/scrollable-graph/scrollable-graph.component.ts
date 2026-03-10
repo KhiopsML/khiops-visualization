@@ -28,8 +28,7 @@ import { ConfigService } from '@khiops-library/providers/config.service';
 })
 export class ScrollableGraphComponent
   extends SelectableComponent
-  implements OnChanges, AfterViewInit, OnDestroy
-{
+  implements OnChanges, AfterViewInit, OnDestroy {
   @Input() public view: any;
   @Input() public maxScale: number = 0;
   @Input() public minScale: number = 0;
