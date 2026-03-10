@@ -67,7 +67,7 @@ export class AgGridComponent
   })
   private searchInputEl: ElementRef | undefined;
 
-  @Input() public inputDatas: any[] | undefined; // Can be any types of datas
+  @Input() public inputDatas: any | any[] | undefined; // Can be any types of datas
   @Input() public displayedColumns: GridColumnsI[] | undefined;
   @Input() public override id: string | undefined = undefined;
   @Input() public title?: string = '';
