@@ -50,7 +50,7 @@ export class HomeLayoutComponent implements OnInit {
   public appTitle?: string;
   public appVersion?: string;
   public opened = false;
-  public selectedTab: Object | undefined;
+  public selectedTab: MatTabChangeEvent | undefined;
   public isCompatibleJson?: boolean;
   public isLoading: boolean = true;
 

@@ -19,7 +19,7 @@ import {
   standalone: false,
 })
 export class HeaderTitleComponent implements OnInit {
-  @Input() title: string = '';
+  @Input() title?: string = '';
   displayedTitle: string[] = [];
   appName: string | undefined;
 
