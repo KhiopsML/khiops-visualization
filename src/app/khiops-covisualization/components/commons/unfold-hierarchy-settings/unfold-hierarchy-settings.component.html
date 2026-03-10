@@ -23,7 +23,7 @@
           [max]="hierarchyDatas?.totalClusters"
           [min]="hierarchyDatas?.minClusters"
           [step]="1"
-          (input)="onHierarchyChanged($event?.target?.['valueAsNumber'])"
+          (input)="onHierarchyChanged($event)"
         >
           <input [(ngModel)]="currentUnfoldHierarchy" matSliderThumb />
         </mat-slider>

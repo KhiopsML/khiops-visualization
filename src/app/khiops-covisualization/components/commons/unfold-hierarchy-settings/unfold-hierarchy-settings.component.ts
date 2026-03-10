@@ -27,7 +27,8 @@ export class UnfoldHierarchySettingsComponent {
   @Output() decrease = new EventEmitter<void>();
   @Output() cyInputSet = new EventEmitter<string>();
 
-  onHierarchyChanged(value: number) {
+  onHierarchyChanged(event: Event) {
+    const value = (event.target as HTMLInputElement).valueAsNumber;
     this.hierarchyChanged.emit(value);
   }
 
