@@ -1,1 +1,0 @@
-"use strict";Object.defineProperty(exports,"__esModule",{value:!0}),exports.HTML=void 0;class HTML{static parse(e){return function(){var t=document.createElement("template");return t.innerHTML=e,t.content.firstElementChild}}}exports.HTML=HTML;

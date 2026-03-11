@@ -1,1 +1,0 @@
-class C{constructor(s,t){this.model=t,this.view=s}}
