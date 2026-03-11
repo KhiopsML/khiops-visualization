@@ -28,7 +28,6 @@
   },
   "scripts": {
     "build": "ng build",
-    "buildHyperTree": "./scripts/buildHyperTree.sh",
     "build:stats": "ng build --stats-json --source-map --output-hashing none && yarn stats:webpack-bundle-analyzer & yarn stats:source-map-explorer",
     "build:webcomponents": "./scripts/build.sh",
     "buildDev:webcomponents": "./scripts/build-dev-watch.sh",

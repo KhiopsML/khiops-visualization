@@ -1,8 +1,3 @@
-cd libs/khiops-hypertree
-mkdir -p dist
-yarn install
-yarn build
-cd ../..
 ng build khiops-webcomponent --single-bundle
 
 # extractCss is deprecated with new Angular version so we need to convert styles manually

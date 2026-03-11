@@ -1,67 +1,85 @@
 const fs = require('fs');
 const path = require('path');
 
-// Chemin du projet Angular
-const projectDir = './src';
+const currentYear = new Date().getFullYear();
+const copyrightNotice = `Copyright (c) 2023-${currentYear} Orange. All rights reserved.`;
+const mitNotice = 'Based on d3-hypertree by Michael Glatzhofer';
 
-// Copyright notice
-const copyrightNotice = 'Copyright (c) 2023-2025 Orange. All rights reserved.';
-
-// Headers par format de fichier
-const headers = {
-  ts: `/*
- * Copyright (c) 2023-2025 Orange. All rights reserved.
+const headerOrange = (ext) => {
+  const content = `
+ * Copyright (c) 2023-${currentYear} Orange. All rights reserved.
  * This software is distributed under the BSD 3-Clause-clear License, the text of which is available
- * at https://spdx.org/licenses/BSD-3-Clause-Clear.html or see the "LICENSE" file for more details.
- */
+ * at https://spdx.org/licenses/BSD-3-Clause-Clear.html or see the "LICENSE" file for more details.`;
 
-`,
-  js: `/*
- * Copyright (c) 2023-2025 Orange. All rights reserved.
- * This software is distributed under the BSD 3-Clause-clear License, the text of which is available
- * at https://spdx.org/licenses/BSD-3-Clause-Clear.html or see the "LICENSE" file for more details.
- */
-
-`,
-  scss: `/*
- * Copyright (c) 2023-2025 Orange. All rights reserved.
- * This software is distributed under the BSD 3-Clause-clear License, the text of which is available
- * at https://spdx.org/licenses/BSD-3-Clause-Clear.html or see the "LICENSE" file for more details.
- */
-
-`,
-  html: `<!--
- * Copyright (c) 2023-2025 Orange. All rights reserved.
+  if (ext === 'html') {
+    return `<!--
+ * Copyright (c) 2023-${currentYear} Orange. All rights reserved.
  * This software is distributed under the BSD 3-Clause-clear License, the text of which is available
  * at https://spdx.org/licenses/BSD-3-Clause-Clear.html or see the "LICENSE" file for more details.
  -->
 
-`
+`;
+  }
+  return `/*${content}
+ */
+
+`;
 };
 
-function headerExists(fileContent) {
-  return fileContent.includes(copyrightNotice);
-}
+const headerHypertree = (ext) => {
+  const content = `
+ * Based on d3-hypertree by Michael Glatzhofer
+ * MIT License - Copyright (c) 2018 Michael Glatzhofer
+ * https://github.com/glouwa/d3-hypertree
+ *
+ * Modifications: Copyright (c) 2023-${currentYear} Orange. All rights reserved.
+ * This software is distributed under the BSD 3-Clause-clear License, the text of which is available
+ * at https://spdx.org/licenses/BSD-3-Clause-Clear.html or see the "LICENSE" file for more details.`;
 
-function getFileExtension(filePath) {
-  const ext = path.extname(filePath).slice(1);
-  return ext;
-}
+  if (ext === 'html') {
+    return `<!--
+ * Based on d3-hypertree by Michael Glatzhofer
+ * MIT License - Copyright (c) 2018 Michael Glatzhofer
+ * https://github.com/glouwa/d3-hypertree
+ *
+ * Modifications: Copyright (c) 2023-${currentYear} Orange. All rights reserved.
+ * This software is distributed under the BSD 3-Clause-clear License, the text of which is available
+ * at https://spdx.org/licenses/BSD-3-Clause-Clear.html or see the "LICENSE" file for more details.
+ -->
 
-function addHeaderToFile(filePath) {
-  const fileContent = fs.readFileSync(filePath, 'utf8');
-  const ext = getFileExtension(filePath);
-
-  if (headerExists(fileContent)) {
-    console.log(`Header déjà présent dans : ${filePath}`);
-  } else {
-    const header = headers[ext];
-    if (header) {
-      const newContent = header + fileContent;
-      fs.writeFileSync(filePath, newContent, 'utf8');
-      console.log(`Header ajouté à : ${filePath}`);
-    }
+`;
   }
+  return `/*${content}
+ */
+
+`;
+};
+
+const SUPPORTED_EXTENSIONS = ['ts', 'js', 'scss', 'html'];
+const HYPERTREE_DIR = path.normalize('src/app/khiops-hypertree');
+
+function headerExists(content) {
+  return content.includes(copyrightNotice) || content.includes(mitNotice);
+}
+
+function getExt(filePath) {
+  return path.extname(filePath).slice(1);
+}
+
+function addHeaderToFile(filePath, isHypertree) {
+  const content = fs.readFileSync(filePath, 'utf8');
+  const ext = getExt(filePath);
+
+  if (headerExists(content)) {
+    console.log(`Header déjà présent : ${filePath}`);
+    return;
+  }
+
+  const header = isHypertree ? headerHypertree(ext) : headerOrange(ext);
+  fs.writeFileSync(filePath, header + content, 'utf8');
+  console.log(
+    `Header ajouté (${isHypertree ? 'MIT+Orange' : 'Orange'}) : ${filePath}`,
+  );
 }
 
 function traverseDirectory(directory) {
@@ -70,12 +88,13 @@ function traverseDirectory(directory) {
     if (fs.statSync(fullPath).isDirectory()) {
       traverseDirectory(fullPath);
     } else {
-      const ext = getFileExtension(fullPath);
-      if (headers[ext]) {
-        addHeaderToFile(fullPath);
+      const ext = getExt(fullPath);
+      if (SUPPORTED_EXTENSIONS.includes(ext)) {
+        const isHypertree = fullPath.includes(HYPERTREE_DIR);
+        addHeaderToFile(fullPath, isHypertree);
       }
     }
   });
 }
 
-traverseDirectory(projectDir);
+traverseDirectory('./src');

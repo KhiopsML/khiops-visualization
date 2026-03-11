@@ -40,17 +40,6 @@ jobs:
           echo "khiops-webcomponent project:"
           ls -la projects/khiops-webcomponent/
 
-      - name: Build khiops-hypertree first
-        run: |
-          cd libs/khiops-hypertree
-          mkdir -p dist
-          yarn install
-          yarn build
-          cd ../..
-          echo "=== Checking generated types ==="
-          ls libs/khiops-hypertree/dist/d/models/n/ || echo "MISSING: dist/d not generated"
-          ls libs/khiops-hypertree/dist/js/models/n/ || echo "MISSING: dist/js not generated"
-
       - name: Build Angular webcomponent
         run: |
           echo "Building Angular webcomponent..."

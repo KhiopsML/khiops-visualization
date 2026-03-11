@@ -6,7 +6,7 @@
 
 @use '../app/khiops-library/components/ag-grid/ag-theme-balham.scss';
 @use '../../libs/khiops-treeview/treeview.scss';
-@use '../../libs/khiops-hypertree/dist/d3-hypertree-light';
+@use '../app/khiops-hypertree/components/unitdisk/unitdisk-light.scss';
 @use 'material.scss';
 @use 'ag-grid.scss';
 @use 'as-split.scss';

@@ -19,10 +19,10 @@ import {
 import { SelectableComponent } from '@khiops-library/components/selectable/selectable.component';
 import { SelectableService } from '@khiops-library/components/selectable/selectable.service';
 import { TranslateService } from '@ngstack/translate';
-import * as hyt from '@khiops-hypertree/js/d3-hypertree';
+import * as hyt from '@khiops-hypertree/d3-hypertree';
 import { UtilsService } from '@khiops-library/providers/utils.service';
 import { TreePreparationDatasService } from '@khiops-visualization/providers/tree-preparation-datas.service';
-import { Hypertree } from '@khiops-hypertree/js/components/hypertree/hypertree';
+import { Hypertree } from '@khiops-hypertree/d3-hypertree';
 import { DistributionDatasService } from '@khiops-visualization/providers/distribution-datas.service';
 import { TreeNodeModel } from '@khiops-visualization/model/tree-node.model';
 import { ConfigService } from '@khiops-library/providers/config.service';
@@ -31,7 +31,7 @@ import { COMPONENT_TYPES } from '@khiops-library/enum/component-types';
 import { AppService } from '@khiops-visualization/providers/app.service';
 import { LS } from '@khiops-library/enum/ls';
 import { TreeHyperService } from './tree-hyper.service';
-import { N } from '@khiops-hypertree/d/models/n/n';
+import { N } from '@khiops-hypertree/models/n/n';
 import {
   TreePreparationDatasModel,
   TreePreparationState,
@@ -55,8 +55,7 @@ import { AppConfig } from '../../../../../environments/environment';
 })
 export class TreeHyperComponent
   extends SelectableComponent
-  implements OnInit, AfterViewInit, OnChanges, OnDestroy
-{
+  implements OnInit, AfterViewInit, OnChanges, OnDestroy {
   @ViewChild('hyperTree') private hyperTree?: ElementRef<HTMLElement>;
 
   @Input() public dimensionTree?: [TreeNodeModel];

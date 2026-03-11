@@ -30,8 +30,7 @@ import { SaveService } from '@khiops-covisualization/providers/save.service';
 })
 export class AxisViewComponent
   extends SelectableTabComponent
-  implements OnInit, OnDestroy
-{
+  implements OnInit, OnDestroy {
   @Input() public openContextView = false;
   public sizes: DynamicI | undefined;
   public viewsLayout: ViewLayoutVO | undefined;
@@ -183,7 +182,7 @@ export class AxisViewComponent
       const unfoldState =
         this.appService.getSavedDatas('unfoldHierarchyState') ||
         this.dimensionsDatasService.dimensionsDatas.dimensions.length *
-          AppConfig.covisualizationCommon.UNFOLD_HIERARCHY.ERGONOMIC_LIMIT;
+        AppConfig.covisualizationCommon.UNFOLD_HIERARCHY.ERGONOMIC_LIMIT;
 
       this.treenodesService.setSelectedUnfoldHierarchy(unfoldState);
       let collapsedNodes =
