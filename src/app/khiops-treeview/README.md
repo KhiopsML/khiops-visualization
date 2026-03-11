@@ -197,9 +197,6 @@ treeView.toggleNode(nodeId, 'expand' | 'collapse', (propagateEvent = true));
 ```javascript
 // Get selected node ID
 const selectedId = treeView.getSelectedNodeId();
-
-// Get selected node name
-const selectedName = treeView.getSelectedNodeName();
 ```
 
 #### Event Methods

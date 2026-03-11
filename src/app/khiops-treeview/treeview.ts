@@ -630,11 +630,6 @@ export default class TreeView {
     return self.currentSelectedNodeId;
   }
 
-  getSelectedNodeName() {
-    let self = this;
-    return self.currentSelectedNodeId;
-  }
-
   toggleNode(nodeId: string | number, state: string, propagateEvent = true) {
     let self = this;
     let el = self.rootElementDom.querySelector('#' + self.node) as HTMLElement;
