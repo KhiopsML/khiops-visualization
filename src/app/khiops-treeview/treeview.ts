@@ -24,6 +24,11 @@ const events = [
   'error',
 ];
 
+/**
+ * Scrolls the given node into view
+ * @param node The HTML element to scroll into view
+ * @param center Whether to center the element in the viewport
+ */
 function scrollIntoView(node: HTMLElement, center = true) {
   if (!(node as any).scrollIntoViewIfNeeded) {
     const options: ScrollIntoViewOptions = {
@@ -37,33 +42,13 @@ function scrollIntoView(node: HTMLElement, center = true) {
 }
 
 /**
- * A forEach that will work with a NodeList and generic Arrays
- * @param {array|NodeList} arr The array to iterate over
- * @param {function} callback Function that executes for each element. First parameter is element, second is index
- * @param {object} The context to execute callback with
- */
-function forEach(
-  arr: any[] | NodeListOf<Element>,
-  callback: Function,
-  scope?: any,
-) {
-  if (arr) {
-    let i: number,
-      len = arr.length;
-    for (i = 0; i < len; i += 1) {
-      callback.call(scope, arr[i], i);
-    }
-  }
-}
-
-/**
  * Emit an event from the tree view
  * @param {string} name The name of the event to emit
  */
 function emit(instance: TreeView, name: string, ...args: any[]) {
   if (events.indexOf(name) > -1) {
     if (instance.handlers[name] && instance.handlers[name] instanceof Array) {
-      forEach(instance.handlers[name], function (handle: any) {
+      instance.handlers[name].forEach((handle) => {
         handle.callback.apply(handle.context, args);
       });
     }
@@ -73,317 +58,302 @@ function emit(instance: TreeView, name: string, ...args: any[]) {
 }
 
 /**
+ * Safely parse a data-item attribute, returns null on failure
+ */
+function parseDataItem(node: HTMLElement): any | null {
+  try {
+    const raw = node.getAttribute('data-item');
+    return raw ? JSON.parse(raw) : null;
+  } catch {
+    console.error('TreeView: failed to parse data-item attribute', node);
+    return null;
+  }
+}
+
+/**
  * Renders the tree view in the DOM
  */
 function render(self: TreeView) {
-  let container = self.rootElementDom.querySelector(
+  const container = self.rootElementDom.querySelector(
     '#' + self.node,
-  ) as HTMLElement;
+  ) as HTMLElement | null;
 
-  let clonedContainer: HTMLElement;
-  if (container) {
-    clonedContainer = container.cloneNode(true) as HTMLElement;
-    container.parentNode!.replaceChild(clonedContainer, container);
-    let leaves: HTMLElement[] = [],
-      clickExpandIcon: (e: Event) => void,
-      dblclick: (e: Event) => void,
-      removeAllEditInputs: () => void,
-      click: (e: Event) => void;
+  if (!container) return;
 
-    let renderLeaf = function (item: any): HTMLElement {
-      let leaf = document.createElement('div');
-      let content = document.createElement('div');
-      let icon = document.createElement('mat-icon');
+  const clonedContainer = container.cloneNode(true) as HTMLElement;
+  container.parentNode!.replaceChild(clonedContainer, container);
 
-      let text = document.createElement('div');
-      let expando = document.createElement('div');
+  let removeAllEditInputs: () => void;
 
-      leaf.setAttribute('class', 'tree-leaf');
-      leaf.setAttribute('id', 'tree-leaf-' + item.id);
-      content.setAttribute('class', 'tree-leaf-content');
-      icon.setAttribute('class', 'tree-icon mat-icon material-icons');
+  const renderLeaf = function (item: any): HTMLElement {
+    const leaf = document.createElement('div');
+    const content = document.createElement('div');
+    const icon = document.createElement('mat-icon');
+    const text = document.createElement('div');
+    const expando = document.createElement('div');
 
-      let leafDatas = {
-        name: item.name,
-        isLeaf: item.isLeaf,
-        id: item.id,
-      };
-      content.setAttribute('data-item', JSON.stringify(leafDatas));
+    leaf.setAttribute('class', 'tree-leaf');
+    leaf.setAttribute('id', 'tree-leaf-' + item.id);
+    content.setAttribute('class', 'tree-leaf-content');
+    icon.setAttribute('class', 'tree-icon mat-icon material-icons');
 
-      text.setAttribute('class', 'tree-leaf-text');
-      text.setAttribute('id', item.id);
-
-      if (item.isLeaf) {
-        icon.classList.add('is-leaf');
-        icon.textContent = 'web_asset';
-        icon.className += ' web_asset';
-      } else {
-        icon.textContent = item.isCollapsed ? 'folder' : 'folder_open';
-      }
-
-      if (item.color) {
-        if (item.isLeaf) {
-          icon.style.backgroundColor = item.color;
-          icon.style.color = '#fff';
-          text.style.color = item.color;
-        } else {
-          icon.style.color = item.color;
-          text.style.color = item.color;
-        }
-      }
-
-      text.textContent = item.shortDescription;
-
-      // Add edit button if editing is enabled
-      if (!self.options.disableUpdateName) {
-        let editButton = document.createElement('button');
-        editButton.setAttribute('class', 'edit-button');
-        editButton.setAttribute('title', 'Edit name');
-        editButton.innerHTML = `<svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
-          <path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/>
-        </svg>`;
-        text.appendChild(editButton);
-      }
-
-      if (!self.options.disableCollapse) {
-        expando.setAttribute(
-          'class',
-          'tree-expando ' + (item.isCollapsed ? '' : 'expanded'),
-        );
-        expando.setAttribute('id', 'tree-expando-' + item.id);
-        expando.textContent = item.isCollapsed ? '+' : '-';
-        if (!item.isUnfoldedByDefault) {
-          content.appendChild(expando);
-        }
-      }
-
-      content.appendChild(icon);
-      content.appendChild(text);
-      leaf.appendChild(content);
-      if (item.isTruncated) {
-        expando.classList.add('hidden');
-      }
-      if (item.children && item.children.length > 0) {
-        let children = document.createElement('div');
-        children.setAttribute('class', 'tree-child-leaves');
-        for (let i = 0; i < item.children.length; i++) {
-          let childLeaf = renderLeaf(item.children[i]);
-          children.appendChild(childLeaf);
-        }
-        if (item.isCollapsed) {
-          children.classList.add('hidden');
-        }
-        leaf.appendChild(children);
-      } else {
-        expando.classList.add('hidden');
-      }
-      return leaf;
+    const leafDatas = {
+      name: item.name,
+      isLeaf: item.isLeaf,
+      id: item.id,
     };
+    content.setAttribute('data-item', JSON.stringify(leafDatas));
 
-    for (let i = 0; i < self.data.length; i++) {
-      leaves.push(renderLeaf.call(self, self.data[i]));
+    text.setAttribute('class', 'tree-leaf-text');
+    text.setAttribute('id', item.id);
+
+    if (item.isLeaf) {
+      icon.classList.add('is-leaf');
+      icon.textContent = 'web_asset';
+      icon.className += ' web_asset';
+    } else {
+      icon.textContent = item.isCollapsed ? 'folder' : 'folder_open';
     }
-    clonedContainer.innerHTML = leaves
-      .map(function (leaf: HTMLElement) {
-        return leaf.outerHTML;
-      })
-      .join('');
 
-    dblclick = function (e: Event) {
-      let node = (e.target || e.currentTarget) as HTMLElement;
-      let parent = node.parentNode as HTMLElement;
-
-      // Hide the text element and its edit button
-      node.style.display = 'none';
-
-      let inputForm = document.createElement('div');
-      inputForm.setAttribute('class', 'tree-leaf-text-input');
-
-      let input = document.createElement('input');
-      // Get text content without the edit button
-      let textContent = node.childNodes[0]
-        ? (node.childNodes[0] as Text).textContent
-        : node.textContent;
-      if (node.querySelector('.edit-button')) {
-        textContent = Array.from(node.childNodes)
-          .filter((child) => child.nodeType === Node.TEXT_NODE)
-          .map((child) => (child as Text).textContent)
-          .join('');
+    if (item.color) {
+      if (item.isLeaf) {
+        icon.style.backgroundColor = item.color;
+        icon.style.color = '#fff';
+        text.style.color = item.color;
+      } else {
+        icon.style.color = item.color;
+        text.style.color = item.color;
       }
-      input.setAttribute('placeholder', textContent || '');
+    }
 
-      let iconAccept = document.createElement('button');
-      iconAccept.setAttribute('class', 'valid-rename edit-icons');
-      iconAccept.innerHTML = `<svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
-        <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/>
-      </svg>`; // Modern check SVG
-      iconAccept.onclick = function () {
-        let newName = input.value;
-        newName = newName.replace(/\./g, ''); // dots are replaced by "-" in css
-        newName = newName.replace(/\ /g, ''); // spaces are replaced by "-" in css
-        newName = newName.replace(/[^\w\s]/gi, '-'); // replace all special chars
+    text.textContent = item.shortDescription;
 
-        if (newName !== '') {
-          // change current node name - preserve the edit button
-          let editButton = node.querySelector('.edit-button');
-          node.innerHTML = newName;
-          if (editButton && !self.options.disableUpdateName) {
-            node.appendChild(editButton);
-          }
+    // Add edit button if editing is enabled
+    if (!self.options.disableUpdateName) {
+      const editButton = document.createElement('button');
+      editButton.setAttribute('class', 'edit-button');
+      editButton.setAttribute('title', 'Edit name');
+      editButton.innerHTML = `<svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+        <path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/>
+      </svg>`;
+      text.appendChild(editButton);
+    }
 
-          // change data-item object
-          let data = JSON.parse(parent.getAttribute('data-item')!);
+    if (!self.options.disableCollapse) {
+      expando.setAttribute(
+        'class',
+        'tree-expando ' + (item.isCollapsed ? '' : 'expanded'),
+      );
+      expando.setAttribute('id', 'tree-expando-' + item.id);
+      expando.textContent = item.isCollapsed ? '+' : '-';
+      if (!item.isUnfoldedByDefault) {
+        content.appendChild(expando);
+      }
+    }
+
+    content.appendChild(icon);
+    content.appendChild(text);
+    leaf.appendChild(content);
+
+    if (item.isTruncated) {
+      expando.classList.add('hidden');
+    }
+
+    if (item.children && item.children.length > 0) {
+      const children = document.createElement('div');
+      children.setAttribute('class', 'tree-child-leaves');
+      for (let i = 0; i < item.children.length; i++) {
+        const childLeaf = renderLeaf(item.children[i]);
+        children.appendChild(childLeaf);
+      }
+      if (item.isCollapsed) {
+        children.classList.add('hidden');
+      }
+      leaf.appendChild(children);
+    } else {
+      expando.classList.add('hidden');
+    }
+
+    return leaf;
+  };
+
+  const leaves: HTMLElement[] = [];
+  for (let i = 0; i < self.data.length; i++) {
+    leaves.push(renderLeaf(self.data[i]));
+  }
+  clonedContainer.innerHTML = leaves.map((leaf) => leaf.outerHTML).join('');
+
+  const dblclick = function (e: Event) {
+    const node = (e.target || e.currentTarget) as HTMLElement;
+    const parent = node.parentNode as HTMLElement;
+
+    node.style.display = 'none';
+
+    const inputForm = document.createElement('div');
+    inputForm.setAttribute('class', 'tree-leaf-text-input');
+
+    const input = document.createElement('input');
+
+    // text extraction without the edit button content
+    const textContent =
+      Array.from(node.childNodes)
+        .filter((child) => child.nodeType === Node.TEXT_NODE)
+        .map((child) => (child as Text).textContent)
+        .join('') ||
+      node.textContent ||
+      '';
+    input.setAttribute('placeholder', textContent.trim());
+
+    const iconAccept = document.createElement('button');
+    iconAccept.setAttribute('class', 'valid-rename edit-icons');
+    iconAccept.innerHTML = `<svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+      <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/>
+    </svg>`; // Modern check SVG
+    iconAccept.onclick = function () {
+      let newName = input.value
+        .replace(/\./g, '') // dots are replaced by "-" in css
+        .replace(/ /g, '') // spaces are replaced by "-" in css
+        .replace(/[^\w\s]/gi, '-'); // replace all special chars
+
+      if (newName !== '') {
+        // change current node name - preserve the edit button
+        const editButton = node.querySelector('.edit-button');
+        node.innerHTML = newName;
+        if (editButton && !self.options.disableUpdateName) {
+          node.appendChild(editButton);
+        }
+
+        // change data-item object
+        const data = parseDataItem(parent);
+        if (data) {
           data.shortDescription = newName;
           parent.setAttribute('data-item', JSON.stringify(data));
-
-          // emit event
-          emit(self, 'updateNodeName', {
-            data: {
-              name: data.name,
-              newName: newName,
-            },
-          });
-
-          // remove input
-          removeAllEditInputs();
-        } else {
-          emit(self, 'error', {
-            data: {
-              message: 'SNACKS.NAME_CAN_NOT_BE_EMPTY',
-            },
-          });
+          emit(self, 'updateNodeName', { data: { name: data.name, newName } });
         }
-      };
+        // remove input
 
-      input.addEventListener('keyup', function (event: KeyboardEvent) {
-        // Number 13 is the "Enter" key on the keyboard
-        if (event.keyCode === 13) {
-          event.preventDefault();
-          // Trigger the button element with a click
-          iconAccept.click();
-        }
-      });
-
-      let iconCancel = document.createElement('button');
-      iconCancel.setAttribute('class', 'edit-icons');
-      iconCancel.innerHTML = `<svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
-        <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/>
-      </svg>`; // Modern X SVG
-      iconCancel.onclick = function () {
         removeAllEditInputs();
-      };
-
-      inputForm.appendChild(input);
-      inputForm.appendChild(iconCancel);
-      inputForm.appendChild(iconAccept);
-
-      parent.appendChild(inputForm);
-
-      input.focus();
-    };
-
-    removeAllEditInputs = function () {
-      forEach(
-        clonedContainer.querySelectorAll('.tree-leaf-text'),
-        function (node: HTMLElement) {
-          node.style.display = 'flex';
-        },
-      );
-      forEach(
-        clonedContainer.querySelectorAll('.tree-leaf-text-input'),
-        function (node: HTMLElement) {
-          node.remove();
-        },
-      );
-    };
-
-    click = function (e: Event) {
-      let currentNode = (e.target || e.currentTarget) as HTMLElement;
-
-      // Don't trigger selection if clicking on edit button
-      if (currentNode.classList.contains('edit-button')) {
-        return;
-      }
-
-      let parent = currentNode.parentNode as HTMLElement;
-      removeAllEditInputs();
-
-      let data = JSON.parse(parent.getAttribute('data-item')!);
-      emit(self, 'select', {
-        data: data,
-      });
-
-      forEach(
-        clonedContainer.querySelectorAll('.tree-leaf-text'),
-        function (node: HTMLElement) {
-          let parent = node.parentNode as HTMLElement;
-          parent.classList.remove('tree-selected');
-        },
-      );
-      parent.classList.add('tree-selected');
-
-      if (!(e as any).isTrusted) {
-        (parent as any).scrollIntoViewIfNeeded({
-          // block: 'center'
-        });
-      }
-    };
-
-    clickExpandIcon = function (e: Event) {
-      let parent = ((e.target || e.currentTarget) as HTMLElement)
-        .parentNode as HTMLElement;
-      let data = JSON.parse(parent.getAttribute('data-item')!);
-      let leaves = parent.parentNode!.querySelector(
-        '.tree-child-leaves',
-      ) as HTMLElement;
-      if (leaves) {
-        if (leaves.classList.contains('hidden')) {
-          self.expand(parent, leaves);
-        } else {
-          self.collapse(parent, leaves);
-        }
       } else {
-        emit(self, 'select', {
-          data: data,
+        emit(self, 'error', {
+          data: { message: 'SNACKS.NAME_CAN_NOT_BE_EMPTY' },
         });
       }
     };
 
-    forEach(
-      clonedContainer.querySelectorAll('.tree-icon'),
-      function (node: HTMLElement) {
-        node.onclick = click;
-      },
-    );
+    input.addEventListener('keyup', function (event: KeyboardEvent) {
+      if (event.key === 'Enter') {
+        event.preventDefault();
+        // Trigger the button element with a click
+        iconAccept.click();
+      }
+    });
 
-    forEach(
-      clonedContainer.querySelectorAll('.tree-leaf-text'),
-      function (node: HTMLElement) {
-        node.onclick = click;
-      },
-    );
+    const iconCancel = document.createElement('button');
+    iconCancel.setAttribute('class', 'edit-icons');
+    iconCancel.innerHTML = `<svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+      <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/>
+    </svg>`; // Modern X SVG
+    iconCancel.onclick = function () {
+      removeAllEditInputs();
+    };
 
-    if (!self.options.disableUpdateName) {
-      forEach(
-        clonedContainer.querySelectorAll('.edit-button'),
-        function (button: HTMLElement) {
-          button.onclick = function (e: Event) {
-            e.stopPropagation(); // Prevent the tree node selection
-            // Find the parent tree-leaf-text element
-            let textElement = button.parentNode as HTMLElement;
-            dblclick({ target: textElement } as unknown as Event);
-          };
-        },
-      );
+    inputForm.appendChild(input);
+    inputForm.appendChild(iconCancel);
+    inputForm.appendChild(iconAccept);
+    parent.appendChild(inputForm);
+    input.focus();
+  };
+
+  removeAllEditInputs = function () {
+    clonedContainer
+      .querySelectorAll<HTMLElement>('.tree-leaf-text')
+      .forEach((node) => {
+        node.style.display = 'flex';
+      });
+    clonedContainer
+      .querySelectorAll<HTMLElement>('.tree-leaf-text-input')
+      .forEach((node) => {
+        node.remove();
+      });
+  };
+
+  const click = function (e: Event) {
+    const currentNode = (e.target || e.currentTarget) as HTMLElement;
+
+    // Don't trigger selection if clicking on edit button
+    if (currentNode.classList.contains('edit-button')) {
+      return;
     }
 
-    forEach(
-      clonedContainer.querySelectorAll('.tree-expando'),
-      function (node: HTMLElement) {
-        node.onclick = clickExpandIcon;
-      },
-    );
+    const parent = currentNode.parentNode as HTMLElement;
+    removeAllEditInputs();
+
+    const data = parseDataItem(parent);
+    if (data) {
+      emit(self, 'select', { data });
+    }
+
+    clonedContainer
+      .querySelectorAll<HTMLElement>('.tree-leaf-text')
+      .forEach((node) => {
+        (node.parentNode as HTMLElement).classList.remove('tree-selected');
+      });
+    parent.classList.add('tree-selected');
+
+    if (!(e as any).isTrusted) {
+      scrollIntoView(parent);
+    }
+  };
+
+  const clickExpandIcon = function (e: Event) {
+    const target = (e.target || e.currentTarget) as HTMLElement;
+    const parent = target.parentNode as HTMLElement;
+    const data = parseDataItem(parent);
+    const leaves = parent.parentNode?.querySelector(
+      '.tree-child-leaves',
+    ) as HTMLElement | null;
+
+    if (leaves) {
+      if (leaves.classList.contains('hidden')) {
+        self.expand(parent, leaves);
+      } else {
+        self.collapse(parent, leaves);
+      }
+    } else if (data) {
+      emit(self, 'select', { data });
+    }
+  };
+
+  clonedContainer
+    .querySelectorAll<HTMLElement>('.tree-icon')
+    .forEach((node) => {
+      node.onclick = click;
+    });
+
+  clonedContainer
+    .querySelectorAll<HTMLElement>('.tree-leaf-text')
+    .forEach((node) => {
+      node.onclick = click;
+    });
+
+  if (!self.options.disableUpdateName) {
+    clonedContainer
+      .querySelectorAll<HTMLElement>('.edit-button')
+      .forEach((button) => {
+        button.onclick = function (e: Event) {
+          e.stopPropagation(); // Prevent the tree node selection
+          // Find the parent tree-leaf-text element
+          const textElement = button.parentNode as HTMLElement;
+          dblclick({ target: textElement } as unknown as Event);
+        };
+      });
   }
+
+  clonedContainer
+    .querySelectorAll<HTMLElement>('.tree-expando')
+    .forEach((node) => {
+      node.onclick = clickExpandIcon;
+    });
 }
 
 interface TreeViewOptions {
@@ -428,9 +398,8 @@ export default class TreeView {
 
     render(this);
 
-    let self = this;
-    setTimeout(function () {
-      emit(self, 'init', {});
+    setTimeout(() => {
+      emit(this, 'init', {});
     });
   }
 
@@ -440,185 +409,159 @@ export default class TreeView {
    * @param {DOMElement} leaves The leaves wrapper element
    */
   expand(node: HTMLElement, leaves: HTMLElement, skipEmit?: boolean) {
-    let expando = node.querySelector('.tree-expando') as HTMLElement;
-    expando.textContent = '-';
-    let icon = node.querySelector('.tree-icon') as HTMLElement;
-    icon.textContent = 'folder_open';
+    const expando = node.querySelector('.tree-expando') as HTMLElement | null;
+    if (expando) expando.textContent = '-';
+    const icon = node.querySelector('.tree-icon') as HTMLElement | null;
+    if (icon) icon.textContent = 'folder_open';
     leaves.classList.remove('hidden');
-    if (skipEmit) {
-      return;
-    }
-    let data = JSON.parse(node.getAttribute('data-item')!);
 
-    emit(this, 'expand', {
-      data: data,
-    });
+    if (skipEmit) return;
+
+    const data = parseDataItem(node);
+    if (data) {
+      emit(this, 'expand', { data });
+    }
   }
 
   expandAll() {
-    let self = this;
-    let el = self.rootElementDom.querySelector('#' + self.node) as HTMLElement;
-    if (el) {
-      let nodes = el.querySelectorAll('.tree-expando');
-      forEach(nodes, function (node: HTMLElement) {
-        let parent = node.parentNode as HTMLElement;
-        let leaves = parent.parentNode!.querySelector(
-          '.tree-child-leaves',
-        ) as HTMLElement;
-        if (parent && leaves && parent.hasAttribute('data-item')) {
-          self.expand(parent, leaves, true);
-        }
-      });
-      emit(this, 'expandAll', {});
-    }
+    const el = this.rootElementDom.querySelector(
+      '#' + this.node,
+    ) as HTMLElement | null;
+    if (!el) return;
+
+    el.querySelectorAll<HTMLElement>('.tree-expando').forEach((node) => {
+      const parent = node.parentNode as HTMLElement;
+      const leaves = parent.parentNode?.querySelector(
+        '.tree-child-leaves',
+      ) as HTMLElement | null;
+      if (parent && leaves && parent.hasAttribute('data-item')) {
+        this.expand(parent, leaves, true);
+      }
+    });
+    emit(this, 'expandAll', {});
   }
 
   selectNextNode(id: string, keyCode: number) {
-    let self = this;
-    let elts: string[] = [];
+    const domId = this.rootElementDom.querySelector(
+      '#' + id,
+    ) as HTMLElement | null;
+    if (!domId) return;
+
+    const elts: string[] = Array.from(domId.getElementsByClassName('tree-leaf'))
+      .filter((el) => (el as HTMLElement).offsetParent !== null)
+      .map((el) => el.id);
+
+    const currentDomIndex = elts.indexOf(
+      'tree-leaf-' + this.getSelectedNodeId(),
+    );
     let nodeId: string | undefined;
-    let domId = self.rootElementDom.querySelector('#' + id) as HTMLElement;
-    if (domId) {
-      Array.from(domId.getElementsByClassName('tree-leaf')).forEach(function (
-        element: Element,
-      ) {
-        if ((element as HTMLElement).offsetParent !== null) {
-          elts.push(element.id);
-        }
-      });
-      let currentDomIndex = elts.indexOf(
-        'tree-leaf-' + self.getSelectedNodeId(),
-      );
-      if (keyCode === 40) {
-        // DOWN
-        nodeId = elts[currentDomIndex + 1];
-      } else if (keyCode === 38) {
-        // UP
-        nodeId = elts[currentDomIndex - 1];
-      }
-      if (nodeId) {
-        nodeId = nodeId.substring(nodeId.lastIndexOf('-') + 1);
-        self.selectNode(nodeId, true);
-      }
+
+    if (keyCode === 40) {
+      // DOWN
+      nodeId = elts[currentDomIndex + 1];
+    } else if (keyCode === 38) {
+      // UP
+      nodeId = elts[currentDomIndex - 1];
+    }
+
+    if (nodeId) {
+      nodeId = nodeId.substring(nodeId.lastIndexOf('-') + 1);
+      this.selectNode(nodeId, true);
     }
   }
 
   scrollToNode(nodeId: string | number) {
-    let self = this;
-    let el = self.rootElementDom.querySelector(
+    const el = this.rootElementDom.querySelector(
       '#tree-leaf-' + nodeId,
-    ) as HTMLElement;
+    ) as HTMLElement | null;
     if (el) {
-      scrollIntoView(el.parentNode as HTMLElement);
+      scrollIntoView(el);
     }
   }
 
   selectNode(nodeId: string | number, propagateEvent = true) {
-    let self = this;
-
     // Avoid redundant selection if the same node is already selected
-    if (self.currentSelectedNodeId === nodeId) {
-      return;
-    }
+    if (this.currentSelectedNodeId === nodeId) return;
 
-    let el = self.rootElementDom.querySelector('#' + self.node) as HTMLElement;
-    if (el) {
-      let nodes = el.querySelectorAll('.tree-leaf-text');
-      if (nodes) {
-        let currentNode: HTMLElement | undefined;
-        forEach(nodes, function (node: HTMLElement) {
-          if (node.id === nodeId.toString()) {
-            currentNode = node;
-          }
-        });
-        self.currentSelectedNodeId = nodeId;
+    const el = this.rootElementDom.querySelector(
+      '#' + this.node,
+    ) as HTMLElement | null;
+    if (!el) return;
 
-        if (currentNode && propagateEvent) {
-          // Click the node to select it and propagate event
-          currentNode.click();
-        } else {
-          // Select node without click propagation
-          forEach(nodes, function (node: HTMLElement) {
-            let parent = node.parentNode as HTMLElement;
-            parent.classList.remove('tree-selected');
-          });
-          if (currentNode?.parentNode) {
-            (currentNode.parentNode as HTMLElement).classList.add(
-              'tree-selected',
-            );
+    const nodes = el.querySelectorAll<HTMLElement>('.tree-leaf-text');
+    let currentNode: HTMLElement | undefined;
 
-            (currentNode.parentNode as any).scrollIntoViewIfNeeded({
-              // block: 'center'
-            });
-          }
-        }
+    nodes.forEach((node) => {
+      if (node.id === nodeId.toString()) {
+        currentNode = node;
+      }
+    });
+
+    this.currentSelectedNodeId = nodeId;
+
+    if (currentNode && propagateEvent) {
+      // Click the node to select it and propagate event
+      currentNode.click();
+    } else {
+      // Select node without click propagation
+      nodes.forEach((node) => {
+        (node.parentNode as HTMLElement).classList.remove('tree-selected');
+      });
+      if (currentNode?.parentNode) {
+        (currentNode.parentNode as HTMLElement).classList.add('tree-selected');
+        scrollIntoView(currentNode.parentNode as HTMLElement);
       }
     }
   }
 
   unselectNodes() {
-    let self = this;
-
-    setTimeout(function () {
+    setTimeout(() => {
       // When we make multiple nodes,
       // we must override simple select node selection with a timeout
-      let el = self.rootElementDom.querySelector(
-        '#' + self.node,
-      ) as HTMLElement;
-      if (el) {
-        let nodes = el.querySelectorAll('.tree-leaf-text');
-        if (nodes) {
-          forEach(nodes, function (node: HTMLElement) {
-            let parent = node.parentNode as HTMLElement;
-            parent.classList.remove('tree-selected');
-          });
-        }
-      }
+      const el = this.rootElementDom.querySelector(
+        '#' + this.node,
+      ) as HTMLElement | null;
+      if (!el) return;
+
+      el.querySelectorAll<HTMLElement>('.tree-leaf-text').forEach((node) => {
+        (node.parentNode as HTMLElement).classList.remove('tree-selected');
+      });
     });
   }
 
   selectNodes(nodesToSelect: any[]) {
-    let self = this;
-
-    setTimeout(function () {
+    setTimeout(() => {
       // When we make multiple nodes,
       // we must override simple select node selection with a timeout
-      let el = self.rootElementDom.querySelector(
-        '#' + self.node,
-      ) as HTMLElement;
-      if (el && nodesToSelect) {
-        let nodes = el.querySelectorAll('.tree-leaf-text');
-        if (nodes) {
-          forEach(nodes, function (node: HTMLElement) {
-            let parent = node.parentNode as HTMLElement;
-            parent.classList.remove('tree-selected');
-          });
+      const el = this.rootElementDom.querySelector(
+        '#' + this.node,
+      ) as HTMLElement | null;
+      if (!el || !nodesToSelect) return;
 
-          for (let i = 0; i < nodesToSelect.length; i++) {
-            let currentNodeToSelect = nodesToSelect[i];
+      const nodes = el.querySelectorAll<HTMLElement>('.tree-leaf-text');
 
-            let currentNode: HTMLElement | undefined;
-            forEach(nodes, function (node: HTMLElement) {
-              if (
-                node.id === currentNodeToSelect.nodeId &&
-                currentNodeToSelect.nodeId.toString()
-              ) {
-                currentNode = node;
-              }
-            });
-            self.currentSelectedNodeId = currentNodeToSelect.nodeId;
+      nodes.forEach((node) => {
+        (node.parentNode as HTMLElement).classList.remove('tree-selected');
+      });
 
-            // Select node without click propagation
-            if (currentNode && currentNode.parentNode) {
-              (currentNode.parentNode as HTMLElement).classList.add(
-                'tree-selected',
-              );
-              if (currentNodeToSelect.isTrusted) {
-                (currentNode.parentNode as any).scrollIntoViewIfNeeded({
-                  block: 'center',
-                });
-              }
-            }
+      for (const currentNodeToSelect of nodesToSelect) {
+        let currentNode: HTMLElement | undefined;
+
+        nodes.forEach((node) => {
+          if (node.id === currentNodeToSelect.nodeId?.toString()) {
+            currentNode = node;
+          }
+        });
+
+        this.currentSelectedNodeId = currentNodeToSelect.nodeId;
+
+        // Select node without click propagation
+        if (currentNode?.parentNode) {
+          (currentNode.parentNode as HTMLElement).classList.add(
+            'tree-selected',
+          );
+          if (currentNodeToSelect.isTrusted) {
+            scrollIntoView(currentNode.parentNode as HTMLElement);
           }
         }
       }
@@ -626,30 +569,55 @@ export default class TreeView {
   }
 
   getSelectedNodeId() {
-    let self = this;
-    return self.currentSelectedNodeId;
+    return this.currentSelectedNodeId;
+  }
+
+  getSelectedNodeName(): string | undefined {
+    if (this.currentSelectedNodeId === undefined) return undefined;
+
+    const el = this.rootElementDom.querySelector(
+      '#' + this.node,
+    ) as HTMLElement | null;
+    if (!el) return undefined;
+
+    const nodes = el.querySelectorAll<HTMLElement>('.tree-leaf-text');
+    let name: string | undefined;
+
+    nodes.forEach((node) => {
+      if (node.id === this.currentSelectedNodeId?.toString()) {
+        // Extract text content, excluding the edit button text
+        name = Array.from(node.childNodes)
+          .filter((child) => child.nodeType === Node.TEXT_NODE)
+          .map((child) => (child as Text).textContent)
+          .join('')
+          .trim();
+      }
+    });
+
+    return name;
   }
 
   toggleNode(nodeId: string | number, state: string, propagateEvent = true) {
-    let self = this;
-    let el = self.rootElementDom.querySelector('#' + self.node) as HTMLElement;
-    if (el) {
-      let nodes = el.querySelectorAll('.tree-expando');
-      if (nodes) {
-        let currentNode: HTMLElement | undefined;
-        forEach(nodes, function (node: HTMLElement) {
-          if (node.id === 'tree-expando-' + nodeId.toString()) {
-            currentNode = node;
-          }
-        });
-        if (currentNode && propagateEvent) {
-          if (
-            (state === 'collapse' && currentNode.textContent === '-') ||
-            (state === 'expand' && currentNode.textContent === '+')
-          ) {
-            currentNode.click();
-          }
-        }
+    const el = this.rootElementDom.querySelector(
+      '#' + this.node,
+    ) as HTMLElement | null;
+    if (!el) return;
+
+    const nodes = el.querySelectorAll<HTMLElement>('.tree-expando');
+    let currentNode: HTMLElement | undefined;
+
+    nodes.forEach((node) => {
+      if (node.id === 'tree-expando-' + nodeId.toString()) {
+        currentNode = node;
+      }
+    });
+
+    if (currentNode && propagateEvent) {
+      if (
+        (state === 'collapse' && currentNode.textContent === '-') ||
+        (state === 'expand' && currentNode.textContent === '+')
+      ) {
+        currentNode.click();
       }
     }
   }
@@ -660,35 +628,31 @@ export default class TreeView {
    * @param {DOMElement} leaves The leaves wrapper element
    */
   collapse(node: HTMLElement, leaves: HTMLElement, skipEmit?: boolean) {
-    let expando = node.querySelector('.tree-expando') as HTMLElement;
-    expando.textContent = '+';
-    let icon = node.querySelector('.tree-icon') as HTMLElement;
-    icon.textContent = 'folder';
+    const expando = node.querySelector('.tree-expando') as HTMLElement | null;
+    if (expando) expando.textContent = '+';
+    const icon = node.querySelector('.tree-icon') as HTMLElement | null;
+    if (icon) icon.textContent = 'folder';
     leaves.classList.add('hidden');
-    if (skipEmit) {
-      return;
-    }
-    let data = JSON.parse(node.getAttribute('data-item')!);
 
-    emit(this, 'collapse', {
-      data: data,
-    });
+    if (skipEmit) return;
+
+    const data = parseDataItem(node);
+    if (data) {
+      emit(this, 'collapse', { data });
+    }
   }
 
-  /**
-   */
   collapseAll() {
-    let self = this;
-    let nodes = self.rootElementDom
-      .querySelector('#' + self.node)!
-      .querySelectorAll('.tree-expando');
-    forEach(nodes, function (node: HTMLElement) {
-      let parent = node.parentNode as HTMLElement;
-      let leaves = parent.parentNode!.querySelector(
+    const el = this.rootElementDom.querySelector('#' + this.node);
+    if (!el) return;
+
+    el.querySelectorAll<HTMLElement>('.tree-expando').forEach((node) => {
+      const parent = node.parentNode as HTMLElement;
+      const leaves = parent.parentNode?.querySelector(
         '.tree-child-leaves',
-      ) as HTMLElement;
+      ) as HTMLElement | null;
       if (parent && leaves && parent.hasAttribute('data-item')) {
-        self.collapse(parent, leaves, true);
+        this.collapse(parent, leaves, true);
       }
     });
     emit(this, 'collapseAll', {});
@@ -705,10 +669,7 @@ export default class TreeView {
       if (!this.handlers[name]) {
         this.handlers[name] = [];
       }
-      this.handlers[name].push({
-        callback: callback,
-        context: scope,
-      });
+      this.handlers[name].push({ callback, context: scope });
     } else {
       throw new Error(name + ' is not supported by TreeView.');
     }
@@ -720,17 +681,12 @@ export default class TreeView {
    * @param {function} callback The function to deattach
    */
   off(name: string, callback: Function) {
-    let index: number,
-      found = false;
     if (this.handlers[name] instanceof Array) {
-      this.handlers[name].forEach(function (handle: EventHandler, i: number) {
-        index = i;
-        if (handle.callback === callback && !found) {
-          found = true;
-        }
-      });
-      if (found) {
-        this.handlers[name].splice(index!, 1);
+      const index = this.handlers[name].findIndex(
+        (handle) => handle.callback === callback,
+      );
+      if (index !== -1) {
+        this.handlers[name].splice(index, 1);
       }
     }
   }
