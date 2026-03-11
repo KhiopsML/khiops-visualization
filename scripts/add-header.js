@@ -59,19 +59,34 @@ const SUPPORTED_EXTENSIONS = ['ts', 'js', 'scss', 'html'];
 const HYPERTREE_DIR = path.normalize('src/app/khiops-hypertree');
 
 function headerExists(content) {
-  return content.includes(copyrightNotice) || content.includes(mitNotice);
+  return (
+    /Copyright \(c\) \d{4}-\d{4} Orange\./.test(content) ||
+    content.includes(mitNotice)
+  );
 }
 
 function getExt(filePath) {
   return path.extname(filePath).slice(1);
 }
 
+function updateYear(filePath) {
+  let content = fs.readFileSync(filePath, 'utf8');
+  const updated = content.replace(
+    /Copyright \(c\) (\d{4})-\d{4} Orange\./g,
+    `Copyright (c) $1-${currentYear} Orange.`,
+  );
+  if (updated !== content) {
+    fs.writeFileSync(filePath, updated, 'utf8');
+    console.log(`Année mise à jour : ${filePath}`);
+  }
+  return updated;
+}
+
 function addHeaderToFile(filePath, isHypertree) {
-  const content = fs.readFileSync(filePath, 'utf8');
+  const content = updateYear(filePath); // ← mise à jour d'abord
   const ext = getExt(filePath);
 
   if (headerExists(content)) {
-    console.log(`Header déjà présent : ${filePath}`);
     return;
   }
 
