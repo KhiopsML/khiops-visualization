@@ -278,6 +278,8 @@ This library is part of the Khiops ecosystem. For contributing guidelines, pleas
 
 This project is licensed under the MIT License - see the main project's [LICENSE](../../LICENSE) file for details.
 
+Based on [js-treeview](https://github.com/justinchmura/js-treeview) by Justin Chmura.
+
 ## 🔗 Related Projects
 
 - [Khiops Visualization](https://github.com/KhiopsML/khiops-visualization) - Main visualization component

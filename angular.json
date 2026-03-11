@@ -36,7 +36,6 @@
               "lodash",
               "pan-zoom",
               "clone-deep",
-              "@khiops-treeview/treeview",
               "typed-function",
               "seedrandom",
               "javascript-natural-sort",
@@ -51,10 +50,7 @@
             "tsConfig": "tsconfig.app.json",
             "inlineStyleLanguage": "scss",
             "assets": ["src/favicon.ico", "src/assets"],
-            "styles": [
-              "./libs/khiops-treeview/treeview.scss",
-              "src/styles.scss"
-            ],
+            "styles": ["src/styles.scss"],
             "scripts": []
           },
           "configurations": {
@@ -196,7 +192,6 @@
               "lodash",
               "pan-zoom",
               "clone-deep",
-              "@khiops-treeview",
               "typed-function",
               "seedrandom",
               "javascript-natural-sort",

@@ -14,7 +14,6 @@ import {
   AfterViewInit,
   Input,
 } from '@angular/core';
-import TreeView from '@khiops-treeview/treeview';
 import { SelectableComponent } from '@khiops-library/components/selectable/selectable.component';
 import { SelectableService } from '@khiops-library/components/selectable/selectable.service';
 
@@ -33,6 +32,7 @@ import {
   selectedNodeSelector,
 } from '@khiops-visualization/selectors/tree-preparation.selector';
 import { TreePreparationState } from '@khiops-visualization/model/tree-preparation-datas.model';
+import TreeView from '@khiops-treeview/treeview';
 
 @Component({
   selector: 'app-tree-select',
@@ -42,8 +42,7 @@ import { TreePreparationState } from '@khiops-visualization/model/tree-preparati
 })
 export class TreeSelectComponent
   extends SelectableComponent
-  implements AfterViewInit, OnChanges
-{
+  implements AfterViewInit, OnChanges {
   @Input() public dimensionTree?: [TreeNodeModel];
 
   public componentType = COMPONENT_TYPES.KV_TREE; // needed to copy datas

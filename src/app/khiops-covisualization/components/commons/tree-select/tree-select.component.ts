@@ -14,7 +14,6 @@ import {
   AfterViewInit,
   Input,
 } from '@angular/core';
-import TreeView from '@khiops-treeview/treeview';
 import { DimensionCovisualizationModel } from '@khiops-library/model/dimension.covisualization.model';
 import { EventsService } from '@khiops-covisualization/providers/events.service';
 import { TreenodesService } from '@khiops-covisualization/providers/treenodes.service';
@@ -30,6 +29,7 @@ import {
   TreeViewUpdateNodeNameEventI,
 } from '@khiops-covisualization/interfaces/events';
 import { SaveService } from '@khiops-covisualization/providers/save.service';
+import TreeView from '@khiops-treeview/treeview';
 
 @Component({
   selector: 'app-tree-select',
@@ -39,8 +39,7 @@ import { SaveService } from '@khiops-covisualization/providers/save.service';
   standalone: false,
 })
 export class TreeSelectComponent
-  implements AfterViewInit, OnChanges, OnDestroy
-{
+  implements AfterViewInit, OnChanges, OnDestroy {
   @Input() public position: number = 0;
   @Input() private selectedDimension: DimensionCovisualizationModel | undefined;
   @Input() private selectedNode: TreeNodeModel | undefined;
