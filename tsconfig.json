@@ -20,6 +20,7 @@
     "types": ["jasmine", "node"],
     "paths": {
       "@khiops-library/*": ["./src/app/khiops-library/*"],
+      "@khiops-menu/*": ["./src/app/khiops-menu/*"],
       "@khiops-treeview/*": ["./src/app/khiops-treeview/*"],
       "@khiops-hypertree/*": ["./src/app/khiops-hypertree/*"],
       "@khiops-visualization/*": ["./src/app/khiops-visualization/*"],

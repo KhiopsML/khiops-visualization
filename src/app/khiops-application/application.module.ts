@@ -6,8 +6,8 @@
 
 import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { AppComponent } from './app.component';
-import { AppRoutingModule } from './app-routing.module';
+import { AppComponent } from './application.component';
+import { AppRoutingModule } from './application-routing.module';
 import { MatButtonModule } from '@angular/material/button';
 import { provideAngularSplitOptions } from 'angular-split';
 import { EffectsModule } from '@ngrx/effects';
@@ -15,7 +15,7 @@ import { StoreModule } from '@ngrx/store';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { TranslateModule, TranslateService } from '@ngstack/translate';
 // Translation data
-import EnTransaltion from '../assets/i18n/en.json';
+import EnTransaltion from '../../assets/i18n/en.json';
 import { ConfigService } from '@khiops-library/providers/config.service';
 @NgModule({
   declarations: [AppComponent],

@@ -10,7 +10,7 @@ const routes: Routes = [
   {
     path: '',
     loadChildren: () =>
-      import('./khiops-menu/menu.module').then((m) => m.MenuModule),
+      import('@khiops-menu/menu.module').then((m) => m.MenuModule),
   },
   {
     path: 'visualization',
