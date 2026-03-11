@@ -202,7 +202,9 @@ function render(self: TreeView) {
         .join('') ||
       node.textContent ||
       '';
-    input.setAttribute('placeholder', textContent.trim());
+    // feat: improve node name update placeholder #91
+    // input.setAttribute('placeholder', textContent.trim());
+    input.value = textContent.trim();
 
     const iconAccept = document.createElement('button');
     iconAccept.setAttribute('class', 'valid-rename edit-icons');
@@ -210,10 +212,7 @@ function render(self: TreeView) {
       <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/>
     </svg>`; // Modern check SVG
     iconAccept.onclick = function () {
-      let newName = input.value
-        .replace(/\./g, '') // dots are replaced by "-" in css
-        .replace(/ /g, '') // spaces are replaced by "-" in css
-        .replace(/[^\w\s]/gi, '-'); // replace all special chars
+      let newName = input.value;
 
       if (newName !== '') {
         // change current node name - preserve the edit button
