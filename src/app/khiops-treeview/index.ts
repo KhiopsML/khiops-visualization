@@ -1,2 +1,12 @@
+/*
+ * Based on js-treeview by Justin Chmura
+ * MIT License - Copyright (c) 2014 Justin Chmura
+ * https://github.com/justinchmura/js-treeview
+ *
+ * Modifications: Copyright (c) 2023-2026 Orange. All rights reserved.
+ * This software is distributed under the BSD 3-Clause-clear License, the text of which is available
+ * at https://spdx.org/licenses/BSD-3-Clause-Clear.html or see the "LICENSE" file for more details.
+ */
+
 export { default as TreeView } from './treeview';
 export { default } from './treeview';
