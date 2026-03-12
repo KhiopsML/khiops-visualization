@@ -7,7 +7,7 @@
 // @ts-nocheck
 import { TestBed } from '@angular/core/testing';
 import { provideHttpClient } from '@angular/common/http';
-import { CopyDatasService } from '@khiops-library/providers/copy-datas.service';
+import { CopyService } from '@khiops-library/providers/copy-datas.service';
 import { ConfigService } from '@khiops-library/providers/config.service';
 import { UtilsService } from '@khiops-library/providers/utils.service';
 import { TranslateModule, TranslateService } from '@ngstack/translate';
@@ -16,18 +16,18 @@ import { AppConfig } from '../../environments/environment';
 import { COMPONENT_TYPES } from '@khiops-library/enum/component-types';
 import { ChartOptions } from 'chart.js';
 
-describe('CopyDatasService', () => {
-  let service: CopyDatasService;
+describe('CopyService', () => {
+  let service: CopyService;
   let configService: ConfigService;
   let translateService: TranslateService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [TranslateModule.forRoot()],
-      providers: [provideHttpClient(), CopyDatasService, ConfigService],
+      providers: [provideHttpClient(), CopyService, ConfigService],
     });
 
-    service = TestBed.inject(CopyDatasService);
+    service = TestBed.inject(CopyService);
     configService = TestBed.inject(ConfigService);
     translateService = TestBed.inject(TranslateService);
 
@@ -745,18 +745,18 @@ describe('CopyDatasService', () => {
  * Additional tests with real data scenarios
  * These tests use realistic data structures as they would appear in the actual application
  */
-describe('CopyDatasService - Real Data Tests', () => {
-  let service: CopyDatasService;
+describe('CopyService - Real Data Tests', () => {
+  let service: CopyService;
   let configService: ConfigService;
   let translateService: TranslateService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [TranslateModule.forRoot()],
-      providers: [provideHttpClient(), CopyDatasService, ConfigService],
+      providers: [provideHttpClient(), CopyService, ConfigService],
     });
 
-    service = TestBed.inject(CopyDatasService);
+    service = TestBed.inject(CopyService);
     configService = TestBed.inject(ConfigService);
     translateService = TestBed.inject(TranslateService);
 

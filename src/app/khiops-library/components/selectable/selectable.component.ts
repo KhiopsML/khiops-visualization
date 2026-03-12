@@ -9,6 +9,7 @@ import {
   Input,
   AfterViewInit,
   OnDestroy,
+  HostBinding,
   HostListener,
   ChangeDetectionStrategy,
   NgZone,
@@ -29,6 +30,9 @@ export class SelectableComponent
 {
   @Input() public override id: string | undefined = undefined;
   private selectedServiceChangeSub: Subscription;
+
+  // Add 'kl-selectable' class to the host
+  @HostBinding('class.kl-selectable') readonly isSelectable = true;
 
   constructor(
     public selectableService: SelectableService,

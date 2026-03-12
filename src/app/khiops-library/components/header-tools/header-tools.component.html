@@ -39,10 +39,10 @@
     (click)="copyImage()"
     attr.aria-label="{{ 'GLOBAL.COPY_IMAGE' | translate }}"
   >
-    @if (!isCopyingImage) {
+    @if (!(copyImageService.isCopyingImage$ | async)) {
       <mat-icon fxFlexFill fxLayoutAlign="center center">filter</mat-icon>
     }
-    @if (isCopyingImage) {
+    @if (copyImageService.isCopyingImage$ | async) {
       <mat-spinner
         fxFlexFill
         fxLayoutAlign="center center"

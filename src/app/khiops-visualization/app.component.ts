@@ -29,6 +29,10 @@ import { ConfigModel } from '@khiops-library/model/config.model';
 import { InAppOverlayContainer } from '@khiops-library/overlay/in-app-overlay-provider';
 import { AppConfig } from '../../environments/environment';
 import { BaseDragDropComponent } from '@khiops-library/components/base-drag-drop/base-drag-drop.component';
+import { UtilsService } from '../khiops-library/providers/utils.service';
+import { CopyDatasService } from '@khiops-library/providers/copy.datas.service';
+import { CopyImageService } from '@khiops-library/providers/copy.image.service';
+
 @Component({
   selector: 'app-root-visualization',
   styleUrls: ['./app.component.scss'],
@@ -59,6 +63,8 @@ export class AppComponent
     private trackerService: TrackerService,
     fileLoaderService: FileLoaderService,
     private element: ElementRef,
+    private copyImageService: CopyImageService,
+    private copyDatasService: CopyDatasService,
   ) {
     super(ngzone, fileLoaderService, configService);
     // Set LS_ID first before any initialization that uses localStorage
@@ -102,6 +108,18 @@ export class AppComponent
         });
       });
     };
+
+    this.element.nativeElement.rightClick = (e: any, cb?: Function) => {
+      UtilsService.processRightClick(e.x, e.y);
+      cb && cb(e);
+    };
+    this.element.nativeElement.copyImage = (_e: any, _cb?: Function) => {
+      this.copyImageService.copyImage();
+    };
+    this.element.nativeElement.copyDatas = (_e: any, _cb?: Function) => {
+      this.copyDatasService.copyDatas();
+    };
+
     this.element.nativeElement.openSaveBeforeQuitDialog = (cb: Function) => {
       // For visualization component, quit directly without confirmation
       cb('reject');

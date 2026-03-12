@@ -8,24 +8,24 @@ import { TestBed } from '@angular/core/testing';
 
 import { PreparationDatasService } from '@khiops-visualization/providers/preparation-datas.service';
 import { provideHttpClient } from '@angular/common/http';
-import { CopyDatasService } from '@khiops-library/providers/copy-datas.service';
+import { CopyService } from '@khiops-library/providers/copy-datas.service';
 import { TranslateModule } from '@ngstack/translate';
 import { AppConfig } from '../../environments/environment';
 
 let preparationDatasService: PreparationDatasService;
-let copyDatasService: CopyDatasService;
+let copyService: CopyService;
 
 describe('Visualization', () => {
   describe('PreparationDatasService', () => {
     beforeEach(() => {
       TestBed.configureTestingModule({
         imports: [TranslateModule.forRoot()],
-  providers: [provideHttpClient()],
+        providers: [provideHttpClient()],
       });
 
       // Inject services
       preparationDatasService = TestBed.inject(PreparationDatasService);
-      copyDatasService = TestBed.inject(CopyDatasService);
+      copyService = TestBed.inject(CopyService);
       preparationDatasService.initialize();
 
       // Set precision to 8 for all tests to maintain compatibility with existing expectations
@@ -73,7 +73,7 @@ describe('Visualization', () => {
       };
 
       const intervalDatas =
-        copyDatasService.getInformationsDatas(currentSelectedArea);
+        copyService.getInformationsDatas(currentSelectedArea);
       const expectedRes =
         'Summary\nGLOBAL.DICTIONARY\t20210303.result.models.021\t\nGLOBAL.DATABASE\tC:\\Users\\yfco6286\\Desktop\\LAROSE Cyril\\essai_07\\20210303.result.models.021.csv\t\nGLOBAL.TARGET_VARIABLE\ttypologie des contenus\t\nGLOBAL.INSTANCES\t123\t\nGLOBAL.LEARNING_TASK\tClassification analysis\t\nGLOBAL.SAMPLE_PERCENTAGE\t70\t\nGLOBAL.SAMPLING_MODE\tInclude sample\t\nGLOBAL.EVALUATED_VARIABLES\t175\t\n';
       expect(JSON.stringify(intervalDatas)).toEqual(
@@ -105,7 +105,7 @@ describe('Visualization', () => {
       };
 
       const intervalDatas =
-        copyDatasService.getInformationsDatas(currentSelectedArea);
+        copyService.getInformationsDatas(currentSelectedArea);
       const expectedRes =
         'Informations\nGLOBAL.EVALUATED_VARIABLES\t175\t\nGLOBAL.INFORMATIVE_VARIABLES\t21\t\nGLOBAL.DISCRETIZATION\tMODL\t\nGLOBAL.VALUE_GROUPING\tMODL\t\n';
       expect(JSON.stringify(intervalDatas)).toEqual(
@@ -138,7 +138,7 @@ describe('Visualization', () => {
       };
 
       const intervalDatas =
-        copyDatasService.getNdBarChartDatas(currentSelectedArea);
+        copyService.getNdBarChartDatas(currentSelectedArea);
       const expectedRes =
         'Global target distribution\nless\tmore\t\n0.76163165\t0.23836835\t\n';
       expect(JSON.stringify(intervalDatas)).toEqual(

@@ -1752,4 +1752,55 @@ export class UtilsService {
   static isSmallScreen() {
     return window.innerWidth <= 1440 || window.innerHeight <= 1080;
   }
+
+  /**
+   * Simulates a right-click event at the specified coordinates.
+   * This method finds the deepest element at the given coordinates and dispatches a custom 'trustedClick' event.
+   * @param x - The x-coordinate of the click event.
+   * @param y - The y-coordinate of the click event.
+   */
+  static processRightClick(x: number, y: number) {
+    const getDeepestElement = (
+      x: number,
+      y: number,
+      root: Document | ShadowRoot = document,
+    ): Element | null => {
+      const el = root.elementFromPoint(x, y);
+      if (!el) return null;
+      if (el.shadowRoot) {
+        return getDeepestElement(x, y, el.shadowRoot) ?? el;
+      }
+      return el;
+    };
+
+    const findClosestSelectableElement = (el: Element): Element | null => {
+      let current: Element | null = el;
+      while (current) {
+        if (current.classList.contains('kl-selectable')) {
+          return current;
+        }
+        if (current.parentElement) {
+          current = current.parentElement;
+        } else {
+          // Traverse shadow DOM boundary
+          const root = current.getRootNode();
+          current = root instanceof ShadowRoot ? root.host : null;
+        }
+      }
+      return null;
+    };
+
+    const elementAtCoords = getDeepestElement(x, y);
+
+    if (elementAtCoords) {
+      const selectableElement = findClosestSelectableElement(elementAtCoords);
+      const targetElement = selectableElement ?? elementAtCoords;
+      const trustedClick = new CustomEvent('trustedClick', {
+        bubbles: true,
+        cancelable: true,
+        composed: true,
+      });
+      targetElement.dispatchEvent(trustedClick);
+    }
+  }
 }

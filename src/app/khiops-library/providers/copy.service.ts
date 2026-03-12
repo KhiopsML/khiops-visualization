@@ -15,7 +15,7 @@ import { COMPONENT_TYPES } from '@khiops-library/enum/component-types';
 @Injectable({
   providedIn: 'root',
 })
-export class CopyDatasService {
+export class CopyService {
   constructor(
     private translate: TranslateService,
     private configService: ConfigService,
