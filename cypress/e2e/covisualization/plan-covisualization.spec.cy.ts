@@ -110,17 +110,22 @@ describe('Test Plan for Khiops Covisualization', () => {
 
         // Rename node
         cy.get('#tree_0').find('.edit-button:eq(1)').click();
-        cy.get('.tree-leaf-text-input input').type('renamed');
+
+        // First remove input content
+        cy.get('.tree-leaf-text-input input').clear({ force: true });
+
+        const newName = 'renamed,.[({';
+        cy.get('.tree-leaf-text-input input').type(newName);
         cy.get('#tree_0').find('.valid-rename').click();
 
         // Check renamed name into all components
-        cy.get('#cluster-details-grid-0').contains('renamed');
+        cy.get('#cluster-details-grid-0').contains(newName);
         if (!isNumericalDimension(datas, 0)) {
-          cy.get('#cluster-composition-0').contains('renamed');
+          cy.get('#cluster-composition-0').contains(newName);
         }
-        cy.get('#cluster-distribution-1').contains('renamed');
-        cy.get('#selected-clusters-grid').contains('renamed');
-        cy.get('#cluster-annotation-0').contains('renamed');
+        cy.get('#cluster-distribution-1').contains(newName);
+        cy.get('#selected-clusters-grid').contains(newName);
+        cy.get('#cluster-annotation-0').contains(newName);
 
         // Open unfold Hierarchy view
         cy.get('.button-unfold-hierarchy').click();
