@@ -44,8 +44,6 @@ export function dfs2({ node, abortFilter, preAction, highway, idx = 0 }) {
     }
 }
 
-
-
 export function clone(o) {
   return JSON.parse(JSON.stringify(o));
 }
@@ -198,20 +196,13 @@ var CkmulCk = (a: Ck, b: Ck) => ({
   re: a.re * b.re - a.im * b.im,
   im: a.im * b.re + a.re * b.im,
 });
-var Ckpow = (a: number) => ({
-  re: Math.cos(a),
-  im: Math.sin(a),
-});
-var Cpow = Ckpow;
-var Clog = Cklog;
+
 var CkdivR = (p: Ck, s: number) => ({
   re: p.re / s,
   im: p.im / s,
 });
 var CkdivCk = (a: Ck, b: Ck) => CkdivCkImpl2(a, b);
-var Cklog = (a: Ck) => CptoCk(Cplog(CktoCp(a)));
 
-var Cplog = (a: Cp) => CplogImpl(a);
 export var CassignC = CkassignCk;
 export var Cneg = Ckneg;
 var Ccon = Ckcon;
@@ -227,8 +218,6 @@ export var ArrtoC = (p: number[]) => ({
   im: p[1],
 });
 
-
-
 function CkdivCkImpl2(a: Ck, b: Ck) {
   var ap = CktoCp(a);
   var bp = CktoCp(b);
@@ -236,19 +225,6 @@ function CkdivCkImpl2(a: Ck, b: Ck) {
     re: (ap.r / bp.r) * Math.cos(ap.θ - bp.θ),
     im: (ap.r / bp.r) * Math.sin(ap.θ - bp.θ),
   };
-}
-
-function CplogImpl(a: Cp) {
-  if (isFinite(Math.log(a.r)))
-    return {
-      r: Math.log(a.r),
-      θ: a.θ,
-    };
-  else
-    return {
-      r: 0,
-      θ: 0,
-    };
 }
 
 export var CtoStr = (c: C) => `${c.re} ${c.im}`;

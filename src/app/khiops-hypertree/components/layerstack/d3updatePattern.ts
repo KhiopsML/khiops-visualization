@@ -67,7 +67,7 @@ export class D3UpdatePattern {
     }
 
     this.elements = this.elements.data(this.data, (d) => d && d.mergeId);
-    const removedElements = this.elements.exit().remove();
+    this.elements.exit().remove();
 
     const newElements = this.elements
       .enter()

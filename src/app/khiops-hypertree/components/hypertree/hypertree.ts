@@ -385,11 +385,11 @@ export class Hypertree {
     // for arc width and node radius in some cases, not flexible enough
     this.data.each(
       (n) =>
-      (n.precalc.weightScale =
-        (Math.log2(n.precalc.visWeight) || 1) /
-        (Math.log2(
-          this.data.precalc.visWeight || this.data.children.length,
-        ) || 1)),
+        (n.precalc.weightScale =
+          (Math.log2(n.precalc.visWeight) || 1) /
+          (Math.log2(
+            this.data.precalc.visWeight || this.data.children.length,
+          ) || 1)),
     );
   }
 

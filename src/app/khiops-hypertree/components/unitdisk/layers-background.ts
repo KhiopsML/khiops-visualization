@@ -52,7 +52,7 @@ export const navBackgroundLayers = [
       nodePos: (n: N) => (n.layoutReference || n.layout).z,
       nodePosStr: (n: N) => (n.layoutReference || n.layout).zStrCache,
       width: (n: N) => arcWidth(n),
-      classed: (s, w) => { },
+      classed: (s, w) => {},
     }),
   (v, ud: UnitDisk) =>
     new ArcLayer(v, {
@@ -63,7 +63,7 @@ export const navBackgroundLayers = [
       nodePos: (n: N) => (n.layoutReference || n.layout).z,
       nodePosStr: (n: N) => (n.layoutReference || n.layout).zStrCache,
       width: (d: N) => arcWidth(d) + 0.005 * d.dampedDistScale,
-      classed: (s, w) => { },
+      classed: (s, w) => {},
     }),
   (v, ud: UnitDisk) =>
     new ArcLayer(v, {

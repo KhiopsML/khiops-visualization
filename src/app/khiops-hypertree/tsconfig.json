@@ -2,15 +2,11 @@
   "extends": "../../../tsconfig.json",
   "compilerOptions": {
     "noImplicitAny": false,
-    "noUncheckedIndexedAccess": false,
+    "noUncheckedIndexedAccess": true,
     "noUnusedParameters": false,
-    "noUnusedLocals": false,
+    "noUnusedLocals": true,
     "noImplicitReturns": false,
-    "noPropertyAccessFromIndexSignature": false,
-    "forceConsistentCasingInFileNames": false,
     "strict": false,
-    "noImplicitOverride": false,
-    "noFallthroughCasesInSwitch": false,
     "skipLibCheck": true
   },
   "angularCompilerOptions": {
