@@ -8,13 +8,13 @@
     "name": "Orange",
     "email": "khiops.team@orange.com"
   },
-  "description": "Khiops Visualization component. Contains the code of Visualization and Covisualization tools",
+  "description": "Khiops Visualization is a powerful visualization plugin for the data preparation and scoring tool Khiops. It provides intuitive visualizations of analysis results, enabling quick and easy interpretation of discovered patterns in your data.",
   "repository": {
     "type": "git",
     "url": "https://github.com/KhiopsML/khiops-visualization.git"
   },
   "bugs": {
-    "url": "https://github.com/KhiopsML/khiops-visualization/issues"
+    "url": "https://github.com/KhiopsML/khiops-visualization-desktop/issues"
   },
   "homepage": "https://github.com/KhiopsML/khiops-visualization#readme"
 }

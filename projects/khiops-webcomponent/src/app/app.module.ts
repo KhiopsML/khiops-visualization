@@ -23,7 +23,7 @@ import { EffectsModule } from '@ngrx/effects';
 })
 export class AppModule {
   constructor(private injector: Injector) {
-    console.log('khiops-visulization - NPM Version: ', packageInfo?.version);
+    console.log('khiops-visualization - NPM Version: ', packageInfo?.version);
   }
   ngDoBootstrap() {
     const visuElement = createCustomElement(visualizationComponent, {
