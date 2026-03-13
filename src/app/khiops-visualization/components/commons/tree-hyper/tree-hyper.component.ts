@@ -19,10 +19,9 @@ import {
 import { SelectableComponent } from '@khiops-library/components/selectable/selectable.component';
 import { SelectableService } from '@khiops-library/components/selectable/selectable.service';
 import { TranslateService } from '@ngstack/translate';
-import * as hyt from '@khiops-hypertree/khiops-hypertree';
+import * as hyt from '@khiops-hypertree';
 import { UtilsService } from '@khiops-library/providers/utils.service';
 import { TreePreparationDatasService } from '@khiops-visualization/providers/tree-preparation-datas.service';
-import { Hypertree } from '@khiops-hypertree/khiops-hypertree';
 import { DistributionDatasService } from '@khiops-visualization/providers/distribution-datas.service';
 import { TreeNodeModel } from '@khiops-visualization/model/tree-node.model';
 import { ConfigService } from '@khiops-library/providers/config.service';
@@ -31,7 +30,7 @@ import { COMPONENT_TYPES } from '@khiops-library/enum/component-types';
 import { AppService } from '@khiops-visualization/providers/app.service';
 import { LS } from '@khiops-library/enum/ls';
 import { TreeHyperService } from './tree-hyper.service';
-import { N } from '@khiops-hypertree/models/n/n';
+import { Hypertree, N } from '@khiops-hypertree';
 import {
   TreePreparationDatasModel,
   TreePreparationState,

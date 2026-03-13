@@ -32,7 +32,7 @@ import {
   selectedNodeSelector,
 } from '@khiops-visualization/selectors/tree-preparation.selector';
 import { TreePreparationState } from '@khiops-visualization/model/tree-preparation-datas.model';
-import TreeView from '@khiops-treeview/khiops-treeview';
+import { TreeView } from '@khiops-treeview';
 
 @Component({
   selector: 'app-tree-select',

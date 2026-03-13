@@ -29,7 +29,7 @@ import {
   TreeViewUpdateNodeNameEventI,
 } from '@khiops-covisualization/interfaces/events';
 import { SaveService } from '@khiops-covisualization/providers/save.service';
-import TreeView from '@khiops-treeview/khiops-treeview';
+import { TreeView } from '@khiops-treeview';
 
 @Component({
   selector: 'app-tree-select',
