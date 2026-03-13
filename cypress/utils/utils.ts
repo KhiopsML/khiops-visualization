@@ -1,4 +1,6 @@
-export function isExplanatoryAnalysis(appDatas): boolean {
+import { VisualizationDatas } from '../../src/app/khiops-visualization/interfaces/app-datas';
+import { CovisualizationDatas } from '../../src/app/khiops-covisualization/interfaces/app-datas';
+export function isExplanatoryAnalysis(appDatas: VisualizationDatas): boolean {
   if (
     appDatas?.preparationReport?.variablesDetailedStatistics &&
     !appDatas?.bivariatePreparationReport
@@ -21,7 +23,7 @@ export function isExplanatoryAnalysis(appDatas): boolean {
   return false;
 }
 
-export function isRegressionAnalysis(appDatas): boolean {
+export function isRegressionAnalysis(appDatas: VisualizationDatas): boolean {
   if (
     appDatas?.trainEvaluationReport?.summary?.learningTask ===
     'Regression analysis'
@@ -36,7 +38,10 @@ export function isRegressionAnalysis(appDatas): boolean {
   }
 }
 
-export function isNumericalDimension(appDatas, dimensionIndex): boolean {
+export function isNumericalDimension(
+  appDatas: CovisualizationDatas,
+  dimensionIndex: number,
+): boolean {
   if (typeof appDatas === 'string') {
     appDatas = JSON.parse(appDatas);
   }
