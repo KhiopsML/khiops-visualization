@@ -35,5 +35,3 @@ yarn build --configuration production --stats-json
 ```bash
 npx webpack-bundle-analyzer dist/visualization-component/stats.json
 ```
-
-npx webpack-bundle-analyzer dist/visualization-component/stats.json
