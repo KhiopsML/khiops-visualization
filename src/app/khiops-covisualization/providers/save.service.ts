@@ -76,9 +76,10 @@ export class SaveService {
     const initialDatas: CovisualizationDatas = {
       tool: this.appService.initialDatas.tool,
       version: this.appService.initialDatas.version,
-      khiops_encoding: this.appService.initialDatas.khiops_encoding,
+      shortDescription: this.appService.initialDatas.shortDescription,
       // Reuse the reference to coclusteringReport because it will not be modified in this method
       coclusteringReport: this.appService.initialDatas.coclusteringReport,
+      khiops_encoding: this.appService.initialDatas.khiops_encoding,
       // savedDatas will be added below
       savedDatas: {},
     };

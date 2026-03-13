@@ -13,6 +13,7 @@ export interface AppDatasI {
 export interface CovisualizationDatas {
   tool: string;
   version: string;
+  shortDescription: string;
   coclusteringReport: CoclusteringReport;
   khiops_encoding: string;
   savedDatas: DynamicI;
