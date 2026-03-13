@@ -8,5 +8,5 @@
  * at https://spdx.org/licenses/BSD-3-Clause-Clear.html or see the "LICENSE" file for more details.
  */
 
-export { default as TreeView } from './treeview';
-export { default } from './treeview';
+export { default as TreeView } from './khiops-treeview';
+export { default } from './khiops-treeview';
