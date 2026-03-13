@@ -10,10 +10,10 @@
 
 'use strict';
 
-export const isPrimitive = (item: unknown) => typeof item !== 'object';
-export const isObject = (item: unknown) =>
+const isPrimitive = (item: unknown) => typeof item !== 'object';
+const isObject = (item: unknown) =>
   typeof item === 'object' && !Array.isArray(item);
-export const isArray = (item: unknown) =>
+const isArray = (item: unknown) =>
   typeof item === 'object' && Array.isArray(item);
 
 export const mergeDeep = (target: any, source: any): any => {

@@ -81,8 +81,3 @@ export class D3UpdatePattern {
       .call(this.args.updateColor);
   }
 }
-
-export const bboxCenter = (bbox: DOMRect) => ({
-  x: bbox.x + bbox.width / 2,
-  y: bbox.y + bbox.height / 2,
-});

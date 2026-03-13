@@ -8,7 +8,7 @@
  * at https://spdx.org/licenses/BSD-3-Clause-Clear.html or see the "LICENSE" file for more details.
  */
 
-export function dfs(n, fpre, idx?) {
+function dfs(n, fpre, idx?) {
   idx = idx || 0;
   if (!n) return [];
   if (fpre) fpre(n, idx);
@@ -44,16 +44,7 @@ export function dfs2({ node, abortFilter, preAction, highway, idx = 0 }) {
     }
 }
 
-export function dfsFlat2(n, f?) {
-  var r = [];
-  dfs2({
-    node: n,
-    abortFilter: f,
-    preAction: (n) => r.push(n),
-    highway: [],
-  });
-  return r;
-}
+
 
 export function clone(o) {
   return JSON.parse(JSON.stringify(o));
@@ -211,6 +202,8 @@ var Ckpow = (a: number) => ({
   re: Math.cos(a),
   im: Math.sin(a),
 });
+var Cpow = Ckpow;
+var Clog = Cklog;
 var CkdivR = (p: Ck, s: number) => ({
   re: p.re / s,
   im: p.im / s,
@@ -226,8 +219,6 @@ export var CaddC = CkaddC;
 export var CsubC = CksubCk;
 export var CmulR = CkmulR;
 var CmulC = CkmulCk;
-export var Cpow = Ckpow;
-export var Clog = Cklog;
 var CdivC = CkdivCk;
 export var CdivR = CkdivR;
 
@@ -236,9 +227,7 @@ export var ArrtoC = (p: number[]) => ({
   im: p[1],
 });
 
-export function ArrAddR(p: [number, number], s: number): [number, number] {
-  return [p[0] + s, p[1] + s];
-}
+
 
 function CkdivCkImpl2(a: Ck, b: Ck) {
   var ap = CktoCp(a);

@@ -12,8 +12,7 @@ import { N } from '../../models/n/n';
 import { C, CktoCp, CptoCk } from '../../models/transformation/hyperbolic-math';
 import { CaddC } from '../../models/transformation/hyperbolic-math';
 import { CtoStr } from '../../models/transformation/hyperbolic-math';
-// @ts-ignore
-import { bboxCenter } from '../layerstack/d3updatePattern';
+import { bboxCenter } from '../layers/label-layer';
 import { CellLayer } from '../layers/cell-layer';
 import { BackgroundLayer } from '../layers/background-layer';
 import { ArcLayer } from '../layers/link-layer';
