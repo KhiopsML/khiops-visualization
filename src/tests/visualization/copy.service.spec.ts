@@ -8,14 +8,14 @@ import { TestBed } from '@angular/core/testing';
 
 import { PreparationDatasService } from '@khiops-visualization/providers/preparation-datas.service';
 import { provideHttpClient } from '@angular/common/http';
-import { CopyService } from '@khiops-library/providers/copy.service';
+import { CopyService } from '../../app/khiops-library/providers/copy.service';
 import { TranslateModule } from '@ngstack/translate';
 import { AppConfig } from '../../environments/environment';
 
 let preparationDatasService: PreparationDatasService;
 let copyService: CopyService;
 
-describe('Visualization', () => {
+describe('Copy service', () => {
   describe('PreparationDatasService', () => {
     beforeEach(() => {
       TestBed.configureTestingModule({

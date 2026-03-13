@@ -7,7 +7,7 @@
 // @ts-nocheck
 import { TestBed } from '@angular/core/testing';
 import { provideHttpClient } from '@angular/common/http';
-import { CopyService } from '@khiops-library/providers/copy-datas.service';
+import { CopyDatasService } from '@khiops-library/providers/copy.datas.service';
 import { ConfigService } from '@khiops-library/providers/config.service';
 import { UtilsService } from '@khiops-library/providers/utils.service';
 import { TranslateModule, TranslateService } from '@ngstack/translate';
@@ -16,18 +16,18 @@ import { AppConfig } from '../../environments/environment';
 import { COMPONENT_TYPES } from '@khiops-library/enum/component-types';
 import { ChartOptions } from 'chart.js';
 
-describe('CopyService', () => {
-  let service: CopyService;
+describe('CopyDatasService', () => {
+  let service: CopyDatasService;
   let configService: ConfigService;
   let translateService: TranslateService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [TranslateModule.forRoot()],
-      providers: [provideHttpClient(), CopyService, ConfigService],
+      providers: [provideHttpClient(), CopyDatasService, ConfigService],
     });
 
-    service = TestBed.inject(CopyService);
+    service = TestBed.inject(CopyDatasService);
     configService = TestBed.inject(ConfigService);
     translateService = TestBed.inject(TranslateService);
 
