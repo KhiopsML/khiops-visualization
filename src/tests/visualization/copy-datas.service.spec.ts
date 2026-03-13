@@ -8,7 +8,7 @@ import { TestBed } from '@angular/core/testing';
 
 import { PreparationDatasService } from '@khiops-visualization/providers/preparation-datas.service';
 import { provideHttpClient } from '@angular/common/http';
-import { CopyService } from '@khiops-library/providers/copy-datas.service';
+import { CopyService } from '@khiops-library/providers/copy.service';
 import { TranslateModule } from '@ngstack/translate';
 import { AppConfig } from '../../environments/environment';
 
@@ -137,8 +137,7 @@ describe('Visualization', () => {
         },
       };
 
-      const intervalDatas =
-        copyService.getNdBarChartDatas(currentSelectedArea);
+      const intervalDatas = copyService.getNdBarChartDatas(currentSelectedArea);
       const expectedRes =
         'Global target distribution\nless\tmore\t\n0.76163165\t0.23836835\t\n';
       expect(JSON.stringify(intervalDatas)).toEqual(
