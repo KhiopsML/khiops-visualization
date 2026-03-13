@@ -10,7 +10,7 @@
 
 import { N } from '../n/n';
 import { layoutBergé } from '../n/n-layouts';
-import { HyperbolicTransformation } from '../../d3-hypertree';
+import { HyperbolicTransformation } from '../../khiops-hypertree';
 import { HypertreeArgs } from './model';
 import { UnitDisk } from '../../components/unitdisk/unitdisk';
 import { Hypertree } from '../../components/hypertree/hypertree';

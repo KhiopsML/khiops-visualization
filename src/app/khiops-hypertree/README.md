@@ -6,36 +6,6 @@ A customized fork of [d3-hypertree](https://glouwa.github.io/d3-hypertree/) spec
 
 This library is an integral part of the [Khiops Visualization](https://github.com/KhiopsML/khiops-visualization) ecosystem, providing interactive hyperbolic tree visualizations for complex hierarchical datasets. It extends the original d3-hypertree with Khiops-specific features and optimizations.
 
-## 📦 Installation
-
-```bash
-# Install dependencies
-yarn install
-```
-
-## 🛠️ Development
-
-### Build
-
-```bash
-# Build the library
-yarn build
-```
-
-### Development Mode
-
-```bash
-# Start development server
-yarn start
-```
-
-For live reload integration with the main visualization component:
-
-```bash
-# In the root visualization-component directory
-yarn start
-```
-
 ## 🔗 Resources
 
 - [Original d3-hypertree API Reference](https://github.com/glouwa/d3-hypertree/blob/master/docs/readme.md)

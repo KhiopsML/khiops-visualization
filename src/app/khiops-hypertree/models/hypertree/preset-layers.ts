@@ -21,7 +21,7 @@ import { LabelForceLayer } from '../../components/layers/label-force-layer';
 import { InteractionLayer } from '../../components/layers/interaction-layer';
 import { InteractionLayer2 } from '../../components/layers/interaction-layer-2';
 import { FocusLayer } from '../../components/layers/focus-layer';
-import { bboxCenter, bboxOval } from '../../d3-hypertree';
+import { bboxCenter, bboxOval } from '../../khiops-hypertree';
 
 export const labeloffsets = {
   centerOffset: (cache: string) => (d: N, i, v) => bboxCenter(d, cache),

@@ -9,8 +9,8 @@
  */
 
 import { LayerStack } from './layerstack';
-import { UnitDisk } from '../../d3-hypertree';
-import { Hypertree } from '../../d3-hypertree';
+import { UnitDisk } from '../../khiops-hypertree';
+import { Hypertree } from '../../khiops-hypertree';
 
 export interface ILayerView {
   parent;
