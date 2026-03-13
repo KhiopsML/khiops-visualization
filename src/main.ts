@@ -9,7 +9,7 @@ import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 
 import { AppConfig } from './environments/environment';
 import { suppressAsSplitWarnings } from './utils/console-suppressors';
-import { AppModule } from './app/khiops-application/application.module';
+import { AppModule } from './app/khiops-application/khiops-application.module';
 
 suppressAsSplitWarnings();
 

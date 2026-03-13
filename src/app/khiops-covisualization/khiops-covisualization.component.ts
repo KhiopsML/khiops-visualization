@@ -12,20 +12,22 @@ import {
   AfterViewInit,
   NgZone,
 } from '@angular/core';
+import { ConfirmDialogComponent } from '@khiops-library/components/confirm-dialog/confirm-dialog.component';
 import { TranslateService } from '@ngstack/translate';
 import {
   MatDialogRef,
   MatDialog,
   MatDialogConfig,
 } from '@angular/material/dialog';
-import { ConfirmDialogComponent } from '@khiops-library/components/confirm-dialog/confirm-dialog.component';
 import { AppService } from './providers/app.service';
 import { ConfigService } from '@khiops-library/providers/config.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { TreenodesService } from './providers/treenodes.service';
 import { TrackerService } from '@khiops-library/providers/tracker.service';
-import { SaveService } from './providers/save.service';
 import { FileLoaderService } from '@khiops-library/providers/file-loader.service';
-import { VisualizationDatas } from './interfaces/app-datas';
+import { CovisualizationDatas } from './interfaces/app-datas';
 import { ConfigModel } from '@khiops-library/model/config.model';
+import { SaveService } from './providers/save.service';
 import { InAppOverlayContainer } from '@khiops-library/overlay/in-app-overlay-provider';
 import { AppConfig } from '../../environments/environment';
 import { BaseDragDropComponent } from '@khiops-library/components/base-drag-drop/base-drag-drop.component';
@@ -34,9 +36,9 @@ import { CopyDatasService } from '@khiops-library/providers/copy.datas.service';
 import { CopyImageService } from '@khiops-library/providers/copy.image.service';
 
 @Component({
-  selector: 'app-root-visualization',
-  styleUrls: ['./app.component.scss'],
-  templateUrl: './app.component.html',
+  selector: 'app-root-covisualization',
+  styleUrls: ['./khiops-covisualization.component.scss'],
+  templateUrl: './khiops-covisualization.component.html',
   encapsulation: ViewEncapsulation.ShadowDom,
   standalone: false,
 })
@@ -44,7 +46,7 @@ export class AppComponent
   extends BaseDragDropComponent
   implements AfterViewInit
 {
-  appdatas: VisualizationDatas | undefined;
+  appdatas: CovisualizationDatas | undefined;
 
   @ViewChild('appElement', {
     static: false,
@@ -53,42 +55,56 @@ export class AppComponent
 
   constructor(
     private overlayContainer: InAppOverlayContainer,
-    private dialogRef: MatDialog,
     ngzone: NgZone,
-    private dialog: MatDialog,
+    private dialogRef: MatDialog,
     private appService: AppService,
-    private translate: TranslateService,
-    configService: ConfigService,
-    private saveService: SaveService,
+    private dialog: MatDialog,
+    private snackBar: MatSnackBar,
     private trackerService: TrackerService,
+    configService: ConfigService,
+    private translate: TranslateService,
     fileLoaderService: FileLoaderService,
+    private treenodesService: TreenodesService,
+    private saveService: SaveService,
     private element: ElementRef,
     private copyImageService: CopyImageService,
     private copyDatasService: CopyDatasService,
   ) {
     super(ngzone, fileLoaderService, configService);
     // Set LS_ID first before any initialization that uses localStorage
-    AppService.Ls.setLsId(AppConfig.visualizationCommon.GLOBAL.LS_ID);
+    AppService.Ls.setLsId(AppConfig.covisualizationCommon.GLOBAL.LS_ID);
     // Now we can safely initialize the app service
     this.appService.initialize();
   }
 
   ngAfterViewInit(): void {
-    this.configService.setRootElement(this.appElement!);
+    this.configService.setRootElement(this.appElement);
     this.element.nativeElement.getDatas = () =>
       this.saveService.constructDatasToSave();
-    this.element.nativeElement.setDatas = (
-      datas: VisualizationDatas | undefined,
-    ) => {
+    this.element.nativeElement.setDatas = (datas: CovisualizationDatas) => {
       // Set data into ngzone to detect change into another context (electron for instance)
       this.ngzone.run(() => {
-        this.clean();
-        // @ts-ignore
         this.appdatas = {
           ...datas,
         };
         this.element.nativeElement.value = datas;
         this.fileLoaderService.setDatas(datas);
+      });
+    };
+    this.element.nativeElement.openSaveBeforeQuitDialog = (cb: Function) => {
+      this.dialogRef.closeAll();
+      this.ngzone.run(() => {
+        const config = new MatDialogConfig();
+        const dialogRef: MatDialogRef<ConfirmDialogComponent> =
+          this.dialog.open(ConfirmDialogComponent, config);
+        dialogRef.componentInstance.message = this.translate.get(
+          'GLOBAL.SAVE_BEFORE_QUIT',
+        );
+        dialogRef.componentInstance.displayRejectBtn = true;
+
+        dialogRef.afterClosed().subscribe((e) => {
+          cb(e);
+        });
       });
     };
     this.element.nativeElement.openChannelDialog = (cb: Function) => {
@@ -120,13 +136,16 @@ export class AppComponent
       this.copyDatasService.copyDatas();
     };
 
-    this.element.nativeElement.openSaveBeforeQuitDialog = (cb: Function) => {
-      // For visualization component, quit directly without confirmation
-      cb('reject');
+    this.element.nativeElement.constructDatasToSave = () => {
+      return this.saveService.constructDatasToSave();
+    };
+    this.element.nativeElement.constructPrunedDatasToSave = () => {
+      const collapsedNodes = this.treenodesService.getSavedCollapsedNodes();
+      // #142 Remove collapsed nodes because datas are truncated
+      return this.saveService.constructSavedJson(collapsedNodes);
     };
     this.element.nativeElement.setConfig = (config: ConfigModel) => {
       AppService.Ls.setLsId(config.lsId);
-
       this.configService.setConfig(config);
 
       AppService.Ls.getAll().then(() => {
@@ -139,16 +158,18 @@ export class AppComponent
       // when reinstantiating the visualization component #32
       this.overlayContainer.createContainer();
     };
-    this.element.nativeElement.clean = () => {
+    this.element.nativeElement.snack = (
+      title: string,
+      duration: number,
+      panelClass: string,
+    ) => {
       this.ngzone.run(() => {
-        this.clean();
+        this.snackBar.open(title, undefined, {
+          duration: duration,
+          panelClass: panelClass,
+        });
       });
     };
-  }
-
-  clean() {
-    this.appdatas = undefined;
-    // Don't preserve data when explicitly cleaning
-    this.appService.initialize(false);
+    this.element.nativeElement.clean = () => (this.appdatas = undefined);
   }
 }

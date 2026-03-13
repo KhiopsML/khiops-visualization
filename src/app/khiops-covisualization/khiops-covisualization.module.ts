@@ -7,7 +7,7 @@
 import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { AppComponent } from './app.component';
+import { AppComponent } from './khiops-covisualization.component';
 import { HomeLayoutComponent } from './components/home-layout/homeLayout.component';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { KhiopsLibraryModule } from '@khiops-library/khiops-library.module';

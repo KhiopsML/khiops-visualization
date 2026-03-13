@@ -6,8 +6,8 @@
 
 import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { AppComponent } from './application.component';
-import { AppRoutingModule } from './application-routing.module';
+import { AppComponent } from './khiops-application.component';
+import { KhiopsApplicationRoutingModule } from './khiops-application-routing.module';
 import { MatButtonModule } from '@angular/material/button';
 import { provideAngularSplitOptions } from 'angular-split';
 import { EffectsModule } from '@ngrx/effects';
@@ -21,7 +21,7 @@ import { ConfigService } from '@khiops-library/providers/config.service';
   declarations: [AppComponent],
   imports: [
     BrowserModule,
-    AppRoutingModule,
+    KhiopsApplicationRoutingModule,
     MatButtonModule,
     StoreModule.forRoot({}),
     EffectsModule.forRoot([]),

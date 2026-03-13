@@ -8,7 +8,7 @@ import { CommonModule } from '@angular/common';
 import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { provideHttpClient } from '@angular/common/http';
-import { AppComponent } from './app.component';
+import { AppComponent } from './khiops-visualization.component';
 import { HomeLayoutComponent } from './components/home-layout/homeLayout.component';
 import { PreparationViewComponent } from './components/preparation-view/preparation-view.component';
 import { Preparation2dViewComponent } from './components/preparation-2d-view/preparation-2d-view.component';
@@ -53,7 +53,6 @@ import { LevelDistributionButtonComponent } from './components/commons/level-dis
 import { ChangeScaleButtonComponent } from './components/commons/change-scale-button/change-scale-button.component';
 import { ChangeScaleDialogComponent } from './components/commons/change-scale-dialog/change-scale-dialog.component';
 import { VisualizationRoutingModule } from './khiops-visualization-routing.module';
-
 @NgModule({
   declarations: [
     HistogramComponent,

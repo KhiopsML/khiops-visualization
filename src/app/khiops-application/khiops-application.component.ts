@@ -8,8 +8,8 @@ import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-root',
-  styleUrls: ['./application.component.scss'],
-  templateUrl: './application.component.html',
+  styleUrls: ['./khiops-application.component.scss'],
+  templateUrl: './khiops-application.component.html',
   standalone: false,
 })
 export class AppComponent {

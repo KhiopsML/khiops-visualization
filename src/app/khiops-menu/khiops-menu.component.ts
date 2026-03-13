@@ -7,11 +7,12 @@
 import { Component } from '@angular/core';
 
 @Component({
-  selector: 'app-library',
-  styleUrls: ['./library.component.scss'],
-  template: '',
+  selector: 'khiops-menu',
+  templateUrl: './khiops-menu.component.html',
+  styleUrls: ['./khiops-menu.component.scss'],
   standalone: false,
 })
-export class LibraryComponent {
-  // Component used to load styles
-}
+/**
+ * Main Menu component used to choose Visu or Covisu in dev mode
+ */
+export class KhiopsMenuComponent {}

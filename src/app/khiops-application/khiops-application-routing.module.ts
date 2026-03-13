@@ -10,7 +10,7 @@ const routes: Routes = [
   {
     path: '',
     loadChildren: () =>
-      import('@khiops-menu/menu.module').then((m) => m.MenuModule),
+      import('@khiops-menu/khiops-menu.module').then((m) => m.KhiopsMenuModule),
   },
   {
     path: 'visualization',
@@ -32,4 +32,4 @@ const routes: Routes = [
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule],
 })
-export class AppRoutingModule { }
+export class KhiopsApplicationRoutingModule {}

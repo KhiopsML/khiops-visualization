@@ -71,7 +71,7 @@ import { RowIdentifierPipe } from './pipes/row-identifie.pipe';
 import { ImportFileLoaderComponent } from './components/import-file-loader/import-file-loader.component';
 import { WatchResizeComponent } from './components/watch-resize/watch-resize.component';
 import { ConfirmDialogComponent } from './components/confirm-dialog/confirm-dialog.component';
-import { LibraryComponent } from './library.component';
+import { KhiopsLibraryComponent } from './khiops-library.component';
 import { BtnFullscreenComponent } from './components/btn-fullscreen/btn-fullscreen.component';
 import { MatrixToggleComponent } from './components/matrix-toggle/matrix-toggle.component';
 import { MatrixModeComponent } from './components/matrix-mode/matrix-mode.component';
@@ -141,7 +141,7 @@ import EnTransaltion from '../../assets/i18n/en.json';
     ClearLsComponent,
     NpmVersionComponent,
     ZoomToolsComponent,
-    LibraryComponent,
+    KhiopsLibraryComponent,
     CellStatsComponent,
     WatchResizeComponent,
     SelectableComponent,
@@ -191,7 +191,7 @@ import EnTransaltion from '../../assets/i18n/en.json';
     ClearLsComponent,
     NpmVersionComponent,
     ZoomToolsComponent, // Add missing component
-    LibraryComponent,
+    KhiopsLibraryComponent,
     CellStatsComponent,
     WatchResizeComponent,
     SelectableComponent,
