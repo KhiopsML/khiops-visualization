@@ -13,7 +13,7 @@ import { VIEW_LAYOUT } from '@khiops-covisualization/config/view-layout';
 import {
   AppDatasI,
   CovisualizationDatas,
-} from '@khiops-covisualization/interfaces/app-datas';
+} from '@khiops-covisualization/interfaces/app-datas.interface';
 import { UtilsService } from '@khiops-library/providers/utils.service';
 import { LS } from '@khiops-library/enum/ls';
 import { ConfigService } from '@khiops-library/providers/config.service';

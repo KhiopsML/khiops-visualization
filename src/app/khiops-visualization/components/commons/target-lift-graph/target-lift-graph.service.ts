@@ -11,9 +11,9 @@ import { EvaluationDatasService } from '@khiops-visualization/providers/evaluati
 import { KhiopsLibraryService } from '@khiops-library/providers/khiops-library.service';
 import { AppService } from '@khiops-visualization/providers/app.service';
 import { ChartDatasModel } from '@khiops-library/model/chart-datas.model';
-import { TargetLiftValuesI } from '@khiops-visualization/interfaces/target-lift-values';
-import { ChartColorsSetI } from '@khiops-library/interfaces/chart-colors-set';
-import { ChartToggleValuesI } from '@khiops-visualization/interfaces/chart-toggle-values';
+import { TargetLiftValuesI } from '@khiops-visualization/interfaces/target-lift-values.interface';
+import { ChartColorsSetI } from '@khiops-library/interfaces/chart-colors-set.interface';
+import { ChartToggleValuesI } from '@khiops-visualization/interfaces/chart-toggle-values.interface';
 import { LS } from '@khiops-library/enum/ls';
 import cloneDeep from 'lodash-es/cloneDeep';
 import { UtilsService } from '../../../../khiops-library/providers/utils.service';

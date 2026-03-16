@@ -19,7 +19,7 @@ import { MatrixUtilsService } from '@khiops-library/components/matrix/matrix.uti
 import {
   Cluster,
   DimensionHierarchy,
-} from '@khiops-covisualization/interfaces/app-datas';
+} from '@khiops-covisualization/interfaces/app-datas.interface';
 import { CellModel } from '@khiops-library/model/cell.model';
 import { MATRIX_MODES } from '@khiops-library/enum/matrix-modes';
 import { BarModel } from '../../khiops-visualization/model/bar.model';

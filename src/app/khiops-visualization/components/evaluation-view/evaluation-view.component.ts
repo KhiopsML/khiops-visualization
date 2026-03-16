@@ -13,7 +13,7 @@ import { EvaluationTypeModel } from '@khiops-visualization/model/evaluation-type
 import { TrackerService } from '../../../khiops-library/providers/tracker.service';
 import { LayoutService } from '@khiops-library/providers/layout.service';
 import { SplitGutterInteractionEvent } from 'angular-split';
-import { DynamicI } from '@khiops-library/interfaces/globals';
+import { DynamicI } from '@khiops-library/interfaces/globals.interface';
 
 @Component({
   selector: 'app-evaluation-view',

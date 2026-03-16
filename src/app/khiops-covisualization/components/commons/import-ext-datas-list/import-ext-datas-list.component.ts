@@ -17,7 +17,7 @@ import { ExtDatasModel } from '@khiops-covisualization/model/ext-datas.model';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { AppConfig } from '../../../../../../src/environments/environment';
 import { LoadExtDatasComponent } from '../load-ext-datas/load-ext-datas.component';
-import { GridDatasI } from '@khiops-library/interfaces/grid-datas';
+import { GridDatasI } from '@khiops-library/interfaces/grid-datas.interface';
 
 @Component({
   selector: 'app-import-ext-datas-list',

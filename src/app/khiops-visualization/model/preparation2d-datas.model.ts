@@ -6,7 +6,7 @@
 
 import { CellModel } from '@khiops-library/model/cell.model';
 import { Preparation2dVariableModel } from './preparation2d-variable.model';
-import { GridColumnsI } from '@khiops-library/interfaces/grid-columns';
+import { GridColumnsI } from '@khiops-library/interfaces/grid-columns.interface';
 import { MatrixDatasModel } from '@khiops-library/model/matrix-datas.model';
 
 export class Preparation2dDatasModel {

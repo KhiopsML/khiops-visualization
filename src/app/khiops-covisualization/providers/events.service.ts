@@ -5,7 +5,7 @@
  */
 
 import { Injectable, EventEmitter } from '@angular/core';
-import { TreeNodeChangedEventI } from '@khiops-covisualization/interfaces/events';
+import { TreeNodeChangedEventI } from '@khiops-covisualization/interfaces/events.interface';
 
 @Injectable({
   providedIn: 'root',

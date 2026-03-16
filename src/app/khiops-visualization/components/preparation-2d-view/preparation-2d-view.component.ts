@@ -18,14 +18,14 @@ import { LevelDistributionGraphComponent } from '@khiops-visualization/component
 import { TargetDistributionGraphComponent } from '@khiops-visualization/components/commons/target-distribution-graph/target-distribution-graph.component';
 import { ModelingDatasService } from '@khiops-visualization/providers/modeling-datas.service';
 import { TranslateService } from '@ngstack/translate';
-import { GridColumnsI } from '@khiops-library/interfaces/grid-columns';
+import { GridColumnsI } from '@khiops-library/interfaces/grid-columns.interface';
 import { ChartDatasModel } from '@khiops-library/model/chart-datas.model';
-import { InfosDatasI } from '@khiops-library/interfaces/infos-datas';
+import { InfosDatasI } from '@khiops-library/interfaces/infos-datas.interface';
 import { Preparation2dDatasModel } from '@khiops-visualization/model/preparation2d-datas.model';
 import { TrackerService } from '../../../khiops-library/providers/tracker.service';
 import { LayoutService } from '@khiops-library/providers/layout.service';
 import { SplitGutterInteractionEvent } from 'angular-split';
-import { DynamicI } from '@khiops-library/interfaces/globals';
+import { DynamicI } from '@khiops-library/interfaces/globals.interface';
 import { VariableModel } from '@khiops-visualization/model/variable.model';
 import { getPreparation2dVariablesGridColumns } from './preparation-2d-view.config';
 import { DistributionService } from '@khiops-visualization/providers/distribution.service';

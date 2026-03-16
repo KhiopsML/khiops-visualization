@@ -11,7 +11,7 @@ import { TranslateService } from '@ngstack/translate';
 import { FileModel } from '@khiops-library/model/file.model';
 import { CheckboxCellComponent } from '@khiops-library/components/ag-grid/checkbox-cell/checkbox-cell.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { GridCheckboxEventI } from '@khiops-library/interfaces/events';
+import { GridCheckboxEventI } from '@khiops-library/interfaces/events.interface';
 import { DimensionCovisualizationModel } from '@khiops-library/model/dimension.covisualization.model';
 
 @Component({

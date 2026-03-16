@@ -4,7 +4,7 @@
  * at https://spdx.org/licenses/BSD-3-Clause-Clear.html or see the "LICENSE" file for more details.
  */
 
-import { InfosDatasI } from './infos-datas';
+import { InfosDatasI } from './infos-datas.interface';
 import { DISPLAY_TYPE } from '../enum/info-data-types';
 
 /**

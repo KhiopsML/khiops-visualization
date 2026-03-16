@@ -24,7 +24,7 @@ import { TreenodesService } from '@khiops-covisualization/providers/treenodes.se
 import { ClustersService } from '@khiops-covisualization/providers/clusters.service';
 import { TreeNodeModel } from '@khiops-covisualization/model/tree-node.model';
 import { Subscription } from 'rxjs';
-import { DistributionOptionsI } from '@khiops-library/interfaces/distribution-options';
+import { DistributionOptionsI } from '@khiops-library/interfaces/distribution-options.interface';
 import { ChartDatasModel } from '@khiops-library/model/chart-datas.model';
 import { ConfigService } from '@khiops-library/providers/config.service';
 import { HistogramType } from '../../../../khiops-visualization/components/commons/histogram/histogram.type';

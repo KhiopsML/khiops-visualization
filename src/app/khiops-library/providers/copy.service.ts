@@ -8,7 +8,7 @@ import { ConfigService } from './config.service';
 import { Injectable } from '@angular/core';
 import { TranslateService } from '@ngstack/translate';
 import { UtilsService } from './utils.service';
-import { DynamicI } from '@khiops-library/interfaces/globals';
+import { DynamicI } from '@khiops-library/interfaces/globals.interface';
 import { AppConfig } from '../../../environments/environment';
 import { COMPONENT_TYPES } from '@khiops-library/enum/component-types';
 

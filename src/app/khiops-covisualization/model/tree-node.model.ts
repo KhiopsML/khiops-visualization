@@ -7,9 +7,9 @@
 import {
   Cluster,
   ValueGroup,
-} from '@khiops-covisualization/interfaces/app-datas';
+} from '@khiops-covisualization/interfaces/app-datas.interface';
 import { TYPES } from '@khiops-library/enum/types';
-import { DynamicI } from '@khiops-library/interfaces/globals';
+import { DynamicI } from '@khiops-library/interfaces/globals.interface';
 import { DimensionCovisualizationModel } from '@khiops-library/model/dimension.covisualization.model';
 import { UtilsService } from '@khiops-library/providers/utils.service';
 

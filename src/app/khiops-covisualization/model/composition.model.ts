@@ -8,7 +8,7 @@ import {
   DimensionCovisualization,
   DimensionPartition,
   ValueGroup,
-} from '@khiops-covisualization/interfaces/app-datas';
+} from '@khiops-covisualization/interfaces/app-datas.interface';
 import { ExtDatasModel } from './ext-datas.model';
 import { TreeNodeModel } from './tree-node.model';
 import { TYPES } from '@khiops-library/enum/types';

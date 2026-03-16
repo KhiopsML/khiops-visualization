@@ -11,7 +11,7 @@ import { SelectableService } from '@khiops-library/components/selectable/selecta
 import { DimensionCovisualizationModel } from '@khiops-library/model/dimension.covisualization.model';
 import { ConfigService } from '@khiops-library/providers/config.service';
 import { COMPONENT_TYPES } from '../../../../khiops-library/enum/component-types';
-import { DynamicI } from '@khiops-library/interfaces/globals';
+import { DynamicI } from '@khiops-library/interfaces/globals.interface';
 
 @Component({
   selector: 'app-external-datas',

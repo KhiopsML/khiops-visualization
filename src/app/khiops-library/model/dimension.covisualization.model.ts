@@ -4,13 +4,13 @@
  * at https://spdx.org/licenses/BSD-3-Clause-Clear.html or see the "LICENSE" file for more details.
  */
 
-import { DimensionVisualization } from '@khiops-visualization/interfaces/shared-interfaces';
+import { DimensionVisualization } from '@khiops-visualization/interfaces/shared-interfaces.interface';
 import {
   DimensionCovisualization,
   DimensionPartition,
   Interval,
   ValueGroup,
-} from '../../khiops-covisualization/interfaces/app-datas';
+} from '../../khiops-covisualization/interfaces/app-datas.interface';
 import { TYPES } from '@khiops-library/enum/types';
 
 export class DimensionCovisualizationModel implements DimensionCovisualization {

@@ -4,7 +4,7 @@
  * at https://spdx.org/licenses/BSD-3-Clause-Clear.html or see the "LICENSE" file for more details.
  */
 
-import { ModelingVariableStatistic } from '@khiops-visualization/interfaces/modeling-report';
+import { ModelingVariableStatistic } from '@khiops-visualization/interfaces/modeling-report.interface';
 import { UtilsService } from '@khiops-library/providers/utils.service';
 
 export class TrainedPredictorModel implements ModelingVariableStatistic {

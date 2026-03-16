@@ -16,15 +16,15 @@ import { EvaluationDatasService } from '@khiops-visualization/providers/evaluati
 import { TranslateService } from '@ngstack/translate';
 import { SelectableComponent } from '@khiops-library/components/selectable/selectable.component';
 import { SelectableService } from '@khiops-library/components/selectable/selectable.service';
-import { ChartColorsSetI } from '@khiops-library/interfaces/chart-colors-set';
+import { ChartColorsSetI } from '@khiops-library/interfaces/chart-colors-set.interface';
 import { ConfigService } from '@khiops-library/providers/config.service';
 import { ChartOptions } from 'chart.js';
 import { ChartDatasModel } from '@khiops-library/model/chart-datas.model';
 import { EvaluationDatasModel } from '@khiops-visualization/model/evaluation-datas.model';
-import { TargetLiftValuesI } from '@khiops-visualization/interfaces/target-lift-values';
+import { TargetLiftValuesI } from '@khiops-visualization/interfaces/target-lift-values.interface';
 import { COMPONENT_TYPES } from '@khiops-library/enum/component-types';
 import { EvaluationPredictorModel } from '@khiops-visualization/model/evaluation-predictor.model';
-import { ChartToggleValuesI } from '@khiops-visualization/interfaces/chart-toggle-values';
+import { ChartToggleValuesI } from '@khiops-visualization/interfaces/chart-toggle-values.interface';
 import { MatMenuTrigger } from '@angular/material/menu';
 import { TargetLiftGraphService } from './target-lift-graph.service';
 

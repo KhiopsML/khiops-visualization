@@ -11,7 +11,7 @@ import { CopyService } from '@khiops-library/providers/copy.service';
 import { ConfigService } from '@khiops-library/providers/config.service';
 import { UtilsService } from '@khiops-library/providers/utils.service';
 import { TranslateModule, TranslateService } from '@ngstack/translate';
-import { DynamicI } from '@khiops-library/interfaces/globals';
+import { DynamicI } from '@khiops-library/interfaces/globals.interface';
 import { AppConfig } from '../../environments/environment';
 import { COMPONENT_TYPES } from '@khiops-library/enum/component-types';
 import { ChartOptions } from 'chart.js';

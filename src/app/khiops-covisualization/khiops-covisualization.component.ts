@@ -25,7 +25,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { TreenodesService } from './providers/treenodes.service';
 import { TrackerService } from '@khiops-library/providers/tracker.service';
 import { FileLoaderService } from '@khiops-library/providers/file-loader.service';
-import { CovisualizationDatas } from './interfaces/app-datas';
+import { CovisualizationDatas } from './interfaces/app-datas.interface';
 import { ConfigModel } from '@khiops-library/model/config.model';
 import { SaveService } from './providers/save.service';
 import { InAppOverlayContainer } from '@khiops-library/overlay/in-app-overlay-provider';

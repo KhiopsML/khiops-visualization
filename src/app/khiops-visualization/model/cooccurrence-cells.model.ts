@@ -4,7 +4,7 @@
  * at https://spdx.org/licenses/BSD-3-Clause-Clear.html or see the "LICENSE" file for more details.
  */
 
-import { GridColumnsI } from '@khiops-library/interfaces/grid-columns';
+import { GridColumnsI } from '@khiops-library/interfaces/grid-columns.interface';
 import { CooccurrenceCellModel } from './cooccurrence-cell.model';
 import { AppService } from '@khiops-visualization/providers/app.service';
 

@@ -24,7 +24,7 @@ import { ConfigService } from '@khiops-library/providers/config.service';
 import { TrackerService } from '@khiops-library/providers/tracker.service';
 import { SaveService } from './providers/save.service';
 import { FileLoaderService } from '@khiops-library/providers/file-loader.service';
-import { VisualizationDatas } from './interfaces/app-datas';
+import { VisualizationDatas } from './interfaces/app-datas.interface';
 import { ConfigModel } from '@khiops-library/model/config.model';
 import { InAppOverlayContainer } from '@khiops-library/overlay/in-app-overlay-provider';
 import { AppConfig } from '../../environments/environment';

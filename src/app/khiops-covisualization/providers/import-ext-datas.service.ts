@@ -10,7 +10,7 @@ import { FileModel } from '@khiops-library/model/file.model';
 import { AppService } from './app.service';
 import { TranslateService } from '@ngstack/translate';
 import { ImportFileLoaderService } from '@khiops-library/components/import-file-loader/import-file-loader.service';
-import { ExtDatasFieldI } from '@khiops-covisualization/interfaces/ext-datas-field';
+import { ExtDatasFieldI } from '@khiops-covisualization/interfaces/ext-datas-field.interface';
 
 @Injectable({
   providedIn: 'root',

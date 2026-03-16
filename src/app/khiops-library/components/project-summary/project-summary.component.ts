@@ -7,7 +7,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { FileLoaderService } from '@khiops-library/providers/file-loader.service';
-import { InfosDatasI } from '@khiops-library/interfaces/infos-datas';
+import { InfosDatasI } from '@khiops-library/interfaces/infos-datas.interface';
 
 @Component({
   selector: 'kl-project-summary',

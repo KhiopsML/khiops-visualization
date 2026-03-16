@@ -21,13 +21,13 @@ import { Preparation2dDatasModel } from '../model/preparation2d-datas.model';
 import { CooccurrenceCellsModel } from '../model/cooccurrence-cells.model';
 import { InformationsModel } from '@khiops-visualization/model/informations.model';
 import { TYPES } from '@khiops-library/enum/types';
-import { InfosDatasI } from '@khiops-library/interfaces/infos-datas';
-import { MatrixRangeValuesI } from '@khiops-visualization/interfaces/matrix-range-values';
+import { InfosDatasI } from '@khiops-library/interfaces/infos-datas.interface';
+import { MatrixRangeValuesI } from '@khiops-visualization/interfaces/matrix-range-values.interface';
 import { VariableModel } from '@khiops-visualization/model/variable.model';
-import { GridColumnsI } from '@khiops-library/interfaces/grid-columns';
-import { MatrixModeI } from '@khiops-library/interfaces/matrix-mode';
+import { GridColumnsI } from '@khiops-library/interfaces/grid-columns.interface';
+import { MatrixModeI } from '@khiops-library/interfaces/matrix-mode.interface';
 import { MatrixValuesModel } from '@khiops-library/model/matrix-value.model';
-import { VariablePairStatistics } from '@khiops-visualization/interfaces/bivariate-preparation-report';
+import { VariablePairStatistics } from '@khiops-visualization/interfaces/bivariate-preparation-report.interface';
 import { DimensionVisualizationModel } from '@khiops-library/model/dimension.visualization.model';
 import { MatrixDatasModel } from '@khiops-library/model/matrix-datas.model';
 import { MATRIX_MODES } from '@khiops-library/enum/matrix-modes';
@@ -37,7 +37,7 @@ import {
   DimensionVisualization,
   InputValues,
   VariableDetail,
-} from '@khiops-visualization/interfaces/shared-interfaces';
+} from '@khiops-visualization/interfaces/shared-interfaces.interface';
 
 @Injectable({
   providedIn: 'root',

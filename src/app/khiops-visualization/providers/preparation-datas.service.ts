@@ -19,17 +19,17 @@ import { REPORT } from '@khiops-library/enum/report';
 import { TASKS } from '@khiops-library/enum/tasks';
 import { TYPES } from '@khiops-library/enum/types';
 import { PreparationDatasModel } from '@khiops-visualization/model/preparation-datas.model';
-import { InfosDatasI } from '@khiops-library/interfaces/infos-datas';
+import { InfosDatasI } from '@khiops-library/interfaces/infos-datas.interface';
 import { ChartDatasModel } from '@khiops-library/model/chart-datas.model';
-import { GridDatasI } from '@khiops-library/interfaces/grid-datas';
-import { GridColumnsI } from '../../khiops-library/interfaces/grid-columns';
-import { DynamicI } from '@khiops-library/interfaces/globals';
-import { TextPreparationVariableStatistic } from '@khiops-visualization/interfaces/text-preparation-report';
+import { GridDatasI } from '@khiops-library/interfaces/grid-datas.interface';
+import { GridColumnsI } from '../../khiops-library/interfaces/grid-columns.interface';
+import { DynamicI } from '@khiops-library/interfaces/globals.interface';
 import { TrainedPredictorModel } from '@khiops-visualization/model/trained-predictor.model';
-import { PreparationVariableStatistic } from '@khiops-visualization/interfaces/preparation-report';
-import { TreePreparationVariableStatistic } from '@khiops-visualization/interfaces/tree-preparation-report';
+import { PreparationVariableStatistic } from '@khiops-visualization/interfaces/preparation-report.interface';
+import { TreePreparationVariableStatistic } from '@khiops-visualization/interfaces/tree-preparation-report.interface';
 import { AppConfig } from '../../../environments/environment';
-import { VariableDetail } from '@khiops-visualization/interfaces/shared-interfaces';
+import { VariableDetail } from '@khiops-visualization/interfaces/shared-interfaces.interface';
+import { TextPreparationVariableStatistic } from '@khiops-visualization/interfaces/text-preparation-report.interface';
 
 @Injectable({
   providedIn: 'root',

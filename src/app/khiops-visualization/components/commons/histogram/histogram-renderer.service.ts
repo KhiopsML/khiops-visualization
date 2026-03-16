@@ -21,7 +21,7 @@ import { HistogramBarModel } from './histogram.bar.model';
 import { HistogramType } from './histogram.type';
 import { HistogramValuesI, RangeYLogI } from './histogram.interfaces';
 import { UtilsService } from '@khiops-library/providers/utils.service';
-import { DistributionOptionsI } from '@khiops-library/interfaces/distribution-options';
+import { DistributionOptionsI } from '@khiops-library/interfaces/distribution-options.interface';
 import { NumberFormatter } from '../../../providers/number.utils.service';
 
 /**

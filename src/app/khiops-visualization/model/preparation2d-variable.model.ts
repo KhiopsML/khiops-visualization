@@ -6,7 +6,7 @@
 
 import { VARIABLE_TYPES } from '@khiops-library/enum/variable-types';
 import { UtilsService } from '@khiops-library/providers/utils.service';
-import { VariablePairStatistics } from '@khiops-visualization/interfaces/bivariate-preparation-report';
+import { VariablePairStatistics } from '@khiops-visualization/interfaces/bivariate-preparation-report.interface';
 
 export class Preparation2dVariableModel implements VariablePairStatistics {
   _id: string;

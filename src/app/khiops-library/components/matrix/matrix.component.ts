@@ -25,7 +25,7 @@ import { MatrixUiService } from './matrix.ui.service';
 import { CellModel } from '../../model/cell.model';
 import { ConfigService } from '@khiops-library/providers/config.service';
 import { TreeNodeModel } from '../../../khiops-covisualization/model/tree-node.model';
-import { MatrixModeI } from '@khiops-library/interfaces/matrix-mode';
+import { MatrixModeI } from '@khiops-library/interfaces/matrix-mode.interface';
 import { Subscription } from 'rxjs';
 import { EventsService } from '../../../khiops-covisualization/providers/events.service';
 import { COMPONENT_TYPES } from '@khiops-library/enum/component-types';
@@ -35,7 +35,7 @@ import { MatrixUtilsService } from './matrix.utils.service';
 import { MatrixRendererService } from './matrix.renderer.service';
 import { MatrixSelectionService } from './matrix-selection.service';
 import { MatrixCursorService } from './matrix.cursor.service';
-import { DynamicI } from '@khiops-library/interfaces/globals';
+import { DynamicI } from '@khiops-library/interfaces/globals.interface';
 import { ZoomToolsEventsService } from '../zoom-tools/zoom-tools.service';
 import { UtilsService } from '@khiops-library/providers/utils.service';
 

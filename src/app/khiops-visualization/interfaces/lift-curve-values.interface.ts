@@ -4,7 +4,7 @@
  * at https://spdx.org/licenses/BSD-3-Clause-Clear.html or see the "LICENSE" file for more details.
  */
 
-import { LiftCurveSerieI } from './lift-curve-serie';
+import { LiftCurveSerieI } from './lift-curve-serie.interface';
 
 export interface LiftCurveValuesI {
   name: string;

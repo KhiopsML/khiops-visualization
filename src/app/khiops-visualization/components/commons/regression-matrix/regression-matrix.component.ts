@@ -23,7 +23,7 @@ import { PreparationVariableModel } from '@khiops-visualization/model/preparatio
 import { Preparation2dDatasModel } from '@khiops-visualization/model/preparation2d-datas.model';
 import { MatrixOptionsModel } from '@khiops-library/model/matrix-options.model';
 import { MatrixModesModel } from '@khiops-library/model/matrix-modes.model';
-import { MatrixRangeValuesI } from '@khiops-visualization/interfaces/matrix-range-values';
+import { MatrixRangeValuesI } from '@khiops-visualization/interfaces/matrix-range-values.interface';
 import { CellModel } from '@khiops-library/model/cell.model';
 import { Preparation2dVariableModel } from '@khiops-visualization/model/preparation2d-variable.model';
 import { MATRIX_MODES } from '@khiops-library/enum/matrix-modes';

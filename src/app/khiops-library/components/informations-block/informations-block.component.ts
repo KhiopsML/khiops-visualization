@@ -18,8 +18,8 @@ import {
 import { SelectableComponent } from '../../components/selectable/selectable.component';
 import { SelectableService } from '../../components/selectable/selectable.service';
 import { ConfigService } from '@khiops-library/providers/config.service';
-import { InfosDatasI } from '@khiops-library/interfaces/infos-datas';
-import { ProcessedInfoDataI } from '@khiops-library/interfaces/processed-info-data';
+import { InfosDatasI } from '@khiops-library/interfaces/infos-datas.interface';
+import { ProcessedInfoDataI } from '@khiops-library/interfaces/processed-info-data.interface';
 import { COMPONENT_TYPES } from '@khiops-library/enum/component-types';
 import {
   INFO_DATA_TYPES,

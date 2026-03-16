@@ -17,7 +17,7 @@ import { DistributionDatasModel } from '../model/distribution-datas.model';
 import { ChartDatasModel } from '@khiops-library/model/chart-datas.model';
 import { TreePreparationDatasService } from './tree-preparation-datas.service';
 import { TYPES } from '@khiops-library/enum/types';
-import { ChartToggleValuesI } from '@khiops-visualization/interfaces/chart-toggle-values';
+import { ChartToggleValuesI } from '@khiops-visualization/interfaces/chart-toggle-values.interface';
 import { ModalityCountsModel } from '@khiops-visualization/model/modality-counts.model';
 import { DistributionType } from '@khiops-visualization/types/distribution-type';
 import { HistogramValuesI } from '@khiops-visualization/components/commons/histogram/histogram.interfaces';
@@ -31,7 +31,7 @@ import { REPORT } from '@khiops-library/enum/report';
 import {
   DimensionVisualization,
   VariableDetail,
-} from '@khiops-visualization/interfaces/shared-interfaces';
+} from '@khiops-visualization/interfaces/shared-interfaces.interface';
 
 @Injectable({
   providedIn: 'root',

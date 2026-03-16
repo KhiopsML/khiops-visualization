@@ -11,7 +11,7 @@ import {
   EventEmitter,
   Output,
 } from '@angular/core';
-import { DistributionOptionsI } from '@khiops-library/interfaces/distribution-options';
+import { DistributionOptionsI } from '@khiops-library/interfaces/distribution-options.interface';
 
 @Component({
     selector: 'kl-graph-options-menu',

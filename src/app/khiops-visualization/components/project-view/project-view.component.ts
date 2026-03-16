@@ -13,7 +13,7 @@ import { ProjectDatasService } from '@khiops-visualization/providers/project-dat
 import { FileLoaderService } from '@khiops-library/providers/file-loader.service';
 import { Subscription } from 'rxjs';
 import { SplitGutterInteractionEvent } from 'angular-split';
-import { DynamicI } from '@khiops-library/interfaces/globals';
+import { DynamicI } from '@khiops-library/interfaces/globals.interface';
 import { AppConfig } from '../../../../environments/environment';
 
 @Component({

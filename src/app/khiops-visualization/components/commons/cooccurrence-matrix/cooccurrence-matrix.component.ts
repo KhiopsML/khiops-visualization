@@ -25,9 +25,9 @@ import { CooccurrenceCellsModel } from '@khiops-visualization/model/cooccurrence
 import { MatrixModesModel } from '@khiops-library/model/matrix-modes.model';
 import { MatrixTargetsModel } from '@khiops-library/model/matrix-targets.model';
 import { MatrixOptionsModel } from '@khiops-library/model/matrix-options.model';
-import { MatrixModeI } from '@khiops-library/interfaces/matrix-mode';
+import { MatrixModeI } from '@khiops-library/interfaces/matrix-mode.interface';
 import { ConfigService } from '@khiops-library/providers/config.service';
-import { MatrixRangeValuesI } from '@khiops-visualization/interfaces/matrix-range-values';
+import { MatrixRangeValuesI } from '@khiops-visualization/interfaces/matrix-range-values.interface';
 import { LS } from '@khiops-library/enum/ls';
 import { CooccurrenceMatrixConfigService } from './cooccurrence-matrix-config.service';
 

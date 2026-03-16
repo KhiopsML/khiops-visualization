@@ -13,9 +13,9 @@ import {
   EventEmitter,
 } from '@angular/core';
 import { TranslateService } from '@ngstack/translate';
-import { ChartColorsSetI } from '../../interfaces/chart-colors-set';
+import { ChartColorsSetI } from '../../interfaces/chart-colors-set.interface';
 import { UtilsService } from '../../providers/utils.service';
-import { DynamicI } from '@khiops-library/interfaces/globals';
+import { DynamicI } from '@khiops-library/interfaces/globals.interface';
 import { ChartDatasetModel } from '@khiops-library/model/chart-dataset.model';
 
 @Component({

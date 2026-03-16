@@ -13,7 +13,7 @@ import {
 } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { DimensionCovisualizationModel } from '@khiops-library/model/dimension.covisualization.model';
-import { GridDatasI } from '@khiops-library/interfaces/grid-datas';
+import { GridDatasI } from '@khiops-library/interfaces/grid-datas.interface';
 import { TranslateService } from '@ngstack/translate';
 import { AgGridComponent } from '@khiops-library/components/ag-grid/ag-grid.component';
 import { TreenodesService } from '@khiops-covisualization/providers/treenodes.service';

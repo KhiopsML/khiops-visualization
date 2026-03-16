@@ -16,9 +16,9 @@ import { LevelDistributionGraphComponent } from '../commons/level-distribution-g
 import { VariableGraphDetailsComponent } from '../commons/variable-graph-details/variable-graph-details.component';
 import { TreePreparationDatasService } from '@khiops-visualization/providers/tree-preparation-datas.service';
 import { DistributionDatasService } from '@khiops-visualization/providers/distribution-datas.service';
-import { GridColumnsI } from '@khiops-library/interfaces/grid-columns';
+import { GridColumnsI } from '@khiops-library/interfaces/grid-columns.interface';
 import { ChartDatasModel } from '@khiops-library/model/chart-datas.model';
-import { InfosDatasI } from '@khiops-library/interfaces/infos-datas';
+import { InfosDatasI } from '@khiops-library/interfaces/infos-datas.interface';
 import { VariableModel } from '@khiops-visualization/model/variable.model';
 import { DistributionDatasModel } from '@khiops-visualization/model/distribution-datas.model';
 import {
@@ -33,7 +33,7 @@ import { LayoutService } from '@khiops-library/providers/layout.service';
 import { DistributionService } from '@khiops-visualization/providers/distribution.service';
 import { REPORT } from '@khiops-library/enum/report';
 import { SplitGutterInteractionEvent } from 'angular-split';
-import { DynamicI } from '@khiops-library/interfaces/globals';
+import { DynamicI } from '@khiops-library/interfaces/globals.interface';
 import { TreeNodeModel } from '@khiops-visualization/model/tree-node.model';
 import { selectNodesFromIndex } from '@khiops-visualization/actions/tree-preparation.action';
 import { Store } from '@ngrx/store';

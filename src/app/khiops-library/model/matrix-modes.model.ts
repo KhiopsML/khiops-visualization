@@ -4,7 +4,7 @@
  * at https://spdx.org/licenses/BSD-3-Clause-Clear.html or see the "LICENSE" file for more details.
  */
 
-import { MatrixModeI } from '../interfaces/matrix-mode';
+import { MatrixModeI } from '../interfaces/matrix-mode.interface';
 
 export class MatrixModesModel {
   types: MatrixModeI[] = [];

@@ -6,7 +6,7 @@
 
 import { TYPES } from '@khiops-library/enum/types';
 import { VARIABLE_TYPES } from '@khiops-library/enum/variable-types';
-import { PreparationVariableStatistic } from '../interfaces/preparation-report';
+import { PreparationVariableStatistic } from '../interfaces/preparation-report.interface';
 import { REPORT } from '@khiops-library/enum/report';
 
 export class PreparationVariableModel implements PreparationVariableStatistic {

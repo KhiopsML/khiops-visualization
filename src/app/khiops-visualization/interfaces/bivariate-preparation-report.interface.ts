@@ -8,7 +8,7 @@ import {
   DimensionVisualization,
   TargetValues,
   VariableDetail,
-} from './shared-interfaces';
+} from './shared-interfaces.interface';
 
 export interface BivariatePreparationReport {
   reportType: string;

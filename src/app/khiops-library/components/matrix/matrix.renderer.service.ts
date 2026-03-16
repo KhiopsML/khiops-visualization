@@ -9,7 +9,7 @@ import { CellModel } from '../../model/cell.model';
 import { MatrixUiService } from './matrix.ui.service';
 import { MatrixUtilsService } from './matrix.utils.service';
 import { MATRIX_MODES } from '@khiops-library/enum/matrix-modes';
-import { DynamicI } from '@khiops-library/interfaces/globals';
+import { DynamicI } from '@khiops-library/interfaces/globals.interface';
 
 /**
  * Service responsible for all canvas rendering operations in the matrix component

@@ -8,11 +8,11 @@ import { Injectable } from '@angular/core';
 import { AppService } from './app.service';
 import { SavedDatasModel } from '../model/saved-datas.model';
 import { LayoutService } from '../../khiops-library/providers/layout.service';
-import { DynamicI } from '@khiops-library/interfaces/globals';
+import { DynamicI } from '@khiops-library/interfaces/globals.interface';
 import {
   CovisualizationDatas,
   DimensionPartition,
-} from '@khiops-covisualization/interfaces/app-datas';
+} from '@khiops-covisualization/interfaces/app-datas.interface';
 import { DimensionsDatasService } from './dimensions-datas.service';
 import { ViewManagerService } from './view-manager.service';
 import { TreenodesService } from './treenodes.service';

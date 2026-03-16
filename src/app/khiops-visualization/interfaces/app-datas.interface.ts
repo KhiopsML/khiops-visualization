@@ -4,15 +4,15 @@
  * at https://spdx.org/licenses/BSD-3-Clause-Clear.html or see the "LICENSE" file for more details.
  */
 
-import { DynamicI } from '@khiops-library/interfaces/globals';
-import { ModelingReport } from './modeling-report';
-import { TrainEvaluationReport } from './train-evaluation-report';
-import { TestEvaluationReport } from './test-evaluation-report';
-import { PreparationReport } from './preparation-report';
-import { TreePreparationReport } from './tree-preparation-report';
-import { BivariatePreparationReport } from './bivariate-preparation-report';
-import { TextPreparationReport } from './text-preparation-report';
-import { EvaluationReport } from './evaluation-report';
+import { DynamicI } from '@khiops-library/interfaces/globals.interface';
+import { ModelingReport } from './modeling-report.interface';
+import { TrainEvaluationReport } from './train-evaluation-report.interface';
+import { TestEvaluationReport } from './test-evaluation-report.interface';
+import { PreparationReport } from './preparation-report.interface';
+import { TreePreparationReport } from './tree-preparation-report.interface';
+import { BivariatePreparationReport } from './bivariate-preparation-report.interface';
+import { TextPreparationReport } from './text-preparation-report.interface';
+import { EvaluationReport } from './evaluation-report.interface';
 
 export interface AppDatasI {
   datas?: VisualizationDatas;
@@ -34,7 +34,7 @@ export interface VisualizationDatas {
   savedDatas: DynamicI;
 }
 
-interface Log {
+export interface Log {
   taskName: string;
   messages: string[];
 }

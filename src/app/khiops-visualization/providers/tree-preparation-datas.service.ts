@@ -16,20 +16,20 @@ import {
   TreePreparationDatasModel,
   TreePreparationState,
 } from '../model/tree-preparation-datas.model';
-import { GridDatasI } from '@khiops-library/interfaces/grid-datas';
+import { GridDatasI } from '@khiops-library/interfaces/grid-datas.interface';
 import { PreparationDatasService } from './preparation-datas.service';
 import { REPORT } from '@khiops-library/enum/report';
 import {
   TreeChildNode,
   TreeDetails,
   TreePreparationVariableStatistic,
-} from '@khiops-visualization/interfaces/tree-preparation-report';
+} from '@khiops-visualization/interfaces/tree-preparation-report.interface';
 import { Observable, take } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { selectedNodesSelector } from '@khiops-visualization/selectors/tree-preparation.selector';
 import { initSelectedNodes } from '@khiops-visualization/actions/tree-preparation.action';
 import { TASKS } from '@khiops-library/enum/tasks';
-import { VariableDetail } from '@khiops-visualization/interfaces/shared-interfaces';
+import { VariableDetail } from '@khiops-visualization/interfaces/shared-interfaces.interface';
 
 @Injectable({
   providedIn: 'root',

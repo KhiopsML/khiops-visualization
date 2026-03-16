@@ -6,7 +6,7 @@
 
 import { Component, Input } from '@angular/core';
 import { ChartDatasModel } from '@khiops-library/model/chart-datas.model';
-import { ChartColorsSetI } from '@khiops-library/interfaces/chart-colors-set';
+import { ChartColorsSetI } from '@khiops-library/interfaces/chart-colors-set.interface';
 import { ChartOptions } from 'chart.js';
 import { SelectableComponent } from '@khiops-library/components/selectable/selectable.component';
 import { COMPONENT_TYPES } from '@khiops-library/enum/component-types';

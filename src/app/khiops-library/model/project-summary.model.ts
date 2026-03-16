@@ -5,7 +5,7 @@
  */
 
 import { TYPES } from '@khiops-library/enum/types';
-import { InfosDatasI } from '@khiops-library/interfaces/infos-datas';
+import { InfosDatasI } from '@khiops-library/interfaces/infos-datas.interface';
 
 export class ProjectSummaryModel {
   filename: string;

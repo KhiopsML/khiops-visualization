@@ -9,12 +9,12 @@ import { EvaluationDatasService } from '@khiops-visualization/providers/evaluati
 import { PreparationDatasService } from '@khiops-visualization/providers/preparation-datas.service';
 import { Preparation2dDatasService } from '@khiops-visualization/providers/preparation2d-datas.service';
 import { VariableGraphDetailsComponent } from '../variable-graph-details/variable-graph-details.component';
-import { GridDatasI } from '@khiops-library/interfaces/grid-datas';
+import { GridDatasI } from '@khiops-library/interfaces/grid-datas.interface';
 import { Preparation2dDatasModel } from '@khiops-visualization/model/preparation2d-datas.model';
 import { PreparationVariableModel } from '@khiops-visualization/model/preparation-variable.model';
 import { LayoutService } from '@khiops-library/providers/layout.service';
 import { SplitGutterInteractionEvent } from 'angular-split';
-import { DynamicI } from '@khiops-library/interfaces/globals';
+import { DynamicI } from '@khiops-library/interfaces/globals.interface';
 
 @Component({
   selector: 'app-var-details-preparation',

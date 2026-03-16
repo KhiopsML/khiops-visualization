@@ -186,8 +186,8 @@ The components can be customized using the `setConfig()` method with the followi
 
 The components expect specific data structures. TypeScript interfaces are available for reference:
 
-- 📊 **VisualizationDatas**: [View Interface](https://github.com/KhiopsML/khiops-visualization/blob/master/src/app/khiops-visualization/interfaces/app-datas.d.ts)
-- 🔗 **CovisualizationDatas**: [View Interface](https://github.com/KhiopsML/khiops-visualization/blob/master/src/app/khiops-covisualization/interfaces/app-datas.d.ts)
+- 📊 **VisualizationDatas**: [View Interface](https://github.com/KhiopsML/khiops-visualization/blob/master/src/app/khiops-visualization/interfaces/app-datas.interface.ts)
+- 🔗 **CovisualizationDatas**: [View Interface](https://github.com/KhiopsML/khiops-visualization/blob/master/src/app/khiops-covisualization/interfaces/app-datas.interface.ts)
 
 > 💡 **Tip**: Use these TypeScript interfaces in your project for better type safety and IntelliSense support.
 

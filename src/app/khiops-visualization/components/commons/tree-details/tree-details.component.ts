@@ -6,7 +6,7 @@
 
 import { Component, NgZone } from '@angular/core';
 import { SelectableService } from '@khiops-library/components/selectable/selectable.service';
-import { GridDatasI } from '@khiops-library/interfaces/grid-datas';
+import { GridDatasI } from '@khiops-library/interfaces/grid-datas.interface';
 import { TranslateService } from '@ngstack/translate';
 import { TreePreparationDatasService } from '@khiops-visualization/providers/tree-preparation-datas.service';
 import { TreeNodeModel } from '@khiops-visualization/model/tree-node.model';

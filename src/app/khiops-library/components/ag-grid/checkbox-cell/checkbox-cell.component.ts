@@ -8,7 +8,7 @@ import { Component } from '@angular/core';
 
 import { AgRendererComponent } from '@ag-grid-community/angular';
 import { ICellRendererParams } from '@ag-grid-community/core';
-import { GridCheckboxEventI } from '@khiops-library/interfaces/events';
+import { GridCheckboxEventI } from '@khiops-library/interfaces/events.interface';
 
 @Component({
   selector: 'kl-checkbox-cell',

@@ -27,7 +27,7 @@ import {
   TreeViewErrorEventI,
   TreeViewNodeEventI,
   TreeViewUpdateNodeNameEventI,
-} from '@khiops-covisualization/interfaces/events';
+} from '@khiops-covisualization/interfaces/events.interface';
 import { SaveService } from '@khiops-covisualization/providers/save.service';
 import { TreeView } from '@khiops-treeview';
 

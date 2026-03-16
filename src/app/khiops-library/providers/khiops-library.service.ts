@@ -5,7 +5,7 @@
  */
 
 import { Injectable } from '@angular/core';
-import { ChartColorsSetI } from '../interfaces/chart-colors-set';
+import { ChartColorsSetI } from '../interfaces/chart-colors-set.interface';
 import {
   CHART_COLORS_0,
   CHART_COLORS_1,

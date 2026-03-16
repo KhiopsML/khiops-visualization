@@ -13,7 +13,7 @@ import {
 } from '@angular/core';
 import { SelectableComponent } from '@khiops-library/components/selectable/selectable.component';
 import { COMPONENT_TYPES } from '@khiops-library/enum/component-types';
-import { ChartColorsSetI } from '@khiops-library/interfaces/chart-colors-set';
+import { ChartColorsSetI } from '@khiops-library/interfaces/chart-colors-set.interface';
 import { ChartDatasModel } from '@khiops-library/model/chart-datas.model';
 import { ChartOptions } from 'chart.js';
 

@@ -4,7 +4,7 @@
  * at https://spdx.org/licenses/BSD-3-Clause-Clear.html or see the "LICENSE" file for more details.
  */
 
-import { VariableDetail } from './shared-interfaces';
+import { VariableDetail } from './shared-interfaces.interface';
 
 export interface PreparationReport {
   reportType: string;

@@ -4,15 +4,15 @@
  * at https://spdx.org/licenses/BSD-3-Clause-Clear.html or see the "LICENSE" file for more details.
  */
 
-import { InfosDatasI } from '@khiops-library/interfaces/infos-datas';
-import { BivariatePreparationSummary } from '@khiops-visualization/interfaces/bivariate-preparation-report';
-import { EvaluationSummary } from '@khiops-visualization/interfaces/evaluation-report';
-import { ModelingSummary } from '@khiops-visualization/interfaces/modeling-report';
-import { PreparationSummary } from '@khiops-visualization/interfaces/preparation-report';
-import { TestEvaluationSummary } from '@khiops-visualization/interfaces/test-evaluation-report';
-import { TextPreparationSummary } from '@khiops-visualization/interfaces/text-preparation-report';
-import { TrainEvaluationSummary } from '@khiops-visualization/interfaces/train-evaluation-report';
-import { TreePreparationSummary } from '@khiops-visualization/interfaces/tree-preparation-report';
+import { InfosDatasI } from '@khiops-library/interfaces/infos-datas.interface';
+import { BivariatePreparationSummary } from '@khiops-visualization/interfaces/bivariate-preparation-report.interface';
+import { EvaluationSummary } from '@khiops-visualization/interfaces/evaluation-report.interface';
+import { ModelingSummary } from '@khiops-visualization/interfaces/modeling-report.interface';
+import { PreparationSummary } from '@khiops-visualization/interfaces/preparation-report.interface';
+import { TestEvaluationSummary } from '@khiops-visualization/interfaces/test-evaluation-report.interface';
+import { TextPreparationSummary } from '@khiops-visualization/interfaces/text-preparation-report.interface';
+import { TrainEvaluationSummary } from '@khiops-visualization/interfaces/train-evaluation-report.interface';
+import { TreePreparationSummary } from '@khiops-visualization/interfaces/tree-preparation-report.interface';
 
 export class SummaryModel {
   dictionary!: string;

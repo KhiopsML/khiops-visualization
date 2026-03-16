@@ -11,9 +11,9 @@ import { PreparationDatasService } from './preparation-datas.service';
 import { ModelingPredictorModel } from '../model/modeling-predictor.model';
 import { SummaryModel } from '../model/summary.model';
 import { ModelingDatasModel } from '../model/modeling-datas.model';
-import { GridColumnsI } from '@khiops-library/interfaces/grid-columns';
+import { GridColumnsI } from '@khiops-library/interfaces/grid-columns.interface';
 import { TrainedPredictorModel } from '@khiops-visualization/model/trained-predictor.model';
-import { InfosDatasI } from '@khiops-library/interfaces/infos-datas';
+import { InfosDatasI } from '@khiops-library/interfaces/infos-datas.interface';
 import { PreparationVariableModel } from '@khiops-visualization/model/preparation-variable.model';
 import { Preparation2dVariableModel } from '@khiops-visualization/model/preparation2d-variable.model';
 import { TreePreparationVariableModel } from '@khiops-visualization/model/tree-preparation-variable.model';
@@ -21,7 +21,7 @@ import { UtilsService } from '@khiops-library/providers/utils.service';
 import {
   ModelingVariableStatistic,
   TrainedPredictor,
-} from '@khiops-visualization/interfaces/modeling-report';
+} from '@khiops-visualization/interfaces/modeling-report.interface';
 @Injectable({
   providedIn: 'root',
 })

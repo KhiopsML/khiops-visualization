@@ -5,9 +5,9 @@
  */
 
 import { PREDICTOR_TYPES } from '@khiops-library/enum/predictor-types';
-import { PredictorPerformance } from '@khiops-visualization/interfaces/evaluation-report';
-import { TestPredictorPerformance } from '@khiops-visualization/interfaces/test-evaluation-report';
-import { TrainPredictorPerformance } from '@khiops-visualization/interfaces/train-evaluation-report';
+import { PredictorPerformance } from '@khiops-visualization/interfaces/evaluation-report.interface';
+import { TestPredictorPerformance } from '@khiops-visualization/interfaces/test-evaluation-report.interface';
+import { TrainPredictorPerformance } from '@khiops-visualization/interfaces/train-evaluation-report.interface';
 
 export class EvaluationPredictorModel {
   _id: string;

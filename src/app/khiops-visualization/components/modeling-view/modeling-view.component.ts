@@ -16,21 +16,21 @@ import { SelectableTabComponent } from '@khiops-library/components/selectable-ta
 import { Preparation2dDatasService } from '@khiops-visualization/providers/preparation2d-datas.service';
 import { TreePreparationDatasService } from '@khiops-visualization/providers/tree-preparation-datas.service';
 import { REPORT } from '@khiops-library/enum/report';
-import { GridColumnsI } from '@khiops-library/interfaces/grid-columns';
+import { GridColumnsI } from '@khiops-library/interfaces/grid-columns.interface';
 import { ChartDatasModel } from '@khiops-library/model/chart-datas.model';
-import { InfosDatasI } from '@khiops-library/interfaces/infos-datas';
+import { InfosDatasI } from '@khiops-library/interfaces/infos-datas.interface';
 import { ModelingDatasModel } from '@khiops-visualization/model/modeling-datas.model';
 import { TrackerService } from '../../../khiops-library/providers/tracker.service';
 import { LayoutService } from '@khiops-library/providers/layout.service';
 import { SplitGutterInteractionEvent } from 'angular-split';
-import { DynamicI } from '@khiops-library/interfaces/globals';
+import { DynamicI } from '@khiops-library/interfaces/globals.interface';
 import { VariableModel } from '@khiops-visualization/model/variable.model';
 import { AppService } from '../../../khiops-visualization/providers/app.service';
-import { TrainedPredictor } from '@khiops-visualization/interfaces/modeling-report';
+import { TrainedPredictor } from '@khiops-visualization/interfaces/modeling-report.interface';
 import { DistributionService } from '@khiops-visualization/providers/distribution.service';
 import { LevelDistributionGraphComponent } from '@khiops-visualization/components/commons/level-distribution-graph/level-distribution-graph.component';
 import { TrainedPredictorModel } from '@khiops-visualization/model/trained-predictor.model';
-import { VisualizationDatas } from '@khiops-visualization/interfaces/app-datas';
+import { VisualizationDatas } from '@khiops-visualization/interfaces/app-datas.interface';
 import { AppConfig } from '../../../../environments/environment';
 
 @Component({

@@ -6,7 +6,7 @@
 
 import { TYPES } from '@khiops-library/enum/types';
 import { VARIABLE_TYPES } from '@khiops-library/enum/variable-types';
-import { TreePreparationVariableStatistic } from '@khiops-visualization/interfaces/tree-preparation-report';
+import { TreePreparationVariableStatistic } from '@khiops-visualization/interfaces/tree-preparation-report.interface';
 
 export class TreePreparationVariableModel
   implements TreePreparationVariableStatistic

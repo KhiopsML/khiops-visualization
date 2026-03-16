@@ -6,7 +6,7 @@
 
 import { TreeNodeModel } from './tree-node.model';
 import { TreePreparationVariableModel } from './tree-preparation-variable.model';
-import { TreeChildNode } from '@khiops-visualization/interfaces/tree-preparation-report';
+import { TreeChildNode } from '@khiops-visualization/interfaces/tree-preparation-report.interface';
 
 export interface TreePreparationState {
   selectedNode: TreeNodeModel | undefined;

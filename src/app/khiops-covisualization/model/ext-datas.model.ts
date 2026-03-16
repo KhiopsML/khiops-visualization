@@ -4,7 +4,7 @@
  * at https://spdx.org/licenses/BSD-3-Clause-Clear.html or see the "LICENSE" file for more details.
  */
 
-import { ExtDatasFieldI } from '@khiops-covisualization/interfaces/ext-datas-field';
+import { ExtDatasFieldI } from '@khiops-covisualization/interfaces/ext-datas-field.interface';
 
 export class ExtDatasModel {
   filename: string;

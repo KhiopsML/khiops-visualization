@@ -9,7 +9,7 @@ import * as ChartJs from 'chart.js';
 import type { ChartEvent, ActiveElement, Chart } from 'chart.js';
 
 import { UtilsService } from '../../providers/utils.service';
-import { ChartColorsSetI } from '../../interfaces/chart-colors-set';
+import { ChartColorsSetI } from '../../interfaces/chart-colors-set.interface';
 import { ChartOptions } from 'chart.js';
 import { ConfigService } from '@khiops-library/providers/config.service';
 import { ChartDatasModel } from '@khiops-library/model/chart-datas.model';

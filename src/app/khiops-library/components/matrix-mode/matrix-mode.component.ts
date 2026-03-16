@@ -13,7 +13,7 @@ import {
   Output,
 } from '@angular/core';
 import { LS } from '@khiops-library/enum/ls';
-import { MatrixModeI } from '@khiops-library/interfaces/matrix-mode';
+import { MatrixModeI } from '@khiops-library/interfaces/matrix-mode.interface';
 import { MatrixModesModel } from '@khiops-library/model/matrix-modes.model';
 import { Ls } from '@khiops-library/providers/ls.service';
 

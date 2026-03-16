@@ -26,7 +26,7 @@ import { TrackerService } from '../../../khiops-library/providers/tracker.servic
 import { FileLoaderService } from '@khiops-library/providers/file-loader.service';
 import { Subscription } from 'rxjs';
 import { MatTabChangeEvent, MatTabGroup } from '@angular/material/tabs';
-import { VisualizationDatas } from '@khiops-visualization/interfaces/app-datas';
+import { VisualizationDatas } from '@khiops-visualization/interfaces/app-datas.interface';
 import { AppConfig } from '../../../../environments/environment';
 import { REPORT } from '@khiops-library/enum/report';
 

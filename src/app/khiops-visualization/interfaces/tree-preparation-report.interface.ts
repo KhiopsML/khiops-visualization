@@ -4,7 +4,7 @@
  * at https://spdx.org/licenses/BSD-3-Clause-Clear.html or see the "LICENSE" file for more details.
  */
 
-import { TargetValues, VariableDetail } from './shared-interfaces';
+import { TargetValues, VariableDetail } from './shared-interfaces.interface';
 
 export interface TreePreparationReport {
   reportType: string;
@@ -59,7 +59,7 @@ export interface TreePreparationVariableStatistic {
   missingNumber?: number;
 }
 
-interface TreeDetails {
+export interface TreeDetails {
   [key: string]: TreeNode;
 }
 
@@ -79,7 +79,7 @@ interface TargetPartition {
   frequencies: number[];
 }
 
-interface TreeChildNode {
+export interface TreeChildNode {
   nodeId: string;
   variable?: string; // Optional, as it may not be present in all child nodes
   type?: string; // Optional, as it may not be present in all child nodes

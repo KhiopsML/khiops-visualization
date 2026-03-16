@@ -8,10 +8,10 @@ import { REPORT } from '@khiops-library/enum/report';
 import { TYPES } from '@khiops-library/enum/types';
 import { VARIABLE_TYPES } from '@khiops-library/enum/variable-types';
 import { UtilsService } from '@khiops-library/providers/utils.service';
-import { PreparationVariableStatistic } from '@khiops-visualization/interfaces/preparation-report';
-import { VariableDetail } from '@khiops-visualization/interfaces/shared-interfaces';
-import { TextPreparationVariableStatistic } from '@khiops-visualization/interfaces/text-preparation-report';
-import { TreePreparationVariableStatistic } from '@khiops-visualization/interfaces/tree-preparation-report';
+import { PreparationVariableStatistic } from '@khiops-visualization/interfaces/preparation-report.interface';
+import { VariableDetail } from '@khiops-visualization/interfaces/shared-interfaces.interface';
+import { TextPreparationVariableStatistic } from '@khiops-visualization/interfaces/text-preparation-report.interface';
+import { TreePreparationVariableStatistic } from '@khiops-visualization/interfaces/tree-preparation-report.interface';
 
 /**
  * Model of variable for grid display

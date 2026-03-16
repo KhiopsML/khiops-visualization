@@ -16,14 +16,14 @@ import { SelectableService } from '@khiops-library/components/selectable/selecta
 import { DistributionDatasService } from '@khiops-visualization/providers/distribution-datas.service';
 import { TranslateService } from '@ngstack/translate';
 import { TreePreparationDatasService } from '@khiops-visualization/providers/tree-preparation-datas.service';
-import { GridDatasI } from '@khiops-library/interfaces/grid-datas';
+import { GridDatasI } from '@khiops-library/interfaces/grid-datas.interface';
 import {
   TreePreparationDatasModel,
   TreePreparationState,
 } from '@khiops-visualization/model/tree-preparation-datas.model';
 import { DistributionDatasModel } from '@khiops-visualization/model/distribution-datas.model';
 import { UtilsService } from '@khiops-library/providers/utils.service';
-import { ChartToggleValuesI } from '@khiops-visualization/interfaces/chart-toggle-values';
+import { ChartToggleValuesI } from '@khiops-visualization/interfaces/chart-toggle-values.interface';
 import { TreeNodeModel } from '@khiops-visualization/model/tree-node.model';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';

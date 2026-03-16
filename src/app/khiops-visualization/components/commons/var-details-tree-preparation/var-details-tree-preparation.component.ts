@@ -13,12 +13,12 @@ import {
 } from '@khiops-visualization/model/tree-preparation-datas.model';
 import { LayoutService } from '@khiops-library/providers/layout.service';
 import { SplitGutterInteractionEvent } from 'angular-split';
-import { DynamicI } from '@khiops-library/interfaces/globals';
+import { DynamicI } from '@khiops-library/interfaces/globals.interface';
 import { TreeNodeModel } from '@khiops-visualization/model/tree-node.model';
 import { selectNodesFromId } from '@khiops-visualization/actions/tree-preparation.action';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
-import { GridDatasI } from '@khiops-library/interfaces/grid-datas';
+import { GridDatasI } from '@khiops-library/interfaces/grid-datas.interface';
 import { selectedNodesSelector } from '@khiops-visualization/selectors/tree-preparation.selector';
 import { PreparationDatasService } from '@khiops-visualization/providers/preparation-datas.service';
 import { REPORT } from '@khiops-library/enum/report';

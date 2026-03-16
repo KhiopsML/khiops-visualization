@@ -19,7 +19,7 @@ import { LayoutService } from '@khiops-library/providers/layout.service';
 import { ViewManagerService } from '@khiops-covisualization/providers/view-manager.service';
 import { FileLoaderService } from '@khiops-library/providers/file-loader.service';
 import { SplitGutterInteractionEvent } from 'angular-split';
-import { DynamicI } from '@khiops-library/interfaces/globals';
+import { DynamicI } from '@khiops-library/interfaces/globals.interface';
 import { SaveService } from '@khiops-covisualization/providers/save.service';
 
 @Component({

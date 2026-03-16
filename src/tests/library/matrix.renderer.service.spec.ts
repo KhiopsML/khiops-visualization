@@ -12,7 +12,7 @@ import { MatrixUiService } from '../../app/khiops-library/components/matrix/matr
 import { MatrixUtilsService } from '../../app/khiops-library/components/matrix/matrix.utils.service';
 import { CellModel } from '../../app/khiops-library/model/cell.model';
 import { MATRIX_MODES } from '../../app/khiops-library/enum/matrix-modes';
-import { DynamicI } from '../../app/khiops-library/interfaces/globals';
+import { DynamicI } from '../../app/khiops-library/interfaces/globals.interface';
 
 describe('MatrixRendererService', () => {
   let service: MatrixRendererService;

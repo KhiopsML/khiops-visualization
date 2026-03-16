@@ -24,7 +24,7 @@ import { PreparationVariableModel } from '@khiops-visualization/model/preparatio
 import { TreePreparationVariableModel } from '@khiops-visualization/model/tree-preparation-variable.model';
 import { DistributionDatasModel } from '@khiops-visualization/model/distribution-datas.model';
 import { REPORT } from '@khiops-library/enum/report';
-import { ChartToggleValuesI } from '@khiops-visualization/interfaces/chart-toggle-values';
+import { ChartToggleValuesI } from '@khiops-visualization/interfaces/chart-toggle-values.interface';
 import { ConfigService } from '@khiops-library/providers/config.service';
 import { SelectableService } from '@khiops-library/components/selectable/selectable.service';
 import { LS } from '@khiops-library/enum/ls';

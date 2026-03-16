@@ -14,7 +14,7 @@ import { deepEqual } from 'fast-equals';
 import cloneDeep from 'lodash-es/cloneDeep';
 import isEqual from 'lodash-es/isEqual';
 import { HierarchyDatasModel } from '@khiops-covisualization/model/hierarchy-datas.model';
-import { DynamicI } from '@khiops-library/interfaces/globals';
+import { DynamicI } from '@khiops-library/interfaces/globals.interface';
 import { DimensionCovisualizationModel } from '@khiops-library/model/dimension.covisualization.model';
 
 @Injectable({

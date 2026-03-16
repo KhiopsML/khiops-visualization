@@ -13,7 +13,7 @@ import { MatrixModesModel } from '@khiops-library/model/matrix-modes.model';
 import { MatrixTargetsModel } from '@khiops-library/model/matrix-targets.model';
 import { LS } from '@khiops-library/enum/ls';
 import { MATRIX_MODES } from '@khiops-library/enum/matrix-modes';
-import { MatrixModeI } from '@khiops-library/interfaces/matrix-mode';
+import { MatrixModeI } from '@khiops-library/interfaces/matrix-mode.interface';
 
 /**
  * Service for managing cooccurrence matrix configuration including modes and targets

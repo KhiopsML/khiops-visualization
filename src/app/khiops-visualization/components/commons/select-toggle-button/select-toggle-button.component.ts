@@ -14,8 +14,8 @@ import {
   SimpleChanges,
 } from '@angular/core';
 import { TranslateService } from '@ngstack/translate';
-import { ChartToggleValuesI } from '@khiops-visualization/interfaces/chart-toggle-values';
-import { PageChangeEventI } from '@khiops-visualization/interfaces/page-change-event';
+import { ChartToggleValuesI } from '@khiops-visualization/interfaces/chart-toggle-values.interface';
+import { PageChangeEventI } from '@khiops-visualization/interfaces/page-change-event.interface';
 import { MatCheckboxChange } from '@angular/material/checkbox';
 import { deepEqual } from 'fast-equals';
 import { AppConfig } from '../../../../../environments/environment';

@@ -5,7 +5,7 @@
  */
 
 import { Injectable } from '@angular/core';
-import { VisualizationDatas } from '@khiops-visualization/interfaces/app-datas';
+import { VisualizationDatas } from '@khiops-visualization/interfaces/app-datas.interface';
 
 @Injectable({
   providedIn: 'root',

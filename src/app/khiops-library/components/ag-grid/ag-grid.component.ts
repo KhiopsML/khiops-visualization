@@ -22,7 +22,7 @@ import { SelectableService } from '@khiops-library/components/selectable/selecta
 import { TranslateService } from '@ngstack/translate';
 import { KhiopsLibraryService } from '@khiops-library/providers/khiops-library.service';
 import { ConfigService } from '@khiops-library/providers/config.service';
-import { GridColumnsI } from '@khiops-library/interfaces/grid-columns';
+import { GridColumnsI } from '@khiops-library/interfaces/grid-columns.interface';
 import { MatCheckboxChange } from '@angular/material/checkbox';
 import {
   Module,
@@ -41,8 +41,8 @@ import { COMPONENT_TYPES } from '@khiops-library/enum/component-types';
 import { LS } from '@khiops-library/enum/ls';
 import { Ls } from '@khiops-library/providers/ls.service';
 import { KEYBOARD } from '@khiops-library/enum/keyboard';
-import { GridCheckboxEventI } from '@khiops-library/interfaces/events';
-import { DynamicI } from '@khiops-library/interfaces/globals';
+import { GridCheckboxEventI } from '@khiops-library/interfaces/events.interface';
+import { DynamicI } from '@khiops-library/interfaces/globals.interface';
 import { AgGridService } from '@khiops-library/components/ag-grid/ag-grid.service';
 import { AgGridLoadingOverlayComponent } from '@khiops-library/components/ag-grid/ag-grid-loading-overlay.component';
 

@@ -14,7 +14,7 @@ import { DistributionDatasModel } from '@khiops-visualization/model/distribution
 import { LS } from '@khiops-library/enum/ls';
 import { LayoutService } from '@khiops-library/providers/layout.service';
 import { SplitGutterInteractionEvent } from 'angular-split';
-import { DynamicI } from '@khiops-library/interfaces/globals';
+import { DynamicI } from '@khiops-library/interfaces/globals.interface';
 
 @Component({
     selector: 'app-var-details-preparation-2d',

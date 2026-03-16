@@ -32,7 +32,7 @@ import {
   RangeYLogI,
   TooltipData,
 } from './histogram.interfaces';
-import { DistributionOptionsI } from '@khiops-library/interfaces/distribution-options';
+import { DistributionOptionsI } from '@khiops-library/interfaces/distribution-options.interface';
 import { debounceTime, Subject } from 'rxjs';
 import { COMPONENT_TYPES } from '@khiops-library/enum/component-types';
 import { BIG_CHART_SIZE } from '@khiops-library/config/global';

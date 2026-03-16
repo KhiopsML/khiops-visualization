@@ -6,8 +6,8 @@
 
 import { Injectable } from '@angular/core';
 import { ColDef } from '@ag-grid-community/core';
-import { GridColumnsI } from '@khiops-library/interfaces/grid-columns';
-import { DynamicI } from '@khiops-library/interfaces/globals';
+import { GridColumnsI } from '@khiops-library/interfaces/grid-columns.interface';
+import { DynamicI } from '@khiops-library/interfaces/globals.interface';
 import { UtilsService } from '@khiops-library/providers/utils.service';
 
 @Injectable({

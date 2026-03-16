@@ -10,7 +10,7 @@ import { PreparationDatasService } from './preparation-datas.service';
 import { Preparation2dDatasService } from './preparation2d-datas.service';
 import { SavedDatasModel } from '../model/saved-datas.model';
 import { LayoutService } from '../../khiops-library/providers/layout.service';
-import { VisualizationDatas } from '@khiops-visualization/interfaces/app-datas';
+import { VisualizationDatas } from '@khiops-visualization/interfaces/app-datas.interface';
 
 @Injectable({
   providedIn: 'root',

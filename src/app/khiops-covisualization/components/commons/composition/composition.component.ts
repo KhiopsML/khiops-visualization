@@ -20,7 +20,7 @@ import { DimensionCovisualizationModel } from '@khiops-library/model/dimension.c
 import { EventsService } from '@khiops-covisualization/providers/events.service';
 import { Subscription } from 'rxjs';
 import cloneDeep from 'lodash-es/cloneDeep';
-import { GridColumnsI } from '@khiops-library/interfaces/grid-columns';
+import { GridColumnsI } from '@khiops-library/interfaces/grid-columns.interface';
 import { TreeNodeModel } from '@khiops-covisualization/model/tree-node.model';
 import { ExtDatasModel } from '@khiops-covisualization/model/ext-datas.model';
 import { ImportExtDatasService } from '@khiops-covisualization/providers/import-ext-datas.service';

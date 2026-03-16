@@ -9,7 +9,7 @@ import { AppConfig } from '../../../environments/environment';
 import {
   DimensionVisualization,
   VariableDetail,
-} from '@khiops-visualization/interfaces/shared-interfaces';
+} from '@khiops-visualization/interfaces/shared-interfaces.interface';
 
 export class VariableDetailsModel {
   dataGrid!: {

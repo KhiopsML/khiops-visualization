@@ -16,7 +16,7 @@ import { VIEW_LAYOUT } from '@khiops-visualization/config/view-layout';
 import {
   AppDatasI,
   VisualizationDatas,
-} from '@khiops-visualization/interfaces/app-datas';
+} from '@khiops-visualization/interfaces/app-datas.interface';
 import { TranslateService } from '@ngstack/translate';
 
 @Injectable({

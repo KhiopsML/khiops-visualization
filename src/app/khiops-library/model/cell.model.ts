@@ -4,7 +4,7 @@
  * at https://spdx.org/licenses/BSD-3-Clause-Clear.html or see the "LICENSE" file for more details.
  */
 
-import { MatrixCoordI } from '../interfaces/matrix-coord';
+import { MatrixCoordI } from '../interfaces/matrix-coord.interface';
 import { UtilsService } from '../providers/utils.service';
 import { MatrixValuesModel } from './matrix-value.model';
 

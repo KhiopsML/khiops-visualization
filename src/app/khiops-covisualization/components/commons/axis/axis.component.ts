@@ -11,7 +11,7 @@ import { LayoutService } from '@khiops-library/providers/layout.service';
 import { ViewManagerService } from '@khiops-covisualization/providers/view-manager.service';
 import { DimensionViewLayoutModel } from '@khiops-covisualization/model/dimension-view-layout.model';
 import { SplitGutterInteractionEvent } from 'angular-split';
-import { DynamicI } from '@khiops-library/interfaces/globals';
+import { DynamicI } from '@khiops-library/interfaces/globals.interface';
 
 @Component({
     selector: 'app-axis',

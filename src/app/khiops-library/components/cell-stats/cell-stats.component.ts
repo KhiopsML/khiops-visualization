@@ -8,7 +8,7 @@ import { Component, SimpleChanges, OnChanges, Input } from '@angular/core';
 import { UtilsService } from '../../providers/utils.service';
 import { CellModel } from '@khiops-library/model/cell.model';
 import { MATRIX_MODES } from '@khiops-library/enum/matrix-modes';
-import { CellStatsI } from '@khiops-library/interfaces/cell-stats';
+import { CellStatsI } from '@khiops-library/interfaces/cell-stats.interface';
 
 @Component({
     selector: 'kl-cell-stats',

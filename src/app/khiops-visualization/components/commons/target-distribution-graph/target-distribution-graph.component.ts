@@ -17,13 +17,13 @@ import { KhiopsLibraryService } from '@khiops-library/providers/khiops-library.s
 import { ScrollableGraphComponent } from '@khiops-library/components/scrollable-graph/scrollable-graph.component';
 import { TranslateService } from '@ngstack/translate';
 import { ToPrecisionPipe } from '@khiops-library/pipes/to-precision.pipe';
-import { ChartColorsSetI } from '@khiops-library/interfaces/chart-colors-set';
+import { ChartColorsSetI } from '@khiops-library/interfaces/chart-colors-set.interface';
 import { ChartOptions, ChartTypeRegistry, TooltipItem } from 'chart.js';
 import { ConfigService } from '@khiops-library/providers/config.service';
 import { ResizedEvent } from 'angular-resize-event-package';
 import { TYPES } from '@khiops-library/enum/types';
 import { ChartDatasModel } from '@khiops-library/model/chart-datas.model';
-import { ChartToggleValuesI } from '@khiops-visualization/interfaces/chart-toggle-values';
+import { ChartToggleValuesI } from '@khiops-visualization/interfaces/chart-toggle-values.interface';
 import { UtilsService } from '@khiops-library/providers/utils.service';
 import { COMPONENT_TYPES } from '@khiops-library/enum/component-types';
 import { AppService } from '@khiops-visualization/providers/app.service';

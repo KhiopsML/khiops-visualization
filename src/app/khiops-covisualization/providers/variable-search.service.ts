@@ -7,7 +7,7 @@
 import { Injectable } from '@angular/core';
 import { DimensionCovisualizationModel } from '@khiops-library/model/dimension.covisualization.model';
 import { TYPES } from '@khiops-library/enum/types';
-import { GridDatasI } from '@khiops-library/interfaces/grid-datas';
+import { GridDatasI } from '@khiops-library/interfaces/grid-datas.interface';
 import { TranslateService } from '@ngstack/translate';
 import { CompositionService } from '@khiops-covisualization/providers/composition.service';
 import { DimensionsDatasService } from '@khiops-covisualization/providers/dimensions-datas.service';

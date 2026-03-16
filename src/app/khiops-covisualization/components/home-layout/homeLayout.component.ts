@@ -34,7 +34,7 @@ import { Subscription } from 'rxjs';
 import { TrackerService } from '../../../khiops-library/providers/tracker.service';
 import { ViewManagerService } from '@khiops-covisualization/providers/view-manager.service';
 import { FileLoaderService } from '@khiops-library/providers/file-loader.service';
-import { CovisualizationDatas } from '@khiops-covisualization/interfaces/app-datas';
+import { CovisualizationDatas } from '@khiops-covisualization/interfaces/app-datas.interface';
 
 @Component({
   selector: 'app-home-layout',

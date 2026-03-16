@@ -15,18 +15,18 @@ import {
 } from '@angular/material/dialog';
 import { LevelDistributionGraphComponent } from '../commons/level-distribution-graph/level-distribution-graph.component';
 import { TranslateService } from '@ngstack/translate';
-import { GridColumnsI } from '@khiops-library/interfaces/grid-columns';
+import { GridColumnsI } from '@khiops-library/interfaces/grid-columns.interface';
 import { REPORT } from '@khiops-library/enum/report';
 import { ChartDatasModel } from '@khiops-library/model/chart-datas.model';
 import { PreparationVariableModel } from '@khiops-visualization/model/preparation-variable.model';
-import { InfosDatasI } from '@khiops-library/interfaces/infos-datas';
+import { InfosDatasI } from '@khiops-library/interfaces/infos-datas.interface';
 import { VariableModel } from '@khiops-visualization/model/variable.model';
 import { TrackerService } from '@khiops-library/providers/tracker.service';
 import { DistributionService } from '../../providers/distribution.service';
 import { LayoutService } from '@khiops-library/providers/layout.service';
 import { SplitGutterInteractionEvent } from 'angular-split';
-import { DynamicI } from '@khiops-library/interfaces/globals';
-import { GridDatasI } from '@khiops-library/interfaces/grid-datas';
+import { DynamicI } from '@khiops-library/interfaces/globals.interface';
+import { GridDatasI } from '@khiops-library/interfaces/grid-datas.interface';
 import { getPreparationVariablesGridColumns } from './preparation-view.config';
 import { AppConfig } from '../../../../environments/environment';
 

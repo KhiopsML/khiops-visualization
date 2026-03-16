@@ -20,7 +20,7 @@ import {
   DimensionHierarchy,
   Interval,
   ValueGroup,
-} from '@khiops-covisualization/interfaces/app-datas';
+} from '@khiops-covisualization/interfaces/app-datas.interface';
 import { DimensionCovisualizationModel } from '@khiops-library/model/dimension.covisualization.model';
 import orderBy from 'lodash-es/orderBy';
 

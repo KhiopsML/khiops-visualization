@@ -5,7 +5,7 @@
  */
 
 import { Component } from '@angular/core';
-import { GridColumnsI } from '@khiops-library/interfaces/grid-columns';
+import { GridColumnsI } from '@khiops-library/interfaces/grid-columns.interface';
 import { ProjectLogModel } from '@khiops-library/model/project-log.model';
 import { ProjectDatasService } from '@khiops-visualization/providers/project-datas.service';
 import { TranslateService } from '@ngstack/translate';

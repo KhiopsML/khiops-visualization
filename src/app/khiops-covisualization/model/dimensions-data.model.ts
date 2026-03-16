@@ -7,7 +7,7 @@
 import { TreeNodeModel } from './tree-node.model';
 import { HierarchyDatasModel } from './hierarchy-datas.model';
 import { MatrixDatasModel } from '@khiops-library/model/matrix-datas.model';
-import { DynamicI } from '@khiops-library/interfaces/globals';
+import { DynamicI } from '@khiops-library/interfaces/globals.interface';
 import { DimensionCovisualizationModel } from '@khiops-library/model/dimension.covisualization.model';
 
 export class DimensionsDatasModel {

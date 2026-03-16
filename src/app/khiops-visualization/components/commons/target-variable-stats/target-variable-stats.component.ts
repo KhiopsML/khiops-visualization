@@ -18,7 +18,7 @@ import { SelectableComponent } from '@khiops-library/components/selectable/selec
 import { SelectableService } from '@khiops-library/components/selectable/selectable.service';
 import { TranslateService } from '@ngstack/translate';
 import { ToPrecisionPipe } from '@khiops-library/pipes/to-precision.pipe';
-import { ChartColorsSetI } from '@khiops-library/interfaces/chart-colors-set';
+import { ChartColorsSetI } from '@khiops-library/interfaces/chart-colors-set.interface';
 import { ChartOptions, TooltipItem, ChartTypeRegistry } from 'chart.js';
 import { ConfigService } from '@khiops-library/providers/config.service';
 import { ChartDatasModel } from '@khiops-library/model/chart-datas.model';

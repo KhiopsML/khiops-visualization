@@ -17,7 +17,7 @@ import { TreeNodeModel } from '@khiops-covisualization/model/tree-node.model';
 import { EventsService } from '@khiops-covisualization/providers/events.service';
 import { TranslateService } from '@ngstack/translate';
 import { ClustersService } from '@khiops-covisualization/providers/clusters.service';
-import { GridColumnsI } from '@khiops-library/interfaces/grid-columns';
+import { GridColumnsI } from '@khiops-library/interfaces/grid-columns.interface';
 import { Subscription } from 'rxjs';
 import { DimensionCovisualizationModel } from '@khiops-library/model/dimension.covisualization.model';
 import { getClustersDisplayedColumns } from './selected-clusters.config';

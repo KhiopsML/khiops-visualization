@@ -5,7 +5,7 @@
  */
 
 import { Injectable } from '@angular/core';
-import { InfosDatasI } from '@khiops-library/interfaces/infos-datas';
+import { InfosDatasI } from '@khiops-library/interfaces/infos-datas.interface';
 import { ProjectLogModel } from '@khiops-library/model/project-log.model';
 import { ProjectSummaryModel } from '@khiops-library/model/project-summary.model';
 import { AppService } from './app.service';

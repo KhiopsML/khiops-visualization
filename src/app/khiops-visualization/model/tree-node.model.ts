@@ -5,9 +5,9 @@
  */
 
 import { UtilsService } from '@khiops-library/providers/utils.service';
-import { TreeChildNode } from '@khiops-visualization/interfaces/tree-preparation-report';
+import { TreeChildNode } from '@khiops-visualization/interfaces/tree-preparation-report.interface';
 import { TreePreparationDatasModel } from './tree-preparation-datas.model';
-import { TargetValues } from '@khiops-visualization/interfaces/shared-interfaces';
+import { TargetValues } from '@khiops-visualization/interfaces/shared-interfaces.interface';
 
 export class TreeNodeModel implements TreeChildNode {
   id: string | undefined;
@@ -42,7 +42,8 @@ export class TreeNodeModel implements TreeChildNode {
     this.id = object.nodeId || undefined;
     this._id = this.id;
     // A leaf node has no childNodes, or has targetValues (regression case)
-    this.isLeaf = !object.childNodes || (!!object.targetValues && !object.childNodes);
+    this.isLeaf =
+      !object.childNodes || (!!object.targetValues && !object.childNodes);
     this.color = treePreparationDatas?.treeColorsMap[this.id || ''] || '#999'; // for folders : grey
 
     this.isTrusted = isTrusted || false;

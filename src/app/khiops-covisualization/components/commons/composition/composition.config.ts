@@ -5,7 +5,7 @@
  */
 
 import { TranslateService } from '@ngstack/translate';
-import { GridColumnsI } from '../../../../khiops-library/interfaces/grid-columns';
+import { GridColumnsI } from '../../../../khiops-library/interfaces/grid-columns.interface';
 import { IconCellComponent } from '../../../../khiops-library/components/ag-grid/icon-cell/icon-cell.component';
 import { ICellRendererParams } from '@ag-grid-community/core';
 import { DimensionsDatasService } from '../../../providers/dimensions-datas.service';

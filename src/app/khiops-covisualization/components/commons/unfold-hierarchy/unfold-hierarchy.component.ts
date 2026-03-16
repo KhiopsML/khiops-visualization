@@ -17,11 +17,11 @@ import { UtilsService } from '@khiops-library/providers/utils.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { HierarchyService } from '@khiops-covisualization/providers/hierarchy.service';
 import { ChartDatasModel } from '@khiops-library/model/chart-datas.model';
-import { GridColumnsI } from '@khiops-library/interfaces/grid-columns';
+import { GridColumnsI } from '@khiops-library/interfaces/grid-columns.interface';
 import { HierarchyDatasModel } from '@khiops-covisualization/model/hierarchy-datas.model';
-import { ChartColorsSetI } from '@khiops-library/interfaces/chart-colors-set';
+import { ChartColorsSetI } from '@khiops-library/interfaces/chart-colors-set.interface';
 import { DimensionCovisualizationModel } from '@khiops-library/model/dimension.covisualization.model';
-import { GridCheckboxEventI } from '@khiops-library/interfaces/events';
+import { GridCheckboxEventI } from '@khiops-library/interfaces/events.interface';
 import {
   getClusterPerDimChartOptions,
   getDefaultChartOptions,
