@@ -14,7 +14,7 @@ import { ViewManagerService } from '@khiops-covisualization/providers/view-manag
 import { TreenodesService } from '@khiops-covisualization/providers/treenodes.service';
 import { AnnotationService } from '@khiops-covisualization/providers/annotation.service';
 import { ImportExtDatasService } from '@khiops-covisualization/providers/import-ext-datas.service';
-import { CovisualizationDatas } from '@khiops-covisualization/interfaces/app-datas';
+import { CovisualizationDatas } from '@khiops-covisualization/interfaces/app-datas.interface';
 
 /**
  * Unit tests for SaveService.truncateJsonHierarchy method

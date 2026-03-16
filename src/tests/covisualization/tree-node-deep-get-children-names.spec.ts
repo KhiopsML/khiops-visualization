@@ -6,7 +6,7 @@
 // @ts-nocheck
 
 import { TreeNodeModel } from '@khiops-covisualization/model/tree-node.model';
-import { Cluster } from '@khiops-covisualization/interfaces/app-datas';
+import { Cluster } from '@khiops-covisualization/interfaces/app-datas.interface';
 import { DimensionCovisualizationModel } from '@khiops-library/model/dimension.covisualization.model';
 import { TYPES } from '@khiops-library/enum/types';
 

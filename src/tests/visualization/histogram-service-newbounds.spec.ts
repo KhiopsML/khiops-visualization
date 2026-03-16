@@ -14,7 +14,7 @@ import { PreparationDatasService } from '@khiops-visualization/providers/prepara
 import { REPORT } from '@khiops-library/enum/report';
 import { TranslateModule } from '@ngstack/translate';
 import { HistogramType } from '@khiops-visualization/components/commons/histogram/histogram.type';
-import { VisualizationDatas } from '@khiops-visualization/interfaces/app-datas';
+import { VisualizationDatas } from '@khiops-visualization/interfaces/app-datas.interface';
 import { provideMockStore } from '@ngrx/store/testing';
 import { TreePreparationDatasService } from '@khiops-visualization/providers/tree-preparation-datas.service';
 import { HistogramValuesI } from '@khiops-visualization/components/commons/histogram/histogram.interfaces.d';

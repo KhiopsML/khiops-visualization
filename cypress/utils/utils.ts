@@ -1,5 +1,5 @@
-import { VisualizationDatas } from '../../src/app/khiops-visualization/interfaces/app-datas';
-import { CovisualizationDatas } from '../../src/app/khiops-covisualization/interfaces/app-datas';
+import { VisualizationDatas } from '../../src/app/khiops-visualization/interfaces/app-datas.interface';
+import { CovisualizationDatas } from '../../src/app/khiops-covisualization/interfaces/app-datas.interface';
 export function isExplanatoryAnalysis(appDatas: VisualizationDatas): boolean {
   if (
     appDatas?.preparationReport?.variablesDetailedStatistics &&
