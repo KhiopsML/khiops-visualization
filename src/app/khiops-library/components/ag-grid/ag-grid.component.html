@@ -10,6 +10,7 @@
   fxLayout="column"
   tabindex="0"
   [ngClass]="{ fullscreen: isFullscreen }"
+  [appFullscreenAnimation]="isFullscreen"
 >
   @if (inputDatas?.length > 0) {
     <div fxLayout="row" class="comp-header" #headerContainer>

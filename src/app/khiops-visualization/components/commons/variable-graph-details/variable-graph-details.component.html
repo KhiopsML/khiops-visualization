@@ -9,6 +9,7 @@
   fxLayout="column"
   fxFlexFill
   [ngClass]="{ fullscreen: isFullscreen }"
+  [appFullscreenAnimation]="isFullscreen"
 >
   @if (isLoading) {
     <div

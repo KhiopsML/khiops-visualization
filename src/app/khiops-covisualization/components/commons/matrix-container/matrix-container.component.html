@@ -29,6 +29,7 @@
         fxLayout="column"
         class="selected-area-inner-div"
         [ngClass]="{ fullscreen: isFullscreen }"
+        [appFullscreenAnimation]="isFullscreen"
       >
         <div fxLayout="row" fxLayoutAlign="start center" class="comp-header">
           <kl-matrix-mode

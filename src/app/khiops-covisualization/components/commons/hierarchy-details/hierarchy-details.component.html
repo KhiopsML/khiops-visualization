@@ -9,6 +9,7 @@
   fxFlexFill
   fxLayout="column"
   [ngClass]="{ fullscreen: isFullscreen }"
+  [appFullscreenAnimation]="isFullscreen"
   [attr.id]="'hierarchy-details-comp-' + position"
 >
   <div fxFlexFill fxLayout="column" class="selected-area-inner-div">
