@@ -16,7 +16,6 @@ import { PreparationDatasService } from '@khiops-visualization/providers/prepara
 import { SelectableService } from '@khiops-library/components/selectable/selectable.service';
 import { Preparation2dDatasService } from '@khiops-visualization/providers/preparation2d-datas.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { MatDialog } from '@angular/material/dialog';
 import { TreePreparationDatasService } from '@khiops-visualization/providers/tree-preparation-datas.service';
 import { KhiopsLibraryService } from '@khiops-library/providers/khiops-library.service';
 import pjson from '../../../../../package.json';
@@ -29,6 +28,7 @@ import { MatTabChangeEvent, MatTabGroup } from '@angular/material/tabs';
 import { VisualizationDatas } from '@khiops-visualization/interfaces/app-datas.interface';
 import { AppConfig } from '../../../../environments/environment';
 import { REPORT } from '@khiops-library/enum/report';
+import { DialogService } from '@khiops-library/providers/dialog.service';
 
 @Component({
   selector: 'app-home-layout',
@@ -66,7 +66,6 @@ export class HomeLayoutComponent implements OnInit {
   constructor(
     private configService: ConfigService,
     private translate: TranslateService,
-    private dialogRef: MatDialog,
     private appService: AppService,
     private snackBar: MatSnackBar,
     public khiopsLibraryService: KhiopsLibraryService,
@@ -79,6 +78,7 @@ export class HomeLayoutComponent implements OnInit {
     private treePreparationDatasService: TreePreparationDatasService,
     private preparation2dDatasService: Preparation2dDatasService,
     private fileLoaderService: FileLoaderService,
+    private dialogService: DialogService,
   ) {
     if (pjson) {
       this.appTitle = pjson.title.visualization;
@@ -185,7 +185,7 @@ export class HomeLayoutComponent implements OnInit {
   }
 
   private closeFile() {
-    this.dialogRef.closeAll();
+    this.dialogService.closeDialog();
     this.fileLoader?.closeFile();
   }
 

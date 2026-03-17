@@ -11,19 +11,13 @@ import { TranslateService } from '@ngstack/translate';
 import { TreePreparationDatasService } from '@khiops-visualization/providers/tree-preparation-datas.service';
 import { TreeNodeModel } from '@khiops-visualization/model/tree-node.model';
 import { Observable } from 'rxjs';
-import { Store } from '@ngrx/store';
-import { selectNodesFromId } from '../../../actions/tree-preparation.action';
-import {
-  selectedNodeSelector,
-  selectedNodesSelector,
-} from '@khiops-visualization/selectors/tree-preparation.selector';
-import { TreePreparationState } from '@khiops-visualization/model/tree-preparation-datas.model';
+import { TreePreparationStore } from '@khiops-visualization/stores/tree-preparation.store';
 
 @Component({
-    selector: 'app-tree-details',
-    templateUrl: './tree-details.component.html',
-    styleUrls: ['./tree-details.component.scss'],
-    standalone: false
+  selector: 'app-tree-details',
+  templateUrl: './tree-details.component.html',
+  styleUrls: ['./tree-details.component.scss'],
+  standalone: false
 })
 export class TreeDetailsComponent {
   public treeDetails?: GridDatasI;
@@ -36,10 +30,10 @@ export class TreeDetailsComponent {
     public selectableService: SelectableService,
     private treePreparationDatasService: TreePreparationDatasService,
     public translate: TranslateService,
-    private store: Store<{ TreePreparationState: TreePreparationState }>,
+    private store: TreePreparationStore,
   ) {
-    this.selectedNodes$ = this.store.select(selectedNodesSelector);
-    this.selectedNode$ = this.store.select(selectedNodeSelector);
+    this.selectedNodes$ = this.store.selectedNodes$;
+    this.selectedNode$ = this.store.selectedNode$;
   }
 
   ngOnInit() {
@@ -51,11 +45,9 @@ export class TreeDetailsComponent {
 
   onSelectListItemChanged(item: TreeNodeModel) {
     if (item?._id) {
-      this.store.dispatch(
-        selectNodesFromId({
-          id: item._id,
-        }),
-      );
+      this.store.selectNodesFromId({
+        id: item._id,
+      });
     }
   }
 }

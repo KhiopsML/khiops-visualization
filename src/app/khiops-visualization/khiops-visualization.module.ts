@@ -42,10 +42,6 @@ import { AngularResizeEventModule } from 'angular-resize-event-package';
 import { HistogramTooltipComponent } from './components/commons/histogram/histogram.tooltip.component';
 import { ProjectLogsComponent } from './components/commons/project-logs/project-logs.component';
 import { GravityCellComponent } from './components/commons/project-logs/gravity-cell/gravity-cell.component';
-import { treePreparationReducer } from './reducers/tree-preparation.reducer';
-import { StoreModule } from '@ngrx/store';
-import { TreePreparationEffects } from './effects/tree-preparation.effect';
-import { EffectsModule } from '@ngrx/effects';
 import { OverlayContainer } from '@angular/cdk/overlay';
 import { InAppOverlayContainer } from '../khiops-library/overlay/in-app-overlay-provider';
 import { DataTypeSelectorComponent } from './components/commons/data-type-selector/data-type-selector.component';
@@ -98,16 +94,11 @@ import { VisualizationRoutingModule } from './khiops-visualization-routing.modul
     AgGridModule,
     FlexLayoutModule,
     AngularResizeEventModule,
-    StoreModule.forFeature('TreePreparationState', treePreparationReducer),
-    EffectsModule.forFeature([TreePreparationEffects]),
     VisualizationRoutingModule,
   ],
   providers: [
     provideHttpClient(),
-    {
-      provide: InAppOverlayContainer,
-      useClass: InAppOverlayContainer,
-    },
+    { provide: OverlayContainer, useClass: InAppOverlayContainer },
   ],
   exports: [AppComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],

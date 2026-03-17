@@ -5,11 +5,6 @@
  */
 
 import { Component, ViewChild } from '@angular/core';
-import {
-  MatDialog,
-  MatDialogRef,
-  MatDialogConfig,
-} from '@angular/material/dialog';
 import { Preparation2dDatasService } from '@khiops-visualization/providers/preparation2d-datas.service';
 import { SelectableTabComponent } from '@khiops-library/components/selectable-tab/selectable-tab.component';
 import { PreparationDatasService } from '@khiops-visualization/providers/preparation-datas.service';
@@ -29,7 +24,7 @@ import { DynamicI } from '@khiops-library/interfaces/globals.interface';
 import { VariableModel } from '@khiops-visualization/model/variable.model';
 import { getPreparation2dVariablesGridColumns } from './preparation-2d-view.config';
 import { DistributionService } from '@khiops-visualization/providers/distribution.service';
-import { AppConfig } from '../../../../environments/environment';
+import { DialogService } from '@khiops-library/providers/dialog.service';
 
 @Component({
   selector: 'app-preparation-2d-view',
@@ -58,11 +53,11 @@ export class Preparation2dViewComponent extends SelectableTabComponent {
     private preparationDatasService: PreparationDatasService,
     private trackerService: TrackerService,
     private translate: TranslateService,
-    private dialog: MatDialog,
     private modelingDatasService: ModelingDatasService,
     private preparation2dDatasService: Preparation2dDatasService,
     private layoutService: LayoutService,
     private distributionService: DistributionService,
+    private dialogService: DialogService,
   ) {
     super();
 
@@ -129,16 +124,14 @@ export class Preparation2dViewComponent extends SelectableTabComponent {
   }
 
   onShowLevelDistributionGraph(datas: VariableModel[] | Variable2dModel[]) {
-    const config = new MatDialogConfig();
-    config.maxWidth = 'unset';
-    config.width = AppConfig.visualizationCommon.LEVEL_DISTRIBUTION_GRAPH.WIDTH;
-    config.height =
-      AppConfig.visualizationCommon.LEVEL_DISTRIBUTION_GRAPH.HEIGHT;
-    const dialogRef: MatDialogRef<LevelDistributionGraphComponent> =
-      this.dialog.open(LevelDistributionGraphComponent, config);
-    dialogRef.componentInstance.levelDistributionTitle =
-      this.levelDistributionTitle;
-    dialogRef.componentInstance.datas = datas;
+    this.dialogService.openDialog(
+      LevelDistributionGraphComponent,
+      {},
+      {
+        datas: datas,
+        levelDistributionTitle: this.levelDistributionTitle,
+      },
+    );
   }
 
   private resizeTargetDistributionGraph() {
