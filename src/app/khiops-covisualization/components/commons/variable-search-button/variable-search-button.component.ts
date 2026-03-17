@@ -6,11 +6,11 @@
 
 import { Component, Input } from '@angular/core';
 import { DimensionCovisualizationModel } from '@khiops-library/model/dimension.covisualization.model';
-import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import {
   VariableSearchDialogComponent,
   VariableSearchDialogData,
 } from '../variable-search-dialog/variable-search-dialog.component';
+import { DialogService } from '@khiops-library/providers/dialog.service';
 
 @Component({
   selector: 'app-variable-search-button',
@@ -23,7 +23,7 @@ export class VariableSearchButtonComponent {
   private lastSelectedInnerVariable: string | undefined;
   private lastSearchInput: string | undefined;
 
-  constructor(private dialog: MatDialog) {}
+  constructor(private dialogService: DialogService) {}
 
   /**
    * Open variable search dialog
@@ -33,33 +33,27 @@ export class VariableSearchButtonComponent {
       return;
     }
 
-    const config = new MatDialogConfig();
-    config.width = '50vw';
-    config.height = '50vh';
-    config.maxWidth = '50vw';
-    config.maxHeight = '50vh';
-    config.data = {
+    const data: VariableSearchDialogData = {
       selectedDimension: this.selectedDimension,
       selectedInnerVariable: this.lastSelectedInnerVariable,
       searchInput: this.lastSearchInput,
-    } as VariableSearchDialogData;
+    };
 
-    const dialogRef = this.dialog.open(VariableSearchDialogComponent, config);
+    const dialogRef = this.dialogService.openDialog(
+      VariableSearchDialogComponent,
+      {
+        width: '50vw',
+        height: '50vh',
+        maxWidth: '50vw',
+        maxHeight: '50vh',
+      },
+      data
+    );
 
     dialogRef.afterClosed().subscribe((result) => {
       if (result?.selectedInnerVariable) {
         this.lastSelectedInnerVariable = result.selectedInnerVariable;
         this.lastSearchInput = result.searchInput;
-      } else if (result === undefined) {
-        // We can retrieve the selected variable and search input from the component instance
-        const componentInstance = dialogRef.componentInstance;
-        if (componentInstance?.selectedInnerVariable) {
-          this.lastSelectedInnerVariable =
-            componentInstance.selectedInnerVariable;
-        }
-        if (componentInstance?.agGridComponent?.searchInput) {
-          this.lastSearchInput = componentInstance.agGridComponent.searchInput;
-        }
       }
     });
   }

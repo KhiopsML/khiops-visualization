@@ -5,7 +5,6 @@
  */
 
 import { AfterViewInit, Component, NgZone } from '@angular/core';
-import { MatDialogRef } from '@angular/material/dialog';
 import { CompositionModel } from '@khiops-covisualization/model/composition.model';
 import { SelectableComponent } from '@khiops-library/components/selectable/selectable.component';
 import { SelectableService } from '@khiops-library/components/selectable/selectable.service';
@@ -13,6 +12,7 @@ import { COMPONENT_TYPES } from '@khiops-library/enum/component-types';
 import { TYPES } from '@khiops-library/enum/types';
 import { ConfigService } from '@khiops-library/providers/config.service';
 import { TranslateService } from '@ngstack/translate';
+import { DialogService } from '@khiops-library/providers/dialog.service';
 
 @Component({
   selector: 'app-composition-detailed-parts',
@@ -47,7 +47,7 @@ export class CompositionDetailedPartsComponent
     public override ngzone: NgZone,
     public override configService: ConfigService,
     public translate: TranslateService,
-    private dialogRef: MatDialogRef<CompositionDetailedPartsComponent>,
+    private dialogService: DialogService,
   ) {
     super(selectableService, ngzone, configService);
   }
@@ -108,6 +108,6 @@ export class CompositionDetailedPartsComponent
   }
 
   onClickOnClose() {
-    this.dialogRef.close();
+    this.dialogService.closeDialog();
   }
 }

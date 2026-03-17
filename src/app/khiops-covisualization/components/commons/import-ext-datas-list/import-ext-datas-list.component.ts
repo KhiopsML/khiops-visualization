@@ -5,11 +5,6 @@
  */
 
 import { Component } from '@angular/core';
-import {
-  MatDialogRef,
-  MatDialog,
-  MatDialogConfig,
-} from '@angular/material/dialog';
 import { ImportExtDatasService } from '@khiops-covisualization/providers/import-ext-datas.service';
 import { TranslateService } from '@ngstack/translate';
 import { FileModel } from '@khiops-library/model/file.model';
@@ -20,6 +15,7 @@ import { LoadExtDatasComponent } from '../load-ext-datas/load-ext-datas.componen
 import { GridDatasI } from '@khiops-library/interfaces/grid-datas.interface';
 import { IconCellComponent } from '@khiops-library/components/ag-grid/icon-cell/icon-cell.component';
 import { EventsService } from '@khiops-covisualization/providers/events.service';
+import { DialogService } from '@khiops-library/providers/dialog.service';
 
 @Component({
   selector: 'app-import-ext-datas-list',
@@ -35,10 +31,9 @@ export class ImportExtDatasListComponent {
   constructor(
     private importExtDatasService: ImportExtDatasService,
     private eventsService: EventsService,
-    private dialog: MatDialog,
     private snackBar: MatSnackBar,
+    private dialogService: DialogService,
     public translate: TranslateService,
-    private dialogRef: MatDialogRef<ImportExtDatasListComponent>,
   ) {
     this.constructImportedDatasTable();
   }
@@ -126,24 +121,23 @@ export class ImportExtDatasListComponent {
   }
 
   onClickOnClose() {
-    this.dialogRef.close();
+    this.dialogService.closeDialog();
     this.openLoadExternalDataDialog();
   }
 
   openLoadExternalDataDialog() {
-    const config = new MatDialogConfig();
-    config.width = AppConfig.covisualizationCommon.MANAGE_VIEWS.WIDTH;
-    config.maxWidth = AppConfig.covisualizationCommon.MANAGE_VIEWS.MAX_WIDTH;
-    const dialogRef: MatDialogRef<LoadExtDatasComponent> = this.dialog.open(
-      LoadExtDatasComponent,
-      config,
-    );
-    dialogRef.disableClose = true;
+    this.dialogService.openDialog(LoadExtDatasComponent, {
+      width: AppConfig.covisualizationCommon.MANAGE_VIEWS.WIDTH,
+      maxWidth: AppConfig.covisualizationCommon.MANAGE_VIEWS.MAX_WIDTH,
+      height: '500px',
+      disableClose: true,
+    });
   }
 
   closeImport() {
     this.importExtDatas = undefined;
     this.constructImportedDatasTable();
+    this.dialogService.closeDialog(); // Automatically close the dialog when import is done
   }
 
   datasLoaded(fileDatas: FileModel) {

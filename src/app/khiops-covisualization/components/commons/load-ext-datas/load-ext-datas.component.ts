@@ -5,16 +5,16 @@
  */
 
 import { Component, OnInit } from '@angular/core';
-import { MatDialogRef } from '@angular/material/dialog';
 import { ImportExtDatasService } from '@khiops-covisualization/providers/import-ext-datas.service';
 import { TranslateService } from '@ngstack/translate';
 import { EventsService } from '@khiops-covisualization/providers/events.service';
+import { DialogService } from '@khiops-library/providers/dialog.service';
 
 @Component({
-    selector: 'app-load-ext-datas',
-    templateUrl: './load-ext-datas.component.html',
-    styleUrls: ['./load-ext-datas.component.scss'],
-    standalone: false
+  selector: 'app-load-ext-datas',
+  templateUrl: './load-ext-datas.component.html',
+  styleUrls: ['./load-ext-datas.component.scss'],
+  standalone: false,
 })
 export class LoadExtDatasComponent implements OnInit {
   loadingDatasStatus: string = '';
@@ -23,8 +23,8 @@ export class LoadExtDatasComponent implements OnInit {
   constructor(
     private eventsService: EventsService,
     private importExtDatasService: ImportExtDatasService,
+    private dialogService: DialogService,
     public translate: TranslateService,
-    private dialogRef: MatDialogRef<LoadExtDatasComponent>,
   ) {}
 
   ngOnInit() {
@@ -35,7 +35,7 @@ export class LoadExtDatasComponent implements OnInit {
       })
       .then((e) => {
         this.eventsService.emitImportedDatasChanged(e);
-        this.dialogRef.close();
+        this.dialogService.closeDialog();
       });
   }
 }

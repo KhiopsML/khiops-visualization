@@ -6,12 +6,10 @@
 
 import {
   Component,
-  Inject,
   ViewChild,
   AfterViewInit,
   NgZone,
 } from '@angular/core';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { DimensionCovisualizationModel } from '@khiops-library/model/dimension.covisualization.model';
 import { GridDatasI } from '@khiops-library/interfaces/grid-datas.interface';
 import { TranslateService } from '@ngstack/translate';
@@ -22,6 +20,7 @@ import { SelectableComponent } from '@khiops-library/components/selectable/selec
 import { SelectableService } from '@khiops-library/components/selectable/selectable.service';
 import { ConfigService } from '@khiops-library/providers/config.service';
 import { COMPONENT_TYPES } from '@khiops-library/enum/component-types';
+import { DialogService } from '@khiops-library/providers/dialog.service';
 
 export interface VariableSearchDialogData {
   selectedDimension: DimensionCovisualizationModel;
@@ -76,38 +75,45 @@ export class VariableSearchDialogComponent
    */
   public inputDatas?: any[];
 
+  /**
+   * Dialog data - set by the DialogService when opening the component
+   */
+  public data!: VariableSearchDialogData;
+
   @ViewChild(AgGridComponent) agGridComponent?: AgGridComponent;
 
   constructor(
     public translate: TranslateService,
-    private dialogRef: MatDialogRef<VariableSearchDialogComponent>,
+    private dialogService: DialogService,
     private treenodesService: TreenodesService,
     private variableSearchService: VariableSearchService,
     public override selectableService: SelectableService,
     public override ngzone: NgZone,
     public override configService: ConfigService,
-    @Inject(MAT_DIALOG_DATA) public data: VariableSearchDialogData,
   ) {
     super(selectableService, ngzone, configService);
-
-    this.initializeInnerVariables();
-    this.initializeSearchResults();
-    // Restore selectedInnerVariable if provided in data
-    if (
-      this.data.selectedInnerVariable &&
-      this.innerVariables.includes(this.data.selectedInnerVariable)
-    ) {
-      this.selectedInnerVariable = this.data.selectedInnerVariable;
-    }
-    // Store searchInput for later restoration in ngAfterViewInit
-    this.performSearch();
   }
 
   override ngAfterViewInit() {
     super.ngAfterViewInit();
 
+    // Initialize the component with data if available
+    if (this.data) {
+      this.initializeInnerVariables();
+      this.initializeSearchResults();
+      // Restore selectedInnerVariable if provided in data
+      if (
+        this.data.selectedInnerVariable &&
+        this.innerVariables.includes(this.data.selectedInnerVariable)
+      ) {
+        this.selectedInnerVariable = this.data.selectedInnerVariable;
+      }
+      // Store searchInput for later restoration in ngAfterViewInit
+      this.performSearch();
+    }
+
     // Restore search input
-    if (this.data.searchInput) {
+    if (this.data?.searchInput) {
       if (this.agGridComponent) {
         this.agGridComponent.searchInput = this.data.searchInput;
         this.agGridComponent.search();
@@ -155,7 +161,7 @@ export class VariableSearchDialogComponent
   onClickOnClose() {
     // Get current search input from AgGrid component
     const currentSearchInput = this.agGridComponent?.searchInput || '';
-    this.dialogRef.close({
+    this.dialogService.closeDialog({
       selectedInnerVariable: this.selectedInnerVariable,
       searchInput: currentSearchInput,
     });
@@ -257,7 +263,7 @@ export class VariableSearchDialogComponent
 
     // Get current search input from AgGrid component
     const currentSearchInput = this.agGridComponent?.searchInput || '';
-    this.dialogRef.close({
+    this.dialogService.closeDialog({
       selectedInnerVariable: this.selectedInnerVariable,
       searchInput: currentSearchInput,
     });
