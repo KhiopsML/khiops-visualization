@@ -2051,6 +2051,13 @@
     "@emnapi/runtime" "^1.7.1"
     "@tybys/wasm-util" "^0.10.1"
 
+"@ngneat/hotkeys@^4.1.0":
+  version "4.1.0"
+  resolved "https://registry.yarnpkg.com/@ngneat/hotkeys/-/hotkeys-4.1.0.tgz#653fdfdb9613bf2a5eb8311e6193be3c620bf5e1"
+  integrity sha512-bqtmK0wMGQOFtNnxmklnbhVbiUoOIp5rXY4UeWGRoMgf7RGvW6dO5moZSPzenJwp8pgi2EmSyo+xpQ8R512hIw==
+  dependencies:
+    tslib "^2.0.0"
+
 "@ngrx/effects@^21.0.1":
   version "21.0.1"
   resolved "https://registry.yarnpkg.com/@ngrx/effects/-/effects-21.0.1.tgz#00d6a0fdfb5de2936c339e1289cc743b3ea5dace"
