@@ -2051,6 +2051,13 @@
     "@emnapi/runtime" "^1.7.1"
     "@tybys/wasm-util" "^0.10.1"
 
+"@ngrx/component-store@^21.0.1":
+  version "21.0.1"
+  resolved "https://registry.yarnpkg.com/@ngrx/component-store/-/component-store-21.0.1.tgz#49eddb6b9549361a6e327d99a0d91299408c4f3c"
+  integrity sha512-aOfudK8MqCZQUuBjMnXAXRxRcr9Qu/+9/2iIh4aLhmGXC5JCpkDi1a82A/39EUFZy2xBbI4lPI7P817b1PQRvQ==
+  dependencies:
+    tslib "^2.0.0"
+
 "@ngrx/effects@^21.0.1":
   version "21.0.1"
   resolved "https://registry.yarnpkg.com/@ngrx/effects/-/effects-21.0.1.tgz#00d6a0fdfb5de2936c339e1289cc743b3ea5dace"

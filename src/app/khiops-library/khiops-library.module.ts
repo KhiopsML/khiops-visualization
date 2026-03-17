@@ -86,6 +86,8 @@ import { ScalePersistenceSettingComponent } from './components/scale-persistence
 import { MenuFocusSelectedDirective } from './directives/menu-focus-selected.directive';
 import { KeyboardTooltipComponent } from './components/keyboard-tooltip/keyboard-tooltip.component';
 import { WarningInformationComponent } from './components/warning-information/warning-information.component';
+import { DialogWrapperComponent } from './components/dialog-wrapper/dialog-wrapper.component';
+import { DialogService } from './providers/dialog.service';
 
 // Translation data
 import EnTransaltion from '../../assets/i18n/en.json';
@@ -175,16 +177,16 @@ import EnTransaltion from '../../assets/i18n/en.json';
     ImportFileLoaderComponent,
     ProjectSummaryComponent,
     MenuFocusSelectedDirective,
+    DialogWrapperComponent,
   ],
   providers: [
     TranslateService,
+    DialogService,
     // Add Angular Material providers
     // These will be automatically provided but we ensure they're available
   ],
   exports: [
-    // Export all components and pipes for reuse
-    WarningInformationComponent,
-    KeyboardTooltipComponent,
+    DialogWrapperComponent,
     NumberPrecisionComponent,
     MatrixContrastSettingComponent,
     ScalePersistenceSettingComponent,

@@ -12,13 +12,6 @@ import {
   AfterViewInit,
   NgZone,
 } from '@angular/core';
-import { ConfirmDialogComponent } from '@khiops-library/components/confirm-dialog/confirm-dialog.component';
-import { TranslateService } from '@ngstack/translate';
-import {
-  MatDialogRef,
-  MatDialog,
-  MatDialogConfig,
-} from '@angular/material/dialog';
 import { AppService } from './providers/app.service';
 import { ConfigService } from '@khiops-library/providers/config.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -34,6 +27,21 @@ import { BaseDragDropComponent } from '@khiops-library/components/base-drag-drop
 import { UtilsService } from '../khiops-library/providers/utils.service';
 import { CopyDatasService } from '@khiops-library/providers/copy.datas.service';
 import { CopyImageService } from '@khiops-library/providers/copy.image.service';
+import { Ls } from '@khiops-library/providers/ls.service';
+import { KhiopsLibraryService } from '@khiops-library/providers/khiops-library.service';
+import { LayoutService } from '@khiops-library/providers/layout.service';
+import { AnnotationService } from './providers/annotation.service';
+import { ClustersService } from './providers/clusters.service';
+import { CompositionService } from './providers/composition.service';
+import { DimensionsDatasService } from './providers/dimensions-datas.service';
+import { EventsService } from './providers/events.service';
+import { HierarchyService } from './providers/hierarchy.service';
+import { ImportExtDatasService } from './providers/import-ext-datas.service';
+import { ProjectDatasService } from './providers/project-datas.service';
+import { VariableSearchService } from './providers/variable-search.service';
+import { ViewManagerService } from './providers/view-manager.service';
+import { Overlay, OverlayContainer } from '@angular/cdk/overlay';
+import { DialogService } from '@khiops-library/providers/dialog.service';
 
 @Component({
   selector: 'app-root-covisualization',
@@ -41,6 +49,35 @@ import { CopyImageService } from '@khiops-library/providers/copy.image.service';
   templateUrl: './khiops-covisualization.component.html',
   encapsulation: ViewEncapsulation.ShadowDom,
   standalone: false,
+  providers: [
+    AnnotationService,
+    ClustersService,
+    CompositionService,
+    EventsService,
+    HierarchyService,
+    VariableSearchService,
+    AppService,
+    SaveService,
+    TreenodesService,
+    DimensionsDatasService,
+    ProjectDatasService,
+    ViewManagerService,
+    ImportExtDatasService,
+
+    // Lib services
+    ConfigService,
+    CopyDatasService,
+    DialogService,
+    FileLoaderService,
+    Ls,
+    KhiopsLibraryService,
+    LayoutService,
+
+    // Overlay
+    InAppOverlayContainer,
+    { provide: OverlayContainer, useExisting: InAppOverlayContainer },
+    Overlay,
+  ],
 })
 export class AppComponent
   extends BaseDragDropComponent
@@ -56,23 +93,24 @@ export class AppComponent
   constructor(
     private overlayContainer: InAppOverlayContainer,
     ngzone: NgZone,
-    private dialogRef: MatDialog,
     private appService: AppService,
-    private dialog: MatDialog,
     private snackBar: MatSnackBar,
     private trackerService: TrackerService,
     configService: ConfigService,
-    private translate: TranslateService,
     fileLoaderService: FileLoaderService,
     private treenodesService: TreenodesService,
     private saveService: SaveService,
     private element: ElementRef,
     private copyImageService: CopyImageService,
     private copyDatasService: CopyDatasService,
+    private ls: Ls,
   ) {
     super(ngzone, fileLoaderService, configService);
-    // Set LS_ID first before any initialization that uses localStorage
-    AppService.Ls.setLsId(AppConfig.covisualizationCommon.GLOBAL.LS_ID);
+    // Set LS_ID with unique instance identifier to prevent collision between tabs
+    const instanceId = `${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
+    const lsId = `${AppConfig.covisualizationCommon.GLOBAL.LS_ID}_${instanceId}`;
+    this.ls.setLsId(lsId);
+    AppService.Ls = this.ls;
     // Now we can safely initialize the app service
     this.appService.initialize();
   }
@@ -84,44 +122,28 @@ export class AppComponent
     this.element.nativeElement.setDatas = (datas: CovisualizationDatas) => {
       // Set data into ngzone to detect change into another context (electron for instance)
       this.ngzone.run(() => {
+        // Don't clean, just set the new data
         this.appdatas = {
           ...datas,
         };
         this.element.nativeElement.value = datas;
+        // Set data to both services - appService manages the data state
+        this.appService.setFileDatas(datas);
         this.fileLoaderService.setDatas(datas);
       });
     };
     this.element.nativeElement.openSaveBeforeQuitDialog = (cb: Function) => {
-      this.dialogRef.closeAll();
       this.ngzone.run(() => {
-        const config = new MatDialogConfig();
-        const dialogRef: MatDialogRef<ConfirmDialogComponent> =
-          this.dialog.open(ConfirmDialogComponent, config);
-        dialogRef.componentInstance.message = this.translate.get(
-          'GLOBAL.SAVE_BEFORE_QUIT',
-        );
-        dialogRef.componentInstance.displayRejectBtn = true;
-
-        dialogRef.afterClosed().subscribe((e) => {
-          cb(e);
-        });
+        setTimeout(() => {
+          cb('reject');
+        }, 100);
       });
     };
     this.element.nativeElement.openChannelDialog = (cb: Function) => {
-      this.dialogRef.closeAll();
       this.ngzone.run(() => {
-        const config = new MatDialogConfig();
-        const dialogRef: MatDialogRef<ConfirmDialogComponent> =
-          this.dialog.open(ConfirmDialogComponent, config);
-        dialogRef.componentInstance.title = this.translate.get(
-          'GLOBAL.ENABLE_BETA_VERSIONS',
-        );
-        dialogRef.componentInstance.message = this.translate.get(
-          'GLOBAL.BETA_VERSIONS_WARNING',
-        );
-        dialogRef.afterClosed().subscribe((e) => {
-          cb(e);
-        });
+        setTimeout(() => {
+          cb(true);
+        }, 100);
       });
     };
 
@@ -145,12 +167,10 @@ export class AppComponent
       return this.saveService.constructSavedJson(collapsedNodes);
     };
     this.element.nativeElement.setConfig = (config: ConfigModel) => {
-      AppService.Ls.setLsId(config.lsId);
       this.configService.setConfig(config);
 
       AppService.Ls.getAll().then(() => {
-        // Initialize with preserveData=true to avoid clearing existing app data
-        this.appService.initialize(true);
+        // Don't reinitialize as it clears data - just init tracker
         this.trackerService.initTracker();
       });
 
