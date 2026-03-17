@@ -108,8 +108,6 @@ import { VisualizationRoutingModule } from './khiops-visualization-routing.modul
       provide: InAppOverlayContainer,
       useClass: InAppOverlayContainer,
     },
-    // Make sure that InAppOverlayContainer and OverlayContainer share the same instance
-    { provide: OverlayContainer, useExisting: InAppOverlayContainer },
   ],
   exports: [AppComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],

@@ -93,9 +93,7 @@ import { CovisualizationRoutingModule } from './khiops-covisualization-routing.m
   ],
   providers: [
     provideHttpClient(),
-    InAppOverlayContainer,
-    // make sure that InAppOverlayContainer and OverlayContainer share the same instance
-    { provide: OverlayContainer, useExisting: InAppOverlayContainer },
+    { provide: OverlayContainer, useClass: InAppOverlayContainer },
   ],
   exports: [AppComponent, VariableSearchDialogComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],

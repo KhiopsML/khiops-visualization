@@ -3,7 +3,6 @@
  * This software is distributed under the BSD 3-Clause-clear License, the text of which is available
  * at https://spdx.org/licenses/BSD-3-Clause-Clear.html or see the "LICENSE" file for more details.
  */
-
 import { Inject, Injectable, DOCUMENT } from '@angular/core';
 import { OverlayContainer } from '@angular/cdk/overlay';
 import { ConfigService } from '@khiops-library/providers/config.service';
@@ -43,8 +42,10 @@ export class InAppOverlayContainer extends OverlayContainer {
   }
 
   getRootElement(): Element | null {
-    return this.configService
-      .getRootElementDom()
-      .querySelector('app-home-layout');
+    const rootElementDom = this.configService.getRootElementDom();
+    if (!rootElementDom) {
+      return null;
+    }
+    return rootElementDom.querySelector('app-home-layout');
   }
 }

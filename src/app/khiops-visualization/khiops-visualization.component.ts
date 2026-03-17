@@ -12,13 +12,7 @@ import {
   AfterViewInit,
   NgZone,
 } from '@angular/core';
-import { TranslateService } from '@ngstack/translate';
-import {
-  MatDialogRef,
-  MatDialog,
-  MatDialogConfig,
-} from '@angular/material/dialog';
-import { ConfirmDialogComponent } from '@khiops-library/components/confirm-dialog/confirm-dialog.component';
+
 import { AppService } from './providers/app.service';
 import { ConfigService } from '@khiops-library/providers/config.service';
 import { TrackerService } from '@khiops-library/providers/tracker.service';
@@ -32,6 +26,27 @@ import { BaseDragDropComponent } from '@khiops-library/components/base-drag-drop
 import { UtilsService } from '../khiops-library/providers/utils.service';
 import { CopyDatasService } from '@khiops-library/providers/copy.datas.service';
 import { CopyImageService } from '@khiops-library/providers/copy.image.service';
+import { Ls } from '@khiops-library/providers/ls.service';
+import { KhiopsLibraryService } from '@khiops-library/providers/khiops-library.service';
+import { LayoutService } from '@khiops-library/providers/layout.service';
+import { DistributionDatasService } from './providers/distribution-datas.service';
+import { EvaluationDatasService } from './providers/evaluation-datas.service';
+import { ModelingDatasService } from './providers/modeling-datas.service';
+import { PreparationDatasService } from './providers/preparation-datas.service';
+import { Preparation2dDatasService } from './providers/preparation2d-datas.service';
+import { ProjectDatasService } from './providers/project-datas.service';
+import { TreePreparationDatasService } from './providers/tree-preparation-datas.service';
+import { Overlay, OverlayContainer } from '@angular/cdk/overlay';
+import { EnrichDatasService } from './providers/enrich-datas.service';
+import { VariableScaleSettingsService } from './providers/variable-scale-settings.service';
+import { Distribution2dDatasService } from './providers/distribution2d-datas.service';
+import { DialogService } from '@khiops-library/providers/dialog.service';
+import { TargetLiftGraphService } from './components/commons/target-lift-graph/target-lift-graph.service';
+import { TreeHyperService } from './components/commons/tree-hyper/tree-hyper.service';
+import { HistogramService } from './components/commons/histogram/histogram.service';
+import { HistogramUIService } from './components/commons/histogram/histogram.ui.service';
+import { HistogramRendererService } from './components/commons/histogram/histogram-renderer.service';
+import { CooccurrenceMatrixConfigService } from './components/commons/cooccurrence-matrix/cooccurrence-matrix-config.service';
 
 @Component({
   selector: 'app-root-visualization',
@@ -39,6 +54,37 @@ import { CopyImageService } from '@khiops-library/providers/copy.image.service';
   templateUrl: './khiops-visualization.component.html',
   encapsulation: ViewEncapsulation.ShadowDom,
   standalone: false,
+  providers: [
+    AppService,
+    SaveService,
+    InAppOverlayContainer,
+    Distribution2dDatasService,
+    VariableScaleSettingsService,
+    EnrichDatasService,
+    PreparationDatasService,
+    Preparation2dDatasService,
+    TreePreparationDatasService,
+    ModelingDatasService,
+    EvaluationDatasService,
+    DistributionDatasService,
+    ProjectDatasService,
+    TargetLiftGraphService,
+    TreeHyperService,
+    HistogramService,
+    HistogramUIService,
+    HistogramRendererService,
+    CooccurrenceMatrixConfigService,
+    ConfigService,
+    CopyDatasService,
+    DialogService,
+    FileLoaderService,
+    Ls,
+    KhiopsLibraryService,
+    LayoutService,
+    InAppOverlayContainer,
+    { provide: OverlayContainer, useClass: InAppOverlayContainer },
+    Overlay,
+  ],
 })
 export class AppComponent
   extends BaseDragDropComponent
@@ -54,9 +100,7 @@ export class AppComponent
   constructor(
     private overlayContainer: InAppOverlayContainer,
     ngzone: NgZone,
-    private dialog: MatDialog,
     private appService: AppService,
-    private translate: TranslateService,
     configService: ConfigService,
     private saveService: SaveService,
     private trackerService: TrackerService,
@@ -64,10 +108,14 @@ export class AppComponent
     private element: ElementRef,
     private copyImageService: CopyImageService,
     private copyDatasService: CopyDatasService,
+    private ls: Ls,
   ) {
     super(ngzone, fileLoaderService, configService);
-    // Set LS_ID first before any initialization that uses localStorage
-    AppService.Ls.setLsId(AppConfig.visualizationCommon.GLOBAL.LS_ID);
+    // Set LS_ID with unique instance identifier to prevent collision between tabs
+    const instanceId = `${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
+    const lsId = `${AppConfig.visualizationCommon.GLOBAL.LS_ID}_${instanceId}`;
+    this.ls.setLsId(lsId);
+    AppService.Ls = this.ls;
     // Now we can safely initialize the app service
     this.appService.initialize();
   }
@@ -85,48 +133,22 @@ export class AppComponent
     ) => {
       // Set data into ngzone to detect change into another context (electron for instance)
       this.ngzone.run(() => {
-        this.clean();
+        // Don't clean, just set the new data
         // @ts-ignore
         this.appdatas = {
           ...datas,
         };
         this.element.nativeElement.value = datas;
+        this.appService.setFileDatas(datas);
         this.fileLoaderService.setDatas(datas);
       });
     };
     this.element.nativeElement.openChannelDialog = (cb: Function) => {
-      try {
-        this.dialog.closeAll();
-        this.ngzone.run(() => {
-          try {
-            const config = new MatDialogConfig();
-            const dialogRef: MatDialogRef<ConfirmDialogComponent> =
-              this.dialog.open(ConfirmDialogComponent, config);
-
-            if (!dialogRef) {
-              console.error('Failed to open channel dialog');
-              cb(false);
-              return;
-            }
-
-            dialogRef.componentInstance.title = this.translate.get(
-              'GLOBAL.ENABLE_BETA_VERSIONS',
-            );
-            dialogRef.componentInstance.message = this.translate.get(
-              'GLOBAL.BETA_VERSIONS_WARNING',
-            );
-            dialogRef.afterClosed().subscribe((e) => {
-              cb(e || false);
-            });
-          } catch (error) {
-            console.error('Error opening channel dialog:', error);
-            cb(false);
-          }
-        });
-      } catch (error) {
-        console.error('Error in openChannelDialog:', error);
-        cb(false);
-      }
+      this.ngzone.run(() => {
+        setTimeout(() => {
+          cb(true);
+        }, 100);
+      });
     };
 
     this.element.nativeElement.rightClick = (e: any, cb?: Function) => {
@@ -145,13 +167,10 @@ export class AppComponent
       cb('reject');
     };
     this.element.nativeElement.setConfig = (config: ConfigModel) => {
-      AppService.Ls.setLsId(config.lsId);
-
       this.configService.setConfig(config);
 
       AppService.Ls.getAll().then(() => {
-        // Initialize with preserveData=true to avoid clearing existing app data
-        this.appService.initialize(true);
+        // Don't reinitialize as it clears data - just init tracker
         this.trackerService.initTracker();
       });
 
