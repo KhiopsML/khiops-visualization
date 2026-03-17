@@ -33,17 +33,10 @@ import { TreeHyperService } from './tree-hyper.service';
 import { Hypertree, N } from '@khiops-hypertree';
 import {
   TreePreparationDatasModel,
-  TreePreparationState,
 } from '@khiops-visualization/model/tree-preparation-datas.model';
 import { DistributionDatasModel } from '@khiops-visualization/model/distribution-datas.model';
 import { firstValueFrom, Observable, take } from 'rxjs';
-import { Store } from '@ngrx/store';
-import { selectNodesFromId } from '@khiops-visualization/actions/tree-preparation.action';
-import {
-  previousSelectedNodesSelector,
-  selectedNodeSelector,
-  selectedNodesSelector,
-} from '@khiops-visualization/selectors/tree-preparation.selector';
+import { TreePreparationStore } from '@khiops-visualization/stores/tree-preparation.store';
 import { AppConfig } from '../../../../../environments/environment';
 
 @Component({
@@ -54,8 +47,7 @@ import { AppConfig } from '../../../../../environments/environment';
 })
 export class TreeHyperComponent
   extends SelectableComponent
-  implements OnInit, AfterViewInit, OnChanges, OnDestroy
-{
+  implements OnInit, AfterViewInit, OnChanges, OnDestroy {
   @ViewChild('hyperTree') private hyperTree?: ElementRef<HTMLElement>;
 
   @Input() public dimensionTree?: [TreeNodeModel];
@@ -86,15 +78,13 @@ export class TreeHyperComponent
     public translate: TranslateService,
     private treePreparationDatasService: TreePreparationDatasService,
     private distributionDatasService: DistributionDatasService,
-    private store: Store<{ TreePreparationState: TreePreparationState }>,
+    private store: TreePreparationStore,
   ) {
     super(selectableService, ngzone, configService);
 
-    this.selectedNodes$ = this.store.select(selectedNodesSelector);
-    this.previousSelectedNodes$ = this.store.select(
-      previousSelectedNodesSelector,
-    );
-    this.selectedNode$ = this.store.select(selectedNodeSelector);
+    this.selectedNodes$ = this.store.selectedNodes$;
+    this.previousSelectedNodes$ = this.store.previousSelectedNodes$;
+    this.selectedNode$ = this.store.selectedNode$;
 
     this.buttonTitle = this.translate.get('GLOBAL.VALUES');
 
@@ -126,10 +116,9 @@ export class TreeHyperComponent
       if (selectedNodes) {
         // get previous values of selected nodes from store synchronously
         let previousSelectedNodes: TreeNodeModel[] = [];
-        this.store
-          .select(previousSelectedNodesSelector)
+        this.store.previousSelectedNodes$
           .pipe(take(1))
-          .subscribe((nodes) => (previousSelectedNodes = nodes));
+          .subscribe((nodes: TreeNodeModel[]) => (previousSelectedNodes = nodes));
 
         this.removeNodes(previousSelectedNodes);
         this.selectNodes(selectedNodes);
@@ -348,11 +337,9 @@ export class TreeHyperComponent
 
   private nodeClick(n: N) {
     this.ngzone.run(() => {
-      this.store.dispatch(
-        selectNodesFromId({
-          id: n.data.id,
-        }),
-      );
+      this.store.selectNodesFromId({
+        id: n.data.id,
+      });
     });
   }
 }
