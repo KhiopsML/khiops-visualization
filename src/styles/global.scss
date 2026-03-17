@@ -383,9 +383,13 @@ canvas:focus {
   top: 11px !important;
   background-color: var(--bg-color) !important;
   box-shadow: 0 1px 5px 0px rgba(0, 0, 0, 0.2);
-  animation: expandToFullscreen 0.2s cubic-bezier(0.25, 0.8, 0.25, 1);
   border-radius: var(--border-radius);
   padding: 20px !important;
+}
+
+/* Animation appliquée seulement à la première ouverture fullscreen */
+.fullscreen.first-open {
+  animation: expandToFullscreen 0.2s cubic-bezier(0.25, 0.8, 0.25, 1);
 }
 
 /* Override fullscreen styles when inside a modal dialog */

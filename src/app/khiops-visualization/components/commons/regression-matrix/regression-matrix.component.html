@@ -6,7 +6,7 @@
 
 <div id="regression-matrix-comp" fxFlexFill fxLayout="column">
   @if (preparation2dDatas?.matrixDatas) {
-    <div fxFlexFill fxLayout="column" [ngClass]="{ fullscreen: isFullscreen }">
+    <div fxFlexFill fxLayout="column" [ngClass]="{ fullscreen: isFullscreen }" [appFullscreenAnimation]="isFullscreen">
       <div fxLayout="row" fxLayoutAlign="start center" class="comp-header">
         <div fxFlex fxLayout="row" fxLayoutAlign="start center">
           <div fxFlex fxLayout="row" fxLayoutAlign="start center">

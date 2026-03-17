@@ -88,6 +88,7 @@ import { KeyboardTooltipComponent } from './components/keyboard-tooltip/keyboard
 import { WarningInformationComponent } from './components/warning-information/warning-information.component';
 import { DialogWrapperComponent } from './components/dialog-wrapper/dialog-wrapper.component';
 import { DialogService } from './providers/dialog.service';
+import { FullscreenAnimationDirective } from './directives/fullscreen-animation.directive';
 
 // Translation data
 import EnTransaltion from '../../assets/i18n/en.json';
@@ -133,6 +134,8 @@ import EnTransaltion from '../../assets/i18n/en.json';
       activeLang: 'en',
       supportedLangs: ['en'],
     }),
+    // Standalone directives
+    FullscreenAnimationDirective,
   ],
   declarations: [
     WarningInformationComponent,
@@ -229,6 +232,7 @@ import EnTransaltion from '../../assets/i18n/en.json';
     RowIdentifierPipe,
     // Directives
     MenuFocusSelectedDirective,
+    FullscreenAnimationDirective,
     // Modules for re-export
     CommonModule,
     FormsModule,

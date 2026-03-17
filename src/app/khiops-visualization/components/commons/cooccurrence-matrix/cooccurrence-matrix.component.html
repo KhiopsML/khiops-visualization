@@ -9,6 +9,7 @@
   fxFlexFill
   fxLayout="column"
   [ngClass]="{ fullscreen: isFullscreen }"
+  [appFullscreenAnimation]="isFullscreen"
 >
   <!-- important to have a main first child for copy images #343 -->
   <div fxFlexFill>

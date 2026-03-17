@@ -10,6 +10,7 @@
   fxLayout="column"
   (resized)="onResized($event)"
   [ngClass]="{ fullscreen: isFullscreen }"
+  [appFullscreenAnimation]="isFullscreen"
 >
   @if (inputDatas) {
     <div fxFlexFill fxLayout="column">

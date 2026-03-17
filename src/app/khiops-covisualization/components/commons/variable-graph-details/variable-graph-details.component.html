@@ -9,6 +9,7 @@
   fxLayout="column"
   fxFlexFill
   [ngClass]="{ fullscreen: isFullscreen }"
+  [appFullscreenAnimation]="isFullscreen"
 >
   <kl-graph-header
     matTooltip="{{ 'TOOLTIPS.AXIS.DISTRIBUTION.TITLE' | translate }}"
