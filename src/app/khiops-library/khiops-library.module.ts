@@ -37,6 +37,7 @@ import { MatRippleModule } from '@angular/material/core';
 
 // Third-party modules
 import { FlexLayoutModule } from '@angular/flex-layout';
+import { HotkeyModule } from 'angular2-hotkeys';
 import { ResizableModule } from 'angular-resizable-element';
 import { TranslateModule, TranslateService } from '@ngstack/translate';
 import { AgGridModule } from '@ag-grid-community/angular';
@@ -125,6 +126,7 @@ import EnTransaltion from '../../assets/i18n/en.json';
     AgGridModule,
     ResizableModule,
     AngularSplitModule,
+    HotkeyModule.forRoot(),
     TranslateModule.forRoot({
       activeLang: 'en',
       supportedLangs: ['en'],

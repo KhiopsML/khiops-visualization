@@ -9,7 +9,7 @@ import { Component, Input, EventEmitter, Output } from '@angular/core';
 import { saveAs } from 'file-saver';
 
 import { SelectableService } from '../selectable/selectable.service';
-import { HotkeysService } from '@ngneat/hotkeys';
+import { HotkeysService, Hotkey } from 'angular2-hotkeys';
 import { CopyDatasService } from '@khiops-library/providers/copy.datas.service';
 import { CopyImageService } from '@khiops-library/providers/copy.image.service';
 
@@ -26,24 +26,29 @@ export class HeaderToolsComponent {
 
   constructor(
     public selectableService: SelectableService,
-    private hotkeys: HotkeysService,
+    private hotkeysService: HotkeysService,
     public copyDatasService: CopyDatasService,
     public copyImageService: CopyImageService,
   ) {
     // define hotkeys - support both ctrl (Windows/Linux) and command (Mac)
-    // ctrl for Windows/Linux, meta for macOS
-    this.hotkeys
-      .addShortcut({ keys: 'ctrl.shift.c' })
-      .subscribe(() => this.copyImage());
-    this.hotkeys
-      .addShortcut({ keys: 'meta.shift.c' })
-      .subscribe(() => this.copyImage());
-    this.hotkeys
-      .addShortcut({ keys: 'ctrl.shift.d' })
-      .subscribe(() => this.copyDatas());
-    this.hotkeys
-      .addShortcut({ keys: 'meta.shift.d' })
-      .subscribe(() => this.copyDatas());
+    this.hotkeysService.add(
+      new Hotkey(
+        ['ctrl+shift+c', 'command+shift+c'],
+        (_event: KeyboardEvent): boolean => {
+          this.copyImage();
+          return false; // Prevent bubbling
+        },
+      ),
+    );
+    this.hotkeysService.add(
+      new Hotkey(
+        ['ctrl+shift+d', 'command+shift+d'],
+        (_event: KeyboardEvent): boolean => {
+          this.copyDatas();
+          return false; // Prevent bubbling
+        },
+      ),
+    );
   }
 
   copyDatas() {
