@@ -56,9 +56,8 @@ export class AppComponent
   constructor(
     private overlayContainer: InAppOverlayContainer,
     ngzone: NgZone,
-    private dialogRef: MatDialog,
-    private appService: AppService,
     private dialog: MatDialog,
+    private appService: AppService,
     private snackBar: MatSnackBar,
     private trackerService: TrackerService,
     configService: ConfigService,
@@ -79,6 +78,11 @@ export class AppComponent
 
   ngAfterViewInit(): void {
     this.configService.setRootElement(this.appElement);
+
+    // Force the creation of the overlay container early so dialogs can be displayed
+    // This must be done before any dialog is opened (e.g., in openSaveBeforeQuitDialog)
+    this.overlayContainer.createContainer();
+
     this.element.nativeElement.getDatas = () =>
       this.saveService.constructDatasToSave();
     this.element.nativeElement.setDatas = (datas: CovisualizationDatas) => {
@@ -92,37 +96,71 @@ export class AppComponent
       });
     };
     this.element.nativeElement.openSaveBeforeQuitDialog = (cb: Function) => {
-      this.dialogRef.closeAll();
-      this.ngzone.run(() => {
-        const config = new MatDialogConfig();
-        const dialogRef: MatDialogRef<ConfirmDialogComponent> =
-          this.dialog.open(ConfirmDialogComponent, config);
-        dialogRef.componentInstance.message = this.translate.get(
-          'GLOBAL.SAVE_BEFORE_QUIT',
-        );
-        dialogRef.componentInstance.displayRejectBtn = true;
+      try {
+        this.dialog.closeAll();
+        this.ngzone.run(() => {
+          try {
+            const config = new MatDialogConfig();
+            const dialogRef: MatDialogRef<ConfirmDialogComponent> =
+              this.dialog.open(ConfirmDialogComponent, config);
 
-        dialogRef.afterClosed().subscribe((e) => {
-          cb(e);
+            if (!dialogRef) {
+              console.error('Failed to open save confirmation dialog');
+              cb('reject');
+              return;
+            }
+
+            dialogRef.componentInstance.message = this.translate.get(
+              'GLOBAL.SAVE_BEFORE_QUIT',
+            );
+            dialogRef.componentInstance.displayRejectBtn = true;
+
+            dialogRef.afterClosed().subscribe((e) => {
+              cb(e || 'reject');
+            });
+          } catch (error) {
+            console.error('Error opening save confirmation dialog:', error);
+            cb('reject');
+          }
         });
-      });
+      } catch (error) {
+        console.error('Error in openSaveBeforeQuitDialog:', error);
+        cb('reject');
+      }
     };
     this.element.nativeElement.openChannelDialog = (cb: Function) => {
-      this.dialogRef.closeAll();
-      this.ngzone.run(() => {
-        const config = new MatDialogConfig();
-        const dialogRef: MatDialogRef<ConfirmDialogComponent> =
-          this.dialog.open(ConfirmDialogComponent, config);
-        dialogRef.componentInstance.title = this.translate.get(
-          'GLOBAL.ENABLE_BETA_VERSIONS',
-        );
-        dialogRef.componentInstance.message = this.translate.get(
-          'GLOBAL.BETA_VERSIONS_WARNING',
-        );
-        dialogRef.afterClosed().subscribe((e) => {
-          cb(e);
+      try {
+        this.dialog.closeAll();
+        this.ngzone.run(() => {
+          try {
+            const config = new MatDialogConfig();
+            const dialogRef: MatDialogRef<ConfirmDialogComponent> =
+              this.dialog.open(ConfirmDialogComponent, config);
+
+            if (!dialogRef) {
+              console.error('Failed to open channel dialog');
+              cb(false);
+              return;
+            }
+
+            dialogRef.componentInstance.title = this.translate.get(
+              'GLOBAL.ENABLE_BETA_VERSIONS',
+            );
+            dialogRef.componentInstance.message = this.translate.get(
+              'GLOBAL.BETA_VERSIONS_WARNING',
+            );
+            dialogRef.afterClosed().subscribe((e) => {
+              cb(e || false);
+            });
+          } catch (error) {
+            console.error('Error opening channel dialog:', error);
+            cb(false);
+          }
         });
-      });
+      } catch (error) {
+        console.error('Error in openChannelDialog:', error);
+        cb(false);
+      }
     };
 
     this.element.nativeElement.rightClick = (e: any, cb?: Function) => {
