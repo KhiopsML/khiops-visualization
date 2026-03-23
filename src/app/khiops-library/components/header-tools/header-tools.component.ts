@@ -24,12 +24,23 @@ export class HeaderToolsComponent {
   @Output() private toggleNavDrawerChanged: EventEmitter<any> =
     new EventEmitter();
 
+  public copyDatasShortcut: string;
+  public copyImageShortcut: string;
+
+  private isMac =
+    typeof navigator !== 'undefined' &&
+    /Mac|iPhone|iPad|iPod/.test(navigator.platform);
+
   constructor(
     public selectableService: SelectableService,
     private hotkeysService: HotkeysService,
     public copyDatasService: CopyDatasService,
     public copyImageService: CopyImageService,
   ) {
+    // Define shortcuts for display
+    this.copyImageShortcut = this.isMac ? 'Command+Shift+C' : 'Ctrl+Shift+C';
+    this.copyDatasShortcut = this.isMac ? 'Command+Shift+D' : 'Ctrl+Shift+D';
+
     // define hotkeys - support both ctrl (Windows/Linux) and command (Mac)
     this.hotkeysService.add(
       new Hotkey(
@@ -53,7 +64,6 @@ export class HeaderToolsComponent {
 
   copyDatas() {
     // this.trackerService.trackEvent('click', 'copy_datas', 'text');
-
     this.copyDatasService.copyDatas();
   }
 

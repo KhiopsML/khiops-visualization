@@ -526,11 +526,6 @@ export class EvaluationDatasService {
           graphDatas.find((e) => e.name === displayedMap[j].name),
         );
       }
-      liftGraphDatas.filter((e) => {
-        return this.evaluationDatas.liftGraphDisplayedValues?.find(
-          (el) => e.name === el.name && el.show,
-        );
-      });
     }
 
     // format datas for new chartjs lib

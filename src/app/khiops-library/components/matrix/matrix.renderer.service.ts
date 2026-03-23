@@ -21,7 +21,7 @@ export class MatrixRendererService {
   private canvasPattern: HTMLCanvasElement | undefined;
   private innerVariableFilterPattern: HTMLCanvasElement | undefined;
 
-  constructor() { }
+  constructor() {}
 
   /**
    * Cleans the main matrix canvas context
@@ -362,6 +362,38 @@ export class MatrixRendererService {
         cell.yCanvas,
         cell.wCanvas,
         cell.hCanvas,
+      );
+    }
+  }
+
+  /**
+   * Draws a 1px black border on the hovered cell
+   * @param matrixSelectedCtx Selected cells canvas context
+   * @param cell Cell to highlight
+   */
+  drawHoveredCell(
+    matrixSelectedCtx: CanvasRenderingContext2D,
+    cell: CellModel,
+  ): void {
+    if (cell) {
+      // Draw white border
+      matrixSelectedCtx.strokeStyle = 'rgba(255,255,255, 0.6)';
+      matrixSelectedCtx.lineWidth = 2;
+      matrixSelectedCtx.strokeRect(
+        cell.xCanvas,
+        cell.yCanvas,
+        cell.wCanvas,
+        cell.hCanvas,
+      );
+
+      // Draw black inset border
+      matrixSelectedCtx.strokeStyle = 'rgba(0 0 0 / 0.6)';
+      matrixSelectedCtx.lineWidth = 1;
+      matrixSelectedCtx.strokeRect(
+        cell.xCanvas + 2,
+        cell.yCanvas + 2,
+        cell.wCanvas - 4,
+        cell.hCanvas - 4,
       );
     }
   }
