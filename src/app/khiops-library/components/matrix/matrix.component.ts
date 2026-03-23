@@ -103,9 +103,9 @@ export class MatrixComponent extends SelectableComponent implements OnChanges {
   public tooltipCell: CellModel | undefined;
   public tooltipPosition:
     | {
-      x: number;
-      y: number;
-    }
+        x: number;
+        y: number;
+      }
     | undefined;
 
   private conditionalOnContextChangedSub: Subscription;
@@ -133,6 +133,9 @@ export class MatrixComponent extends SelectableComponent implements OnChanges {
   private multiSelectCurrentCell: CellModel | undefined;
   private mouseDownHandler!: (event: MouseEvent) => void;
   private mouseUpHandler!: (event: MouseEvent) => void;
+
+  // Hover cell border
+  private hoveredCell: CellModel | undefined;
 
   constructor(
     private ls: Ls,
@@ -169,6 +172,12 @@ export class MatrixComponent extends SelectableComponent implements OnChanges {
 
     this.mouseoutHandler = (_event: Event) => {
       this.hideTooltip();
+      // Clear hovered cell border
+      if (this.hoveredCell) {
+        this.hoveredCell = undefined;
+        this.cleanSelectedDomContext();
+        this.drawSelectedNodes();
+      }
       // Cancel multi-selection if mouse leaves the matrix
       if (this.isMultiSelecting) {
         this.isMultiSelecting = false;
@@ -180,6 +189,17 @@ export class MatrixComponent extends SelectableComponent implements OnChanges {
     };
     this.mousemoveHandler = (event: MouseEvent) => {
       this.currentEvent = event;
+
+      // Update hover border
+      const currentCell = this.getCurrentCell(event);
+      if (currentCell !== this.hoveredCell) {
+        this.hoveredCell = currentCell;
+        this.cleanSelectedDomContext();
+        this.drawSelectedNodes();
+        if (this.hoveredCell) {
+          this.drawHoveredCell(this.hoveredCell);
+        }
+      }
 
       // Don't show tooltip during multi-selection
       if (!this.isMultiSelecting) {
@@ -684,6 +704,15 @@ export class MatrixComponent extends SelectableComponent implements OnChanges {
   }
 
   /**
+   * Draw a 1px black border on the hovered cell
+   */
+  private drawHoveredCell(cell: CellModel) {
+    if (cell && this.matrixSelectedCtx) {
+      this.matrixRendererService.drawHoveredCell(this.matrixSelectedCtx, cell);
+    }
+  }
+
+  /**
    * Before draw canvas, clean dom and clone divs to remove listeners
    */
   private cleanDomContext() {
@@ -814,12 +843,12 @@ export class MatrixComponent extends SelectableComponent implements OnChanges {
         if (
           y > this.inputDatas.matrixCellDatas[i].yCanvas &&
           y <
-          this.inputDatas.matrixCellDatas[i].yCanvas +
-          this.inputDatas.matrixCellDatas[i].hCanvas &&
+            this.inputDatas.matrixCellDatas[i].yCanvas +
+              this.inputDatas.matrixCellDatas[i].hCanvas &&
           x > this.inputDatas.matrixCellDatas[i].xCanvas &&
           x <
-          this.inputDatas.matrixCellDatas[i].xCanvas +
-          this.inputDatas.matrixCellDatas[i].wCanvas
+            this.inputDatas.matrixCellDatas[i].xCanvas +
+              this.inputDatas.matrixCellDatas[i].wCanvas
         ) {
           return this.inputDatas.matrixCellDatas[i];
         }
