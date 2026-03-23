@@ -376,13 +376,24 @@ export class MatrixRendererService {
     cell: CellModel,
   ): void {
     if (cell) {
-      matrixSelectedCtx.strokeStyle = 'rgba(0, 0, 0, 0.7)';
-      matrixSelectedCtx.lineWidth = 1;
+      // Draw white border
+      matrixSelectedCtx.strokeStyle = 'rgba(255,255,255, 0.6)';
+      matrixSelectedCtx.lineWidth = 2;
       matrixSelectedCtx.strokeRect(
         cell.xCanvas,
         cell.yCanvas,
         cell.wCanvas,
         cell.hCanvas,
+      );
+
+      // Draw black inset border
+      matrixSelectedCtx.strokeStyle = 'rgba(0 0 0 / 0.6)';
+      matrixSelectedCtx.lineWidth = 1;
+      matrixSelectedCtx.strokeRect(
+        cell.xCanvas + 2,
+        cell.yCanvas + 2,
+        cell.wCanvas - 4,
+        cell.hCanvas - 4,
       );
     }
   }
