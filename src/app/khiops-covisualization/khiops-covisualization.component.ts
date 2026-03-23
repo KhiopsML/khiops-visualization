@@ -117,6 +117,11 @@ export class AppComponent
 
   ngAfterViewInit(): void {
     this.configService.setRootElement(this.appElement);
+
+    // Force the creation of the overlay container early so dialogs can be displayed
+    // This must be done before any dialog is opened (e.g., in openSaveBeforeQuitDialog)
+    this.overlayContainer.createContainer();
+
     this.element.nativeElement.getDatas = () =>
       this.saveService.constructDatasToSave();
     this.element.nativeElement.setDatas = (datas: CovisualizationDatas) => {

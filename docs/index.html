@@ -6,14 +6,6 @@
     <title>Khiops-visualization demo</title>
     <link rel="stylesheet" href="./common-header.css" />
     <style>
-      @keyframes spin {
-        0% {
-          transform: rotate(0deg);
-        }
-        100% {
-          transform: rotate(360deg);
-        }
-      }
       #file-opener {
         margin: 0 20px;
       }
@@ -75,17 +67,96 @@
         z-index: 1000;
       "
     >
-      <div
-        style="
-          border: 4px solid #f3f3f3;
-          border-top: 4px solid #3498db;
-          border-radius: 50%;
-          width: 40px;
-          height: 40px;
-          animation: spin 1s linear infinite;
-          margin: 0 auto 20px;
-        "
-      ></div>
+      <svg
+        version="1.0"
+        width="80"
+        height="80"
+        viewBox="0 0 496.31 305.509"
+        xmlns="http://www.w3.org/2000/svg"
+        style="margin: 0 auto 0px; display: block;"
+      >
+        <style>
+          @keyframes drawFill {
+            0% {
+              stroke-dashoffset: 1200;
+              fill-opacity: 0;
+            }
+            18% {
+              stroke-dashoffset: 0;
+              fill-opacity: 0;
+            }
+            28% {
+              stroke-dashoffset: 0;
+              fill-opacity: 1;
+            }
+            70% {
+              stroke-dashoffset: 0;
+              fill-opacity: 1;
+            }
+            88% {
+              stroke-dashoffset: 1200;
+              fill-opacity: 0;
+            }
+            100% {
+              stroke-dashoffset: 1200;
+              fill-opacity: 0;
+            }
+          }
+          .shape {
+            stroke-dasharray: 1200;
+            stroke-dashoffset: 1200;
+            fill-opacity: 0;
+          }
+          .s1 { animation: drawFill 1.8s ease-in-out 0s infinite; }
+          .s2 { animation: drawFill 1.8s ease-in-out 0.02s infinite; }
+          .s3 { animation: drawFill 1.8s ease-in-out 0.04s infinite; }
+          .s4 { animation: drawFill 1.8s ease-in-out 0.08s infinite; }
+          .s5 { animation: drawFill 1.8s ease-in-out 0.12s infinite; }
+          .s6 { animation: drawFill 1.8s ease-in-out 0.16s infinite; }
+          .s7 { animation: drawFill 1.8s ease-in-out 0.2s infinite; }
+          .s8 { animation: drawFill 1.8s ease-in-out 0.24s infinite; }
+        </style>
+        <path
+          class="shape s1"
+          style="fill: #5f9ac7; stroke: #5f9ac7; stroke-width: 2; stroke-linejoin: round;"
+          d="m259.43 0 10.732 41.142-94.356 28.827z"
+        />
+        <path
+          class="shape s2"
+          style="fill: #2e5674; stroke: #2e5674; stroke-width: 2; stroke-linejoin: round;"
+          d="m259.43 0 10.732 41.142 39.138 9.382z"
+        />
+        <path
+          class="shape s3"
+          style="fill: #91cb47; stroke: #91cb47; stroke-width: 2; stroke-linejoin: round;"
+          d="m276.207 64.315 12.806 49.09-165.849 29.05z"
+        />
+        <path
+          class="shape s4"
+          style="fill: #527823; stroke: #527823; stroke-width: 2; stroke-linejoin: round;"
+          d="m276.207 64.315 12.806 49.09 78.288 11.98z"
+        />
+        <path
+          class="shape s5"
+          style="fill: #ffb448; stroke: #ffb448; stroke-width: 2; stroke-linejoin: round;"
+          d="m295.528 138.378 13.514 51.806-246.25 33.15z"
+        />
+        <path
+          class="shape s6"
+          style="fill: #996823; stroke: #996823; stroke-width: 2; stroke-linejoin: round;"
+          d="m295.528 138.378 13.514 51.806 119.647 21.577z"
+        />
+        <path
+          class="shape s7"
+          style="fill: #ed614e; stroke: #ed614e; stroke-width: 2; stroke-linejoin: round;"
+          d="m316.075 217.14 15.414 59.091-331.49 28.495z"
+        />
+        <path
+          class="shape s8"
+          style="fill: #8e3327; stroke: #8e3327; stroke-width: 2; stroke-linejoin: round;"
+          d="m316.075 217.14 15.414 59.091 164.82 29.278z"
+        />
+      </svg>
       <p
         id="loading-text"
         style="font-family: Arial, sans-serif; color: #666; font-size: 16px"
