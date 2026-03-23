@@ -24,9 +24,13 @@
     id="header-tools-copy-datas-button"
     color="primary"
     mat-flat-button
-    matTooltip="{{ 'GLOBAL.COPY_DATAS' | translate }}"
+    matTooltip="{{
+      'GLOBAL.COPY_DATAS' | translate: { shortcut: copyDatasShortcut }
+    }}"
     (click)="copyDatas()"
-    attr.aria-label="{{ 'GLOBAL.COPY_DATAS' | translate }}"
+    attr.aria-label="{{
+      'GLOBAL.COPY_DATAS' | translate: { shortcut: copyDatasShortcut }
+    }}"
   >
     <mat-icon fxFlexFill fxLayoutAlign="center center">filter_none</mat-icon>
   </button>
@@ -34,10 +38,14 @@
     id="header-tools-copy-image-button"
     color="primary"
     mat-flat-button
-    matTooltip="{{ 'GLOBAL.COPY_IMAGE' | translate }}"
+    matTooltip="{{
+      'GLOBAL.COPY_IMAGE' | translate: { shortcut: copyImageShortcut }
+    }}"
     fxLayoutAlign="center center"
     (click)="copyImage()"
-    attr.aria-label="{{ 'GLOBAL.COPY_IMAGE' | translate }}"
+    attr.aria-label="{{
+      'GLOBAL.COPY_IMAGE' | translate: { shortcut: copyImageShortcut }
+    }}"
   >
     @if (!(copyImageService.isCopyingImage$ | async)) {
       <mat-icon fxFlexFill fxLayoutAlign="center center">filter</mat-icon>
