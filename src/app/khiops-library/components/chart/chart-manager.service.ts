@@ -174,7 +174,8 @@ export class ChartManagerService {
         if (
           inputDatas &&
           this.chart &&
-          inputDatas.datasets[0]?.data.length > 0
+          (inputDatas.datasets.length === 0 ||
+            inputDatas.datasets[0]?.data.length > 0)
         ) {
           // Create hash of current data state
           const currentDataHash = this.createDataHash(

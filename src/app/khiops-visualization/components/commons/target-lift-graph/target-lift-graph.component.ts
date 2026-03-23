@@ -119,6 +119,9 @@ export class TargetLiftGraphComponent
   }
 
   onSelectToggleButtonChanged(displayedValues: ChartToggleValuesI[]) {
+    // Update the displayed values in the service before recomputing data
+    this.evaluationDatas.liftGraphDisplayedValues = displayedValues;
+
     this.computeTargetLiftDatas();
 
     // Update color set based on displayed values using service
