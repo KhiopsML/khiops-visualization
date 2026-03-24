@@ -15,12 +15,13 @@ Cypress.Commands.add('loadFile', (ctx: string, file: string) => {
   // Set number precision again after page load to ensure it's applied
   cy.setGlobalNumberPrecision();
 
-  // Switch to the desired tab (assuming it's the last tab)
-  cy.get('.mat-mdc-tab').last().click();
-
-  // Upload the file
+  // Upload the file first
   cy.get('#open-file-input').first().type(file, { force: true });
   cy.get('#open-file-button').first().click({ force: true });
+
+  // Wait for tabs to be created after file loads, then switch to the desired tab
+  cy.get('.mat-mdc-tab').should('exist');
+  cy.get('.mat-mdc-tab').last().click();
 });
 
 Cypress.Commands.add('initViews', () => {
