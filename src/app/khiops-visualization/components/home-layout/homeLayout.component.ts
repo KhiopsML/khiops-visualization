@@ -196,7 +196,7 @@ export class HomeLayoutComponent implements OnInit {
       this.mainTabGroup.selectedIndex = 0;
       setTimeout(() => {
         this.isLoading = false;
-      });
+      }, 250);
     });
   }
 }
