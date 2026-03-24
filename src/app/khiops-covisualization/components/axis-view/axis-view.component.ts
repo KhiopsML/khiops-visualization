@@ -21,6 +21,7 @@ import { FileLoaderService } from '@khiops-library/providers/file-loader.service
 import { SplitGutterInteractionEvent } from 'angular-split';
 import { DynamicI } from '@khiops-library/interfaces/globals.interface';
 import { SaveService } from '@khiops-covisualization/providers/save.service';
+import { MatrixDatasModel } from '@khiops-library/model/matrix-datas.model';
 
 @Component({
   selector: 'app-axis-view',
@@ -30,7 +31,8 @@ import { SaveService } from '@khiops-covisualization/providers/save.service';
 })
 export class AxisViewComponent
   extends SelectableTabComponent
-  implements OnInit, OnDestroy {
+  implements OnInit, OnDestroy
+{
   @Input() public openContextView = false;
   public sizes: DynamicI | undefined;
   public viewsLayout: ViewLayoutVO | undefined;
@@ -84,34 +86,47 @@ export class AxisViewComponent
     this.isBigJsonFile = this.appService.isBigJsonFile();
 
     setTimeout(() => {
-      this.sizes = this.layoutService.getViewSplitSizes('axisView');
+      try {
+        this.sizes = this.layoutService.getViewSplitSizes('axisView');
 
-      // #154 initializeSavedState before datas to get saved json datas
-      this.initializeSavedState();
-      this.initializeDatas();
+        // #154 initializeSavedState before datas to get saved json datas
+        this.initializeSavedState();
+        this.initializeDatas();
 
-      if (
-        this.dimensionsDatasService.dimensionsDatas?.dimensions &&
-        this.dimensionsDatasService.dimensionsDatas.dimensions.length > 0
-      ) {
-        const isLargeCocluster = this.dimensionsDatasService.isLargeCocluster();
-        let collapsedNodes = this.appService.getSavedDatas('collapsedNodes');
+        if (
+          this.dimensionsDatasService.dimensionsDatas?.dimensions &&
+          this.dimensionsDatasService.dimensionsDatas.dimensions.length > 0
+        ) {
+          const isLargeCocluster =
+            this.dimensionsDatasService.isLargeCocluster();
+          let collapsedNodes = this.appService.getSavedDatas('collapsedNodes');
 
-        if (collapsedNodes) {
-          this.computeSavedState(collapsedNodes);
+          if (collapsedNodes) {
+            this.computeSavedState(collapsedNodes);
+          }
+          // Always computeLargeCoclustering if it's a LargeCocluster
+          if (isLargeCocluster) {
+            this.computeLargeCoclustering(collapsedNodes);
+          }
+
+          this.dimensionsDatasService.getMatrixDatas();
+          this.dimensionsDatasService.computeMatrixDataFreqMap();
+
+          this.viewsLayout = this.viewManagerService.initViewsLayout(
+            this.dimensionsDatasService.dimensionsDatas?.selectedDimensions,
+          );
+        } else {
+          // Fallback: ensure matrixDatas is initialized even if dimensions are missing
+          // This prevents the UI from getting stuck on the loading screen
+          if (!this.dimensionsDatasService.dimensionsDatas.matrixDatas) {
+            this.dimensionsDatasService.dimensionsDatas.matrixDatas =
+              new MatrixDatasModel();
+          }
         }
-        // Always computeLargeCoclustering if it's a LargeCocluster
-        if (isLargeCocluster) {
-          this.computeLargeCoclustering(collapsedNodes);
-        }
-
-        this.dimensionsDatasService.getMatrixDatas();
-        this.dimensionsDatasService.computeMatrixDataFreqMap();
+      } finally {
+        // Ensure loading state is always cleared, even if initialization fails
+        // This prevents UI from getting stuck on the loading screen
         this.loadingView = false;
-
-        this.viewsLayout = this.viewManagerService.initViewsLayout(
-          this.dimensionsDatasService.dimensionsDatas?.selectedDimensions,
-        );
       }
     }, 500); // To show loader when big files
 
@@ -182,7 +197,7 @@ export class AxisViewComponent
       const unfoldState =
         this.appService.getSavedDatas('unfoldHierarchyState') ||
         this.dimensionsDatasService.dimensionsDatas.dimensions.length *
-        AppConfig.covisualizationCommon.UNFOLD_HIERARCHY.ERGONOMIC_LIMIT;
+          AppConfig.covisualizationCommon.UNFOLD_HIERARCHY.ERGONOMIC_LIMIT;
 
       this.treenodesService.setSelectedUnfoldHierarchy(unfoldState);
       let collapsedNodes =
