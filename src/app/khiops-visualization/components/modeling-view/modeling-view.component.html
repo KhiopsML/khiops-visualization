@@ -152,6 +152,7 @@
                   'text-preparation'
               ) {
                 <app-var-details-preparation
+                  fxFlex
                   [preparationSource]="preparationSource"
                 >
                 </app-var-details-preparation>
@@ -160,7 +161,7 @@
                 modelingDatas?.selectedVariable?.variableType ===
                 'preparation-2d'
               ) {
-                <app-var-details-preparation-2d>
+                <app-var-details-preparation-2d fxFlex>
                 </app-var-details-preparation-2d>
               }
               @if (
