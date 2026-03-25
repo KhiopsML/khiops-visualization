@@ -2051,17 +2051,17 @@
     "@emnapi/runtime" "^1.7.1"
     "@tybys/wasm-util" "^0.10.1"
 
-"@ngrx/effects@^21.0.1":
-  version "21.0.1"
-  resolved "https://registry.yarnpkg.com/@ngrx/effects/-/effects-21.0.1.tgz#00d6a0fdfb5de2936c339e1289cc743b3ea5dace"
-  integrity sha512-hSdpToAiSYa5FJ/CAygQHpnCaF2S1HO7q/57ob3XvNTWmkofa0VqI/IIe4W57bojh2YOWCJ91SCn3kAjymaV3g==
+"@ngrx/effects@^21.1.0":
+  version "21.1.0"
+  resolved "https://registry.yarnpkg.com/@ngrx/effects/-/effects-21.1.0.tgz#b0d17e28dec881da7d9e920f0800dd994bbe9736"
+  integrity sha512-Hh+PlV+xYP3i65XK2yOxpIQ9pP4T70gLpm6JIjBE02DumW+evr6LdUgeixfq5vaUS1kN3Rqvl24fNUDJKGkkZw==
   dependencies:
     tslib "^2.0.0"
 
-"@ngrx/store@^21.0.1":
-  version "21.0.1"
-  resolved "https://registry.yarnpkg.com/@ngrx/store/-/store-21.0.1.tgz#86103f7080d7f69711657f827e7a5f67827034a2"
-  integrity sha512-2hGnw/c5o8nmKzyx7TrUUM7FXjE2zqjX0EF+wLbw9Oy/L+VdCmx+ZI1BFjuAR4B8PKEWHG2KSbOM13SMNkpZiA==
+"@ngrx/store@^21.1.0":
+  version "21.1.0"
+  resolved "https://registry.yarnpkg.com/@ngrx/store/-/store-21.1.0.tgz#dc31b8fbf800555fb752e87aeefb9fce47205a58"
+  integrity sha512-XnpzqmmENOQGtIzFSDX4qq7zVB2WwfMZWoK78yt36lIeDvtgZuUvxyIiGo5mla7e7+KlsSAeNDUvi9zmqIezfw==
   dependencies:
     tslib "^2.0.0"
 
@@ -4317,10 +4317,10 @@ custom-event@~1.0.0:
   resolved "https://registry.npmjs.org/custom-event/-/custom-event-1.0.1.tgz"
   integrity sha512-GAj5FOq0Hd+RsCGVJxZuKaIDXDf3h6GQoNEjFgbLLI/trgtavwUbSnZ5pVfg27DVCaWjIohryS0JFwIJyT2cMg==
 
-cypress@^15.12.0:
-  version "15.12.0"
-  resolved "https://registry.yarnpkg.com/cypress/-/cypress-15.12.0.tgz#84be43a9d85cb390ca404e5b1d030568a06ab4eb"
-  integrity sha512-B2BRcudLfA4NZZP5QpA45J70bu1heCH59V1yKRLHAtiC49r7RV03X5ifUh7Nfbk8QNg93RAsc6oAmodm/+j0pA==
+cypress@^15.13.0:
+  version "15.13.0"
+  resolved "https://registry.yarnpkg.com/cypress/-/cypress-15.13.0.tgz#e3c5487efd815e7f1e6f0ec76e4f7b4f9fe7cd21"
+  integrity sha512-hJ9sY++TUC/HlUzHVJpIrDyqKMjlhx5PTXl/A7eA91JNEtUWkJAqefQR5mo9AtLra/9+m+JJaMg2U5Qd0a74Fw==
   dependencies:
     "@cypress/request" "^3.0.10"
     "@cypress/xvfb" "^1.2.4"
