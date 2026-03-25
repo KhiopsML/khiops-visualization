@@ -42,6 +42,13 @@ import { VariableSearchService } from './providers/variable-search.service';
 import { ViewManagerService } from './providers/view-manager.service';
 import { Overlay, OverlayContainer } from '@angular/cdk/overlay';
 import { DialogService } from '@khiops-library/providers/dialog.service';
+import {
+  MatDialog,
+  MatDialogConfig,
+  MatDialogRef,
+} from '@angular/material/dialog';
+import { ConfirmDialogComponent } from '@khiops-library/components/confirm-dialog/confirm-dialog.component';
+import { TranslateService } from '@ngstack/translate';
 
 @Component({
   selector: 'app-root-covisualization',
@@ -93,10 +100,12 @@ export class AppComponent
   constructor(
     private overlayContainer: InAppOverlayContainer,
     ngzone: NgZone,
+    private dialog: MatDialog,
     private appService: AppService,
     private snackBar: MatSnackBar,
     private trackerService: TrackerService,
     configService: ConfigService,
+    private translate: TranslateService,
     fileLoaderService: FileLoaderService,
     private treenodesService: TreenodesService,
     private saveService: SaveService,
@@ -138,11 +147,37 @@ export class AppComponent
       });
     };
     this.element.nativeElement.openSaveBeforeQuitDialog = (cb: Function) => {
-      this.ngzone.run(() => {
-        setTimeout(() => {
-          cb('reject');
-        }, 100);
-      });
+      try {
+        this.dialog.closeAll();
+        this.ngzone.run(() => {
+          try {
+            const config = new MatDialogConfig();
+            const dialogRef: MatDialogRef<ConfirmDialogComponent> =
+              this.dialog.open(ConfirmDialogComponent, config);
+
+            if (!dialogRef) {
+              console.error('Failed to open save confirmation dialog');
+              cb('reject');
+              return;
+            }
+
+            dialogRef.componentInstance.message = this.translate.get(
+              'GLOBAL.SAVE_BEFORE_QUIT',
+            );
+            dialogRef.componentInstance.displayRejectBtn = true;
+
+            dialogRef.afterClosed().subscribe((e) => {
+              cb(e || 'reject');
+            });
+          } catch (error) {
+            console.error('Error opening save confirmation dialog:', error);
+            cb('reject');
+          }
+        });
+      } catch (error) {
+        console.error('Error in openSaveBeforeQuitDialog:', error);
+        cb('reject');
+      }
     };
     this.element.nativeElement.openChannelDialog = (cb: Function) => {
       this.ngzone.run(() => {
