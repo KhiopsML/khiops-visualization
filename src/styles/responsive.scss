@@ -84,12 +84,14 @@
   }
 
   /* Override responsive fullscreen styles when inside a modal dialog */
-  mat-dialog-container .fullscreen,
-  .cdk-overlay-pane .fullscreen {
-    width: calc(100% - 24px) !important;
-    height: calc(100% - 82px) !important;
-    min-width: calc(100% - 24px) !important;
-    min-height: calc(100% - 82px) !important;
+  kl-dialog-wrapper {
+    .fullscreen {
+      width: calc(100% - 22px) !important;
+      height: calc(100% - 122px) !important;
+      min-width: calc(100% - 22px) !important;
+      min-height: calc(100% - 122px) !important;
+      top: 42px !important;
+    }
   }
 }
 
