@@ -8,6 +8,7 @@ import {
   Component,
   ViewChild,
   AfterViewInit,
+  OnInit,
   NgZone,
 } from '@angular/core';
 import { DimensionCovisualizationModel } from '@khiops-library/model/dimension.covisualization.model';
@@ -42,7 +43,7 @@ export interface VariableSearchResult {
 })
 export class VariableSearchDialogComponent
   extends SelectableComponent
-  implements AfterViewInit
+  implements OnInit, AfterViewInit
 {
   innerVariables: string[] = [];
   selectedInnerVariable = '';
@@ -94,10 +95,9 @@ export class VariableSearchDialogComponent
     super(selectableService, ngzone, configService);
   }
 
-  override ngAfterViewInit() {
-    super.ngAfterViewInit();
+  ngOnInit() {
+    // Initialize data properties in ngOnInit to avoid ExpressionChangedAfterItHasBeenCheckedError
 
-    // Initialize the component with data if available
     if (this.data) {
       this.initializeInnerVariables();
       this.initializeSearchResults();
@@ -108,11 +108,14 @@ export class VariableSearchDialogComponent
       ) {
         this.selectedInnerVariable = this.data.selectedInnerVariable;
       }
-      // Store searchInput for later restoration in ngAfterViewInit
       this.performSearch();
     }
+  }
 
-    // Restore search input
+  override ngAfterViewInit() {
+    super.ngAfterViewInit();
+
+    // Restore search input (needs @ViewChild agGridComponent)
     if (this.data?.searchInput) {
       if (this.agGridComponent) {
         this.agGridComponent.searchInput = this.data.searchInput;

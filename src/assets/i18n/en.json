@@ -117,6 +117,7 @@
     "MESSAGE": "Keep Y/X linear/log scales when changing variable"
   },
   "GLOBAL": {
+    "SELECT_VARIABLE": "Select variable",
     "TARGET_FREQUENCY": "Target Frequency",
     "X_AXIS": "X Axis",
     "Y_AXIS": "Y Axis",

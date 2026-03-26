@@ -14,6 +14,7 @@ import { StoreModule } from '@ngrx/store';
 import { TreeNodeModel } from '@khiops-visualization/model/tree-node.model';
 import { TreeChildNode } from '@khiops-visualization/interfaces/tree-preparation-report';
 import { TreePreparationDatasModel } from '@khiops-visualization/model/tree-preparation-datas.model';
+import { TreePreparationStore } from '@khiops-visualization/stores/tree-preparation.store';
 
 describe('Visualization - Tree Preparation Regression - Simple Tests', () => {
   let treePreparationDatasService: TreePreparationDatasService;
@@ -26,6 +27,7 @@ describe('Visualization - Tree Preparation Regression - Simple Tests', () => {
         TreePreparationDatasService,
         AppService,
         PreparationDatasService,
+        TreePreparationStore,
         TranslateService,
       ],
     }).compileComponents();

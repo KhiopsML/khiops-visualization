@@ -5,12 +5,13 @@
  */
 
 import { Component, OnInit } from '@angular/core';
+import { DialogService } from '@khiops-library/providers/dialog.service';
 import { TranslateService } from '@ngstack/translate';
 
 @Component({
-    selector: 'kl-confirm-dialog',
-    templateUrl: './confirm-dialog.component.html',
-    standalone: false
+  selector: 'kl-confirm-dialog',
+  templateUrl: './confirm-dialog.component.html',
+  standalone: false,
 })
 export class ConfirmDialogComponent implements OnInit {
   public title: string = '';
@@ -20,7 +21,10 @@ export class ConfirmDialogComponent implements OnInit {
   public confirmButtonText: string;
   public confirmTranslation: string = '';
 
-  constructor(private translate: TranslateService) {
+  constructor(
+    private dialogService: DialogService,
+    private translate: TranslateService,
+  ) {
     this.confirmButtonText = this.translate.get('GLOBAL.YES');
   }
 
@@ -28,5 +32,17 @@ export class ConfirmDialogComponent implements OnInit {
     if (this.confirmTranslation) {
       this.confirmButtonText = this.confirmTranslation;
     }
+  }
+
+  confirm() {
+    this.dialogService.closeDialog('confirm');
+  }
+
+  reject() {
+    this.dialogService.closeDialog('reject');
+  }
+
+  cancel() {
+    this.dialogService.closeDialog('cancel');
   }
 }

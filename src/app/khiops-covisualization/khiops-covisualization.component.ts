@@ -42,11 +42,6 @@ import { VariableSearchService } from './providers/variable-search.service';
 import { ViewManagerService } from './providers/view-manager.service';
 import { Overlay, OverlayContainer } from '@angular/cdk/overlay';
 import { DialogService } from '@khiops-library/providers/dialog.service';
-import {
-  MatDialog,
-  MatDialogConfig,
-  MatDialogRef,
-} from '@angular/material/dialog';
 import { ConfirmDialogComponent } from '@khiops-library/components/confirm-dialog/confirm-dialog.component';
 import { TranslateService } from '@ngstack/translate';
 
@@ -100,10 +95,10 @@ export class AppComponent
   constructor(
     private overlayContainer: InAppOverlayContainer,
     ngzone: NgZone,
-    private dialog: MatDialog,
     private appService: AppService,
     private snackBar: MatSnackBar,
     private trackerService: TrackerService,
+    private dialogService: DialogService,
     configService: ConfigService,
     private translate: TranslateService,
     fileLoaderService: FileLoaderService,
@@ -148,26 +143,24 @@ export class AppComponent
     };
     this.element.nativeElement.openSaveBeforeQuitDialog = (cb: Function) => {
       try {
-        this.dialog.closeAll();
         this.ngzone.run(() => {
           try {
-            const config = new MatDialogConfig();
-            const dialogRef: MatDialogRef<ConfirmDialogComponent> =
-              this.dialog.open(ConfirmDialogComponent, config);
-
-            if (!dialogRef) {
-              console.error('Failed to open save confirmation dialog');
-              cb('reject');
-              return;
-            }
-
-            dialogRef.componentInstance.message = this.translate.get(
-              'GLOBAL.SAVE_BEFORE_QUIT',
+            const dialogRef = this.dialogService.openDialog(
+              ConfirmDialogComponent,
+              {
+                width: '400px',
+                height: 'auto',
+                disableClose: true,
+              },
+              {
+                displayCancelBtn: true,
+                displayRejectBtn: true,
+                confirmTranslation: this.translate.get('GLOBAL.SAVE'),
+                title: this.translate.get('GLOBAL.SAVE_BEFORE_QUIT'),
+              },
             );
-            dialogRef.componentInstance.displayRejectBtn = true;
-
-            dialogRef.afterClosed().subscribe((e) => {
-              cb(e || 'reject');
+            dialogRef.afterClosed().subscribe((result) => {
+              cb(result || 'reject');
             });
           } catch (error) {
             console.error('Error opening save confirmation dialog:', error);
