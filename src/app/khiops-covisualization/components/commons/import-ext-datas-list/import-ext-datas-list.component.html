@@ -6,7 +6,7 @@
 
 <div id="import-ext-datas-list-comp" fxFlexFill #manageViews fxLayout="column">
   @if (!importExtDatas) {
-    <div fxFlexFill>
+    <div fxFlexFill id="import-ext-datas-list-comp-container">
       <div
         fxLayout="row"
         id="import-ext-datas-header"
@@ -24,24 +24,22 @@
       </div>
       @if (!isLoadingDatas) {
         <div
-          id="import-ext-datas-content"
+          id="import-ext-datas-list-content"
           fxLayout="column"
-          fxFlexFill
           fxLayoutAlign="start center"
         >
           @if (importedDatas && importedDatas.values) {
             <div
               id="import-ext-datas-list-table"
               class="kl-card"
-              fxFlexFill
               fxLayout="column"
+              fxFlex
               fxLayoutAlign="start center"
             >
-              <h1 fxFlexFill class="small-title">
+              <h1 class="small-title">
                 {{ 'GLOBAL.IMPORTED_EXTERNAL_DATA' | translate }}
               </h1>
               <kl-ag-grid
-                fxFlexFill
                 [showSearch]="false"
                 [showLineSelection]="false"
                 [enableClickSelection]="false"
@@ -54,7 +52,6 @@
             </div>
           }
           <kl-import-file-loader
-            fxFlexFill
             (datasLoaded)="datasLoaded($event)"
           ></kl-import-file-loader>
         </div>
