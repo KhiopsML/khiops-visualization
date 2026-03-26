@@ -15,6 +15,10 @@
   pointer-events: auto;
 }
 
+.kl-dialog-wrapper.no-overlay {
+  pointer-events: none;
+}
+
 .dialog-overlay {
   position: absolute;
   top: 0;
