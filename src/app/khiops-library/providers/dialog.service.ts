@@ -19,6 +19,7 @@ export interface DialogConfigI {
   maxWidth?: string;
   maxHeight?: string;
   disableClose?: boolean;
+  hidden?: boolean;
   panelClass?: string;
   noOverlay?: boolean;
 }
