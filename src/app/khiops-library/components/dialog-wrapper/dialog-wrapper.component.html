@@ -1,6 +1,10 @@
 <div
   class="kl-dialog-wrapper"
-  [class.active]="(dialogContent$ | async)?.type !== 'none'"
+  [class.active]="
+    (dialogContent$ | async)?.type !== 'none' &&
+    !(dialogContent$ | async)?.config?.noOverlay
+  "
+  [class.no-overlay]="(dialogContent$ | async)?.config?.noOverlay"
   fxLayout="row"
   fxFlexFill
   fxLayoutAlign="center center"
