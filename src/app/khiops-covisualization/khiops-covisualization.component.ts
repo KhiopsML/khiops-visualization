@@ -37,6 +37,7 @@ import { DimensionsDatasService } from './providers/dimensions-datas.service';
 import { EventsService } from './providers/events.service';
 import { HierarchyService } from './providers/hierarchy.service';
 import { ImportExtDatasService } from './providers/import-ext-datas.service';
+import { ImportFileLoaderService } from '@khiops-library/components/import-file-loader/import-file-loader.service';
 import { ProjectDatasService } from './providers/project-datas.service';
 import { VariableSearchService } from './providers/variable-search.service';
 import { ViewManagerService } from './providers/view-manager.service';
@@ -65,6 +66,7 @@ import { TranslateService } from '@ngstack/translate';
     ProjectDatasService,
     ViewManagerService,
     ImportExtDatasService,
+    ImportFileLoaderService,
 
     // Lib services
     ConfigService,
