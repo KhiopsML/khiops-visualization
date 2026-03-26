@@ -10,22 +10,22 @@
       {{ title }}
     </h1>
   }
-  <mat-dialog-content>
+  <span>
     {{ message }}
-  </mat-dialog-content>
-  <mat-dialog-actions align="end">
-    <button mat-button [mat-dialog-close]="'confirm'" cdkFocusInitial>
+  </span>
+  <div fxLayout="row" fxLayoutAlign="end center">
+    <button mat-button cdkFocusInitial (click)="confirm()">
       {{ confirmButtonText }}
     </button>
     @if (displayRejectBtn) {
-      <button mat-button [mat-dialog-close]="'reject'">
+      <button mat-button (click)="reject()">
         {{ 'GLOBAL.NO' | translate }}
       </button>
     }
     @if (displayCancelBtn) {
-      <button mat-button [mat-dialog-close]="'cancel'">
+      <button mat-button (click)="cancel()">
         {{ 'GLOBAL.CANCEL' | translate }}
       </button>
     }
-  </mat-dialog-actions>
+  </div>
 </div>

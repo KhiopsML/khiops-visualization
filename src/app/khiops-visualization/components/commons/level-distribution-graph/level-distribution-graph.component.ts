@@ -29,6 +29,7 @@ import { Variable2dModel } from '@khiops-visualization/model/variable-2d.model';
 import { AppConfig } from '../../../../../environments/environment';
 import { DistributionType } from '@khiops-visualization/types/distribution-type';
 import { ToPrecisionPipe } from '@khiops-library/pipes/to-precision.pipe';
+import { DialogService } from '@khiops-library/providers/dialog.service';
 
 @Component({
   selector: 'app-level-distribution-graph',
@@ -73,6 +74,7 @@ export class LevelDistributionGraphComponent
     public override selectableService: SelectableService,
     public override ngzone: NgZone,
     public override configService: ConfigService,
+    private dialogService: DialogService,
     private translate: TranslateService,
     private khiopsLibraryService: KhiopsLibraryService,
     private toPrecision: ToPrecisionPipe,
@@ -154,5 +156,9 @@ export class LevelDistributionGraphComponent
     // Save current scale value into ls
     this.scaleValue = value;
     this.resizeGraph();
+  }
+
+  close() {
+    this.dialogService.closeDialog();
   }
 }

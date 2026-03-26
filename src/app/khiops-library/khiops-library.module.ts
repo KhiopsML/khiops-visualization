@@ -13,7 +13,6 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatButtonModule } from '@angular/material/button';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatCheckboxModule } from '@angular/material/checkbox';
-import { MatDialogModule } from '@angular/material/dialog';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatGridListModule } from '@angular/material/grid-list';
@@ -123,7 +122,6 @@ import EnTransaltion from '../../assets/i18n/en.json';
     MatRippleModule,
     MatSliderModule,
     MatButtonToggleModule,
-    MatDialogModule,
     // Third-party modules
     FlexLayoutModule,
     AgGridModule,
@@ -264,7 +262,6 @@ import EnTransaltion from '../../assets/i18n/en.json';
     MatPaginatorModule,
     MatSliderModule,
     MatButtonToggleModule,
-    MatDialogModule,
     MatRippleModule,
   ],
 })

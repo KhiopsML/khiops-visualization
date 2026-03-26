@@ -7,6 +7,7 @@
 import {
   Component,
   OnInit,
+  AfterViewInit,
   ViewChild,
   ViewContainerRef,
   ComponentRef,
@@ -24,7 +25,9 @@ import { Observable, Subscription } from 'rxjs';
   styleUrls: ['./dialog-wrapper.component.scss'],
   standalone: false,
 })
-export class DialogWrapperComponent implements OnInit, OnDestroy {
+export class DialogWrapperComponent
+  implements OnInit, AfterViewInit, OnDestroy
+{
   public dialogContent$: Observable<DialogContentI>;
 
   @ViewChild('dynamicComponentContainer', {
@@ -41,45 +44,60 @@ export class DialogWrapperComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
+    // Don't subscribe here - wait for view initialization
+  }
+
+  ngAfterViewInit(): void {
+    // Now that the view is initialized, dynamicComponentContainer is available
     this.subscription = this.dialogContent$.subscribe((content) => {
       if (content.type === 'component' && content.componentType) {
-        // Wait for view to be ready
-        setTimeout(() => {
-          if (this.dynamicComponentContainer && content.componentType) {
-            // Clear previous component
-            this.clearDynamicComponent();
-
-            // Create new component dynamically
-            this.componentRef = this.dynamicComponentContainer.createComponent(
-              content.componentType,
-            );
-
-            // Set component host element to fill available space
-            const hostElement = this.componentRef.location
-              .nativeElement as HTMLElement;
-            hostElement.style.height = '100%';
-            hostElement.style.width = '100%';
-            hostElement.style.display = 'flex';
-            hostElement.style.flexDirection = 'column';
-
-            // Pass data to component if it exists
-            if (content.data && this.componentRef.instance) {
-              Object.assign(this.componentRef.instance, content.data);
-            }
-
-            // Trigger change detection
-            this.componentRef.changeDetectorRef.detectChanges();
-
-            // Set component reference in service for cleanup
-            this.dialogService.setComponentRef(this.componentRef);
-          } else {
-            console.error('dynamicComponentContainer not found!');
-          }
-        }, 0);
+        // If container not ready yet, defer to next tick
+        if (!this.dynamicComponentContainer) {
+          setTimeout(() => this.createDialogComponent(content), 0);
+          return;
+        }
+        this.createDialogComponent(content);
       } else if (content.type === 'none') {
         this.clearDynamicComponent();
       }
     });
+  }
+
+  /**
+   * Create the dialog component with data
+   */
+  private createDialogComponent(content: DialogContentI): void {
+    if (!this.dynamicComponentContainer || !content.componentType) {
+      return;
+    }
+
+    // Clear previous component
+    this.clearDynamicComponent();
+
+    // Create new component dynamically
+    this.componentRef = this.dynamicComponentContainer.createComponent(
+      content.componentType,
+    );
+
+    // Pass data to component SYNCHRONOUSLY before change detection
+    // This ensures data is available in component's ngAfterViewInit
+    if (content.data && this.componentRef.instance) {
+      Object.assign(this.componentRef.instance, content.data);
+    }
+
+    // Set component host element to fill available space
+    const hostElement = this.componentRef.location
+      .nativeElement as HTMLElement;
+    hostElement.style.height = '100%';
+    hostElement.style.width = '100%';
+    hostElement.style.display = 'flex';
+    hostElement.style.flexDirection = 'column';
+
+    // Trigger change detection
+    this.componentRef.changeDetectorRef.detectChanges();
+
+    // Set component reference in service for cleanup
+    this.dialogService.setComponentRef(this.componentRef);
   }
 
   ngOnDestroy(): void {

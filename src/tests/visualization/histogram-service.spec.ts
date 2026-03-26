@@ -17,6 +17,7 @@ import { HistogramType } from '@khiops-visualization/components/commons/histogra
 import { VisualizationDatas } from '@khiops-visualization/interfaces/app-datas.interface';
 import { provideMockStore } from '@ngrx/store/testing';
 import { TreePreparationDatasService } from '@khiops-visualization/providers/tree-preparation-datas.service';
+import { TreePreparationStore } from '@khiops-visualization/stores/tree-preparation.store';
 
 let appService: AppService;
 let histogramService: HistogramService;
@@ -49,6 +50,7 @@ describe('Visualization', () => {
           DistributionDatasService,
           PreparationDatasService,
           TreePreparationDatasService,
+          TreePreparationStore,
           AppService,
         ],
       });

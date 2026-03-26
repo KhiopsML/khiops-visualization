@@ -2157,7 +2157,7 @@
   dependencies:
     tslib "^2.0.0"
 
-"@ngrx/store@^21.1.0":
+"@ngrx/store@^21.0.1":
   version "21.1.0"
   resolved "https://registry.yarnpkg.com/@ngrx/store/-/store-21.1.0.tgz#dc31b8fbf800555fb752e87aeefb9fce47205a58"
   integrity sha512-XnpzqmmENOQGtIzFSDX4qq7zVB2WwfMZWoK78yt36lIeDvtgZuUvxyIiGo5mla7e7+KlsSAeNDUvi9zmqIezfw==

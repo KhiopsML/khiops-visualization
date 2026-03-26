@@ -16,6 +16,7 @@ import { TYPES } from '@khiops-library/enum/types';
 import { TranslateModule } from '@ngstack/translate';
 import { TreeNodeModel } from '@khiops-visualization/model/tree-node.model';
 import { provideMockStore } from '@ngrx/store/testing';
+import { TreePreparationStore } from '@khiops-visualization/stores/tree-preparation.store';
 
 let distributionDatasService: DistributionDatasService;
 let preparationDatasService: PreparationDatasService;
@@ -31,6 +32,7 @@ describe('Visualization', () => {
           provideHttpClient(),
           provideMockStore({ initialState: {} }),
           DistributionDatasService,
+          TreePreparationStore,
           PreparationDatasService,
           TreePreparationDatasService,
           AppService,

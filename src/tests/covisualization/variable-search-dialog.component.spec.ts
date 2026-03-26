@@ -6,7 +6,6 @@
 // @ts-nocheck
 
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { TranslateModule } from '@ngstack/translate';
 import { provideHttpClient } from '@angular/common/http';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
@@ -14,14 +13,13 @@ import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { VariableSearchDialogComponent } from '../../app/khiops-covisualization/components/commons/variable-search-dialog/variable-search-dialog.component';
 import { VariableSearchService } from '../../app/khiops-covisualization/providers/variable-search.service';
 import { TreenodesService } from '../../app/khiops-covisualization/providers/treenodes.service';
+import { DialogService } from '../../app/khiops-library/providers/dialog.service';
 import { TYPES } from '../../app/khiops-library/enum/types';
 
 describe('VariableSearchDialogComponent', () => {
   let component: VariableSearchDialogComponent;
   let fixture: ComponentFixture<VariableSearchDialogComponent>;
-  let mockDialogRef: jasmine.SpyObj<
-    MatDialogRef<VariableSearchDialogComponent>
-  >;
+  let mockDialogService: jasmine.SpyObj<DialogService>;
   let mockVariableSearchService: jasmine.SpyObj<VariableSearchService>;
   let mockTreenodesService: jasmine.SpyObj<TreenodesService>;
 
@@ -40,7 +38,9 @@ describe('VariableSearchDialogComponent', () => {
   };
 
   beforeEach(async () => {
-    const dialogRefSpy = jasmine.createSpyObj('MatDialogRef', ['close']);
+    const dialogServiceSpy = jasmine.createSpyObj('DialogService', [
+      'closeDialog',
+    ]);
     const variableSearchServiceSpy = jasmine.createSpyObj(
       'VariableSearchService',
       ['performVariableSearch', 'getClusterInfoForRow'],
@@ -51,25 +51,24 @@ describe('VariableSearchDialogComponent', () => {
 
     await TestBed.configureTestingModule({
       declarations: [VariableSearchDialogComponent],
-      imports: [
-        TranslateModule.forRoot(),
-        NoopAnimationsModule,
-      ],
+      imports: [TranslateModule.forRoot(), NoopAnimationsModule],
       providers: [
         provideHttpClient(),
-        { provide: MatDialogRef, useValue: dialogRefSpy },
-        { provide: MAT_DIALOG_DATA, useValue: mockDialogData },
+        { provide: DialogService, useValue: dialogServiceSpy },
         { provide: VariableSearchService, useValue: variableSearchServiceSpy },
         { provide: TreenodesService, useValue: treenodesServiceSpy },
       ],
-      schemas: [CUSTOM_ELEMENTS_SCHEMA], // Add this to ignore unknown elements
+      schemas: [CUSTOM_ELEMENTS_SCHEMA],
     }).compileComponents();
 
     fixture = TestBed.createComponent(VariableSearchDialogComponent);
     component = fixture.componentInstance;
-    mockDialogRef = TestBed.inject(MatDialogRef) as jasmine.SpyObj<
-      MatDialogRef<VariableSearchDialogComponent>
-    >;
+    // Set data before detectChanges, simulating what DialogWrapperComponent does
+    component.data = mockDialogData;
+    fixture.detectChanges();
+    mockDialogService = TestBed.inject(
+      DialogService,
+    ) as jasmine.SpyObj<DialogService>;
     mockVariableSearchService = TestBed.inject(
       VariableSearchService,
     ) as jasmine.SpyObj<VariableSearchService>;
@@ -129,7 +128,7 @@ describe('VariableSearchDialogComponent', () => {
 
     expect(mockVariableSearchService.getClusterInfoForRow).toHaveBeenCalledWith(
       selectedRow,
-      component.rowToClusterMap,
+      component['rowToClusterMap'],
     );
     expect(mockTreenodesService.setSelectedNode).toHaveBeenCalledWith(
       'TestDimension',
@@ -137,13 +136,13 @@ describe('VariableSearchDialogComponent', () => {
       false,
       'A',
     );
-    expect(mockDialogRef.close).toHaveBeenCalled();
+    expect(mockDialogService.closeDialog).toHaveBeenCalled();
   });
 
   it('should close dialog with current state', () => {
     component.onClickOnClose();
 
-    expect(mockDialogRef.close).toHaveBeenCalledWith({
+    expect(mockDialogService.closeDialog).toHaveBeenCalledWith({
       selectedInnerVariable: component.selectedInnerVariable,
       searchInput: '',
     });

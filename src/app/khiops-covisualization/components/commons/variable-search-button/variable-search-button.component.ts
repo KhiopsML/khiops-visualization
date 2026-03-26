@@ -47,7 +47,7 @@ export class VariableSearchButtonComponent {
         maxWidth: '50vw',
         maxHeight: '50vh',
       },
-      data
+      { data },
     );
 
     dialogRef.afterClosed().subscribe((result) => {

@@ -18,6 +18,7 @@ import { VisualizationDatas } from '@khiops-visualization/interfaces/app-datas.i
 import { provideMockStore } from '@ngrx/store/testing';
 import { TreePreparationDatasService } from '@khiops-visualization/providers/tree-preparation-datas.service';
 import { HistogramValuesI } from '@khiops-visualization/components/commons/histogram/histogram.interfaces.d';
+import { TreePreparationStore } from '@khiops-visualization/stores/tree-preparation.store';
 
 let appService: AppService;
 let histogramService: HistogramService;
@@ -50,6 +51,7 @@ describe('HistogramService - BugAnalysisResults_NewBounds Tests', () => {
         provideHttpClient(),
         provideMockStore({ initialState: {} }),
         DistributionDatasService,
+        TreePreparationStore,
         PreparationDatasService,
         TreePreparationDatasService,
         AppService,
