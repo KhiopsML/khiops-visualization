@@ -8,6 +8,7 @@
   fxLayout="row"
   fxFlexFill
   fxLayoutAlign="center center"
+  [hidden]="dialogContent.config?.hidden"
   *ngIf="dialogContent$ | async as dialogContent"
 >
   <div

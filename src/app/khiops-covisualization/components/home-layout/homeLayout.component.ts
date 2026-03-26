@@ -311,6 +311,7 @@ export class HomeLayoutComponent implements OnInit, OnDestroy {
       maxWidth: AppConfig.covisualizationCommon.MANAGE_VIEWS.MAX_WIDTH,
       height: '500px',
       disableClose: true,
+      hidden: true,
     });
   }
 
