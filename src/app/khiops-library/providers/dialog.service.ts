@@ -20,6 +20,7 @@ export interface DialogConfigI {
   maxHeight?: string;
   disableClose?: boolean;
   panelClass?: string;
+  noOverlay?: boolean;
 }
 
 export interface DialogRef<T = any> {

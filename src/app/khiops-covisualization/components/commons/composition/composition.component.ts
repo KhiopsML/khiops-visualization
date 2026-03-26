@@ -182,6 +182,7 @@ export class CompositionComponent implements OnInit, OnDestroy, AfterViewInit {
       width: '600px',
       height: '400px',
       panelClass: 'draggable-dialog',
+      noOverlay: true,
     }, {
       detailedParts: detailedParts,
     });

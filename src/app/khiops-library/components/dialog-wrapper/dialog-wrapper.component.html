@@ -10,7 +10,7 @@
     class="dialog-overlay"
     fxFlexFill
     (click)="onBackdropClick()"
-    *ngIf="dialogContent.type !== 'none'"
+    *ngIf="dialogContent.type !== 'none' && !dialogContent.config?.noOverlay"
   ></div>
   <div
     class="dialog-content"

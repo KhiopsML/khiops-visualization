@@ -14,9 +14,9 @@ export class DraggableDialogDirective implements OnInit {
   constructor(private elementRef: ElementRef) {}
 
   ngOnInit() {
-    // Find the parent mat-dialog-container
+    // Find the parent .dialog-content (custom dialog wrapper)
     let parent = this.elementRef.nativeElement.parentElement;
-    while (parent && !parent.classList.contains('mat-mdc-dialog-container')) {
+    while (parent && !parent.classList.contains('dialog-content')) {
       parent = parent.parentElement;
     }
 
@@ -38,49 +38,14 @@ export class DraggableDialogDirective implements OnInit {
         header.style.cursor = 'move';
       }
 
-      // Allow interaction with background elements
-      // We need to set pointer-events: none on the overlay wrapper
-      // and restore pointer-events: auto on the dialog itself
-      let overlayPane = parent.parentElement;
-      if (overlayPane && overlayPane.classList.contains('cdk-overlay-pane')) {
-        overlayPane.style.pointerEvents = 'auto'; // Ensure pane allows interaction if needed, or inherited
-      }
-
-      let overlayWrapper = overlayPane?.parentElement;
-      while (
-        overlayWrapper &&
-        !overlayWrapper.classList.contains('cdk-global-overlay-wrapper')
-      ) {
-        overlayWrapper = overlayWrapper.parentElement;
-      }
-
-      if (overlayWrapper) {
-        overlayWrapper.style.pointerEvents = 'none';
-      }
-
       // Ensure the dialog itself captures events
       parent.style.pointerEvents = 'auto';
 
-      // Convert both the overlay pane and dialog container to fixed positioning
+      // Convert the dialog container to fixed positioning
       // immediately using getBoundingClientRect to get the real visual position,
-      // bypassing any CSS transform-based centering from Angular Material
+      // bypassing any CSS centering from the wrapper
       const fixPositioning = () => {
-        const paneRect = overlayPane
-          ? overlayPane.getBoundingClientRect()
-          : null;
         const parentRect = parent.getBoundingClientRect();
-
-        if (overlayPane && paneRect) {
-          overlayPane.style.position = 'fixed';
-          overlayPane.style.left = paneRect.left + 'px';
-          overlayPane.style.top = paneRect.top + 'px';
-          // Important: Reset flex/grid centering properties that might cause expansion from center
-          overlayPane.style.display = 'block';
-          overlayPane.style.transform = 'none';
-          overlayPane.style.margin = '0';
-          overlayPane.style.maxWidth = 'none';
-          overlayPane.style.maxHeight = 'none';
-        }
 
         parent.style.position = 'fixed';
         parent.style.left = parentRect.left + 'px';
@@ -101,8 +66,6 @@ export class DraggableDialogDirective implements OnInit {
       let startY = 0;
       let initialX = 0;
       let initialY = 0;
-      let initialOverlayX = 0; // Keep these variables although they might be redundant with fixPositioning usage
-      let initialOverlayY = 0;
 
       parent.addEventListener('mousedown', (event: MouseEvent) => {
         // Only allow dragging from the header area
@@ -121,14 +84,6 @@ export class DraggableDialogDirective implements OnInit {
         initialX = parentRect.left;
         initialY = parentRect.top;
         parent.style.position = 'fixed';
-
-        // Also position and store overlay pane initial position
-        if (overlayPane) {
-          const paneRect = overlayPane.getBoundingClientRect();
-          overlayPane.style.position = 'fixed';
-          initialOverlayX = paneRect.left;
-          initialOverlayY = paneRect.top;
-        }
       });
 
       document.addEventListener('mousemove', (event: MouseEvent) => {
@@ -137,12 +92,6 @@ export class DraggableDialogDirective implements OnInit {
           const deltaY = event.clientY - startY;
           parent.style.left = initialX + deltaX + 'px';
           parent.style.top = initialY + deltaY + 'px';
-
-          // Also move the overlay pane
-          if (overlayPane) {
-            overlayPane.style.left = initialOverlayX + deltaX + 'px';
-            overlayPane.style.top = initialOverlayY + deltaY + 'px';
-          }
         }
       });
 
@@ -202,16 +151,6 @@ export class DraggableDialogDirective implements OnInit {
 
           parent.style.width = newWidth + 'px';
           parent.style.height = newHeight + 'px';
-
-          // Also resize the overlay pane if it exists to match
-          if (
-            overlayPane &&
-            overlayPane.classList.contains('cdk-overlay-pane')
-          ) {
-            overlayPane.style.width = newWidth + 'px';
-            overlayPane.style.height = newHeight + 'px';
-            overlayPane.style.maxWidth = 'none'; // Ensure max-width doesn't constrain
-          }
         }
       });
 
