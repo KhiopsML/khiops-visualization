@@ -260,10 +260,6 @@ mat-checkbox .mdc-form-field label {
   transform: scale(0.7) translate(-70%, -80%) !important;
 }
 
-.mat-mdc-dialog-container .mdc-dialog__surface {
-  padding: 1rem;
-}
-
 button.mdc-icon-button {
   padding: 0 !important;
   max-height: 2rem !important;
@@ -392,14 +388,6 @@ button {
   font-size: 1em;
 }
 
-mat-dialog-container {
-  .mat-mdc-dialog-surface {
-    // border: 1px solid #000000 !important;
-    border-radius: var(--border-radius) !important;
-    background-color: var(--bg-color-20) !important;
-    border-radius: var(--border-radius) !important;
-  }
-}
 .mdc-checkbox .mdc-checkbox__background {
   border-width: 1px;
 }

@@ -12,7 +12,7 @@
     {{ 'GLOBAL.CHANGE_ALL_SCALES_DESCRIPTION' | translate }}
   </p>
 
-  <mat-dialog-content>
+  <div class="dialog-content">
     <div class="scale-options">
       <!-- X-axis scale selection -->
       <div class="scale-group">
@@ -48,9 +48,9 @@
         </mat-button-toggle-group>
       </div>
     </div>
-  </mat-dialog-content>
+  </div>
 
-  <mat-dialog-actions align="end">
+  <div class="dialog-actions" align="end">
     <button mat-stroked-button (click)="onCancel()">
       {{ 'GLOBAL.CANCEL' | translate }}
     </button>
@@ -62,5 +62,5 @@
     >
       {{ 'GLOBAL.APPLY' | translate }}
     </button>
-  </mat-dialog-actions>
+  </div>
 </div>

@@ -393,12 +393,14 @@ canvas:focus {
 }
 
 /* Override fullscreen styles when inside a modal dialog */
-mat-dialog-container .fullscreen,
-.cdk-overlay-pane .fullscreen {
-  width: calc(100% - 30px) !important;
-  height: calc(100% - 95px) !important;
-  min-width: calc(100% - 30px) !important;
-  min-height: calc(100% - 95px) !important;
+kl-dialog-wrapper {
+  .fullscreen {
+    width: calc(100% - 30px) !important;
+    height: calc(100% - 136px) !important;
+    min-width: calc(100% - 30px) !important;
+    min-height: calc(100% - 136px) !important;
+    top: 52px !important;
+  }
 }
 
 .fullscreen.selected::before {
@@ -493,6 +495,6 @@ mat-checkbox.kl-checkbox {
   }
 }
 
-.mat-mdc-dialog-container {
+.dialog-container {
   animation: dialogFadeIn 0.25s ease-out;
 }
