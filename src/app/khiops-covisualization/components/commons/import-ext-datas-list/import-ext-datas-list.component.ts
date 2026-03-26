@@ -137,7 +137,10 @@ export class ImportExtDatasListComponent {
   closeImport() {
     this.importExtDatas = undefined;
     this.constructImportedDatasTable();
-    this.dialogService.closeDialog(); // Automatically close the dialog when import is done
+    // Call openLoadExternalDataDialog to refresh ext datas in app after import
+    this.openLoadExternalDataDialog();
+    // Automatically close the dialog when import is done
+    this.dialogService.closeDialog();
   }
 
   datasLoaded(fileDatas: FileModel) {

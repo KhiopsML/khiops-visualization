@@ -5,46 +5,44 @@
  */
 
 #import-ext-datas-list-comp {
-  padding-bottom: 1.6em;
+  // padding-bottom: 1.6em;
 
-  #import-ext-datas-header {
-    height: 68px;
+  #import-ext-datas-list-comp-container {
+    display: flex;
+    flex-direction: column;
 
-    h2 {
-      margin-left: 1em;
+    #import-ext-datas-header {
+      height: 68px;
+
+      h2 {
+        margin-left: 1em;
+      }
+
+      button {
+        margin-left: 1em;
+      }
     }
 
-    button {
-      margin-left: 1em;
+    #import-ext-datas-list-content {
+      flex: 1;
+
+      #import-ext-datas-list-table {
+        padding: 1em;
+        width: 100%;
+        margin-bottom: 1em;
+        h1 {
+          text-align: left;
+          width: 100%;
+        }
+      }
     }
-  }
 
-  #import-ext-datas-content {
-    overflow: hidden;
-    max-height: 70vh;
-
-    #import-ext-datas-list-table {
-      padding: 1em;
-      margin-bottom: 1em;
-    }
-  }
-
-  #import-ext-datas-content-empty {
-    margin: 3em;
-
-    span {
-      text-align: center;
-    }
-  }
-
-  kl-ag-grid {
-    // border: 1px solid var(--border-color);
-    min-height: 212px;
-    max-height: 212px;
-    height: 212px !important;
-
-    ::ng-deep .ag-center-cols-viewport {
-      overflow-x: hidden;
+    kl-ag-grid {
+      flex: 1;
+      width: 100%;
+      ::ng-deep .ag-center-cols-viewport {
+        overflow-x: hidden;
+      }
     }
   }
 }
