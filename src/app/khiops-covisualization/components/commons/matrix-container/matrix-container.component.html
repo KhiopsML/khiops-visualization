@@ -6,105 +6,102 @@
 
 <div class="matrix-container-comp" fxFlexFill>
   <as-split direction="vertical" (dragEnd)="onSplitDragEnd($event, sizeId)">
-    <as-split-area
-      [size]="sizes?.[sizeId]?.[0]"
-      order="1"
-      [visible]="viewsLayout?.isDimensionsChecked"
-      class="kl-card"
-    >
-      <app-selected-clusters
-        [selectedNodes]="dimensionsDatas?.selectedNodes"
-        [selectedDimensions]="selectedDimensions"
+    @if (viewsLayout?.isDimensionsChecked) {
+      <as-split-area [size]="sizes?.[sizeId]?.[0]" order="1" class="kl-card">
+        <app-selected-clusters
+          [selectedNodes]="dimensionsDatas?.selectedNodes"
+          [selectedDimensions]="selectedDimensions"
+        >
+        </app-selected-clusters>
+      </as-split-area>
+    }
+    @if (viewsLayout?.isCooccurrenceChecked) {
+      <as-split-area
+        class="matrix-container-comp-wrapper kl-card"
+        [size]="sizes?.[sizeId]?.[1]"
+        order="2"
       >
-      </app-selected-clusters>
-    </as-split-area>
-    <as-split-area
-      class="matrix-container-comp-wrapper kl-card"
-      [size]="sizes?.[sizeId]?.[1]"
-      order="2"
-      [visible]="viewsLayout?.isCooccurrenceChecked"
-    >
-      <div
-        fxFlexFill
-        fxLayout="column"
-        class="selected-area-inner-div"
-        [ngClass]="{ fullscreen: isFullscreen }"
-        [appFullscreenAnimation]="isFullscreen"
-      >
-        <div fxLayout="row" fxLayoutAlign="start center" class="comp-header">
-          <kl-matrix-mode
-            fxFlex
-            [matrixModes]="matrixModes"
-            (matrixModeChange)="changeMatrixMode($event)"
-          >
-          </kl-matrix-mode>
+        <div
+          fxFlexFill
+          fxLayout="column"
+          class="selected-area-inner-div"
+          [ngClass]="{ fullscreen: isFullscreen }"
+        >
+          <div fxLayout="row" fxLayoutAlign="start center" class="comp-header">
+            <kl-matrix-mode
+              fxFlex
+              [matrixModes]="matrixModes"
+              (matrixModeChange)="changeMatrixMode($event)"
+            >
+            </kl-matrix-mode>
 
-          <!-- Inner Variables Filter Component -->
-          <app-matrix-inner-variables-filter
-            class="screenshot-hide"
-            fxFlex
-            [selectedDimensions]="selectedDimensions"
-            [showComponent]="showInnerVariablesFilter"
-            (selectionChanged)="onInnerVariablesSelectionChanged($event)"
-          ></app-matrix-inner-variables-filter>
-          <!-- <kl-matrix-toggle
+            <!-- Inner Variables Filter Component -->
+            <app-matrix-inner-variables-filter
+              class="screenshot-hide"
+              fxFlex
+              [selectedDimensions]="selectedDimensions"
+              [showComponent]="showInnerVariablesFilter"
+              (selectionChanged)="onInnerVariablesSelectionChanged($event)"
+            ></app-matrix-inner-variables-filter>
+            <!-- <kl-matrix-toggle
           class="screenshot-hide"
           [matrixOptions]="matrixFilterOptions"
           [lsId]="LS.MATRIX_FILTER_OPTION"
           (matrixOptionChange)="changeMatrixFilterType($event)"
         ></kl-matrix-toggle> -->
-          @if (dimensionsDatas?.contextDimensionCount) {
-            <mat-checkbox
-              color="accent"
-              class="kl-checkbox"
-              [checked]="dimensionsDatas?.conditionalOnContext"
-              (change)="changeConditionalOnContext()"
-              matTooltipPosition="above"
-              matTooltip="{{
-                'TOOLTIPS.COMMONS.CONDITIONAL_ON_CONTEXT' | translate
-              }}"
+            @if (dimensionsDatas?.contextDimensionCount) {
+              <mat-checkbox
+                color="accent"
+                class="kl-checkbox"
+                [checked]="dimensionsDatas?.conditionalOnContext"
+                (change)="changeConditionalOnContext()"
+                matTooltipPosition="above"
+                matTooltip="{{
+                  'TOOLTIPS.COMMONS.CONDITIONAL_ON_CONTEXT' | translate
+                }}"
+              >
+                {{ 'GLOBAL.CONDITIONAL_ON_CONTEXT' | translate }}</mat-checkbox
+              >
+            }
+            <kl-matrix-toggle
+              class="screenshot-hide"
+              [matrixOptions]="matrixOptions"
+              (matrixOptionChange)="changeMatrixType($event)"
+            ></kl-matrix-toggle>
+            <kl-btn-fullscreen
+              class="screenshot-hide"
+              (toggleFullscreen)="onToggleFullscreen($event)"
             >
-              {{ 'GLOBAL.CONDITIONAL_ON_CONTEXT' | translate }}</mat-checkbox
-            >
-          }
-          <kl-matrix-toggle
-            class="screenshot-hide"
-            [matrixOptions]="matrixOptions"
-            (matrixOptionChange)="changeMatrixType($event)"
-          ></kl-matrix-toggle>
-          <kl-btn-fullscreen
-            class="screenshot-hide"
-            (toggleFullscreen)="onToggleFullscreen($event)"
+            </kl-btn-fullscreen>
+          </div>
+          <kl-matrix
+            #matrix
+            fxFlex
+            fxLayout="row"
+            [id]="'matrix-container-comp-wrapper'"
+            [attr.id]="'matrix-container-comp-wrapper'"
+            (cellSelected)="onCellSelected($event)"
+            [isAxisInverted]="dimensionsDatas?.isAxisInverted || false"
+            (matrixAxisInverted)="onMatrixAxisInverted()"
+            [contextSelection]="dimensionsDatas?.contextSelection"
+            [graphMode]="matrixModes.selected"
+            [contrast]="dimensionsDatas!.matrixContrast"
+            [selectedNodes]="dimensionsDatas?.selectedNodes"
+            [inputDatas]="dimensionsDatas?.matrixDatas"
+            [graphType]="matrixOptions.selected"
+            [matrixFilterOption]="matrixFilterOptions.selected"
+            [selectedInnerVariables]="
+              selectedInnerVariablesState.selectedInnerVariables
+            "
+            [showExpectedFrequency]="true"
+            [hasInnerVariables]="showInnerVariablesFilter"
+            [dimensionsClusters]="
+              dimensionsDatas?.currentDimensionsClusters || []
+            "
           >
-          </kl-btn-fullscreen>
+          </kl-matrix>
         </div>
-        <kl-matrix
-          #matrix
-          fxFlex
-          fxLayout="row"
-          [id]="'matrix-container-comp-wrapper'"
-          [attr.id]="'matrix-container-comp-wrapper'"
-          (cellSelected)="onCellSelected($event)"
-          [isAxisInverted]="dimensionsDatas?.isAxisInverted || false"
-          (matrixAxisInverted)="onMatrixAxisInverted()"
-          [contextSelection]="dimensionsDatas?.contextSelection"
-          [graphMode]="matrixModes.selected"
-          [contrast]="dimensionsDatas!.matrixContrast"
-          [selectedNodes]="dimensionsDatas?.selectedNodes"
-          [inputDatas]="dimensionsDatas?.matrixDatas"
-          [graphType]="matrixOptions.selected"
-          [matrixFilterOption]="matrixFilterOptions.selected"
-          [selectedInnerVariables]="
-            selectedInnerVariablesState.selectedInnerVariables
-          "
-          [showExpectedFrequency]="true"
-          [hasInnerVariables]="showInnerVariablesFilter"
-          [dimensionsClusters]="
-            dimensionsDatas?.currentDimensionsClusters || []
-          "
-        >
-        </kl-matrix>
-      </div>
-    </as-split-area>
+      </as-split-area>
+    }
   </as-split>
 </div>
