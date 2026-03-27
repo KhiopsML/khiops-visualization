@@ -48,9 +48,36 @@ export class CopyImageService {
           }
 
           const rootElement = this.configService.getRootElementDom();
+          if (!rootElement) {
+            this.snackBar.open(
+              this.translate.get('SNACKS.COPY_ERROR') +
+                ' (Root element not found)',
+              undefined,
+              {
+                duration: 4000,
+                panelClass: 'error',
+              },
+            );
+            this.isCopyingImage$.next(false);
+            return;
+          }
+
           const currentDiv: any = rootElement?.querySelector(
             '#' + currentSelectedArea.id,
           )?.firstChild;
+
+          if (!currentDiv) {
+            this.snackBar.open(
+              this.translate.get('SNACKS.COPY_ERROR') + ' (Element not found)',
+              undefined,
+              {
+                duration: 4000,
+                panelClass: 'error',
+              },
+            );
+            this.isCopyingImage$.next(false);
+            return;
+          }
 
           this.rePaintGraph(currentDiv);
 
@@ -151,6 +178,9 @@ export class CopyImageService {
    * @param elt - The element representing the graph to be repainted.
    */
   private rePaintGraph(elt: HTMLElement) {
+    if (!elt) {
+      return;
+    }
     // Remove box shadow to prevent bliue overlay on exported screenshot
     // https://stackoverflow.com/questions/57070074/issue-with-html2canvas-green-overlay-while-exporting
     this.removeSelectedClass(elt);
@@ -170,6 +200,9 @@ export class CopyImageService {
    * @param elt - The element from which the 'selected' class will be removed.
    */
   private removeSelectedClass(elt: HTMLElement) {
+    if (!elt) {
+      return;
+    }
     elt.classList.replace('selected', 'printing');
     const parent = elt.parentNode as HTMLElement;
     if (parent && parent.classList.contains('selected')) {
@@ -182,6 +215,9 @@ export class CopyImageService {
    * @param elt - The element to which the 'selected' class will be added.
    */
   private addSelectedClass(elt: HTMLElement) {
+    if (!elt) {
+      return;
+    }
     elt.classList.replace('printing', 'selected');
     const parent = elt.parentNode as HTMLElement;
     if (parent && parent.classList.contains('printing')) {

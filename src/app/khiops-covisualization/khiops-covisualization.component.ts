@@ -70,6 +70,7 @@ import { TranslateService } from '@ngstack/translate';
 
     // Lib services
     ConfigService,
+    CopyImageService,
     CopyDatasService,
     DialogService,
     FileLoaderService,
