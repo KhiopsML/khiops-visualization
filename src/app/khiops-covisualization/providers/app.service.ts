@@ -199,23 +199,4 @@ export class AppService {
     };
     this.khiopsLibraryService.setAppConfig(AppConfig);
   }
-
-  /**
-   * Detects if the application is running in an E2E testing environment
-   */
-  detectE2ETestingEnvironment() {
-    try {
-      if (
-        typeof window !== 'undefined' &&
-        // @ts-ignore
-        window.Cypress
-      ) {
-        this.configService.isElectron = true;
-        this.configService.isCypressTesting = true;
-      }
-      console.log("🚀 ~ AppService ~ detectE2ETestingEnvironment ~ this.configService.isCypressTesting:", this.configService.isCypressTesting)
-    } catch (error) {
-      console.error('Error detecting E2E testing environment:', error);
-    }
-  }
 }
