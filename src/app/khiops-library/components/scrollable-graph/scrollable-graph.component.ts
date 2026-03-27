@@ -58,6 +58,13 @@ export class ScrollableGraphComponent
     this.windowResizeSubject.next();
   };
 
+  private onVisibilityChange = () => {
+    // Force immediate resize when tab becomes visible (bypass throttle)
+    if (document.visibilityState === 'visible') {
+      this.resizeGraph();
+    }
+  };
+
   override ngAfterViewInit() {
     // Resize at init to take saved scale value
     this.resizeGraph(true);
@@ -68,6 +75,7 @@ export class ScrollableGraphComponent
     });
 
     window.addEventListener('resize', this.onWindowResize);
+    document.addEventListener('visibilitychange', this.onVisibilityChange);
   }
 
   initScrollEvents() {
@@ -96,6 +104,7 @@ export class ScrollableGraphComponent
 
   override ngOnDestroy() {
     window.removeEventListener('resize', this.onWindowResize);
+    document.removeEventListener('visibilitychange', this.onVisibilityChange);
     this.windowResizeSubject.complete();
 
     const graphWrapper: any = this.configService
@@ -170,6 +179,12 @@ export class ScrollableGraphComponent
 
         const parentWidth = parent.offsetWidth;
         const parentHeight = parent.offsetHeight;
+
+        // Skip resize if parent is hidden (tab switched, dimensions are 0)
+        if (parentWidth === 0 || parentHeight === 0) {
+          return;
+        }
+
         let compWidth = this.inputDatas.labels.length * this.scaleValue * 0.6;
         const maxCompDatasWidth =
           this.inputDatas.labels.length * this.maxScale * 0.6;
