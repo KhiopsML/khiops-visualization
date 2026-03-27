@@ -10,13 +10,14 @@ import {
   AfterViewInit,
   Input,
   SimpleChanges,
-  HostListener,
   Output,
   EventEmitter,
   ChangeDetectionStrategy,
   OnDestroy,
   NgZone,
 } from '@angular/core';
+import { Subject } from 'rxjs';
+import { throttleTime } from 'rxjs/operators';
 import { SelectableComponent } from '../selectable/selectable.component';
 import { SelectableService } from '../selectable/selectable.service';
 import { ConfigService } from '@khiops-library/providers/config.service';
@@ -28,7 +29,8 @@ import { ConfigService } from '@khiops-library/providers/config.service';
 })
 export class ScrollableGraphComponent
   extends SelectableComponent
-  implements OnChanges, AfterViewInit, OnDestroy {
+  implements OnChanges, AfterViewInit, OnDestroy
+{
   @Input() public view: any;
   @Input() public maxScale: number = 0;
   @Input() public minScale: number = 0;
@@ -41,6 +43,7 @@ export class ScrollableGraphComponent
     new EventEmitter();
 
   private graphWrapper: any;
+  private windowResizeSubject = new Subject<void>();
 
   constructor(
     public override selectableService: SelectableService,
@@ -51,14 +54,20 @@ export class ScrollableGraphComponent
     this.onScroll = this.onScroll.bind(this);
   }
 
-  @HostListener('window:resize')
-  keyEvent() {
-    this.resizeGraph();
-  }
+  private onWindowResize = () => {
+    this.windowResizeSubject.next();
+  };
 
   override ngAfterViewInit() {
     // Resize at init to take saved scale value
     this.resizeGraph(true);
+
+    // Setup throttled window resize listener (250ms throttle)
+    this.windowResizeSubject.pipe(throttleTime(250)).subscribe(() => {
+      this.resizeGraph();
+    });
+
+    window.addEventListener('resize', this.onWindowResize);
   }
 
   initScrollEvents() {
@@ -86,6 +95,9 @@ export class ScrollableGraphComponent
   }
 
   override ngOnDestroy() {
+    window.removeEventListener('resize', this.onWindowResize);
+    this.windowResizeSubject.complete();
+
     const graphWrapper: any = this.configService
       .getRootElementDom()
       .querySelector('#' + this.graphIdContainer);
