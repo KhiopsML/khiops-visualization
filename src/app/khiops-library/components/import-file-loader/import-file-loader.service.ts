@@ -15,28 +15,15 @@ export class ImportFileLoaderService {
   constructor(private configService: ConfigService) {}
   readImportFile(file: File): any {
     if (this.configService.isElectron) {
-      if (!this.configService.isCypressTesting) {
-        // Method called automatically at startup
-        // For security reasons, local files can not be loaded automatically without Electron
-        return new Promise((resolve) => {
-          this.configService
-            ?.getConfig()
-            ?.readLocalFile?.(file, (fileContent: any, filePath: string) => {
-              resolve(new FileModel(fileContent, filePath, file));
-            });
-        });
-      } else {
-        return new Promise((resolve) => {
-          resolve(
-            new FileModel(
-              `education	An example of text
-Bachelors	This text is standard`,
-              'path',
-              file,
-            ),
-          );
-        });
-      }
+      // Method called automatically at startup
+      // For security reasons, local files can not be loaded automatically without Electron
+      return new Promise((resolve) => {
+        this.configService
+          ?.getConfig()
+          ?.readLocalFile?.(file, (fileContent: any, filePath: string) => {
+            resolve(new FileModel(fileContent, filePath, file));
+          });
+      });
     } else {
       // Method called when user open an external file manually
       return new Promise((resolve, reject) => {

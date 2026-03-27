@@ -17,5 +17,4 @@ export class ConfigModel {
   onCopyImage!: Function;
   onSendEvent!: Function;
   readLocalFile?: Function;
-  isCypressTesting?: boolean;
 }

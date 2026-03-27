@@ -69,14 +69,6 @@ export class ConfigService {
       : this.getConfig().appSource;
   }
 
-  get isCypressTesting(): boolean {
-    return this.getConfig().isCypressTesting === true;
-  }
-
-  set isCypressTesting(value: boolean) {
-    this.getConfig().isCypressTesting = value;
-  }
-
   /**
    * Checks if the application is using Electron for storage.
    * @returns True if the storage is 'ELECTRON', otherwise false.
