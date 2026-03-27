@@ -208,11 +208,12 @@ export class AppService {
       if (
         typeof window !== 'undefined' &&
         // @ts-ignore
-        (window.Cypress || window.process?.versions?.electron)
+        window.Cypress
       ) {
         this.configService.isElectron = true;
-        this.configService.isE2eTesting = true;
+        this.configService.isCypressTesting = true;
       }
+      console.log("🚀 ~ AppService ~ detectE2ETestingEnvironment ~ this.configService.isCypressTesting:", this.configService.isCypressTesting)
     } catch (error) {
       console.error('Error detecting E2E testing environment:', error);
     }
