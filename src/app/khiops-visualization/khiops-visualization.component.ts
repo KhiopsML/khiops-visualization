@@ -75,13 +75,18 @@ import { TreePreparationStore } from './stores/tree-preparation.store';
     HistogramUIService,
     HistogramRendererService,
     CooccurrenceMatrixConfigService,
+
+    // Lib services
     ConfigService,
+    CopyImageService,
     CopyDatasService,
     DialogService,
     FileLoaderService,
     Ls,
     KhiopsLibraryService,
     LayoutService,
+
+    // Overlay
     InAppOverlayContainer,
     { provide: OverlayContainer, useClass: InAppOverlayContainer },
     Overlay,
