@@ -66,10 +66,11 @@ describe('Copy datas Test Plan for Khiops Covisualization', () => {
             '#cluster-distribution-1',
             'kc-cluster-distribution-1.txt',
           );
-          cy.testComponentCopyDatas(
-            '#external-datas-1',
-            'kc-external-datas-1.txt',
-          );
+          // This is now done into electron e2e tests
+          // cy.testComponentCopyDatas(
+          //   '#external-datas-1',
+          //   'kc-external-datas-1.txt',
+          // );
 
           cy.testComponentCopyDatas(
             '#selected-clusters-grid',
