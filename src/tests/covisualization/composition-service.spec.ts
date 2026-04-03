@@ -866,6 +866,131 @@ describe('coVisualization', () => {
         expect(result).toBeDefined();
         expect(Array.isArray(result)).toBe(true);
       });
+
+      it('should produce complete entries for all values in VarVar case including single-character strings', () => {
+        // Regression: old code used parts[j][1]?.length (character indexing on a string).
+        // For a single-char string like '7', parts[j][1] is undefined → cIndex becomes NaN
+        // → object.values[NaN] = undefined → incomplete rows for all entries after the first single-char one.
+        // Fix: VarVar uses j directly as valueIndex, no character indexing.
+        const noInnerVarsDetails = {
+          isCategorical: true,
+          innerVariables: undefined,
+        };
+        const clusterWithSingleCharValues = {
+          cluster: 'leaf1',
+          values: ['12', '7', '19', '3', '21'], // '7' and '3' are single-char → triggered NaN
+          valueTypicalities: [0.9, 0.8, 0.7, 0.6, 0.5],
+          valueFrequencies: [50, 30, 40, 20, 10],
+        };
+        const initDetails = { valueGroups: [clusterWithSingleCharValues] };
+        const node = {
+          getChildrenList: jasmine.createSpy(),
+          getInnerValueGroups: jasmine.createSpy(),
+          childrenLeafList: ['leaf1'],
+          isCollapsed: false,
+          shortDescription: 'Test',
+        };
+        compositionService['dimensionsDatasService'] = {
+          dimensionsDatas: {
+            dimensionsClusters: [
+              [{ cluster: 'leaf1', shortDescription: 'L1', rank: 0 }],
+            ],
+          },
+        } as any;
+        compositionService['importExtDatasService'] = {
+          getImportedDatasFromDimension: jasmine.createSpy().and.returnValue({}),
+        } as any;
+
+        const result = compositionService['processNodeCompositions'](
+          noInnerVarsDetails,
+          initDetails,
+          node,
+          0,
+          false, // VarVar: isIndiVarCase = false
+        );
+
+        // All 5 values must be present and defined
+        expect(result.length).toBe(5);
+        expect(result[0].value).toBe('12');
+        expect(result[1].value).toBe('7');  // was undefined with old code
+        expect(result[2].value).toBe('19'); // was undefined with old code
+        expect(result[3].value).toBe('3');  // was undefined with old code
+        expect(result[4].value).toBe('21'); // was undefined with old code
+        result.forEach((comp) => expect(comp.value).toBeDefined());
+      });
+
+      it('should map each variable to its first entry in object.values in IndiVar case when variables have multiple parts', () => {
+        // Regression: old code: cIndex = -1; cIndex += parts[j][1].length BEFORE use.
+        // For a variable with 2 parts (length=2): first use → cIndex = -1+2 = 1 (skips index 0!).
+        // Fix: cIndex starts at 0, is used FIRST, then advanced by partsArray.length.
+        const indiVarDetails = {
+          isCategorical: true,
+          innerVariables: {
+            dimensionSummaries: [
+              { name: 'alpha', type: TYPES.CATEGORICAL },
+              { name: 'beta', type: TYPES.CATEGORICAL },
+              { name: 'gamma', type: TYPES.CATEGORICAL },
+            ],
+            dimensionPartitions: [
+              { type: TYPES.CATEGORICAL, valueGroups: [] },
+              { type: TYPES.CATEGORICAL, valueGroups: [] },
+              { type: TYPES.CATEGORICAL, valueGroups: [] },
+            ],
+          },
+        };
+        // object.values: indices 0-1 for alpha (2 parts), 2-3 for beta (2 parts), 4 for gamma (1 part)
+        const clusterWithMultiPartVars = {
+          cluster: 'leaf1',
+          values: ['alpha X', 'alpha Y', 'beta P', 'beta Q', 'gamma Z'],
+          valueTypicalities: [0.9, 0.8, 0.7, 0.6, 0.5],
+          valueFrequencies: [10, 5, 15, 8, 20],
+        };
+        const initDetails = { valueGroups: [clusterWithMultiPartVars] };
+        // innerValues[0]: alpha has parts [X, Y] (2 parts), beta has [P, Q] (2 parts), gamma has [Z] (1 part)
+        const node = {
+          getChildrenList: jasmine.createSpy(),
+          getInnerValueGroups: jasmine.createSpy(),
+          childrenLeafList: ['leaf1'],
+          innerValues: [
+            [
+              ['alpha', ['X', 'Y']],
+              ['beta', ['P', 'Q']],
+              ['gamma', ['Z']],
+            ],
+          ],
+          isCollapsed: false,
+          shortDescription: 'Test',
+        };
+        compositionService['dimensionsDatasService'] = {
+          dimensionsDatas: {
+            dimensionsClusters: [
+              [{ cluster: 'leaf1', shortDescription: 'L1', rank: 0 }],
+            ],
+          },
+        } as any;
+        compositionService['importExtDatasService'] = {
+          getImportedDatasFromDimension: jasmine.createSpy().and.returnValue({}),
+        } as any;
+
+        const result = compositionService['processNodeCompositions'](
+          indiVarDetails,
+          initDetails,
+          node,
+          0,
+          true, // IndiVar: isIndiVarCase = true
+        );
+
+        expect(result.length).toBe(3);
+        // alpha: must use object.values[0] = 'alpha X' (old code gave object.values[1] = 'alpha Y')
+        expect(result[0].value).toBe('alpha X');
+        expect(result[0].innerVariable).toBe('alpha');
+        // beta: must use object.values[2] = 'beta P' (old code gave object.values[3] = 'beta Q')
+        expect(result[1].value).toBe('beta P');
+        expect(result[1].innerVariable).toBe('beta');
+        // gamma: object.values[4] = 'gamma Z' (same in old and new code)
+        expect(result[2].value).toBe('gamma Z');
+        expect(result[2].innerVariable).toBe('gamma');
+      });
     });
 
     describe('processCollapsedChildren', () => {
@@ -1521,6 +1646,53 @@ describe('coVisualization', () => {
         expect(relevantCompositions[1].partFrequencies).toEqual([
           163, 69, 16, 33, 32,
         ]);
+      });
+    });
+
+    describe('IV-Glass VarVar composition regression', () => {
+      // Regression: in the Glass IndivVar coclustering, the "Instance index" dimension
+      // has clusters whose values contain single-character strings (e.g. '2', '7', '3').
+      // The old cIndex calculation (cIndex += parts[j][1]?.length) treated the value as
+      // a string and read its 2nd character, which is undefined for single-char strings,
+      // causing cIndex to become NaN. All subsequent composition rows then had
+      // object.values[NaN] = undefined, leaving every column after the first empty.
+      beforeEach(() => {
+        dimensionsDatasService = TestBed.inject(DimensionsDatasService);
+        appService = TestBed.inject(AppService);
+
+        const fileDatas = require('../../assets/mocks/kc/IV-Glass.json');
+        appService.setFileDatas(fileDatas);
+
+        dimensionsDatasService.initialize();
+        dimensionsDatasService.getDimensions();
+        dimensionsDatasService.initSelectedDimensions();
+        dimensionsDatasService.constructDimensionsTrees();
+      });
+
+      it('should return complete (non-undefined) values for all Instance index compositions including single-char IDs', () => {
+        // The root "Instance index" node covers all 3 leaf clusters.
+        // Each cluster's values array contains numeric strings, several of which are
+        // single-character ('2', '3', '4', '5', '6', '7', '8', '9').
+        const rootNode: TreeNodeModel | undefined =
+          dimensionsDatasService.dimensionsDatas.dimensionsTrees?.[0]?.[0];
+
+        const compositions = compositionService.getCompositionClusters(
+          'Instance index',
+          rootNode,
+        );
+
+        expect(compositions.length).toBeGreaterThan(4);
+        // Every composition entry must have a defined value – no NaN-index undefined rows
+        compositions.forEach((comp, idx) =>
+          expect(comp.value)
+            .withContext(`composition[${idx}].value`)
+            .toBeDefined(),
+        );
+        // Known single-char instance IDs that triggered the bug must be present
+        const values = compositions.map((c) => c.value);
+        expect(values).toContain('2');
+        expect(values).toContain('7');
+        expect(values).toContain('3');
       });
     });
   });
