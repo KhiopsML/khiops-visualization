@@ -151,10 +151,11 @@ export class CompositionService {
               ? node.innerValues?.[i]
               : currentClusterDetails.values;
 
-            let cIndex = -1;
+            // For IndiVar: cumulative offset since each variable can span multiple entries in object.values
+            // For VarVar: parts is a flat string array, j maps directly to object.values index
+            let cIndex = 0;
             for (let j = 0; j < (parts?.length ?? 0); j++) {
-              // @ts-ignore
-              cIndex = cIndex + parts?.[j]?.[1]?.length ?? 0;
+              const valueIndex = isIndiVarCase ? cIndex : j;
               const currentDimensionHierarchyCluster =
                 currentDimensionClusters.find(
                   (e) => e.cluster === currentLeafName,
@@ -176,12 +177,18 @@ export class CompositionService {
                   currentClusterDetails,
                   currentDimensionHierarchyCluster,
                   currentPartIndex ?? -1,
-                  cIndex,
+                  valueIndex,
                   externalDatas,
                   currentDimensionDetails.innerVariables,
                   parts?.[j],
                 );
                 compositionValues.push(composition);
+              }
+              // Advance cIndex for IndiVar case: each variable occupies as many entries as it has parts
+              if (isIndiVarCase) {
+                // @ts-ignore
+                const partsArray = parts?.[j]?.[1];
+                cIndex += Array.isArray(partsArray) ? partsArray.length : 1;
               }
             }
           }
