@@ -18,6 +18,8 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { AppConfig } from '../../../../../../src/environments/environment';
 import { LoadExtDatasComponent } from '../load-ext-datas/load-ext-datas.component';
 import { GridDatasI } from '@khiops-library/interfaces/grid-datas.interface';
+import { IconCellComponent } from '@khiops-library/components/ag-grid/icon-cell/icon-cell.component';
+import { EventsService } from '@khiops-covisualization/providers/events.service';
 
 @Component({
   selector: 'app-import-ext-datas-list',
@@ -32,6 +34,7 @@ export class ImportExtDatasListComponent {
 
   constructor(
     private importExtDatasService: ImportExtDatasService,
+    private eventsService: EventsService,
     private dialog: MatDialog,
     private snackBar: MatSnackBar,
     public translate: TranslateService,
@@ -59,15 +62,15 @@ export class ImportExtDatasListComponent {
           headerName: this.translate.get('GLOBAL.DIMENSION'),
           field: 'dimension',
         },
-        // {
-        //   headerName: '',
-        //   field: 'remove',
-        //   cellRendererFramework: IconCellComponent,
-        //   cellRendererParams: {
-        //     icon: 'delete',
-        //     action: this.removeExtDatasFromList.bind(this),
-        //   },
-        // },
+        {
+          headerName: '',
+          field: 'remove',
+          cellRenderer: IconCellComponent,
+          cellRendererParams: {
+            icon: 'delete',
+            action: this.removeExtDatasFromList.bind(this),
+          },
+        },
       ],
       values: [],
     };
@@ -87,22 +90,15 @@ export class ImportExtDatasListComponent {
   }
 
   removeExtDatasFromList(e: any) {
-    const importedDatas = this.importExtDatasService.removeImportedDatas(
+    const dimensionName = e.data.dimension;
+    const removed = this.importExtDatasService.removeImportedDatas(
       e.data.filename,
       e.data.dimension,
       e.data.joinKey,
       e.data.separator,
       e.data.field,
     );
-    this.snackBar.open(
-      this.translate.get('SNACKS.EXTERNAL_DATA_DELETED'),
-      undefined,
-      {
-        duration: 2000,
-        panelClass: 'success',
-      },
-    );
-    if (importedDatas) {
+    if (removed) {
       this.snackBar.open(
         this.translate.get('SNACKS.EXTERNAL_DATA_DELETED'),
         undefined,
@@ -111,6 +107,10 @@ export class ImportExtDatasListComponent {
           panelClass: 'success',
         },
       );
+      this.importExtDatasService.loadSavedExternalDatas().then(() => {
+        // Emit event with dimension name so UI can refresh
+        this.eventsService.emitImportedDatasChanged([dimensionName]);
+      });
     } else {
       this.snackBar.open(
         this.translate.get('SNACKS.EXTERNAL_DATA_DELETE_ERROR'),
