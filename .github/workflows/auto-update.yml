@@ -23,11 +23,8 @@ jobs:
         with:
           node-version: 22
 
-      - name: Enable Corepack (Yarn modern)
-        run: corepack enable
-
       - name: Install dependencies
-        run: yarn install --immutable
+        run: yarn install --frozen-lockfile
 
       - name: Update dependencies
         run: |
@@ -40,10 +37,8 @@ jobs:
           ncu -u --target patch
 
           # Actually upgrade all resolutions in yarn.lock (not just re-read package.json)
+          # yarn upgrade also deduplicates automatically in Yarn Classic
           yarn upgrade
-
-          # Deduplicate lockfile to remove old vulnerable transitive deps
-          yarn dedupe
 
       - name: Create Pull Request
         id: create-pr
