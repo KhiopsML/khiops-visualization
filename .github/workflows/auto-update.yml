@@ -1,4 +1,4 @@
-name: Update libs
+name: Auto-update dependencies
 
 on:
   schedule:
@@ -23,18 +23,31 @@ jobs:
         with:
           node-version: 22
 
-      - name: yarn install
-        run: yarn install
+      - name: Enable Corepack (Yarn modern)
+        run: corepack enable
+
+      - name: Install dependencies
+        run: yarn install --immutable
 
       - name: Update dependencies
         run: |
           npm install -g npm-check-updates
+
+          # Update to latest minor+patch (non-breaking)
           ncu -u --target minor
-          yarn install
+
+          # Also apply patch-only updates for packages already at their major
+          ncu -u --target patch
+
+          # Actually upgrade all resolutions in yarn.lock (not just re-read package.json)
+          yarn upgrade
+
+          # Deduplicate lockfile to remove old vulnerable transitive deps
+          yarn dedupe
 
       - name: Create Pull Request
         id: create-pr
-        uses: peter-evans/create-pull-request@v5
+        uses: peter-evans/create-pull-request@v7
         with:
           token: ${{ secrets.PAT_TOKEN }}
           commit-message: 'chore: update dependencies'
