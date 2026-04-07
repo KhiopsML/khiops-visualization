@@ -236,8 +236,26 @@ export class CompositionService {
     compositionValues.push(...nodeCompositions);
 
     if (node.isCollapsed && isIndiVarCase) {
+      // Interactively collapsed node: full merge across leaves + format
       compositionValues = this.mergeAllContiguousModels(compositionValues);
       compositionValues = this.formatCompositions(node, compositionValues);
+    } else if (isIndiVarCase) {
+      // Non-collapsed IndiVar node (covers frozen/simplified leaves from external tool):
+      // Only simplify contiguous numerical intervals within each composition in place,
+      // without merging distinct leaves or calling formatCompositions
+      compositionValues = compositionValues.map((c) => {
+        if (
+          c.innerVariableType !== TYPES.NUMERICAL ||
+          !Array.isArray(c.part) ||
+          c.part.length <= 1
+        ) {
+          return c;
+        }
+        return {
+          ...c,
+          part: CompositionUtils.simplifyIntervals(c.part as string[]),
+        };
+      });
     } else if (processedCollapsedChildren.size > 0) {
       // When we have collapsed children, preserve their cluster names for both IndiVar and VarVar cases
       compositionValues = this.formatCompositions(
@@ -657,6 +675,7 @@ export class CompositionService {
   mergeAllContiguousModels(models: CompositionModel[]): CompositionModel[] {
     // Group models by innerVariable
     const modelsByVariable: Record<string, CompositionModel[]> = {};
+    const modelsWithoutInnerVariable: CompositionModel[] = [];
 
     models.forEach((model) => {
       if (model.innerVariable !== undefined) {
@@ -667,6 +686,9 @@ export class CompositionService {
         if (arr) {
           arr.push(model);
         }
+      } else {
+        // Keep models without innerVariable to add them as-is to results
+        modelsWithoutInnerVariable.push(model);
       }
     });
 
@@ -676,9 +698,22 @@ export class CompositionService {
     for (const variable in modelsByVariable) {
       const variableModels = modelsByVariable[variable];
 
-      // Skip if there's only one model for this variable
+      // If there's only one model for this variable, still simplify its intervals if numerical
       if ((variableModels ?? []).length <= 1) {
-        results.push(...(variableModels ?? []));
+        const singleModel = variableModels?.[0];
+        if (
+          singleModel &&
+          singleModel.innerVariableType !== TYPES.CATEGORICAL &&
+          Array.isArray(singleModel.part) &&
+          singleModel.part.length > 1
+        ) {
+          const simplifiedPart = CompositionUtils.simplifyIntervals(
+            singleModel.part as string[],
+          );
+          results.push({ ...singleModel, part: simplifiedPart });
+        } else {
+          results.push(...(variableModels ?? []));
+        }
         continue;
       }
 
@@ -803,6 +838,9 @@ export class CompositionService {
         results.push(mergedNumericalModel);
       }
     }
+
+    // Add back models that don't have innerVariable defined
+    results.push(...modelsWithoutInnerVariable);
 
     return results;
   }
