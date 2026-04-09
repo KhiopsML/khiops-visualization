@@ -143,7 +143,7 @@
 }
 
 .tree-leaf .tree-leaf-content.tree-selected:hover {
-  background: var(--primary-20);
+  background: var(--primary-10);
 }
 
 .tree-leaf .tree-leaf-content:before,
@@ -157,7 +157,7 @@
 }
 
 .tree-leaf .tree-leaf-content.tree-selected {
-  background: var(--primary);
+  background: var(--bg-color-contrast);
   border-radius: 0px;
   transition: background-color 0s !important;
 

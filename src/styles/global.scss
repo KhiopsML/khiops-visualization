@@ -201,12 +201,14 @@ h2 {
   right: 0px;
   bottom: 0px;
   left: 0px;
-  border: 1px solid var(--selected);
+  border: 1px var(--selected);
+  border-style: var(--selected-style);
   pointer-events: none;
 }
 
 .parent-selected {
-  border: 1px solid var(--selected);
+  border: 1px var(--selected);
+  border-style: var(--selected-style);
 }
 
 .selected-area-inner-div {
@@ -446,6 +448,7 @@ mat-dialog-container .fullscreen,
 }
 
 .kl-card {
+  position: relative;
   border: 1px solid var(--border-color);
   background-color: white !important;
   color: var(--primary-10);
@@ -456,6 +459,7 @@ mat-dialog-container .fullscreen,
   // animation: klCardFadeIn 0.2s ease-out;
   // animation-fill-mode: both;
 }
+
 app-home-layout {
   background: var(--bg-color-20);
 }

@@ -21,10 +21,9 @@
   --bg-color-40: #bbb;
   --bg-color-50: #aaa;
   --scrollbar: #eee;
-  --primary: #000;
-  --primary-10: #222222;
-  --primary-20: #333333;
-  --primary-30: #757575;
+  --primary: #393f4d;
+  --primary-10: #393f4d;
+  --primary-30: #6d778f;
   --accent: #cd3c14;
   --selected: #ff66008c;
   --gutter-hover: #f1f1f1;
@@ -37,6 +36,7 @@
   --cell-type-num: #d1dcee;
   --cell-type-cat: #f5ddaf;
   --border-color: rgba(4, 32, 69, 0.1);
+  --selected-style: dashed;
 }
 
 :host ::ng-deep .ag-theme-balham {

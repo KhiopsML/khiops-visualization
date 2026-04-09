@@ -313,7 +313,7 @@ button.mdc-icon-button {
 }
 
 .mat-badge-active {
-  background-color: var(--selected) !important;
+  background-color: var(--orange-main) !important;
   border-radius: 50% !important;
 }
 
@@ -417,7 +417,7 @@ button.mat-accent {
 }
 
 .mdc-tab-indicator .mdc-tab-indicator__content {
-  border-color: #ff6600 !important;
+  border-color: var(--orange-main) !important;
 }
 
 .mdc-checkbox,
@@ -437,6 +437,7 @@ button.mat-accent {
 .mdc-tab__text-label {
   font-weight: 500;
   font-size: 0.94em !important;
+  color: var(--primary-10) !important;
 }
 
 .mat-mdc-select-panel {

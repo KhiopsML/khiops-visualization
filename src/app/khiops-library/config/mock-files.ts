@@ -108,7 +108,8 @@ export function getCoviszalizationMockFile(): string {
   // let urlKC = '8-TS4624User_Coclustering.json';
   // let urlKC = 'IV-AdultEducation.json';
   // let urlKC = 'Coclustering-IVAdultEducation.json';
-  let urlKC = 'Coclustering-IV-Glass.khcj';
+  // let urlKC = 'Coclustering-IV-Glass.khcj';
+  let urlKC = 'Adult50_Coclustering.khcj';
   // let urlKC = 'Coclustering-IV-Iris.khcj';
   // let urlKC = 'Coclustering-IV-Pima.khcj';
   // let urlKC = 'Coclustering_NewSeparator.khcj';

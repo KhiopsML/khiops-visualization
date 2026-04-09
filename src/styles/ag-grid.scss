@@ -11,6 +11,7 @@
 .ag-header,
 .ag-cell {
   font-size: 0.97em !important;
+  font-weight: 500 !important;
 }
 .ag-grid-comp {
   background: var(--bg-color) !important;
@@ -32,7 +33,7 @@ ag-grid-angular {
 }
 
 .ag-row {
-  color: var(--bg-color-contrast) !important;
+  color: var(--primary-10) !important;
 }
 
 // Override grid style
@@ -44,8 +45,6 @@ ag-grid-angular {
   width: 14px !important;
 }
 .ag-theme-balham .ag-row-selected {
-  background-color: var(--primary) !important;
-  border-color: var(--primary) !important;
   color: white !important;
   transition: none !important;
 
@@ -57,7 +56,7 @@ ag-grid-angular {
   }
 }
 .ag-theme-balham .ag-row-selected:hover {
-  background: var(--primary-20) !important;
+  background: var(--primary-10) !important;
 }
 
 .ag-theme-balham .ag-cell {
@@ -95,7 +94,8 @@ ag-grid-angular {
 }
 
 .ag-header-cell-label .ag-header-cell-text {
-  font-weight: 400;
+  font-weight: 500;
+  color: var(--primary-30);
 }
 
 // Style for expected frequency cells when conditional on context is enabled

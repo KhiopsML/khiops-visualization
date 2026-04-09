@@ -120,6 +120,7 @@ export class TargetDistributionGraphComponent
       },
       scales: {
         x: {
+          // stacked: true,
           ticks: {
             callback: function (tickValue: string | number) {
               // Use regular function to access Chart.js 'this' context and getLabelForValue
@@ -131,6 +132,7 @@ export class TargetDistributionGraphComponent
           },
         },
         y: {
+          // stacked: true,
           // min: 0,
           // max: 100,
           ticks: {
