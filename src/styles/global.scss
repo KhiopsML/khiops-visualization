@@ -435,15 +435,12 @@ mat-dialog-container .fullscreen,
   background-color: #000000cc;
 }
 
-// Fade-in animation keyframes
 @keyframes klCardFadeIn {
   from {
     opacity: 0;
-    transform: translateY(10px);
   }
   to {
     opacity: 1;
-    transform: translateY(0);
   }
 }
 
@@ -454,10 +451,9 @@ mat-dialog-container .fullscreen,
   color: var(--primary-10);
   border-radius: var(--border-radius);
   padding: 12px;
-
-  // Add fade-in animation on first display
-  // animation: klCardFadeIn 0.2s ease-out;
-  // animation-fill-mode: both;
+  // Animation controlled by a CSS custom property set at the shadow root level
+  animation: var(--kl-card-animation, none) 0.2s ease-out;
+  animation-fill-mode: both;
 }
 
 app-home-layout {

@@ -9,6 +9,11 @@
 @use '../../styles/responsive.scss';
 @use '../../styles/drag-drop.scss';
 
+// Enable fade-in animation on .kl-card only within khiops-visualization
+:host {
+  --kl-card-animation: klCardFadeIn;
+}
+
 // Drag and drop styles
 .mat-app-background {
   @include drag-drop.drag-drop-overlay('Drop your JSON or KHJ file here');
