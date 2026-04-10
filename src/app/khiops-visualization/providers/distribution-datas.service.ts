@@ -28,6 +28,7 @@ import { DistributionChartDatasModel } from '@khiops-visualization/model/distrib
 import { VariableModel } from '@khiops-visualization/model/variable.model';
 import { Variable2dModel } from '@khiops-visualization/model/variable-2d.model';
 import { REPORT } from '@khiops-library/enum/report';
+import { HistogramType } from '@khiops-visualization/components/commons/histogram/histogram.type';
 import {
   DimensionVisualization,
   VariableDetail,
@@ -497,7 +498,60 @@ export class DistributionDatasService {
     }
     this.distributionDatas.distributionGraphDatas = distributionsGraphDetails;
 
+    // Auto-detect optimal Y scale when no explicit type is provided (initial load)
+    if (!type && distributionsGraphDetails?.datasets?.[0]?.data?.length > 0) {
+      const optimalYScale = this.computeOptimalYScale(
+        distributionsGraphDetails?.datasets?.[0]?.data,
+      );
+      if (this.distributionDatas.distributionGraphOptionsY) {
+        this.distributionDatas.distributionGraphOptionsY = {
+          ...this.distributionDatas.distributionGraphOptionsY,
+          selected: optimalYScale,
+        };
+      }
+    }
+
     return distributionsGraphDetails;
+  }
+
+  /**
+   * Computes the optimal Y scale (linear or logarithmic) for the distribution graph
+   * based on the proportion of visible area the bars fill in the bounding rectangle.
+   *
+   * Proportion = sum of bar heights / (n × max bar height)
+   *
+   * The log scale is selected if its proportion exceeds the linear proportion by a factor > 1.5.
+   *
+   * @param values - Array of frequency values from the distribution dataset
+   * @returns HistogramType.YLOG if log scale is optimal, otherwise HistogramType.YLIN
+   */
+  private computeOptimalYScale(values: number[]): string {
+    if (!values || values.length === 0) return HistogramType.YLIN;
+
+    const maxVal = Math.max(...values);
+    if (maxVal <= 0) return HistogramType.YLIN;
+
+    // Linear proportion: mean(values) / max(values)
+    const sumLin = values.reduce((acc, v) => acc + v, 0);
+    const proportionLin = sumLin / (values.length * maxVal);
+
+    // Log scale requires max > 1 (axis starts at 1, log₁₀(1) = 0)
+    if (maxVal <= 1) return HistogramType.YLIN;
+
+    const logMaxVal = Math.log10(maxVal);
+    if (logMaxVal <= 0) return HistogramType.YLIN;
+
+    // Log proportion: clip each value to at least 1 (axis floor), then compare
+    const logValues = values.map((v) => Math.log10(Math.max(v, 1)));
+    const sumLog = logValues.reduce((acc, v) => acc + v, 0);
+    const proportionLog = sumLog / (values.length * logMaxVal);
+
+    // Select log scale only if it improves coverage by more than factor 1.5
+    if (proportionLog > proportionLin * 1.5) {
+      return HistogramType.YLOG;
+    }
+
+    return HistogramType.YLIN;
   }
 
   defineDefaultGroup(dimension: DimensionVisualization) {
@@ -643,7 +697,134 @@ export class DistributionDatasService {
     }
 
     this.distributionDatas.histogramDatas = histogramGraphDetails;
+
+    // Auto-detect optimal X and Y scales only on initial variable load (not when navigating
+    // between interpretable histogram versions, which would override the current scale).
+    if (interpretableHistogramNumber === undefined) {
+      const optimalScales = this.computeOptimalHistogramScales(
+        histogramGraphDetails,
+      );
+      if (this.distributionDatas.distributionGraphOptionsX) {
+        this.distributionDatas.distributionGraphOptionsX = {
+          ...this.distributionDatas.distributionGraphOptionsX,
+          selected: optimalScales.xScale,
+        };
+      }
+      if (this.distributionDatas.distributionGraphOptionsY) {
+        this.distributionDatas.distributionGraphOptionsY = {
+          ...this.distributionDatas.distributionGraphOptionsY,
+          selected: optimalScales.yScale,
+        };
+      }
+    }
+
     return histogramGraphDetails;
+  }
+
+  /**
+   * Computes the optimal X and Y scales (linear or logarithmic) for the histogram
+   * by comparing the 4 combinations (XLin/XLog × YLin/YLog).
+   *
+   * For each combination, the 2D fill ratio is computed:
+   *   proportion = Σ(normalized_bar_width_i × normalized_bar_height_i)
+   *
+   * The combination that maximizes the proportion is selected if it exceeds
+   * the Lin/Lin baseline by a factor > 1.5. Otherwise Lin/Lin is the default.
+   *
+   * XLog is only considered when all partition bounds are strictly positive
+   * (no zeros or negative values), since log scale cannot represent those.
+   *
+   * @param datas - Array of histogram values
+   * @returns Object with xScale and yScale HistogramType values
+   */
+  private computeOptimalHistogramScales(datas: HistogramValuesI[]): {
+    xScale: string;
+    yScale: string;
+  } {
+    const defaultResult = {
+      xScale: HistogramType.XLIN,
+      yScale: HistogramType.YLIN,
+    };
+    if (!datas || datas.length === 0) return defaultResult;
+
+    // --- Normalized Y heights ---
+    const densities = datas.map((d) => d.density);
+    const maxDensity = Math.max(...densities);
+    if (maxDensity <= 0) return defaultResult;
+
+    const yHeightsLin = densities.map((v) => v / maxDensity);
+
+    const logValues = datas.map((d) => d.logValue).filter((v) => v !== 0);
+    let yHeightsLog: number[];
+    if (logValues.length > 1) {
+      const logMax = Math.max(...logValues);
+      const logMin = Math.min(...logValues);
+      const logRange = logMax - logMin;
+      yHeightsLog =
+        logRange > 0
+          ? datas.map((d) =>
+              d.logValue !== 0 ? (d.logValue - logMin) / logRange : 0,
+            )
+          : yHeightsLin;
+    } else {
+      yHeightsLog = yHeightsLin;
+    }
+
+    // --- X widths ---
+    const allPositive = datas.every(
+      (d) => d.partition[0]! > 0 && d.partition[1]! > 0,
+    );
+
+    const linWidths = datas.map((d) =>
+      Math.abs(d.partition[1]! - d.partition[0]!),
+    );
+    const totalLinWidth = linWidths.reduce((a, b) => a + b, 0);
+    if (totalLinWidth <= 0) return defaultResult;
+    const linWidthsNorm = linWidths.map((w) => w / totalLinWidth);
+
+    // Compute 4 proportions (or 2 if XLog is not applicable)
+    const propLinLin = linWidthsNorm.reduce(
+      (acc, w, i) => acc + w * yHeightsLin[i]!,
+      0,
+    );
+    const propLinLog = linWidthsNorm.reduce(
+      (acc, w, i) => acc + w * yHeightsLog[i]!,
+      0,
+    );
+
+    const configs: { x: string; y: string; prop: number }[] = [
+      { x: HistogramType.XLIN, y: HistogramType.YLIN, prop: propLinLin },
+      { x: HistogramType.XLIN, y: HistogramType.YLOG, prop: propLinLog },
+    ];
+
+    if (allPositive) {
+      const logWidths = datas.map((d) =>
+        Math.abs(Math.log10(d.partition[1]!) - Math.log10(d.partition[0]!)),
+      );
+      const totalLogWidth = logWidths.reduce((a, b) => a + b, 0);
+      if (totalLogWidth > 0) {
+        const logWidthsNorm = logWidths.map((w) => w / totalLogWidth);
+        const propLogLin = logWidthsNorm.reduce(
+          (acc, w, i) => acc + w * yHeightsLin[i]!,
+          0,
+        );
+        const propLogLog = logWidthsNorm.reduce(
+          (acc, w, i) => acc + w * yHeightsLog[i]!,
+          0,
+        );
+        configs.push(
+          { x: HistogramType.XLOG, y: HistogramType.YLIN, prop: propLogLin },
+          { x: HistogramType.XLOG, y: HistogramType.YLOG, prop: propLogLog },
+        );
+      }
+    }
+
+    // Pick the combination with the highest proportion if it beats Lin/Lin by >1.5
+    const best = configs.reduce((a, b) => (b.prop > a.prop ? b : a));
+    if (best.prop > propLinLin * 1.5) {
+      return { xScale: best.x, yScale: best.y };
+    }
+    return defaultResult;
   }
 
   /**
