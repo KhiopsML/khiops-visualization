@@ -16,8 +16,6 @@ import { GridDatasI } from '@khiops-library/interfaces/grid-datas.interface';
 import { IconCellComponent } from '@khiops-library/components/ag-grid/icon-cell/icon-cell.component';
 import { EventsService } from '@khiops-covisualization/providers/events.service';
 import { DialogService } from '@khiops-library/providers/dialog.service';
-import { IconCellComponent } from '@khiops-library/components/ag-grid/icon-cell/icon-cell.component';
-import { EventsService } from '@khiops-covisualization/providers/events.service';
 
 @Component({
   selector: 'app-import-ext-datas-list',
