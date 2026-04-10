@@ -6,6 +6,7 @@
 
 import { Injectable } from '@angular/core';
 import { AppService } from './app.service';
+import { LS } from '@khiops-library/enum/ls';
 import cloneDeep from 'lodash-es/cloneDeep';
 import { AppConfig } from '../../../environments/environment';
 import { BarModel } from '../model/bar.model';
@@ -499,7 +500,14 @@ export class DistributionDatasService {
     this.distributionDatas.distributionGraphDatas = distributionsGraphDetails;
 
     // Auto-detect optimal Y scale when no explicit type is provided (initial load)
-    if (!type && distributionsGraphDetails?.datasets?.[0]?.data?.length > 0) {
+    // and when the user has enabled the auto-scale setting.
+    const autoScaleEnabled =
+      AppService.Ls.get(LS.SETTING_AUTO_SCALE)?.toString() === 'true';
+    if (
+      autoScaleEnabled &&
+      !type &&
+      distributionsGraphDetails?.datasets?.[0]?.data?.length > 0
+    ) {
       const optimalYScale = this.computeOptimalYScale(
         distributionsGraphDetails?.datasets?.[0]?.data,
       );
@@ -699,8 +707,10 @@ export class DistributionDatasService {
     this.distributionDatas.histogramDatas = histogramGraphDetails;
 
     // Auto-detect optimal X and Y scales only on initial variable load (not when navigating
-    // between interpretable histogram versions, which would override the current scale).
-    if (interpretableHistogramNumber === undefined) {
+    // between interpretable histogram versions) and when the auto-scale setting is enabled.
+    const autoScaleEnabled =
+      AppService.Ls.get(LS.SETTING_AUTO_SCALE)?.toString() === 'true';
+    if (autoScaleEnabled && interpretableHistogramNumber === undefined) {
       const optimalScales = this.computeOptimalHistogramScales(
         histogramGraphDetails,
       );

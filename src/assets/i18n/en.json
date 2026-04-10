@@ -113,8 +113,8 @@
     "ALLOW": "Ok"
   },
   "SCALE_PERSISTENCE": {
-    "TITLE": "Scale persistence",
-    "MESSAGE": "Keep Y/X linear/log scales when changing variable"
+    "MESSAGE": "When enabled, automatically adjusts the axes of distribution charts for improved readability",
+    "AUTO_SCALE": "Automatic scale selection (Lin/Log)"
   },
   "GLOBAL": {
     "TARGET_FREQUENCY": "Target Frequency",

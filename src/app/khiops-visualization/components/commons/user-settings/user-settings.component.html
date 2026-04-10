@@ -26,6 +26,16 @@
     <kl-matrix-contrast-setting
       [(contrastValue)]="contrastValue"
     ></kl-matrix-contrast-setting>
+    <div
+      class="kl-auto-scale-setting"
+      fxLayout="column"
+      fxLayoutAlign="start start"
+    >
+      <h2>{{ 'SCALE_PERSISTENCE.AUTO_SCALE' | translate }}</h2>
+      <mat-checkbox [(ngModel)]="autoScale" color="primary">
+        {{ 'SCALE_PERSISTENCE.MESSAGE' | translate }}
+      </mat-checkbox>
+    </div>
     <kl-clear-ls></kl-clear-ls>
     <kl-npm-version></kl-npm-version>
   </div>
