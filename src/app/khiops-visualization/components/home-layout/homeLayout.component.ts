@@ -196,7 +196,7 @@ export class HomeLayoutComponent implements OnInit {
       this.mainTabGroup.selectedIndex = 0;
       setTimeout(() => {
         this.isLoading = false;
-      });
+      }, 250); // simce important to avoid white screen on some freeze during loadings
     });
   }
 }
