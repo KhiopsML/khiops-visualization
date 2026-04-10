@@ -5,11 +5,11 @@
  */
 
 import { Injectable } from '@angular/core';
-import { ComponentStore } from '@ngrx/component-store';
 import { TreeNodeModel } from '../model/tree-node.model';
 import { TreePreparationState, initialState } from '../model/tree-preparation-datas.model';
 import { Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
+import { ComponentStore } from '@ngrx/component-store';
 
 /**
  * ComponentStore for Tree Preparation state management.

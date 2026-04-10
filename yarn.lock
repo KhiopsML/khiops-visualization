@@ -2150,14 +2150,21 @@
   dependencies:
     "@tybys/wasm-util" "^0.10.1"
 
-"@ngrx/component-store@^21.0.1":
-  version "21.0.1"
-  resolved "https://registry.yarnpkg.com/@ngrx/component-store/-/component-store-21.0.1.tgz#49eddb6b9549361a6e327d99a0d91299408c4f3c"
-  integrity sha512-aOfudK8MqCZQUuBjMnXAXRxRcr9Qu/+9/2iIh4aLhmGXC5JCpkDi1a82A/39EUFZy2xBbI4lPI7P817b1PQRvQ==
+"@ngrx/component-store@^21.1.0":
+  version "21.1.0"
+  resolved "https://registry.yarnpkg.com/@ngrx/component-store/-/component-store-21.1.0.tgz#1841fbbfc190e9470fdcb5e0b6800a4a8e6dd32a"
+  integrity sha512-piH+AY/TR5BVN2IU68B2tYHPnombbMESMlCJAdk8d4o2I+qxzP2B6xQ7+2ztsDz6xciX0mJlYXjmrtci05lVUQ==
   dependencies:
     tslib "^2.0.0"
 
-"@ngrx/store@^21.0.1":
+"@ngrx/effects@^21.1.0":
+  version "21.1.0"
+  resolved "https://registry.yarnpkg.com/@ngrx/effects/-/effects-21.1.0.tgz#b0d17e28dec881da7d9e920f0800dd994bbe9736"
+  integrity sha512-Hh+PlV+xYP3i65XK2yOxpIQ9pP4T70gLpm6JIjBE02DumW+evr6LdUgeixfq5vaUS1kN3Rqvl24fNUDJKGkkZw==
+  dependencies:
+    tslib "^2.0.0"
+
+"@ngrx/store@^21.1.0":
   version "21.1.0"
   resolved "https://registry.yarnpkg.com/@ngrx/store/-/store-21.1.0.tgz#dc31b8fbf800555fb752e87aeefb9fce47205a58"
   integrity sha512-XnpzqmmENOQGtIzFSDX4qq7zVB2WwfMZWoK78yt36lIeDvtgZuUvxyIiGo5mla7e7+KlsSAeNDUvi9zmqIezfw==
