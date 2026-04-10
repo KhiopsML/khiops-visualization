@@ -24,10 +24,10 @@ import { ResizedEvent } from 'angular-resize-event-package';
 import { TYPES } from '@khiops-library/enum/types';
 import { ChartDatasModel } from '@khiops-library/model/chart-datas.model';
 import { ChartToggleValuesI } from '@khiops-visualization/interfaces/chart-toggle-values.interface';
-import { UtilsService } from '@khiops-library/providers/utils.service';
 import { COMPONENT_TYPES } from '@khiops-library/enum/component-types';
 import { AppService } from '@khiops-visualization/providers/app.service';
 import { LS } from '@khiops-library/enum/ls';
+import { ChartLabelTruncationUtils } from '@khiops-library/components/chart/chart-label-truncation.utils';
 
 @Component({
   selector: 'app-target-distribution-graph',
@@ -124,9 +124,13 @@ export class TargetDistributionGraphComponent
           ticks: {
             callback: function (tickValue: string | number) {
               // Use regular function to access Chart.js 'this' context and getLabelForValue
+              const chartWidth = (this as any).chart?.width ?? 600;
+              const barCount = (this as any).chart?.data?.labels?.length ?? 1;
               return self.getXAxisTickValue(
                 tickValue,
                 this.getLabelForValue.bind(this),
+                chartWidth,
+                barCount,
               );
             },
           },
@@ -296,22 +300,25 @@ export class TargetDistributionGraphComponent
   }
 
   /**
-   * Get X-axis tick callback value with ellipsis
+   * Get X-axis tick callback value with dynamic cropping based on
+   * available chart width and number of bars
    * @param tickValue The tick value from Chart.js
    * @param getLabelForValue Chart.js function to get the actual label
+   * @param chartWidth The current pixel width of the chart canvas
+   * @param barCount The total number of bars in the chart
    * @returns Formatted label with ellipsis if needed
    */
   private getXAxisTickValue(
     tickValue: string | number,
     getLabelForValue: (value: number) => string,
+    chartWidth: number,
+    barCount: number,
   ): string {
-    const value =
-      typeof tickValue === 'string' ? parseFloat(tickValue) : tickValue;
-    let label = getLabelForValue(value);
-    label = UtilsService.ellipsis(
-      label,
-      this.khiopsLibraryService.getAppConfig().common.GLOBAL.MAX_LABEL_LENGTH,
+    return ChartLabelTruncationUtils.getXAxisTickValue(
+      tickValue,
+      getLabelForValue,
+      chartWidth,
+      barCount,
     );
-    return label;
   }
 }

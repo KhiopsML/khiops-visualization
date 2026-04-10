@@ -27,11 +27,11 @@ import { TYPES } from '@khiops-library/enum/types';
 import { HistogramType } from '../../../khiops-visualization/components/commons/histogram/histogram.type';
 import { ChartDatasModel } from '@khiops-library/model/chart-datas.model';
 import { DistributionOptionsI } from '@khiops-library/interfaces/distribution-options.interface';
-import { UtilsService } from '@khiops-library/providers/utils.service';
 import { COMPONENT_TYPES } from '@khiops-library/enum/component-types';
 import { TranslateService } from '@ngstack/translate';
 import { VariableScaleSettingsService } from '../../../khiops-visualization/providers/variable-scale-settings.service';
 import { ScaleChangeEventsService } from '../../../khiops-visualization/providers/scale-change-events.service';
+import { ChartLabelTruncationUtils } from '@khiops-library/components/chart/chart-label-truncation.utils';
 
 @Component({
   selector: 'kl-distribution-graph',
@@ -42,7 +42,8 @@ import { ScaleChangeEventsService } from '../../../khiops-visualization/provider
 })
 export class DistributionGraphComponent
   extends ScrollableGraphComponent
-  implements OnInit, OnChanges, OnDestroy {
+  implements OnInit, OnChanges, OnDestroy
+{
   @Input() public position = 0;
   @Input() declare public inputDatas: ChartDatasModel | undefined;
   @Input() public graphOptions: DistributionOptionsI | undefined;
@@ -145,9 +146,13 @@ export class DistributionGraphComponent
           ticks: {
             callback: function (tickValue: string | number) {
               // Use regular function to access Chart.js 'this' context and getLabelForValue
+              const chartWidth = (this as any).chart?.width ?? 600;
+              const barCount = (this as any).chart?.data?.labels?.length ?? 1;
               return self.getXAxisTickValue(
                 tickValue,
                 this.getLabelForValue.bind(this),
+                chartWidth,
+                barCount,
               );
             },
           },
@@ -413,28 +418,8 @@ export class DistributionGraphComponent
 
     return typeof value === 'number'
       ? Math.round(value * this.PERCENTAGE_MULTIPLIER) /
-      this.PERCENTAGE_MULTIPLIER
+          this.PERCENTAGE_MULTIPLIER
       : value;
-  }
-
-  /**
-   * Get X-axis tick callback value with ellipsis
-   * @param tickValue The tick value from Chart.js
-   * @param getLabelForValue Chart.js function to get the actual label
-   * @returns Formatted label with ellipsis if needed
-   */
-  private getXAxisTickValue(
-    tickValue: string | number,
-    getLabelForValue: (value: number) => string,
-  ): string {
-    const value =
-      typeof tickValue === 'string' ? parseFloat(tickValue) : tickValue;
-    let label = getLabelForValue(value);
-    label = UtilsService.ellipsis(
-      label,
-      this.khiopsLibraryService.getAppConfig().common.GLOBAL.MAX_LABEL_LENGTH,
-    );
-    return label;
   }
 
   /**
@@ -444,5 +429,28 @@ export class DistributionGraphComponent
   private calculateMinValue(): number {
     const minValues = this.inputDatas?.datasets?.[0]?.data;
     return minValues ? Math.min(...minValues) : 0;
+  }
+
+  /**
+   * Get X-axis tick callback value with dynamic cropping based on
+   * available chart width and number of bars
+   * @param tickValue The tick value from Chart.js
+   * @param getLabelForValue Chart.js function to get the actual label
+   * @param chartWidth The current pixel width of the chart canvas
+   * @param barCount The total number of bars in the chart
+   * @returns Formatted label with ellipsis if needed
+   */
+  private getXAxisTickValue(
+    tickValue: string | number,
+    getLabelForValue: (value: number) => string,
+    chartWidth: number,
+    barCount: number,
+  ): string {
+    return ChartLabelTruncationUtils.getXAxisTickValue(
+      tickValue,
+      getLabelForValue,
+      chartWidth,
+      barCount,
+    );
   }
 }
