@@ -194,6 +194,10 @@ export class HomeLayoutComponent implements OnInit {
       this.selectedTab = undefined;
       this.activeTab = 0;
       this.mainTabGroup.selectedIndex = 0;
+      // Beware, the distribution chart fails to resize on init for some files #134, so we need to DOUBLE set loading to false after a delay to let the chart resize before displaying it
+      setTimeout(() => {
+        this.isLoading = false; // Distribution chart fails to resize on init for some files #134
+      });
       setTimeout(() => {
         this.isLoading = false;
       }, 250); // simce important to avoid white screen on some freeze during loadings
