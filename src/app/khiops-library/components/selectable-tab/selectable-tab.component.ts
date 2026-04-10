@@ -30,19 +30,19 @@ import { MatTabChangeEvent } from '@angular/material/tabs';
 @Component({
   template: '',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  standalone: false
+  standalone: false,
 })
 export class SelectableTabComponent implements OnChanges {
   @Input() selectedTab?: MatTabChangeEvent | undefined;
   public tabIndex?: number;
-  public loadingView = true;
+  public loadingView = false;
 
   ngOnChanges(changes: SimpleChanges) {
     if (
       changes.selectedTab
         ?.firstChange /* important to do not load when tab change to context (covisu)*/
     ) {
-      this.loadingView = true;
+      this.loadingView = false;
 
       this.loaded();
     }
@@ -50,9 +50,9 @@ export class SelectableTabComponent implements OnChanges {
 
   loaded() {
     setTimeout(() => {
-      this.loadingView = false;
+      // this.loadingView = false;
       this.loadView();
-    }, 150); // set > value than .mat-ink-bar transition animation to avoid freeze
+    }, 0); // set > value than .mat-ink-bar transition animation to avoid freeze
   }
 
   loadView() {

@@ -452,7 +452,7 @@ mat-dialog-container .fullscreen,
   border-radius: var(--border-radius);
   padding: 12px;
   // Animation controlled by a CSS custom property set at the shadow root level
-  animation: var(--kl-card-animation, none) 0.2s ease-out;
+  animation: var(--kl-card-animation, none) 0.4s ease-out;
   animation-fill-mode: both;
 }
 
