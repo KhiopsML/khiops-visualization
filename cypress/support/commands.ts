@@ -7,13 +7,13 @@
 
 Cypress.Commands.add('loadFile', (ctx: string, file: string) => {
   // Set number precision to 8 before loading any file
-  cy.setGlobalNumberPrecision();
+  cy.setGlobalSetting('SETTING_NUMBER_PRECISION', 8);
 
   // Load the visualization or covisualization page
   cy.visit('/' + ctx + '/');
 
   // Set number precision again after page load to ensure it's applied
-  cy.setGlobalNumberPrecision();
+  cy.setGlobalSetting('SETTING_NUMBER_PRECISION', 8);
 
   // Switch to the desired tab (assuming it's the last tab)
   cy.get('.mat-mdc-tab').last().click();
@@ -55,22 +55,16 @@ Cypress.Commands.add('checkCanvasIsNotEmpty', (canvasSelector: string) => {
   });
 });
 
-Cypress.Commands.add('setGlobalNumberPrecision', () => {
-  // Set number precision to 8 globally for all tests
+Cypress.Commands.add('setGlobalSetting', (settingKey: string, value: any) => {
+  // Generic function to set any global setting for all tests
   // This will work for both visualization and covisualization modules
   cy.window().then((win) => {
-    // Set in localStorage directly with the correct prefixes used by the application
-    win.localStorage.setItem(
-      'KHIOPS_VISUALIZATION_SETTING_NUMBER_PRECISION',
-      '8',
-    );
-    win.localStorage.setItem(
-      'KHIOPS_COVISUALIZATION_SETTING_NUMBER_PRECISION',
-      '8',
-    );
+    // Set in localStorage directly with the correct module prefixes
+    win.localStorage.setItem(`KHIOPS_VISUALIZATION_${settingKey}`, String(value));
+    win.localStorage.setItem(`KHIOPS_COVISUALIZATION_${settingKey}`, String(value));
 
     // Log for debugging
-    cy.log('Set number precision to 8 in localStorage');
+    cy.log(`Set ${settingKey} to ${value} in localStorage`);
 
     // Also try to set through the application if available
     try {
@@ -82,11 +76,8 @@ Cypress.Commands.add('setGlobalNumberPrecision', () => {
           try {
             const appService = injector.get('AppService');
             if (appService && appService.Ls) {
-              const LS = (win as any).LS || {
-                SETTING_NUMBER_PRECISION: 'SETTING_NUMBER_PRECISION',
-              };
-              appService.Ls.set(LS.SETTING_NUMBER_PRECISION, 8);
-              cy.log('Set number precision to 8 via AppService');
+              appService.Ls.set(settingKey, value);
+              cy.log(`Set ${settingKey} to ${value} via AppService`);
             }
           } catch (serviceError) {
             cy.log('AppService not available, localStorage fallback used');
@@ -98,6 +89,11 @@ Cypress.Commands.add('setGlobalNumberPrecision', () => {
       cy.log('Angular not available yet, localStorage fallback used');
     }
   });
+});
+
+Cypress.Commands.add('setGlobalAutoScale', (value: boolean) => {
+  // Set auto scale setting globally for all tests
+  cy.setGlobalSetting('SETTING_AUTO_SCALE', value);
 });
 
 Cypress.Commands.add(

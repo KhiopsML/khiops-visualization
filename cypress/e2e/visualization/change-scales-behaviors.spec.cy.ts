@@ -20,91 +20,26 @@ describe('Level distribution Test Plan for Khiops Visualization', () => {
         cy.wait(500);
         cy.checkCanvasIsNotEmpty('#histogram-canvas');
 
-        cy.get('.graph-options-menu-comp').first().contains('xLin');
-        cy.get('.graph-options-menu-comp').eq(1).contains('yLin');
-
-        // change scale settings
-        cy.get('#change-scale-button').click();
-
-        cy.get('#scale-toggle-group-xLog').click();
-        cy.get('#scale-toggle-group-yLog').click();
-        cy.wait(500);
-
-        cy.get('#change-scale-dialog-apply-btn').click();
-        cy.wait(200);
-
         cy.get('.graph-options-menu-comp').first().contains('xLog');
         cy.get('.graph-options-menu-comp').eq(1).contains('yLog');
 
-        cy.checkCanvasIsNotEmpty('#histogram-canvas');
-
-        // change variable
         cy.get('#preparation-variables-list').find('.ag-row:eq(1)').click();
-
-        cy.checkCanvasIsNotEmpty('#histogram-canvas');
-
-        cy.get('.graph-options-menu-comp').first().contains('xLog');
-        cy.get('.graph-options-menu-comp').eq(1).contains('yLog');
-
-        cy.get('.graph-options-menu-comp').first().click();
-        cy.wait(200);
-        // set to xLin
-        cy.get('.mat-mdc-menu-item').eq(0).click();
-
-        cy.get('.graph-options-menu-comp').eq(1).click();
-        cy.wait(200);
-
-        // set to yLin
-        cy.get('.mat-mdc-menu-item').eq(0).click();
-
-        cy.checkCanvasIsNotEmpty('#histogram-canvas');
-
-        // change variable
-        cy.get('#preparation-variables-list').find('.ag-row:eq(0)').click();
-
-        cy.checkCanvasIsNotEmpty('#histogram-canvas');
-
-        // scale must be on log
-        cy.get('.graph-options-menu-comp').first().contains('xLog');
-        cy.get('.graph-options-menu-comp').eq(1).contains('yLog');
-
-        // change variable
-        cy.get('#preparation-variables-list').find('.ag-row:eq(1)').click();
-
-        cy.checkCanvasIsNotEmpty('#histogram-canvas');
-
-        // scale must be on lin
-        cy.get('.graph-options-menu-comp').first().contains('xLin');
-        cy.get('.graph-options-menu-comp').eq(1).contains('yLin');
-
-        // change variable
-        cy.get('#preparation-variables-list').find('.ag-row:eq(1)').click();
-
-        cy.checkCanvasIsNotEmpty('#histogram-canvas');
-
-        // channge scale settings
-        cy.get('#change-scale-button').click();
-
-        cy.get('#scale-toggle-group-xLin').click();
-        cy.wait(500);
-
-        cy.get('#change-scale-dialog-apply-btn').click();
-        cy.wait(200);
-
-        // change variable
-        cy.get('#preparation-variables-list').find('.ag-row:eq(2)').click();
-
-        // scale must be on lin and log
+        cy.wait(250);
         cy.get('.graph-options-menu-comp').first().contains('xLin');
         cy.get('.graph-options-menu-comp').eq(1).contains('yLog');
 
-        // change variable to categorical
         cy.get('#preparation-variables-list').find('.ag-row:eq(3)').click();
+        cy.wait(250);
+        cy.get('.graph-options-menu-comp').first().contains('yLin');
 
-        cy.checkCanvasIsNotEmpty('#distribution-chart-0');
+        cy.get('#preparation-variables-list').find('.ag-row:eq(4)').click();
+        cy.wait(250);
+        cy.get('.graph-options-menu-comp').first().contains('yLog');
 
-        // scale must be on log
-        cy.get('.graph-options-menu-comp').eq(0).contains('yLog');
+        cy.get('#preparation-variables-list').find('.ag-row:eq(6)').click();
+        cy.wait(250);
+        cy.get('.graph-options-menu-comp').first().contains('xLog');
+        cy.get('.graph-options-menu-comp').eq(1).contains('yLog');
       });
     });
   });
