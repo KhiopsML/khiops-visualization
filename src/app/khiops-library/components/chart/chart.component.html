@@ -18,7 +18,7 @@
       ></mat-spinner>
     </div>
   }
-  <div class="kl-chart-comp">
+  <div class="kl-chart-comp" [class.chart-ready]="isChartReady">
     <canvas id="{{ canvasIdContainer }}"></canvas>
   </div>
 </div>

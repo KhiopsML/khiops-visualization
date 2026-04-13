@@ -19,6 +19,11 @@
     overflow: hidden;
     max-width: 50000px; // Avoid canvas break
     min-width: 300px;
+    visibility: hidden;
+
+    &.chart-ready {
+      visibility: visible;
+    }
 
     canvas {
       min-width: 300px;
