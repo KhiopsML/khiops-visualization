@@ -28,7 +28,8 @@ import { ConfigService } from '@khiops-library/providers/config.service';
 })
 export class ScrollableGraphComponent
   extends SelectableComponent
-  implements OnChanges, AfterViewInit, OnDestroy {
+  implements OnChanges, AfterViewInit, OnDestroy
+{
   @Input() public view: any;
   @Input() public maxScale: number = 0;
   @Input() public minScale: number = 0;
@@ -184,7 +185,8 @@ export class ScrollableGraphComponent
         }
 
         el.style.width = currentWidth + 'px';
-        if (!firstRender) {
+        if (!firstRender || !elCanvas) {
+          // When elCanvas is undefined, elMonitor IS the canvas — never set it to 0px
           elMonitor.style.width = currentWidth + 'px';
         } else {
           elMonitor.style.width = '0px';

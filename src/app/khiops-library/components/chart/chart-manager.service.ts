@@ -89,6 +89,7 @@ export class ChartManagerService {
     chartOptions: ChartOptions | undefined,
     graphClickEvent: (_e: ChartEvent, items: ActiveElement[]) => void,
     hostElement?: HTMLElement,
+    onResizeComplete?: () => void,
   ): boolean {
     const searchContext = hostElement || this.configService.getRootElementDom();
     if (!searchContext) {
@@ -135,6 +136,11 @@ export class ChartManagerService {
 
       // Merge chart options
       options = UtilsService.mergeDeep(options, chartOptions);
+
+      // Attach onResize callback after merge to avoid it being overwritten
+      if (onResizeComplete) {
+        options.onResize = () => onResizeComplete();
+      }
       ChartJs.Chart.register.apply(
         null,
         // @ts-ignore
