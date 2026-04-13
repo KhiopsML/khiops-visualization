@@ -33,6 +33,7 @@ export class ChartManagerService {
   private barColor: string = 'rgba(0, 0, 0, 1)';
   private fontColor: string = '#999';
   private lastDataHash: string | null = null;
+  private selectedBarIndex: number | undefined;
 
   constructor(private configService: ConfigService) {}
 
@@ -107,6 +108,34 @@ export class ChartManagerService {
       } catch (e) {}
       this.lastDataHash = null; // Reset hash when reinitializing chart
 
+      const shadowPlugin = {
+        id: 'selectedBarShadow',
+        beforeDatasetsDraw: (chart: ChartJs.Chart) => {
+          if (this.selectedBarIndex === undefined) return;
+          const ctx = chart.ctx;
+          ctx.save();
+          ctx.shadowColor = 'rgba(0, 0, 0, 0.3)';
+          ctx.shadowBlur = 2;
+          ctx.shadowOffsetX = 0;
+          ctx.shadowOffsetY = 2;
+          // ctx.fillStyle = 'rgb(0 0 0)';
+          for (let i = 0; i < chart.data.datasets.length; i++) {
+            const meta = chart.getDatasetMeta(i);
+            if (meta.hidden) continue;
+            // @ts-ignore
+            const el = meta.data[this.selectedBarIndex] as any;
+            if (!el) continue;
+            // Draw a solid opaque rectangle so the canvas shadow is fully opaque
+            const barX = el.x - el.width / 2;
+            const barY = el.y;
+            const barW = el.width;
+            const barH = el.base - el.y;
+            ctx.fillRect(barX, barY, barW, barH);
+          }
+          ctx.restore();
+        },
+      };
+
       const chartAreaBorder = {
         id: 'chartAreaBorder',
         beforeDraw(
@@ -152,7 +181,7 @@ export class ChartManagerService {
         type: type,
         data: data,
         options: options,
-        plugins: [chartAreaBorder],
+        plugins: [shadowPlugin, chartAreaBorder],
       };
       this.chart = new ChartJs.Chart(ctx, config);
       return true;
@@ -205,6 +234,9 @@ export class ChartManagerService {
         this.chart.data.datasets = inputDatas.datasets;
         this.chart.data.labels = inputDatas.labels;
 
+        if (activeEntries !== undefined) {
+          this.selectedBarIndex = activeEntries;
+        }
         this.colorize(inputDatas, colorSet, selectedLineChartItem);
         if (activeEntries !== undefined) {
           // can be 0
@@ -286,6 +318,7 @@ export class ChartManagerService {
       if (inputDatas) {
         this.colorize(inputDatas, colorSet, selectedLineChartItem);
       }
+      this.selectedBarIndex = index;
       for (let i = 0; i < this.chart.data.datasets.length; i++) {
         const dataset = <ChartDatasetModel>this.chart.data.datasets[i];
         if (index !== undefined) {
@@ -330,6 +363,11 @@ export class ChartManagerService {
             colorSet?.domain[i]!,
             0.5,
           );
+        }
+        // Selected bar gets full opacity
+        if (this.selectedBarIndex !== undefined) {
+          (dataset.backgroundColor as string[])[this.selectedBarIndex] =
+            UtilsService.hexToRGBa(colorSet?.domain[i]!, 1);
         }
 
         let borderOpacity = 1;
@@ -386,5 +424,6 @@ export class ChartManagerService {
     } catch (e) {}
     this.chart = undefined;
     this.lastDataHash = null; // Reset hash when chart is destroyed
+    this.selectedBarIndex = undefined;
   }
 }
