@@ -169,48 +169,52 @@ export class ChartManagerService {
     selectedLineChartItem: string | undefined,
     isLoading: boolean,
   ): void {
-    setTimeout(
-      () => {
-        if (
-          inputDatas &&
-          this.chart &&
-          (inputDatas.datasets.length === 0 ||
-            inputDatas.datasets[0]?.data.length > 0)
-        ) {
-          // Create hash of current data state
-          const currentDataHash = this.createDataHash(
-            inputDatas,
-            activeEntries,
-            colorSet,
-            selectedLineChartItem,
-          );
+    const run = () => {
+      if (
+        inputDatas &&
+        this.chart &&
+        (inputDatas.datasets.length === 0 ||
+          inputDatas.datasets[0]?.data.length > 0)
+      ) {
+        // Create hash of current data state
+        const currentDataHash = this.createDataHash(
+          inputDatas,
+          activeEntries,
+          colorSet,
+          selectedLineChartItem,
+        );
 
-          // Check if data has changed
-          if (currentDataHash === this.lastDataHash) {
-            // No changes detected, skip update
-            return;
-          }
-
-          // Update last hash
-          this.lastDataHash = currentDataHash;
-
-          // Update datas
-          // Force khiops VO into Chart dataset
-          // @ts-ignore
-          this.chart.data.datasets = inputDatas.datasets;
-          this.chart.data.labels = inputDatas.labels;
-
-          this.colorize(inputDatas, colorSet, selectedLineChartItem);
-          if (activeEntries !== undefined) {
-            // can be 0
-            // Select previous value if set
-            this.selectCurrentBarIndex(activeEntries, true);
-          }
-          this.chart.update();
+        // Check if data has changed
+        if (currentDataHash === this.lastDataHash) {
+          // No changes detected, skip update
+          return;
         }
-      },
-      isLoading ? 100 : 0,
-    );
+
+        // Update last hash
+        this.lastDataHash = currentDataHash;
+
+        // Update datas
+        // Force khiops VO into Chart dataset
+        // @ts-ignore
+        this.chart.data.datasets = inputDatas.datasets;
+        this.chart.data.labels = inputDatas.labels;
+
+        this.colorize(inputDatas, colorSet, selectedLineChartItem);
+        if (activeEntries !== undefined) {
+          // can be 0
+          // Select previous value if set
+          this.selectCurrentBarIndex(activeEntries, true);
+        }
+        this.chart.update();
+      }
+    };
+
+    // Only delay when chart is in loading state, otherwise run directly
+    if (isLoading) {
+      setTimeout(run, 100);
+    } else {
+      run();
+    }
   }
 
   /**
