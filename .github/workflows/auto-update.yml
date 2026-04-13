@@ -2,7 +2,8 @@ name: Auto-update dependencies
 
 on:
   schedule:
-    - cron: '0 2 * * *'
+    # Every day at 02:00 UTC
+    - cron: "0 2 * * *"
   workflow_dispatch:
 
 permissions:
@@ -17,58 +18,46 @@ jobs:
       - name: Check out Git repository
         uses: actions/checkout@v4
 
-      - name: Setup Node.js
+      - name: Install Node.js and Yarn
         uses: actions/setup-node@v4
         with:
           node-version: 22
-          cache: yarn
 
       - name: Update dependencies
         run: |
           npm install -g npm-check-updates
 
-          # minor + patch uniquement
+          # Update to latest minor+patch (non-breaking)
+          # This covers both minor and patch updates in one command
           ncu -u --target minor
 
+          # Install dependencies and update yarn.lock
           yarn install
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Create Pull Request
         id: create-pr
         uses: peter-evans/create-pull-request@v7
         with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-          commit-message: 'chore: update dependencies'
-          title: 'chore: update dependencies'
+          token: ${{ secrets.PAT_TOKEN }}
+          commit-message: "chore: update dependencies"
+          title: "chore: update dependencies"
           body: |
             Automated dependency update.
 
-            - Minor + patch updates only
-            - Auto-merge if checks pass ✅
+            This PR updates all dependencies in `package.json` and `yarn.lock`.
+
+            Please review and merge if all checks pass.
           branch: chore/update-dependencies
           delete-branch: true
 
-      - name: Stop if no PR
-        if: steps.create-pr.outputs.pull-request-number == ''
-        run: echo "No updates, skipping"
-
-      - name: Wait for checks to pass
-        if: steps.create-pr.outputs.pull-request-number != ''
-        run: |
-          echo "Waiting for required checks..."
-
-          gh pr checks ${{ steps.create-pr.outputs.pull-request-number }} \
-            --watch \
-            --required
-
-          echo "All required checks passed ✅"
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Merge PR
-        if: steps.create-pr.outputs.pull-request-number != ''
+      - name: Enable auto-merge
+        if: steps.create-pr.outputs.pull-request-number
         run: |
           gh pr merge ${{ steps.create-pr.outputs.pull-request-number }} \
+            --auto \
             --squash \
             --delete-branch
         env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_TOKEN: ${{ secrets.PAT_TOKEN }}
