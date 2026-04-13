@@ -445,7 +445,6 @@ mat-dialog-container .fullscreen,
 }
 
 .kl-card {
-  // position: relative;
   border: 1px solid var(--border-color);
   background-color: white !important;
   color: var(--primary-10);
@@ -453,7 +452,6 @@ mat-dialog-container .fullscreen,
   padding: 12px;
   // Animation controlled by a CSS custom property set at the shadow root level
   animation: var(--kl-card-animation, none) 0.4s ease-out;
-  animation-fill-mode: both;
 }
 
 app-home-layout {
