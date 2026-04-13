@@ -22,8 +22,7 @@
   }
 
   .comp-header {
-    margin-top: 1.4em !important;
-    margin-bottom: 1em !important;
+    min-height: 48px !important;
     overflow-x: auto;
 
     button {
