@@ -345,7 +345,7 @@ export class ChartManagerService {
     ctx.strokeStyle = 'rgba(255, 255, 255, 1)';
     ctx.lineWidth = 2;
     ctx.lineCap = 'square';
-    ctx.lineJoin = 'bevel';
+    ctx.lineJoin = 'miter';
     ctx.imageSmoothingEnabled = false;
 
     const spacing = 10;
