@@ -87,17 +87,6 @@ export class DistributionGraphComponent
     }
   }
 
-  /**
-   * Determine if legend should be visible based on the selected graph option
-   * @returns True if legend should be visible, false otherwise
-   */
-  get shouldShowLegend(): boolean {
-    return !(
-      this.graphOptions?.selected === HistogramType.YLOG ||
-      this.graphOptions?.selected === HistogramType.YLIN
-    );
-  }
-
   constructor(
     public override selectableService: SelectableService,
     public override ngzone: NgZone,

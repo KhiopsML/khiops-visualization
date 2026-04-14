@@ -325,6 +325,42 @@ export class ChartManagerService {
   }
 
   /**
+   * Creates a diagonal hatching canvas pattern over a base color.
+   * @param color - The base fill color for the pattern
+   * @returns A CanvasPattern with hatching, or the original color string if canvas is unavailable
+   */
+  private createHatchPattern(color: string): CanvasPattern | string {
+    const size = 20;
+    const canvas = document.createElement('canvas');
+    canvas.width = size;
+    canvas.height = size;
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return color;
+
+    // Fill with base color
+    ctx.fillStyle = color;
+    ctx.fillRect(0, 0, size, size);
+
+    // Draw multiple parallel diagonal lines that connect seamlessly when tiled
+    ctx.strokeStyle = 'rgba(255, 255, 255, 1)';
+    ctx.lineWidth = 2;
+    ctx.lineCap = 'square';
+    ctx.lineJoin = 'bevel';
+    ctx.imageSmoothingEnabled = false;
+
+    const spacing = 10;
+    // Draw lines across the full tile and beyond to connect seamlessly
+    for (let offset = -size; offset < size * 2; offset += spacing) {
+      ctx.beginPath();
+      ctx.moveTo(offset, 0);
+      ctx.lineTo(offset + size, size);
+      ctx.stroke();
+    }
+
+    return ctx.createPattern(canvas, 'repeat') || color;
+  }
+
+  /**
    * Applies colorization to the chart datasets based on the input data.
    * @param inputDatas - The chart data
    * @param colorSet - The color set to use
@@ -351,17 +387,27 @@ export class ChartManagerService {
         const defaultGroupIndex = dataset.extra?.findIndex(
           (e: ChartDatasetExtra) => e.defaultGroupIndex,
         );
-        if (defaultGroupIndex !== -1) {
+        // Apply hatching for default group index bar, keeping the same base color
+        if (defaultGroupIndex !== -1 && defaultGroupIndex !== undefined) {
+          const baseColor = UtilsService.hexToRGBa(colorSet?.domain[i]!, 0.7);
           // @ts-ignore
-          dataset.backgroundColor[defaultGroupIndex] = UtilsService.hexToRGBa(
-            colorSet?.domain[i]!,
-            0.5,
+          dataset.backgroundColor[defaultGroupIndex] = this.createHatchPattern(
+            baseColor ?? '',
           );
         }
         // Selected bar gets full opacity
         if (this.selectedBarIndex !== undefined) {
-          (dataset.backgroundColor as string[])[this.selectedBarIndex] =
-            UtilsService.hexToRGBa(colorSet?.domain[i]!, 1);
+          const index = this.selectedBarIndex;
+          if (index === defaultGroupIndex) {
+            // Selected default group bar: full opacity with hatching
+            const fullColor = UtilsService.hexToRGBa(colorSet?.domain[i]!, 1);
+            // @ts-ignore
+            (dataset.backgroundColor as (string | CanvasPattern)[])[index] =
+              this.createHatchPattern(fullColor ?? '');
+          } else {
+            (dataset.backgroundColor as string[])[index] =
+              UtilsService.hexToRGBa(colorSet?.domain[i]!, 1) ?? '';
+          }
         }
 
         let borderOpacity = 1;
@@ -382,14 +428,6 @@ export class ChartManagerService {
         dataset.borderColor = new Array(inputDatas.labels.length).fill(
           UtilsService.hexToRGBa(colorSet?.domain[i]!, borderOpacity),
         );
-
-        if (defaultGroupIndex !== -1) {
-          // @ts-ignore
-          dataset.borderColor[defaultGroupIndex] = UtilsService.hexToRGBa(
-            '#ff6600',
-            0.9,
-          );
-        }
       }
     }
   }

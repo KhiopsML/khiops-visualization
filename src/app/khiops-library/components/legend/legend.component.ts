@@ -36,8 +36,11 @@ export class LegendComponent implements OnChanges {
 
   public legend: any[] = [];
   public selectedItem: string | undefined;
+  public defaultGroupName: string = '';
 
-  constructor(private translate: TranslateService) {}
+  constructor(private translate: TranslateService) {
+    this.defaultGroupName = this.translate.get('GLOBAL.DEFAULT_GROUP_INDEX');
+  }
 
   ngOnChanges(changes: SimpleChanges) {
     this.inputDatas = changes?.inputDatas?.currentValue;
@@ -77,8 +80,8 @@ export class LegendComponent implements OnChanges {
       if (defaultIndex !== -1) {
         this.legend.push({
           name: this.translate.get('GLOBAL.DEFAULT_GROUP_INDEX'),
-          color: UtilsService.hexToRGBa(this.colorSet?.domain[0]!, 0.3),
-          borderColor: UtilsService.hexToRGBa('#ff6600', 0.8),
+          borderColor: UtilsService.hexToRGBa(this.colorSet?.domain[0]!, 1),
+          color: UtilsService.hexToRGBa('#ff6600', 0.3),
         });
       }
     }
@@ -94,18 +97,7 @@ export class LegendComponent implements OnChanges {
     if (this.inputDatas) {
       this.legend = [];
       if (this.type === 'chart-1d') {
-        if (this.inputDatas?.datasets?.[0]) {
-          this.legend.push({
-            name: this.translate.get(this.inputDatas.datasets[0].label),
-            color: this.colorSet?.domain[0],
-          });
-          this.checkForDefaultGroupIndex(this.inputDatas.datasets[0]);
-        } else {
-          this.legend.push({
-            name: this.translate.get(this.inputDatas),
-            color: this.colorSet?.domain[0],
-          });
-        }
+        this.checkForDefaultGroupIndex(this.inputDatas.datasets[0]);
       } else if (this.type === 'chart-nd') {
         // compute legend items
         if (Array.isArray(this.inputDatas)) {
@@ -113,6 +105,10 @@ export class LegendComponent implements OnChanges {
           for (let i = 0; i < series.length; i++) {
             this.legend.push({
               name: series[i].name,
+              borderColor: UtilsService.hexToRGBa(
+                this.colorSet?.domain[i]!,
+                0.2,
+              ),
               color: this.colorSet?.domain[i],
             });
           }
@@ -124,6 +120,10 @@ export class LegendComponent implements OnChanges {
           for (let i = 0; i < this.inputDatas.datasets.length; i++) {
             this.legend.push({
               name: this.inputDatas.datasets[i].label,
+              borderColor: UtilsService.hexToRGBa(
+                this.colorSet?.domain[i]!,
+                0.2,
+              ),
               color: this.colorSet?.domain[i],
             });
           }
@@ -134,6 +134,10 @@ export class LegendComponent implements OnChanges {
           if (this.inputDatas[i].show === true) {
             this.legend.push({
               name: this.inputDatas[i].name,
+              borderColor: UtilsService.hexToRGBa(
+                this.colorSet?.domain[i]!,
+                0.2,
+              ),
               color: this.colorSet?.domain[i],
             });
           }
