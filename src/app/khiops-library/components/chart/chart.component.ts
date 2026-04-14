@@ -47,9 +47,7 @@ export class ChartComponent implements AfterViewInit, OnChanges, OnDestroy {
 
   public isLoading: boolean = false;
   public isChartReady: boolean = false;
-  private updatePending: boolean = false;
-  private dataWasRendered: boolean = false;
-  private revealRafId: number | undefined;
+  private updateGraphTimeout: any;
 
   constructor(
     private el: ElementRef,
@@ -70,8 +68,8 @@ export class ChartComponent implements AfterViewInit, OnChanges, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    if (this.revealRafId !== undefined) {
-      cancelAnimationFrame(this.revealRafId);
+    if (this.updateGraphTimeout) {
+      clearTimeout(this.updateGraphTimeout);
     }
     this.chartManagerService.destroy();
   }
@@ -87,38 +85,7 @@ export class ChartComponent implements AfterViewInit, OnChanges, OnDestroy {
       this.chartOptions,
       this.graphClickEvent.bind(this),
       this.el.nativeElement,
-      this.onChartResize.bind(this),
     );
-  }
-
-  /**
-   * Schedules the chart reveal after all pending resizes have settled.
-   * Each call cancels the previous schedule, so reveal only fires after
-   * the last resize in a burst (rAF debounce pattern).
-   */
-  private scheduleReveal() {
-    if (this.revealRafId !== undefined) {
-      cancelAnimationFrame(this.revealRafId);
-    }
-    this.revealRafId = requestAnimationFrame(() => {
-      this.revealRafId = requestAnimationFrame(() => {
-        this.revealRafId = undefined;
-        if (this.dataWasRendered && !this.isChartReady) {
-          this.isChartReady = true;
-          this.cdr.detectChanges();
-        }
-      });
-    });
-  }
-
-  /**
-   * Called by Chart.js onResize — resets the reveal schedule so the chart
-   * is only revealed after the last resize in a burst.
-   */
-  private onChartResize() {
-    if (!this.isChartReady) {
-      this.scheduleReveal();
-    }
   }
 
   /**
@@ -152,7 +119,6 @@ export class ChartComponent implements AfterViewInit, OnChanges, OnDestroy {
     ) {
       // We must reconstruct the chart if the scale change
       this.isChartReady = false;
-      this.dataWasRendered = false;
       this.chartManagerService.destroy(); // Clean up existing chart
       this.initChart();
     }
@@ -172,14 +138,16 @@ export class ChartComponent implements AfterViewInit, OnChanges, OnDestroy {
 
   /**
    * Updates the chart data and refreshes the chart display.
-   * Uses a microtask to coalesce multiple calls in the same change detection cycle.
+   * Uses debounce to prevent multiple calls in the same change detection cycle.
    */
   private updateGraph() {
-    if (this.updatePending) return;
-    this.updatePending = true;
-
-    queueMicrotask(() => {
-      this.updatePending = false;
+    // Clear any pending update
+    if (this.updateGraphTimeout) {
+      clearTimeout(this.updateGraphTimeout);
+    }
+    
+    // Debounce the update to avoid multiple calls
+    this.updateGraphTimeout = setTimeout(() => {
       if (this.inputDatas) {
         this.chartManagerService.updateGraph(
           this.inputDatas,
@@ -189,13 +157,17 @@ export class ChartComponent implements AfterViewInit, OnChanges, OnDestroy {
           this.isLoading,
         );
         this.isLoading = false;
-        this.dataWasRendered = true;
-        // Schedule reveal; if Chart.js fires onResize after this (due to external
-        // container resizing), it will cancel and reschedule, ensuring the chart
-        // is only revealed after all resizes have settled.
-        this.scheduleReveal();
+        // Wait for Chart.js ResizeObserver to settle before revealing the chart
+        if (!this.isChartReady) {
+          requestAnimationFrame(() => {
+            requestAnimationFrame(() => {
+              this.isChartReady = true;
+              this.cdr.detectChanges();
+            });
+          });
+        }
       }
-    });
+    }, 0); // Execute on next tick
   }
 
   /**
