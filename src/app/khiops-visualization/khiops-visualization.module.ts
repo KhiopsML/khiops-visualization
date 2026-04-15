@@ -15,6 +15,10 @@ import { Preparation2dViewComponent } from './components/preparation-2d-view/pre
 import { ModelingViewComponent } from './components/modeling-view/modeling-view.component';
 import { EvaluationViewComponent } from './components/evaluation-view/evaluation-view.component';
 import { ProjectViewComponent } from './components/project-view/project-view.component';
+import { ProjectSummaryPanelComponent } from './components/project-view/panels/project-summary-panel.component';
+import { FileLoaderPanelComponent } from './components/project-view/panels/file-loader-panel.component';
+import { ProjectLogsPanelComponent } from './components/project-view/panels/project-logs-panel.component';
+import { DockviewAngularModule } from 'dockview-angular';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { TargetVariableStatsComponent } from './components/commons/target-variable-stats/target-variable-stats.component';
 import { DescriptionBlockComponent } from './components/commons/description-block/description-block.component';
@@ -53,6 +57,7 @@ import { LevelDistributionButtonComponent } from './components/commons/level-dis
 import { ChangeScaleButtonComponent } from './components/commons/change-scale-button/change-scale-button.component';
 import { ChangeScaleDialogComponent } from './components/commons/change-scale-dialog/change-scale-dialog.component';
 import { VisualizationRoutingModule } from './khiops-visualization-routing.module';
+
 @NgModule({
   declarations: [
     HistogramComponent,
@@ -74,6 +79,9 @@ import { VisualizationRoutingModule } from './khiops-visualization-routing.modul
     ModelingViewComponent,
     EvaluationViewComponent,
     ProjectViewComponent,
+    ProjectSummaryPanelComponent,
+    FileLoaderPanelComponent,
+    ProjectLogsPanelComponent,
     TargetVariableStatsComponent,
     DescriptionBlockComponent,
     LevelDistributionGraphComponent,
@@ -101,6 +109,7 @@ import { VisualizationRoutingModule } from './khiops-visualization-routing.modul
     StoreModule.forFeature('TreePreparationState', treePreparationReducer),
     EffectsModule.forFeature([TreePreparationEffects]),
     VisualizationRoutingModule,
+    DockviewAngularModule,
   ],
   providers: [
     provideHttpClient(),

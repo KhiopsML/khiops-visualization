@@ -4833,6 +4833,18 @@ dns-packet@^5.2.2:
   dependencies:
     "@leichtgewicht/ip-codec" "^2.0.1"
 
+dockview-angular@^5.2.0:
+  version "5.2.0"
+  resolved "https://registry.yarnpkg.com/dockview-angular/-/dockview-angular-5.2.0.tgz#d6a422573001af200d0a8c8d442e817c72d26183"
+  integrity sha512-pQVjkuN7+813CGkz4LgnKF+91/HdY9bR60DHAhfavXhUxFO9G5HCnqZ+/RAVmd6hv2rlJsUwp0x3uuFxDH4Vbw==
+  dependencies:
+    dockview-core "^5.2.0"
+
+dockview-core@^5.2.0:
+  version "5.2.0"
+  resolved "https://registry.yarnpkg.com/dockview-core/-/dockview-core-5.2.0.tgz#0b6d96ece172378dfbf966f396ade3e642a5d4f1"
+  integrity sha512-Gib8yhK2Ng7w47ASvbUZ7GdhBYbeXEflbIDxf/vobdQBMrN/QXmPaouSsSSkEx5YH0N8ap8GYljfvqjug7h5Fg==
+
 dom-serialize@^2.2.1:
   version "2.2.1"
   resolved "https://registry.yarnpkg.com/dom-serialize/-/dom-serialize-2.2.1.tgz#562ae8999f44be5ea3076f5419dcd59eb43ac95b"

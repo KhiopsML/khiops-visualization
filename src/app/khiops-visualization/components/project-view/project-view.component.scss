@@ -5,32 +5,16 @@
  */
 
 #project-view-comp {
-  display: inline-table !important;
-  position: relative;
+  display: block;
+  height: 100%;
+  width: 100%;
 
-  #project-view-comp-file-loader {
-    padding: 1rem 0.5rem !important;
-    h1 {
-      mat-icon {
-        margin-right: 0.4em !important;
-        margin-top: -3px !important;
-        font-size: 21px !important;
-      }
-    }
-    kl-file-loader {
-      display: flex;
-      margin-left: 15px;
-    }
+  dv-dockview {
+    height: 100%;
   }
 
-  #project-view-comp-table {
-    margin: auto;
-    height: auto;
-    display: flex;
-    flex-direction: column;
-
-    kl-informations-block {
-      padding-bottom: 1em;
-    }
+  // Override dockview CSS variables for custom border radius
+  ::ng-deep .dockview-theme-light-spaced {
+    --dv-border-radius: 2px;
   }
 }

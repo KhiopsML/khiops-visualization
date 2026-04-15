@@ -4,17 +4,17 @@
  * at https://spdx.org/licenses/BSD-3-Clause-Clear.html or see the "LICENSE" file for more details.
  */
 
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Type } from '@angular/core';
 import { SelectableTabComponent } from '@khiops-library/components/selectable-tab/selectable-tab.component';
 import { TrackerService } from '../../../khiops-library/providers/tracker.service';
 import { ConfigService } from '@khiops-library/providers/config.service';
-import { LayoutService } from '@khiops-library/providers/layout.service';
 import { ProjectDatasService } from '@khiops-visualization/providers/project-datas.service';
-import { FileLoaderService } from '@khiops-library/providers/file-loader.service';
-import { Subscription } from 'rxjs';
-import { SplitGutterInteractionEvent } from 'angular-split';
-import { DynamicI } from '@khiops-library/interfaces/globals.interface';
+import { DockviewReadyEvent } from 'dockview-angular';
 import { AppConfig } from '../../../../environments/environment';
+import { ProjectSummaryPanelComponent } from './panels/project-summary-panel.component';
+import { FileLoaderPanelComponent } from './panels/file-loader-panel.component';
+import { ProjectLogsPanelComponent } from './panels/project-logs-panel.component';
+import { themeLightSpaced } from 'dockview-core';
 
 @Component({
   selector: 'app-project-view',
@@ -26,21 +26,21 @@ export class ProjectViewComponent
   extends SelectableTabComponent
   implements OnInit
 {
-  private fileLoadedSub?: Subscription;
-
-  public sizes?: DynamicI = { row: [null, null] };
   public isElectron: boolean = false;
   public debugFile = AppConfig.debugFile;
   public showOpenFileBtn: boolean | undefined = false;
 
-  // managed by selectable-tab component
   public override tabIndex = 0;
 
+  public dockviewComponents: Record<string, Type<any>> = {
+    projectSummary: ProjectSummaryPanelComponent,
+    fileLoader: FileLoaderPanelComponent,
+    projectLogs: ProjectLogsPanelComponent,
+  };
+
   constructor(
-    private fileLoaderService: FileLoaderService,
     private configService: ConfigService,
     private trackerService: TrackerService,
-    private layoutService: LayoutService,
     public projectDatasService: ProjectDatasService,
   ) {
     super();
@@ -50,30 +50,36 @@ export class ProjectViewComponent
   ngOnInit() {
     this.trackerService.trackEvent('page_view', 'project');
     this.showOpenFileBtn = this.configService.getConfig().showOpenFileBtn;
-    // Initialize sizes to avoid the ExpressionChangedAfterItHasBeenCheckedError
-    this.sizes = this.layoutService.getViewSplitSizes('projectView');
   }
 
-  ngAfterViewInit() {
-    this.fileLoadedSub = this.fileLoaderService.fileLoaded$.subscribe(
-      (datas) => {
-        if (datas) {
-          this.sizes = this.layoutService.getViewSplitSizes('projectView');
-        }
-      },
-    );
-  }
+  onDockviewReady(event: DockviewReadyEvent) {
+    // Apply theme with custom gap via updateOptions (theme is not an Angular @Input)
+    event.api.updateOptions({
+      theme: { ...themeLightSpaced, gap: 10 },
+    });
+    const summaryPanel = event.api.addPanel({
+      id: 'project-summary',
+      component: 'projectSummary',
+      initialWidth: 500,
+      title: 'Project Summary',
+    });
 
-  ngOnDestroy(): void {
-    this.fileLoadedSub?.unsubscribe();
-  }
+    if ((this.debugFile && !this.isElectron) || this.showOpenFileBtn) {
+      event.api.addPanel({
+        id: 'file-loader',
+        component: 'fileLoader',
+        title: 'Load Data',
+        position: { referencePanel: summaryPanel, direction: 'right' },
+        maximumWidth: 200,
+      });
+    }
 
-  onSplitDragEnd(event: SplitGutterInteractionEvent, item: string) {
-    this.layoutService.resizeAndSetSplitSizes(
-      item,
-      this.sizes,
-      event.sizes,
-      'projectView',
-    );
+    event.api.addPanel({
+      id: 'project-logs',
+      component: 'projectLogs',
+      title: 'Logs',
+      position: { referencePanel: summaryPanel, direction: 'below' },
+      initialHeight: 300,
+    });
   }
 }

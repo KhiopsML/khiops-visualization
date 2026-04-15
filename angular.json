@@ -50,8 +50,12 @@
             "tsConfig": "tsconfig.app.json",
             "inlineStyleLanguage": "scss",
             "assets": ["src/favicon.ico", "src/assets"],
-            "styles": ["src/styles.scss"],
-            "scripts": []
+            "styles": [
+              "src/styles.scss",
+              "./node_modules/dockview-core/dist/styles/dockview.css"
+            ],
+            "scripts": [],
+            "extraWebpackConfig": "webpack.extra.js"
           },
           "configurations": {
             "production": {
@@ -88,6 +92,9 @@
         },
         "serve": {
           "builder": "ngx-build-plus:dev-server",
+          "options": {
+            "extraWebpackConfig": "webpack.extra.js"
+          },
           "configurations": {
             "production": {
               "buildTarget": "visualization-component:build:production"
@@ -114,7 +121,8 @@
             "inlineStyleLanguage": "scss",
             "assets": ["src/favicon.ico", "src/assets"],
             "styles": ["src/styles.scss"],
-            "scripts": []
+            "scripts": [],
+            "extraWebpackConfig": "webpack.extra.js"
           }
         },
         "cypress-run": {
@@ -213,7 +221,8 @@
               "projects/khiops-webcomponent/src/iframe.html"
             ],
             "styles": ["projects/khiops-webcomponent/src/styles.scss"],
-            "scripts": []
+            "scripts": [],
+            "extraWebpackConfig": "webpack.extra.js"
           },
           "configurations": {
             "production": {

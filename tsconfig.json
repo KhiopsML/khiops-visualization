@@ -28,7 +28,9 @@
         "./dist/khiops-visualization-components/khiops-visualization-components",
         "./dist/khiops-visualization-components"
       ],
-      "stream": ["./node_modules/stream-browserify"]
+      "stream": ["./node_modules/stream-browserify"],
+      "dockview-angular": ["./node_modules/dockview-angular/dist"]
+
     }
   },
   "exclude": ["node_modules", "./libs", "dist", "**/*.spec.ts"],
