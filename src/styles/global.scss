@@ -445,6 +445,10 @@ mat-dialog-container .fullscreen,
   }
 }
 
+.dv-groupview {
+  // Animation controlled by a CSS custom property set at the shadow root level
+  animation: var(--kl-card-animation, none) 0.4s ease-out;
+}
 .kl-card {
   border: 1px solid var(--border-color);
   background-color: white !important;
