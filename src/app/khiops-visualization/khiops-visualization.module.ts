@@ -23,7 +23,9 @@ import { PreparationTargetStatsPanelComponent } from './components/preparation-v
 import { PreparationInformationsPanelComponent } from './components/preparation-view/panels/preparation-informations-panel.component';
 import { PreparationVariablesPanelComponent } from './components/preparation-view/panels/preparation-variables-panel.component';
 import { PreparationDescriptionPanelComponent } from './components/preparation-view/panels/preparation-description-panel.component';
-import { PreparationVarDetailsPanelComponent } from './components/preparation-view/panels/preparation-var-details-panel.component';
+import { PreparationGraphPanelComponent } from './components/preparation-view/panels/preparation-graph-panel.component';
+import { PreparationMatrixPanelComponent } from './components/preparation-view/panels/preparation-matrix-panel.component';
+import { PreparationIntervalPanelComponent } from './components/preparation-view/panels/preparation-interval-panel.component';
 import { DockviewAngularModule } from 'dockview-angular';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { TargetVariableStatsComponent } from './components/commons/target-variable-stats/target-variable-stats.component';
@@ -93,7 +95,9 @@ import { VisualizationRoutingModule } from './khiops-visualization-routing.modul
     PreparationInformationsPanelComponent,
     PreparationVariablesPanelComponent,
     PreparationDescriptionPanelComponent,
-    PreparationVarDetailsPanelComponent,
+    PreparationGraphPanelComponent,
+    PreparationMatrixPanelComponent,
+    PreparationIntervalPanelComponent,
     TargetVariableStatsComponent,
     DescriptionBlockComponent,
     LevelDistributionGraphComponent,

@@ -10,12 +10,17 @@ import { REPORT } from '@khiops-library/enum/report';
 import { TrackerService } from '@khiops-library/providers/tracker.service';
 import { DockviewReadyEvent } from 'dockview-angular';
 import { themeLightSpaced } from 'dockview-core';
+import { BehaviorSubject } from 'rxjs';
+import { PreparationDatasService } from '@khiops-visualization/providers/preparation-datas.service';
+import { EvaluationDatasService } from '@khiops-visualization/providers/evaluation-datas.service';
 import { PreparationSummaryPanelComponent } from './panels/preparation-summary-panel.component';
 import { PreparationTargetStatsPanelComponent } from './panels/preparation-target-stats-panel.component';
 import { PreparationInformationsPanelComponent } from './panels/preparation-informations-panel.component';
 import { PreparationVariablesPanelComponent } from './panels/preparation-variables-panel.component';
 import { PreparationDescriptionPanelComponent } from './panels/preparation-description-panel.component';
-import { PreparationVarDetailsPanelComponent } from './panels/preparation-var-details-panel.component';
+import { PreparationGraphPanelComponent } from './panels/preparation-graph-panel.component';
+import { PreparationMatrixPanelComponent } from './panels/preparation-matrix-panel.component';
+import { PreparationIntervalPanelComponent } from './panels/preparation-interval-panel.component';
 
 @Component({
   selector: 'app-preparation-view',
@@ -34,10 +39,16 @@ export class PreparationViewComponent extends SelectableTabComponent {
     informations: PreparationInformationsPanelComponent,
     variables: PreparationVariablesPanelComponent,
     description: PreparationDescriptionPanelComponent,
-    varDetails: PreparationVarDetailsPanelComponent,
+    graph: PreparationGraphPanelComponent,
+    matrix: PreparationMatrixPanelComponent,
+    interval: PreparationIntervalPanelComponent,
   };
 
-  constructor(private trackerService: TrackerService) {
+  constructor(
+    private trackerService: TrackerService,
+    private preparationDatasService: PreparationDatasService,
+    private evaluationDatasService: EvaluationDatasService,
+  ) {
     super();
   }
 
@@ -54,6 +65,22 @@ export class PreparationViewComponent extends SelectableTabComponent {
       theme: { ...themeLightSpaced, gap: 10 },
       tabAnimation: 'default',
     });
+
+    const isRegressionOrExplanatoryAnalysis =
+      this.preparationDatasService.isExplanatoryAnalysis() ||
+      this.evaluationDatasService.isRegressionAnalysis();
+
+    // Shared state for graph <-> matrix synchronization
+    const state = {
+      distributionSelectedBarIndex$: new BehaviorSubject<number>(0),
+      matrixRegSelectedCell$: new BehaviorSubject<number>(0),
+    };
+
+    const varParams = {
+      preparationSource: this.preparationSource,
+      isRegressionOrExplanatoryAnalysis,
+      state,
+    };
 
     // Left column: Variables (active) + Description (inactive tab in same group)
     const variablesPanel = event.api.addPanel({
@@ -73,15 +100,25 @@ export class PreparationViewComponent extends SelectableTabComponent {
       params: { preparationSource: this.preparationSource },
     });
 
-    // Middle column: Variable Details
-    const varDetailsPanel = event.api.addPanel({
-      id: `${this.preparationSource}-var-details`,
-      component: 'varDetails',
+    const graphPanel = event.api.addPanel({
+      id: `${this.preparationSource}-graph`,
+      component: 'graph',
+      title: 'Graph',
       minimumWidth: 500,
-      title: 'Variable Details',
       position: { referencePanel: variablesPanel, direction: 'right' },
-      params: { preparationSource: this.preparationSource },
+      params: varParams,
     });
+
+    // Middle column: Matrix panel (only for regression/explanatory analysis)
+    if (isRegressionOrExplanatoryAnalysis) {
+      event.api.addPanel({
+        id: `${this.preparationSource}-matrix`,
+        component: 'matrix',
+        title: 'Matrix',
+        position: { referencePanel: graphPanel, direction: 'below' },
+        params: varParams,
+      });
+    }
 
     // Right column top: Summary (active) + Informations (inactive tab in same group)
     const summaryPanel = event.api.addPanel({
@@ -89,7 +126,7 @@ export class PreparationViewComponent extends SelectableTabComponent {
       component: 'summary',
       title: 'Summary',
       minimumWidth: 400,
-      position: { referencePanel: varDetailsPanel, direction: 'right' },
+      position: { referencePanel: graphPanel, direction: 'right' },
       params: { preparationSource: this.preparationSource },
     });
 
@@ -103,13 +140,22 @@ export class PreparationViewComponent extends SelectableTabComponent {
     });
 
     // Right column bottom: Target Stats (below Summary/Informations group)
-    event.api.addPanel({
+    const targetStatsPanel = event.api.addPanel({
       id: `${this.preparationSource}-target-stats`,
       component: 'targetStats',
       title: 'Target Stats',
       initialHeight: 200,
       position: { referencePanel: summaryPanel, direction: 'below' },
       params: { preparationSource: this.preparationSource },
+    });
+
+    // Right column bottom: Interval panel (below Target Stats)
+    event.api.addPanel({
+      id: `${this.preparationSource}-interval`,
+      component: 'interval',
+      title: 'Interval',
+      position: { referencePanel: targetStatsPanel, direction: 'below' },
+      params: varParams,
     });
   }
 }
