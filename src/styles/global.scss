@@ -493,8 +493,9 @@ mat-checkbox.kl-checkbox {
 }
 
 // Override dockview CSS variables for custom border radius
-::ng-deep .dockview-theme-light-spaced {
+.dockview-theme-light-spaced {
   --dv-border-radius: 2px;
+  --dv-tab-margin: 0.5rem !important;
   padding: 0;
 }
 
@@ -509,7 +510,18 @@ mat-checkbox.kl-checkbox {
   border: 1px solid var(--border-color); /* your border style here */
   pointer-events: none;
   z-index: 1;
+  border-radius: var(--border-radius);
 }
 .dv-tab {
   border-radius: var(--border-radius) !important;
+}
+
+.dv-tabs-and-actions-container {
+  border-bottom: 1px solid #eee;
+  background-color: #f9fafb;
+  border-radius: var(--border-radius);
+}
+.dv-content-container {
+  padding: 10px;
+  overflow: auto;
 }
