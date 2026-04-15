@@ -2,6 +2,10 @@ name: Build WebComponents Bundle
 
 on:
   push:
+    branches:
+      - master
+      # Add more branches below to automatically trigger builds when pushing to them:
+      - feat-dock
   workflow_dispatch:
     inputs:
       branch:
@@ -18,10 +22,27 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout code
+      - name: Get branch name
+        id: branch
+        run: |
+          BRANCH_NAME="${{ inputs.branch || github.ref_name }}"
+          # Sanitize branch name: keep only alphanumeric and hyphens
+          SAFE_BRANCH=$(echo "$BRANCH_NAME" | sed 's/[^a-zA-Z0-9-]/-/g')
+          echo "name=$BRANCH_NAME" >> $GITHUB_OUTPUT
+          echo "safe_name=$SAFE_BRANCH" >> $GITHUB_OUTPUT
+          echo "Building branch: $BRANCH_NAME (safe filename: $SAFE_BRANCH)"
+
+      - name: Checkout source branch
         uses: actions/checkout@v4
         with:
-          ref: ${{ inputs.branch || 'master' }}
+          ref: ${{ inputs.branch || github.ref_name }}
+          path: source
+
+      - name: Checkout master for docs update
+        uses: actions/checkout@v4
+        with:
+          ref: master
+          path: docs-repo
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
@@ -29,9 +50,11 @@ jobs:
           node-version: '20'
 
       - name: Install dependencies
+        working-directory: source
         run: yarn install
 
       - name: Debug - Check Angular CLI and project structure
+        working-directory: source
         run: |
           echo "Angular CLI version:"
           npx ng version
@@ -41,6 +64,7 @@ jobs:
           ls -la projects/khiops-webcomponent/
 
       - name: Build Angular webcomponent
+        working-directory: source
         run: |
           echo "Building Angular webcomponent..."
           npx ng build khiops-webcomponent --single-bundle
@@ -49,6 +73,7 @@ jobs:
           ls -la dist/khiops-webcomponent/ || echo "No khiops-webcomponent directory"
 
       - name: Process CSS and create bundle
+        working-directory: source
         run: |
           if [ -f "dist/khiops-webcomponent/styles.css" ]; then
             echo "Processing CSS file..."
@@ -80,37 +105,72 @@ jobs:
           cd ../..
 
       - name: Debug - Final check
+        working-directory: source
         run: |
           echo "Final check - Contents of dist directory:"
           find dist/ -type f -name "*.js" || echo "No JS files found"
 
-      - name: Create docs/dist directory
-        run: mkdir -p docs/dist
-
-      - name: Copy bundle to docs/dist
+      - name: Copy bundle to docs-repo
         run: |
-          echo "Removing old bundle if exists..."
-          rm -f docs/dist/khiops-webcomponents.bundle.js
-          echo "Copying new bundle..."
-          cp dist/khiops-webcomponent/khiops-webcomponents.bundle.js docs/dist/
-          echo "Verifying bundle size and modification time:"
-          ls -lh docs/dist/khiops-webcomponents.bundle.js
-          echo "First 100 bytes of bundle:"
-          head -c 100 docs/dist/khiops-webcomponents.bundle.js
+          SAFE_BRANCH="${{ steps.branch.outputs.safe_name }}"
+          BRANCH_NAME="${{ steps.branch.outputs.name }}"
+          BUNDLE_SRC="source/dist/khiops-webcomponent/khiops-webcomponents.bundle.js"
+          BUNDLE_DEST="docs-repo/docs/dist/khiops-webcomponents-${SAFE_BRANCH}.bundle.js"
 
-      - name: Commit and push changes
+          mkdir -p docs-repo/docs/dist
+          echo "Copying bundle: $BUNDLE_SRC → $BUNDLE_DEST"
+          cp "$BUNDLE_SRC" "$BUNDLE_DEST"
+
+          # Also copy to the legacy location for master (backward compatibility)
+          if [ "$BRANCH_NAME" = "master" ]; then
+            cp "$BUNDLE_SRC" docs-repo/docs/dist/khiops-webcomponents.bundle.js
+            echo "Copied legacy bundle: docs-repo/docs/dist/khiops-webcomponents.bundle.js"
+          fi
+
+          echo "Contents of docs-repo/docs/dist:"
+          ls -lh docs-repo/docs/dist/
+
+      - name: Commit and push changes to master
+        working-directory: docs-repo
         run: |
           git config --local user.email "stephane.bouget@orange.com"
           git config --local user.name "Stéphane Bouget"
 
-          # Force add the new file (even if in gitignore) BEFORE pulling
-          git add -f docs/dist/khiops-webcomponents.bundle.js
+          SAFE_BRANCH="${{ steps.branch.outputs.safe_name }}"
+          BRANCH_NAME="${{ steps.branch.outputs.name }}"
+          BUNDLE_FILE="docs/dist/khiops-webcomponents-${SAFE_BRANCH}.bundle.js"
+          MANIFEST="docs/dist/branches.json"
 
-          # Pull with strategy to keep our version of the bundle
-          git pull --no-rebase --strategy-option=ours origin ${{ inputs.branch || 'master' }}
+          # Pull latest master first to get the most up-to-date manifest
+          git pull --no-rebase origin master || true
+
+          # Update branches manifest with current branch
+          if [ -f "$MANIFEST" ]; then
+            EXISTING=$(cat "$MANIFEST")
+          else
+            EXISTING='[]'
+          fi
+
+          EXISTING_IDX=$(echo "$EXISTING" | jq --arg safe "$SAFE_BRANCH" 'map(.safe) | index($safe)')
+          if [ "$EXISTING_IDX" = "null" ]; then
+            UPDATED=$(echo "$EXISTING" | jq --arg name "$BRANCH_NAME" --arg safe "$SAFE_BRANCH" '. + [{name: $name, safe: $safe}]')
+          else
+            UPDATED=$(echo "$EXISTING" | jq --arg name "$BRANCH_NAME" --arg safe "$SAFE_BRANCH" --argjson idx "$EXISTING_IDX" '.[$idx] = {name: $name, safe: $safe}')
+          fi
+          echo "$UPDATED" | jq 'sort_by(if .name == "master" then "" else .name end)' > "$MANIFEST"
+
+          # Force add new files (even if in gitignore)
+          git add -f "$BUNDLE_FILE"
+          git add -f "$MANIFEST"
+
+          # Also add legacy bundle for master (backward compatibility)
+          if [ "$BRANCH_NAME" = "master" ]; then
+            git add -f docs/dist/khiops-webcomponents.bundle.js
+          fi
+
           if git diff --staged --quiet; then
             echo "No changes to commit"
           else
-            git commit -m "Generate khiops-webcomponents.bundle.js"
-            git push
+            git commit -m "Generate khiops-webcomponents bundle for branch $BRANCH_NAME [skip ci]"
+            git push origin master
           fi
