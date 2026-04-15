@@ -16,5 +16,21 @@
   // Override dockview CSS variables for custom border radius
   ::ng-deep .dockview-theme-light-spaced {
     --dv-border-radius: 2px;
+    padding: 0;
+    // Disable sash transitions for better DnD performance
+    --dv-active-sash-transition-duration: 0s;
+    --dv-active-sash-transition-delay: 0s;
+  }
+
+  // Disable transitions during drag for better performance on rich views
+  ::ng-deep .dv-tab,
+  ::ng-deep .dv-groupview,
+  ::ng-deep .dv-resize-container {
+    transition: none !important;
+  }
+
+  // Hide the close button on all panels
+  ::ng-deep .dv-tab .dv-svg.close-action {
+    display: none;
   }
 }

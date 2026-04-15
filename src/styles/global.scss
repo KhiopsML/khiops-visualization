@@ -491,3 +491,22 @@ mat-checkbox.kl-checkbox {
 .mat-mdc-dialog-container {
   animation: dialogFadeIn 0.25s ease-out;
 }
+
+// Override dockview CSS variables for custom border radius
+::ng-deep .dockview-theme-light-spaced {
+  --dv-border-radius: 2px;
+  padding: 0;
+}
+
+.dv-groupview {
+  position: relative;
+}
+
+.dv-groupview::before {
+  content: '';
+  position: absolute;
+  inset: 0; /* top: 0; right: 0; bottom: 0; left: 0 */
+  border: 1px solid var(--border-color); /* your border style here */
+  pointer-events: none;
+  z-index: 1;
+}

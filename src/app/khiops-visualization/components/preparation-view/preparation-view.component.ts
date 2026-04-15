@@ -4,31 +4,18 @@
  * at https://spdx.org/licenses/BSD-3-Clause-Clear.html or see the "LICENSE" file for more details.
  */
 
-import { Component, Input } from '@angular/core';
-import { PreparationDatasService } from '../../providers/preparation-datas.service';
+import { Component, Input, Type } from '@angular/core';
 import { SelectableTabComponent } from '@khiops-library/components/selectable-tab/selectable-tab.component';
-import { ModelingDatasService } from '@khiops-visualization/providers/modeling-datas.service';
-import {
-  MatDialog,
-  MatDialogRef,
-  MatDialogConfig,
-} from '@angular/material/dialog';
-import { LevelDistributionGraphComponent } from '../commons/level-distribution-graph/level-distribution-graph.component';
-import { TranslateService } from '@ngstack/translate';
-import { GridColumnsI } from '@khiops-library/interfaces/grid-columns.interface';
 import { REPORT } from '@khiops-library/enum/report';
-import { ChartDatasModel } from '@khiops-library/model/chart-datas.model';
-import { PreparationVariableModel } from '@khiops-visualization/model/preparation-variable.model';
-import { InfosDatasI } from '@khiops-library/interfaces/infos-datas.interface';
-import { VariableModel } from '@khiops-visualization/model/variable.model';
 import { TrackerService } from '@khiops-library/providers/tracker.service';
-import { DistributionService } from '../../providers/distribution.service';
-import { LayoutService } from '@khiops-library/providers/layout.service';
-import { SplitGutterInteractionEvent } from 'angular-split';
-import { DynamicI } from '@khiops-library/interfaces/globals.interface';
-import { GridDatasI } from '@khiops-library/interfaces/grid-datas.interface';
-import { getPreparationVariablesGridColumns } from './preparation-view.config';
-import { AppConfig } from '../../../../environments/environment';
+import { DockviewReadyEvent } from 'dockview-angular';
+import { themeLightSpaced } from 'dockview-core';
+import { PreparationSummaryPanelComponent } from './panels/preparation-summary-panel.component';
+import { PreparationTargetStatsPanelComponent } from './panels/preparation-target-stats-panel.component';
+import { PreparationInformationsPanelComponent } from './panels/preparation-informations-panel.component';
+import { PreparationVariablesPanelComponent } from './panels/preparation-variables-panel.component';
+import { PreparationDescriptionPanelComponent } from './panels/preparation-description-panel.component';
+import { PreparationVarDetailsPanelComponent } from './panels/preparation-var-details-panel.component';
 
 @Component({
   selector: 'app-preparation-view',
@@ -37,35 +24,21 @@ import { AppConfig } from '../../../../environments/environment';
   standalone: false,
 })
 export class PreparationViewComponent extends SelectableTabComponent {
-  @Input() public preparationSource = REPORT.PREPARATION_REPORT; // By default
-  public sizes?: DynamicI;
-  public preparationDatas?: {
-    selectedVariable: PreparationVariableModel;
-    currentIntervalDatas: GridDatasI;
-  };
-  public summaryDatas?: InfosDatasI[];
-  public informationsDatas?: InfosDatasI[];
-  public targetVariableStatsDatas?: ChartDatasModel;
-  public variablesDatas?: VariableModel[];
-  public targetVariableStatsInformations?: InfosDatasI[];
+  @Input() public preparationSource = REPORT.PREPARATION_REPORT;
+
   public override tabIndex = 1; // managed by selectable-tab component
-  public variablesDisplayedColumns: GridColumnsI[] = [];
-  public showFilteredVariablesWarning: boolean = false;
 
-  constructor(
-    private preparationDatasService: PreparationDatasService,
-    private translate: TranslateService,
-    private trackerService: TrackerService,
-    private dialog: MatDialog,
-    private layoutService: LayoutService,
-    private modelingDatasService: ModelingDatasService,
-    private distributionService: DistributionService,
-  ) {
+  public dockviewComponents: Record<string, Type<any>> = {
+    summary: PreparationSummaryPanelComponent,
+    targetStats: PreparationTargetStatsPanelComponent,
+    informations: PreparationInformationsPanelComponent,
+    variables: PreparationVariablesPanelComponent,
+    description: PreparationDescriptionPanelComponent,
+    varDetails: PreparationVarDetailsPanelComponent,
+  };
+
+  constructor(private trackerService: TrackerService) {
     super();
-
-    this.variablesDisplayedColumns = getPreparationVariablesGridColumns(
-      this.translate,
-    );
   }
 
   ngOnInit() {
@@ -74,139 +47,69 @@ export class PreparationViewComponent extends SelectableTabComponent {
         ? 'preparation'
         : 'textPreparation';
     this.trackerService.trackEvent('page_view', trackView);
-
-    this.preparationDatas = this.preparationDatasService.getDatas(
-      this.preparationSource,
-    );
-
-    this.sizes = this.layoutService.getViewSplitSizes('preparationView');
-    this.summaryDatas = this.preparationDatasService.getSummaryDatas();
-    this.informationsDatas = this.preparationDatasService.getInformationsDatas(
-      this.preparationSource,
-    );
-    this.showFilteredVariablesWarning =
-      this.preparationDatasService.isFilteredVariables(this.preparationSource);
-    this.targetVariableStatsDatas =
-      this.preparationDatasService.getTargetVariableStatsDatas();
-    this.targetVariableStatsInformations =
-      this.preparationDatasService.getTargetVariableStatsInformations();
-    this.variablesDatas = this.preparationDatasService.getVariablesDatas(
-      this.preparationSource,
-    );
-
-    const includesTargetParts =
-      this.preparationDatasService.includesTargetParts(this.variablesDatas);
-    if (includesTargetParts) {
-      this.variablesDisplayedColumns.splice(3, 0, {
-        headerName: this.translate.get('GLOBAL.TARGET_PARTS'),
-        field: 'targetParts',
-        tooltip: this.translate.get(
-          'TOOLTIPS.PREPARATION.VARIABLES.TARGET_PARTS',
-        ),
-      });
-    }
   }
 
-  onSplitDragEnd(event: SplitGutterInteractionEvent, item: string) {
-    this.layoutService.resizeAndSetSplitSizes(
-      item,
-      this.sizes,
-      event.sizes,
-      'preparationView',
-    );
-  }
+  onDockviewReady(event: DockviewReadyEvent) {
+    event.api.updateOptions({
+      theme: { ...themeLightSpaced, gap: 10 },
+      tabAnimation: 'default',
+    });
 
-  onSelectListItemChanged(item: VariableModel) {
-    if (!item.name) {
-      return;
-    }
-    const modelingVariable = this.preparationDatasService.setSelectedVariable(
-      item.name,
-      this.preparationSource,
-    );
-    if (modelingVariable) {
-      this.modelingDatasService.setSelectedVariable(modelingVariable);
-    }
-  }
+    // Left column: Variables (active) + Description (inactive tab in same group)
+    const variablesPanel = event.api.addPanel({
+      id: `${this.preparationSource}-variables`,
+      component: 'variables',
+      title: 'Variables',
+      minimumWidth: 400,
+      params: { preparationSource: this.preparationSource },
+    });
 
-  onShowLevelDistributionGraph(datas: VariableModel[]) {
-    const config = new MatDialogConfig();
-    config.maxWidth = 'unset';
-    config.width = AppConfig.visualizationCommon.LEVEL_DISTRIBUTION_GRAPH.WIDTH;
-    config.height =
-      AppConfig.visualizationCommon.LEVEL_DISTRIBUTION_GRAPH.HEIGHT;
-    const dialogRef: MatDialogRef<LevelDistributionGraphComponent> =
-      this.dialog.open(LevelDistributionGraphComponent, config);
-    dialogRef.componentInstance.datas = datas;
-  }
+    event.api.addPanel({
+      id: `${this.preparationSource}-description`,
+      component: 'description',
+      title: 'Description',
+      position: { referencePanel: variablesPanel, direction: 'within' },
+      inactive: true,
+      params: { preparationSource: this.preparationSource },
+    });
 
-  onShowLevelDistributionFromButton() {
-    if (this.variablesDatas) {
-      // Sort data by level before showing distribution
-      const sortedData = this.distributionService.sortDatasByLevel(
-        this.variablesDatas,
-      );
-      this.onShowLevelDistributionGraph(sortedData);
-    }
-  }
+    // Middle column: Variable Details
+    const varDetailsPanel = event.api.addPanel({
+      id: `${this.preparationSource}-var-details`,
+      component: 'varDetails',
+      minimumWidth: 500,
+      title: 'Variable Details',
+      position: { referencePanel: variablesPanel, direction: 'right' },
+      params: { preparationSource: this.preparationSource },
+    });
 
-  getDerivationRuleValue(): string {
-    return (
-      this.preparationDatas?.selectedVariable?.derivationRule ||
-      this.translate.get('GLOBAL.NO_DERIVATION_RULE')
-    );
-  }
+    // Right column top: Summary (active) + Informations (inactive tab in same group)
+    const summaryPanel = event.api.addPanel({
+      id: `${this.preparationSource}-summary`,
+      component: 'summary',
+      title: 'Summary',
+      minimumWidth: 400,
+      position: { referencePanel: varDetailsPanel, direction: 'right' },
+      params: { preparationSource: this.preparationSource },
+    });
 
-  /**
-   * Checks if the variables data has level information for displaying the level distribution button
-   * @returns true if variables data has level property
-   */
-  hasLevelData(): boolean {
-    return this.distributionService.hasLevelData(this.variablesDatas || []);
-  }
+    event.api.addPanel({
+      id: `${this.preparationSource}-informations`,
+      component: 'informations',
+      title: 'Informations',
+      position: { referencePanel: summaryPanel, direction: 'within' },
+      inactive: true,
+      params: { preparationSource: this.preparationSource },
+    });
 
-  /**
-   * Checks if the selected variable is non-informative (level = 0)
-   * @returns true if the selected variable has level 0
-   */
-  isNonInformativeVariable(): boolean {
-    const hasLevel0 = this.preparationDatas?.selectedVariable?.level === 0;
-    const hasDetailedStats = this.preparationDatasService.hasDetailedStatistics(
-      this.preparationSource,
-    );
-    return hasLevel0 || !hasDetailedStats;
-  }
-
-  /**
-   * Gets the appropriate no-data message based on evaluated and selected variables
-   * @returns the translation key for the no-data message
-   */
-  getNoDataMessage(): string | undefined {
-    if (!this.informationsDatas || this.informationsDatas.length === 0) {
-      return undefined;
-    }
-
-    // Find evaluatedVariables and selectedVariables from informationsDatas
-    const evaluatedVarInfo = this.informationsDatas.find(
-      (info) => info.title === 'GLOBAL.EVALUATED_VARIABLES',
-    );
-    const selectedVarInfo = this.informationsDatas.find(
-      (info) => info.title === 'GLOBAL.SELECTED_VARIABLES',
-    );
-
-    const evaluatedVariables = evaluatedVarInfo
-      ? Number(evaluatedVarInfo.value)
-      : 0;
-    const selectedVariables = selectedVarInfo
-      ? Number(selectedVarInfo.value)
-      : 0;
-
-    if (evaluatedVariables === 0) {
-      return 'NO_DATAS.NO_EVALUATED_VARIABLES';
-    } else if (selectedVariables === 0) {
-      return 'NO_DATAS.NO_SELECTED_VARIABLES';
-    }
-
-    return undefined;
+    // Right column bottom: Target Stats (below Summary/Informations group)
+    event.api.addPanel({
+      id: `${this.preparationSource}-target-stats`,
+      component: 'targetStats',
+      title: 'Target Stats',
+      initialHeight: 200,
+      position: { referencePanel: summaryPanel, direction: 'below' },
+      params: { preparationSource: this.preparationSource },
+    });
   }
 }

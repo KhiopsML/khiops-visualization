@@ -18,6 +18,12 @@ import { ProjectViewComponent } from './components/project-view/project-view.com
 import { ProjectSummaryPanelComponent } from './components/project-view/panels/project-summary-panel.component';
 import { FileLoaderPanelComponent } from './components/project-view/panels/file-loader-panel.component';
 import { ProjectLogsPanelComponent } from './components/project-view/panels/project-logs-panel.component';
+import { PreparationSummaryPanelComponent } from './components/preparation-view/panels/preparation-summary-panel.component';
+import { PreparationTargetStatsPanelComponent } from './components/preparation-view/panels/preparation-target-stats-panel.component';
+import { PreparationInformationsPanelComponent } from './components/preparation-view/panels/preparation-informations-panel.component';
+import { PreparationVariablesPanelComponent } from './components/preparation-view/panels/preparation-variables-panel.component';
+import { PreparationDescriptionPanelComponent } from './components/preparation-view/panels/preparation-description-panel.component';
+import { PreparationVarDetailsPanelComponent } from './components/preparation-view/panels/preparation-var-details-panel.component';
 import { DockviewAngularModule } from 'dockview-angular';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { TargetVariableStatsComponent } from './components/commons/target-variable-stats/target-variable-stats.component';
@@ -82,6 +88,12 @@ import { VisualizationRoutingModule } from './khiops-visualization-routing.modul
     ProjectSummaryPanelComponent,
     FileLoaderPanelComponent,
     ProjectLogsPanelComponent,
+    PreparationSummaryPanelComponent,
+    PreparationTargetStatsPanelComponent,
+    PreparationInformationsPanelComponent,
+    PreparationVariablesPanelComponent,
+    PreparationDescriptionPanelComponent,
+    PreparationVarDetailsPanelComponent,
     TargetVariableStatsComponent,
     DescriptionBlockComponent,
     LevelDistributionGraphComponent,

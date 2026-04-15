@@ -8,4 +8,28 @@
   app-regression-matrix {
     overflow: hidden;
   }
+
+  dv-dockview {
+    height: 100%;
+  }
+
+  // Override dockview CSS variables and disable sash transitions for better DnD performance
+  ::ng-deep .dockview-theme-light-spaced {
+    --dv-border-radius: 2px;
+    padding: 0;
+    --dv-active-sash-transition-duration: 0s;
+    --dv-active-sash-transition-delay: 0s;
+  }
+
+  // Disable transitions during drag for better performance on rich views
+  ::ng-deep .dv-tab,
+  ::ng-deep .dv-groupview,
+  ::ng-deep .dv-resize-container {
+    transition: none !important;
+  }
+
+  // Hide the close button on all panels
+  ::ng-deep .dv-tab .dv-svg.close-action {
+    display: none;
+  }
 }

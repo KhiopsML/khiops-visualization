@@ -56,6 +56,7 @@ export class ProjectViewComponent
     // Apply theme with custom gap via updateOptions (theme is not an Angular @Input)
     event.api.updateOptions({
       theme: { ...themeLightSpaced, gap: 10 },
+      tabAnimation: 'default',
     });
     const summaryPanel = event.api.addPanel({
       id: 'project-summary',
