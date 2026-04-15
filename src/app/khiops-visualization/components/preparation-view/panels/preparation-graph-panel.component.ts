@@ -74,8 +74,9 @@ export class PreparationGraphPanelComponent implements OnInit, OnDestroy {
       );
     }
 
-    if (this.api) {
-      this.api.onDidLayoutChange(() => {
+    // Subscribe to dimension changes when panel is resized
+    if (this.api && typeof this.api.onDidDimensionsChange === 'function') {
+      this.api.onDidDimensionsChange(() => {
         this.appVariableGraphDetails?.resize();
       });
     }
@@ -92,7 +93,8 @@ export class PreparationGraphPanelComponent implements OnInit, OnDestroy {
     if (this.isRegressionOrExplanatoryAnalysis) {
       state?.matrixRegSelectedCell$.next(index);
     } else {
-      const currentHistogramInfo = this.appVariableGraphDetails?.distributionDatas
+      const currentHistogramInfo = this.appVariableGraphDetails
+        ?.distributionDatas
         ? {
             interpretableHistogramNumber:
               this.appVariableGraphDetails.distributionDatas
