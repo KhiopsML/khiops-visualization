@@ -500,6 +500,10 @@ mat-checkbox.kl-checkbox {
 .dockview-theme-light-spaced {
   --dv-border-radius: 2px;
   --dv-tab-margin: 0.5rem !important;
+  --dv-group-view-background-color: var(--bg-color-20) !important;
+
+  --dv-drag-over-background-color: rgba(0, 120, 212, 0.1); /* blue tint */
+  --dv-drag-over-border-color: rgba(0, 120, 212, 0.7);
   padding: 0;
 }
 
