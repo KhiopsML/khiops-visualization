@@ -5,7 +5,7 @@
  -->
 
 <div id="tree-preparation-view-comp" fxFlexFill>
-  @if (loadingView) {
+  <!-- @if (loadingView) {
     <div fxLayout="column" fxFlexFill fxLayoutAlign="center center">
       <mat-spinner
         diameter="40"
@@ -13,7 +13,7 @@
         mode="indeterminate"
       ></mat-spinner>
     </div>
-  }
+  } -->
   @if (!loadingView && sizes) {
     <as-split direction="horizontal" (dragEnd)="onSplitDragEnd($event, 'col')">
       <as-split-area [size]="sizes.col[0]">
@@ -76,7 +76,6 @@
                     >
                     </kl-informations-block>
                   </as-split-area>
-
                 </as-split>
               </as-split-area>
             </as-split>

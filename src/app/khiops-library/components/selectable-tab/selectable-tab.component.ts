@@ -35,14 +35,14 @@ import { MatTabChangeEvent } from '@angular/material/tabs';
 export class SelectableTabComponent implements OnChanges {
   @Input() selectedTab?: MatTabChangeEvent | undefined;
   public tabIndex?: number;
-  public loadingView = false;
+  public loadingView = true;
 
   ngOnChanges(changes: SimpleChanges) {
     if (
       changes.selectedTab
         ?.firstChange /* important to do not load when tab change to context (covisu)*/
     ) {
-      this.loadingView = false;
+      this.loadingView = true;
 
       this.loaded();
     }
@@ -50,7 +50,7 @@ export class SelectableTabComponent implements OnChanges {
 
   loaded() {
     setTimeout(() => {
-      // this.loadingView = false;
+      this.loadingView = false;
       this.loadView();
     }, 0); // set > value than .mat-ink-bar transition animation to avoid freeze
   }

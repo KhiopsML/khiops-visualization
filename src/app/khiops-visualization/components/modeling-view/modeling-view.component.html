@@ -5,7 +5,7 @@
  -->
 
 <div id="modeling-view-comp" fxFlexFill>
-  @if (loadingView) {
+  <!-- @if (loadingView) {
     <div fxLayout="column" fxFlexFill fxLayoutAlign="center center">
       <mat-spinner
         diameter="40"
@@ -13,7 +13,7 @@
         mode="indeterminate"
       ></mat-spinner>
     </div>
-  }
+ } -->
   @if (!loadingView) {
     <as-split direction="vertical" (dragEnd)="onSplitDragEnd($event, 'row')">
       <as-split-area [size]="sizes?.row[0]">
@@ -61,7 +61,6 @@
                   [inputDatas]="trainedPredictorsSummaryDatas"
                 ></kl-informations-block>
               </as-split-area>
-
             </as-split>
           </as-split-area>
         </as-split>

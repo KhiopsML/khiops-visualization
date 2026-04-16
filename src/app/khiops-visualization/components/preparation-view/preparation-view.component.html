@@ -5,15 +5,15 @@
  -->
 
 <div id="preparation-view-comp" fxFlexFill>
-  @if (loadingView) {
-    <div fxLayout="column" fxFlexFill fxLayoutAlign="center center">
-      <mat-spinner
+  <!-- @if (loadingView) {
+    <div fxLayout="column" fxFlexFill fxLayoutAlign="center center"> -->
+  <!-- <mat-spinner
         diameter="40"
         color="accent"
         mode="indeterminate"
-      ></mat-spinner>
-    </div>
-  }
+      ></mat-spinner> -->
+  <!-- </div>
+  } -->
   @if (!loadingView && sizes) {
     <as-split direction="vertical" (dragEnd)="onSplitDragEnd($event, 'row')">
       <as-split-area [size]="sizes.row[0]">
@@ -64,7 +64,6 @@
                 >
                 </kl-informations-block>
               </as-split-area>
-
             </as-split>
           </as-split-area>
         </as-split>
