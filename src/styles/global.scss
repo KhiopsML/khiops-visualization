@@ -533,3 +533,67 @@ mat-checkbox.kl-checkbox {
   padding: 10px;
   overflow: auto;
 }
+
+
+
+
+
+
+
+
+
+//tabs version
+
+// Override dockview CSS variables for custom border radius
+// .dockview-theme-light-spaced {
+//   --dv-border-radius: 2px;
+//   --dv-tab-margin: 0rem !important;
+//   --dv-group-view-background-color: var(--bg-color-20) !important;
+//   --dv-inactivegroup-visiblepanel-tab-background-color: white !important;
+//   --dv-activegroup-visiblepanel-tab-background-color: white !important;
+//   --dv-drag-over-background-color: rgba(0, 120, 212, 0.1); /* blue tint */
+//   --dv-drag-over-border-color: rgba(0, 120, 212, 0.7);
+//   padding: 0;
+// }
+
+// .dv-groupview {
+//   position: relative;
+// }
+
+// .dv-groupview::before {
+//   content: '';
+//   position: absolute;
+//   inset: 0; /* top: 0; right: 0; bottom: 0; left: 0 */
+//   border: 1px solid var(--border-color); /* your border style here */
+//   pointer-events: none;
+//   z-index: 1;
+//   border-radius: var(--border-radius);
+// }
+// .dv-tab {
+//   border-radius: var(--border-radius) !important;
+// }
+
+// .dv-tabs-and-actions-container {
+//   // border-bottom: 1px solid #eee;
+//   background-color: #f9fafb;
+//   border-radius: var(--border-radius);
+// }
+// .dv-content-container {
+//   padding: 10px;
+//   overflow: auto;
+// }
+
+// .dv-tab.dv-inactive-tab,
+// .dv-void-container {
+//   border-bottom: 1px solid #eee;
+// }
+
+// .dv-tab.dv-active-tab {
+//   border-left: 1px solid #eee;
+//   border-right: 1px solid #eee;
+// }
+
+// // le 1er dv-tab dans dv-tabs-container ne doit pas avoir de border left
+// .dv-tabs-container .dv-tab:first-child {
+//   border-left: none;
+// }
