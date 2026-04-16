@@ -248,25 +248,39 @@ export class CopyService {
       return formattedDatas;
     }
 
-    // Find the maximum data length among all datasets
-    const maxLength = Math.max(...datasets.map((ds: any) => ds.data.length));
+    // Exclude bar-type indicator datasets (e.g. "Number of clusters" selection bar)
+    const exportDatasets = datasets.filter((ds: any) => !ds.barThickness);
+    if (exportDatasets.length === 0) {
+      return formattedDatas;
+    }
+
+    // Use chart labels for x-axis values when available (actual cluster counts),
+    // otherwise fall back to the row index
+    const labels: string[] | undefined = selectedArea.datas.labels;
+    const maxLength =
+      labels && labels.length > 0
+        ? labels.length
+        : Math.max(...exportDatasets.map((ds: any) => ds.data.length));
 
     // Header row
-    formattedDatas += selectedArea.chartOptions.scales.x.title.text + '\t';
-    for (let i = 0; i < datasets.length; i++) {
-      formattedDatas += datasets[i].label + '\t';
+    formattedDatas += selectedArea.chartOptions.scales.x.title.text;
+    for (let i = 0; i < exportDatasets.length; i++) {
+      formattedDatas += '\t' + exportDatasets[i].label;
     }
     formattedDatas += '\n';
 
     // Data rows
     for (let row = 0; row < maxLength; row++) {
-      formattedDatas += this.formatNumberWithPrecision(row) + '\t';
-      for (let col = 0; col < datasets.length; col++) {
-        const value = datasets[col].data[row];
+      const xValue =
+        labels && labels[row] !== undefined
+          ? labels[row]
+          : this.formatNumberWithPrecision(row);
+      formattedDatas += xValue;
+      for (let col = 0; col < exportDatasets.length; col++) {
+        const value = exportDatasets[col].data[row];
+        formattedDatas += '\t';
         if (value !== undefined && value !== null) {
-          formattedDatas += this.formatNumberWithPrecision(value) + '\t';
-        } else {
-          formattedDatas += '\t';
+          formattedDatas += this.formatNumberWithPrecision(value);
         }
       }
       formattedDatas += '\n';

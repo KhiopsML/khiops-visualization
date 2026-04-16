@@ -344,6 +344,226 @@ describe('CopyService', () => {
       expect(result).toContain('1\t15\t');
       expect(result).toContain('2\t20\t25');
     });
+
+    it('should filter out bar-type datasets from the export', () => {
+      const selectedArea = {
+        datas: {
+          datasets: [
+            { label: 'Series1', data: [10, 20, 30] },
+            {
+              label: 'Number of clusters',
+              data: [0, 100, 0],
+              barThickness: 5,
+              maxBarThickness: 5,
+            },
+          ],
+        },
+        chartOptions: { scales: { x: { title: { text: 'X Axis' } } } },
+      };
+
+      const result = service.getNdLineChart(selectedArea);
+
+      expect(result).toContain('X Axis\tSeries1');
+      expect(result).not.toContain('Number of clusters');
+    });
+
+    it('should return only title when all datasets are bar-type', () => {
+      const selectedArea = {
+        title: 'Chart Title',
+        datas: {
+          datasets: [{ label: 'Indicator', data: [0, 100, 0], barThickness: 5 }],
+        },
+        chartOptions: { scales: { x: { title: { text: 'X' } } } },
+      };
+
+      const result = service.getNdLineChart(selectedArea);
+
+      expect(result).toBe('Chart Title\n');
+    });
+
+    it('should return only title when datasets array is empty', () => {
+      const selectedArea = {
+        title: 'Empty Chart',
+        datas: { datasets: [] },
+        chartOptions: { scales: { x: { title: { text: 'X' } } } },
+      };
+
+      const result = service.getNdLineChart(selectedArea);
+
+      expect(result).toBe('Empty Chart\n');
+    });
+
+    it('should use chart labels as x-axis values when labels are provided', () => {
+      const selectedArea = {
+        datas: {
+          labels: ['2', '3', '4'],
+          datasets: [{ label: 'Information rate', data: [5.344, 5.288, 6.721] }],
+        },
+        chartOptions: {
+          scales: { x: { title: { text: 'Total number of clusters' } } },
+        },
+      };
+
+      const result = service.getNdLineChart(selectedArea);
+
+      expect(result).toContain('Total number of clusters\tInformation rate');
+      expect(result).toContain('2\t5.344');
+      expect(result).toContain('3\t5.288');
+      expect(result).toContain('4\t6.721');
+      // Row index must NOT be used as x-axis
+      expect(result).not.toContain('0\t5.344');
+    });
+
+    it('should use row index as x-axis when no labels are provided', () => {
+      const selectedArea = {
+        datas: {
+          datasets: [{ label: 'Series1', data: [10, 20, 30] }],
+        },
+        chartOptions: { scales: { x: { title: { text: 'X' } } } },
+      };
+
+      const result = service.getNdLineChart(selectedArea);
+
+      expect(result).toContain('0\t10');
+      expect(result).toContain('1\t20');
+      expect(result).toContain('2\t30');
+    });
+
+    it('should limit exported rows to labels length when labels are provided', () => {
+      const selectedArea = {
+        datas: {
+          labels: ['2', '3'],
+          // Dataset has more entries than labels
+          datasets: [{ label: 'Series1', data: [10, 20, 30, 40] }],
+        },
+        chartOptions: { scales: { x: { title: { text: 'X' } } } },
+      };
+
+      const result = service.getNdLineChart(selectedArea);
+
+      const nonEmptyRows = result.split('\n').filter((r: string) => r.length > 0);
+      expect(nonEmptyRows.length).toBe(3); // 1 header + 2 data rows
+      expect(result).toContain('2\t10');
+      expect(result).toContain('3\t20');
+      expect(result).not.toContain('30');
+      expect(result).not.toContain('40');
+    });
+
+    it('should use max dataset length when no labels and datasets have different lengths', () => {
+      const selectedArea = {
+        datas: {
+          datasets: [
+            { label: 'Short', data: [1, 2] },
+            { label: 'Long', data: [10, 20, 30, 40] },
+          ],
+        },
+        chartOptions: { scales: { x: { title: { text: 'X' } } } },
+      };
+
+      const result = service.getNdLineChart(selectedArea);
+
+      const nonEmptyRows = result.split('\n').filter((r: string) => r.length > 0);
+      expect(nonEmptyRows.length).toBe(5); // 1 header + 4 data rows
+      expect(result).toContain('0\t1\t10');
+      expect(result).toContain('3\t\t40'); // Short dataset has no value at row 3
+    });
+
+    it('should not include trailing tab after last column in header row', () => {
+      const selectedArea = {
+        datas: {
+          datasets: [
+            { label: 'A', data: [1] },
+            { label: 'B', data: [2] },
+          ],
+        },
+        chartOptions: { scales: { x: { title: { text: 'X' } } } },
+      };
+
+      const result = service.getNdLineChart(selectedArea);
+      const headerLine = result.split('\n')[0];
+
+      expect(headerLine).toBe('X\tA\tB');
+      expect(headerLine.endsWith('\t')).toBeFalse();
+    });
+
+    it('should output empty tab for null values in data with labels provided', () => {
+      const selectedArea = {
+        datas: {
+          labels: ['2', '3', '4'],
+          datasets: [{ label: 'Series1', data: [10, null, 30] }],
+        },
+        chartOptions: { scales: { x: { title: { text: 'X' } } } },
+      };
+
+      const result = service.getNdLineChart(selectedArea);
+
+      expect(result).toContain('2\t10');
+      expect(result).toContain('4\t30');
+      // Row with null: label then a single empty tab before newline
+      expect(result).toContain('3\t\n');
+    });
+
+    it('should simulate info-rate graph: filter bar dataset and use labels as x-axis', () => {
+      // Reproduces the exact data structure from clusters.service.ts getInfoPerCluster()
+      const selectedArea = {
+        datas: {
+          labels: ['2', '3', '4', '5'],
+          datasets: [
+            { label: 'Information rate', data: [5.344, 5.288, 6.721, 16.85] },
+            {
+              label: 'Number of clusters',
+              data: [0, 0, 0, 0],
+              barThickness: 5,
+              maxBarThickness: 5,
+            },
+          ],
+        },
+        chartOptions: {
+          scales: { x: { title: { text: 'Total number of clusters' } } },
+        },
+      };
+
+      const result = service.getNdLineChart(selectedArea);
+
+      expect(result).toContain('Total number of clusters\tInformation rate');
+      expect(result).not.toContain('\tNumber of clusters');
+      expect(result).toContain('2\t5.344');
+      expect(result).toContain('5\t16.85');
+      const allLines = result.split('\n').filter((r: string) => r.length > 0);
+      expect(allLines.length).toBe(5); // 1 header + 4 data rows
+    });
+
+    it('should simulate clusters-per-dim graph: multiple line datasets with filtered bar', () => {
+      // Reproduces getClustersPerDimDatas() with 2 dimensions + selection bar indicator
+      const selectedArea = {
+        datas: {
+          labels: ['2', '3', '4'],
+          datasets: [
+            { label: 'Age', data: [1, 2, 2] },
+            { label: 'Education', data: [1, 1, 2] },
+            {
+              label: 'Number of clusters',
+              data: [0, 17, 0],
+              barThickness: 5,
+              maxBarThickness: 5,
+            },
+          ],
+        },
+        chartOptions: {
+          scales: { x: { title: { text: 'Total number of clusters' } } },
+        },
+      };
+
+      const result = service.getNdLineChart(selectedArea);
+
+      expect(result).toContain('Total number of clusters\tAge\tEducation');
+      expect(result).not.toContain('\tNumber of clusters');
+      expect(result).toContain('2\t1\t1');
+      expect(result).toContain('3\t2\t1');
+      expect(result).toContain('4\t2\t2');
+      const allLines = result.split('\n').filter((r: string) => r.length > 0);
+      expect(allLines.length).toBe(4); // 1 header + 3 data rows
+    });
   });
 
   /**
