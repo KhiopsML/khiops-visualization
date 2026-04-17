@@ -17,6 +17,7 @@ import { ChartColorsSetI } from '../../interfaces/chart-colors-set.interface';
 import { UtilsService } from '../../providers/utils.service';
 import { DynamicI } from '@khiops-library/interfaces/globals.interface';
 import { ChartDatasetModel } from '@khiops-library/model/chart-dataset.model';
+import { HistogramType } from '@khiops-visualization/components/commons/histogram/histogram.type';
 
 @Component({
   selector: 'kl-legend',
@@ -97,7 +98,22 @@ export class LegendComponent implements OnChanges {
     if (this.inputDatas) {
       this.legend = [];
       if (this.type === 'chart-1d') {
-        this.checkForDefaultGroupIndex(this.inputDatas.datasets[0]);
+        if (this.inputDatas?.datasets?.[0]) {
+          if (
+            this.inputDatas.datasets[0].label &&
+            !(Object.values(HistogramType) as string[]).includes(
+              this.inputDatas.datasets[0].label,
+            )
+          ) {
+            // Only display distribution legend on KC
+            // For KV, the legend is not relevant
+            this.legend.push({
+              name: this.translate.get(this.inputDatas.datasets[0].label),
+              color: this.colorSet?.domain[0],
+            });
+          }
+          this.checkForDefaultGroupIndex(this.inputDatas.datasets[0]);
+        }
       } else if (this.type === 'chart-nd') {
         // compute legend items
         if (Array.isArray(this.inputDatas)) {
