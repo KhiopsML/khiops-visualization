@@ -807,10 +807,6 @@ export class DistributionDatasService {
     }
 
     // --- X widths ---
-    const allPositive = datas.every(
-      (d) => d.partition[0]! > 0 && d.partition[1]! > 0,
-    );
-
     const linWidths = datas.map((d) =>
       Math.abs(d.partition[1]! - d.partition[0]!),
     );
@@ -833,10 +829,20 @@ export class DistributionDatasService {
       { x: HistogramType.XLIN, y: HistogramType.YLOG, prop: propLinLog },
     ];
 
-    if (allPositive) {
-      const logWidths = datas.map((d) =>
-        Math.abs(Math.log10(d.partition[1]!) - Math.log10(d.partition[0]!)),
-      );
+    // XLog uses absolute values (the chart renders negative values symmetrically in log).
+    // Bars where |bound| <= 1 fall in the infinite zone and contribute 0 XLog width.
+    // XLog is evaluated whenever at least one bar has both |bounds| > 1.
+    const xLogValidMask = datas.map(
+      (d) => Math.abs(d.partition[0]!) > 1 && Math.abs(d.partition[1]!) > 1,
+    );
+    if (xLogValidMask.some((v) => v)) {
+      const logWidths = datas.map((d, i) => {
+        if (!xLogValidMask[i]) return 0;
+        return Math.abs(
+          Math.log10(Math.abs(d.partition[1]!)) -
+            Math.log10(Math.abs(d.partition[0]!)),
+        );
+      });
       const totalLogWidth = logWidths.reduce((a, b) => a + b, 0);
       if (totalLogWidth > 0) {
         const logWidthsNorm = logWidths.map((w) => w / totalLogWidth);
@@ -856,7 +862,9 @@ export class DistributionDatasService {
     }
 
     // Pick the combination with the highest proportion if it beats Lin/Lin by >1.5
-    const best = configs.reduce((a, b) => (b.prop > a.prop ? b : a));
+    const best = configs.reduce((a, b) => {
+      return b.prop > a.prop ? b : a;
+    });
     if (best.prop > propLinLin * 1.5) {
       return { xScale: best.x, yScale: best.y };
     }
