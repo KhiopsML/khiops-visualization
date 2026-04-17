@@ -371,7 +371,9 @@ describe('CopyService', () => {
       const selectedArea = {
         title: 'Chart Title',
         datas: {
-          datasets: [{ label: 'Indicator', data: [0, 100, 0], barThickness: 5 }],
+          datasets: [
+            { label: 'Indicator', data: [0, 100, 0], barThickness: 5 },
+          ],
         },
         chartOptions: { scales: { x: { title: { text: 'X' } } } },
       };
@@ -397,7 +399,9 @@ describe('CopyService', () => {
       const selectedArea = {
         datas: {
           labels: ['2', '3', '4'],
-          datasets: [{ label: 'Information rate', data: [5.344, 5.288, 6.721] }],
+          datasets: [
+            { label: 'Information rate', data: [5.344, 5.288, 6.721] },
+          ],
         },
         chartOptions: {
           scales: { x: { title: { text: 'Total number of clusters' } } },
@@ -441,7 +445,9 @@ describe('CopyService', () => {
 
       const result = service.getNdLineChart(selectedArea);
 
-      const nonEmptyRows = result.split('\n').filter((r: string) => r.length > 0);
+      const nonEmptyRows = result
+        .split('\n')
+        .filter((r: string) => r.length > 0);
       expect(nonEmptyRows.length).toBe(3); // 1 header + 2 data rows
       expect(result).toContain('2\t10');
       expect(result).toContain('3\t20');
@@ -462,7 +468,9 @@ describe('CopyService', () => {
 
       const result = service.getNdLineChart(selectedArea);
 
-      const nonEmptyRows = result.split('\n').filter((r: string) => r.length > 0);
+      const nonEmptyRows = result
+        .split('\n')
+        .filter((r: string) => r.length > 0);
       expect(nonEmptyRows.length).toBe(5); // 1 header + 4 data rows
       expect(result).toContain('0\t1\t10');
       expect(result).toContain('3\t\t40'); // Short dataset has no value at row 3
@@ -563,6 +571,206 @@ describe('CopyService', () => {
       expect(result).toContain('4\t2\t2');
       const allLines = result.split('\n').filter((r: string) => r.length > 0);
       expect(allLines.length).toBe(4); // 1 header + 3 data rows
+    });
+
+    it('should export 1000-entry single-series dataset with correct row count and boundary values', () => {
+      // Build a 1000-entry population dataset simulating lift curve values
+      const data = Array.from({ length: 1000 }, (_, i) =>
+        parseFloat((i / 10).toFixed(1)),
+      );
+      const labels = Array.from({ length: 1000 }, (_, i) => String(i + 1));
+      const selectedArea = {
+        title: 'Lift Curve - 1000 points',
+        datas: {
+          labels,
+          datasets: [{ label: 'Lift', data }],
+        },
+        chartOptions: { scales: { x: { title: { text: 'Population %' } } } },
+      };
+
+      const result = service.getNdLineChart(selectedArea);
+
+      const nonEmptyLines = result
+        .split('\n')
+        .filter((r: string) => r.length > 0);
+      // title + 1 header + 1000 data rows
+      expect(nonEmptyLines.length).toBe(1002);
+      // First data row: label='1', value=0
+      expect(result).toContain('1\t0');
+      // Last data row: label='1000', value=99.9
+      expect(result).toContain('1000\t99.9');
+      // Header must list the single series (index 1 because index 0 is the title)
+      expect(nonEmptyLines[1]).toBe('Population %\tLift');
+    });
+
+    it('should export 1000-entry multi-series dataset and filter bar-type datasets', () => {
+      // Simulate 10 dimensions + 1 bar-type indicator over 1000 cluster counts
+      const size = 1000;
+      const labels = Array.from({ length: size }, (_, i) => String(i + 1));
+      const lineSeries = Array.from({ length: 5 }, (_, s) => ({
+        label: `Dim${s + 1}`,
+        data: Array.from({ length: size }, (_, i) => (i % (s + 2)) + s),
+      }));
+      const barSeries = {
+        label: 'Number of clusters',
+        data: Array.from({ length: size }, () => 0),
+        barThickness: 5,
+        maxBarThickness: 5,
+      };
+      const selectedArea = {
+        title: 'Clusters per Dimension - 1000 points',
+        datas: { labels, datasets: [...lineSeries, barSeries] },
+        chartOptions: {
+          scales: { x: { title: { text: 'Total number of clusters' } } },
+        },
+      };
+
+      const result = service.getNdLineChart(selectedArea);
+
+      // Bar series must be excluded from the output
+      expect(result).not.toContain('\tNumber of clusters');
+      // All 5 line series must appear in the header
+      expect(result).toContain(
+        'Total number of clusters\tDim1\tDim2\tDim3\tDim4\tDim5',
+      );
+      // Header must not have trailing tab (index 1 because index 0 is the title)
+      const headerLine = result.split('\n')[1];
+      expect(headerLine.endsWith('\t')).toBeFalse();
+      // title + 1 header + 1000 data rows
+      const nonEmptyLines = result
+        .split('\n')
+        .filter((r: string) => r.length > 0);
+      expect(nonEmptyLines.length).toBe(1002);
+      // Spot-check first and last data rows
+      expect(result).toContain('1\t');
+      expect(result).toContain('1000\t');
+    });
+
+    it('should handle 1000-entry dataset with sparse null values and produce correct empty tabs', () => {
+      // Every 10th value is null to simulate missing measurements
+      const size = 1000;
+      const labels = Array.from({ length: size }, (_, i) => String(i + 1));
+      const data = Array.from({ length: size }, (_, i) =>
+        i % 10 === 0 ? null : parseFloat((Math.sin(i / 100) * 100).toFixed(4)),
+      );
+      const selectedArea = {
+        datas: {
+          labels,
+          datasets: [{ label: 'Signal', data }],
+        },
+        chartOptions: { scales: { x: { title: { text: 'Sample' } } } },
+      };
+
+      const result = service.getNdLineChart(selectedArea);
+
+      // Rows where index % 10 === 0 (label = i+1, so label '1', '11', '21'...) must have empty value tab
+      // Label '1' corresponds to index 0 (0 % 10 === 0 → null)
+      expect(result).toContain('1\t\n');
+      // Label '2' corresponds to index 1 (not null)
+      const line2Match = result
+        .split('\n')
+        .find((l: string) => l.startsWith('2\t'));
+      expect(line2Match).toBeTruthy();
+      expect(line2Match).not.toEqual('2\t');
+      // Total row count: 1 header + 1000 data rows
+      const nonEmptyLines = result
+        .split('\n')
+        .filter((r: string) => r.length > 0);
+      expect(nonEmptyLines.length).toBe(1001);
+      // Exactly 100 null rows (indices 0,10,20,...,990)
+      const nullRows = result
+        .split('\n')
+        .filter((l: string) => /^\d+\t\n?$/.test(l));
+      expect(nullRows.length).toBe(100);
+    });
+
+    it('should use copyDatasToClipboard with ND_LINE_CHART type and 1000-entry dataset', () => {
+      const size = 1000;
+      const labels = Array.from({ length: size }, (_, i) => String(i + 1));
+      const datasets = [
+        {
+          label: 'Accuracy',
+          data: Array.from({ length: size }, (_, i) =>
+            parseFloat((i / 1000).toFixed(6)),
+          ),
+        },
+        {
+          label: 'Precision',
+          data: Array.from({ length: size }, (_, i) =>
+            parseFloat((1 - i / 1000).toFixed(6)),
+          ),
+        },
+      ];
+      const mockOnCopyData = jasmine.createSpy('onCopyData');
+      spyOn(configService, 'getConfig').and.returnValue({
+        onCopyData: mockOnCopyData,
+      });
+
+      const selectedArea = {
+        componentType: COMPONENT_TYPES.ND_LINE_CHART,
+        title: 'Model Performance - 1000 points',
+        datas: { labels, datasets },
+        chartOptions: { scales: { x: { title: { text: 'Threshold' } } } },
+      };
+
+      service.copyDatasToClipboard(selectedArea);
+
+      expect(mockOnCopyData).toHaveBeenCalledTimes(1);
+      const copiedContent: string = mockOnCopyData.calls.first().args[0];
+      // Title present
+      expect(copiedContent).toContain('Model Performance - 1000 points');
+      // Header row
+      expect(copiedContent).toContain('Threshold\tAccuracy\tPrecision');
+      // 1 header + 1000 data rows
+      const nonEmptyLines = copiedContent
+        .split('\n')
+        .filter((r: string) => r.length > 0);
+      expect(nonEmptyLines.length).toBe(1002); // title + header + 1000 data rows
+      // Boundary values: label='1' (index 0) → Accuracy=0, Precision=1.0
+      expect(copiedContent).toContain('1\t0\t1');
+      // label='1000' (index 999) → Accuracy=0.999, Precision=0.001
+      expect(copiedContent).toContain('1000\t0.999\t0.001');
+    });
+
+    it('should correctly export 1000-entry dataset with 3 line series and no labels (index-based x-axis)', () => {
+      // No labels provided: row index should be used as x-axis value
+      const size = 1000;
+      const series = [
+        {
+          label: 'SeriesA',
+          data: Array.from({ length: size }, (_, i) => i * 2),
+        },
+        {
+          label: 'SeriesB',
+          data: Array.from({ length: size }, (_, i) => i * 3),
+        },
+        {
+          label: 'SeriesC',
+          data: Array.from({ length: size }, (_, i) => i * 5),
+        },
+      ];
+      const selectedArea = {
+        title: 'Index-based X-axis - 1000 points',
+        datas: { datasets: series },
+        chartOptions: { scales: { x: { title: { text: 'Index' } } } },
+      };
+
+      const result = service.getNdLineChart(selectedArea);
+
+      // Header: no trailing tab (index 1 because index 0 is the title)
+      const headerLine = result.split('\n')[1];
+      expect(headerLine).toBe('Index\tSeriesA\tSeriesB\tSeriesC');
+      // Total rows: title + 1 header + 1000 data rows
+      const nonEmptyLines = result
+        .split('\n')
+        .filter((r: string) => r.length > 0);
+      expect(nonEmptyLines.length).toBe(1002);
+      // First row: x=0, values 0, 0, 0
+      expect(result).toContain('0\t0\t0\t0');
+      // Row at index 500: x=500; formatWithSpaces adds thousands separators for values >= 1000
+      expect(result).toContain('500\t1 000\t1 500\t2 500');
+      // Last row: x=999; 999*2=1998, 999*3=2997, 999*5=4995
+      expect(result).toContain('999\t1 998\t2 997\t4 995');
     });
   });
 
