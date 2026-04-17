@@ -92,81 +92,109 @@ export class LegendComponent implements OnChanges {
    * Updates the legend based on the input data.
    * It constructs the legend items based on the type of chart and the datasets provided.
    * For 'chart-1d', 'chart-nd', and 'chart-nd-dynamic' types, it populates the legend with appropriate names and colors.
-   * It also applies ellipsis to long legend text and sorts the legend items in natural order.
+   * It also applies ellipsis to long legend text.
    */
   private updateLegend() {
     if (this.inputDatas) {
       this.legend = [];
       if (this.type === 'chart-1d') {
-        if (this.inputDatas?.datasets?.[0]) {
-          if (
-            this.inputDatas.datasets[0].label &&
-            !(Object.values(HistogramType) as string[]).includes(
-              this.inputDatas.datasets[0].label,
-            )
-          ) {
-            // Only display distribution legend on KC
-            // For KV, the legend is not relevant
-            this.legend.push({
-              name: this.translate.get(this.inputDatas.datasets[0].label),
-              color: this.colorSet?.domain[0],
-            });
-          }
-          this.checkForDefaultGroupIndex(this.inputDatas.datasets[0]);
-        }
+        this.legend = this.buildChart1dLegend();
       } else if (this.type === 'chart-nd') {
-        // compute legend items
-        if (Array.isArray(this.inputDatas)) {
-          const series = this.inputDatas[0].series;
-          for (let i = 0; i < series.length; i++) {
-            this.legend.push({
-              name: series[i].name,
-              borderColor: UtilsService.hexToRGBa(
-                this.colorSet?.domain[i]!,
-                0.2,
-              ),
-              color: this.colorSet?.domain[i],
-            });
-          }
-        } else if (
-          this.inputDatas.datasets &&
-          this.inputDatas.datasets.length > 0
-        ) {
-          // new graph
-          for (let i = 0; i < this.inputDatas.datasets.length; i++) {
-            this.legend.push({
-              name: this.inputDatas.datasets[i].label,
-              borderColor: UtilsService.hexToRGBa(
-                this.colorSet?.domain[i]!,
-                0.2,
-              ),
-              color: this.colorSet?.domain[i],
-            });
-          }
-        }
+        this.legend = this.buildChartNdLegend();
       } else if (this.type === 'chart-nd-dynamic') {
-        // compute legend items
-        for (let i = 0; i < this.inputDatas.length; i++) {
-          if (this.inputDatas[i].show === true) {
-            this.legend.push({
-              name: this.inputDatas[i].name,
-              borderColor: UtilsService.hexToRGBa(
-                this.colorSet?.domain[i]!,
-                0.2,
-              ),
-              color: this.colorSet?.domain[i],
-            });
-          }
-        }
+        this.legend = this.buildChartNdDynamicLegend();
       }
+      this.applyEllipsisToLegend();
+    }
+  }
 
-      // Ellipsis long legend text
-      for (let i = 0; i < this.legend.length; i++) {
-        this.legend[i].shortname = UtilsService.ellipsis(
-          this.legend?.[i]?.name?.toString(),
-          20,
-        );
+  /**
+   * Builds legend items for chart-1d type.
+   * Displays the distribution label when it is not a histogram type value.
+   * Also checks for a default group index entry.
+   */
+  private buildChart1dLegend(): any[] {
+    const items: any[] = [];
+    if (this.inputDatas?.datasets?.[0]) {
+      if (
+        this.inputDatas.datasets[0].label &&
+        !(Object.values(HistogramType) as string[]).includes(
+          this.inputDatas.datasets[0].label,
+        )
+      ) {
+        // Only display distribution legend on KC
+        // For KV, the legend is not relevant
+        items.push({
+          name: this.translate.get(this.inputDatas.datasets[0].label),
+          color: this.colorSet?.domain[0],
+        });
       }
+      this.legend = items;
+      this.checkForDefaultGroupIndex(this.inputDatas.datasets[0]);
+      return this.legend;
+    }
+    return items;
+  }
+
+  /**
+   * Builds legend items for chart-nd type.
+   * Supports both array-based series data and dataset-based data formats.
+   */
+  private buildChartNdLegend(): any[] {
+    const items: any[] = [];
+    if (Array.isArray(this.inputDatas)) {
+      const series = this.inputDatas[0].series;
+      for (let i = 0; i < series.length; i++) {
+        items.push({
+          name: series[i].name,
+          borderColor: UtilsService.hexToRGBa(this.colorSet?.domain[i]!, 0.2),
+          color: this.colorSet?.domain[i],
+        });
+      }
+    } else if (
+      this.inputDatas.datasets &&
+      this.inputDatas.datasets.length > 0
+    ) {
+      // new graph
+      for (let i = 0; i < this.inputDatas.datasets.length; i++) {
+        items.push({
+          name: this.inputDatas.datasets[i].label,
+          borderColor: UtilsService.hexToRGBa(this.colorSet?.domain[i]!, 0.2),
+          color: this.colorSet?.domain[i],
+        });
+      }
+    }
+    return items;
+  }
+
+  /**
+   * Builds legend items for chart-nd-dynamic type.
+   * Only includes items where the show flag is true.
+   */
+  private buildChartNdDynamicLegend(): any[] {
+    const items: any[] = [];
+    for (let i = 0; i < this.inputDatas.length; i++) {
+      if (this.inputDatas[i].show === true) {
+        items.push({
+          name: this.inputDatas[i].name,
+          borderColor: UtilsService.hexToRGBa(this.colorSet?.domain[i]!, 0.2),
+          color: this.colorSet?.domain[i],
+        });
+      }
+    }
+    return items;
+  }
+
+  /**
+   * Applies ellipsis truncation to long legend item names.
+   * Updates each legend item in place with a shortname property.
+   */
+  private applyEllipsisToLegend() {
+    for (let i = 0; i < this.legend.length; i++) {
+      this.legend[i].shortname = UtilsService.ellipsis(
+        this.legend?.[i]?.name?.toString(),
+        20,
+      );
     }
   }
 }
