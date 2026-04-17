@@ -25,7 +25,7 @@ describe('Level distribution Test Plan for Khiops Visualization', () => {
 
         cy.get('#preparation-variables-list').find('.ag-row:eq(1)').click();
         cy.wait(250);
-        cy.get('.graph-options-menu-comp').first().contains('xLin');
+        cy.get('.graph-options-menu-comp').first().contains('xLog');
         cy.get('.graph-options-menu-comp').eq(1).contains('yLog');
 
         cy.get('#preparation-variables-list').find('.ag-row:eq(3)').click();
