@@ -226,7 +226,9 @@ export class VariableGraphDetailsComponent
     const rootElement = this.configService.getRootElementDom();
     if (rootElement) {
       rootElement.querySelector(compToSelect)?.dispatchEvent(trustedClickEvent);
-      rootElement.querySelector('#app-histogram')?.dispatchEvent(trustedClickEvent);
+      rootElement
+        .querySelector('#app-histogram')
+        ?.dispatchEvent(trustedClickEvent);
     }
   }
 

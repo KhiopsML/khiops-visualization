@@ -710,21 +710,47 @@ export class DistributionDatasService {
     // between interpretable histogram versions) and when the auto-scale setting is enabled.
     const autoScaleEnabled =
       AppService.Ls.get(LS.SETTING_AUTO_SCALE)?.toString() === 'true';
-    if (autoScaleEnabled && interpretableHistogramNumber === undefined) {
-      const optimalScales = this.computeOptimalHistogramScales(
-        histogramGraphDetails,
-      );
-      if (this.distributionDatas.distributionGraphOptionsX) {
-        this.distributionDatas.distributionGraphOptionsX = {
-          ...this.distributionDatas.distributionGraphOptionsX,
-          selected: optimalScales.xScale,
-        };
-      }
-      if (this.distributionDatas.distributionGraphOptionsY) {
-        this.distributionDatas.distributionGraphOptionsY = {
-          ...this.distributionDatas.distributionGraphOptionsY,
-          selected: optimalScales.yScale,
-        };
+    if (autoScaleEnabled) {
+      if (interpretableHistogramNumber === undefined) {
+        // Initial load: compute optimal scales based on the default histogram and store them.
+        const optimalScales = this.computeOptimalHistogramScales(
+          histogramGraphDetails,
+        );
+        this.distributionDatas.autoComputedScaleX = optimalScales.xScale;
+        this.distributionDatas.autoComputedScaleY = optimalScales.yScale;
+        if (this.distributionDatas.distributionGraphOptionsX) {
+          this.distributionDatas.distributionGraphOptionsX = {
+            ...this.distributionDatas.distributionGraphOptionsX,
+            selected: optimalScales.xScale,
+          };
+        }
+        if (this.distributionDatas.distributionGraphOptionsY) {
+          this.distributionDatas.distributionGraphOptionsY = {
+            ...this.distributionDatas.distributionGraphOptionsY,
+            selected: optimalScales.yScale,
+          };
+        }
+      } else {
+        // Slider navigation: restore the auto-computed scales so setDefaultGraphOptions()
+        // does not override them with global defaults.
+        if (
+          this.distributionDatas.distributionGraphOptionsX &&
+          this.distributionDatas.autoComputedScaleX
+        ) {
+          this.distributionDatas.distributionGraphOptionsX = {
+            ...this.distributionDatas.distributionGraphOptionsX,
+            selected: this.distributionDatas.autoComputedScaleX,
+          };
+        }
+        if (
+          this.distributionDatas.distributionGraphOptionsY &&
+          this.distributionDatas.autoComputedScaleY
+        ) {
+          this.distributionDatas.distributionGraphOptionsY = {
+            ...this.distributionDatas.distributionGraphOptionsY,
+            selected: this.distributionDatas.autoComputedScaleY,
+          };
+        }
       }
     }
 

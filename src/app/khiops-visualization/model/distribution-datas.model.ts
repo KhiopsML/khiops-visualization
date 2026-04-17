@@ -19,6 +19,11 @@ export class DistributionDatasModel {
   defaultInterpretableHistogramNumber: number = 0;
   histogramNumber: number = 0;
 
+  // Scales computed by the auto-scale algorithm for the default histogram.
+  // Preserved during slider navigation so the slider does not reset them.
+  autoComputedScaleX: string | undefined = undefined;
+  autoComputedScaleY: string | undefined = undefined;
+
   distributionGraphOptionsX: DistributionOptionsI | undefined = undefined;
   distributionGraphOptionsY: DistributionOptionsI | undefined = undefined;
   distributionGraphDatas: ChartDatasModel | undefined = undefined;
