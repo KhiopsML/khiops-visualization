@@ -4425,10 +4425,10 @@ custom-event@~1.0.0:
   resolved "https://registry.yarnpkg.com/custom-event/-/custom-event-1.0.1.tgz#5d02a46850adf1b4a317946a3928fccb5bfd0425"
   integrity sha512-GAj5FOq0Hd+RsCGVJxZuKaIDXDf3h6GQoNEjFgbLLI/trgtavwUbSnZ5pVfg27DVCaWjIohryS0JFwIJyT2cMg==
 
-cypress@^15.14.0:
-  version "15.14.0"
-  resolved "https://registry.yarnpkg.com/cypress/-/cypress-15.14.0.tgz#762d58fd7acc348bbf35f566164e7c234d1756b1"
-  integrity sha512-AHt9YLKVl6uOFfXsLM3+LSZFwsx36BJRyFv4CjsqcRgr+V9kir0IPVRZUgqZVNudRalx771A1c4yR3DmXvSiBQ==
+cypress@^15.14.1:
+  version "15.14.1"
+  resolved "https://registry.yarnpkg.com/cypress/-/cypress-15.14.1.tgz#396a6f0aa4f0e7fa98e714c1d435e9affd60cde0"
+  integrity sha512-AkuiHNSnmm0a+h/horcvbjmY6dWpCe1Ebp1R0LjMP5I6pjMaNA50Mw1YP/d07pLHJ/sV8FZoGecUWFCJ/Nifpw==
   dependencies:
     "@cypress/request" "^3.0.10"
     "@cypress/xvfb" "^1.2.4"
