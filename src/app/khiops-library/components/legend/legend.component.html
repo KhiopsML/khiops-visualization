@@ -14,7 +14,11 @@
           fxLayoutAlign="start center"
           (click)="selectLegendItem(data.name)"
           [ngClass]="{ 'legend-selected': selectedItem === data.name }"
-          title="{{ tooltip || data.name }}"
+          title="{{
+            data.name === defaultGroupName
+              ? ('TOOLTIPS.DEFAULT_GROUP_INDEX' | translate)
+              : tooltip || data.name
+          }}"
         >
           <div
             class="square"
