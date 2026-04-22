@@ -119,7 +119,7 @@
 }
 
 .tree-leaf .tree-leaf-text .edit-button:hover {
-  background: rgba(0, 0, 0, 0.9);
+  background: rgba(255, 255, 255, 0.2) !important;
   color: white !important;
 }
 
@@ -134,16 +134,16 @@
 }
 
 .tree-leaf .tree-leaf-content.tree-selected .tree-leaf-text .edit-button:hover {
-  background: rgba(0, 0, 0, 0.9);
+  background: rgba(255, 255, 255, 0.2) !important;
   color: white !important;
 }
 
 .tree-leaf .tree-leaf-content:not(.tree-selected):hover {
-  background: var(--bg-color-20);
+  background: var(--bg-color-30);
 }
 
 .tree-leaf .tree-leaf-content.tree-selected:hover {
-  background: var(--primary-10);
+  background: var(--bg-color-contrast);
 }
 
 .tree-leaf .tree-leaf-content:before,
@@ -230,7 +230,7 @@
     }
 
     .edit-icons:hover {
-      background: rgba(0, 0, 0, 0.9);
+      background: rgba(255, 255, 255, 0.2) !important;
       color: white !important;
     }
   }

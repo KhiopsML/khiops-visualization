@@ -353,7 +353,6 @@ export class HistogramComponent extends SelectableComponent implements OnInit {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    // console.log('🚀 ~ HistogramComponent ~ ngOnChanges ~ changes:', changes);
     if (changes.datas && !changes.datas.firstChange) {
       // Don't restore variable scale settings here - it would override user's local changes
       // Only restore on component initialization (ngOnInit)
@@ -692,7 +691,7 @@ export class HistogramComponent extends SelectableComponent implements OnInit {
             let middleShift =
               shift -
               ((this.w - 2 * this.xPadding) / this.ratio) *
-              Math.log10(this.rangeXLog.middlewidth || 1);
+                Math.log10(this.rangeXLog.middlewidth || 1);
             domain = [1];
             this.histogramRendererService.drawXAxis(
               this.svg,
@@ -735,14 +734,14 @@ export class HistogramComponent extends SelectableComponent implements OnInit {
             width =
               width -
               ((this.w - 2 * this.xPadding) / this.ratio) *
-              Math.log10(this.rangeXLog.middlewidth || 1) *
-              2;
+                Math.log10(this.rangeXLog.middlewidth || 1) *
+                2;
           } else {
             if (this.rangeXLog.inf) {
               width =
                 width -
                 ((this.w - 2 * this.xPadding) / this.ratio) *
-                Math.log10(this.rangeXLog.middlewidth || 1);
+                  Math.log10(this.rangeXLog.middlewidth || 1);
             }
           }
           this.histogramRendererService.drawXAxis(

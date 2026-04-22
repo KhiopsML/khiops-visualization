@@ -14,6 +14,7 @@ import {
   SimpleChanges,
   ElementRef,
   OnDestroy,
+  ChangeDetectorRef,
 } from '@angular/core';
 import * as ChartJs from 'chart.js';
 import type { ChartEvent, ActiveElement } from 'chart.js';
@@ -45,12 +46,14 @@ export class ChartComponent implements AfterViewInit, OnChanges, OnDestroy {
   @Output() private selectBarIndex: EventEmitter<number> = new EventEmitter();
 
   public isLoading: boolean = false;
+  public isChartReady: boolean = false;
   private updateGraphTimeout: any;
 
   constructor(
     private el: ElementRef,
     private khiopsLibraryService: KhiopsLibraryService,
     private chartManagerService: ChartManagerService,
+    private cdr: ChangeDetectorRef,
   ) {
     this.colorSet = this.khiopsLibraryService.getGraphColorSet()[0];
   }
@@ -115,6 +118,7 @@ export class ChartComponent implements AfterViewInit, OnChanges, OnDestroy {
       !changes.chartOptions.firstChange
     ) {
       // We must reconstruct the chart if the scale change
+      this.isChartReady = false;
       this.chartManagerService.destroy(); // Clean up existing chart
       this.initChart();
     }
@@ -153,6 +157,15 @@ export class ChartComponent implements AfterViewInit, OnChanges, OnDestroy {
           this.isLoading,
         );
         this.isLoading = false;
+        // Wait for Chart.js ResizeObserver to settle before revealing the chart
+        if (!this.isChartReady) {
+          requestAnimationFrame(() => {
+            requestAnimationFrame(() => {
+              this.isChartReady = true;
+              this.cdr.detectChanges();
+            });
+          });
+        }
       }
     }, 0); // Execute on next tick
   }

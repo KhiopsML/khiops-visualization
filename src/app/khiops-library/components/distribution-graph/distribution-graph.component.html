@@ -15,13 +15,11 @@
             </h2>
           </div>
         }
-        @if (shouldShowLegend) {
-          <kl-legend
-            [inputDatas]="inputDatas"
-            [type]="'chart-1d'"
-            [colorSet]="colorSet"
-          ></kl-legend>
-        }
+        <kl-legend
+          [inputDatas]="inputDatas"
+          [type]="'chart-1d'"
+          [colorSet]="colorSet"
+        ></kl-legend>
         @if (!hideGraphOptions) {
           <div class="comp-header-tools screenshot-hide" fxLayout="row">
             <kl-graph-options-menu

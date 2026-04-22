@@ -19,7 +19,8 @@ import './commands';
 // Global setup: Set number precision to 8 for all tests
 beforeEach(() => {
   // Ensure number precision is set to 8 before every test
-  cy.setGlobalNumberPrecision();
+  cy.setGlobalSetting('SETTING_NUMBER_PRECISION', 8);
+  cy.setGlobalAutoScale(true);
 });
 
 declare global {
@@ -28,7 +29,12 @@ declare global {
       loadFile(ctx: string, file: string): Chainable<Element>;
       initViews(): Chainable<Element>;
       checkCanvasIsNotEmpty(canvasSelector: string): Chainable<Element>;
-      setGlobalNumberPrecision(): Chainable<Element>;
+      setGlobalSetting(settingKey: string, value: any): Chainable<Element>;
+      setGlobalAutoScale(value: boolean): Chainable<Element>;
+      testComponentCopyDatas(
+        id: string,
+        mockFileName: string,
+      ): Chainable<Element>;
       testComponentScreenshot(id: string): Chainable<Element>;
     }
   }

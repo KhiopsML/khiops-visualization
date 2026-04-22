@@ -33,6 +33,7 @@ export class ChartManagerService {
   private barColor: string = 'rgba(0, 0, 0, 1)';
   private fontColor: string = '#999';
   private lastDataHash: string | null = null;
+  private selectedBarIndex: number | undefined;
 
   constructor(private configService: ConfigService) {}
 
@@ -106,6 +107,34 @@ export class ChartManagerService {
       } catch (e) {}
       this.lastDataHash = null; // Reset hash when reinitializing chart
 
+      const shadowPlugin = {
+        id: 'selectedBarShadow',
+        beforeDatasetsDraw: (chart: ChartJs.Chart) => {
+          if (this.selectedBarIndex === undefined) return;
+          const ctx = chart.ctx;
+          ctx.save();
+          ctx.shadowColor = 'rgba(0, 0, 0, 0.3)';
+          ctx.shadowBlur = 2;
+          ctx.shadowOffsetX = 0;
+          ctx.shadowOffsetY = 2;
+          // ctx.fillStyle = 'rgb(0 0 0)';
+          for (let i = 0; i < chart.data.datasets.length; i++) {
+            const meta = chart.getDatasetMeta(i);
+            if (meta.hidden) continue;
+            // @ts-ignore
+            const el = meta.data[this.selectedBarIndex] as any;
+            if (!el) continue;
+            // Draw a solid opaque rectangle so the canvas shadow is fully opaque
+            const barX = el.x - el.width / 2;
+            const barY = el.y;
+            const barW = el.width;
+            const barH = el.base - el.y;
+            ctx.fillRect(barX, barY, barW, barH);
+          }
+          ctx.restore();
+        },
+      };
+
       const chartAreaBorder = {
         id: 'chartAreaBorder',
         beforeDraw(
@@ -146,7 +175,7 @@ export class ChartManagerService {
         type: type,
         data: data,
         options: options,
-        plugins: [chartAreaBorder],
+        plugins: [shadowPlugin, chartAreaBorder],
       };
       this.chart = new ChartJs.Chart(ctx, config);
       return true;
@@ -169,48 +198,55 @@ export class ChartManagerService {
     selectedLineChartItem: string | undefined,
     isLoading: boolean,
   ): void {
-    setTimeout(
-      () => {
-        if (
-          inputDatas &&
-          this.chart &&
-          (inputDatas.datasets.length === 0 ||
-            inputDatas.datasets[0]?.data.length > 0)
-        ) {
-          // Create hash of current data state
-          const currentDataHash = this.createDataHash(
-            inputDatas,
-            activeEntries,
-            colorSet,
-            selectedLineChartItem,
-          );
+    const run = () => {
+      if (
+        inputDatas &&
+        this.chart &&
+        (inputDatas.datasets.length === 0 ||
+          inputDatas.datasets[0]?.data.length > 0)
+      ) {
+        // Create hash of current data state
+        const currentDataHash = this.createDataHash(
+          inputDatas,
+          activeEntries,
+          colorSet,
+          selectedLineChartItem,
+        );
 
-          // Check if data has changed
-          if (currentDataHash === this.lastDataHash) {
-            // No changes detected, skip update
-            return;
-          }
-
-          // Update last hash
-          this.lastDataHash = currentDataHash;
-
-          // Update datas
-          // Force khiops VO into Chart dataset
-          // @ts-ignore
-          this.chart.data.datasets = inputDatas.datasets;
-          this.chart.data.labels = inputDatas.labels;
-
-          this.colorize(inputDatas, colorSet, selectedLineChartItem);
-          if (activeEntries !== undefined) {
-            // can be 0
-            // Select previous value if set
-            this.selectCurrentBarIndex(activeEntries, true);
-          }
-          this.chart.update();
+        // Check if data has changed
+        if (currentDataHash === this.lastDataHash) {
+          // No changes detected, skip update
+          return;
         }
-      },
-      isLoading ? 100 : 0,
-    );
+
+        // Update last hash
+        this.lastDataHash = currentDataHash;
+
+        // Update datas
+        // Force khiops VO into Chart dataset
+        // @ts-ignore
+        this.chart.data.datasets = inputDatas.datasets;
+        this.chart.data.labels = inputDatas.labels;
+
+        if (activeEntries !== undefined) {
+          this.selectedBarIndex = activeEntries;
+        }
+        this.colorize(inputDatas, colorSet, selectedLineChartItem);
+        if (activeEntries !== undefined) {
+          // can be 0
+          // Select previous value if set
+          this.selectCurrentBarIndex(activeEntries, true);
+        }
+        this.chart.update();
+      }
+    };
+
+    // Only delay when chart is in loading state, otherwise run directly
+    if (isLoading) {
+      setTimeout(run, 100);
+    } else {
+      run();
+    }
   }
 
   /**
@@ -276,6 +312,7 @@ export class ChartManagerService {
       if (inputDatas) {
         this.colorize(inputDatas, colorSet, selectedLineChartItem);
       }
+      this.selectedBarIndex = index;
       for (let i = 0; i < this.chart.data.datasets.length; i++) {
         const dataset = <ChartDatasetModel>this.chart.data.datasets[i];
         if (index !== undefined) {
@@ -285,6 +322,42 @@ export class ChartManagerService {
         dataset.borderWidth = 2;
       }
     }
+  }
+
+  /**
+   * Creates a diagonal hatching canvas pattern over a base color.
+   * @param color - The base fill color for the pattern
+   * @returns A CanvasPattern with hatching, or the original color string if canvas is unavailable
+   */
+  private createHatchPattern(color: string): CanvasPattern | string {
+    const size = 20;
+    const canvas = document.createElement('canvas');
+    canvas.width = size;
+    canvas.height = size;
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return color;
+
+    // Fill with base color
+    ctx.fillStyle = color;
+    ctx.fillRect(0, 0, size, size);
+
+    // Draw multiple parallel diagonal lines that connect seamlessly when tiled
+    ctx.strokeStyle = 'rgba(255, 255, 255, 1)';
+    ctx.lineWidth = 2;
+    ctx.lineCap = 'square';
+    ctx.lineJoin = 'miter';
+    ctx.imageSmoothingEnabled = false;
+
+    const spacing = 10;
+    // Draw lines across the full tile and beyond to connect seamlessly
+    for (let offset = -size; offset < size * 2; offset += spacing) {
+      ctx.beginPath();
+      ctx.moveTo(offset, 0);
+      ctx.lineTo(offset + size, size);
+      ctx.stroke();
+    }
+
+    return ctx.createPattern(canvas, 'repeat') || color;
   }
 
   /**
@@ -314,12 +387,27 @@ export class ChartManagerService {
         const defaultGroupIndex = dataset.extra?.findIndex(
           (e: ChartDatasetExtra) => e.defaultGroupIndex,
         );
-        if (defaultGroupIndex !== -1) {
+        // Apply hatching for default group index bar, keeping the same base color
+        if (defaultGroupIndex !== -1 && defaultGroupIndex !== undefined) {
+          const baseColor = UtilsService.hexToRGBa(colorSet?.domain[i]!, 0.7);
           // @ts-ignore
-          dataset.backgroundColor[defaultGroupIndex] = UtilsService.hexToRGBa(
-            colorSet?.domain[i]!,
-            0.5,
+          dataset.backgroundColor[defaultGroupIndex] = this.createHatchPattern(
+            baseColor ?? '',
           );
+        }
+        // Selected bar gets full opacity
+        if (this.selectedBarIndex !== undefined) {
+          const index = this.selectedBarIndex;
+          if (index === defaultGroupIndex) {
+            // Selected default group bar: full opacity with hatching
+            const fullColor = UtilsService.hexToRGBa(colorSet?.domain[i]!, 1);
+            // @ts-ignore
+            (dataset.backgroundColor as (string | CanvasPattern)[])[index] =
+              this.createHatchPattern(fullColor ?? '');
+          } else {
+            (dataset.backgroundColor as string[])[index] =
+              UtilsService.hexToRGBa(colorSet?.domain[i]!, 1) ?? '';
+          }
         }
 
         let borderOpacity = 1;
@@ -340,14 +428,6 @@ export class ChartManagerService {
         dataset.borderColor = new Array(inputDatas.labels.length).fill(
           UtilsService.hexToRGBa(colorSet?.domain[i]!, borderOpacity),
         );
-
-        if (defaultGroupIndex !== -1) {
-          // @ts-ignore
-          dataset.borderColor[defaultGroupIndex] = UtilsService.hexToRGBa(
-            '#ff6600',
-            0.9,
-          );
-        }
       }
     }
   }
@@ -376,5 +456,6 @@ export class ChartManagerService {
     } catch (e) {}
     this.chart = undefined;
     this.lastDataHash = null; // Reset hash when chart is destroyed
+    this.selectedBarIndex = undefined;
   }
 }

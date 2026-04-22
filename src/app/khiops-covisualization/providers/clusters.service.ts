@@ -297,7 +297,10 @@ export class ClustersService {
     const infoPerCluster = new ChartDatasModel();
 
     let currentDataSet: ChartDatasetModel;
-    currentDataSet = new ChartDatasetModel('info', CHART_TYPES.LINE);
+    currentDataSet = new ChartDatasetModel(
+      this.translate.get('GLOBAL.INFORMATION_RATE'),
+      CHART_TYPES.LINE,
+    );
     if (this.dimensionsDatasService.dimensionsDatas?.hierarchyDatas) {
       for (
         let j =
@@ -388,9 +391,8 @@ export class ClustersService {
         i++
       ) {
         currentDataSet = new ChartDatasetModel(
-          this.dimensionsDatasService.dimensionsDatas?.selectedDimensions[
-            i
-          ]?.name,
+          this.dimensionsDatasService.dimensionsDatas?.selectedDimensions[i]
+            ?.name,
           CHART_TYPES.LINE,
         );
 

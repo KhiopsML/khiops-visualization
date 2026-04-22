@@ -184,12 +184,27 @@
         }
       }
 
+      // Fetch available branch bundles from the branches manifest
+      async function fetchBranches() {
+        try {
+          const response = await fetch('./dist/branches.json');
+          if (!response.ok) return [];
+          return await response.json();
+        } catch (error) {
+          console.error('Error fetching branches:', error);
+          return [];
+        }
+      }
+
       // Load script for a specific version
       function loadScript(version) {
         // Update loading text with version info
         const loadingText = document.getElementById('loading-text');
-        if (version === 'dev') {
-          loadingText.textContent = 'Loading Khiops version development (dev)';
+        if (version === 'dev' || version === 'branch:master') {
+          loadingText.textContent = 'Loading Khiops development version (master branch)';
+        } else if (version && version.startsWith('branch:')) {
+          const branchName = version.slice('branch:'.length);
+          loadingText.textContent = `Loading Khiops branch ${branchName}`;
         } else if (version) {
           loadingText.textContent = `Loading Khiops version ${version}`;
         } else {
@@ -202,8 +217,11 @@
         const scriptElement = document.getElementById('dynamic-script');
         let url;
 
-        if (version === 'dev') {
+        if (version === 'dev' || version === 'branch:master') {
           url = `./dist/khiops-webcomponents.bundle.js?v=${Math.random()}`;
+        } else if (version && version.startsWith('branch:')) {
+          const safeName = version.slice('branch:'.length);
+          url = `./dist/khiops-webcomponents-${safeName}.bundle.js?v=${Math.random()}`;
         } else if (version) {
           // Encode version to prevent XSS
           const encodedVersion = encodeURIComponent(version);
@@ -236,17 +254,35 @@
       // Initialize version selector
       async function initVersionSelector() {
         const select = document.getElementById('version-select');
-        const versions = await fetchVersions();
 
-        if (versions.length === 0) {
+        // Fetch branch bundles and NPM versions in parallel
+        const [branches, versions] = await Promise.all([
+          fetchBranches(),
+          fetchVersions(),
+        ]);
+
+        if (branches.length === 0 && versions.length === 0) {
           select.innerHTML =
             '<option value="">Failed to load versions</option>';
           return;
         }
 
-        // Build options with dev at top
-        let optionsHTML = '<option value="dev">dev (branch master)</option>';
-        optionsHTML += '<option disabled>──────────</option>';
+        let optionsHTML = '';
+
+        // Branches section at the top
+        if (branches.length > 0) {
+          optionsHTML += '<option disabled>── Branches ──</option>';
+          branches.forEach((branch) => {
+            const label =
+              branch.name === 'master' ? 'master (dev)' : branch.name;
+            optionsHTML += `<option value="branch:${branch.safe}">${label}</option>`;
+          });
+          if (versions.length > 0) {
+            optionsHTML += '<option disabled>──────────</option>';
+          }
+        }
+
+        // NPM versions section
         optionsHTML += versions
           .map(
             (version) =>
@@ -261,12 +297,20 @@
         const versionParam = urlParams.get('v');
 
         if (versionParam === 'dev') {
-          currentVersion = 'dev';
+          // Legacy: map 'dev' to master branch if available
+          currentVersion = branches.find((b) => b.name === 'master')
+            ? 'branch:master'
+            : versions[0] || '';
+        } else if (versionParam && versionParam.startsWith('branch:')) {
+          const safeName = versionParam.slice('branch:'.length);
+          currentVersion = branches.some((b) => b.safe === safeName)
+            ? versionParam
+            : versions[0] || '';
         } else if (versionParam && versions.includes(versionParam)) {
           currentVersion = versionParam;
         } else {
           // Default to latest NPM version
-          currentVersion = versions[0];
+          currentVersion = versions[0] || '';
         }
 
         select.value = currentVersion;

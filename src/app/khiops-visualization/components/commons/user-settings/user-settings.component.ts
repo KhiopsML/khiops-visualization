@@ -32,6 +32,7 @@ export class UserSettingsComponent implements OnChanges {
   public numberPrecision?: number;
   public contrastValue: number =
     AppConfig.visualizationCommon.GLOBAL.MATRIX_CONTRAST;
+  public autoScale: boolean = false;
 
   constructor(private trackerService: TrackerService) {}
 
@@ -60,6 +61,10 @@ export class UserSettingsComponent implements OnChanges {
       AppConfig.visualizationCommon.GLOBAL.MATRIX_CONTRAST;
     AppService.Ls.set(LS.SETTING_MATRIX_CONTRAST, this.contrastValue);
     AppConfig.visualizationCommon.GLOBAL.MATRIX_CONTRAST = this.contrastValue;
+
+    // Auto scale
+    this.autoScale =
+      AppService.Ls.get(LS.SETTING_AUTO_SCALE)?.toString() === 'true';
   }
 
   onClickOnCancel() {
@@ -75,6 +80,8 @@ export class UserSettingsComponent implements OnChanges {
 
     AppService.Ls.set(LS.SETTING_MATRIX_CONTRAST, this.contrastValue);
     AppConfig.visualizationCommon.GLOBAL.MATRIX_CONTRAST = this.contrastValue;
+
+    AppService.Ls.set(LS.SETTING_AUTO_SCALE, this.autoScale);
 
     AppService.Ls.setAll();
 

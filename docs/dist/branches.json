@@ -1,0 +1,10 @@
+[
+  {
+    "name": "master",
+    "safe": "master"
+  },
+  {
+    "name": "feat-dock",
+    "safe": "feat-dock"
+  }
+]

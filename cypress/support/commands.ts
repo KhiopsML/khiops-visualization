@@ -65,6 +65,11 @@ Cypress.Commands.add('setGlobalNumberPrecision', () => {
   // No-op: number precision is now handled via localStorage.getItem interception in loadFile
 });
 
+Cypress.Commands.add('setGlobalAutoScale', (value: boolean) => {
+  // Set auto scale setting globally for all tests
+  cy.setGlobalSetting('SETTING_AUTO_SCALE', value);
+});
+
 Cypress.Commands.add(
   'testComponentCopyDatas',
   (id: string, mockFileName: string) => {

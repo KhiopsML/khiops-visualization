@@ -33,13 +33,15 @@ import { TreeView } from '@khiops-treeview';
 })
 export class TreeSelectComponent
   extends SelectableComponent
-  implements AfterViewInit, OnChanges {
+  implements AfterViewInit, OnChanges
+{
   @Input() public dimensionTree?: [TreeNodeModel];
 
   public componentType = COMPONENT_TYPES.KV_TREE; // needed to copy datas
   public override id: string | undefined = undefined;
   public isFullscreen: boolean = false;
   private tree: any;
+  private isTreeReady: boolean = false;
 
   selectedNodes$: Observable<TreeNodeModel[]>;
   selectedNode$: Observable<TreeNodeModel | undefined>;
@@ -65,10 +67,12 @@ export class TreeSelectComponent
 
   ngOnInit() {
     this.selectedNodes$.subscribe((selectedNodes) => {
-      this.tree?.selectNodes(selectedNodes);
+      if (this.isTreeReady) {
+        this.tree?.selectNodes(selectedNodes);
+      }
     });
     this.selectedNode$.subscribe((selectedNode) => {
-      if (selectedNode) {
+      if (this.isTreeReady && selectedNode) {
         this.tree?.scrollToNode(selectedNode._id);
       }
     });
@@ -96,7 +100,16 @@ export class TreeSelectComponent
       );
 
       this.tree.on('init', async () => {
+        // Keep subscriptions blocked during reset
+        this.isTreeReady = false;
         this.store.initSelectedNodes();
+        // Re-enable subscriptions after the store has settled, then apply initial selection
+        queueMicrotask(() => {
+          this.isTreeReady = true;
+          firstValueFrom(this.selectedNodes$).then((nodes) => {
+            this.tree?.selectNodes(nodes);
+          });
+        });
       });
 
       this.tree.on('select', (e: any) => {

@@ -113,8 +113,8 @@
     "ALLOW": "Ok"
   },
   "SCALE_PERSISTENCE": {
-    "TITLE": "Scale persistence",
-    "MESSAGE": "Keep Y/X linear/log scales when changing variable"
+    "MESSAGE": "When enabled, automatically adjusts the axes of distribution charts for improved readability",
+    "AUTO_SCALE": "Automatic scale selection (Lin/Log)"
   },
   "GLOBAL": {
     "SELECT_VARIABLE": "Select variable",
@@ -394,6 +394,7 @@
     }
   },
   "TOOLTIPS": {
+    "DEFAULT_GROUP_INDEX": "In the case of a variable with many categories, a specific bin (\"Default group index\") may gather many modalities and is shown with a different color. This specific bin is given the name of its most populated modality and clicking on the bin makes its content is available in panel E. As it may gather many small modalities, it may appear as the dominant bin of the distribution and the name might be misleading, therefore the different color.",
     "TABS": {
       "PROJECT": "Project: list of output analysis files",
       "PREPARATION": "Preparation:  univariate data analysis on the train database",
