@@ -71,7 +71,9 @@ export class AppComponent
   ) {
     super(ngzone, fileLoaderService, configService);
     // Set LS_ID first before any initialization that uses localStorage
-    AppService.Ls.setLsId(AppConfig.covisualizationCommon.GLOBAL.LS_ID);
+    AppService.Ls.setLsId(
+      AppConfig.covisualizationCommon.GLOBAL.LS_ID || 'KHIOPS_COVISUALIZATION_',
+    );
     // Now we can safely initialize the app service
     this.appService.initialize();
   }
