@@ -110,12 +110,12 @@ export class SelectedClustersComponent implements OnInit, OnDestroy, OnChanges {
 
   /**
    * Selects the active clusters from the list of selected clusters.
-   * Simply displays all available selected clusters regardless of hierarchy visibility.
+   * Displays only the first 2 clusters, unless there are exactly 2 clusters in total.
    */
   private selectActiveClusters() {
-    // Display all selected clusters - no need for complex position mapping
-    if (this.selectedClusters && this.selectedClusters.length > 0) {
-      this.activeClusters = [...this.selectedClusters];
+    // Select only the first 2 items, unless there are exactly 2 items
+    if (this.selectedClusters && this.selectedClusters.length > 2) {
+      this.activeClusters = this.selectedClusters.slice(0, 2);
     } else {
       this.activeClusters = [];
     }
