@@ -30,7 +30,7 @@ export class VarDetailsPreparationComponent implements OnInit, OnChanges {
 
   @Input() public preparationSource?: string;
 
-  public isRegressionOrExplanatoryAnalysis?: boolean;
+  public isRegressionAnalysis?: boolean;
   public preparationDatas?: {
     selectedVariable: PreparationVariableModel;
     currentIntervalDatas: GridDatasI;
@@ -49,8 +49,7 @@ export class VarDetailsPreparationComponent implements OnInit, OnChanges {
 
   ngOnInit() {
     this.sizes = this.layoutService.getViewSplitSizes('preparationView');
-    this.isRegressionOrExplanatoryAnalysis =
-      this.preparationDatasService.isExplanatoryAnalysis() ||
+    this.isRegressionAnalysis =
       this.evaluationDatasService.isRegressionAnalysis();
     this.preparation2dDatas = this.preparation2dDatasService.getDatas();
   }
@@ -94,7 +93,7 @@ export class VarDetailsPreparationComponent implements OnInit, OnChanges {
     this.distributionSelectedBarIndex = index;
 
     // Callback when user click on bar distribution to select matrix corresponding cell
-    if (this.isRegressionOrExplanatoryAnalysis) {
+    if (this.isRegressionAnalysis) {
       this.matrixRegSelectedCell = index;
     } else {
       // get interval data if no matrix

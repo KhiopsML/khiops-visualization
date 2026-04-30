@@ -24,7 +24,7 @@
             (selectedItemChanged)="onSelectedGraphItemChanged($event)"
             (interpretableHistogramChanged)="onSelectedGraphItemChanged($event)"
             fxFlex="1 1 100%"
-            [showTargetDistributionGraph]="!isRegressionOrExplanatoryAnalysis"
+            [showTargetDistributionGraph]="!isRegressionAnalysis"
           >
           </app-variable-graph-details>
         }
@@ -32,7 +32,7 @@
           <kl-no-data fxFlex></kl-no-data>
         }
       </as-split-area>
-      @if (isRegressionOrExplanatoryAnalysis) {
+      @if (isRegressionAnalysis) {
         <as-split-area class="kl-card" [size]="sizes?.row1Col1Row0Col[1]">
           <app-regression-matrix
             fxFlex="1 1 100%"
@@ -52,8 +52,7 @@
     [size]="sizes?.row1Col1Row[1]"
   >
     @if (
-      preparationDatas?.currentIntervalDatas?.values &&
-      !isRegressionOrExplanatoryAnalysis
+      preparationDatas?.currentIntervalDatas?.values && !isRegressionAnalysis
     ) {
       <kl-ag-grid
         id="preparation-current-interval"
@@ -82,7 +81,7 @@
     @if (
       (!preparationDatas?.currentIntervalDatas?.values &&
         preparation2dDatas?.currentCellDatas) ||
-      isRegressionOrExplanatoryAnalysis
+      isRegressionAnalysis
     ) {
       <as-split direction="horizontal">
         <as-split-area class="variables-list-container">
