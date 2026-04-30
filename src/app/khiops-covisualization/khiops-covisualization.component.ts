@@ -203,6 +203,11 @@ export class AppComponent
       return this.saveService.constructSavedJson(collapsedNodes);
     };
     this.element.nativeElement.setConfig = (config: ConfigModel) => {
+      AppService.Ls.setLsId(
+        config.lsId ||
+          AppConfig.covisualizationCommon.GLOBAL.LS_ID ||
+          'KHIOPS_COVISUALIZATION_',
+      );
       this.configService.setConfig(config);
 
       AppService.Ls.getAll().then(() => {
