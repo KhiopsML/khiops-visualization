@@ -45,6 +45,7 @@ import { CovisualizationDatas } from '@khiops-covisualization/interfaces/app-dat
 export class HomeLayoutComponent implements OnInit, OnDestroy {
   public showProjectTab: boolean | undefined = true;
   public showLogo: boolean | undefined = false;
+  public selectTabName: string | undefined;
   public get appDatas(): CovisualizationDatas | undefined {
     return this.appService.appDatas;
   }
@@ -230,10 +231,25 @@ export class HomeLayoutComponent implements OnInit, OnDestroy {
     }, 250); // do it after nav drawer anim
   }
 
+  private getTabIndexByName(name: string): number {
+    const visibleTabs: string[] = ['AXIS'];
+    if (this.isContextDimensions) visibleTabs.push('CONTEXT');
+    if (this.showProjectTab) visibleTabs.push('PROJECT');
+    const index = visibleTabs.findIndex(
+      (t) => t.toLowerCase() === name.toLowerCase(),
+    );
+    return index >= 0 ? index : 0;
+  }
+
   private selectFirstTab() {
     this.openContextView = false;
     this.selectedTab = undefined;
-    this.activeTab = 0;
+    this.activeTab = this.selectTabName
+      ? this.getTabIndexByName(this.selectTabName)
+      : 0;
+    if (this.activeTab === 1 && this.isContextDimensions) {
+      this.openContextView = true;
+    }
     this.appService.setActiveTabIndex(this.activeTab);
   }
 
@@ -263,6 +279,7 @@ export class HomeLayoutComponent implements OnInit, OnDestroy {
     if (this.showLogo === undefined) {
       this.showLogo = true;
     }
+    this.selectTabName = this.configService.getConfig().selectTabName;
     if (datas && !UtilsService.isEmpty(datas)) {
       if (!this.isCompatibleJson) {
         this.closeFile();
