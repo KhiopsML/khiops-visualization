@@ -147,7 +147,11 @@ export class AppComponent
       cb('reject');
     };
     this.element.nativeElement.setConfig = (config: ConfigModel) => {
-      AppService.Ls.setLsId(config.lsId);
+      AppService.Ls.setLsId(
+        config.lsId ||
+          AppConfig.visualizationCommon.GLOBAL.LS_ID ||
+          'KHIOPS_VISUALIZATION_',
+      );
 
       this.configService.setConfig(config);
 
