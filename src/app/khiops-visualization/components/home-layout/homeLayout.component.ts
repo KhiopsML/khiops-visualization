@@ -47,6 +47,7 @@ export class HomeLayoutComponent implements OnInit {
   }
   public showProjectTab: boolean | undefined = true;
   public showLogo: boolean | undefined = false;
+  public selectTabName: string | undefined;
   public activeTab = AppConfig.visualizationCommon.HOME.ACTIVE_TAB_INDEX;
   public appTitle?: string;
   public appVersion?: string;
@@ -148,6 +149,7 @@ export class HomeLayoutComponent implements OnInit {
     if (this.showLogo === undefined) {
       this.showLogo = true;
     }
+    this.selectTabName = this.configService.getConfig().selectTabName;
     if (!this.isCompatibleJson) {
       this.closeFile();
       this.snackBar.open(
@@ -189,11 +191,33 @@ export class HomeLayoutComponent implements OnInit {
     this.fileLoader?.closeFile();
   }
 
+  private getTabIndexByName(name: string): number {
+    const visibleTabs: string[] = [];
+    if (this.appDatas?.preparationReport) visibleTabs.push('PREPARATION');
+    if (this.appDatas?.textPreparationReport) visibleTabs.push('TEXT_PREPARATION');
+    if (this.appDatas?.treePreparationReport) visibleTabs.push('TREE_PREPARATION');
+    if (this.appDatas?.bivariatePreparationReport) visibleTabs.push('PREPARATION_2D');
+    if (this.appDatas?.modelingReport) visibleTabs.push('MODELING');
+    if (
+      this.appDatas?.trainEvaluationReport ||
+      this.appDatas?.evaluationReport ||
+      this.appDatas?.testEvaluationReport
+    )
+      visibleTabs.push('EVALUATION');
+    if (this.showProjectTab) visibleTabs.push('PROJECT');
+    const index = visibleTabs.findIndex(
+      (t) => t.toLowerCase() === name.toLowerCase(),
+    );
+    return index >= 0 ? index : 0;
+  }
+
   private selectFirstTab() {
     setTimeout(() => {
       this.selectedTab = undefined;
-      this.activeTab = 0;
-      this.mainTabGroup.selectedIndex = 0;
+      this.activeTab = this.selectTabName
+        ? this.getTabIndexByName(this.selectTabName)
+        : 0;
+      this.mainTabGroup.selectedIndex = this.activeTab;
       // Beware, the distribution chart fails to resize on init for some files #134, so we need to DOUBLE set loading to false after a delay to let the chart resize before displaying it
       setTimeout(() => {
         this.isLoading = false; // Distribution chart fails to resize on init for some files #134

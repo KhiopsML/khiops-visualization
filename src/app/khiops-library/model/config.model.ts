@@ -8,6 +8,7 @@ export class ConfigModel {
   showProjectTab?: boolean;
   showOpenFileBtn?: boolean;
   showLogo?: boolean;
+  selectTabName?: string;
   appSource!: string;
   storage: string = 'DEFAULT';
   lsId: string = '';
