@@ -134,9 +134,14 @@ export class VariableSearchDialogComponent
   private initializeInnerVariables() {
     if (this.data.selectedDimension?.innerVariables?.dimensionSummaries) {
       this.innerVariables =
-        this.data.selectedDimension.innerVariables.dimensionSummaries.map(
-          (dim) => dim.name,
-        );
+        this.data.selectedDimension.innerVariables.dimensionSummaries
+          .map((dim) => dim.name)
+          .sort((a, b) =>
+            a.localeCompare(b, undefined, {
+              numeric: true,
+              sensitivity: 'base',
+            }),
+          );
       if (this.innerVariables.length > 0) {
         this.selectedInnerVariable = this.innerVariables[0] || '';
       }
