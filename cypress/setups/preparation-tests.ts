@@ -6,7 +6,7 @@
 // @ts-nocheck
 
 import '../utils/utils';
-import { isExplanatoryAnalysis, isRegressionAnalysis } from '../utils/utils';
+import { isRegressionAnalysis } from '../utils/utils';
 
 export function setupPreparationTests(datas, testsValues) {
   testsValues.Preparation.push('Summary');
@@ -37,7 +37,7 @@ export function setupPreparationTests(datas, testsValues) {
     datas.preparationReport?.variablesDetailedStatistics?.R01 ||
     datas.preparationReport?.variablesDetailedStatistics?.R001
   ) {
-    if (isRegressionAnalysis(datas) || isExplanatoryAnalysis(datas)) {
+    if (isRegressionAnalysis(datas)) {
       // regression matrix case or explanatory
       // Check if matrix is displayed
       testsValues.Preparation.push('Target values');
