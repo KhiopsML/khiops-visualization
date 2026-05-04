@@ -67,9 +67,14 @@ export class MatrixInnerVariablesFilterComponent implements OnInit, OnChanges {
       // Get inner variables from the first dimension that has them
       for (const dimension of this.selectedDimensions) {
         if (dimension?.innerVariables?.dimensionSummaries) {
-          this.innerVariables = dimension.innerVariables.dimensionSummaries.map(
-            (dim) => dim.name,
-          );
+          this.innerVariables = dimension.innerVariables.dimensionSummaries
+            .map((dim) => dim.name)
+            .sort((a, b) =>
+              a.localeCompare(b, undefined, {
+                numeric: true,
+                sensitivity: 'base',
+              }),
+            );
 
           if (previousSelection.length > 0) {
             this.selectedInnerVariables = previousSelection.filter((variable) =>
