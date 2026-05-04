@@ -571,13 +571,18 @@ export class MatrixRendererService {
       ? cellData.xAxisFullPart
       : [];
 
-    // Check if any value in selectedInnerVariables is a substring of yAxisFullPart or xAxisFullPart
+    // Check if any value in selectedInnerVariables matches a value in yAxisFullPart or xAxisFullPart.
+    // Values are formatted as "InnerVarName PartName" (e.g. "V1 B0"), so we check for exact equality
+    // or a prefix match followed by a space to avoid "V1" matching "V11 B0".
+    const matchesInnerVar = (value: string, innerVar: string): boolean =>
+      value === innerVar || value.startsWith(innerVar + ' ');
+
     const containsInYAxis = yAxisFullPart.some((value: string) =>
-      selectedInnerVariables.some((innerVar) => value.includes(innerVar)),
+      selectedInnerVariables.some((innerVar) => matchesInnerVar(value, innerVar)),
     );
 
     const containsInXAxis = xAxisFullPart.some((value: string) =>
-      selectedInnerVariables.some((innerVar) => value.includes(innerVar)),
+      selectedInnerVariables.some((innerVar) => matchesInnerVar(value, innerVar)),
     );
 
     return containsInYAxis || containsInXAxis;
