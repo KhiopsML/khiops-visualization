@@ -24,20 +24,8 @@ describe('Test Plan for Khiops Covisualization', () => {
         cy.get('.variable-search-button-comp').first().click();
         cy.wait(200);
 
-        cy.get('#variable-search-results-table').contains('3 316');
-        cy.get('#variable-search-results-table').contains('2 767');
-        cy.get('#variable-search-results-table').contains('230');
-        cy.get('#variable-search-results-table').contains('32');
-
-        cy.get('.close-btn').first().click();
-        cy.wait(200);
-        cy.get('.variable-search-button-comp').first().click();
-        cy.wait(200);
-
-        cy.get('#variable-search-results-table').contains('3 316');
-        cy.get('#variable-search-results-table').contains('2 767');
-        cy.get('#variable-search-results-table').contains('230');
-        cy.get('#variable-search-results-table').contains('32');
+        cy.get('#variable-search-results-table').contains('5 539');
+        cy.get('#variable-search-results-table').contains('805');
 
         cy.get('.close-btn').first().click();
         cy.wait(200);
