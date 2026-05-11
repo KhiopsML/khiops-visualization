@@ -68,7 +68,7 @@ export function getVisualizationMockFile(): string {
   // let urlKV = 'typeBotnet_AllReports.json';
   // let urlKV = 'irisU.json';
   // let urlKV = 'CoronaWords100000_AllReports.V11.json';
-  // let urlKV = 'CrirteoAllReports.json';
+  // let urlKV = '.json';
   // let urlKV = 'CriteoAnalysisResults.khj';
   // let urlKV = 'Words100_AllReports.json';
   // let urlKV = 'UnivariateAnalysisResults.json';
