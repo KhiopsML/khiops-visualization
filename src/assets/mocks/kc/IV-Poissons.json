@@ -12,7 +12,7 @@
       "initialDimensions": 2,
       "frequencyVariable": "",
       "dictionary": "Albert et al NFF ecomatrix",
-      "database": "C:\\Users\\yfco6286\\OneDrive - orange.com\\Documents\\! - FABRICE_DOCUMENTS\\! - WORK 2025\\Poissons tropicaux\\Albert et al NFF ecomatrix.csv",
+      "database": "user",
       "samplePercentage": 100,
       "samplingMode": "Include sample",
       "selectionVariable": "",
@@ -32800,7 +32800,7 @@
     ]
   },
   "khiops_encoding": "ascii",
-  "filename": "C:\\Users\\yfco6286\\OneDrive - orange.com\\Documents\\! - FABRICE_DOCUMENTS\\! - WORK 2025\\Poissons tropicaux\\Coclustering.khcj",
+  "filename": "user",
   "savedDatas": {
     "viewsLayout": {
       "isDimensionsChecked": true,

@@ -6,26 +6,6 @@
 		{
 			"taskName": "Data preparation",
 			"messages": [
-				"warning : Data table C:\\Users\\yfco6286\\Documents\\! - FABRICE_DOCUMENTS\\! - WORK 2022\\MARTINEZ LOPEZ Sofia\\jointure2.txt : Record 14856 : Variable QO2 - Verbatim autre raison de non utilisation with value <\"Je prefere mon PC.....> : missing double-quote at the end of the field",
-				"warning : Data table C:\\Users\\yfco6286\\Documents\\! - FABRICE_DOCUMENTS\\! - WORK 2022\\MARTINEZ LOPEZ Sofia\\jointure2.txt : Record 14856 : Ignored record, bad field number (13 read fields for 102 expected fields)",
-				"warning : Data table C:\\Users\\yfco6286\\Documents\\! - FABRICE_DOCUMENTS\\! - WORK 2022\\MARTINEZ LOPEZ Sofia\\jointure2.txt : Record 14857 : Numerical variable csf_techno3g: value <Z1> converted to <> (Unconverted string)",
-				"warning : Data table C:\\Users\\yfco6286\\Documents\\! - FABRICE_DOCUMENTS\\! - WORK 2022\\MARTINEZ LOPEZ Sofia\\jointure2.txt : Record 14857 : Numerical variable drop_call_techno3g: value <NON> converted to <> (Unconverted string)",
-				"warning : Data table C:\\Users\\yfco6286\\Documents\\! - FABRICE_DOCUMENTS\\! - WORK 2022\\MARTINEZ LOPEZ Sofia\\jointure2.txt : Record 14857 : Numerical variable drop_call_techno4g: value <NON> converted to <> (Unconverted string)",
-				"warning : Data table C:\\Users\\yfco6286\\Documents\\! - FABRICE_DOCUMENTS\\! - WORK 2022\\MARTINEZ LOPEZ Sofia\\jointure2.txt : Record 14857 : Numerical variable drop_call_technowifi: value <NON> converted to <> (Unconverted string)",
-				"warning : Data table C:\\Users\\yfco6286\\Documents\\! - FABRICE_DOCUMENTS\\! - WORK 2022\\MARTINEZ LOPEZ Sofia\\jointure2.txt : Record 14857 : Numerical variable established_call_techno4g: value <DOGSO> converted to <> (Unconverted string)",
-				"warning : Data table C:\\Users\\yfco6286\\Documents\\! - FABRICE_DOCUMENTS\\! - WORK 2022\\MARTINEZ LOPEZ Sofia\\jointure2.txt : Record 14857 : Ignored record, bad field number (90 read fields for 102 expected fields)",
-				"warning : Data table C:\\Users\\yfco6286\\Documents\\! - FABRICE_DOCUMENTS\\! - WORK 2022\\MARTINEZ LOPEZ Sofia\\jointure2.txt : Record 14910 : Variable QO3_SAT - Verbatim SAT with value <\"Cela fonctionne sou...> : missing double-quote at the end of the field",
-				"warning : Data table C:\\Users\\yfco6286\\Documents\\! - FABRICE_DOCUMENTS\\! - WORK 2022\\MARTINEZ LOPEZ Sofia\\jointure2.txt : Record 14910 : Ignored record, bad field number (15 read fields for 102 expected fields)",
-				"warning : Data table C:\\Users\\yfco6286\\Documents\\! - FABRICE_DOCUMENTS\\! - WORK 2022\\MARTINEZ LOPEZ Sofia\\jointure2.txt : Record 14911 : Numerical variable Q23_SAT - Satisfaction globale reseau mobile Orange: value <Surfer sur internet ...> converted to <> (Unconverted string)",
-				"warning : Data table C:\\Users\\yfco6286\\Documents\\! - FABRICE_DOCUMENTS\\! - WORK 2022\\MARTINEZ LOPEZ Sofia\\jointure2.txt : Record 14911 : Numerical variable csf: value <Z1> converted to <> (Unconverted string)",
-				"warning : Data table C:\\Users\\yfco6286\\Documents\\! - FABRICE_DOCUMENTS\\! - WORK 2022\\MARTINEZ LOPEZ Sofia\\jointure2.txt : Record 14911 : Numerical variable drop_call: value <OUI> converted to <> (Unconverted string)",
-				"warning : Data table C:\\Users\\yfco6286\\Documents\\! - FABRICE_DOCUMENTS\\! - WORK 2022\\MARTINEZ LOPEZ Sofia\\jointure2.txt : Record 14911 : Numerical variable drop_call_techno2g: value <OUI> converted to <> (Unconverted string)",
-				"warning : Data table C:\\Users\\yfco6286\\Documents\\! - FABRICE_DOCUMENTS\\! - WORK 2022\\MARTINEZ LOPEZ Sofia\\jointure2.txt : Record 14911 : Numerical variable drop_call_techno3g: value <NON> converted to <> (Unconverted string)",
-				"warning : Data table C:\\Users\\yfco6286\\Documents\\! - FABRICE_DOCUMENTS\\! - WORK 2022\\MARTINEZ LOPEZ Sofia\\jointure2.txt : Record 14911 : Numerical variable established_call_techno2g: value <DOIDF> converted to <> (Unconverted string)",
-				"warning : Data table C:\\Users\\yfco6286\\Documents\\! - FABRICE_DOCUMENTS\\! - WORK 2022\\MARTINEZ LOPEZ Sofia\\jointure2.txt : Record 14911 : Numerical variable established_call_technowifi: value <1\/ Top15> converted to <> (Unconverted end of string)",
-				"warning : Data table C:\\Users\\yfco6286\\Documents\\! - FABRICE_DOCUMENTS\\! - WORK 2022\\MARTINEZ LOPEZ Sofia\\jointure2.txt : Record 14911 : Ignored record, bad field number (88 read fields for 102 expected fields)",
-				"warning : Data table C:\\Users\\yfco6286\\Documents\\! - FABRICE_DOCUMENTS\\! - WORK 2022\\MARTINEZ LOPEZ Sofia\\jointure2.txt : Record 14928 : Variable QO3_SAT - Verbatim SAT with value <\"23A Avenue de Broce...> : missing double-quote at the end of the field",
-				"warning : Data table C:\\Users\\yfco6286\\Documents\\! - FABRICE_DOCUMENTS\\! - WORK 2022\\MARTINEZ LOPEZ Sofia\\jointure2.txt : Record 14928 : Ignored record, bad field number (15 read fields for 102 expected fields)",
 				"warning : Data table : ..."
 			]
 		}
@@ -855,7 +835,7 @@
 			},
 			{
 				"rank": "R077",
-				"name": "flag_cxgp2020_qualite_coupurevoix",
+				"name": "user",
 				"type": "Categorical",
 				"values": 3,
 				"mode": "0",
@@ -2968,7 +2948,7 @@
 					"isSupervised": false,
 					"dimensions": [
 						{
-							"variable": "flag_cxgp2020_qualite_coupurevoix",
+							"variable": "user",
 							"type": "Categorical",
 							"partitionType": "Value groups",
 							"partition": [
