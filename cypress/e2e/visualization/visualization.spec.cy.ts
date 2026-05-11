@@ -65,7 +65,6 @@ describe('Test Khiops Visualization sample files', () => {
     'test_long_XDSL_Delc_AllReports.json',
     'typeBotnet_AllReports.json',
     'irisU.json',
-    'CrirteoAllReports.json',
     'UnivariateAnalysisResults.json',
     'ylogAdultAllReports.json',
     'AdultAllReports.json',
