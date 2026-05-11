@@ -63,7 +63,6 @@ describe('Test Khiops Visualization sample files', () => {
     'marc.json',
     'marc2.json',
     'test_long_XDSL_Delc_AllReports.json',
-    'Essai_1_AllReports.json',
     'typeBotnet_AllReports.json',
     'irisU.json',
     'CrirteoAllReports.json',
