@@ -200,8 +200,8 @@
       function loadScript(version) {
         // Update loading text with version info
         const loadingText = document.getElementById('loading-text');
-        if (version === 'dev' || version === 'branch:master') {
-          loadingText.textContent = 'Loading Khiops development version (master branch)';
+        if (version === 'dev' || version === 'branch:main') {
+          loadingText.textContent = 'Loading Khiops development version (main branch)';
         } else if (version && version.startsWith('branch:')) {
           const branchName = version.slice('branch:'.length);
           loadingText.textContent = `Loading Khiops branch ${branchName}`;
@@ -217,7 +217,7 @@
         const scriptElement = document.getElementById('dynamic-script');
         let url;
 
-        if (version === 'dev' || version === 'branch:master') {
+        if (version === 'dev' || version === 'branch:main') {
           url = `./dist/khiops-webcomponents.bundle.js?v=${Math.random()}`;
         } else if (version && version.startsWith('branch:')) {
           const safeName = version.slice('branch:'.length);
@@ -274,7 +274,7 @@
           optionsHTML += '<option disabled>── Branches ──</option>';
           branches.forEach((branch) => {
             const label =
-              branch.name === 'master' ? 'master (dev)' : branch.name;
+              branch.name === 'main' ? 'main (dev)' : branch.name;
             optionsHTML += `<option value="branch:${branch.safe}">${label}</option>`;
           });
           if (versions.length > 0) {
@@ -297,9 +297,9 @@
         const versionParam = urlParams.get('v');
 
         if (versionParam === 'dev') {
-          // Legacy: map 'dev' to master branch if available
-          currentVersion = branches.find((b) => b.name === 'master')
-            ? 'branch:master'
+          // Legacy: map 'dev' to main branch if available
+          currentVersion = branches.find((b) => b.name === 'main')
+            ? 'branch:main'
             : versions[0] || '';
         } else if (versionParam && versionParam.startsWith('branch:')) {
           const safeName = versionParam.slice('branch:'.length);
