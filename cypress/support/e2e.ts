@@ -16,13 +16,6 @@
 // When a command from ./commands is ready to use, import with `import './commands'` syntax
 import './commands';
 
-// Global setup: Set number precision to 8 for all tests
-beforeEach(() => {
-  // Ensure number precision is set to 8 before every test
-  cy.setGlobalSetting('SETTING_NUMBER_PRECISION', 8);
-  cy.setGlobalAutoScale(true);
-});
-
 declare global {
   namespace Cypress {
     interface Chainable {
