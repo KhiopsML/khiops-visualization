@@ -7,9 +7,11 @@
   },
   "angular.enable-strict-mode-prompt": false,
   "files.exclude": {
-    "**/node_modules": true
+    "**/node_modules": true,
+    "**/dist/**": true
   },
   "search.exclude": {
-    "**/node_modules": true
+    "**/node_modules": true,
+    "**/dist/**": true
   }
 }
