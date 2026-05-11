@@ -43,7 +43,7 @@ describe('Copy service', () => {
           {
             title: 'GLOBAL.DATABASE',
             value:
-              'C:\\Users\\yfco6286\\Desktop\\LAROSE Cyril\\essai_07\\20210303.result.models.021.csv',
+              'C:\\Users\\user\\Desktop\\user\\essai_07\\20210303.result.models.021.csv',
           },
           {
             title: 'GLOBAL.TARGET_VARIABLE',
@@ -75,7 +75,7 @@ describe('Copy service', () => {
       const intervalDatas =
         copyService.getInformationsDatas(currentSelectedArea);
       const expectedRes =
-        'Summary\nGLOBAL.DICTIONARY\t20210303.result.models.021\t\nGLOBAL.DATABASE\tC:\\Users\\yfco6286\\Desktop\\LAROSE Cyril\\essai_07\\20210303.result.models.021.csv\t\nGLOBAL.TARGET_VARIABLE\ttypologie des contenus\t\nGLOBAL.INSTANCES\t123\t\nGLOBAL.LEARNING_TASK\tClassification analysis\t\nGLOBAL.SAMPLE_PERCENTAGE\t70\t\nGLOBAL.SAMPLING_MODE\tInclude sample\t\nGLOBAL.EVALUATED_VARIABLES\t175\t\n';
+        'Summary\nGLOBAL.DICTIONARY\t20210303.result.models.021\t\nGLOBAL.DATABASE\tC:\\Users\\user\\Desktop\\user\\essai_07\\20210303.result.models.021.csv\t\nGLOBAL.TARGET_VARIABLE\ttypologie des contenus\t\nGLOBAL.INSTANCES\t123\t\nGLOBAL.LEARNING_TASK\tClassification analysis\t\nGLOBAL.SAMPLE_PERCENTAGE\t70\t\nGLOBAL.SAMPLING_MODE\tInclude sample\t\nGLOBAL.EVALUATED_VARIABLES\t175\t\n';
       expect(JSON.stringify(intervalDatas)).toEqual(
         JSON.stringify(expectedRes),
       );

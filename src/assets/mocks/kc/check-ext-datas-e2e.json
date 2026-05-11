@@ -612,7 +612,7 @@
       6, 5, 4
     ]
   },
-  "filename": "C:\\Users\\jcdf8453\\WORK\\workspace\\khiops\\visualization-component\\src\\assets\\mocks\\kc\\check-ext-datas.json",
+  "filename": "C:\\Users\\user\\WORK\\workspace\\khiops\\visualization-component\\src\\assets\\mocks\\kc\\check-ext-datas.json",
   "savedDatas": {
     "viewsLayout": {
       "isDimensionsChecked": true,
@@ -684,7 +684,7 @@
     "importedDatas": [
       {
         "filename": "ExternalDataEducation.txt",
-        "path": "/home/jcdf8453/projects/khiops-visualization/src/assets/mocks/kc/ExternalDataEducation.txt",
+        "path": "/home/user/projects/khiops-visualization/src/assets/mocks/kc/ExternalDataEducation.txt",
         "dimension": "education",
         "joinKey": "education",
         "file": {},
