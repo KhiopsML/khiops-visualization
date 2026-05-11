@@ -65,7 +65,6 @@ export function getVisualizationMockFile(): string {
   // let urlKV = 'marc2.json';
   // let urlKV = 'tree-AllReports.json';
   // let urlKV = 'test_long_XDSL_Delc_AllReports.json';
-  // let urlKV = 'Essai_1_AllReports.json';
   // let urlKV = 'typeBotnet_AllReports.json';
   // let urlKV = 'irisU.json';
   // let urlKV = 'CoronaWords100000_AllReports.V11.json';
