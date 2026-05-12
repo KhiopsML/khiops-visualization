@@ -49,14 +49,11 @@ describe('Test Plan for Khiops Covisualization', () => {
         if (fileName.endsWith('.khcj')) {
           datas = JSON.parse(datas);
         }
-        cy.wait(500);
 
         // Move to the first matrix cell
         cy.get('#matrix-selected').should('be.visible').trigger('mousemove', {
           position: 'bottomLeft',
         });
-
-        cy.wait(500);
 
         // Check Matrix tooltip
         cy.get('.matrix-tooltip-comp').contains(res.matrixTooltip[0]);
@@ -65,14 +62,10 @@ describe('Test Plan for Khiops Covisualization', () => {
         cy.get('#tree_0').find('.tree-expando:eq(1)').click();
         cy.get('#tree_1').find('.tree-expando:eq(1)').click();
 
-        cy.wait(500);
-
         // Move to the first matrix cell
         cy.get('#matrix-selected').should('be.visible').trigger('mousemove', {
           position: 'bottomLeft',
         });
-
-        cy.wait(500);
 
         // Check Matrix tooltip
         cy.get('.matrix-tooltip-comp').contains(res.matrixTooltip[1]);
@@ -139,20 +132,17 @@ describe('Test Plan for Khiops Covisualization', () => {
         });
 
         cy.get('.button-confirm-hierarchy').click();
-        cy.wait(500);
 
         // Move to the last matrix cell
         cy.get('#matrix-container').should('be.visible').trigger('mousemove', {
           position: 'topLeft',
         });
-        cy.wait(500);
 
         // Check Matrix tooltip
         cy.get('.matrix-tooltip-comp').contains(res.matrixTooltip[2]);
 
         // Now reverse dimenions
         cy.get('.hierarchy-select-comp-button').first().click();
-        cy.wait(200);
         cy.get('.mat-mdc-menu-item').eq(1).click();
       });
     });

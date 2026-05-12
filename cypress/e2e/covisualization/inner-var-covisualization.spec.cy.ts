@@ -16,29 +16,24 @@ describe('Test Plan for Khiops Covisualization', () => {
       cy.loadFile('covisualization', fileName);
 
       cy.readFile('./src/assets/mocks/kc/' + fileName).then(() => {
-        cy.wait(200);
 
         // Check if previous selected nodes are initized
         cy.get('#cluster-composition-1').contains('Mes_sm_eph');
 
         cy.get('.variable-search-button-comp').first().click();
-        cy.wait(200);
 
         cy.get('#variable-search-results-table').contains('5 539');
         cy.get('#variable-search-results-table').contains('805');
 
         cy.get('.close-btn').first().click();
-        cy.wait(200);
 
         cy.get('#85').click(); // click on root node B1
-        cy.wait(200);
 
         cy.get('#cluster-composition-1', { includeShadowDom: true }).contains(
           '{2, 3}',
         );
 
         cy.get('#tree-expando-85').first().click();
-        cy.wait(200);
 
         cy.get('#cluster-composition-1', { includeShadowDom: true }).contains(
           '{1, 2, 0, ...}',

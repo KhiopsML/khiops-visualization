@@ -143,16 +143,13 @@ Cypress.Commands.add(
 );
 
 Cypress.Commands.add('testComponentScreenshot', (id: string) => {
+  cy.task('log', `Testing screenshot copy for component with id: ${id}`);
+
   // Wait for the component to be visible and trigger trustedClick
-  cy.get(id, { timeout: 10000 })
-    .should('exist')
-    .should('be.visible')
-    .trigger('trustedClick');
+  cy.get(id).should('exist').should('be.visible').trigger('trustedClick');
 
   // Verify the component is selected (has selected class)
   cy.get(id).should('have.class', 'selected');
-
-  cy.wait(100);
 
   cy.get('#header-tools-copy-image-button').first().click({ force: true });
 
@@ -161,21 +158,13 @@ Cypress.Commands.add('testComponentScreenshot', (id: string) => {
     .should('be.visible')
     .and('contain', 'copied');
 
-  // Verify fetch was called with a data URL
+  // Verify fetch was called with a valid PNG data URL
   cy.get('@fetchSpy', { timeout: 2000 }).should((spy) => {
-    // Check that fetch was called
+    const dataUrl = spy.args.at(-1)?.[0];
     expect(spy).to.have.been.called;
-
-    // Get the last call argument (the dataUrl) since there might be multiple calls
-    const lastCallIndex = spy.args.length - 1;
-    const dataUrl = spy.args[lastCallIndex]?.[0];
-
-    // Verify it's a PNG data URL
-    expect(dataUrl).to.be.a('string');
-    expect(dataUrl).to.include('data:image/png;base64,');
-
-    // Verify the image has substantial data (more than just header)
-    // A real screenshot should be at least 1000 characters
-    expect(dataUrl.length).to.be.greaterThan(1000);
+    expect(dataUrl)
+      .to.be.a('string')
+      .and.include('data:image/png;base64,')
+      .and.have.length.greaterThan(1000);
   });
 });

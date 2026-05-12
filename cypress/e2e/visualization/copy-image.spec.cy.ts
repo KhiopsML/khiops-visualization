@@ -16,7 +16,6 @@ describe('Copy images Test Plan for Khiops Visualization', () => {
       cy.loadFile('visualization', fileName);
 
       cy.readFile('./src/assets/mocks/kv/' + fileName).then(() => {
-        cy.wait(500);
 
         // Create spy once for all screenshot tests
         cy.window().then((win) => {
@@ -25,19 +24,16 @@ describe('Copy images Test Plan for Khiops Visualization', () => {
 
         // Preparation Tab Screenshots
         cy.get('.mat-mdc-tab:contains("Preparation")').first().click();
-        cy.wait(500);
         cy.testComponentScreenshot('#preparation-informations-block-summary');
         cy.testComponentScreenshot('#preparation-target-variable-stats');
         cy.testComponentScreenshot(
           '#preparation-informations-block-informations',
         );
         cy.get('.level-distribution-btn').first().click({ force: true });
-        cy.wait(250);
         cy.testComponentScreenshot('#level-distribution-graph-comp');
         cy.get('#level-distribution-graph-close-btn')
           .first()
           .click({ force: true });
-        cy.wait(250);
         cy.testComponentScreenshot('#preparation-variables-list');
         cy.testComponentScreenshot('#distribution-graph0');
         cy.testComponentScreenshot('#target-distribution-graph0');
@@ -47,19 +43,16 @@ describe('Copy images Test Plan for Khiops Visualization', () => {
 
         // Text preparation Tab Screenshots
         cy.get('.mat-mdc-tab:contains("Text preparation")').first().click();
-        cy.wait(500);
         cy.testComponentScreenshot('#preparation-informations-block-summary');
         cy.testComponentScreenshot('#preparation-target-variable-stats');
         cy.testComponentScreenshot(
           '#preparation-informations-block-informations',
         );
         cy.get('.level-distribution-btn').first().click({ force: true });
-        cy.wait(250);
         cy.testComponentScreenshot('#level-distribution-graph-comp');
         cy.get('#level-distribution-graph-close-btn')
           .first()
           .click({ force: true });
-        cy.wait(250);
         cy.testComponentScreenshot('#preparation-variables-list');
         cy.testComponentScreenshot('#distribution-graph0');
         cy.testComponentScreenshot('#target-distribution-graph0');
@@ -69,7 +62,6 @@ describe('Copy images Test Plan for Khiops Visualization', () => {
 
         // Tree preparation Tab Screenshots
         cy.get('.mat-mdc-tab:contains("Tree preparation")').first().click();
-        cy.wait(500);
         cy.testComponentScreenshot(
           '#tree-preparation-informations-block-summary',
         );
@@ -78,12 +70,10 @@ describe('Copy images Test Plan for Khiops Visualization', () => {
           '#tree-preparation-informations-block-informations',
         );
         cy.get('.level-distribution-btn').first().click({ force: true });
-        cy.wait(250);
         cy.testComponentScreenshot('#level-distribution-graph-comp');
         cy.get('#level-distribution-graph-close-btn')
           .first()
           .click({ force: true });
-        cy.wait(250);
         cy.testComponentScreenshot('#tree-preparation-variables-list');
         cy.testComponentScreenshot('#distribution-graph0');
         cy.testComponentScreenshot('#target-distribution-graph0');
@@ -93,22 +83,18 @@ describe('Copy images Test Plan for Khiops Visualization', () => {
         cy.testComponentScreenshot('#tree-preparation-hyper');
 
         cy.get('.mat-mdc-tab:contains("Leaf rules")').first().click();
-        cy.wait(500);
         cy.testComponentScreenshot('#tree-leaf-rules-comp');
 
         // Preparation 2D Tab Screenshots
         cy.get('.mat-mdc-tab:contains("Preparation 2D")').first().click();
-        cy.wait(500);
         cy.testComponentScreenshot(
           '#preparation-2d-informations-block-summary',
         );
         cy.get('.level-distribution-btn').first().click({ force: true });
-        cy.wait(250);
         cy.testComponentScreenshot('#level-distribution-graph-comp');
         cy.get('#level-distribution-graph-close-btn')
           .first()
           .click({ force: true });
-        cy.wait(250);
         cy.testComponentScreenshot('#preparation-2d-target-variable-stats');
         cy.testComponentScreenshot('#preparation-2d-variables-list');
         cy.testComponentScreenshot('#cooccurrence-matrix-comp');
@@ -117,12 +103,10 @@ describe('Copy images Test Plan for Khiops Visualization', () => {
         cy.testComponentScreenshot('#preparation-2d-current-cell-y');
 
         cy.get('.mat-mdc-tab:contains("Cells")').first().click();
-        cy.wait(500);
         cy.testComponentScreenshot('#cooccurrence-matrix-cells-container');
 
         // Modeling Tab Screenshots
         cy.get('.mat-mdc-tab:contains("Modeling")').first().click();
-        cy.wait(500);
         cy.testComponentScreenshot('#modeling-informations-block-summary');
         cy.testComponentScreenshot('#modeling-target-variable-stats');
         cy.testComponentScreenshot('#modeling-informations-block-informations');
@@ -132,16 +116,13 @@ describe('Copy images Test Plan for Khiops Visualization', () => {
         cy.testComponentScreenshot('#preparation-current-interval');
 
         cy.get('.level-distribution-btn').eq(1).click({ force: true });
-        cy.wait(250);
         cy.testComponentScreenshot('#importance-distribution-graph-comp');
         cy.get('#importance-distribution-graph-close-btn')
           .first()
           .click({ force: true });
-        cy.wait(250);
 
         // Evaluation Tab Screenshots
         cy.get('.mat-mdc-tab:contains("Evaluation")').first().click();
-        cy.wait(500);
         cy.testComponentScreenshot('#evaluation-types-summary');
         cy.testComponentScreenshot('#evaluation-predictor-evaluations');
         cy.testComponentScreenshot('#evaluation-lift-curves');
@@ -149,7 +130,6 @@ describe('Copy images Test Plan for Khiops Visualization', () => {
 
         // Project Tab Screenshots
         cy.get('.mat-mdc-tab:contains("Project")').first().click();
-        cy.wait(500);
         cy.testComponentScreenshot('#project-summary-comp');
         cy.testComponentScreenshot('#project-logs');
       });

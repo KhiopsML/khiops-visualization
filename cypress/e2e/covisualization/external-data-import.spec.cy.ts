@@ -24,9 +24,6 @@ describe('Test External Data Import in Khiops Covisualization', () => {
       0,
     );
 
-    // Wait for the external data to be loaded automatically from savedDatas
-    cy.wait(3000);
-
     // Select a node that has the external data (e.g., "Bachelors")
     cy.get('app-composition', { timeout: 10000 })
       .contains('Bachelors')
@@ -65,9 +62,6 @@ Some-college\tMore text
         0,
       );
 
-      // Wait for UI to stabilize after file load
-      cy.wait(2000);
-
       // Click on the import external data button (file_upload icon)
       cy.get('app-header-manage-view button mat-icon', { timeout: 10000 })
         .contains('file_upload')
@@ -80,7 +74,6 @@ Some-college\tMore text
       );
 
       cy.get('#import-new-file-btn').click();
-      cy.wait(200);
 
       // Create a mock file object for external data
       const extFileName = 'ExternalDataEducation.txt';
@@ -117,9 +110,6 @@ Some-college\tMore text
         force: true,
       });
 
-      // Wait for the snackbar and for the dialog state to update
-      cy.wait(1500);
-
       // Close the import-ext-datas-list dialog by clicking the close button
       // This will also trigger the LoadExtDatasComponent to reload external data
       cy.get(
@@ -132,8 +122,6 @@ Some-college\tMore text
 
       // Wait for the LoadExtDatasComponent dialog to appear and finish loading
       // This dialog loads the saved external data and then closes automatically
-      cy.wait(1000);
-
       // Wait for all dialogs to be closed
       cy.get('app-import-ext-datas-list', { timeout: 10000 }).should(
         'not.exist',
