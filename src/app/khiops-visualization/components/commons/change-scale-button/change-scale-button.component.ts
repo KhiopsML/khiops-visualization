@@ -45,27 +45,44 @@ export class ChangeScaleButtonComponent {
   }
 
   private applyScaleSettings(scaleSettings: ScaleSettings) {
-    // Map the scale settings to HistogramType values
-    const xScaleType =
-      scaleSettings.xScale === 'linear'
-        ? HistogramType.XLIN
-        : HistogramType.XLOG;
-    const yScaleType =
-      scaleSettings.yScale === 'linear'
-        ? HistogramType.YLIN
-        : HistogramType.YLOG;
+    if (scaleSettings.mode === 'auto') {
+      // Enable auto scale mode globally
+      AppService.Ls.set(LS.SETTING_AUTO_SCALE, true);
 
-    // Update global scale settings in Local Storage
-    AppService.Ls.set(LS.DISTRIBUTION_GRAPH_OPTION_X, xScaleType);
-    AppService.Ls.set(LS.DISTRIBUTION_GRAPH_OPTION_Y, yScaleType);
+      // Reset graph options so auto-scale detection runs on next data fetch
+      this.distributionDatasService.updateGraphOptions();
 
-    // Update graph options to trigger ngOnChanges detection
-    this.distributionDatasService.updateGraphOptions();
+      // Notify all listening components to re-render
+      this.scaleChangeEventsService.emitScaleChange({
+        xScale: 'auto',
+        yScale: 'auto',
+      });
+    } else {
+      // Disable auto scale, apply manual X/Y settings
+      AppService.Ls.set(LS.SETTING_AUTO_SCALE, false);
 
-    // Emit scale change event to notify all listening components
-    this.scaleChangeEventsService.emitScaleChange({
-      xScale: xScaleType,
-      yScale: yScaleType,
-    });
+      // Map the scale settings to HistogramType values
+      const xScaleType =
+        scaleSettings.xScale === 'linear'
+          ? HistogramType.XLIN
+          : HistogramType.XLOG;
+      const yScaleType =
+        scaleSettings.yScale === 'linear'
+          ? HistogramType.YLIN
+          : HistogramType.YLOG;
+
+      // Update global scale settings in Local Storage
+      AppService.Ls.set(LS.DISTRIBUTION_GRAPH_OPTION_X, xScaleType);
+      AppService.Ls.set(LS.DISTRIBUTION_GRAPH_OPTION_Y, yScaleType);
+
+      // Update graph options to trigger ngOnChanges detection
+      this.distributionDatasService.updateGraphOptions();
+
+      // Emit scale change event to notify all listening components
+      this.scaleChangeEventsService.emitScaleChange({
+        xScale: xScaleType,
+        yScale: yScaleType,
+      });
+    }
   }
 }

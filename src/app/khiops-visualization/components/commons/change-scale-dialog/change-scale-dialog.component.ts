@@ -12,6 +12,7 @@ import { AppService } from '@khiops-visualization/providers/app.service';
 import { TYPES } from '@khiops-library/enum/types';
 
 export interface ScaleSettings {
+  mode: 'auto' | 'manual';
   xScale: TYPES.LINEAR | TYPES.LOGARITHMIC;
   yScale: TYPES.LINEAR | TYPES.LOGARITHMIC;
 }
@@ -23,12 +24,18 @@ export interface ScaleSettings {
   standalone: false,
 })
 export class ChangeScaleDialogComponent implements OnInit {
+  mode: 'auto' | 'manual' = 'manual';
   xScale: TYPES.LINEAR | TYPES.LOGARITHMIC = TYPES.LINEAR;
   yScale: TYPES.LINEAR | TYPES.LOGARITHMIC = TYPES.LINEAR;
 
   constructor(private dialogRef: MatDialogRef<ChangeScaleDialogComponent>) {}
 
   ngOnInit(): void {
+    // Initialize mode from auto-scale setting
+    const autoScaleEnabled =
+      AppService.Ls.get(LS.SETTING_AUTO_SCALE)?.toString() === 'true';
+    this.mode = autoScaleEnabled ? 'auto' : 'manual';
+
     // Initialize with current scale settings from local storage
     const currentXScale = AppService.Ls.get(LS.DISTRIBUTION_GRAPH_OPTION_X);
     const currentYScale = AppService.Ls.get(LS.DISTRIBUTION_GRAPH_OPTION_Y);
@@ -46,6 +53,7 @@ export class ChangeScaleDialogComponent implements OnInit {
 
   onApply(): void {
     const scaleSettings: ScaleSettings = {
+      mode: this.mode,
       xScale: this.xScale,
       yScale: this.yScale,
     };

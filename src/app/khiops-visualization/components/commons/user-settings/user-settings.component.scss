@@ -40,4 +40,32 @@
       white-space: pre-wrap;
     }
   }
+
+  .kl-auto-scale-setting {
+    margin-top: 1em;
+    width: 100%;
+
+    .factor-description {
+      color: var(--text-secondary-color, rgba(0, 0, 0, 0.6));
+      margin: 0.25em 0 0 0;
+    }
+
+    &.disabled {
+      mat-slider,
+      span,
+      p {
+        opacity: 0.4;
+        pointer-events: none;
+      }
+
+      h2 {
+        opacity: 0.4;
+
+        mat-icon {
+          opacity: 1;
+          pointer-events: auto;
+        }
+      }
+    }
+  }
 }

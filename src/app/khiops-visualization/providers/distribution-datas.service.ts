@@ -529,6 +529,22 @@ export class DistributionDatasService {
   }
 
   /**
+   * Returns the configured auto-scale threshold factor from Local Storage.
+   * Falls back to the default value of 1.5 if not set or invalid.
+   * The factor determines how much better a log scale must be before it is selected.
+   */
+  private getAutoScaleFactor(): number {
+    const stored = AppService.Ls.get(LS.SETTING_AUTO_SCALE_FACTOR);
+    if (stored !== null && stored !== undefined && stored !== '') {
+      const parsed = parseFloat(stored);
+      if (!isNaN(parsed) && parsed >= 1 && parsed <= 3) {
+        return parsed;
+      }
+    }
+    return 1.5;
+  }
+
+  /**
    * Computes the optimal Y scale (linear or logarithmic) for the distribution graph
    * based on the proportion of visible area the bars fill in the bounding rectangle.
    *
@@ -560,8 +576,9 @@ export class DistributionDatasService {
     const sumLog = logValues.reduce((acc, v) => acc + v, 0);
     const proportionLog = sumLog / (values.length * logMaxVal);
 
-    // Select log scale only if it improves coverage by more than factor 1.5
-    if (proportionLog > proportionLin * 1.5) {
+    // Select log scale only if it improves coverage by more than the configured factor
+    const factor = this.getAutoScaleFactor();
+    if (proportionLog > proportionLin * factor) {
       return HistogramType.YLOG;
     }
 
@@ -867,11 +884,12 @@ export class DistributionDatasService {
       }
     }
 
-    // Pick the combination with the highest proportion if it beats Lin/Lin by >1.5
+    // Pick the combination with the highest proportion if it beats Lin/Lin by the configured factor
     const best = configs.reduce((a, b) => {
       return b.prop > a.prop ? b : a;
     });
-    if (best.prop > propLinLin * 1.5) {
+    const factor = this.getAutoScaleFactor();
+    if (best.prop > propLinLin * factor) {
       return { xScale: best.x, yScale: best.y };
     }
     return defaultResult;

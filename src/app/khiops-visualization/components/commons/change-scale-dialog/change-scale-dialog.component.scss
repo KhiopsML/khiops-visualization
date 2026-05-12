@@ -6,22 +6,91 @@
 
 #change-scale-dialog-comp {
   margin-top: 1rem;
-  min-width: 350px;
   padding: 0;
 
-  > p {
-    padding: 1rem 1rem 0 1rem;
+  h1 {
+    margin: 0 0 1.25rem 0;
   }
 
-  .scale-options {
-    margin-bottom: 2rem;
+  .mode-toggle-group {
+    margin-bottom: 1.25rem;
+
+    .scale-toggle-group {
+      width: 100%;
+
+      mat-button-toggle {
+        flex: 1;
+        ::ng-deep button {
+          padding-left: 0 !important;
+        }
+      }
+    }
+  }
+
+  .mode-description {
+    background-color: var(--primary-light-bg, #f0f4ff);
+    border: 2px solid var(--primary-color, #1976d2);
+    font-size: 0.9em;
+    border-radius: 6px;
+    padding: 0.85rem 1rem;
+    margin-top: 2rem;
+    p {
+      margin: 0;
+      line-height: 1.5;
+    }
+  }
+
+  .auto-description {
+    background-color: var(--primary-light-bg, #f0f4ff);
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 0;
+
+    .auto-icon {
+      font-size: 1.6rem;
+      width: 1.6rem;
+      height: 1.6rem;
+      flex-shrink: 0;
+      color: var(--primary-color, #1976d2);
+    }
+  }
+
+  .auto-scale-settings-hint {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 0.35rem;
+    margin: 0.75rem 0 0 0;
+    font-size: 0.8rem;
+    color: var(--text-secondary-color, rgba(0, 0, 0, 0.55));
+    font-style: italic;
+
+    .hint-icon {
+      font-size: 0.95rem;
+      width: 0.95rem;
+      height: 0.95rem;
+      flex-shrink: 0;
+    }
+  }
+
+  mat-divider {
+    margin-bottom: 1.25rem;
+  }
+
+  .axes-row {
+    display: flex;
+    flex-direction: row;
+    gap: 2rem;
+    margin-bottom: 0.5rem;
 
     .scale-group {
-      margin-bottom: 1.5rem;
+      flex: 1;
 
       h3 {
         margin: 0 0 0.5rem 0;
-        font-size: 1rem;
+        font-size: 0.95rem;
         font-weight: 500;
       }
 
