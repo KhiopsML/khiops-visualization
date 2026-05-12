@@ -220,8 +220,16 @@
         if (version === 'dev' || version === 'branch:main') {
           url = `./dist/khiops-webcomponents.bundle.js?v=${Math.random()}`;
         } else if (version && version.startsWith('branch:')) {
-          const safeName = version.slice('branch:'.length);
-          url = `./dist/khiops-webcomponents-${safeName}.bundle.js?v=${Math.random()}`;
+          const branchName = version.slice('branch:'.length);
+          // Allow only expected branch-name characters to prevent script URL injection.
+          if (/^[A-Za-z0-9._/-]+$/.test(branchName)) {
+            const encodedBranchName = encodeURIComponent(branchName);
+            url = `./dist/khiops-webcomponents-${encodedBranchName}.bundle.js?v=${Math.random()}`;
+          } else {
+            console.error('Invalid branch name in version selector:', branchName);
+            url =
+              'https://cdn.jsdelivr.net/npm/khiops-visualization/khiops-webcomponents.bundle.js';
+          }
         } else if (version) {
           // Encode version to prevent XSS
           const encodedVersion = encodeURIComponent(version);
