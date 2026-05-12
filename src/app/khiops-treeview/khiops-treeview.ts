@@ -217,7 +217,7 @@ function render(self: TreeView) {
       if (newName !== '') {
         // change current node name - preserve the edit button
         const editButton = node.querySelector('.edit-button');
-        node.innerHTML = newName;
+        node.textContent = newName;
         if (editButton && !self.options.disableUpdateName) {
           node.appendChild(editButton);
         }
