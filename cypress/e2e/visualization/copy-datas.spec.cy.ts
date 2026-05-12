@@ -8,7 +8,7 @@ import '../../support/commands';
 
 describe('Copy datas Test Plan for Khiops Visualization', () => {
   const files = ['ALLREPORTS_Std_Iris_AnalysisResults.khj'];
-  describe('Copy datas Test Plan for Khiops CoVisualization', () => {
+  describe('Copy datas Test Plan for Khiops Visualization', () => {
     files.forEach((fileName) => {
       it(`Check values for ${fileName}`, () => {
         cy.initViews();
@@ -16,11 +16,8 @@ describe('Copy datas Test Plan for Khiops Visualization', () => {
         cy.loadFile('visualization', fileName);
 
         cy.readFile('./src/assets/mocks/kv/' + fileName).then(() => {
-          cy.wait(500);
-
           // Preparation Tab datas
           cy.get('.mat-mdc-tab:contains("Preparation")').first().click();
-          cy.wait(500);
 
           cy.testComponentCopyDatas(
             '#preparation-informations-block-summary',
@@ -35,7 +32,6 @@ describe('Copy datas Test Plan for Khiops Visualization', () => {
             'kv-preparation-informations-block-informations.txt',
           );
           cy.get('.level-distribution-btn').first().click({ force: true });
-          cy.wait(250);
           cy.testComponentCopyDatas(
             '#level-distribution-graph-comp',
             'kv-level-distribution-graph-comp.txt',
@@ -43,7 +39,6 @@ describe('Copy datas Test Plan for Khiops Visualization', () => {
           cy.get('#level-distribution-graph-close-btn')
             .first()
             .click({ force: true });
-          cy.wait(250);
           cy.testComponentCopyDatas(
             '#preparation-variables-list',
             'kv-preparation-variables-list.txt',
@@ -72,7 +67,6 @@ describe('Copy datas Test Plan for Khiops Visualization', () => {
 
           // Tree preparation Tab datas
           cy.get('.mat-mdc-tab:contains("Tree preparation")').first().click();
-          cy.wait(500);
           cy.testComponentCopyDatas(
             '#target-distribution-graph1',
             'kv-target-distribution-graph1.txt',
@@ -92,7 +86,6 @@ describe('Copy datas Test Plan for Khiops Visualization', () => {
           );
 
           cy.get('.mat-mdc-tab:contains("Leaf rules")').first().click();
-          cy.wait(500);
           cy.testComponentCopyDatas(
             '#tree-leaf-rules-comp',
             'kv-tree-leaf-rules-comp.txt',
@@ -100,7 +93,6 @@ describe('Copy datas Test Plan for Khiops Visualization', () => {
 
           // Preparation 2D Tab datas
           cy.get('.mat-mdc-tab:contains("Preparation 2D")').first().click();
-          cy.wait(500);
 
           cy.testComponentCopyDatas(
             '#cooccurrence-matrix-comp',
@@ -120,7 +112,6 @@ describe('Copy datas Test Plan for Khiops Visualization', () => {
           );
 
           cy.get('.mat-mdc-tab:contains("Cells")').first().click();
-          cy.wait(500);
 
           cy.testComponentCopyDatas(
             '#cooccurrence-matrix-cells-container',
@@ -129,9 +120,7 @@ describe('Copy datas Test Plan for Khiops Visualization', () => {
 
           // Modeling Tab datas
           cy.get('.mat-mdc-tab:contains("Modeling")').first().click();
-          cy.wait(500);
           cy.get('.level-distribution-btn').eq(1).click({ force: true });
-          cy.wait(250);
           cy.testComponentCopyDatas(
             '#importance-distribution-graph-comp',
             'kv-importance-distribution-graph-comp.txt',
@@ -139,11 +128,9 @@ describe('Copy datas Test Plan for Khiops Visualization', () => {
           cy.get('#importance-distribution-graph-close-btn')
             .first()
             .click({ force: true });
-          cy.wait(250);
 
           // Evaluation Tab datas
           cy.get('.mat-mdc-tab:contains("Evaluation")').first().click();
-          cy.wait(500);
           cy.testComponentCopyDatas(
             '#evaluation-types-summary',
             'kv-evaluation-types-summary.txt',
@@ -163,7 +150,6 @@ describe('Copy datas Test Plan for Khiops Visualization', () => {
 
           // Project Tab datas
           cy.get('.mat-mdc-tab:contains("Project")').first().click();
-          cy.wait(500);
 
           cy.testComponentCopyDatas(
             '#project-summary-comp',
@@ -173,10 +159,8 @@ describe('Copy datas Test Plan for Khiops Visualization', () => {
 
           // Preparation Tab datas
           cy.get('.mat-mdc-tab:contains("Preparation")').first().click();
-          cy.wait(500);
           // Filter target distribution datas
           cy.get('#select-toggle-button').click({ force: true });
-          cy.wait(250);
           cy.get('.mat-mdc-checkbox')
             .contains('Iris-setosa')
             .first()

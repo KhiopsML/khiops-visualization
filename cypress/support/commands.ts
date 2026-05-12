@@ -60,11 +60,14 @@ Cypress.Commands.add('setGlobalSetting', (settingKey: string, value: any) => {
   // This will work for both visualization and covisualization modules
   cy.window().then((win) => {
     // Set in localStorage directly with the correct module prefixes
-    win.localStorage.setItem(`KHIOPS_VISUALIZATION_${settingKey}`, String(value));
-    win.localStorage.setItem(`KHIOPS_COVISUALIZATION_${settingKey}`, String(value));
-
-    // Log for debugging
-    cy.log(`Set ${settingKey} to ${value} in localStorage`);
+    win.localStorage.setItem(
+      `KHIOPS_VISUALIZATION_${settingKey}`,
+      String(value),
+    );
+    win.localStorage.setItem(
+      `KHIOPS_COVISUALIZATION_${settingKey}`,
+      String(value),
+    );
 
     // Also try to set through the application if available
     try {
@@ -77,16 +80,14 @@ Cypress.Commands.add('setGlobalSetting', (settingKey: string, value: any) => {
             const appService = injector.get('AppService');
             if (appService && appService.Ls) {
               appService.Ls.set(settingKey, value);
-              cy.log(`Set ${settingKey} to ${value} via AppService`);
             }
           } catch (serviceError) {
-            cy.log('AppService not available, localStorage fallback used');
+            // AppService not available, localStorage fallback used
           }
         }
       }
     } catch (e) {
       // Ignore errors if Angular is not available yet
-      cy.log('Angular not available yet, localStorage fallback used');
     }
   });
 });

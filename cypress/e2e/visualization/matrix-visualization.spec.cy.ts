@@ -11,17 +11,14 @@ describe('Matrix visualization Test Plan for Khiops Visualization', () => {
     cy.initViews();
     cy.loadFile('visualization', 'co-oc.json');
     cy.readFile('./src/assets/mocks/kv/co-oc.json').then(() => {
-      cy.wait(500);
 
       cy.get('.mat-mdc-tab:contains("Preparation 2D")').first().click();
-      cy.wait(500);
       cy.get('app-cooccurrence-matrix').contains('Co-occurrence');
 
       // Move to the first matrix cell
       cy.get('#matrix-selected').should('be.visible').trigger('mousemove', {
         position: 'topLeft',
       });
-      cy.wait(500);
       // Check Matrix tooltip
       cy.get('.matrix-tooltip-comp').contains('config/batch_size: [128,1088]');
       cy.get('.matrix-tooltip-comp').contains('config/lr: ]0');
@@ -38,7 +35,6 @@ describe('Matrix visualization Test Plan for Khiops Visualization', () => {
     cy.initViews();
     cy.loadFile('visualization', 'reg.json');
     cy.readFile('./src/assets/mocks/kv/reg.json').then(() => {
-      cy.wait(500);
 
       cy.get('app-regression-matrix').contains('Target values');
 
@@ -46,7 +42,6 @@ describe('Matrix visualization Test Plan for Khiops Visualization', () => {
       cy.get('#matrix-selected').should('be.visible').trigger('mousemove', {
         position: 'topLeft',
       });
-      cy.wait(500);
       // Check Matrix tooltip
       cy.get('.matrix-tooltip-comp').contains(973);
       cy.get('.matrix-mode-comp').contains('I (marital_status , age)');

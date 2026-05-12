@@ -15,12 +15,27 @@
 
 // When a command from ./commands is ready to use, import with `import './commands'` syntax
 import './commands';
-
 // Global setup: Set number precision to 8 for all tests
 beforeEach(() => {
   // Ensure number precision is set to 8 before every test
   cy.setGlobalSetting('SETTING_NUMBER_PRECISION', 8);
   cy.setGlobalAutoScale(true);
+});
+
+// Disable CSS animations and transitions on every page load.
+// This eliminates the need for most cy.wait(250/500) calls caused by Material animations,
+// making tests significantly faster without changing their logic.
+Cypress.on('window:load', (win) => {
+  const style = win.document.createElement('style');
+  style.innerHTML = `
+    *, *::before, *::after {
+      animation-duration: 0s !important;
+      animation-delay: 0s !important;
+      transition-duration: 0s !important;
+      transition-delay: 0s !important;
+    }
+  `;
+  win.document.head.appendChild(style);
 });
 
 declare global {

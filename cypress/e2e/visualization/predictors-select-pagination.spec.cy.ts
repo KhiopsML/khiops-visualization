@@ -14,14 +14,10 @@ describe('Level distribution Test Plan for Khiops Visualization', () => {
       cy.initViews();
 
       cy.loadFile('visualization', fileName);
-      cy.wait(500);
 
       cy.readFile('./src/assets/mocks/kv/' + fileName).then(() => {
-        cy.wait(500);
         cy.get('.mat-mdc-tab:contains("Evaluation")').first().click();
-        cy.wait(500);
         cy.get('#select-toggle-button').click({ force: true });
-        cy.wait(250);
         cy.get('.mat-mdc-menu-content').first().contains('Items per page');
         cy.get('.mat-mdc-menu-content').first().contains('20 of 111');
       });
