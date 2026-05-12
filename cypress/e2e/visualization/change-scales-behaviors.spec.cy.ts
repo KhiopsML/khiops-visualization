@@ -40,6 +40,14 @@ describe('Level distribution Test Plan for Khiops Visualization', () => {
         cy.wait(250);
         cy.get('.graph-options-menu-comp').first().contains('xLog');
         cy.get('.graph-options-menu-comp').eq(1).contains('yLog');
+
+        cy.get('#change-scale-button').click();
+        cy.wait(250);
+        cy.get('#scale-toggle-mode-manual-button').click();
+        cy.get('#change-scale-dialog-apply-btn').click();
+        cy.wait(250);
+        cy.get('.graph-options-menu-comp').first().contains('xLin');
+        cy.get('.graph-options-menu-comp').eq(1).contains('yLin');
       });
     });
   });
