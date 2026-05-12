@@ -142,8 +142,11 @@ Cypress.Commands.add(
   },
 );
 
-Cypress.Commands.add('testComponentScreenshot', (id: string) => {
-  cy.task('log', `Testing screenshot copy for component with id: ${id}`);
+Cypress.Commands.add('testComponentScreenshot', (id: string, tab?: string) => {
+  cy.task(
+    'log',
+    `Testing screenshot copy for component with id: ${id} for tab: ${tab}`,
+  );
 
   // Wait for the component to be visible and trigger trustedClick
   cy.get(id).should('exist').should('be.visible').trigger('trustedClick');

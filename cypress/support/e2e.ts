@@ -50,7 +50,7 @@ declare global {
         id: string,
         mockFileName: string,
       ): Chainable<Element>;
-      testComponentScreenshot(id: string): Chainable<Element>;
+      testComponentScreenshot(id: string, tab?: string): Chainable<Element>;
     }
   }
 }
