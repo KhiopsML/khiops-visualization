@@ -2,13 +2,5 @@
   {
     "name": "main",
     "safe": "main"
-  },
-  {
-    "name": "feat-dock",
-    "safe": "feat-dock"
-  },
-  {
-    "name": "master",
-    "safe": "master"
   }
 ]
