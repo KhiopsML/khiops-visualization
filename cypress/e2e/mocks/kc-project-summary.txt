@@ -1,0 +1,7 @@
+Summary
+Project file	./assets/mocks/kc/check-ext-datas.json	
+Dictionary	Adult	
+Database	../../../datasets/Adult/Adult.txt	
+Sample percentage	70	
+Sampling mode	Include sample	
+Instances	31 267	

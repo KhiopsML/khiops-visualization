@@ -93,6 +93,14 @@ describe('Copy datas Test Plan for Khiops Covisualization', () => {
           );
 
           cy.get('.button-confirm-hierarchy').first().click({ force: true });
+
+          // Project Tab datas
+          cy.get('.mat-mdc-tab:contains("Project")').first().click();
+
+          cy.testComponentCopyDatas(
+            '#project-summary-comp',
+            'kc-project-summary.txt',
+          );
         });
       });
     });
