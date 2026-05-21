@@ -16,10 +16,8 @@ describe('Test Plan for Khiops Covisualization', () => {
       cy.loadFile('visualization', fileName);
 
       cy.readFile('./src/assets/mocks/kv/' + fileName).then(() => {
-        cy.wait(500);
 
         cy.get('.mat-mdc-tab:contains("Tree")').first().click();
-        cy.wait(500);
 
         cy.get('#tree-preparation-informations-block-summary').contains(
           'Classification',
@@ -57,7 +55,6 @@ describe('Test Plan for Khiops Covisualization', () => {
         cy.get('#tree-node-infos').contains('3790');
 
         cy.get('.mat-mdc-tab:contains("Leaf rules")').first().click();
-        cy.wait(500);
 
         cy.get('#tree-leaf-rules-comp').contains('workclass');
         cy.get('#tree-leaf-rules-comp').contains('Craft');
@@ -66,14 +63,10 @@ describe('Test Plan for Khiops Covisualization', () => {
 
         cy.get('#hyperTree').find('circle').should('have.length', 53);
 
-        cy.wait(500);
         cy.get('.mat-mdc-tab:contains("Modeling")').first().click();
         cy.checkCanvasIsNotEmpty('#distribution-chart-0');
 
-        cy.wait(500);
-
         cy.get('#modeling-variables-list').find('.ag-row:eq(3)').click();
-        cy.wait(500);
 
         cy.get('#modeling-variables-list').find('.ag-row:eq(0)').click();
         cy.checkCanvasIsNotEmpty('#distribution-chart-0');

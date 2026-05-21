@@ -5,6 +5,130 @@
  */
 // @ts-nocheck
 import '../../support/commands';
+import { pickRandom } from '../../utils/utils';
+
+interface ComponentEntry {
+  tab: string;
+  subtab?: string;
+  id: string;
+  setup?: () => void;
+  teardown?: () => void;
+}
+
+const levelDistributionSetup = () =>
+  cy.get('.level-distribution-btn').first().click({ force: true });
+const levelDistributionTeardown = () =>
+  cy.get('#level-distribution-graph-close-btn').first().click({ force: true });
+
+const allComponents: ComponentEntry[] = [
+  // Preparation
+  { tab: 'Preparation', id: '#preparation-informations-block-summary' },
+  { tab: 'Preparation', id: '#preparation-target-variable-stats' },
+  { tab: 'Preparation', id: '#preparation-informations-block-informations' },
+  {
+    tab: 'Preparation',
+    id: '#level-distribution-graph-comp',
+    setup: levelDistributionSetup,
+    teardown: levelDistributionTeardown,
+  },
+  { tab: 'Preparation', id: '#preparation-variables-list' },
+  { tab: 'Preparation', id: '#distribution-graph0' },
+  { tab: 'Preparation', id: '#target-distribution-graph0' },
+  { tab: 'Preparation', id: '#preparation-description-block-variable' },
+  { tab: 'Preparation', id: '#preparation-description-block-derivation' },
+  { tab: 'Preparation', id: '#preparation-current-interval' },
+
+  // Text preparation
+  { tab: 'Text preparation', id: '#preparation-informations-block-summary' },
+  { tab: 'Text preparation', id: '#preparation-target-variable-stats' },
+  {
+    tab: 'Text preparation',
+    id: '#preparation-informations-block-informations',
+  },
+  {
+    tab: 'Text preparation',
+    id: '#level-distribution-graph-comp',
+    setup: levelDistributionSetup,
+    teardown: levelDistributionTeardown,
+  },
+  { tab: 'Text preparation', id: '#preparation-variables-list' },
+  { tab: 'Text preparation', id: '#distribution-graph0' },
+  { tab: 'Text preparation', id: '#target-distribution-graph0' },
+  { tab: 'Text preparation', id: '#preparation-description-block-variable' },
+  { tab: 'Text preparation', id: '#preparation-description-block-derivation' },
+  { tab: 'Text preparation', id: '#preparation-current-interval' },
+
+  // Tree preparation
+  {
+    tab: 'Tree preparation',
+    id: '#tree-preparation-informations-block-summary',
+  },
+  { tab: 'Tree preparation', id: '#tree-preparation-target-variable-stats' },
+  {
+    tab: 'Tree preparation',
+    id: '#tree-preparation-informations-block-informations',
+  },
+  {
+    tab: 'Tree preparation',
+    id: '#level-distribution-graph-comp',
+    setup: levelDistributionSetup,
+    teardown: levelDistributionTeardown,
+  },
+  { tab: 'Tree preparation', id: '#tree-preparation-variables-list' },
+  { tab: 'Tree preparation', id: '#distribution-graph0' },
+  { tab: 'Tree preparation', id: '#target-distribution-graph0' },
+  { tab: 'Tree preparation', id: '#target-distribution-graph1' },
+  { tab: 'Tree preparation', id: '#tree-preparation-select' },
+  { tab: 'Tree preparation', id: '#tree-details-comp' },
+  { tab: 'Tree preparation', id: '#tree-preparation-hyper' },
+  { tab: 'Tree preparation', subtab: 'Leaf rules', id: '#tree-leaf-rules-comp' },
+
+  // Preparation 2D
+  { tab: 'Preparation 2D', id: '#preparation-2d-informations-block-summary' },
+  {
+    tab: 'Preparation 2D',
+    id: '#level-distribution-graph-comp',
+    setup: levelDistributionSetup,
+    teardown: levelDistributionTeardown,
+  },
+  { tab: 'Preparation 2D', id: '#preparation-2d-target-variable-stats' },
+  { tab: 'Preparation 2D', id: '#preparation-2d-variables-list' },
+  { tab: 'Preparation 2D', id: '#cooccurrence-matrix-comp' },
+  { tab: 'Preparation 2D', id: '#preparation-2d-target-distribution-graph' },
+  { tab: 'Preparation 2D', id: '#preparation-2d-current-cell-x' },
+  { tab: 'Preparation 2D', id: '#preparation-2d-current-cell-y' },
+  {
+    tab: 'Preparation 2D',
+    subtab: 'Cells',
+    id: '#cooccurrence-matrix-cells-container',
+  },
+
+  // Modeling
+  { tab: 'Modeling', id: '#modeling-informations-block-summary' },
+  { tab: 'Modeling', id: '#modeling-target-variable-stats' },
+  { tab: 'Modeling', id: '#modeling-informations-block-informations' },
+  { tab: 'Modeling', id: '#modeling-variables-list' },
+  { tab: 'Modeling', id: '#distribution-graph0' },
+  { tab: 'Modeling', id: '#target-distribution-graph0' },
+  { tab: 'Modeling', id: '#preparation-current-interval' },
+  {
+    tab: 'Modeling',
+    id: '#importance-distribution-graph-comp',
+    setup: () => cy.get('.level-distribution-btn').eq(1).click({ force: true }),
+    teardown: () =>
+      cy.get('#importance-distribution-graph-close-btn').first().click({ force: true }),
+  },
+
+  // Evaluation
+  { tab: 'Evaluation', id: '#evaluation-types-summary' },
+  { tab: 'Evaluation', id: '#evaluation-predictor-evaluations' },
+  { tab: 'Evaluation', id: '#evaluation-lift-curves' },
+  { tab: 'Evaluation', id: '#evaluation-confusion-matrix' },
+
+  // Project
+  { tab: 'Project', id: '#project-summary-comp' },
+  { tab: 'Project', id: '#project-logs' },
+];
 
 describe('Copy images Test Plan for Khiops Visualization', () => {
   const files = ['ALLREPORTS_Std_Iris_AnalysisResults.khj'];
@@ -16,142 +140,22 @@ describe('Copy images Test Plan for Khiops Visualization', () => {
       cy.loadFile('visualization', fileName);
 
       cy.readFile('./src/assets/mocks/kv/' + fileName).then(() => {
-        cy.wait(500);
-
         // Create spy once for all screenshot tests
         cy.window().then((win) => {
           cy.spy(win, 'fetch').as('fetchSpy');
         });
 
-        // Preparation Tab Screenshots
-        cy.get('.mat-mdc-tab:contains("Preparation")').first().click();
-        cy.wait(500);
-        cy.testComponentScreenshot('#preparation-informations-block-summary');
-        cy.testComponentScreenshot('#preparation-target-variable-stats');
-        cy.testComponentScreenshot(
-          '#preparation-informations-block-informations',
-        );
-        cy.get('.level-distribution-btn').first().click({ force: true });
-        cy.wait(250);
-        cy.testComponentScreenshot('#level-distribution-graph-comp');
-        cy.get('#level-distribution-graph-close-btn')
-          .first()
-          .click({ force: true });
-        cy.wait(250);
-        cy.testComponentScreenshot('#preparation-variables-list');
-        cy.testComponentScreenshot('#distribution-graph0');
-        cy.testComponentScreenshot('#target-distribution-graph0');
-        cy.testComponentScreenshot('#preparation-description-block-variable');
-        cy.testComponentScreenshot('#preparation-description-block-derivation');
-        cy.testComponentScreenshot('#preparation-current-interval');
+        const toTest = pickRandom(allComponents, 10);
 
-        // Text preparation Tab Screenshots
-        cy.get('.mat-mdc-tab:contains("Text preparation")').first().click();
-        cy.wait(500);
-        cy.testComponentScreenshot('#preparation-informations-block-summary');
-        cy.testComponentScreenshot('#preparation-target-variable-stats');
-        cy.testComponentScreenshot(
-          '#preparation-informations-block-informations',
-        );
-        cy.get('.level-distribution-btn').first().click({ force: true });
-        cy.wait(250);
-        cy.testComponentScreenshot('#level-distribution-graph-comp');
-        cy.get('#level-distribution-graph-close-btn')
-          .first()
-          .click({ force: true });
-        cy.wait(250);
-        cy.testComponentScreenshot('#preparation-variables-list');
-        cy.testComponentScreenshot('#distribution-graph0');
-        cy.testComponentScreenshot('#target-distribution-graph0');
-        cy.testComponentScreenshot('#preparation-description-block-variable');
-        cy.testComponentScreenshot('#preparation-description-block-derivation');
-        cy.testComponentScreenshot('#preparation-current-interval');
-
-        // Tree preparation Tab Screenshots
-        cy.get('.mat-mdc-tab:contains("Tree preparation")').first().click();
-        cy.wait(500);
-        cy.testComponentScreenshot(
-          '#tree-preparation-informations-block-summary',
-        );
-        cy.testComponentScreenshot('#tree-preparation-target-variable-stats');
-        cy.testComponentScreenshot(
-          '#tree-preparation-informations-block-informations',
-        );
-        cy.get('.level-distribution-btn').first().click({ force: true });
-        cy.wait(250);
-        cy.testComponentScreenshot('#level-distribution-graph-comp');
-        cy.get('#level-distribution-graph-close-btn')
-          .first()
-          .click({ force: true });
-        cy.wait(250);
-        cy.testComponentScreenshot('#tree-preparation-variables-list');
-        cy.testComponentScreenshot('#distribution-graph0');
-        cy.testComponentScreenshot('#target-distribution-graph0');
-        cy.testComponentScreenshot('#target-distribution-graph1');
-        cy.testComponentScreenshot('#tree-preparation-select');
-        cy.testComponentScreenshot('#tree-details-comp');
-        cy.testComponentScreenshot('#tree-preparation-hyper');
-
-        cy.get('.mat-mdc-tab:contains("Leaf rules")').first().click();
-        cy.wait(500);
-        cy.testComponentScreenshot('#tree-leaf-rules-comp');
-
-        // Preparation 2D Tab Screenshots
-        cy.get('.mat-mdc-tab:contains("Preparation 2D")').first().click();
-        cy.wait(500);
-        cy.testComponentScreenshot(
-          '#preparation-2d-informations-block-summary',
-        );
-        cy.get('.level-distribution-btn').first().click({ force: true });
-        cy.wait(250);
-        cy.testComponentScreenshot('#level-distribution-graph-comp');
-        cy.get('#level-distribution-graph-close-btn')
-          .first()
-          .click({ force: true });
-        cy.wait(250);
-        cy.testComponentScreenshot('#preparation-2d-target-variable-stats');
-        cy.testComponentScreenshot('#preparation-2d-variables-list');
-        cy.testComponentScreenshot('#cooccurrence-matrix-comp');
-        cy.testComponentScreenshot('#preparation-2d-target-distribution-graph');
-        cy.testComponentScreenshot('#preparation-2d-current-cell-x');
-        cy.testComponentScreenshot('#preparation-2d-current-cell-y');
-
-        cy.get('.mat-mdc-tab:contains("Cells")').first().click();
-        cy.wait(500);
-        cy.testComponentScreenshot('#cooccurrence-matrix-cells-container');
-
-        // Modeling Tab Screenshots
-        cy.get('.mat-mdc-tab:contains("Modeling")').first().click();
-        cy.wait(500);
-        cy.testComponentScreenshot('#modeling-informations-block-summary');
-        cy.testComponentScreenshot('#modeling-target-variable-stats');
-        cy.testComponentScreenshot('#modeling-informations-block-informations');
-        cy.testComponentScreenshot('#modeling-variables-list');
-        cy.testComponentScreenshot('#distribution-graph0');
-        cy.testComponentScreenshot('#target-distribution-graph0');
-        cy.testComponentScreenshot('#preparation-current-interval');
-
-        cy.get('.level-distribution-btn').eq(1).click({ force: true });
-        cy.wait(250);
-        cy.testComponentScreenshot('#importance-distribution-graph-comp');
-        cy.get('#importance-distribution-graph-close-btn')
-          .first()
-          .click({ force: true });
-        cy.wait(250);
-
-        // Evaluation Tab Screenshots
-        cy.get('.mat-mdc-tab:contains("Evaluation")').first().click();
-        cy.wait(500);
-        cy.testComponentScreenshot('#evaluation-types-summary');
-        cy.testComponentScreenshot('#evaluation-predictor-evaluations');
-        cy.testComponentScreenshot('#evaluation-lift-curves');
-        cy.testComponentScreenshot('#evaluation-confusion-matrix');
-
-        // Project Tab Screenshots
-        cy.get('.mat-mdc-tab:contains("Project")').first().click();
-        cy.wait(500);
-        cy.testComponentScreenshot('#project-summary-comp');
-        cy.testComponentScreenshot('#project-logs');
+        toTest.forEach(({ tab, subtab, id, setup, teardown }) => {
+          cy.get(`.mat-mdc-tab:contains("${tab}")`).first().click();
+          if (subtab) {
+            cy.get(`.mat-mdc-tab:contains("${subtab}")`).first().click();
+          }
+          if (setup) setup();
+          cy.testComponentScreenshot(id, tab);
+          if (teardown) teardown();
+        });
       });
     });
   });

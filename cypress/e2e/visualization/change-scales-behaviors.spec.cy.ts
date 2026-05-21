@@ -14,32 +14,33 @@ describe('Level distribution Test Plan for Khiops Visualization', () => {
       cy.initViews();
 
       cy.loadFile('visualization', fileName);
-      cy.wait(500);
 
       cy.readFile('./src/assets/mocks/kv/' + fileName).then(() => {
-        cy.wait(500);
+        cy.wait(100);
         cy.checkCanvasIsNotEmpty('#histogram-canvas');
 
         cy.get('.graph-options-menu-comp').first().contains('xLog');
         cy.get('.graph-options-menu-comp').eq(1).contains('yLog');
 
         cy.get('#preparation-variables-list').find('.ag-row:eq(1)').click();
-        cy.wait(250);
         cy.get('.graph-options-menu-comp').first().contains('xLog');
         cy.get('.graph-options-menu-comp').eq(1).contains('yLog');
 
         cy.get('#preparation-variables-list').find('.ag-row:eq(3)').click();
-        cy.wait(250);
         cy.get('.graph-options-menu-comp').first().contains('yLin');
 
         cy.get('#preparation-variables-list').find('.ag-row:eq(4)').click();
-        cy.wait(250);
         cy.get('.graph-options-menu-comp').first().contains('yLog');
 
         cy.get('#preparation-variables-list').find('.ag-row:eq(6)').click();
-        cy.wait(250);
         cy.get('.graph-options-menu-comp').first().contains('xLog');
         cy.get('.graph-options-menu-comp').eq(1).contains('yLog');
+
+        cy.get('#change-scale-button').click();
+        cy.get('#scale-toggle-mode-manual-button').click();
+        cy.get('#change-scale-dialog-apply-btn').click();
+        cy.get('.graph-options-menu-comp').first().contains('xLin');
+        cy.get('.graph-options-menu-comp').eq(1).contains('yLin');
       });
     });
   });

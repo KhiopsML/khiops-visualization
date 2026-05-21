@@ -7,6 +7,12 @@ export default defineConfig({
     baseUrl: 'http://localhost:4200/',
     allowCypressEnv: false,
     setupNodeEvents(on, config) {
+      on('task', {
+        log(message) {
+          console.log(message);
+          return null;
+        },
+      });
       on('before:browser:launch', (browser = {}, launchOptions) => {
         if ((browser.family === 'chromium' || browser.name === 'chrome') && browser.name !== 'electron') {
           launchOptions.args.push('--no-sandbox');

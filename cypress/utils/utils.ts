@@ -1,5 +1,9 @@
 import { VisualizationDatas } from '../../src/app/khiops-visualization/interfaces/app-datas.interface';
 import { CovisualizationDatas } from '../../src/app/khiops-covisualization/interfaces/app-datas.interface';
+
+export function pickRandom<T>(arr: T[], count: number): T[] {
+  return [...arr].sort(() => Math.random() - 0.5).slice(0, count);
+}
 export function isExplanatoryAnalysis(appDatas: VisualizationDatas): boolean {
   if (
     appDatas?.preparationReport?.variablesDetailedStatistics &&

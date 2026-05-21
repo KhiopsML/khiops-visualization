@@ -17,13 +17,11 @@ describe('Level distribution Test Plan for Khiops Visualization', () => {
       cy.initViews();
 
       cy.loadFile('visualization', fileName);
-      cy.wait(500);
 
       cy.readFile('./src/assets/mocks/kv/' + fileName).then(() => {
         if (fileName === '000_000_10000words_AllReports.json') {
           cy.get('#preparation-variables-list').contains('Level distribution');
           cy.get('.level-distribution-btn').first().click();
-          cy.wait(500);
           cy.get('#level-distribution-graph-comp').contains(
             'Level distribution',
           );

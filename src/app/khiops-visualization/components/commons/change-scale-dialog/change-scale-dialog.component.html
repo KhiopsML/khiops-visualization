@@ -5,50 +5,77 @@
  -->
 
 <div id="change-scale-dialog-comp">
-  <h1 style="margin-left: 0; margin-bottom: 1.5rem">
+  <h1>
     {{ 'GLOBAL.CHANGE_ALL_SCALES' | translate }}
   </h1>
-  <p>
-    {{ 'GLOBAL.CHANGE_ALL_SCALES_DESCRIPTION' | translate }}
-  </p>
 
-  <div class="dialog-content">
-    <div class="scale-options">
-      <!-- X-axis scale selection -->
-      <div class="scale-group">
-        <h3>{{ 'GLOBAL.X_AXIS' | translate }}</h3>
-        <mat-button-toggle-group
-          [(ngModel)]="xScale"
-          aria-label="X-axis scale"
-          class="scale-toggle-group"
-        >
-          <mat-button-toggle id="scale-toggle-group-xLin" value="linear">
-            xLin
-          </mat-button-toggle>
-          <mat-button-toggle id="scale-toggle-group-xLog" value="logarithmic">
-            xLog
-          </mat-button-toggle>
-        </mat-button-toggle-group>
-      </div>
-
-      <!-- Y-axis scale selection -->
-      <div class="scale-group">
-        <h3>{{ 'GLOBAL.Y_AXIS' | translate }}</h3>
-        <mat-button-toggle-group
-          [(ngModel)]="yScale"
-          aria-label="Y-axis scale"
-          class="scale-toggle-group"
-        >
-          <mat-button-toggle id="scale-toggle-group-yLin" value="linear">
-            yLin
-          </mat-button-toggle>
-          <mat-button-toggle id="scale-toggle-group-yLog" value="logarithmic">
-            yLog
-          </mat-button-toggle>
-        </mat-button-toggle-group>
-      </div>
+  <mat-dialog-content>
+    <!-- Mode selection -->
+    <div class="mode-toggle-group">
+      <mat-button-toggle-group
+        [(ngModel)]="mode"
+        aria-label="Scale mode"
+        class="scale-toggle-group"
+      >
+        <mat-button-toggle id="scale-toggle-mode-manual" value="manual">
+          {{ 'GLOBAL.MANUAL_SCALE' | translate }}
+        </mat-button-toggle>
+        <mat-button-toggle id="scale-toggle-mode-auto" value="auto">
+          {{ 'GLOBAL.AUTO_SCALE' | translate }}
+        </mat-button-toggle>
+      </mat-button-toggle-group>
     </div>
-  </div>
+
+    <!-- Description box -->
+    @if (mode === 'manual') {
+      <div class="mode-description manual-description">
+        <p>{{ 'GLOBAL.MANUAL_SCALE_DESCRIPTION' | translate }}</p>
+      </div>
+      <mat-divider></mat-divider>
+      <!-- X and Y axes side by side -->
+      <div class="axes-row">
+        <div class="scale-group">
+          <h3>{{ 'GLOBAL.X_AXIS' | translate }}</h3>
+          <mat-button-toggle-group
+            [(ngModel)]="xScale"
+            aria-label="X-axis scale"
+            class="scale-toggle-group"
+          >
+            <mat-button-toggle id="scale-toggle-group-xLin" value="linear">
+              Lin
+            </mat-button-toggle>
+            <mat-button-toggle id="scale-toggle-group-xLog" value="logarithmic">
+              Log
+            </mat-button-toggle>
+          </mat-button-toggle-group>
+        </div>
+        <div class="scale-group">
+          <h3>{{ 'GLOBAL.Y_AXIS' | translate }}</h3>
+          <mat-button-toggle-group
+            [(ngModel)]="yScale"
+            aria-label="Y-axis scale"
+            class="scale-toggle-group"
+          >
+            <mat-button-toggle id="scale-toggle-group-yLin" value="linear">
+              Lin
+            </mat-button-toggle>
+            <mat-button-toggle id="scale-toggle-group-yLog" value="logarithmic">
+              Log
+            </mat-button-toggle>
+          </mat-button-toggle-group>
+        </div>
+      </div>
+    }
+    @if (mode === 'auto') {
+      <div class="mode-description auto-description">
+        <kl-icon name="magic" />
+        <p>{{ 'GLOBAL.AUTO_SCALE_DESCRIPTION' | translate }}</p>
+      </div>
+      <p class="auto-scale-settings-hint">
+        {{ 'GLOBAL.AUTO_SCALE_SETTINGS_HINT' | translate }}
+      </p>
+    }
+  </mat-dialog-content>
 
   <div class="dialog-actions" align="end">
     <button mat-stroked-button (click)="onCancel()">

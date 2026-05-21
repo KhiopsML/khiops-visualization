@@ -17,14 +17,10 @@ describe('Copy datas Test Plan for Khiops Covisualization', () => {
         cy.loadFile('covisualization', fileName);
 
         cy.readFile('./src/assets/mocks/kc/' + fileName).then(() => {
-          cy.wait(250);
-
           cy.get('.mat-mdc-tab:contains("Axis")').first().click();
-          cy.wait(250);
 
           // Open statistics panels
           cy.get('.hierarchy-infos-button').eq(0).click({ force: true });
-          cy.wait(250);
 
           cy.testComponentCopyDatas(
             '#hierarchy-details-comp-0',
@@ -83,7 +79,6 @@ describe('Copy datas Test Plan for Khiops Covisualization', () => {
 
           // Open unfold Hierarchy view
           cy.get('.button-unfold-hierarchy').click();
-          cy.wait(250);
 
           cy.testComponentCopyDatas(
             '#unfold-hierarchy-table',
@@ -99,6 +94,14 @@ describe('Copy datas Test Plan for Khiops Covisualization', () => {
           );
 
           cy.get('.button-confirm-hierarchy').first().click({ force: true });
+
+          // Project Tab datas
+          cy.get('.mat-mdc-tab:contains("Project")').first().click();
+
+          cy.testComponentCopyDatas(
+            '#project-summary-comp',
+            'kc-project-summary.txt',
+          );
         });
       });
     });
@@ -113,12 +116,9 @@ describe('Copy datas Test Plan for Khiops Covisualization', () => {
         cy.loadFile('covisualization', fileName);
 
         cy.readFile('./src/assets/mocks/kc/' + fileName).then(() => {
-          cy.wait(250);
-
           cy.get('.mat-mdc-tab:contains("Axis")').first().click();
-          cy.wait(250);
 
-          // // Variable Search Dialog
+          // Variable Search Dialog
           cy.get('.variable-search-button-comp').first().click({ force: true });
           cy.get('#variable-search-dialog-comp', { timeout: 5000 })
             .should('exist')

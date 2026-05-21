@@ -43,7 +43,6 @@ describe('Behaviors tests for Khiops Covisualization', () => {
 
       //  reverse dimenions
       cy.get('.hierarchy-select-comp-button').first().click();
-      cy.wait(500);
       cy.get('.mat-mdc-menu-item').eq(1).click();
 
       cy.get('#tree-expando-19').first().click();
@@ -75,23 +74,18 @@ describe('Behaviors tests for Khiops Covisualization', () => {
       cy.get('.button-unfold-hierarchy').click();
 
       // Reduce hierarchy and check values
-      cy.wait(250);
 
       // force to work on hidden elt
       cy.get('#cy-unfold-value-input').clear({ force: true }).type('20', {
         force: true,
       });
-      cy.wait(250);
 
       cy.get('#cy-unfold-value-button').click({
         force: true,
       });
-      cy.wait(250);
       cy.get('.button-reduce-hierarchy').click();
-      cy.wait(250);
 
       cy.get('kl-checkbox-cell').first().find('input').click({ force: true });
-      cy.wait(250);
 
       // Close dialog
       cy.get('.button-confirm-hierarchy').click();
@@ -99,7 +93,6 @@ describe('Behaviors tests for Khiops Covisualization', () => {
       // Open statistics panels
       cy.get('.hierarchy-infos-button').eq(0).click({ force: true });
       cy.get('.hierarchy-infos-button').eq(1).click({ force: true });
-      cy.wait(250);
 
       // Check values
       cy.get('.hierarchy-select-comp').eq(0).contains('473');
@@ -118,7 +111,6 @@ describe('Behaviors tests for Khiops Covisualization', () => {
       cy.get('.button-unfold-hierarchy').click();
 
       // Reduce hierarchy and check values
-      cy.wait(250);
 
       // force to work on hidden elt
       cy.get('#cy-unfold-value-input').clear({ force: true }).type('378', {
@@ -127,7 +119,6 @@ describe('Behaviors tests for Khiops Covisualization', () => {
       cy.get('#cy-unfold-value-button').click({
         force: true,
       });
-      cy.wait(250);
 
       // Check table values
       cy.get('#unfold-hierarchy-table').contains('341');
@@ -136,10 +127,8 @@ describe('Behaviors tests for Khiops Covisualization', () => {
 
       cy.get('.unfold-information-rate').contains('112 530');
       cy.get('#unfold-hierarchy-settings').contains('Number of clusters : 378');
-      cy.wait(250);
 
       cy.get('.button-reduce-hierarchy').click();
-      cy.wait(250);
       // Check table values
       cy.get('#unfold-hierarchy-table').contains('340');
 
@@ -147,7 +136,6 @@ describe('Behaviors tests for Khiops Covisualization', () => {
       cy.get('#unfold-hierarchy-settings').contains('Number of clusters : 377');
 
       cy.get('.button-increase-hierarchy').click();
-      cy.wait(250);
 
       cy.get('.unfold-information-rate').contains('112 530');
       cy.get('#unfold-hierarchy-settings').contains('Number of clusters : 378');
@@ -161,19 +149,16 @@ describe('Behaviors tests for Khiops Covisualization', () => {
 
       cy.loadFile('covisualization', fileName);
 
-      cy.wait(500);
       // Now we check matrix values
       cy.get('#matrix-selected').should('be.visible').trigger('mousemove', {
         position: 'center',
       });
-      cy.wait(500);
       cy.get('.matrix-tooltip-comp').contains('2 496');
 
       // Open unfold Hierarchy view
       cy.get('.button-unfold-hierarchy').click();
 
       // Reduce hierarchy and check values
-      cy.wait(250);
       // force to work on hidden elt
       cy.get('#cy-unfold-value-input').clear({ force: true }).type('200', {
         force: true,
@@ -181,7 +166,6 @@ describe('Behaviors tests for Khiops Covisualization', () => {
       cy.get('#cy-unfold-value-button').click({
         force: true,
       });
-      cy.wait(250);
       cy.get('.unfold-information-rate').contains('53 790');
       cy.get('.unfold-information-rate').contains('92.4%');
 
@@ -192,7 +176,6 @@ describe('Behaviors tests for Khiops Covisualization', () => {
       cy.get('#cy-unfold-value-button').click({
         force: true,
       });
-      cy.wait(250);
       cy.get('.unfold-information-rate').contains('5 746');
       cy.get('.unfold-information-rate').contains('69.8%');
 
@@ -202,13 +185,10 @@ describe('Behaviors tests for Khiops Covisualization', () => {
       // Check values
       cy.get('#tree-comp-0').contains('A214');
 
-      cy.wait(500);
-
       // Now we check matrix values
       cy.get('#matrix-selected').should('be.visible').trigger('mousemove', {
         position: 'bottomRight',
       });
-      cy.wait(500);
       cy.get('.matrix-tooltip-comp').contains('0.043');
     });
   });
@@ -230,7 +210,6 @@ describe('Behaviors tests for Khiops Covisualization', () => {
 
       // Now reverse dimenions
       cy.get('.hierarchy-select-comp-button').first().click();
-      cy.wait(500);
       cy.get('.mat-mdc-menu-item').eq(2).click();
 
       // Check that dimension has been changed
@@ -271,14 +250,12 @@ describe('Behaviors tests for Khiops Covisualization', () => {
       cy.get('#cluster-composition-0').contains('A10');
       cy.get('.annotation-comp').first().contains('A10');
       cy.get('#cluster-distribution-1').contains('A10');
-      cy.wait(500);
       cy.get('#matrix-selected').should('be.visible').trigger('mousemove', {
         position: 'topLeft',
       });
       cy.get('.matrix-tooltip-comp').contains('A10');
       cy.get('#selected-clusters-grid').contains('A10');
 
-      cy.wait(500);
       // ### Click on matrix cell
       cy.get('#matrix-selected')
         .should('be.visible')

@@ -3,7 +3,7 @@ name: Build WebComponents Bundle
 on:
   push:
     branches:
-      - master
+      - main
       # Add more branches below to automatically trigger builds when pushing to them:
       - feat-dock
   workflow_dispatch:
@@ -11,7 +11,7 @@ on:
       branch:
         description: 'Branch to build from'
         required: false
-        default: 'master'
+        default: 'main'
         type: string
 
 permissions:
@@ -38,10 +38,10 @@ jobs:
           ref: ${{ inputs.branch || github.ref_name }}
           path: source
 
-      - name: Checkout master for docs update
+      - name: Checkout main for docs update
         uses: actions/checkout@v4
         with:
-          ref: master
+          ref: main
           path: docs-repo
 
       - name: Setup Node.js
@@ -121,8 +121,8 @@ jobs:
           echo "Copying bundle: $BUNDLE_SRC → $BUNDLE_DEST"
           cp "$BUNDLE_SRC" "$BUNDLE_DEST"
 
-          # Also copy to the legacy location for master (backward compatibility)
-          if [ "$BRANCH_NAME" = "master" ]; then
+          # Also copy to the legacy location for main (backward compatibility)
+          if [ "$BRANCH_NAME" = "main" ]; then
             cp "$BUNDLE_SRC" docs-repo/docs/dist/khiops-webcomponents.bundle.js
             echo "Copied legacy bundle: docs-repo/docs/dist/khiops-webcomponents.bundle.js"
           fi
@@ -130,7 +130,7 @@ jobs:
           echo "Contents of docs-repo/docs/dist:"
           ls -lh docs-repo/docs/dist/
 
-      - name: Commit and push changes to master
+      - name: Commit and push changes to main
         working-directory: docs-repo
         run: |
           git config --local user.email "stephane.bouget@orange.com"
@@ -141,8 +141,8 @@ jobs:
           BUNDLE_FILE="docs/dist/khiops-webcomponents-${SAFE_BRANCH}.bundle.js"
           MANIFEST="docs/dist/branches.json"
 
-          # Pull latest master first to get the most up-to-date manifest
-          git pull --no-rebase origin master || true
+          # Pull latest main first to get the most up-to-date manifest
+          git pull --no-rebase origin main || true
 
           # Update branches manifest with current branch
           if [ -f "$MANIFEST" ]; then
@@ -157,14 +157,14 @@ jobs:
           else
             UPDATED=$(echo "$EXISTING" | jq --arg name "$BRANCH_NAME" --arg safe "$SAFE_BRANCH" --argjson idx "$EXISTING_IDX" '.[$idx] = {name: $name, safe: $safe}')
           fi
-          echo "$UPDATED" | jq 'sort_by(if .name == "master" then "" else .name end)' > "$MANIFEST"
+          echo "$UPDATED" | jq 'sort_by(if .name == "main" then "" else .name end)' > "$MANIFEST"
 
           # Force add new files (even if in gitignore)
           git add -f "$BUNDLE_FILE"
           git add -f "$MANIFEST"
 
-          # Also add legacy bundle for master (backward compatibility)
-          if [ "$BRANCH_NAME" = "master" ]; then
+          # Also add legacy bundle for main (backward compatibility)
+          if [ "$BRANCH_NAME" = "main" ]; then
             git add -f docs/dist/khiops-webcomponents.bundle.js
           fi
 
@@ -172,5 +172,5 @@ jobs:
             echo "No changes to commit"
           else
             git commit -m "Generate khiops-webcomponents bundle for branch $BRANCH_NAME [skip ci]"
-            git push origin master
+            git push origin main
           fi

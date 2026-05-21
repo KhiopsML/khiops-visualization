@@ -9,10 +9,13 @@ import { InfosDatasI } from '@khiops-library/interfaces/infos-datas.interface';
 
 export class ProjectSummaryModel {
   filename: string;
+  dictionary: string;
   database: string;
   shortDescription: string;
   learningTask: string;
   targetVariable: string;
+  samplePercentage: number | undefined;
+  samplingMode: string;
   instances: string;
   variables: number | undefined;
 
@@ -30,10 +33,13 @@ export class ProjectSummaryModel {
       // Otherwise, use filename directly or default to empty string
       this.filename = appDatas.filename || '';
     }
+    this.dictionary = appDatas[source]?.summary?.dictionary || '';
     this.database = appDatas[source]?.summary?.database || '';
     this.shortDescription = appDatas.shortDescription || '';
     this.learningTask = appDatas[source]?.summary?.learningTask || '';
     this.targetVariable = appDatas[source]?.summary?.targetVariable || '';
+    this.samplePercentage = appDatas[source]?.summary?.samplePercentage || undefined;
+    this.samplingMode = appDatas[source]?.summary?.samplingMode || '';
     this.instances = appDatas[source]?.summary?.instances || '';
 
     this.variables = undefined;
@@ -78,10 +84,13 @@ export class ProjectSummaryModel {
     // Define the mapping between property keys and their display titles
     const fields: { key: keyof ProjectSummaryModel; title: string }[] = [
       { key: 'filename', title: 'GLOBAL.PROJECT_FILE' },
+      { key: 'dictionary', title: 'GLOBAL.DICTIONARY' },
       { key: 'database', title: 'GLOBAL.DATABASE' },
       { key: 'shortDescription', title: 'GLOBAL.SHORT_DESCRIPTION' },
       { key: 'learningTask', title: 'GLOBAL.LEARNING_TASK' },
       { key: 'targetVariable', title: 'GLOBAL.TARGET_VARIABLE' },
+      { key: 'samplePercentage', title: 'GLOBAL.SAMPLE_PERCENTAGE' },
+      { key: 'samplingMode', title: 'GLOBAL.SAMPLING_MODE' },
       { key: 'instances', title: 'GLOBAL.INSTANCES' },
       { key: 'variables', title: 'GLOBAL.VARIABLES' },
     ];

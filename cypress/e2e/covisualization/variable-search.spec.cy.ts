@@ -15,7 +15,6 @@ describe('Variable Search Bug Fixes Tests', () => {
       cy.loadFile('covisualization', 'IV-Breast.json');
 
       cy.readFile('./src/assets/mocks/kc/IV-Breast.json').then(() => {
-        cy.wait(200);
 
         // Wait for composition table to be visible
         cy.get('#cluster-composition-1', { timeout: 15000 }).should(
@@ -24,20 +23,14 @@ describe('Variable Search Bug Fixes Tests', () => {
 
         // Open variable search dialog
         cy.get('.variable-search-button-comp').first().click();
-        cy.wait(200);
 
         // click on first button with class inner-variable-select
         cy.get('.inner-variable-select').first().click();
 
-        cy.wait(200);
-
         // click on 6th button with class  mat-mdc-menu-item
         cy.get('.mat-mdc-menu-item').eq(5).click();
-        cy.wait(200);
 
         cy.get('#variable-search-results-table').find('.ag-row:eq(1)').click();
-
-        cy.wait(200);
 
         // check selection
         cy.get('#cluster-composition-1 [row-id="2"]').then((element) => {
@@ -46,20 +39,14 @@ describe('Variable Search Bug Fixes Tests', () => {
 
         // Open variable search dialog
         cy.get('.variable-search-button-comp').first().click();
-        cy.wait(200);
 
         // click on first button with class inner-variable-select
         cy.get('.inner-variable-select').first().click();
 
-        cy.wait(200);
-
         // click on 6th button with class  mat-mdc-menu-item
         cy.get('.mat-mdc-menu-item').eq(6).click();
-        cy.wait(200);
 
         cy.get('#variable-search-results-table').find('.ag-row:eq(1)').click();
-
-        cy.wait(200);
 
         // check selection
         cy.get('#cluster-composition-1 [row-id="3"]').then((element) => {
@@ -77,7 +64,6 @@ describe('Variable Search Bug Fixes Tests', () => {
       cy.loadFile('covisualization', 'IV-Glass.json');
 
       cy.readFile('./src/assets/mocks/kc/IV-Glass.json').then(() => {
-        cy.wait(200);
 
         // Wait for composition table to be visible
         cy.get('#cluster-composition-1', { timeout: 15000 }).should(
@@ -86,20 +72,14 @@ describe('Variable Search Bug Fixes Tests', () => {
 
         // Open variable search dialog
         cy.get('.variable-search-button-comp').first().click();
-        cy.wait(200);
 
         // click on first button with class inner-variable-select
         cy.get('.inner-variable-select').first().click();
 
-        cy.wait(200);
-
         // click on 6th button with class  mat-mdc-menu-item
         cy.get('.mat-mdc-menu-item').eq(10).click();
-        cy.wait(200);
 
         cy.get('#variable-search-results-table').find('.ag-row:eq(2)').click();
-
-        cy.wait(200);
 
         // check selection
         cy.get('#cluster-composition-1 [row-id="8"]').then((element) => {

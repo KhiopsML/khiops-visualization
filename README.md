@@ -2,7 +2,7 @@
 
 [![Unit tests](https://github.com/KhiopsML/khiops-visualization/actions/workflows/test.yml/badge.svg)](https://github.com/KhiopsML/khiops-visualization/actions/workflows/test.yml)
 [![Publish to NPM](https://github.com/KhiopsML/khiops-visualization/actions/workflows/publish.yml/badge.svg)](https://github.com/KhiopsML/khiops-visualization/actions/workflows/publish.yml)
-[![End-to-end tests](https://github.com/KhiopsML/khiops-visualization/actions/workflows/e2e.yml/badge.svg?branch=master)](https://github.com/KhiopsML/khiops-visualization/actions/workflows/e2e.yml)
+[![End-to-end tests](https://github.com/KhiopsML/khiops-visualization/actions/workflows/e2e.yml/badge.svg?branch=main)](https://github.com/KhiopsML/khiops-visualization/actions/workflows/e2e.yml)
 [![gitleaks](https://github.com/KhiopsML/khiops-visualization/actions/workflows/gitleaks.yml/badge.svg)](https://github.com/KhiopsML/khiops-visualization/actions/workflows/gitleaks.yml)
 [![Build WebComponents Bundle](https://github.com/KhiopsML/khiops-visualization/actions/workflows/build-webcomponents.yml/badge.svg)](https://github.com/KhiopsML/khiops-visualization/actions/workflows/build-webcomponents.yml)
 [![pages-build-deployment](https://github.com/KhiopsML/khiops-visualization/actions/workflows/pages/pages-build-deployment/badge.svg)](https://github.com/KhiopsML/khiops-visualization/actions/workflows/pages/pages-build-deployment)

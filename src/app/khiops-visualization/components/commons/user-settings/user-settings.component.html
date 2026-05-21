@@ -30,11 +30,35 @@
       class="kl-auto-scale-setting"
       fxLayout="column"
       fxLayoutAlign="start start"
+      [class.disabled]="!autoScaleEnabled"
     >
-      <h2>{{ 'SCALE_PERSISTENCE.AUTO_SCALE' | translate }}</h2>
-      <mat-checkbox [(ngModel)]="autoScale" color="primary">
-        {{ 'SCALE_PERSISTENCE.MESSAGE' | translate }}
-      </mat-checkbox>
+      <h2 fxLayoutAlign="start center">
+        {{ 'SCALE_PERSISTENCE.AUTO_SCALE_FACTOR_TITLE' | translate }}
+        <mat-icon
+          *ngIf="!autoScaleEnabled"
+          matTooltip="{{
+            'SCALE_PERSISTENCE.AUTO_SCALE_FACTOR_DISABLED_TOOLTIP' | translate
+          }}"
+          >info</mat-icon
+        >
+      </h2>
+      <div fxLayout="row" fxLayoutAlign="start center">
+        <mat-slider
+          [min]="1"
+          [max]="3"
+          [step]="0.1"
+          [disabled]="!autoScaleEnabled"
+          attr.aria-label="{{
+            'SCALE_PERSISTENCE.AUTO_SCALE_FACTOR' | translate
+          }}"
+        >
+          <input matSliderThumb [(ngModel)]="autoScaleFactor" />
+        </mat-slider>
+        <span>{{ autoScaleFactor | number: '1.1-1' }}</span>
+      </div>
+      <p class="factor-description">
+        {{ 'SCALE_PERSISTENCE.AUTO_SCALE_FACTOR_DESCRIPTION' | translate }}
+      </p>
     </div>
     <kl-clear-ls></kl-clear-ls>
     <kl-npm-version></kl-npm-version>

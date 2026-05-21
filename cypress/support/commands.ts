@@ -61,8 +61,41 @@ Cypress.Commands.add('checkCanvasIsNotEmpty', (canvasSelector: string) => {
   });
 });
 
-Cypress.Commands.add('setGlobalNumberPrecision', () => {
-  // No-op: number precision is now handled via localStorage.getItem interception in loadFile
+Cypress.Commands.add('setGlobalSetting', (settingKey: string, value: any) => {
+  // Generic function to set any global setting for all tests
+  // This will work for both visualization and covisualization modules
+  cy.window().then((win) => {
+    // Set in localStorage directly with the correct module prefixes
+    win.localStorage.setItem(
+      `KHIOPS_VISUALIZATION_${settingKey}`,
+      String(value),
+    );
+    win.localStorage.setItem(
+      `KHIOPS_COVISUALIZATION_${settingKey}`,
+      String(value),
+    );
+
+    // Also try to set through the application if available
+    try {
+      // Check if Angular is available and get the injector
+      const angular = (win as any).ng;
+      if (angular && angular.getInjector) {
+        const injector = angular.getInjector();
+        if (injector) {
+          try {
+            const appService = injector.get('AppService');
+            if (appService && appService.Ls) {
+              appService.Ls.set(settingKey, value);
+            }
+          } catch (serviceError) {
+            // AppService not available, localStorage fallback used
+          }
+        }
+      }
+    } catch (e) {
+      // Ignore errors if Angular is not available yet
+    }
+  });
 });
 
 Cypress.Commands.add('setGlobalAutoScale', (value: boolean) => {
@@ -115,17 +148,17 @@ Cypress.Commands.add(
   },
 );
 
-Cypress.Commands.add('testComponentScreenshot', (id: string) => {
+Cypress.Commands.add('testComponentScreenshot', (id: string, tab?: string) => {
+  cy.task(
+    'log',
+    `Testing screenshot copy for component with id: ${id} for tab: ${tab}`,
+  );
+
   // Wait for the component to be visible and trigger trustedClick
-  cy.get(id, { timeout: 10000 })
-    .should('exist')
-    .should('be.visible')
-    .trigger('trustedClick');
+  cy.get(id).should('exist').should('be.visible').trigger('trustedClick');
 
   // Verify the component is selected (has selected class)
   cy.get(id).should('have.class', 'selected');
-
-  cy.wait(100);
 
   cy.get('#header-tools-copy-image-button').first().click({ force: true });
 
@@ -134,21 +167,13 @@ Cypress.Commands.add('testComponentScreenshot', (id: string) => {
     .should('be.visible')
     .and('contain', 'copied');
 
-  // Verify fetch was called with a data URL
+  // Verify fetch was called with a valid PNG data URL
   cy.get('@fetchSpy', { timeout: 2000 }).should((spy) => {
-    // Check that fetch was called
+    const dataUrl = spy.args.at(-1)?.[0];
     expect(spy).to.have.been.called;
-
-    // Get the last call argument (the dataUrl) since there might be multiple calls
-    const lastCallIndex = spy.args.length - 1;
-    const dataUrl = spy.args[lastCallIndex]?.[0];
-
-    // Verify it's a PNG data URL
-    expect(dataUrl).to.be.a('string');
-    expect(dataUrl).to.include('data:image/png;base64,');
-
-    // Verify the image has substantial data (more than just header)
-    // A real screenshot should be at least 1000 characters
-    expect(dataUrl.length).to.be.greaterThan(1000);
+    expect(dataUrl)
+      .to.be.a('string')
+      .and.include('data:image/png;base64,')
+      .and.have.length.greaterThan(1000);
   });
 });

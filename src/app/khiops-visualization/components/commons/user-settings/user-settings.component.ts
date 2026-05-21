@@ -32,7 +32,8 @@ export class UserSettingsComponent implements OnChanges {
   public numberPrecision?: number;
   public contrastValue: number =
     AppConfig.visualizationCommon.GLOBAL.MATRIX_CONTRAST;
-  public autoScale: boolean = false;
+  public autoScaleFactor: number = 1.5;
+  public autoScaleEnabled: boolean = false;
 
   constructor(private trackerService: TrackerService) {}
 
@@ -62,8 +63,14 @@ export class UserSettingsComponent implements OnChanges {
     AppService.Ls.set(LS.SETTING_MATRIX_CONTRAST, this.contrastValue);
     AppConfig.visualizationCommon.GLOBAL.MATRIX_CONTRAST = this.contrastValue;
 
-    // Auto scale
-    this.autoScale =
+    // Auto scale factor (default 1.5)
+    const storedFactor = parseFloat(
+      AppService.Ls.get(LS.SETTING_AUTO_SCALE_FACTOR),
+    );
+    this.autoScaleFactor = !isNaN(storedFactor) ? storedFactor : 1.5;
+
+    // Whether auto scale mode is currently active
+    this.autoScaleEnabled =
       AppService.Ls.get(LS.SETTING_AUTO_SCALE)?.toString() === 'true';
   }
 
@@ -81,7 +88,7 @@ export class UserSettingsComponent implements OnChanges {
     AppService.Ls.set(LS.SETTING_MATRIX_CONTRAST, this.contrastValue);
     AppConfig.visualizationCommon.GLOBAL.MATRIX_CONTRAST = this.contrastValue;
 
-    AppService.Ls.set(LS.SETTING_AUTO_SCALE, this.autoScale);
+    AppService.Ls.set(LS.SETTING_AUTO_SCALE_FACTOR, this.autoScaleFactor);
 
     AppService.Ls.setAll();
 
