@@ -45,6 +45,7 @@ import { GridCheckboxEventI } from '@khiops-library/interfaces/events.interface'
 import { DynamicI } from '@khiops-library/interfaces/globals.interface';
 import { AgGridService } from '@khiops-library/components/ag-grid/ag-grid.service';
 import { AgGridLoadingOverlayComponent } from '@khiops-library/components/ag-grid/ag-grid-loading-overlay.component';
+import { Subscription } from 'rxjs';
 
 ModuleRegistry.registerModules([ClientSideRowModelModule]);
 
@@ -57,6 +58,7 @@ ModuleRegistry.registerModules([ClientSideRowModelModule]);
 export class AgGridComponent
   extends SelectableComponent
   implements OnChanges, AfterViewInit {
+  private settingsChangedSub: Subscription;
   @ViewChild('agGrid', {
     static: false,
   })
@@ -152,6 +154,12 @@ export class AgGridComponent
     super(selectableService, ngzone, configService);
     this.AppConfig = this.khiopsLibraryService.getAppConfig().common;
 
+    this.settingsChangedSub = this.khiopsLibraryService.settingsChanged$.subscribe(() => {
+      if (this.isGridApiAvailable()) {
+        this.agGrid!.api.refreshCells({ force: true });
+      }
+    });
+
     this.title = this.translate.get('GLOBAL.VARIABLES') || this.title;
 
     try {
@@ -167,6 +175,12 @@ export class AgGridComponent
       this.gridModes = PREV_MODES_AG_GRID || {}; // 'fitToSpace' or 'fitToContent'
     } catch (e) { }
   }
+
+  override ngOnDestroy() {
+    super.ngOnDestroy();
+    this.settingsChangedSub.unsubscribe();
+  }
+
   override ngAfterViewInit() {
     // Call ngAfterViewInit of extend component
     super.ngAfterViewInit();

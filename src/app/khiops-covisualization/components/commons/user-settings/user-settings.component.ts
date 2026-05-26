@@ -14,6 +14,7 @@ import {
 } from '@angular/core';
 import { AppConfig } from '../../../../../environments/environment';
 import { TrackerService } from '../../../../khiops-library/providers/tracker.service';
+import { KhiopsLibraryService } from '@khiops-library/providers/khiops-library.service';
 import { LS } from '@khiops-library/enum/ls';
 import { AppService } from '@khiops-covisualization/providers/app.service';
 import { DimensionsDatasService } from '@khiops-covisualization/providers/dimensions-datas.service';
@@ -36,6 +37,7 @@ export class UserSettingsComponent implements OnChanges {
   constructor(
     private trackerService: TrackerService,
     private dimensionsDatasService: DimensionsDatasService,
+    private khiopsLibraryService: KhiopsLibraryService,
   ) {}
 
   ngOnChanges(changes: SimpleChanges) {
@@ -84,7 +86,10 @@ export class UserSettingsComponent implements OnChanges {
     this.dimensionsDatasService.dimensionsDatas.matrixContrast =
       this.contrastValue;
 
-    // Close the nav drawer
-    this.toggleNavDrawerChanged.emit(true);
+    // Notify components to refresh without reloading the view
+    this.khiopsLibraryService.settingsChanged$.next();
+
+    // Close the nav drawer without reload
+    this.toggleNavDrawerChanged.emit();
   }
 }

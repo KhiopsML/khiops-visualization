@@ -13,6 +13,7 @@ import {
   Output,
 } from '@angular/core';
 import { TrackerService } from '../../../../khiops-library/providers/tracker.service';
+import { KhiopsLibraryService } from '@khiops-library/providers/khiops-library.service';
 import { LS } from '@khiops-library/enum/ls';
 import { AppService } from '@khiops-visualization/providers/app.service';
 import { AppConfig } from '../../../../../environments/environment';
@@ -35,7 +36,10 @@ export class UserSettingsComponent implements OnChanges {
   public autoScaleFactor: number = 1.5;
   public autoScaleEnabled: boolean = false;
 
-  constructor(private trackerService: TrackerService) {}
+  constructor(
+    private trackerService: TrackerService,
+    private khiopsLibraryService: KhiopsLibraryService,
+  ) {}
 
   ngOnChanges(changes: SimpleChanges) {
     if (changes.opened?.currentValue) {
@@ -92,7 +96,10 @@ export class UserSettingsComponent implements OnChanges {
 
     AppService.Ls.setAll();
 
-    // Close the nav drawer
-    this.toggleNavDrawerChanged.emit(true);
+    // Notify components to refresh without reloading the view
+    this.khiopsLibraryService.settingsChanged$.next();
+
+    // Close the nav drawer without reload
+    this.toggleNavDrawerChanged.emit();
   }
 }
