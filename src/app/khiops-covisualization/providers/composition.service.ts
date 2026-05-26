@@ -214,15 +214,23 @@ export class CompositionService {
     let compositionValues: CompositionModel[] = [];
     let processedCollapsedChildren = new Set<string>();
 
-    // Process collapsed children for both IndiVar and VarVar cases
-    processedCollapsedChildren = this.processCollapsedChildren(
-      currentDimensionDetails,
-      currentInitialDimensionDetails,
-      node,
-      currentIndex,
-      isIndiVarCase,
-      compositionValues,
-    );
+    // Process collapsed children only for IndiVar case.
+    // For VarVar (Categorical × Categorical), sub-node collapse state is irrelevant:
+    // the composition must show the flat list of all leaf values, just like manual folding.
+    // Calling processCollapsedChildren in VarVar causes duplicate rows when both a parent
+    // cluster (e.g. A5) and one of its child clusters (e.g. A9) are collapsed by auto-fold,
+    // because the child's leaves are added once by processCollapsedChildren and again
+    // (without being skipped) by processNodeCompositions.
+    if (isIndiVarCase) {
+      processedCollapsedChildren = this.processCollapsedChildren(
+        currentDimensionDetails,
+        currentInitialDimensionDetails,
+        node,
+        currentIndex,
+        isIndiVarCase,
+        compositionValues,
+      );
+    }
 
     // Then process the current node using the factorized method
     const nodeCompositions = this.processNodeCompositions(
@@ -257,7 +265,8 @@ export class CompositionService {
         };
       });
     } else if (processedCollapsedChildren.size > 0) {
-      // When we have collapsed children, preserve their cluster names for both IndiVar and VarVar cases
+      // IndiVar only: processedCollapsedChildren is always empty for VarVar (processCollapsedChildren is never called).
+      // Preserve cluster names for collapsed children that were processed above.
       compositionValues = this.formatCompositions(
         node,
         compositionValues,

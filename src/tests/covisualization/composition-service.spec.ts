@@ -1293,7 +1293,10 @@ describe('coVisualization', () => {
         ).toHaveBeenCalled();
       });
 
-      it('should process collapsed children for VarVar case', () => {
+      it('should NOT process collapsed children for VarVar case (fix: prevents duplicate rows on auto-fold)', () => {
+        // For VarVar (isIndiVarCase=false), processCollapsedChildren must NOT be called.
+        // Calling it caused duplicate composition rows when both a parent cluster and a
+        // child cluster were simultaneously auto-collapsed by getLeafNodesForARank().
         compositionService['getCompositionValues'](
           mockCurrentDimensionDetails,
           mockCurrentInitialDimensionDetails,
@@ -1304,7 +1307,7 @@ describe('coVisualization', () => {
 
         expect(
           compositionService['processCollapsedChildren'],
-        ).toHaveBeenCalled();
+        ).not.toHaveBeenCalled();
       });
 
       it('should merge and format compositions for collapsed IndiVar nodes', () => {
@@ -1646,6 +1649,98 @@ describe('coVisualization', () => {
         expect(relevantCompositions[1].partFrequencies).toEqual([
           163, 69, 16, 33, 32,
         ]);
+      });
+    });
+
+    describe('VarVar auto-fold duplicate composition regression (adult2var)', () => {
+      // Regression: when the hierarchy is automatically folded to a smaller coclustering
+      // (e.g. 9×9 → 3×3), getLeafNodesForARank() can mark both a parent cluster (B5)
+      // and one of its child clusters (B9) as collapsed=true simultaneously.
+      // Before the fix, processCollapsedChildren was called in the VarVar path and added
+      // B9's leaf compositions to the result; then processNodeCompositions re-added the
+      // same leaves without skipping them (the `isIndiVarCase &&` guard prevented the skip).
+      // This produced duplicate rows (e.g. 7 instead of 4 for B5).
+      // After the fix, processCollapsedChildren is skipped entirely for VarVar, so the
+      // composition is the same flat list of leaf values as with a manual fold.
+      beforeEach(() => {
+        dimensionsDatasService = TestBed.inject(DimensionsDatasService);
+        appService = TestBed.inject(AppService);
+        saveService = TestBed.inject(SaveService);
+        treenodesService = TestBed.inject(TreenodesService);
+
+        const fileDatas = require('../../assets/mocks/kc/adult2var.json');
+        appService.setFileDatas(fileDatas);
+
+        dimensionsDatasService.getDimensions();
+        dimensionsDatasService.initSelectedDimensions();
+        dimensionsDatasService.saveInitialDimension();
+        dimensionsDatasService.constructDimensionsTrees();
+      });
+
+      it('should not produce duplicate composition rows when parent (B5) and child (B9) are both auto-collapsed', () => {
+        // In adult2var.json education has hierarchicalRanks: B5=6, B9=10 (B9 is child of B5).
+        // rank=6 collapses all non-leaf nodes with hierarchicalRank >= 6, so both B5 and B9
+        // end up in collapsedNodes. B5's initial subtree contains B9 as a child.
+        const unfoldRank = 6;
+        treenodesService.setSelectedUnfoldHierarchy(unfoldRank);
+        const collapsedNodes = treenodesService.getLeafNodesForARank(unfoldRank);
+
+        // Both B5 and B9 must be in the collapsed set for this regression to be meaningful
+        expect(collapsedNodes['education']).toContain('B5');
+        expect(collapsedNodes['education']).toContain('B9');
+
+        treenodesService.setSavedCollapsedNodes(collapsedNodes);
+        const croppedDatas = saveService.constructSavedJson(collapsedNodes);
+        appService.setCroppedFileDatas(croppedDatas);
+
+        dimensionsDatasService.getDimensions();
+        dimensionsDatasService.initSelectedDimensions();
+        dimensionsDatasService.saveInitialDimension();
+        dimensionsDatasService.constructDimensionsTrees();
+
+        // education is selectedDimensions[1] in adult2var.json
+        const educationIndex =
+          dimensionsDatasService.dimensionsDatas.selectedDimensions.findIndex(
+            (e) => e.name === 'education',
+          );
+
+        // B5 must exist in the INITIAL dimension clusters and be collapsed,
+        // with B9 (also collapsed) as one of its children in the initial tree.
+        const b5Node =
+          dimensionsDatasService.dimensionsDatas.dimensionsClusters[
+            educationIndex
+          ]?.find((n) => n.cluster === 'B5');
+
+        expect(b5Node).toBeDefined();
+        expect(b5Node?.isCollapsed).toBeTrue();
+
+        // B9 must be a direct child of B5 in the initial tree
+        const b9InB5Children = b5Node?.children?.find(
+          (c) => c.cluster === 'B9',
+        );
+        expect(b9InB5Children).toBeDefined();
+        expect(b9InB5Children?.isCollapsed).toBeTrue();
+
+        // Composition of B5: {Bachelors}(1 value) + {Masters}(1 value) +
+        // {Prof-school, Doctorate}(2 values) = 4 total — no duplicates.
+        const compositions = compositionService.getCompositionClusters(
+          'education',
+          b5Node,
+        );
+
+        // Verify there are no duplicates by checking that each value appears exactly once
+        const compositionValues = compositions.map((c) => c.value);
+        const uniqueValues = new Set(compositionValues);
+        expect(uniqueValues.size).toEqual(compositionValues.length);
+
+        // The exact 4 values that belong to B5's subtree must all be present
+        expect(compositionValues).toContain('Bachelors');
+        expect(compositionValues).toContain('Masters');
+        expect(compositionValues).toContain('Prof-school');
+        expect(compositionValues).toContain('Doctorate');
+
+        // And nothing from outside B5's subtree should appear
+        expect(compositions.length).toEqual(4);
       });
     });
 
