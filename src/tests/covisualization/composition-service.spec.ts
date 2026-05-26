@@ -1742,6 +1742,66 @@ describe('coVisualization', () => {
         // And nothing from outside B5's subtree should appear
         expect(compositions.length).toEqual(4);
       });
+
+      it('should not mutate shared cluster shortDescription when B5 is collapsed (re-expand regression #246)', () => {
+        // Bug: processNodeCompositions was calling
+        //   currentDimensionHierarchyCluster.shortDescription = node.shortDescription
+        // which mutated the shared TreeNodeModel objects inside dimensionsClusters.
+        // After unfolding B5, those objects still had shortDescription = "B5", so a
+        // subsequent call to getCompositionClusters for any of B5's leaves showed "B5"
+        // instead of the real leaf cluster name.
+        //
+        // Fix: use a local shallow-clone for the overridden shortDescription instead of
+        // mutating the shared object.  This test verifies no mutation occurs.
+
+        const unfoldRank = 6;
+        treenodesService.setSelectedUnfoldHierarchy(unfoldRank);
+        const collapsedNodes = treenodesService.getLeafNodesForARank(unfoldRank);
+        treenodesService.setSavedCollapsedNodes(collapsedNodes);
+        const croppedDatas = saveService.constructSavedJson(collapsedNodes);
+        appService.setCroppedFileDatas(croppedDatas);
+
+        dimensionsDatasService.getDimensions();
+        dimensionsDatasService.initSelectedDimensions();
+        dimensionsDatasService.saveInitialDimension();
+        dimensionsDatasService.constructDimensionsTrees();
+
+        const educationIndex =
+          dimensionsDatasService.dimensionsDatas.selectedDimensions.findIndex(
+            (e) => e.name === 'education',
+          );
+
+        const b5Node =
+          dimensionsDatasService.dimensionsDatas.dimensionsClusters[
+            educationIndex
+          ]?.find((n) => n.cluster === 'B5');
+
+        expect(b5Node).toBeDefined();
+        expect(b5Node?.isCollapsed).toBeTrue();
+
+        // Record every cluster's shortDescription BEFORE the call — none should change.
+        const leafClusters =
+          dimensionsDatasService.dimensionsDatas.dimensionsClusters[
+            educationIndex
+          ];
+        const shortDescsBefore = new Map(
+          leafClusters.map((n) => [n.cluster, n.shortDescription]),
+        );
+
+        // Call with B5 collapsed — the old code mutated leaf shortDescriptions here.
+        const compositionsWhileCollapsed =
+          compositionService.getCompositionClusters('education', b5Node);
+        expect(compositionsWhileCollapsed.length).toEqual(4); // sanity check
+
+        // Verify no shared cluster objects in dimensionsClusters were mutated.
+        for (const clusterNode of leafClusters) {
+          expect(clusterNode.shortDescription)
+            .withContext(
+              `shortDescription of cluster '${clusterNode.cluster}' must not be mutated by a collapsed-node call`,
+            )
+            .toEqual(shortDescsBefore.get(clusterNode.cluster));
+        }
+      });
     });
 
     describe('IV-Glass VarVar composition regression', () => {

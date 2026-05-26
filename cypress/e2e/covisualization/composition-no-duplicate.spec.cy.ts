@@ -54,6 +54,17 @@ describe('Composition no-duplicate regression – adult2var VarVar', () => {
     cy.get('#cluster-composition-1').contains('Doctorate');
   };
 
+  const assertB5andB9Composition = () => {
+    // Exactly 4 data rows (not 7 as in the buggy version)
+    cy.get('#cluster-composition-1 .ag-row').should('have.length', 4);
+
+    // Each expected value appears exactly once
+    cy.get('#cluster-composition-1').contains('Bachelors');
+    cy.get('#cluster-composition-1').contains('B9');
+    cy.get('#cluster-composition-1').contains('B9');
+    cy.get('#cluster-composition-1').contains('B9');
+  };
+
   // ─── test 1 : manual fold ──────────────────────────────────────────────────
 
   it('Manual fold of B5 in education produces exactly 4 composition rows without duplicates', () => {
@@ -95,5 +106,39 @@ describe('Composition no-duplicate regression – adult2var VarVar', () => {
     cy.get('#9').last().click();
 
     assertB5Composition();
+  });
+
+  // ─── test 3 : fold then expand – composition must not change (#246) ────────
+
+  it('Folding B5 then expanding it again leaves the composition unchanged', () => {
+    cy.initViews();
+    cy.loadFile('covisualization', fileName);
+
+    // Collapse B5 (selects it at the same time)
+    cy.get('#tree-expando-9').last().click();
+    assertB5Composition();
+
+    // Expand B5 again – the composition for B5 must still show the same 4 values
+    // Bug #246: after expand the cluster column showed wrong names (e.g. B5 instead
+    // of the actual leaf cluster names) because processNodeCompositions was mutating
+    // currentDimensionHierarchyCluster.shortDescription when node.isCollapsed was true,
+    // and that mutation persisted after the node was re-expanded.
+    cy.get('#tree-expando-9').last().click();
+    assertB5Composition();
+  });
+
+  it('Folding B9 and B5 then expanding it again leaves the composition unchanged', () => {
+    cy.initViews();
+    cy.loadFile('covisualization', fileName);
+
+    // Collapse B9 (selects it at the same time)
+    cy.get('#tree-expando-10').last().click();
+
+    // Collapse B5 (selects it at the same time)
+    cy.get('#tree-expando-9').last().click();
+    cy.get('#cluster-composition-1').contains('B5');
+
+    cy.get('#tree-expando-9').last().click();
+    assertB5andB9Composition();
   });
 });
