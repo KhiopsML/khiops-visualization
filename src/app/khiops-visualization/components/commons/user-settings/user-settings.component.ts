@@ -33,7 +33,7 @@ export class UserSettingsComponent implements OnChanges {
   public numberPrecision?: number;
   public contrastValue: number =
     AppConfig.visualizationCommon.GLOBAL.MATRIX_CONTRAST;
-  public autoScaleFactor: number = 1.5;
+  public autoScaleFactor: number = 2.5;
   public autoScaleEnabled: boolean = false;
 
   constructor(
@@ -67,11 +67,11 @@ export class UserSettingsComponent implements OnChanges {
     AppService.Ls.set(LS.SETTING_MATRIX_CONTRAST, this.contrastValue);
     AppConfig.visualizationCommon.GLOBAL.MATRIX_CONTRAST = this.contrastValue;
 
-    // Auto scale factor (default 1.5)
+    // Auto scale factor (default 2.5)
     const storedFactor = parseFloat(
       AppService.Ls.get(LS.SETTING_AUTO_SCALE_FACTOR),
     );
-    this.autoScaleFactor = !isNaN(storedFactor) ? storedFactor : 1.5;
+    this.autoScaleFactor = !isNaN(storedFactor) ? storedFactor : 2.5;
 
     // Whether auto scale mode is currently active
     this.autoScaleEnabled =

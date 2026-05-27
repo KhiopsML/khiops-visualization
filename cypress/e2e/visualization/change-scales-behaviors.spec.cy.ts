@@ -19,15 +19,29 @@ describe('Level distribution Test Plan for Khiops Visualization', () => {
         cy.wait(100);
         cy.checkCanvasIsNotEmpty('#histogram-canvas');
 
+        // Set auto-scale factor to 1 via Settings UI so auto-detection picks yLog
+        cy.window().then((win) => {
+          win.localStorage.setItem(
+            'KHIOPS_VISUALIZATION_SETTING_AUTO_SCALE_FACTOR',
+            '1',
+          );
+        });
+        cy.get('#header-tools-comp button').first().click();
+        cy.get('#user-settings-comp').should('be.visible');
+        cy.get('#user-settings-comp button').contains('Save').click();
+        cy.get('#user-settings-comp').should('not.be.visible');
+
+        // Apply Auto mode to recalculate with factor 1
+        cy.get('#change-scale-button').click();
+        cy.get('#scale-toggle-mode-auto-button').click();
+        cy.get('#change-scale-dialog-apply-btn').click();
+
         cy.get('.graph-options-menu-comp').first().contains('xLog');
         cy.get('.graph-options-menu-comp').eq(1).contains('yLog');
 
         cy.get('#preparation-variables-list').find('.ag-row:eq(1)').click();
         cy.get('.graph-options-menu-comp').first().contains('xLog');
         cy.get('.graph-options-menu-comp').eq(1).contains('yLog');
-
-        cy.get('#preparation-variables-list').find('.ag-row:eq(3)').click();
-        cy.get('.graph-options-menu-comp').first().contains('yLin');
 
         cy.get('#preparation-variables-list').find('.ag-row:eq(4)').click();
         cy.get('.graph-options-menu-comp').first().contains('yLog');

@@ -15,6 +15,7 @@ import { HistogramType } from '../histogram/histogram.type';
 import { AppService } from '@khiops-visualization/providers/app.service';
 import { DistributionDatasService } from '@khiops-visualization/providers/distribution-datas.service';
 import { ScaleChangeEventsService } from '@khiops-visualization/providers/scale-change-events.service';
+import { VariableScaleSettingsService } from '@khiops-visualization/providers/variable-scale-settings.service';
 
 @Component({
   selector: 'app-change-scale-button',
@@ -27,6 +28,7 @@ export class ChangeScaleButtonComponent {
     private dialog: MatDialog,
     private distributionDatasService: DistributionDatasService,
     private scaleChangeEventsService: ScaleChangeEventsService,
+    private variableScaleSettingsService: VariableScaleSettingsService,
   ) {}
 
   openChangeScaleDialog() {
@@ -49,6 +51,9 @@ export class ChangeScaleButtonComponent {
       // Enable auto scale mode globally
       AppService.Ls.set(LS.SETTING_AUTO_SCALE, true);
 
+      // Clear all per-variable scale overrides so auto-scale takes effect
+      this.variableScaleSettingsService.clearAllVariableScaleSettings();
+
       // Reset graph options so auto-scale detection runs on next data fetch
       this.distributionDatasService.updateGraphOptions();
 
@@ -60,6 +65,9 @@ export class ChangeScaleButtonComponent {
     } else {
       // Disable auto scale, apply manual X/Y settings
       AppService.Ls.set(LS.SETTING_AUTO_SCALE, false);
+
+      // Clear all per-variable scale overrides so manual global settings apply uniformly
+      this.variableScaleSettingsService.clearAllVariableScaleSettings();
 
       // Map the scale settings to HistogramType values
       const xScaleType =

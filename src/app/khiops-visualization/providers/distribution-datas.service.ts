@@ -537,11 +537,11 @@ export class DistributionDatasService {
     const stored = AppService.Ls.get(LS.SETTING_AUTO_SCALE_FACTOR);
     if (stored !== null && stored !== undefined && stored !== '') {
       const parsed = parseFloat(stored);
-      if (!isNaN(parsed) && parsed >= 1 && parsed <= 3) {
+      if (!isNaN(parsed) && parsed >= 1 && parsed <= 5) {
         return parsed;
       }
     }
-    return 1.5;
+    return 2.5;
   }
 
   /**

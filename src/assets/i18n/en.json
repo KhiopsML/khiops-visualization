@@ -117,7 +117,7 @@
     "AUTO_SCALE": "Automatic scale selection (Lin/Log)",
     "AUTO_SCALE_FACTOR_TITLE": "Auto scale threshold factor",
     "AUTO_SCALE_FACTOR": "Auto scale threshold factor",
-    "AUTO_SCALE_FACTOR_DESCRIPTION": "Factor for switching from Lin to Log (1 = switch easily, 3 = switch rarely)",
+    "AUTO_SCALE_FACTOR_DESCRIPTION": "Factor for switching from Lin to Log (1 = switch easily, 5 = switch rarely)",
     "AUTO_SCALE_FACTOR_DISABLED_TOOLTIP": "Enable Auto mode via \"Change all scales\" to use this setting"
   },
   "GLOBAL": {

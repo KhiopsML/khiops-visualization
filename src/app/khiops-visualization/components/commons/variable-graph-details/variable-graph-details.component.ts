@@ -30,6 +30,7 @@ import { SelectableService } from '@khiops-library/components/selectable/selecta
 import { LS } from '@khiops-library/enum/ls';
 import { AppService } from '@khiops-visualization/providers/app.service';
 import { ScaleChangeEventsService } from '@khiops-visualization/providers/scale-change-events.service';
+import { KhiopsLibraryService } from '@khiops-library/providers/khiops-library.service';
 import { Subscription } from 'rxjs';
 
 @Component({
@@ -75,6 +76,7 @@ export class VariableGraphDetailsComponent
   private distributionGraphType?: string;
   private targetDistributionGraphType: string | null;
   private scaleChangeSubscription?: Subscription;
+  private settingsChangedSubscription?: Subscription;
 
   constructor(
     private preparationDatasService: PreparationDatasService,
@@ -83,6 +85,7 @@ export class VariableGraphDetailsComponent
     private treePreparationDatasService: TreePreparationDatasService,
     private distributionDatasService: DistributionDatasService,
     private scaleChangeEventsService: ScaleChangeEventsService,
+    private khiopsLibraryService: KhiopsLibraryService,
   ) {
     this.targetDistributionGraphType = AppService.Ls.get(
       LS.TARGET_DISTRIBUTION_GRAPH_OPTION,
@@ -97,11 +100,20 @@ export class VariableGraphDetailsComponent
       this.scaleChangeEventsService.scaleChange$.subscribe(() => {
         this.onScaleChanged();
       });
+
+    // Subscribe to settings changes (e.g. auto-scale factor changed)
+    this.settingsChangedSubscription =
+      this.khiopsLibraryService.settingsChanged$.subscribe(() => {
+        this.onSettingsChanged();
+      });
   }
 
   ngOnDestroy() {
     if (this.scaleChangeSubscription) {
       this.scaleChangeSubscription.unsubscribe();
+    }
+    if (this.settingsChangedSubscription) {
+      this.settingsChangedSubscription.unsubscribe();
     }
   }
 
@@ -307,6 +319,37 @@ export class VariableGraphDetailsComponent
         this.distributionDatasService.getTargetDistributionGraphDatas(
           currentVariable,
           this.targetDistributionGraphType || undefined,
+          false,
+        );
+      }
+    }
+    this.initActiveEntries(this.selectedGraphItemIndex);
+  }
+
+  /**
+   * Handle settings changes (e.g. auto-scale factor changed).
+   * Pass undefined for interpretableHistogramNumber to force full auto-scale recalculation.
+   */
+  private onSettingsChanged() {
+    const currentVariable = this.getCurrentVariable();
+    if (currentVariable) {
+      if (this.isHistogramDisplayed() && this.showDistributionGraph) {
+        this.distributionDatasService.getHistogramGraphDatas(
+          currentVariable,
+          undefined,
+        );
+      } else if (this.showDistributionGraph) {
+        this.distributionDatasService.getdistributionGraphDatas(
+          currentVariable,
+          undefined,
+          false,
+        );
+      }
+
+      if (this.showTargetDistributionGraph) {
+        this.distributionDatasService.getTargetDistributionGraphDatas(
+          currentVariable,
+          undefined,
           false,
         );
       }
