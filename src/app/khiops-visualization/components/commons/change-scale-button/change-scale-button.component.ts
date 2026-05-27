@@ -54,6 +54,11 @@ export class ChangeScaleButtonComponent {
       // Clear all per-variable scale overrides so auto-scale takes effect
       this.variableScaleSettingsService.clearAllVariableScaleSettings();
 
+      // Clear global manual scale values so restoreVariableScaleSettings()
+      // in distribution-graph doesn't override auto-scale computed values
+      AppService.Ls.del(LS.DISTRIBUTION_GRAPH_OPTION_X);
+      AppService.Ls.del(LS.DISTRIBUTION_GRAPH_OPTION_Y);
+
       // Reset graph options so auto-scale detection runs on next data fetch
       this.distributionDatasService.updateGraphOptions();
 
