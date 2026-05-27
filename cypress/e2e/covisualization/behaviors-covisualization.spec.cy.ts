@@ -120,6 +120,8 @@ describe('Behaviors tests for Khiops Covisualization', () => {
         force: true,
       });
 
+      cy.wait(1000);
+
       // Check table values
       cy.get('#unfold-hierarchy-table').contains('341');
       cy.get('#unfold-hierarchy-table').contains('15');
