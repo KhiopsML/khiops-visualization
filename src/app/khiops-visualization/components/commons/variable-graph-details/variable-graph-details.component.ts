@@ -297,19 +297,24 @@ export class VariableGraphDetailsComponent
   private onScaleChanged() {
     const currentVariable = this.getCurrentVariable();
     if (currentVariable) {
+      // When auto-scale is enabled, pass undefined so auto-scale detection runs
+      const autoScaleEnabled =
+        AppService.Ls.get(LS.SETTING_AUTO_SCALE)?.toString() === 'true';
+
       // Handle histogram case
       if (this.isHistogramDisplayed() && this.showDistributionGraph) {
-        // Force regeneration of histogram data with current variable
         this.distributionDatasService.getHistogramGraphDatas(
           currentVariable,
-          this.distributionDatas?.interpretableHistogramNumber,
+          autoScaleEnabled
+            ? undefined
+            : this.distributionDatas?.interpretableHistogramNumber,
         );
       }
       // Handle regular distribution graph case
       else if (this.showDistributionGraph) {
         this.distributionDatasService.getdistributionGraphDatas(
           currentVariable,
-          this.distributionGraphType,
+          autoScaleEnabled ? undefined : this.distributionGraphType,
           false,
         );
       }
@@ -318,7 +323,9 @@ export class VariableGraphDetailsComponent
       if (this.showTargetDistributionGraph) {
         this.distributionDatasService.getTargetDistributionGraphDatas(
           currentVariable,
-          this.targetDistributionGraphType || undefined,
+          autoScaleEnabled
+            ? undefined
+            : this.targetDistributionGraphType || undefined,
           false,
         );
       }

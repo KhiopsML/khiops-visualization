@@ -33,8 +33,13 @@ export class UserSettingsComponent implements OnChanges {
   public numberPrecision?: number;
   public contrastValue: number =
     AppConfig.visualizationCommon.GLOBAL.MATRIX_CONTRAST;
-  public autoScaleFactor: number = 2.5;
+  public autoScaleFactor: number =
+    AppConfig.visualizationCommon.GLOBAL.AUTO_SCALE_THRESHOLD_DEFAULT;
   public autoScaleEnabled: boolean = false;
+  public autoScaleThresholdMin: number =
+    AppConfig.visualizationCommon.GLOBAL.AUTO_SCALE_THRESHOLD_MIN;
+  public autoScaleThresholdMax: number =
+    AppConfig.visualizationCommon.GLOBAL.AUTO_SCALE_THRESHOLD_MAX;
 
   constructor(
     private trackerService: TrackerService,
@@ -67,11 +72,13 @@ export class UserSettingsComponent implements OnChanges {
     AppService.Ls.set(LS.SETTING_MATRIX_CONTRAST, this.contrastValue);
     AppConfig.visualizationCommon.GLOBAL.MATRIX_CONTRAST = this.contrastValue;
 
-    // Auto scale factor (default 2.5)
+    // Auto scale factor
     const storedFactor = parseFloat(
       AppService.Ls.get(LS.SETTING_AUTO_SCALE_FACTOR),
     );
-    this.autoScaleFactor = !isNaN(storedFactor) ? storedFactor : 2.5;
+    this.autoScaleFactor = !isNaN(storedFactor)
+      ? storedFactor
+      : AppConfig.visualizationCommon.GLOBAL.AUTO_SCALE_THRESHOLD_DEFAULT;
 
     // Whether auto scale mode is currently active
     this.autoScaleEnabled =

@@ -44,8 +44,8 @@
       </h2>
       <div fxLayout="row" fxLayoutAlign="start center">
         <mat-slider
-          [min]="1"
-          [max]="5"
+          [min]="autoScaleThresholdMin"
+          [max]="autoScaleThresholdMax"
           [step]="0.1"
           [disabled]="!autoScaleEnabled"
           attr.aria-label="{{
