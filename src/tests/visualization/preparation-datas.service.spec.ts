@@ -584,5 +584,377 @@ describe('Visualization', () => {
       );
       expect(result).toBe(false);
     });
+
+    // ===== getDatas =====
+
+    describe('getDatas', () => {
+      it('should return selectedVariable = "relationship" (first var) after init on AdultAllReports', () => {
+        const fileDatas = JSON.parse(JSON.stringify(require('../../assets/mocks/kv/AdultAllReports.json')));
+        appService.setFileDatas(fileDatas);
+        preparationDatasService.initialize();
+
+        const result = preparationDatasService.getDatas(REPORT.PREPARATION_REPORT);
+        expect(result.selectedVariable.name).toBe('relationship');
+        expect(result.selectedVariable.rank).toBe('R01');
+        expect(result.selectedVariable.type).toBe('Categorical');
+      });
+    });
+
+    // ===== getSelectedVariable / setSelectedVariable / getSelectedVariableRank =====
+
+    describe('setSelectedVariable + getSelectedVariable + getSelectedVariableRank', () => {
+      it('should auto-select first variable "relationship" R01 after init', () => {
+        const fileDatas = JSON.parse(JSON.stringify(require('../../assets/mocks/kv/AdultAllReports.json')));
+        appService.setFileDatas(fileDatas);
+        preparationDatasService.initialize();
+
+        const selectedVar = preparationDatasService.getSelectedVariable(REPORT.PREPARATION_REPORT);
+        expect(selectedVar.name).toBe('relationship');
+        expect(selectedVar.rank).toBe('R01');
+        expect(selectedVar.type).toBe('Categorical');
+        expect(preparationDatasService.getSelectedVariableRank()).toBe('R01');
+      });
+
+      it('should switch to "capital_gain" R03 Numerical and update rank', () => {
+        const fileDatas = JSON.parse(JSON.stringify(require('../../assets/mocks/kv/AdultAllReports.json')));
+        appService.setFileDatas(fileDatas);
+        preparationDatasService.initialize();
+
+        const result = preparationDatasService.setSelectedVariable('capital_gain', REPORT.PREPARATION_REPORT);
+        expect(result.name).toBe('capital_gain');
+        expect(result.rank).toBe('R03');
+        expect(result.type).toBe('Numerical');
+        expect(preparationDatasService.getSelectedVariableRank()).toBe('R03');
+      });
+
+      it('should return undefined for empty name or non-existent variable', () => {
+        const fileDatas = JSON.parse(JSON.stringify(require('../../assets/mocks/kv/AdultAllReports.json')));
+        appService.setFileDatas(fileDatas);
+        preparationDatasService.initialize();
+
+        expect(preparationDatasService.setSelectedVariable('', REPORT.PREPARATION_REPORT)).toBeUndefined();
+        expect(preparationDatasService.setSelectedVariable('NON_EXISTENT', REPORT.PREPARATION_REPORT)).toBeUndefined();
+      });
+    });
+
+    // ===== getVariableFromName / getVariableFromRank =====
+
+    describe('getVariableFromName + getVariableFromRank', () => {
+      it('should find "education" by name with rank R05, type Categorical, level 0.113452', () => {
+        const fileDatas = JSON.parse(JSON.stringify(require('../../assets/mocks/kv/AdultAllReports.json')));
+        appService.setFileDatas(fileDatas);
+        preparationDatasService.initialize();
+
+        const byName = preparationDatasService.getVariableFromName('education', REPORT.PREPARATION_REPORT);
+        expect(byName.name).toBe('education');
+        expect(byName.rank).toBe('R05');
+        expect(byName.type).toBe('Categorical');
+        expect(byName.level).toBe(0.113452);
+      });
+
+      it('should find "marital_status" by rank R02 with type Categorical, level 0.19789', () => {
+        const fileDatas = JSON.parse(JSON.stringify(require('../../assets/mocks/kv/AdultAllReports.json')));
+        appService.setFileDatas(fileDatas);
+        preparationDatasService.initialize();
+
+        const byRank = preparationDatasService.getVariableFromRank('R02', REPORT.PREPARATION_REPORT);
+        expect(byRank.name).toBe('marital_status');
+        expect(byRank.type).toBe('Categorical');
+        expect(byRank.level).toBe(0.19789);
+      });
+
+      it('should return undefined for non-existent name/rank', () => {
+        const fileDatas = JSON.parse(JSON.stringify(require('../../assets/mocks/kv/AdultAllReports.json')));
+        appService.setFileDatas(fileDatas);
+
+        expect(preparationDatasService.getVariableFromName('FAKE', REPORT.PREPARATION_REPORT)).toBeUndefined();
+        expect(preparationDatasService.getVariableFromRank('R99', REPORT.PREPARATION_REPORT)).toBeUndefined();
+      });
+    });
+
+    // ===== getSummaryDatas =====
+
+    describe('getSummaryDatas', () => {
+      it('should return summary with instances=34174 and targetVariable=class for AdultAllReports', () => {
+        const fileDatas = JSON.parse(JSON.stringify(require('../../assets/mocks/kv/AdultAllReports.json')));
+        appService.setFileDatas(fileDatas);
+        preparationDatasService.initialize();
+
+        const result = preparationDatasService.getSummaryDatas(REPORT.PREPARATION_REPORT);
+        expect(Array.isArray(result)).toBe(true);
+        // SummaryModel uses translated titles (GLOBAL.X keys)
+        const instancesItem = result.find(e => e.title === 'GLOBAL.INSTANCES');
+        const targetItem = result.find(e => e.title === 'GLOBAL.TARGET_VARIABLE');
+        expect(instancesItem.value).toBe(34174);
+        expect(targetItem.value).toBe('class');
+      });
+
+      it('should return empty array when no data loaded', () => {
+        appService.initialize();
+        expect(preparationDatasService.getSummaryDatas()).toEqual([]);
+      });
+    });
+
+    // ===== getInformationsDatas =====
+
+    describe('getInformationsDatas', () => {
+      it('should return informations containing evaluatedVariables=15 and informativeVariables=13 for AdultAllReports', () => {
+        const fileDatas = JSON.parse(JSON.stringify(require('../../assets/mocks/kv/AdultAllReports.json')));
+        appService.setFileDatas(fileDatas);
+        preparationDatasService.initialize();
+
+        const result = preparationDatasService.getInformationsDatas(REPORT.PREPARATION_REPORT);
+        expect(Array.isArray(result)).toBe(true);
+        // InformationsModel uses translated titles (GLOBAL.X keys)
+        const evalItem = result.find(e => e.title === 'GLOBAL.EVALUATED_VARIABLES');
+        const infoItem = result.find(e => e.title === 'GLOBAL.INFORMATIVE_VARIABLES');
+        expect(evalItem.value).toBe(15);
+        expect(infoItem.value).toBe(13);
+      });
+
+      it('should return undefined when no summary exists', () => {
+        appService.initialize();
+        expect(preparationDatasService.getInformationsDatas(REPORT.PREPARATION_REPORT)).toBeUndefined();
+      });
+    });
+
+    // ===== getVariablesDatas =====
+
+    describe('getVariablesDatas', () => {
+      it('should return 15 VariableModel objects for AdultAllReports with correct first/last entries', () => {
+        const fileDatas = JSON.parse(JSON.stringify(require('../../assets/mocks/kv/AdultAllReports.json')));
+        appService.setFileDatas(fileDatas);
+        preparationDatasService.initialize();
+
+        const result = preparationDatasService.getVariablesDatas(REPORT.PREPARATION_REPORT);
+        expect(result.length).toBe(15);
+        // First var: relationship, Categorical, level 0.207419
+        expect(result[0].name).toBe('relationship');
+        expect(result[0].type).toBe('Categorical');
+        expect(result[0].level).toBe(0.207419);
+        // Last var: fnlwgt, level 0
+        expect(result[14].name).toBe('fnlwgt');
+        expect(result[14].level).toBe(0);
+      });
+
+      it('should return empty array when no data loaded', () => {
+        appService.initialize();
+        expect(preparationDatasService.getVariablesDatas(REPORT.PREPARATION_REPORT)).toEqual([]);
+      });
+    });
+
+    // ===== getTargetVariableStatsInformations =====
+
+    describe('getTargetVariableStatsInformations', () => {
+      it('should return descriptive stats with values=2, mode="less", modeFrequency=26028 for AdultAllReports', () => {
+        const fileDatas = JSON.parse(JSON.stringify(require('../../assets/mocks/kv/AdultAllReports.json')));
+        appService.setFileDatas(fileDatas);
+        preparationDatasService.initialize();
+
+        const result = preparationDatasService.getTargetVariableStatsInformations();
+        expect(Array.isArray(result)).toBe(true);
+        const valuesItem = result.find(e => e.title === 'values');
+        const modeItem = result.find(e => e.title === 'mode');
+        const modeFreqItem = result.find(e => e.title === 'modeFrequency');
+        expect(valuesItem.value).toBe(2);
+        expect(modeItem.value).toBe('less');
+        expect(modeFreqItem.value).toBe(26028);
+      });
+
+      it('should return regression stats with min=45.51, max=926.0164, mean=175.4992237 for AnalysisRegressionQ99', () => {
+        const fileDatas = JSON.parse(JSON.stringify(require('../../assets/mocks/kv/AnalysisRegressionQ99.json')));
+        appService.setFileDatas(fileDatas);
+        preparationDatasService.initialize();
+
+        const result = preparationDatasService.getTargetVariableStatsInformations();
+        expect(Array.isArray(result)).toBe(true);
+        const minItem = result.find(e => e.title === 'min');
+        const maxItem = result.find(e => e.title === 'max');
+        const meanItem = result.find(e => e.title === 'mean');
+        expect(minItem.value).toBe(45.51);
+        expect(maxItem.value).toBe(926.0164);
+        expect(meanItem.value).toBe(175.4992237);
+      });
+    });
+
+    // ===== getTargetVariable =====
+
+    describe('getTargetVariable', () => {
+      it('should return "class" for AdultAllReports', () => {
+        const fileDatas = JSON.parse(JSON.stringify(require('../../assets/mocks/kv/AdultAllReports.json')));
+        appService.setFileDatas(fileDatas);
+        preparationDatasService.initialize();
+
+        expect(preparationDatasService.getTargetVariable(REPORT.PREPARATION_REPORT)).toBe('class');
+      });
+
+      it('should return "duration_p99" for AnalysisRegressionQ99', () => {
+        const fileDatas = JSON.parse(JSON.stringify(require('../../assets/mocks/kv/AnalysisRegressionQ99.json')));
+        appService.setFileDatas(fileDatas);
+        preparationDatasService.initialize();
+
+        expect(preparationDatasService.getTargetVariable(REPORT.PREPARATION_REPORT)).toBe('duration_p99');
+      });
+
+      it('should return undefined when no data loaded', () => {
+        appService.initialize();
+        expect(preparationDatasService.getTargetVariable(REPORT.PREPARATION_REPORT)).toBeUndefined();
+      });
+    });
+
+    // ===== isExplanatoryAnalysis =====
+
+    describe('isExplanatoryAnalysis', () => {
+      it('should return false for AdultAllReports (classification with bivariate)', () => {
+        const fileDatas = JSON.parse(JSON.stringify(require('../../assets/mocks/kv/AdultAllReports.json')));
+        appService.setFileDatas(fileDatas);
+        preparationDatasService.initialize();
+
+        // AdultAllReports has no bivariatePreparationReport, but its dims are not "Value groups" only
+        expect(preparationDatasService.isExplanatoryAnalysis()).toBe(false);
+      });
+
+      it('should return false when no data', () => {
+        appService.initialize();
+        expect(preparationDatasService.isExplanatoryAnalysis()).toBe(false);
+      });
+    });
+
+    // ===== isSupervised =====
+
+    describe('isSupervised', () => {
+      it('should return true for AdultAllReports (classification analysis)', () => {
+        const fileDatas = JSON.parse(JSON.stringify(require('../../assets/mocks/kv/AdultAllReports.json')));
+        appService.setFileDatas(fileDatas);
+        preparationDatasService.initialize();
+
+        expect(preparationDatasService.isSupervised()).toBe(true);
+      });
+
+      it('should return false for bi2 (unsupervised analysis)', () => {
+        const fileDatas = JSON.parse(JSON.stringify(require('../../assets/mocks/kv/bi2.json')));
+        appService.setFileDatas(fileDatas);
+        preparationDatasService.initialize();
+        // bi2 first var R01 has no detailed stats, select R02 which does
+        preparationDatasService.setSelectedVariable('age', REPORT.PREPARATION_REPORT);
+
+        expect(preparationDatasService.isSupervised()).toBe(false);
+      });
+
+      it('should return false when no data loaded', () => {
+        appService.initialize();
+        expect(preparationDatasService.isSupervised()).toBe(false);
+      });
+    });
+
+    // ===== getAvailablePreparationReport =====
+
+    describe('getAvailablePreparationReport', () => {
+      it('should return preparationReport for AdultAllReports', () => {
+        const fileDatas = JSON.parse(JSON.stringify(require('../../assets/mocks/kv/AdultAllReports.json')));
+        appService.setFileDatas(fileDatas);
+        expect(preparationDatasService.getAvailablePreparationReport()).toBe(REPORT.PREPARATION_REPORT);
+      });
+
+      it('should fall back to textPreparationReport when preparationReport has no variablesStatistics', () => {
+        appService.setFileDatas({
+          preparationReport: { summary: {} },
+          textPreparationReport: { summary: {}, variablesStatistics: [{ rank: 'R1', name: 'v1' }] },
+        });
+        expect(preparationDatasService.getAvailablePreparationReport()).toBe(REPORT.TEXT_PREPARATION_REPORT);
+      });
+    });
+
+    // ===== getPreparationSourceFromVariable =====
+
+    describe('getPreparationSourceFromVariable', () => {
+      it('should return PREPARATION_REPORT for "relationship" which exists in preparationReport', () => {
+        const fileDatas = JSON.parse(JSON.stringify(require('../../assets/mocks/kv/AdultAllReports.json')));
+        appService.setFileDatas(fileDatas);
+
+        expect(preparationDatasService.getPreparationSourceFromVariable({ name: 'relationship' })).toBe(REPORT.PREPARATION_REPORT);
+      });
+
+      it('should return TEXT_PREPARATION_REPORT for a variable not in preparationReport', () => {
+        const fileDatas = JSON.parse(JSON.stringify(require('../../assets/mocks/kv/AdultAllReports.json')));
+        appService.setFileDatas(fileDatas);
+
+        expect(preparationDatasService.getPreparationSourceFromVariable({ name: 'NOT_IN_PREP' })).toBe(REPORT.TEXT_PREPARATION_REPORT);
+      });
+    });
+
+    // ===== hasDetailedStatistics =====
+
+    describe('hasDetailedStatistics', () => {
+      it('should return true for R01 "relationship" which has detailed stats in AdultAllReports', () => {
+        const fileDatas = JSON.parse(JSON.stringify(require('../../assets/mocks/kv/AdultAllReports.json')));
+        appService.setFileDatas(fileDatas);
+        preparationDatasService.initialize();
+        // Default selected = R01 which has detailed stats
+        expect(preparationDatasService.hasDetailedStatistics(REPORT.PREPARATION_REPORT)).toBe(true);
+      });
+
+      it('should return false for R15 "fnlwgt" which has no detailed stats (level=0)', () => {
+        const fileDatas = JSON.parse(JSON.stringify(require('../../assets/mocks/kv/AdultAllReports.json')));
+        appService.setFileDatas(fileDatas);
+        preparationDatasService.initialize();
+        preparationDatasService.setSelectedVariable('fnlwgt', REPORT.PREPARATION_REPORT);
+        expect(preparationDatasService.hasDetailedStatistics(REPORT.PREPARATION_REPORT)).toBe(false);
+      });
+
+      it('should return false when no selected variable', () => {
+        expect(preparationDatasService.hasDetailedStatistics(REPORT.PREPARATION_REPORT)).toBe(false);
+      });
+    });
+
+    // ===== includesTargetParts =====
+
+    describe('includesTargetParts', () => {
+      it('should return false when all targetParts are undefined', () => {
+        expect(preparationDatasService.includesTargetParts([
+          { targetParts: undefined },
+          { targetParts: undefined },
+        ])).toBe(false);
+      });
+
+      it('should return true when some targetParts are defined', () => {
+        expect(preparationDatasService.includesTargetParts([
+          { targetParts: 3 },
+          { targetParts: undefined },
+        ])).toBe(true);
+      });
+
+      it('should return true when all targetParts are defined', () => {
+        expect(preparationDatasService.includesTargetParts([
+          { targetParts: 3 },
+          { targetParts: 5 },
+        ])).toBe(true);
+      });
+
+      it('should return false for empty array', () => {
+        expect(preparationDatasService.includesTargetParts([])).toBe(false);
+      });
+    });
+
+    // ===== getTargetVariableStatsDatas with real data =====
+
+    describe('getTargetVariableStatsDatas', () => {
+      it('should return 2 datasets "less" (76.16%) and "more" (23.84%) for AdultAllReports', () => {
+        const fileDatas = JSON.parse(JSON.stringify(require('../../assets/mocks/kv/AdultAllReports.json')));
+        appService.setFileDatas(fileDatas);
+        preparationDatasService.initialize();
+
+        const result = preparationDatasService.getTargetVariableStatsDatas();
+        expect(result.datasets.length).toBe(2);
+        expect(result.datasets[0].label).toBe('less');
+        expect(result.datasets[1].label).toBe('more');
+        // less: 26028/(26028+8146)*100 = 76.163...
+        expect(result.datasets[0].data[0]).toBeCloseTo(76.163, 1);
+        expect(result.datasets[0].extra[0].extra.value).toBe(26028);
+        // more: 8146/(26028+8146)*100 = 23.837...
+        expect(result.datasets[1].data[0]).toBeCloseTo(23.837, 1);
+        expect(result.datasets[1].extra[0].extra.value).toBe(8146);
+      });
+    });
   });
 });
