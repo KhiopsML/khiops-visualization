@@ -6,6 +6,8 @@ fi
 
 TAG=$1
 
+git pull origin main --tags
+
 # Replace version into package.json
 sed -i "s/\"version\": \".*\"/\"version\": \"$TAG\"/" package.json
 
