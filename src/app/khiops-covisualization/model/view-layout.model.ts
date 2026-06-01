@@ -60,10 +60,14 @@ export class ViewLayoutVO {
             prevValue?.name === this.dimensionsViewsLayoutsVO[i]?.name)
         ) {
           if (this.dimensionsViewsLayoutsVO[i]) {
+            const originalName = this.dimensionsViewsLayoutsVO[i]!.name;
             this.dimensionsViewsLayoutsVO[i] = Object.assign(
               this.dimensionsViewsLayoutsVO[i]!,
               prevValue,
             );
+            // Preserve the original dimension name to avoid overwriting
+            // with empty name from initLS defaults
+            this.dimensionsViewsLayoutsVO[i]!.name = originalName;
           }
         }
       }

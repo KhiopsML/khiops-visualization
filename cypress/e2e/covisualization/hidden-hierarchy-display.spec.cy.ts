@@ -34,7 +34,9 @@ describe('Hidden hierarchy should not prevent dimension table display #64', () =
     cy.get('#cluster-annotation-1').should('be.visible');
 
     // Distribution for education should be visible
-    cy.get('#cluster-distribution-1').should('be.visible');
+    // Note: the distribution inside axis 1 (education) renders with invertedPosition=0,
+    // so its ID is cluster-distribution-0
+    cy.get('#cluster-distribution-0').should('be.visible');
 
     // Saved selected node for education should be restored properly
     // v4.1.json has selectedNodes: ["A3", "{Prof-school, Doctorate}"]
