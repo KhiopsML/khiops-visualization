@@ -25,25 +25,25 @@ describe('Copy images Test Plan for Khiops Covisualization', () => {
 
           cy.get('.mat-mdc-tab:contains("Axis")').first().click();
 
-          cy.testComponentScreenshot('#hierarchy-details-comp-0');
-          cy.testComponentScreenshot('#cluster-details-grid-0');
-          cy.testComponentScreenshot('#cluster-annotation-0');
-          cy.testComponentScreenshot('#cluster-distribution-0');
-          cy.testComponentScreenshot('#hierarchy-details-comp-1');
-          cy.testComponentScreenshot('#cluster-details-grid-1');
-          cy.testComponentScreenshot('#cluster-annotation-1');
-          cy.testComponentScreenshot('#cluster-distribution-1');
-          cy.testComponentScreenshot('#external-datas-1');
+          cy.testComponentScreenshot('#hierarchy-details-comp-0', 'Axis');
+          cy.testComponentScreenshot('#cluster-details-grid-0', 'Axis');
+          cy.testComponentScreenshot('#cluster-annotation-0', 'Axis');
+          cy.testComponentScreenshot('#cluster-distribution-0', 'Axis');
+          cy.testComponentScreenshot('#hierarchy-details-comp-1', 'Axis');
+          cy.testComponentScreenshot('#cluster-details-grid-1', 'Axis');
+          cy.testComponentScreenshot('#cluster-annotation-1', 'Axis');
+          cy.testComponentScreenshot('#cluster-distribution-1', 'Axis');
+          cy.testComponentScreenshot('#external-datas-1', 'Axis');
 
-          cy.testComponentScreenshot('#selected-clusters-grid');
-          cy.testComponentScreenshot('#matrix-container-comp-wrapper');
+          cy.testComponentScreenshot('#selected-clusters-grid', 'Axis');
+          cy.testComponentScreenshot('#matrix-container-comp-wrapper', 'Axis');
 
           // Open unfold Hierarchy view
           cy.get('.button-unfold-hierarchy').click();
 
-          cy.testComponentScreenshot('#unfold-hierarchy-table');
-          cy.testComponentScreenshot('#unfold-hierarchy-info-rate');
-          cy.testComponentScreenshot('#unfold-hierarchy-clusters-graph');
+          cy.testComponentScreenshot('#unfold-hierarchy-table', 'Unfold Hierarchy');
+          cy.testComponentScreenshot('#unfold-hierarchy-info-rate', 'Unfold Hierarchy');
+          cy.testComponentScreenshot('#unfold-hierarchy-clusters-graph', 'Unfold Hierarchy');
 
           cy.get('.button-confirm-hierarchy').first().click({ force: true });
         });
@@ -70,7 +70,7 @@ describe('Copy images Test Plan for Khiops Covisualization', () => {
 
           // Variable Search Dialog
           cy.get('.variable-search-button-comp').first().click({ force: true });
-          cy.testComponentScreenshot('#variable-search-dialog-comp');
+          cy.testComponentScreenshot('#variable-search-dialog-comp', 'Axis');
 
           cy.get('.close-btn').first().click({ force: true });
 
@@ -78,7 +78,7 @@ describe('Copy images Test Plan for Khiops Covisualization', () => {
 
           // Composition Detailed Parts
           cy.get('.kl-icon-cell-comp-btn').eq(0).click({ force: true });
-          cy.testComponentScreenshot('#composition-detailed-parts-comp');
+          cy.testComponentScreenshot('#composition-detailed-parts-comp', 'Axis');
         });
       });
     });
