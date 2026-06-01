@@ -5,6 +5,7 @@
  */
 
 import { Injectable } from '@angular/core';
+import { Subject } from 'rxjs';
 import { ChartColorsSetI } from '../interfaces/chart-colors-set.interface';
 import {
   CHART_COLORS_0,
@@ -18,6 +19,7 @@ import {
 export class KhiopsLibraryService {
   private graphColorSet: ChartColorsSetI[];
   private appConfig: any;
+  public settingsChanged$ = new Subject<void>();
 
   /**
    * An array of graph colors used for chart visualizations.

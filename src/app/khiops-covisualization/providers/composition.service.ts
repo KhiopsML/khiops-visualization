@@ -127,6 +127,33 @@ export class CompositionService {
             currentIndex
           ],
         );
+
+        // For VarVar: map every leaf that belongs to a collapsed child of this
+        // node to that collapsed child, so the composition shows the collapsed
+        // child's cluster name rather than the raw leaf name.
+        // (IndiVar already handles this via processCollapsedChildren.)
+        const leafToCollapsedChild = new Map<string, TreeNodeModel>();
+        if (!isIndiVarCase && !node.isCollapsed) {
+          const mapCollapsedDescendants = (parent: TreeNodeModel) => {
+            if (!Array.isArray(parent.children)) return;
+            for (const child of parent.children) {
+              if (child.isCollapsed) {
+                child.getChildrenList();
+                for (const leafName of child.childrenLeafList) {
+                  leafToCollapsedChild.set(leafName, child);
+                }
+                // Do not recurse further into collapsed sub-trees
+              } else if (
+                Array.isArray(child.children) &&
+                child.children.length > 0
+              ) {
+                mapCollapsedDescendants(child);
+              }
+            }
+          };
+          mapCollapsedDescendants(node);
+        }
+
         const childrenLeafListLength = node.childrenLeafList.length;
 
         for (let i = 0; i < childrenLeafListLength; i++) {
@@ -160,29 +187,43 @@ export class CompositionService {
                 currentDimensionClusters.find(
                   (e) => e.cluster === currentLeafName,
                 );
-              if (node.isCollapsed && currentDimensionHierarchyCluster) {
-                currentDimensionHierarchyCluster.shortDescription =
-                  node.shortDescription;
-              }
-              const externalDatas: ExtDatasModel =
-                this.importExtDatasService.getImportedDatasFromDimension(
-                  currentDimensionDetails,
-                );
-              const currentPartIndex =
-                currentDimensionDetails.innerVariables?.dimensionSummaries?.findIndex(
-                  (e) => e.name === parts?.[j]?.[0],
-                );
-              if (currentDimensionHierarchyCluster) {
-                const composition = new CompositionModel(
-                  currentClusterDetails,
-                  currentDimensionHierarchyCluster,
-                  currentPartIndex ?? -1,
-                  valueIndex,
-                  externalDatas,
-                  currentDimensionDetails.innerVariables,
-                  parts?.[j],
-                );
-                compositionValues.push(composition);
+              // When the node is collapsed we want to show the collapsed node's name
+              // as the cluster, but we must NOT mutate the shared dimensionsClusters
+              // entry: the mutation persisted after the node was re-expanded and caused
+              // wrong cluster names to appear in the composition panel (#246).
+              // Use a local shallow-clone with the overridden shortDescription instead.
+              // Also handle the case where the leaf itself is under a collapsed child of
+              // this node: use that collapsed child as the effective cluster display.
+              if (currentLeafName) {
+                const collapsedAncestor =
+                  leafToCollapsedChild.get(currentLeafName);
+                const clusterForComposition =
+                  node.isCollapsed && currentDimensionHierarchyCluster
+                    ? ({
+                        ...currentDimensionHierarchyCluster,
+                        shortDescription: node.shortDescription,
+                      } as TreeNodeModel)
+                    : (collapsedAncestor ?? currentDimensionHierarchyCluster);
+                const externalDatas: ExtDatasModel =
+                  this.importExtDatasService.getImportedDatasFromDimension(
+                    currentDimensionDetails,
+                  );
+                const currentPartIndex =
+                  currentDimensionDetails.innerVariables?.dimensionSummaries?.findIndex(
+                    (e) => e.name === parts?.[j]?.[0],
+                  );
+                if (clusterForComposition) {
+                  const composition = new CompositionModel(
+                    currentClusterDetails,
+                    clusterForComposition,
+                    currentPartIndex ?? -1,
+                    valueIndex,
+                    externalDatas,
+                    currentDimensionDetails.innerVariables,
+                    parts?.[j],
+                  );
+                  compositionValues.push(composition);
+                }
               }
               // Advance cIndex for IndiVar case: each variable occupies as many entries as it has parts
               if (isIndiVarCase) {
@@ -214,15 +255,23 @@ export class CompositionService {
     let compositionValues: CompositionModel[] = [];
     let processedCollapsedChildren = new Set<string>();
 
-    // Process collapsed children for both IndiVar and VarVar cases
-    processedCollapsedChildren = this.processCollapsedChildren(
-      currentDimensionDetails,
-      currentInitialDimensionDetails,
-      node,
-      currentIndex,
-      isIndiVarCase,
-      compositionValues,
-    );
+    // Process collapsed children only for IndiVar case.
+    // For VarVar (Categorical × Categorical), sub-node collapse state is irrelevant:
+    // the composition must show the flat list of all leaf values, just like manual folding.
+    // Calling processCollapsedChildren in VarVar causes duplicate rows when both a parent
+    // cluster (e.g. A5) and one of its child clusters (e.g. A9) are collapsed by auto-fold,
+    // because the child's leaves are added once by processCollapsedChildren and again
+    // (without being skipped) by processNodeCompositions.
+    if (isIndiVarCase) {
+      processedCollapsedChildren = this.processCollapsedChildren(
+        currentDimensionDetails,
+        currentInitialDimensionDetails,
+        node,
+        currentIndex,
+        isIndiVarCase,
+        compositionValues,
+      );
+    }
 
     // Then process the current node using the factorized method
     const nodeCompositions = this.processNodeCompositions(
@@ -257,7 +306,8 @@ export class CompositionService {
         };
       });
     } else if (processedCollapsedChildren.size > 0) {
-      // When we have collapsed children, preserve their cluster names for both IndiVar and VarVar cases
+      // IndiVar only: processedCollapsedChildren is always empty for VarVar (processCollapsedChildren is never called).
+      // Preserve cluster names for collapsed children that were processed above.
       compositionValues = this.formatCompositions(
         node,
         compositionValues,

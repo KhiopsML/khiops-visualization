@@ -109,6 +109,7 @@ export class MatrixComponent extends SelectableComponent implements OnChanges {
     | undefined;
 
   private conditionalOnContextChangedSub: Subscription;
+  private settingsChangedSub: Subscription;
   private selectedTargetIndex = -1;
   private matrixValues?: number[] = [];
   private matrixFreqsValues: number[] = [];
@@ -165,6 +166,16 @@ export class MatrixComponent extends SelectableComponent implements OnChanges {
 
     this.conditionalOnContextChangedSub =
       this.eventsService.conditionalOnContextChanged.subscribe(() => {
+        this.drawMatrix();
+      });
+
+    this.settingsChangedSub =
+      this.khiopsLibraryService.settingsChanged$.subscribe(() => {
+        this.contrast = this.ls.get(
+          LS.SETTING_MATRIX_CONTRAST,
+          this.khiopsLibraryService.getAppConfig().common.GLOBAL
+            .MATRIX_CONTRAST,
+        );
         this.drawMatrix();
       });
 
@@ -261,6 +272,7 @@ export class MatrixComponent extends SelectableComponent implements OnChanges {
 
   override ngOnDestroy() {
     this.conditionalOnContextChangedSub.unsubscribe();
+    this.settingsChangedSub.unsubscribe();
     this.matrixCursorService.destroy();
   }
 

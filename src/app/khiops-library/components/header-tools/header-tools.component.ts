@@ -29,7 +29,7 @@ export class HeaderToolsComponent {
 
   private isMac =
     typeof navigator !== 'undefined' &&
-    /Mac|iPhone|iPad|iPod/.test(navigator.platform);
+    /mac/i.test(navigator.userAgent);
 
   constructor(
     public selectableService: SelectableService,

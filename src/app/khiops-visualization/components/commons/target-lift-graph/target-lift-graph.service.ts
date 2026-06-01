@@ -32,10 +32,12 @@ export interface TargetLiftGraphData {
   providedIn: 'root',
 })
 export class TargetLiftGraphService {
-  numPrecision = AppService.Ls.get(
-    LS.SETTING_NUMBER_PRECISION,
-    AppConfig.visualizationCommon.GLOBAL.TO_FIXED,
-  );
+  get numPrecision(): number {
+    return AppService.Ls.get(
+      LS.SETTING_NUMBER_PRECISION,
+      AppConfig.visualizationCommon.GLOBAL.TO_FIXED,
+    );
+  }
 
   constructor(
     private evaluationDatasService: EvaluationDatasService,

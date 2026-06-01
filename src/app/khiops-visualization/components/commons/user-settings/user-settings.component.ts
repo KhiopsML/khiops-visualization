@@ -13,6 +13,7 @@ import {
   Output,
 } from '@angular/core';
 import { TrackerService } from '../../../../khiops-library/providers/tracker.service';
+import { KhiopsLibraryService } from '@khiops-library/providers/khiops-library.service';
 import { LS } from '@khiops-library/enum/ls';
 import { AppService } from '@khiops-visualization/providers/app.service';
 import { AppConfig } from '../../../../../environments/environment';
@@ -32,10 +33,18 @@ export class UserSettingsComponent implements OnChanges {
   public numberPrecision?: number;
   public contrastValue: number =
     AppConfig.visualizationCommon.GLOBAL.MATRIX_CONTRAST;
-  public autoScaleFactor: number = 1.5;
+  public autoScaleFactor: number =
+    AppConfig.visualizationCommon.GLOBAL.AUTO_SCALE_THRESHOLD_DEFAULT;
   public autoScaleEnabled: boolean = false;
+  public autoScaleThresholdMin: number =
+    AppConfig.visualizationCommon.GLOBAL.AUTO_SCALE_THRESHOLD_MIN;
+  public autoScaleThresholdMax: number =
+    AppConfig.visualizationCommon.GLOBAL.AUTO_SCALE_THRESHOLD_MAX;
 
-  constructor(private trackerService: TrackerService) {}
+  constructor(
+    private trackerService: TrackerService,
+    private khiopsLibraryService: KhiopsLibraryService,
+  ) {}
 
   ngOnChanges(changes: SimpleChanges) {
     if (changes.opened?.currentValue) {
@@ -63,11 +72,13 @@ export class UserSettingsComponent implements OnChanges {
     AppService.Ls.set(LS.SETTING_MATRIX_CONTRAST, this.contrastValue);
     AppConfig.visualizationCommon.GLOBAL.MATRIX_CONTRAST = this.contrastValue;
 
-    // Auto scale factor (default 1.5)
+    // Auto scale factor
     const storedFactor = parseFloat(
       AppService.Ls.get(LS.SETTING_AUTO_SCALE_FACTOR),
     );
-    this.autoScaleFactor = !isNaN(storedFactor) ? storedFactor : 1.5;
+    this.autoScaleFactor = !isNaN(storedFactor)
+      ? storedFactor
+      : AppConfig.visualizationCommon.GLOBAL.AUTO_SCALE_THRESHOLD_DEFAULT;
 
     // Whether auto scale mode is currently active
     this.autoScaleEnabled =
@@ -92,7 +103,10 @@ export class UserSettingsComponent implements OnChanges {
 
     AppService.Ls.setAll();
 
-    // Close the nav drawer
-    this.toggleNavDrawerChanged.emit(true);
+    // Notify components to refresh without reloading the view
+    this.khiopsLibraryService.settingsChanged$.next();
+
+    // Close the nav drawer without reload
+    this.toggleNavDrawerChanged.emit();
   }
 }

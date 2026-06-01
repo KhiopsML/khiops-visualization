@@ -4,6 +4,7 @@
  * at https://spdx.org/licenses/BSD-3-Clause-Clear.html or see the "LICENSE" file for more details.
  */
 import { Component, Input, OnInit } from '@angular/core';
+import { TranslateService } from '@ngstack/translate';
 
 @Component({
   selector: 'kl-keyboard-tooltip',
@@ -14,14 +15,27 @@ import { Component, Input, OnInit } from '@angular/core';
 export class KeyboardTooltipComponent implements OnInit {
   @Input() key: string = '';
   @Input() tooltip: string = '';
-  
+
   displayKey: string = '';
+  tooltipWithCorrectKey: string = '';
+
+  private isMac =
+    typeof navigator !== 'undefined' && /mac/i.test(navigator.userAgent);
+
+  constructor(private translate: TranslateService) {}
 
   ngOnInit(): void {
     // Detect platform and use CMD for Mac, CTRL for others
     if (this.key) {
-      const isMac = navigator.platform.toUpperCase().indexOf('MAC') >= 0;
-      this.displayKey = this.key === 'CTRL' && isMac ? 'CMD' : this.key;
+      this.displayKey = this.key === 'CTRL' && this.isMac ? 'CMD' : this.key;
+    }
+
+    // Replace the key in the tooltip to show the correct key for the platform
+    if (this.tooltip) {
+      const correctKey = this.isMac ? 'Cmd' : 'Ctrl';
+      this.tooltipWithCorrectKey = this.translate
+        .get(this.tooltip)
+        .replace('Ctrl', correctKey);
     }
   }
 }

@@ -153,12 +153,6 @@ button {
   color: white !important;
 }
 
-.mat-mdc-snack-bar-container.success {
-  .mdc-snackbar__surface {
-    background-color: var(--primary) !important;
-  }
-}
-
 .mat-mdc-snack-bar-container.warning {
   .mdc-snackbar__surface {
     background: var(--accent) !important;

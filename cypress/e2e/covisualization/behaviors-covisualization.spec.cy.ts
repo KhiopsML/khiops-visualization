@@ -264,6 +264,11 @@ describe('Behaviors tests for Khiops Covisualization', () => {
         })
         .click(1, 1, { force: true }); // Force coords to click on the matrix
 
+      // Re-trigger mousemove after click: the click can dismiss the tooltip temporarily
+      cy.get('#matrix-selected')
+        .should('be.visible')
+        .trigger('mousemove', { position: 'topLeft' });
+
       // Check values
       cy.get('.matrix-tooltip-comp').contains('A10');
       cy.get('#cluster-distribution-1').contains('A10');

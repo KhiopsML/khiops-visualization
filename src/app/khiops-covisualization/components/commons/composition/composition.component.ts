@@ -190,8 +190,9 @@ export class CompositionComponent implements OnInit, OnDestroy, AfterViewInit {
 
   onSelectRowChanged(item: CompositionModel) {
     // find composition in local to get external datas
+    // Use _id instead of value to avoid "jumping" when multiple rows share the same value
     this.selectedComposition = this.compositionValues?.find(
-      (e) => e.value === item.value,
+      (e) => e._id === item._id,
     );
     this.selectedCompositionChanged.emit(this.selectedComposition);
   }

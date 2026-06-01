@@ -7,7 +7,8 @@
 [![Build WebComponents Bundle](https://github.com/KhiopsML/khiops-visualization/actions/workflows/build-webcomponents.yml/badge.svg)](https://github.com/KhiopsML/khiops-visualization/actions/workflows/build-webcomponents.yml)
 [![pages-build-deployment](https://github.com/KhiopsML/khiops-visualization/actions/workflows/pages/pages-build-deployment/badge.svg)](https://github.com/KhiopsML/khiops-visualization/actions/workflows/pages/pages-build-deployment)
 [![CodeQL](https://github.com/KhiopsML/khiops-visualization/actions/workflows/github-code-scanning/codeql/badge.svg)](https://github.com/KhiopsML/khiops-visualization/actions/workflows/github-code-scanning/codeql)
-[![npm version](https://badge.fury.io/js/khiops-visualization.svg)](https://www.npmjs.com/package/khiops-visualization)
+[![NPM Version](https://img.shields.io/github/v/release/KhiopsML/khiops-visualization?label=NPM%20version)](https://github.com/KhiopsML/khiops-visualization/releases)
+
 
 **Intuitive visualization of [Khiops][khiops] analysis results**
 

@@ -1293,7 +1293,10 @@ describe('coVisualization', () => {
         ).toHaveBeenCalled();
       });
 
-      it('should process collapsed children for VarVar case', () => {
+      it('should NOT process collapsed children for VarVar case (fix: prevents duplicate rows on auto-fold)', () => {
+        // For VarVar (isIndiVarCase=false), processCollapsedChildren must NOT be called.
+        // Calling it caused duplicate composition rows when both a parent cluster and a
+        // child cluster were simultaneously auto-collapsed by getLeafNodesForARank().
         compositionService['getCompositionValues'](
           mockCurrentDimensionDetails,
           mockCurrentInitialDimensionDetails,
@@ -1304,7 +1307,7 @@ describe('coVisualization', () => {
 
         expect(
           compositionService['processCollapsedChildren'],
-        ).toHaveBeenCalled();
+        ).not.toHaveBeenCalled();
       });
 
       it('should merge and format compositions for collapsed IndiVar nodes', () => {
@@ -1649,6 +1652,158 @@ describe('coVisualization', () => {
       });
     });
 
+    describe('VarVar auto-fold duplicate composition regression (adult2var)', () => {
+      // Regression: when the hierarchy is automatically folded to a smaller coclustering
+      // (e.g. 9×9 → 3×3), getLeafNodesForARank() can mark both a parent cluster (B5)
+      // and one of its child clusters (B9) as collapsed=true simultaneously.
+      // Before the fix, processCollapsedChildren was called in the VarVar path and added
+      // B9's leaf compositions to the result; then processNodeCompositions re-added the
+      // same leaves without skipping them (the `isIndiVarCase &&` guard prevented the skip).
+      // This produced duplicate rows (e.g. 7 instead of 4 for B5).
+      // After the fix, processCollapsedChildren is skipped entirely for VarVar, so the
+      // composition is the same flat list of leaf values as with a manual fold.
+      beforeEach(() => {
+        dimensionsDatasService = TestBed.inject(DimensionsDatasService);
+        appService = TestBed.inject(AppService);
+        saveService = TestBed.inject(SaveService);
+        treenodesService = TestBed.inject(TreenodesService);
+
+        const fileDatas = require('../../assets/mocks/kc/adult2var.json');
+        appService.setFileDatas(fileDatas);
+
+        dimensionsDatasService.getDimensions();
+        dimensionsDatasService.initSelectedDimensions();
+        dimensionsDatasService.saveInitialDimension();
+        dimensionsDatasService.constructDimensionsTrees();
+      });
+
+      it('should not produce duplicate composition rows when parent (B5) and child (B9) are both auto-collapsed', () => {
+        // In adult2var.json education has hierarchicalRanks: B5=6, B9=10 (B9 is child of B5).
+        // rank=6 collapses all non-leaf nodes with hierarchicalRank >= 6, so both B5 and B9
+        // end up in collapsedNodes. B5's initial subtree contains B9 as a child.
+        const unfoldRank = 6;
+        treenodesService.setSelectedUnfoldHierarchy(unfoldRank);
+        const collapsedNodes = treenodesService.getLeafNodesForARank(unfoldRank);
+
+        // Both B5 and B9 must be in the collapsed set for this regression to be meaningful
+        expect(collapsedNodes['education']).toContain('B5');
+        expect(collapsedNodes['education']).toContain('B9');
+
+        treenodesService.setSavedCollapsedNodes(collapsedNodes);
+        const croppedDatas = saveService.constructSavedJson(collapsedNodes);
+        appService.setCroppedFileDatas(croppedDatas);
+
+        dimensionsDatasService.getDimensions();
+        dimensionsDatasService.initSelectedDimensions();
+        dimensionsDatasService.saveInitialDimension();
+        dimensionsDatasService.constructDimensionsTrees();
+
+        // education is selectedDimensions[1] in adult2var.json
+        const educationIndex =
+          dimensionsDatasService.dimensionsDatas.selectedDimensions.findIndex(
+            (e) => e.name === 'education',
+          );
+
+        // B5 must exist in the INITIAL dimension clusters and be collapsed,
+        // with B9 (also collapsed) as one of its children in the initial tree.
+        const b5Node =
+          dimensionsDatasService.dimensionsDatas.dimensionsClusters[
+            educationIndex
+          ]?.find((n) => n.cluster === 'B5');
+
+        expect(b5Node).toBeDefined();
+        expect(b5Node?.isCollapsed).toBeTrue();
+
+        // B9 must be a direct child of B5 in the initial tree
+        const b9InB5Children = b5Node?.children?.find(
+          (c) => c.cluster === 'B9',
+        );
+        expect(b9InB5Children).toBeDefined();
+        expect(b9InB5Children?.isCollapsed).toBeTrue();
+
+        // Composition of B5: {Bachelors}(1 value) + {Masters}(1 value) +
+        // {Prof-school, Doctorate}(2 values) = 4 total — no duplicates.
+        const compositions = compositionService.getCompositionClusters(
+          'education',
+          b5Node,
+        );
+
+        // Verify there are no duplicates by checking that each value appears exactly once
+        const compositionValues = compositions.map((c) => c.value);
+        const uniqueValues = new Set(compositionValues);
+        expect(uniqueValues.size).toEqual(compositionValues.length);
+
+        // The exact 4 values that belong to B5's subtree must all be present
+        expect(compositionValues).toContain('Bachelors');
+        expect(compositionValues).toContain('Masters');
+        expect(compositionValues).toContain('Prof-school');
+        expect(compositionValues).toContain('Doctorate');
+
+        // And nothing from outside B5's subtree should appear
+        expect(compositions.length).toEqual(4);
+      });
+
+      it('should not mutate shared cluster shortDescription when B5 is collapsed (re-expand regression #246)', () => {
+        // Bug: processNodeCompositions was calling
+        //   currentDimensionHierarchyCluster.shortDescription = node.shortDescription
+        // which mutated the shared TreeNodeModel objects inside dimensionsClusters.
+        // After unfolding B5, those objects still had shortDescription = "B5", so a
+        // subsequent call to getCompositionClusters for any of B5's leaves showed "B5"
+        // instead of the real leaf cluster name.
+        //
+        // Fix: use a local shallow-clone for the overridden shortDescription instead of
+        // mutating the shared object.  This test verifies no mutation occurs.
+
+        const unfoldRank = 6;
+        treenodesService.setSelectedUnfoldHierarchy(unfoldRank);
+        const collapsedNodes = treenodesService.getLeafNodesForARank(unfoldRank);
+        treenodesService.setSavedCollapsedNodes(collapsedNodes);
+        const croppedDatas = saveService.constructSavedJson(collapsedNodes);
+        appService.setCroppedFileDatas(croppedDatas);
+
+        dimensionsDatasService.getDimensions();
+        dimensionsDatasService.initSelectedDimensions();
+        dimensionsDatasService.saveInitialDimension();
+        dimensionsDatasService.constructDimensionsTrees();
+
+        const educationIndex =
+          dimensionsDatasService.dimensionsDatas.selectedDimensions.findIndex(
+            (e) => e.name === 'education',
+          );
+
+        const b5Node =
+          dimensionsDatasService.dimensionsDatas.dimensionsClusters[
+            educationIndex
+          ]?.find((n) => n.cluster === 'B5');
+
+        expect(b5Node).toBeDefined();
+        expect(b5Node?.isCollapsed).toBeTrue();
+
+        // Record every cluster's shortDescription BEFORE the call — none should change.
+        const leafClusters =
+          dimensionsDatasService.dimensionsDatas.dimensionsClusters[
+            educationIndex
+          ];
+        const shortDescsBefore = new Map(
+          leafClusters.map((n) => [n.cluster, n.shortDescription]),
+        );
+
+        // Call with B5 collapsed — the old code mutated leaf shortDescriptions here.
+        const compositionsWhileCollapsed =
+          compositionService.getCompositionClusters('education', b5Node);
+        expect(compositionsWhileCollapsed.length).toEqual(4); // sanity check
+
+        // Verify no shared cluster objects in dimensionsClusters were mutated.
+        for (const clusterNode of leafClusters) {
+          expect(clusterNode.shortDescription)
+            .withContext(
+              `shortDescription of cluster '${clusterNode.cluster}' must not be mutated by a collapsed-node call`,
+            )
+            .toEqual(shortDescsBefore.get(clusterNode.cluster));
+        }
+      });
+    });
+
     describe('IV-Glass VarVar composition regression', () => {
       // Regression: in the Glass IndivVar coclustering, the "Instance index" dimension
       // has clusters whose values contain single-character strings (e.g. '2', '7', '3').
@@ -1693,6 +1848,1129 @@ describe('coVisualization', () => {
         expect(values).toContain('2');
         expect(values).toContain('7');
         expect(values).toContain('3');
+      });
+    });
+
+    describe('generateContextCombinations (private method)', () => {
+      it('should return [[]] for empty input', () => {
+        const result = compositionService['generateContextCombinations']([]);
+        expect(result).toEqual([[]]);
+      });
+
+      it('should return single-element arrays for one dimension', () => {
+        const result = compositionService['generateContextCombinations']([
+          [1, 2, 3],
+        ]);
+        expect(result).toEqual([[1], [2], [3]]);
+      });
+
+      it('should return cartesian product for two dimensions', () => {
+        const result = compositionService['generateContextCombinations']([
+          [1, 2],
+          [3, 4],
+        ]);
+        expect(result).toEqual([
+          [1, 3],
+          [1, 4],
+          [2, 3],
+          [2, 4],
+        ]);
+      });
+
+      it('should return cartesian product for three dimensions', () => {
+        const result = compositionService['generateContextCombinations']([
+          [0],
+          [1, 2],
+          [3],
+        ]);
+        expect(result).toEqual([
+          [0, 1, 3],
+          [0, 2, 3],
+        ]);
+      });
+
+      it('should handle single index per dimension', () => {
+        const result = compositionService['generateContextCombinations']([
+          [5],
+          [10],
+        ]);
+        expect(result).toEqual([[5, 10]]);
+      });
+
+      it('should handle undefined first dimension gracefully', () => {
+        const result = compositionService['generateContextCombinations']([
+          undefined as any,
+        ]);
+        expect(result).toEqual([[]]);
+      });
+    });
+
+    describe('calculateContextualCompositionFrequencies (private method)', () => {
+      beforeEach(() => {
+        compositionService['dimensionsDatasService'] = {
+          dimensionsDatas: {
+            conditionalOnContext: true,
+            contextDimensionCount: 1,
+            contextSelection: [[0]],
+            matrixDatas: {
+              matrixCellDatas: [
+                {
+                  xaxisPartValues: 'clusterA',
+                  yaxisPartValues: 'clusterB',
+                  xDisplayaxisPart: 'clusterA',
+                  yDisplayaxisPart: 'clusterB',
+                  cellFreqHash: { '0': 0 },
+                  cellFreqs: [50],
+                },
+                {
+                  xaxisPartValues: 'clusterA',
+                  yaxisPartValues: 'clusterC',
+                  xDisplayaxisPart: 'clusterA',
+                  yDisplayaxisPart: 'clusterC',
+                  cellFreqHash: { '0': 0 },
+                  cellFreqs: [30],
+                },
+              ],
+            },
+          },
+        } as any;
+      });
+
+      it('should skip calculation when conditionalOnContext is false', () => {
+        compositionService[
+          'dimensionsDatasService'
+        ].dimensionsDatas.conditionalOnContext = false;
+
+        const compositions: any[] = [
+          {
+            terminalCluster: 'clusterA',
+            cluster: 'clusterA',
+            frequency: 100,
+          },
+        ];
+        compositionService['calculateContextualCompositionFrequencies'](
+          compositions,
+          0,
+        );
+        // frequency should remain unchanged
+        expect(compositions[0].frequency).toBe(100);
+      });
+
+      it('should skip calculation when contextDimensionCount is 0', () => {
+        compositionService[
+          'dimensionsDatasService'
+        ].dimensionsDatas.contextDimensionCount = 0;
+
+        const compositions: any[] = [
+          {
+            terminalCluster: 'clusterA',
+            cluster: 'clusterA',
+            frequency: 100,
+          },
+        ];
+        compositionService['calculateContextualCompositionFrequencies'](
+          compositions,
+          0,
+        );
+        expect(compositions[0].frequency).toBe(100);
+      });
+
+      it('should skip calculation when matrixCellDatas is missing', () => {
+        compositionService[
+          'dimensionsDatasService'
+        ].dimensionsDatas.matrixDatas = null;
+
+        const compositions: any[] = [
+          {
+            terminalCluster: 'clusterA',
+            cluster: 'clusterA',
+            frequency: 100,
+          },
+        ];
+        compositionService['calculateContextualCompositionFrequencies'](
+          compositions,
+          0,
+        );
+        expect(compositions[0].frequency).toBe(100);
+      });
+
+      it('should distribute contextual frequency proportionally among compositions in the same cluster (x-axis)', () => {
+        const compositions: any[] = [
+          {
+            terminalCluster: 'clusterA',
+            cluster: 'clusterA',
+            frequency: 60,
+          },
+          {
+            terminalCluster: 'clusterA',
+            cluster: 'clusterA',
+            frequency: 40,
+          },
+        ];
+
+        // Total contextual frequency for clusterA on x-axis = 50 + 30 = 80
+        compositionService['calculateContextualCompositionFrequencies'](
+          compositions,
+          0,
+        );
+
+        // Total original frequency = 60 + 40 = 100
+        // composition[0]: 80 * (60/100) = 48
+        // composition[1]: 80 * (40/100) = 32
+        expect(compositions[0].frequency).toBe(48);
+        expect(compositions[1].frequency).toBe(32);
+      });
+
+      it('should use yaxisPartValues when currentIndex is 1', () => {
+        compositionService[
+          'dimensionsDatasService'
+        ].dimensionsDatas.matrixDatas.matrixCellDatas = [
+          {
+            xaxisPartValues: 'otherCluster',
+            yaxisPartValues: 'clusterY',
+            xDisplayaxisPart: 'otherCluster',
+            yDisplayaxisPart: 'clusterY',
+            cellFreqHash: { '0': 0 },
+            cellFreqs: [75],
+          },
+        ];
+
+        const compositions: any[] = [
+          {
+            terminalCluster: 'clusterY',
+            cluster: 'clusterY',
+            frequency: 100,
+          },
+        ];
+
+        compositionService['calculateContextualCompositionFrequencies'](
+          compositions,
+          1,
+        );
+
+        expect(compositions[0].frequency).toBe(75);
+      });
+
+      it('should set frequency to 0 when no matching cells are found', () => {
+        const compositions: any[] = [
+          {
+            terminalCluster: 'nonExistentCluster',
+            cluster: 'nonExistentCluster',
+            frequency: 100,
+          },
+        ];
+
+        compositionService['calculateContextualCompositionFrequencies'](
+          compositions,
+          0,
+        );
+
+        expect(compositions[0].frequency).toBe(0);
+      });
+
+      it('should skip compositions without terminalCluster', () => {
+        const compositions: any[] = [
+          {
+            terminalCluster: undefined,
+            cluster: 'clusterA',
+            frequency: 100,
+          },
+        ];
+
+        compositionService['calculateContextualCompositionFrequencies'](
+          compositions,
+          0,
+        );
+
+        // frequency unchanged since composition was skipped
+        expect(compositions[0].frequency).toBe(100);
+      });
+
+      it('should handle multiple context dimension combinations', () => {
+        compositionService[
+          'dimensionsDatasService'
+        ].dimensionsDatas.contextDimensionCount = 2;
+        compositionService[
+          'dimensionsDatasService'
+        ].dimensionsDatas.contextSelection = [[0, 1], [0]];
+
+        compositionService[
+          'dimensionsDatasService'
+        ].dimensionsDatas.matrixDatas.matrixCellDatas = [
+          {
+            xaxisPartValues: 'clusterA',
+            yaxisPartValues: 'clusterB',
+            xDisplayaxisPart: 'clusterA',
+            yDisplayaxisPart: 'clusterB',
+            cellFreqHash: { '0,0': 0, '1,0': 1 },
+            cellFreqs: [20, 15],
+          },
+        ];
+
+        const compositions: any[] = [
+          {
+            terminalCluster: 'clusterA',
+            cluster: 'clusterA',
+            frequency: 100,
+          },
+        ];
+
+        compositionService['calculateContextualCompositionFrequencies'](
+          compositions,
+          0,
+        );
+
+        // Both context combinations (0,0) and (1,0) match → 20 + 15 = 35
+        expect(compositions[0].frequency).toBe(35);
+      });
+
+      it('should handle collapsed nodes where multiple terminal clusters map to the same display cluster', () => {
+        compositionService[
+          'dimensionsDatasService'
+        ].dimensionsDatas.matrixDatas.matrixCellDatas = [
+          {
+            xaxisPartValues: 'termCluster1',
+            yaxisPartValues: 'y1',
+            xDisplayaxisPart: 'parentCluster',
+            yDisplayaxisPart: 'y1',
+            cellFreqHash: { '0': 0 },
+            cellFreqs: [40],
+          },
+          {
+            xaxisPartValues: 'termCluster2',
+            yaxisPartValues: 'y1',
+            xDisplayaxisPart: 'parentCluster',
+            yDisplayaxisPart: 'y1',
+            cellFreqHash: { '0': 0 },
+            cellFreqs: [60],
+          },
+        ];
+
+        const compositions: any[] = [
+          {
+            terminalCluster: 'termCluster1',
+            cluster: 'parentCluster',
+            frequency: 30,
+          },
+          {
+            terminalCluster: 'termCluster2',
+            cluster: 'parentCluster',
+            frequency: 70,
+          },
+        ];
+
+        compositionService['calculateContextualCompositionFrequencies'](
+          compositions,
+          0,
+        );
+
+        // Total contextual frequency for parentCluster = 40 + 60 = 100
+        // termCluster1 original proportion = 30/100 = 0.3 → 100 * 0.3 = 30
+        // termCluster2 original proportion = 70/100 = 0.7 → 100 * 0.7 = 70
+        expect(compositions[0].frequency).toBe(30);
+        expect(compositions[1].frequency).toBe(70);
+      });
+
+      it('should update partFrequencies proportionally for numerical variables', () => {
+        compositionService[
+          'dimensionsDatasService'
+        ].dimensionsDatas.matrixDatas.matrixCellDatas = [
+          {
+            xaxisPartValues: 'clusterA',
+            yaxisPartValues: 'y1',
+            xDisplayaxisPart: 'clusterA',
+            yDisplayaxisPart: 'y1',
+            cellFreqHash: { '0': 0 },
+            cellFreqs: [50],
+          },
+        ];
+
+        const compositions: any[] = [
+          {
+            terminalCluster: 'clusterA',
+            cluster: 'clusterA',
+            frequency: 100,
+            partFrequencies: [60, 40],
+          },
+        ];
+
+        compositionService['calculateContextualCompositionFrequencies'](
+          compositions,
+          0,
+        );
+
+        // scaleFactor = 50 / 100 = 0.5
+        expect(compositions[0].frequency).toBe(50);
+        expect(compositions[0].partFrequencies).toEqual([30, 20]);
+      });
+
+      it('should update valueFrequencies proportionally for categorical variables', () => {
+        compositionService[
+          'dimensionsDatasService'
+        ].dimensionsDatas.matrixDatas.matrixCellDatas = [
+          {
+            xaxisPartValues: 'clusterA',
+            yaxisPartValues: 'y1',
+            xDisplayaxisPart: 'clusterA',
+            yDisplayaxisPart: 'y1',
+            cellFreqHash: { '0': 0 },
+            cellFreqs: [50],
+          },
+        ];
+
+        const compositions: any[] = [
+          {
+            terminalCluster: 'clusterA',
+            cluster: 'clusterA',
+            frequency: 100,
+            valueGroups: {
+              values: ['A', 'B'],
+              valueFrequencies: [80, 20],
+            },
+          },
+        ];
+
+        compositionService['calculateContextualCompositionFrequencies'](
+          compositions,
+          0,
+        );
+
+        // scaleFactor = 50 / 100 = 0.5
+        expect(compositions[0].frequency).toBe(50);
+        expect(compositions[0].valueGroups.valueFrequencies).toEqual([40, 10]);
+      });
+
+      it('should handle cells without cellFreqHash gracefully', () => {
+        compositionService[
+          'dimensionsDatasService'
+        ].dimensionsDatas.matrixDatas.matrixCellDatas = [
+          {
+            xaxisPartValues: 'clusterA',
+            yaxisPartValues: 'y1',
+            xDisplayaxisPart: 'clusterA',
+            yDisplayaxisPart: 'y1',
+            cellFreqHash: undefined,
+            cellFreqs: undefined,
+          },
+        ];
+
+        const compositions: any[] = [
+          {
+            terminalCluster: 'clusterA',
+            cluster: 'clusterA',
+            frequency: 100,
+          },
+        ];
+
+        compositionService['calculateContextualCompositionFrequencies'](
+          compositions,
+          0,
+        );
+
+        // No cellFreqHash → no contextual frequency found → set to 0
+        expect(compositions[0].frequency).toBe(0);
+      });
+
+      it('should set frequency to 0 when totalOriginalFrequency is 0', () => {
+        compositionService[
+          'dimensionsDatasService'
+        ].dimensionsDatas.matrixDatas.matrixCellDatas = [
+          {
+            xaxisPartValues: 'clusterA',
+            yaxisPartValues: 'y1',
+            xDisplayaxisPart: 'clusterA',
+            yDisplayaxisPart: 'y1',
+            cellFreqHash: { '0': 0 },
+            cellFreqs: [50],
+          },
+        ];
+
+        const compositions: any[] = [
+          {
+            terminalCluster: 'clusterA',
+            cluster: 'clusterA',
+            frequency: 0,
+          },
+        ];
+
+        compositionService['calculateContextualCompositionFrequencies'](
+          compositions,
+          0,
+        );
+
+        expect(compositions[0].frequency).toBe(0);
+      });
+    });
+
+    describe('getCompositionValues contextual frequency integration', () => {
+      it('should call calculateContextualCompositionFrequencies when conditionalOnContext is enabled for axis dimension', () => {
+        const calculateSpy = spyOn(
+          compositionService,
+          'calculateContextualCompositionFrequencies' as any,
+        );
+
+        spyOn(
+          compositionService,
+          'processNodeCompositions' as any,
+        ).and.returnValue([]);
+
+        compositionService['dimensionsDatasService'] = {
+          dimensionsDatas: {
+            conditionalOnContext: true,
+            contextDimensionCount: 1,
+            contextSelection: [[0]],
+          },
+        } as any;
+
+        const mockNode = { isCollapsed: false, cluster: 'test' } as any;
+
+        compositionService['getCompositionValues'](
+          { isCategorical: true } as any,
+          { valueGroups: [] } as any,
+          mockNode,
+          0,
+          false,
+        );
+
+        expect(calculateSpy).toHaveBeenCalled();
+      });
+
+      it('should NOT call calculateContextualCompositionFrequencies for context dimension (index >= 2)', () => {
+        const calculateSpy = spyOn(
+          compositionService,
+          'calculateContextualCompositionFrequencies' as any,
+        );
+
+        spyOn(
+          compositionService,
+          'processNodeCompositions' as any,
+        ).and.returnValue([]);
+
+        compositionService['dimensionsDatasService'] = {
+          dimensionsDatas: {
+            conditionalOnContext: true,
+            contextDimensionCount: 1,
+            contextSelection: [[0]],
+          },
+        } as any;
+
+        const mockNode = { isCollapsed: false, cluster: 'test' } as any;
+
+        compositionService['getCompositionValues'](
+          { isCategorical: true } as any,
+          { valueGroups: [] } as any,
+          mockNode,
+          2, // context dimension index
+          false,
+        );
+
+        expect(calculateSpy).not.toHaveBeenCalled();
+      });
+    });
+
+    describe('getCompositionValues non-collapsed IndiVar simplification', () => {
+      it('should simplify numerical intervals in-place for non-collapsed IndiVar nodes', () => {
+        spyOn(
+          compositionService,
+          'processCollapsedChildren' as any,
+        ).and.returnValue(new Set());
+
+        spyOn(
+          compositionService,
+          'processNodeCompositions' as any,
+        ).and.returnValue([
+          {
+            _id: 'n1',
+            innerVariableType: TYPES.NUMERICAL,
+            part: [']0;10]', ']10;20]'],
+            frequency: 30,
+            cluster: 'c1',
+            terminalCluster: 'c1',
+          } as any,
+          {
+            _id: 'n2',
+            innerVariableType: TYPES.CATEGORICAL,
+            part: ['{A, B}'],
+            frequency: 10,
+            cluster: 'c2',
+            terminalCluster: 'c2',
+          } as any,
+        ]);
+
+        compositionService['dimensionsDatasService'] = {
+          dimensionsDatas: {
+            conditionalOnContext: false,
+            contextDimensionCount: 0,
+          },
+        } as any;
+
+        const mockNode = {
+          isCollapsed: false,
+          cluster: 'test',
+        } as any;
+
+        const result = compositionService['getCompositionValues'](
+          { isCategorical: true } as any,
+          { valueGroups: [] } as any,
+          mockNode,
+          0,
+          true, // IndiVar
+        );
+
+        // Numerical interval should be simplified
+        expect(result[0].part).toEqual([']0;20]']);
+        // Categorical should remain unchanged
+        expect(result[1].part).toEqual(['{A, B}']);
+      });
+
+      it('should not simplify numerical intervals with only one element', () => {
+        spyOn(
+          compositionService,
+          'processCollapsedChildren' as any,
+        ).and.returnValue(new Set());
+
+        spyOn(
+          compositionService,
+          'processNodeCompositions' as any,
+        ).and.returnValue([
+          {
+            _id: 'n1',
+            innerVariableType: TYPES.NUMERICAL,
+            part: [']0;10]'],
+            frequency: 30,
+            cluster: 'c1',
+            terminalCluster: 'c1',
+          } as any,
+        ]);
+
+        compositionService['dimensionsDatasService'] = {
+          dimensionsDatas: {
+            conditionalOnContext: false,
+            contextDimensionCount: 0,
+          },
+        } as any;
+
+        const mockNode = {
+          isCollapsed: false,
+          cluster: 'test',
+        } as any;
+
+        const result = compositionService['getCompositionValues'](
+          { isCategorical: true } as any,
+          { valueGroups: [] } as any,
+          mockNode,
+          0,
+          true, // IndiVar
+        );
+
+        // Single element should remain unchanged
+        expect(result[0].part).toEqual([']0;10]']);
+      });
+    });
+
+    describe('processNodeCompositions VarVar collapsed child mapping', () => {
+      it('should map leaf values to collapsed child cluster for VarVar non-collapsed parent', () => {
+        const currentDimensionDetails = {
+          isCategorical: true,
+          innerVariables: undefined,
+        };
+
+        const initDetails = {
+          valueGroups: [
+            {
+              cluster: 'leaf1',
+              values: ['A'],
+              valueTypicalities: [0.9],
+              valueFrequencies: [50],
+            },
+            {
+              cluster: 'leaf2',
+              values: ['B'],
+              valueTypicalities: [0.8],
+              valueFrequencies: [30],
+            },
+          ],
+        };
+
+        // Parent node is NOT collapsed, but has a collapsed child
+        const collapsedChild = {
+          isCollapsed: true,
+          cluster: 'collapsedChild',
+          shortDescription: 'Collapsed Child',
+          children: [],
+          childrenLeafList: ['leaf1'],
+          getChildrenList: jasmine.createSpy(),
+        };
+
+        const node = {
+          getChildrenList: jasmine.createSpy(),
+          getInnerValueGroups: jasmine.createSpy(),
+          childrenLeafList: ['leaf1', 'leaf2'],
+          isCollapsed: false,
+          shortDescription: 'Parent',
+          children: [collapsedChild],
+        };
+
+        compositionService['dimensionsDatasService'] = {
+          dimensionsDatas: {
+            dimensionsClusters: [
+              [
+                {
+                  cluster: 'leaf1',
+                  shortDescription: 'Leaf1',
+                  rank: 0,
+                },
+                {
+                  cluster: 'leaf2',
+                  shortDescription: 'Leaf2',
+                  rank: 1,
+                },
+              ],
+            ],
+          },
+        } as any;
+        compositionService['importExtDatasService'] = {
+          getImportedDatasFromDimension: jasmine
+            .createSpy()
+            .and.returnValue({}),
+        } as any;
+
+        const result = compositionService['processNodeCompositions'](
+          currentDimensionDetails,
+          initDetails,
+          node,
+          0,
+          false, // VarVar
+        );
+
+        // leaf1 should be mapped to the collapsed child
+        expect(result.length).toBe(2);
+        expect(result[0].cluster).toBe('Collapsed Child');
+        // leaf2 should use its own cluster
+        expect(result[1].cluster).toBe('Leaf2');
+      });
+    });
+
+    describe('getCompositionClusters edge cases', () => {
+      it('should return empty array when dimensionSummaries position has no entry', () => {
+        compositionService['appService'] = {
+          initialDatas: {
+            coclusteringReport: {
+              dimensionSummaries: [], // empty array
+              dimensionPartitions: [{}],
+            },
+          },
+          appDatas: {
+            coclusteringReport: {
+              dimensionPartitions: [{}],
+            },
+          },
+        } as any;
+
+        compositionService['dimensionsDatasService'] = {
+          dimensionsDatas: {
+            selectedDimensions: [
+              {
+                name: 'testHierarchy',
+                isCategorical: true,
+                isVarPart: false,
+                startPosition: 0,
+              },
+            ],
+            dimensionsClusters: [[]],
+          },
+        } as any;
+
+        const result = compositionService.getCompositionClusters(
+          'testHierarchy',
+          {} as any,
+        );
+        expect(result).toEqual([]);
+      });
+
+      it('should return empty array when dimensionPartitions position has no entry', () => {
+        compositionService['appService'] = {
+          initialDatas: {
+            coclusteringReport: {
+              dimensionSummaries: [
+                {
+                  name: 'testHierarchy',
+                  type: TYPES.CATEGORICAL,
+                },
+              ],
+              dimensionPartitions: [], // empty array
+            },
+          },
+          appDatas: {
+            coclusteringReport: {
+              dimensionPartitions: [{}],
+            },
+          },
+        } as any;
+
+        compositionService['dimensionsDatasService'] = {
+          dimensionsDatas: {
+            selectedDimensions: [
+              {
+                name: 'testHierarchy',
+                isCategorical: true,
+                isVarPart: false,
+                startPosition: 0,
+              },
+            ],
+            dimensionsClusters: [[]],
+          },
+        } as any;
+
+        const result = compositionService.getCompositionClusters(
+          'testHierarchy',
+          {} as any,
+        );
+        expect(result).toEqual([]);
+      });
+    });
+
+    describe('CC_3 Integration with context dimensions', () => {
+      beforeEach(() => {
+        dimensionsDatasService = TestBed.inject(DimensionsDatasService);
+        appService = TestBed.inject(AppService);
+
+        const fileDatas = require('../../assets/mocks/kc/CC_3_Coclustering.json');
+        appService.setFileDatas(fileDatas);
+
+        dimensionsDatasService.initialize();
+        dimensionsDatasService.getDimensions();
+        dimensionsDatasService.initSelectedDimensions();
+        dimensionsDatasService.constructDimensionsTrees();
+      });
+
+      it('should return composition for the workclass dimension (axis dimension 0)', () => {
+        const rootNode: TreeNodeModel | undefined =
+          dimensionsDatasService.dimensionsDatas.dimensionsTrees?.[0]?.[0];
+
+        const compositions = compositionService.getCompositionClusters(
+          'workclass',
+          rootNode,
+        );
+
+        expect(compositions.length).toBeGreaterThan(0);
+        compositions.forEach((comp) => {
+          expect(comp.value).toBeTruthy();
+          expect(comp.frequency).toBeGreaterThanOrEqual(0);
+        });
+      });
+
+      it('should return composition for the education dimension (axis dimension 1)', () => {
+        const rootNode: TreeNodeModel | undefined =
+          dimensionsDatasService.dimensionsDatas.dimensionsTrees?.[1]?.[0];
+
+        const compositions = compositionService.getCompositionClusters(
+          'education',
+          rootNode,
+        );
+
+        expect(compositions.length).toBeGreaterThan(0);
+        compositions.forEach((comp) => {
+          expect(comp.value).toBeTruthy();
+          expect(comp.frequency).toBeGreaterThanOrEqual(0);
+        });
+      });
+    });
+
+    describe('mergeAllContiguousModels edge cases', () => {
+      it('should handle models without innerVariable', () => {
+        const models: CompositionModel[] = [
+          {
+            _id: 'no_inner1',
+            cluster: 'cluster1',
+            terminalCluster: 'tc1',
+            innerVariable: undefined,
+            innerVariableType: undefined,
+            part: ['{A}'],
+            frequency: 10,
+            rank: 1,
+            value: '{A}',
+          } as CompositionModel,
+        ];
+
+        const result = compositionService.mergeAllContiguousModels(models);
+        expect(result.length).toBe(1);
+        expect(result[0]._id).toBe('no_inner1');
+        expect(result[0].frequency).toBe(10);
+      });
+
+      it('should handle empty input', () => {
+        const result = compositionService.mergeAllContiguousModels([]);
+        expect(result).toEqual([]);
+      });
+
+      it('should simplify intervals for a single numerical model with multiple parts', () => {
+        const models: CompositionModel[] = [
+          {
+            _id: 'single_num',
+            cluster: 'c1',
+            terminalCluster: 'tc1',
+            innerVariable: 'NumVar',
+            innerVariableType: TYPES.NUMERICAL,
+            part: [']0;10]', ']10;20]'],
+            frequency: 30,
+            rank: 1,
+            value: 'NumVar ]0;20]',
+          } as CompositionModel,
+        ];
+
+        const result = compositionService.mergeAllContiguousModels(models);
+        expect(result.length).toBe(1);
+        expect(result[0].part).toEqual([']0;20]']);
+      });
+
+      it('should not simplify a single numerical model with one part', () => {
+        const models: CompositionModel[] = [
+          {
+            _id: 'single_num_one',
+            cluster: 'c1',
+            terminalCluster: 'tc1',
+            innerVariable: 'NumVar',
+            innerVariableType: TYPES.NUMERICAL,
+            part: [']0;10]'],
+            frequency: 20,
+            rank: 1,
+            value: 'NumVar ]0;10]',
+          } as CompositionModel,
+        ];
+
+        const result = compositionService.mergeAllContiguousModels(models);
+        expect(result.length).toBe(1);
+        expect(result[0]._id).toBe('single_num_one');
+        expect(result[0].part).toEqual([']0;10]']);
+      });
+
+      it('should merge categorical models and use valueGroups.values for full list', () => {
+        const models: CompositionModel[] = [
+          {
+            _id: 'cat_a',
+            cluster: 'c1',
+            terminalCluster: 'tc1',
+            innerVariable: 'CatVar',
+            innerVariableType: TYPES.CATEGORICAL,
+            part: ['{X}'],
+            frequency: 10,
+            rank: 1,
+            value: 'CatVar {X}',
+            valueGroups: {
+              cluster: 'c1',
+              values: ['X'],
+              valueFrequencies: [10],
+              valueTypicalities: [0.9],
+            },
+          } as CompositionModel,
+          {
+            _id: 'cat_b',
+            cluster: 'c2',
+            terminalCluster: 'tc2',
+            innerVariable: 'CatVar',
+            innerVariableType: TYPES.CATEGORICAL,
+            part: ['{Y, Z}'],
+            frequency: 25,
+            rank: 1,
+            value: 'CatVar {Y, Z}',
+            valueGroups: {
+              cluster: 'c2',
+              values: ['Y', 'Z'],
+              valueFrequencies: [15, 10],
+              valueTypicalities: [0.8, 0.7],
+            },
+          } as CompositionModel,
+        ];
+
+        const result = compositionService.mergeAllContiguousModels(models);
+        expect(result.length).toBe(1);
+        expect(result[0].frequency).toBe(35);
+        expect(result[0].valueGroups?.values).toEqual(['X', 'Y', 'Z']);
+        expect(result[0].valueGroups?.valueFrequencies).toEqual([10, 15, 10]);
+      });
+
+      it('should fall back to part when valueGroups is not available for categorical merge', () => {
+        const models: CompositionModel[] = [
+          {
+            _id: 'cat_noVG_a',
+            cluster: 'c1',
+            terminalCluster: 'tc1',
+            innerVariable: 'CatVar2',
+            innerVariableType: TYPES.CATEGORICAL,
+            part: ['{M}'],
+            frequency: 5,
+            rank: 1,
+            value: 'CatVar2 {M}',
+          } as CompositionModel,
+          {
+            _id: 'cat_noVG_b',
+            cluster: 'c2',
+            terminalCluster: 'tc2',
+            innerVariable: 'CatVar2',
+            innerVariableType: TYPES.CATEGORICAL,
+            part: ['{N}'],
+            frequency: 8,
+            rank: 1,
+            value: 'CatVar2 {N}',
+          } as CompositionModel,
+        ];
+
+        const result = compositionService.mergeAllContiguousModels(models);
+        expect(result.length).toBe(1);
+        expect(result[0].frequency).toBe(13);
+        expect(result[0].part).toEqual(['{M, N}']);
+      });
+
+      it('should collect partDetails and sort them for merged numerical models', () => {
+        const models: CompositionModel[] = [
+          {
+            _id: 'num_a',
+            cluster: 'c1',
+            terminalCluster: 'tc1',
+            innerVariable: 'NumVar2',
+            innerVariableType: TYPES.NUMERICAL,
+            part: [']20;30]'],
+            partFrequencies: [15],
+            partDetails: [']20;30]'],
+            frequency: 15,
+            rank: 1,
+            value: 'NumVar2 ]20;30]',
+          } as CompositionModel,
+          {
+            _id: 'num_b',
+            cluster: 'c2',
+            terminalCluster: 'tc2',
+            innerVariable: 'NumVar2',
+            innerVariableType: TYPES.NUMERICAL,
+            part: [']0;10]'],
+            partFrequencies: [25],
+            partDetails: [']0;10]'],
+            frequency: 25,
+            rank: 1,
+            value: 'NumVar2 ]0;10]',
+          } as CompositionModel,
+        ];
+
+        const result = compositionService.mergeAllContiguousModels(models);
+        expect(result.length).toBe(1);
+        expect(result[0].frequency).toBe(40);
+        // partDetails should be sorted
+        expect(result[0].partDetails).toEqual([']0;10]', ']20;30]']);
+        expect(result[0].partFrequencies).toEqual([15, 25]);
+      });
+    });
+
+    describe('formatCompositions preserveCollapsedClusterNames', () => {
+      it('should preserve cluster names of collapsed children when preserveCollapsedClusterNames is true', () => {
+        const parentNode = {
+          rank: 2,
+          cluster: 'parentCluster',
+        } as any;
+
+        const compositions: CompositionModel[] = [
+          {
+            _id: 'comp1',
+            cluster: 'childCluster',
+            terminalCluster: 'tc1',
+            innerVariable: 'Var1',
+            innerVariableType: TYPES.CATEGORICAL,
+            part: ['{A}'],
+            frequency: 10,
+            rank: 1,
+            value: 'Var1 {A}',
+          } as CompositionModel,
+          {
+            _id: 'comp2',
+            cluster: 'parentCluster',
+            terminalCluster: 'tc2',
+            innerVariable: 'Var2',
+            innerVariableType: TYPES.NUMERICAL,
+            part: [']0;10]'],
+            frequency: 15,
+            rank: 1,
+            value: 'Var2 ]0;10]',
+          } as CompositionModel,
+        ];
+
+        const result = compositionService.formatCompositions(
+          parentNode,
+          compositions,
+          true, // preserveCollapsedClusterNames
+        );
+
+        // comp1 has different cluster name → should be preserved
+        expect(result[0]?.cluster).toEqual('childCluster');
+        // comp2 has same cluster as parent → should be overwritten
+        expect(result[1]?.cluster).toEqual('parentCluster');
+      });
+    });
+
+    describe('formatCompositions exactly 3 values', () => {
+      it('should format part with braces when exactly 3 values (no ellipsis, no crop)', () => {
+        const parentNode = { rank: 1 } as any;
+
+        const compositions: CompositionModel[] = [
+          {
+            _id: 'comp1',
+            cluster: 'c1',
+            terminalCluster: 'tc1',
+            innerVariable: 'Var',
+            innerVariableType: TYPES.CATEGORICAL,
+            part: ['{A, B, C}'],
+            frequency: 30,
+            rank: 1,
+            value: 'Var {A, B, C}',
+            valueGroups: {
+              cluster: 'c1',
+              values: ['A', 'B', 'C'],
+              valueFrequencies: [10, 15, 5],
+              valueTypicalities: [0.8, 0.9, 0.7],
+            },
+          } as CompositionModel,
+        ];
+
+        const result = compositionService.formatCompositions(
+          parentNode,
+          compositions,
+        );
+
+        // Exactly 3 values — no ellipsis (>3 triggers crop), no braces wrap (< 3 triggers wrap)
+        // Since 3 is NOT > 3 and NOT < 3, neither branch applies → part stays unchanged
+        expect(result[0]?.part).toEqual(['{A, B, C}']);
+      });
+    });
+
+    describe('formatCompositions does not mutate originals', () => {
+      it('should return deep copies and not mutate the input compositions', () => {
+        const parentNode = { rank: 5, cluster: 'parentCluster' } as any;
+
+        const original = {
+          _id: 'comp1',
+          cluster: 'c1',
+          terminalCluster: 'tc1',
+          innerVariable: 'Var',
+          innerVariableType: TYPES.CATEGORICAL,
+          part: ['{A}'],
+          frequency: 10,
+          rank: 1,
+          value: 'Var {A}',
+          valueGroups: {
+            cluster: 'c1',
+            values: ['A'],
+            valueFrequencies: [10],
+            valueTypicalities: [0.8],
+          },
+        } as CompositionModel;
+
+        const result = compositionService.formatCompositions(parentNode, [
+          original,
+        ]);
+
+        // The returned object should have rank = 5 (parent's rank)
+        expect(result[0]?.rank).toBe(5);
+        // The original should not be mutated
+        expect(original.rank).toBe(1);
       });
     });
   });

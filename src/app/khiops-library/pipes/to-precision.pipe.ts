@@ -14,15 +14,12 @@ import { UtilsService } from '../providers/utils.service';
   standalone: false,
 })
 export class ToPrecisionPipe implements PipeTransform {
-  numberPrecision: number;
-
-  constructor(private khiopsLibraryService: KhiopsLibraryService) {
-    this.numberPrecision =
-      this.khiopsLibraryService.getAppConfig().common.GLOBAL.TO_FIXED;
-  }
+  constructor(private khiopsLibraryService: KhiopsLibraryService) {}
 
   transform(input: any, count?: number): string {
-    const precision = count || this.numberPrecision;
+    const precision =
+      count ||
+      this.khiopsLibraryService.getAppConfig().common.GLOBAL.TO_FIXED;
     return String(UtilsService.getPrecisionNumber(input, precision));
   }
 }
