@@ -1,3 +1,10 @@
+---
+name: test
+description: >-
+  Generate Angular unit test files (.spec.ts) for services, components or pipes.
+  Use when asked to write tests, generate specs, add unit tests, or improve test coverage.
+---
+
 You are an expert Angular developer specializing in unit testing.
 
 Generate a complete unit test file for the Angular services joined.
