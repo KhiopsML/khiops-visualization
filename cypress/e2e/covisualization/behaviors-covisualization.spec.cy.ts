@@ -120,8 +120,6 @@ describe('Behaviors tests for Khiops Covisualization', () => {
         force: true,
       });
 
-      cy.wait(1000);
-
       // Check table values
       cy.get('#unfold-hierarchy-table').contains('341');
       cy.get('#unfold-hierarchy-table').contains('15');
@@ -265,6 +263,11 @@ describe('Behaviors tests for Khiops Covisualization', () => {
           position: 'topLeft',
         })
         .click(1, 1, { force: true }); // Force coords to click on the matrix
+
+      // Re-trigger mousemove after click: the click can dismiss the tooltip temporarily
+      cy.get('#matrix-selected')
+        .should('be.visible')
+        .trigger('mousemove', { position: 'topLeft' });
 
       // Check values
       cy.get('.matrix-tooltip-comp').contains('A10');
