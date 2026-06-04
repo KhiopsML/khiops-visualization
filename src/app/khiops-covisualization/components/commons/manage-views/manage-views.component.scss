@@ -24,7 +24,7 @@
     max-height: 70vh;
 
     .views-container {
-      background-color: white;
+      background-color: var(--bg-color);
       border: 1px solid var(--primary);
       border-radius: var(--border-radius);
       box-shadow: 0 2px 6px 0px rgba(0, 0, 0, 0.1);
@@ -64,7 +64,7 @@
         cursor: pointer;
         height: 140px;
         text-align: center;
-        background: white;
+        background: var(--bg-color);
         color: var(--primary);
         font-size: 0.9em;
         box-shadow: 0 2px 6px 0px rgba(0, 0, 0, 0.1);
@@ -86,7 +86,7 @@
       }
 
       .box-dimension:hover {
-        background: white;
+        background: var(--bg-color);
       }
 
       .box-dimension.disabled:hover {

@@ -38,7 +38,7 @@ ag-grid-angular {
 
 // Override grid style
 ag-grid-angular {
-  background: white;
+  background: var(--bg-color);
 }
 
 .ag-theme-balham .ag-header-cell-resize {
