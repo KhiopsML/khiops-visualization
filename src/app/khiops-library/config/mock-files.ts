@@ -87,7 +87,7 @@ export function getVisualizationMockFile(): string {
  * Mock files for co-visualization (KC) debugging.
  * To change the default file, uncomment the desired line and comment the current active one.
  */
-export function getCoviszalizationMockFile(): string {
+export function getCovisualizationMockFile(): string {
   // let urlKC = 'Coclustering-100x100.json';
   // let urlKC = 'IV-Poissons.json';
   // let urlKC = 'cc.json';

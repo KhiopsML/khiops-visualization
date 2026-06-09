@@ -12,7 +12,7 @@ import { LS } from '@khiops-library/enum/ls';
 import { BehaviorSubject, Observable } from 'rxjs';
 import {
   getVisualizationMockFile,
-  getCoviszalizationMockFile,
+  getCovisualizationMockFile,
 } from '../config/mock-files';
 
 @Injectable({
@@ -79,7 +79,7 @@ export class FileLoaderService {
     // Visualization files and Co visualization files
     // File selection is configured in mock-files.ts
     let urlKV = getVisualizationMockFile();
-    let urlKC = getCoviszalizationMockFile();
+    let urlKC = getCovisualizationMockFile();
 
     if (fileName) {
       urlKV = fileName;
