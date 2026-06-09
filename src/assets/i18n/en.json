@@ -366,6 +366,8 @@
     "EXIT": "exit",
     "NO": "No",
     "YES": "Yes",
+    "YES_TO_ALL": "Yes to All",
+    "NO_TO_ALL": "No to All",
     "PARTITION": "Partition",
     "LOGVALUE": "LOG value",
     "VALUE": "Value",

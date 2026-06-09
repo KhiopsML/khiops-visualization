@@ -17,9 +17,19 @@
     <button mat-button cdkFocusInitial (click)="confirm()">
       {{ confirmButtonText }}
     </button>
+    @if (displayYesToAllBtn) {
+      <button mat-button (click)="confirmAll()">
+        {{ 'GLOBAL.YES_TO_ALL' | translate }}
+      </button>
+    }
     @if (displayRejectBtn) {
       <button mat-button (click)="reject()">
         {{ 'GLOBAL.NO' | translate }}
+      </button>
+    }
+    @if (displayNoToAllBtn) {
+      <button mat-button (click)="rejectAll()">
+        {{ 'GLOBAL.NO_TO_ALL' | translate }}
       </button>
     }
     @if (displayCancelBtn) {

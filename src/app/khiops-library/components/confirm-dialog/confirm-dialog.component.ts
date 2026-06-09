@@ -18,6 +18,8 @@ export class ConfirmDialogComponent implements OnInit {
   public message: string = '';
   public displayRejectBtn: boolean = false;
   public displayCancelBtn: boolean = true;
+  public displayYesToAllBtn: boolean = false;
+  public displayNoToAllBtn: boolean = false;
   public confirmButtonText: string;
   public confirmTranslation: string = '';
 
@@ -38,8 +40,16 @@ export class ConfirmDialogComponent implements OnInit {
     this.dialogService.closeDialog('confirm');
   }
 
+  confirmAll() {
+    this.dialogService.closeDialog('confirmAll');
+  }
+
   reject() {
     this.dialogService.closeDialog('reject');
+  }
+
+  rejectAll() {
+    this.dialogService.closeDialog('rejectAll');
   }
 
   cancel() {

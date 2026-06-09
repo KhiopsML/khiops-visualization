@@ -144,7 +144,7 @@ export class AppComponent
         this.fileLoaderService.setDatas(datas);
       });
     };
-    this.element.nativeElement.openSaveBeforeQuitDialog = (cb: Function) => {
+    this.element.nativeElement.openSaveBeforeQuitDialog = (cb: Function, options?: { showBatchButtons?: boolean }) => {
       try {
         this.ngzone.run(() => {
           try {
@@ -158,6 +158,8 @@ export class AppComponent
               {
                 displayCancelBtn: true,
                 displayRejectBtn: true,
+                displayYesToAllBtn: options?.showBatchButtons ?? false,
+                displayNoToAllBtn: options?.showBatchButtons ?? false,
                 confirmTranslation: this.translate.get('GLOBAL.SAVE'),
                 title: this.translate.get('GLOBAL.SAVE_BEFORE_QUIT'),
               },
