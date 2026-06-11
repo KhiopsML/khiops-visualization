@@ -14,12 +14,7 @@
     {{ message }}
   </span>
   <div fxLayout="row" fxLayoutAlign="end center">
-    <button
-      cdkFocusInitial
-      (click)="confirm()"
-      mat-flat-button
-      color="warn"
-    >
+    <button (click)="confirm()" mat-flat-button color="warn">
       {{ confirmButtonText }}
     </button>
     @if (displayYesToAllBtn) {

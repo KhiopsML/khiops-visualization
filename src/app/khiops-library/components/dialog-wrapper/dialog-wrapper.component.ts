@@ -86,8 +86,7 @@ export class DialogWrapperComponent
     }
 
     // Set component host element to fill available space
-    const hostElement = this.componentRef.location
-      .nativeElement as HTMLElement;
+    const hostElement = this.componentRef.location.nativeElement as HTMLElement;
     hostElement.style.height = '100%';
     hostElement.style.width = '100%';
     hostElement.style.display = 'flex';
@@ -98,6 +97,15 @@ export class DialogWrapperComponent
 
     // Set component reference in service for cleanup
     this.dialogService.setComponentRef(this.componentRef);
+
+    // Focus the primary action button after the dialog is rendered
+    const hostEl = this.componentRef.location.nativeElement as HTMLElement;
+    setTimeout(() => {
+      const primaryBtn = hostEl.querySelector<HTMLElement>(
+        'button[mat-flat-button], button[color="warn"]',
+      );
+      primaryBtn?.focus();
+    });
   }
 
   ngOnDestroy(): void {
