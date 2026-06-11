@@ -151,7 +151,7 @@ export class AppComponent
             const dialogRef = this.dialogService.openDialog(
               ConfirmDialogComponent,
               {
-                width: '400px',
+                width: 'auto',
                 height: 'auto',
                 disableClose: true,
               },
