@@ -273,10 +273,15 @@ export class HomeLayoutComponent implements OnInit, OnDestroy {
     }
     this.selectTabName = this.configService.getConfig().selectTabName;
     if (datas && !UtilsService.isEmpty(datas)) {
+      const basename = (datas as any).filename
+        ? (datas as any).filename.split(/[\/\\]/).pop()
+        : '';
       if (!this.isCompatibleJson) {
         this.closeFile();
         this.snackBar.open(
-          this.translate.get('SNACKS.OPEN_FILE_ERROR'),
+          basename
+            ? `File ${basename}: open error`
+            : this.translate.get('SNACKS.OPEN_FILE_ERROR'),
           undefined,
           {
             duration: 4000,
@@ -285,7 +290,9 @@ export class HomeLayoutComponent implements OnInit, OnDestroy {
         );
       } else {
         this.snackBar.open(
-          this.translate.get('SNACKS.DATAS_LOADED'),
+          basename
+            ? `File ${basename} loaded`
+            : this.translate.get('SNACKS.DATAS_LOADED'),
           undefined,
           {
             duration: 2000,

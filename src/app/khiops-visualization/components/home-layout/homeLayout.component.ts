@@ -152,8 +152,13 @@ export class HomeLayoutComponent implements OnInit {
     this.selectTabName = this.configService.getConfig().selectTabName;
     if (!this.isCompatibleJson) {
       this.closeFile();
+      const basename = (datas as any).filename
+        ? (datas as any).filename.split(/[\/\\]/).pop()
+        : '';
       this.snackBar.open(
-        this.translate.get('SNACKS.OPEN_FILE_ERROR'),
+        basename
+          ? `File ${basename}: open error`
+          : this.translate.get('SNACKS.OPEN_FILE_ERROR'),
         undefined,
         {
           duration: 400000,
@@ -161,10 +166,19 @@ export class HomeLayoutComponent implements OnInit {
         },
       );
     } else {
-      this.snackBar.open(this.translate.get('SNACKS.DATAS_LOADED'), undefined, {
-        duration: 2000,
-        panelClass: 'success',
-      });
+      const basename = (datas as any).filename
+        ? (datas as any).filename.split(/[\/\\]/).pop()
+        : '';
+      this.snackBar.open(
+        basename
+          ? `File ${basename} loaded`
+          : this.translate.get('SNACKS.DATAS_LOADED'),
+        undefined,
+        {
+          duration: 2000,
+          panelClass: 'success',
+        },
+      );
     }
 
     // Init services
@@ -194,9 +208,12 @@ export class HomeLayoutComponent implements OnInit {
   private getTabIndexByName(name: string): number {
     const visibleTabs: string[] = [];
     if (this.appDatas?.preparationReport) visibleTabs.push('PREPARATION');
-    if (this.appDatas?.textPreparationReport) visibleTabs.push('TEXT_PREPARATION');
-    if (this.appDatas?.treePreparationReport) visibleTabs.push('TREE_PREPARATION');
-    if (this.appDatas?.bivariatePreparationReport) visibleTabs.push('PREPARATION_2D');
+    if (this.appDatas?.textPreparationReport)
+      visibleTabs.push('TEXT_PREPARATION');
+    if (this.appDatas?.treePreparationReport)
+      visibleTabs.push('TREE_PREPARATION');
+    if (this.appDatas?.bivariatePreparationReport)
+      visibleTabs.push('PREPARATION_2D');
     if (this.appDatas?.modelingReport) visibleTabs.push('MODELING');
     if (
       this.appDatas?.trainEvaluationReport ||
