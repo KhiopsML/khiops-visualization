@@ -49,7 +49,6 @@
     "DATAS_LOADED": "Datas loaded",
     "COLLIDING_FILE": "The coclustering model was built using data with both Ansi and Utf8 encodings. The display may be corrupted and not fully correspond to the model",
     "OPEN_FILE_ERROR": "No data or file error !",
-    "SAVE_FILE_SUCCESS": "Save file success",
     "NAME_CAN_NOT_BE_EMPTY": "Name can not be empty",
     "TOO_MANY_VARIABLES": "Too many variables. Only the 1000 high levels are displayed.",
     "SAVE_FILE_ERROR": "Save file error",
