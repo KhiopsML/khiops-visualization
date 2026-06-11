@@ -146,7 +146,7 @@ export class AppComponent
     };
     this.element.nativeElement.openSaveBeforeQuitDialog = (
       cb: Function,
-      options?: { showBatchButtons?: boolean },
+      options?: { showBatchButtons?: boolean; filename?: string },
     ) => {
       try {
         this.ngzone.run(() => {
@@ -165,6 +165,9 @@ export class AppComponent
                 displayNoToAllBtn: options?.showBatchButtons ?? false,
                 confirmTranslation: this.translate.get('GLOBAL.SAVE'),
                 title: this.translate.get('GLOBAL.SAVE_BEFORE_QUIT'),
+                message: options?.filename
+                  ? `${this.translate.get('GLOBAL.FILE')}: ${options.filename.split(/[\/\\]/).pop()}`
+                  : '',
               },
             );
             dialogRef.afterClosed().subscribe((result) => {
