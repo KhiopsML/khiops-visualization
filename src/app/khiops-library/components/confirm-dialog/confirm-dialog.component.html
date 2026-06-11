@@ -6,7 +6,7 @@
 
 <div id="confirm-dialog-comp">
   @if (title) {
-    <h1 style="margin-left: 0; margin-bottom: 1.5rem">
+    <h1>
       {{ title }}
     </h1>
   }
@@ -14,26 +14,31 @@
     {{ message }}
   </span>
   <div fxLayout="row" fxLayoutAlign="end center">
-    <button mat-button cdkFocusInitial (click)="confirm()">
+    <button
+      cdkFocusInitial
+      (click)="confirm()"
+      mat-flat-button
+      color="warn"
+    >
       {{ confirmButtonText }}
     </button>
     @if (displayYesToAllBtn) {
-      <button mat-button (click)="confirmAll()">
+      <button mat-stroked-button (click)="confirmAll()">
         {{ 'GLOBAL.YES_TO_ALL' | translate }}
       </button>
     }
     @if (displayRejectBtn) {
-      <button mat-button (click)="reject()">
+      <button mat-stroked-button (click)="reject()">
         {{ 'GLOBAL.NO' | translate }}
       </button>
     }
     @if (displayNoToAllBtn) {
-      <button mat-button (click)="rejectAll()">
+      <button mat-stroked-button (click)="rejectAll()">
         {{ 'GLOBAL.NO_TO_ALL' | translate }}
       </button>
     }
     @if (displayCancelBtn) {
-      <button mat-button (click)="cancel()">
+      <button mat-stroked-button (click)="cancel()">
         {{ 'GLOBAL.CANCEL' | translate }}
       </button>
     }
