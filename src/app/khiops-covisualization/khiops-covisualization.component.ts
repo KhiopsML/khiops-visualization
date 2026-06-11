@@ -144,7 +144,10 @@ export class AppComponent
         this.fileLoaderService.setDatas(datas);
       });
     };
-    this.element.nativeElement.openSaveBeforeQuitDialog = (cb: Function, options?: { showBatchButtons?: boolean }) => {
+    this.element.nativeElement.openSaveBeforeQuitDialog = (
+      cb: Function,
+      options?: { showBatchButtons?: boolean },
+    ) => {
       try {
         this.ngzone.run(() => {
           try {
