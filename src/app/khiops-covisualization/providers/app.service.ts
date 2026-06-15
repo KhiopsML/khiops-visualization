@@ -7,6 +7,11 @@
 import { Injectable } from '@angular/core';
 import { KhiopsLibraryService } from '@khiops-library/providers/khiops-library.service';
 import { AppConfig } from '../../../environments/environment';
+import { covisualizationCommonEnvironment } from '../../../environments/covisualization-common';
+
+// Capture defaults at module load time, before any AppConfig mutation
+const INITIAL_TO_FIXED = covisualizationCommonEnvironment.GLOBAL.TO_FIXED;
+const INITIAL_MATRIX_CONTRAST = covisualizationCommonEnvironment.GLOBAL.MATRIX_CONTRAST;
 import { Ls } from '@khiops-library/providers/ls.service';
 import { LayoutService } from '@khiops-library/providers/layout.service';
 import { VIEW_LAYOUT } from '@khiops-covisualization/config/view-layout';
@@ -189,10 +194,10 @@ export class AppService {
   initGlobalConfigVariables() {
     AppConfig.covisualizationCommon.GLOBAL.TO_FIXED =
       parseInt(this.ls.get(LS.SETTING_NUMBER_PRECISION) || '', 10) ||
-      AppConfig.covisualizationCommon.GLOBAL.TO_FIXED;
+      INITIAL_TO_FIXED;
     AppConfig.covisualizationCommon.GLOBAL.MATRIX_CONTRAST =
       parseInt(this.ls.get(LS.SETTING_MATRIX_CONTRAST) || '', 10) ||
-      AppConfig.covisualizationCommon.GLOBAL.MATRIX_CONTRAST;
+      INITIAL_MATRIX_CONTRAST;
 
     AppConfig.common = {
       ...AppConfig.covisualizationCommon,

@@ -64,7 +64,7 @@ export class UserSettingsComponent implements OnChanges {
     // Global number precision
     this.numberPrecision = parseInt(
       AppService.Ls.get(LS.SETTING_NUMBER_PRECISION) ||
-        AppConfig.visualizationCommon.GLOBAL.TO_FIXED.toString(),
+        DEFAULT_NUMBER_PRECISION.toString(),
       10,
     );
 
@@ -74,7 +74,7 @@ export class UserSettingsComponent implements OnChanges {
     // Matrix contrast
     this.contrastValue =
       parseInt(AppService.Ls.get(LS.SETTING_MATRIX_CONTRAST), 10) ||
-      AppConfig.visualizationCommon.GLOBAL.MATRIX_CONTRAST;
+      DEFAULT_MATRIX_CONTRAST;
     AppService.Ls.set(LS.SETTING_MATRIX_CONTRAST, this.contrastValue);
     AppConfig.visualizationCommon.GLOBAL.MATRIX_CONTRAST = this.contrastValue;
 
@@ -84,7 +84,7 @@ export class UserSettingsComponent implements OnChanges {
     );
     this.autoScaleFactor = !isNaN(storedFactor)
       ? storedFactor
-      : AppConfig.visualizationCommon.GLOBAL.AUTO_SCALE_THRESHOLD_DEFAULT;
+      : DEFAULT_AUTO_SCALE_FACTOR;
 
     // Whether auto scale mode is currently active
     this.autoScaleEnabled =

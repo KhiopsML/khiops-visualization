@@ -220,14 +220,19 @@ export class AppComponent
       this.configService.setConfig(config);
 
       AppService.Ls.getAll().then(() => {
-        // Reapply config from restored storage (per-file settings)
-        this.appService.initGlobalConfigVariables();
         this.trackerService.initTracker();
       });
 
       // Force the creation of the overlay container
       // when reinstantiating the visualization component #32
       this.overlayContainer.createContainer();
+    };
+
+    // Called by the desktop when this tab becomes active.
+    // Restores the per-tab Ls reference and re-applies this tab's settings to AppConfig.
+    this.element.nativeElement.activate = () => {
+      AppService.Ls = this.ls;
+      this.appService.initGlobalConfigVariables();
     };
     this.element.nativeElement.snack = (
       title: string,

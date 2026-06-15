@@ -6,6 +6,11 @@
 
 import { Injectable } from '@angular/core';
 import { AppConfig } from '../../../environments/environment';
+import { visualizationCommonEnvironment } from '../../../environments/visualization-common';
+
+// Capture defaults at module load time, before any AppConfig mutation
+const INITIAL_TO_FIXED = visualizationCommonEnvironment.GLOBAL.TO_FIXED;
+const INITIAL_MATRIX_CONTRAST = visualizationCommonEnvironment.GLOBAL.MATRIX_CONTRAST;
 import { KhiopsLibraryService } from '@khiops-library/providers/khiops-library.service';
 import { REPORT } from '@khiops-library/enum/report';
 import { LS } from '@khiops-library/enum/ls';
@@ -73,10 +78,10 @@ export class AppService {
   initGlobalConfigVariables() {
     AppConfig.visualizationCommon.GLOBAL.TO_FIXED =
       parseInt(this.ls.get(LS.SETTING_NUMBER_PRECISION) || '', 10) ||
-      AppConfig.visualizationCommon.GLOBAL.TO_FIXED;
+      INITIAL_TO_FIXED;
     AppConfig.visualizationCommon.GLOBAL.MATRIX_CONTRAST =
       parseInt(this.ls.get(LS.SETTING_MATRIX_CONTRAST) || '', 10) ||
-      AppConfig.visualizationCommon.GLOBAL.MATRIX_CONTRAST;
+      INITIAL_MATRIX_CONTRAST;
 
     AppConfig.common = {
       ...AppConfig.visualizationCommon,

@@ -57,7 +57,7 @@ export class UserSettingsComponent implements OnChanges {
     // Global number precision
     this.numberPrecision = parseInt(
       AppService.Ls.get(LS.SETTING_NUMBER_PRECISION) ||
-        AppConfig.covisualizationCommon.GLOBAL.TO_FIXED.toString(),
+        DEFAULT_NUMBER_PRECISION.toString(),
       10,
     );
 
@@ -67,7 +67,7 @@ export class UserSettingsComponent implements OnChanges {
     // Matrix contrast
     this.contrastValue =
       parseInt(AppService.Ls.get(LS.SETTING_MATRIX_CONTRAST), 10) ||
-      AppConfig.covisualizationCommon.GLOBAL.MATRIX_CONTRAST;
+      DEFAULT_MATRIX_CONTRAST;
     AppService.Ls.set(LS.SETTING_MATRIX_CONTRAST, this.contrastValue);
     AppConfig.covisualizationCommon.GLOBAL.MATRIX_CONTRAST = this.contrastValue;
   }
