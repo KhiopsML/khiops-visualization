@@ -17,6 +17,12 @@ import { KhiopsLibraryService } from '@khiops-library/providers/khiops-library.s
 import { LS } from '@khiops-library/enum/ls';
 import { AppService } from '@khiops-visualization/providers/app.service';
 import { AppConfig } from '../../../../../environments/environment';
+import { visualizationCommonEnvironment } from '../../../../../environments/visualization-common';
+
+// Capture default values before AppConfig mutations can overwrite them
+const DEFAULT_NUMBER_PRECISION = visualizationCommonEnvironment.GLOBAL.TO_FIXED;
+const DEFAULT_MATRIX_CONTRAST = visualizationCommonEnvironment.GLOBAL.MATRIX_CONTRAST;
+const DEFAULT_AUTO_SCALE_FACTOR = visualizationCommonEnvironment.GLOBAL.AUTO_SCALE_THRESHOLD_DEFAULT;
 
 @Component({
   selector: 'app-user-settings',
@@ -106,7 +112,16 @@ export class UserSettingsComponent implements OnChanges {
     // Notify components to refresh without reloading the view
     this.khiopsLibraryService.settingsChanged$.next();
 
+    // Request auto-save of the file with updated settings
+    this.khiopsLibraryService.saveFileRequested$.next();
+
     // Close the nav drawer without reload
     this.toggleNavDrawerChanged.emit();
+  }
+
+  onClickOnResetDefaults() {
+    this.numberPrecision = DEFAULT_NUMBER_PRECISION;
+    this.contrastValue = DEFAULT_MATRIX_CONTRAST;
+    this.autoScaleFactor = DEFAULT_AUTO_SCALE_FACTOR;
   }
 }

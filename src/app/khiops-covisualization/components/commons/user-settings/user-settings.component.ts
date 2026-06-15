@@ -18,6 +18,11 @@ import { KhiopsLibraryService } from '@khiops-library/providers/khiops-library.s
 import { LS } from '@khiops-library/enum/ls';
 import { AppService } from '@khiops-covisualization/providers/app.service';
 import { DimensionsDatasService } from '@khiops-covisualization/providers/dimensions-datas.service';
+import { covisualizationCommonEnvironment } from '../../../../../environments/covisualization-common';
+
+// Capture default values before AppConfig mutations can overwrite them
+const DEFAULT_NUMBER_PRECISION = covisualizationCommonEnvironment.GLOBAL.TO_FIXED;
+const DEFAULT_MATRIX_CONTRAST = covisualizationCommonEnvironment.GLOBAL.MATRIX_CONTRAST;
 
 @Component({
   selector: 'app-user-settings',
@@ -89,7 +94,15 @@ export class UserSettingsComponent implements OnChanges {
     // Notify components to refresh without reloading the view
     this.khiopsLibraryService.settingsChanged$.next();
 
+    // Request auto-save of the file with updated settings
+    this.khiopsLibraryService.saveFileRequested$.next();
+
     // Close the nav drawer without reload
     this.toggleNavDrawerChanged.emit();
+  }
+
+  onClickOnResetDefaults() {
+    this.numberPrecision = DEFAULT_NUMBER_PRECISION;
+    this.contrastValue = DEFAULT_MATRIX_CONTRAST;
   }
 }

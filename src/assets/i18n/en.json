@@ -324,6 +324,7 @@
     "SETTINGS": "Settings",
     "SAVE": "Save",
     "CANCEL": "Cancel",
+    "RESET_DEFAULTS": "Reset settings to defaults",
     "FILTER_CURVES": "Filter curves",
     "REC_CURVES": "REC Curves",
     "MATRIX": "Matrix",

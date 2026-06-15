@@ -111,6 +111,7 @@ export class AppComponent
     private copyImageService: CopyImageService,
     private copyDatasService: CopyDatasService,
     private ls: Ls,
+    private khiopsLibraryService: KhiopsLibraryService,
   ) {
     super(ngzone, fileLoaderService, configService);
     // Set LS_ID with unique instance identifier to prevent collision between tabs
@@ -219,7 +220,8 @@ export class AppComponent
       this.configService.setConfig(config);
 
       AppService.Ls.getAll().then(() => {
-        // Don't reinitialize as it clears data - just init tracker
+        // Reapply config from restored storage (per-file settings)
+        this.appService.initGlobalConfigVariables();
         this.trackerService.initTracker();
       });
 
@@ -240,5 +242,19 @@ export class AppComponent
       });
     };
     this.element.nativeElement.clean = () => (this.appdatas = undefined);
+
+    // Auto-save settings to Electron storage when changed
+    this.khiopsLibraryService.saveFileRequested$.subscribe(() => {
+      const settings: Record<string, any> = {
+        SETTING_NUMBER_PRECISION: AppService.Ls.get('SETTING_NUMBER_PRECISION'),
+        SETTING_MATRIX_CONTRAST: AppService.Ls.get('SETTING_MATRIX_CONTRAST'),
+      };
+      this.element.nativeElement.dispatchEvent(
+        new CustomEvent('save-file-requested', {
+          bubbles: true,
+          detail: settings,
+        }),
+      );
+    });
   }
 }
