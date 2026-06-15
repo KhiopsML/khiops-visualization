@@ -28,6 +28,13 @@ import sortBy from 'lodash-es/sortBy';
   providedIn: 'root',
 })
 export class SaveService {
+  private initialDirtyState: {
+    collapsedNodes: string;
+    nodesNames: string;
+    annotations: string;
+    importedDatas: string;
+  } | null = null;
+
   constructor(
     private appService: AppService,
     private layoutService: LayoutService,
@@ -37,6 +44,57 @@ export class SaveService {
     private importExtDatasService: ImportExtDatasService,
     private annotationService: AnnotationService,
   ) {}
+
+  /**
+   * Captures the baseline state of the dirty-trackable fields from the loaded file's savedDatas.
+   * Must be called each time a file is loaded so that isDirty() can detect changes.
+   *
+   * @param savedDatas - The savedDatas object from the loaded file.
+   */
+  setInitialDirtyState(savedDatas: any): void {
+    // collapsedNodes: an empty object is treated as undefined by the service
+    const collapsedNodes = savedDatas?.collapsedNodes;
+    const normalizedCollapsed =
+      collapsedNodes && Object.keys(collapsedNodes).length > 0
+        ? collapsedNodes
+        : undefined;
+
+    // importedDatas: exclude the non-serializable `file` property
+    const importedDatas = (savedDatas?.importedDatas ?? []).map(
+      ({ file: _file, ...rest }: any) => rest,
+    );
+
+    this.initialDirtyState = {
+      collapsedNodes: JSON.stringify(normalizedCollapsed ?? null),
+      nodesNames: JSON.stringify(savedDatas?.nodesNames ?? {}),
+      annotations: JSON.stringify(savedDatas?.annotations ?? {}),
+      importedDatas: JSON.stringify(importedDatas),
+    };
+  }
+
+  /**
+   * Returns true if any of the dirty-trackable fields have changed since the file was loaded.
+   * Only tracks: collapsedNodes, nodesNames, annotations, importedDatas.
+   */
+  isDirty(): boolean {
+    if (!this.initialDirtyState) {
+      return false;
+    }
+    const currentImportedDatas = (
+      this.importExtDatasService.getImportedDatas() ?? []
+    ).map(({ file: _file, ...rest }: any) => rest);
+
+    return (
+      JSON.stringify(this.treenodesService.getSavedCollapsedNodes() ?? null) !==
+        this.initialDirtyState.collapsedNodes ||
+      JSON.stringify(this.treenodesService.getNodesNames() ?? {}) !==
+        this.initialDirtyState.nodesNames ||
+      JSON.stringify(this.annotationService.getAnnotations() ?? {}) !==
+        this.initialDirtyState.annotations ||
+      JSON.stringify(currentImportedDatas) !==
+        this.initialDirtyState.importedDatas
+    );
+  }
 
   /**
    * Updates the current state based on the given dimension name.

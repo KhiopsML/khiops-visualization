@@ -143,12 +143,19 @@ export class AppComponent
         // Set data to both services - appService manages the data state
         this.appService.setFileDatas(datas);
         this.fileLoaderService.setDatas(datas);
+        // Capture the baseline dirty state so isDirty() can detect user changes
+        this.saveService.setInitialDirtyState(datas?.savedDatas);
       });
     };
     this.element.nativeElement.openSaveBeforeQuitDialog = (
       cb: Function,
       options?: { showBatchButtons?: boolean; filename?: string },
     ) => {
+      // Skip the dialog when none of the saveable fields have changed
+      if (!this.saveService.isDirty()) {
+        cb('reject');
+        return;
+      }
       try {
         this.ngzone.run(() => {
           try {
