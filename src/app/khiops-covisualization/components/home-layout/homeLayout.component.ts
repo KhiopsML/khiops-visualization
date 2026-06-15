@@ -280,7 +280,9 @@ export class HomeLayoutComponent implements OnInit, OnDestroy {
         this.closeFile();
         this.snackBar.open(
           basename
-            ? `File ${basename}: open error`
+            ? this.translate.get('SNACKS.FILE_OPEN_ERROR', {
+                filename: basename,
+              })
             : this.translate.get('SNACKS.OPEN_FILE_ERROR'),
           undefined,
           {
@@ -291,11 +293,11 @@ export class HomeLayoutComponent implements OnInit, OnDestroy {
       } else {
         this.snackBar.open(
           basename
-            ? `File ${basename} loaded`
+            ? this.translate.get('SNACKS.FILE_LOADED', { filename: basename })
             : this.translate.get('SNACKS.DATAS_LOADED'),
           undefined,
           {
-            duration: 2000,
+            duration: 200000,
             panelClass: 'success',
           },
         );

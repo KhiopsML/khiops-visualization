@@ -14,6 +14,7 @@ export class ConfigModel {
   lsId: string = '';
   trackerId?: string;
   onFileOpen!: Function;
+  onFileError?: Function;
   onCopyData!: Function;
   onCopyImage!: Function;
   onSendEvent!: Function;

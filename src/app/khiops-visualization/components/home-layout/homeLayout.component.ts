@@ -157,21 +157,25 @@ export class HomeLayoutComponent implements OnInit {
         : '';
       this.snackBar.open(
         basename
-          ? `File ${basename}: open error`
+          ? this.translate.get('SNACKS.FILE_OPEN_ERROR', { filename: basename })
           : this.translate.get('SNACKS.OPEN_FILE_ERROR'),
         undefined,
         {
-          duration: 400000,
+          duration: 4000,
           panelClass: 'error',
         },
       );
+      const config = this.configService.getConfig();
+      if (config?.onFileError) {
+        config.onFileError((datas as any).filename);
+      }
     } else {
       const basename = (datas as any).filename
         ? (datas as any).filename.split(/[\/\\]/).pop()
         : '';
       this.snackBar.open(
         basename
-          ? `File ${basename} loaded`
+          ? this.translate.get('SNACKS.FILE_LOADED', { filename: basename })
           : this.translate.get('SNACKS.DATAS_LOADED'),
         undefined,
         {
