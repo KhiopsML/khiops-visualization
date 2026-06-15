@@ -16,6 +16,7 @@ import isEqual from 'lodash-es/isEqual';
 import { HierarchyDatasModel } from '@khiops-covisualization/model/hierarchy-datas.model';
 import { DynamicI } from '@khiops-library/interfaces/globals.interface';
 import { DimensionCovisualizationModel } from '@khiops-library/model/dimension.covisualization.model';
+import { KhiopsLibraryService } from '@khiops-library/providers/khiops-library.service';
 
 @Injectable({
   providedIn: 'root',
@@ -27,6 +28,7 @@ export class TreenodesService {
     private appService: AppService,
     private dimensionsDatasService: DimensionsDatasService,
     private eventsService: EventsService,
+    private khiopsLibraryService: KhiopsLibraryService,
   ) {
     this.initialize();
   }
@@ -86,6 +88,7 @@ export class TreenodesService {
     this.dimensionsDatasService.dimensionsDatas.nodesNames[dimensionName][
       name
     ] = newName;
+    this.khiopsLibraryService.dirtyStateChanged$.next();
   }
 
   /**
@@ -755,10 +758,12 @@ export class TreenodesService {
     if (way === -1) {
       if (index !== -1) {
         this.collapsedNodesToSave[dimensionName].splice(index, 1);
+        this.khiopsLibraryService.dirtyStateChanged$.next();
       }
     } else if (way === 1) {
       if (index === -1) {
         this.collapsedNodesToSave[dimensionName].push(nodeName);
+        this.khiopsLibraryService.dirtyStateChanged$.next();
       }
     }
   }

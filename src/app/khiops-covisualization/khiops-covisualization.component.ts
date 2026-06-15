@@ -255,6 +255,11 @@ export class AppComponent
     };
     this.element.nativeElement.clean = () => (this.appdatas = undefined);
 
+    // Expose markSaved so the desktop can update the dirty baseline after saving
+    this.element.nativeElement.markSaved = () => {
+      this.saveService.markSaved();
+    };
+
     // Auto-save settings to Electron storage when changed
     this.khiopsLibraryService.saveFileRequested$.subscribe(() => {
       const settings: Record<string, any> = {
@@ -265,6 +270,16 @@ export class AppComponent
         new CustomEvent('save-file-requested', {
           bubbles: true,
           detail: settings,
+        }),
+      );
+    });
+
+    // Propagate dirty state changes to the desktop via a custom DOM event
+    this.khiopsLibraryService.dirtyStateChanged$.subscribe(() => {
+      this.element.nativeElement.dispatchEvent(
+        new CustomEvent('dirty-state-changed', {
+          bubbles: true,
+          detail: { isDirty: this.saveService.isDirty() },
         }),
       );
     });

@@ -11,6 +11,7 @@ import { AppService } from './app.service';
 import { TranslateService } from '@ngstack/translate';
 import { ImportFileLoaderService } from '@khiops-library/components/import-file-loader/import-file-loader.service';
 import { ExtDatasFieldI } from '@khiops-covisualization/interfaces/ext-datas-field.interface';
+import { KhiopsLibraryService } from '@khiops-library/providers/khiops-library.service';
 
 @Injectable({
   providedIn: 'root',
@@ -23,6 +24,7 @@ export class ImportExtDatasService {
     private translate: TranslateService,
     private importFileLoaderService: ImportFileLoaderService,
     private appService: AppService,
+    private khiopsLibraryService: KhiopsLibraryService,
   ) {
     this.importExtDatas = [];
     this.savedExternalDatas = {};
@@ -123,6 +125,7 @@ export class ImportExtDatasService {
       )
     ) {
       this.importExtDatas.push(data);
+      this.khiopsLibraryService.dirtyStateChanged$.next();
       return data;
     } else {
       return false;
@@ -154,6 +157,7 @@ export class ImportExtDatasService {
     );
     if (extDataPos !== -1) {
       this.importExtDatas.splice(extDataPos, 1);
+      this.khiopsLibraryService.dirtyStateChanged$.next();
       return true;
     } else {
       return false;

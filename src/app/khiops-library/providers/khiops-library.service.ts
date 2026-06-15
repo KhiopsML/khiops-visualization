@@ -21,6 +21,7 @@ export class KhiopsLibraryService {
   private appConfig: any;
   public settingsChanged$ = new Subject<void>();
   public saveFileRequested$ = new Subject<void>();
+  public dirtyStateChanged$ = new Subject<void>();
 
   /**
    * An array of graph colors used for chart visualizations.

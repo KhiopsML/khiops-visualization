@@ -97,6 +97,32 @@ export class SaveService {
   }
 
   /**
+   * Updates the baseline dirty state to the current values.
+   * Must be called after a successful save so that isDirty() reflects changes
+   * made since the last save rather than since the last file load.
+   */
+  markSaved(): void {
+    const currentImportedDatas = (
+      this.importExtDatasService.getImportedDatas() ?? []
+    ).map(({ file: _file, ...rest }: any) => rest);
+
+    const currentCollapsedNodes = this.treenodesService.getSavedCollapsedNodes();
+    const normalizedCollapsed =
+      currentCollapsedNodes && Object.keys(currentCollapsedNodes).length > 0
+        ? currentCollapsedNodes
+        : undefined;
+
+    this.initialDirtyState = {
+      collapsedNodes: JSON.stringify(normalizedCollapsed ?? null),
+      nodesNames: JSON.stringify(this.treenodesService.getNodesNames() ?? {}),
+      annotations: JSON.stringify(
+        this.annotationService.getAnnotations() ?? {},
+      ),
+      importedDatas: JSON.stringify(currentImportedDatas),
+    };
+  }
+
+  /**
    * Updates the current state based on the given dimension name.
    * This method retrieves the saved collapsed nodes, constructs the saved JSON data,
    * updates the application service with the cropped file data, and reinitializes

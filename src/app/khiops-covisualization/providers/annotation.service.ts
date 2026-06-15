@@ -7,6 +7,7 @@
 import { Injectable } from '@angular/core';
 import { DimensionsDatasService } from '@khiops-covisualization/providers/dimensions-datas.service';
 import { AppService } from './app.service';
+import { KhiopsLibraryService } from '@khiops-library/providers/khiops-library.service';
 
 @Injectable({
   providedIn: 'root',
@@ -15,6 +16,7 @@ export class AnnotationService {
   constructor(
     private appService: AppService,
     private dimensionsDatasService: DimensionsDatasService,
+    private khiopsLibraryService: KhiopsLibraryService,
   ) {}
 
   /**
@@ -61,6 +63,7 @@ export class AnnotationService {
       this.dimensionsDatasService.dimensionsDatas.annotations[dimensionName][
         nodeName
       ] = annotation;
+      this.khiopsLibraryService.dirtyStateChanged$.next();
     }
   }
 }
