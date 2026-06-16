@@ -59,9 +59,6 @@ export class TreePreparationDatasService {
   initialize() {
     this.treePreparationDatas = new TreePreparationDatasModel();
 
-    // Reset the store state when loading a new file
-    this.store.initSelectedNodes();
-
     // select the first item of the list by default
     if (this.isValid()) {
       let defaultVariable: TreePreparationVariableStatistic | undefined =
@@ -82,6 +79,11 @@ export class TreePreparationDatasService {
         this.setSelectedVariable(defaultVariable.name);
       }
     }
+
+    // Initialize selected nodes AFTER selectedVariable is set, so that
+    // savedTreeNodeId can be restored correctly (initSelectedNodes checks
+    // treePreparationDatas.selectedVariable before looking up the saved node).
+    this.store.initSelectedNodes();
   }
 
   /**
@@ -226,6 +228,7 @@ export class TreePreparationDatasService {
    * @returns {TreePreparationVariableModel | undefined} The selected variable.
    */
   setSelectedVariable(name: string): TreePreparationVariableModel | undefined {
+    console.log("🚀 ~ TreePreparationDatasService ~ setSelectedVariable ~ name:", name)
     if (this.treePreparationDatas && name) {
       const variable: TreePreparationVariableStatistic =
         this.preparationDatasService.getVariableFromName(
@@ -242,6 +245,12 @@ export class TreePreparationDatasService {
         this.computeTreeColorsMap();
         this.treePreparationDatas.computeTreePartTargetFrequencies();
         this.constructDimensionTree();
+        // Keep preparationDatasService in sync so that constructDatasToSave()
+        // can read the correct rank via getSelectedTreePreparationVariableRank().
+        this.preparationDatasService.setSelectedVariable(
+          name,
+          REPORT.TREE_PREPARATION_REPORT,
+        );
         return this.treePreparationDatas.selectedVariable;
       }
     }
