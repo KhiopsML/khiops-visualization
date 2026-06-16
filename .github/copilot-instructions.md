@@ -78,3 +78,8 @@ Ex: build: update webpack
 
 ci: Changes related to CI/CD.
 Ex: ci: add GitHub Actions workflow for testing
+
+## Notations
+kv means khiops-visualization
+kc means khiops-covisualization
+kvd means khiops-visualization-desktop
