@@ -306,7 +306,7 @@ export class HomeLayoutComponent implements OnInit, OnDestroy {
             : this.translate.get('SNACKS.DATAS_LOADED'),
           undefined,
           {
-            duration: 200000,
+            duration: 2000,
             panelClass: 'success',
           },
         );
