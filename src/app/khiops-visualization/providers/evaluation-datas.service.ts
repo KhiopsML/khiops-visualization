@@ -73,6 +73,20 @@ export class EvaluationDatasService {
   }
 
   /**
+   * Returns the type of the currently selected evaluation type.
+   */
+  getSelectedEvaluationType(): string | undefined {
+    return this.evaluationDatas.selectedEvaluationTypeVariable?.type;
+  }
+
+  /**
+   * Returns the name of the currently selected predictor evaluation variable.
+   */
+  getSelectedPredictorEvaluationName(): string | undefined {
+    return this.evaluationDatas.selectedPredictorEvaluationVariable?.name;
+  }
+
+  /**
    * Retrieves the predictor evaluation variable for the specified evaluation type.
    * @param type - The evaluation type.
    * @returns The corresponding EvaluationPredictorModel.
@@ -347,7 +361,12 @@ export class EvaluationDatasService {
 
       // Init selection the first time
       if (!this.evaluationDatas.selectedEvaluationTypeVariable) {
-        this.setSelectedEvaluationTypeVariable(datas[0]);
+        // Restore saved evaluation type if available
+        const savedType = this.appService.getSavedDatas('selectedEvaluationType');
+        const savedEvalType = savedType
+          ? datas.find((e) => e.type === savedType)
+          : undefined;
+        this.setSelectedEvaluationTypeVariable(savedEvalType || datas[0]);
       }
     }
 
@@ -441,7 +460,22 @@ export class EvaluationDatasService {
           datas.length > 0 &&
           datas[0]
         ) {
-          this.setSelectedPredictorEvaluationVariable(datas[0]);
+          // Restore saved predictor evaluation if available
+          const savedName = this.appService.getSavedDatas(
+            'selectedPredictorEvaluationName',
+          );
+          const savedType = this.appService.getSavedDatas(
+            'selectedEvaluationType',
+          );
+          const savedPredictor =
+            savedName && savedType
+              ? datas.find(
+                  (e) => e.name === savedName && e.type === savedType,
+                )
+              : undefined;
+          this.setSelectedPredictorEvaluationVariable(
+            savedPredictor || datas[0],
+          );
         }
       }
     }

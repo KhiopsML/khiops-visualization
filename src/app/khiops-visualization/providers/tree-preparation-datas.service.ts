@@ -34,6 +34,7 @@ import { VariableDetail } from '@khiops-visualization/interfaces/shared-interfac
 export class TreePreparationDatasService {
   private treePreparationDatas: TreePreparationDatasModel =
     new TreePreparationDatasModel();
+  private currentSelectedNodeId: string | undefined;
   selectedNodes$: Observable<TreeNodeModel[]>;
 
   constructor(
@@ -45,6 +46,10 @@ export class TreePreparationDatasService {
     this.selectedNodes$ = this.store.selectedNodes$;
     // Link the store with this service to avoid circular dependency
     this.store.setService(this);
+    // Track the current selected node ID for state persistence
+    this.store.selectedNode$.subscribe((node) => {
+      this.currentSelectedNodeId = node?.id;
+    });
   }
 
   /**
@@ -63,7 +68,9 @@ export class TreePreparationDatasService {
         this.appService.appDatas?.treePreparationReport.variablesStatistics[0];
 
       // Check if there is a saved selected variable into json
-      const savedSelectedRank = this.appService.getSavedDatas('selectedRank');
+      const savedSelectedRank = this.appService.getSavedDatas(
+        'selectedTreePreparationRank',
+      );
       if (savedSelectedRank) {
         defaultVariable = this.preparationDatasService.getVariableFromRank(
           savedSelectedRank,
@@ -86,12 +93,17 @@ export class TreePreparationDatasService {
   }
 
   /**
+   * Returns the ID of the currently selected tree node.
+   */
+  getSelectedNodeId(): string | undefined {
+    return this.currentSelectedNodeId;
+  }
+
+  /**
    * Initializes the selected nodes based on the first partition of the selected variable.
+   * If a saved selected tree node ID exists, restores that selection.
    */
   initSelectedNodes() {
-    // const savedSelectedNodes = this.appService.getSavedDatas('selectedNodes');
-    // Todo init nodes from json if exists
-
     let nodes;
     const variablesDetailedStatistics:
       | { [key: string]: VariableDetail }
@@ -103,6 +115,19 @@ export class TreePreparationDatasService {
       if (rank && variablesDetailedStatistics?.[rank]) {
         const dimensions =
           variablesDetailedStatistics[rank].dataGrid.dimensions;
+
+        // Restore the saved selected tree node if available
+        const savedTreeNodeId =
+          this.appService.getSavedDatas('selectedTreeNodeId');
+        if (savedTreeNodeId) {
+          const [_index, nodesIdsToSelect] =
+            this.getNodesLinkedToOneNode(savedTreeNodeId);
+          if (nodesIdsToSelect) {
+            nodes = this.setSelectedNodes(nodesIdsToSelect, savedTreeNodeId);
+            return nodes;
+          }
+        }
+
         const firstpartition: any = dimensions[0]?.partition[0];
         nodes = this.setSelectedNodes(firstpartition, firstpartition[0]);
       }

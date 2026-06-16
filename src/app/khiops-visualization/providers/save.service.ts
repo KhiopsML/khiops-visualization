@@ -8,6 +8,8 @@ import { Injectable } from '@angular/core';
 import { AppService } from './app.service';
 import { PreparationDatasService } from './preparation-datas.service';
 import { Preparation2dDatasService } from './preparation2d-datas.service';
+import { TreePreparationDatasService } from './tree-preparation-datas.service';
+import { EvaluationDatasService } from './evaluation-datas.service';
 import { SavedDatasModel } from '../model/saved-datas.model';
 import { LayoutService } from '../../khiops-library/providers/layout.service';
 import { VisualizationDatas } from '@khiops-visualization/interfaces/app-datas.interface';
@@ -21,6 +23,8 @@ export class SaveService {
     private layoutService: LayoutService,
     private preparationDatasService: PreparationDatasService,
     private preparation2dDatasService: Preparation2dDatasService,
+    private treePreparationDatasService: TreePreparationDatasService,
+    private evaluationDatasService: EvaluationDatasService,
   ) {}
 
   /**
@@ -32,16 +36,33 @@ export class SaveService {
   constructDatasToSave(): VisualizationDatas | undefined {
     const splitSizes = this.layoutService.getSplitSizes();
     const selectedRank = this.preparationDatasService.getSelectedVariableRank();
+    const selectedTextPreparationRank =
+      this.preparationDatasService.getSelectedTextPreparationVariableRank();
+    const selectedTreePreparationRank =
+      this.preparationDatasService.getSelectedTreePreparationVariableRank();
     const selected2dRank =
       this.preparation2dDatasService.getSelectedVariableRank();
     const selected2dCell =
       this.preparation2dDatasService.getSelectedCellIndex();
+    const selectedEvaluationType =
+      this.evaluationDatasService.getSelectedEvaluationType();
+    const selectedPredictorEvaluationName =
+      this.evaluationDatasService.getSelectedPredictorEvaluationName();
+    const activeTabIndex = this.appService.getActiveTabIndex();
+    const selectedTreeNodeId =
+      this.treePreparationDatasService.getSelectedNodeId();
     if (this.appService.appDatas) {
       this.appService.appDatas.savedDatas = new SavedDatasModel(
         splitSizes,
         selectedRank,
+        selectedTextPreparationRank,
+        selectedTreePreparationRank,
         selected2dRank,
         selected2dCell,
+        selectedEvaluationType,
+        selectedPredictorEvaluationName,
+        activeTabIndex,
+        selectedTreeNodeId,
       );
       return this.appService.appDatas;
     }

@@ -50,20 +50,24 @@ export class PreparationDatasService {
   initialize() {
     this.preparationDatas = new PreparationDatasModel();
 
+    // Map each report type to its dedicated savedDatas key
     const reports = [
       {
         type: REPORT.PREPARATION_REPORT,
         data: this.appService.appDatas?.preparationReport?.variablesStatistics,
+        savedRankKey: 'selectedRank',
       },
       {
         type: REPORT.TEXT_PREPARATION_REPORT,
         data: this.appService.appDatas?.textPreparationReport
           ?.variablesStatistics,
+        savedRankKey: 'selectedTextPreparationRank',
       },
       {
         type: REPORT.TREE_PREPARATION_REPORT,
         data: this.appService.appDatas?.treePreparationReport
           ?.variablesStatistics,
+        savedRankKey: 'selectedTreePreparationRank',
       },
     ];
 
@@ -72,7 +76,9 @@ export class PreparationDatasService {
         let defaultVariable = report.data[0];
 
         // Check if there is a saved selected variable into json
-        const savedSelectedRank = this.appService.getSavedDatas('selectedRank');
+        const savedSelectedRank = this.appService.getSavedDatas(
+          report.savedRankKey,
+        );
         if (savedSelectedRank) {
           const foundVar = this.getVariableFromRank(
             savedSelectedRank,
@@ -146,6 +152,20 @@ export class PreparationDatasService {
    */
   getSelectedVariableRank(): string | undefined {
     return this.preparationDatas?.preparationReport?.selectedVariable?.rank;
+  }
+
+  /**
+   * Retrieves the rank of the selected text preparation variable.
+   */
+  getSelectedTextPreparationVariableRank(): string | undefined {
+    return this.preparationDatas?.textPreparationReport?.selectedVariable?.rank;
+  }
+
+  /**
+   * Retrieves the rank of the selected tree preparation variable.
+   */
+  getSelectedTreePreparationVariableRank(): string | undefined {
+    return this.preparationDatas?.treePreparationReport?.selectedVariable?.rank;
   }
 
   /**

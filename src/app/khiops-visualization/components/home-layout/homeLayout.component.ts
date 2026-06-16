@@ -91,6 +91,7 @@ export class HomeLayoutComponent implements OnInit {
     // init selected area to undefined
     this.selectableService.initialize();
     this.selectedTab = e;
+    this.appService.setActiveTabIndex(e.index);
   }
 
   checkEmptyMessageVisibility(): boolean {
@@ -235,10 +236,20 @@ export class HomeLayoutComponent implements OnInit {
   private selectFirstTab() {
     setTimeout(() => {
       this.selectedTab = undefined;
-      this.activeTab = this.selectTabName
-        ? this.getTabIndexByName(this.selectTabName)
-        : 0;
+
+      // Restore active tab: savedDatas takes priority, then config, then default
+      const savedActiveTabIndex =
+        this.appService.getSavedDatas('activeTabIndex');
+      if (savedActiveTabIndex !== undefined && savedActiveTabIndex !== null) {
+        this.activeTab = savedActiveTabIndex;
+      } else if (this.selectTabName) {
+        this.activeTab = this.getTabIndexByName(this.selectTabName);
+      } else {
+        this.activeTab = 0;
+      }
+
       this.mainTabGroup.selectedIndex = this.activeTab;
+      this.appService.setActiveTabIndex(this.activeTab);
       // Beware, the distribution chart fails to resize on init for some files #134, so we need to DOUBLE set loading to false after a delay to let the chart resize before displaying it
       setTimeout(() => {
         this.isLoading = false; // Distribution chart fails to resize on init for some files #134

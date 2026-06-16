@@ -199,6 +199,7 @@ export class SaveService {
     const matrixMode = this.dimensionsDatasService.dimensionsDatas.matrixMode;
     const isAxisInverted =
       this.dimensionsDatasService.dimensionsDatas.isAxisInverted;
+    const activeTabIndex = this.appService.getActiveTabIndex();
 
     initialDatas.savedDatas = new SavedDatasModel(
       viewsLayout,
@@ -215,6 +216,7 @@ export class SaveService {
       matrixOption,
       matrixMode,
       isAxisInverted,
+      activeTabIndex,
     );
 
     return initialDatas;

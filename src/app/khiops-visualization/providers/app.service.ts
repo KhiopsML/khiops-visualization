@@ -32,6 +32,7 @@ export class AppService {
   static translate: TranslateService;
 
   private _appDatas: AppDatasI | undefined = undefined;
+  private activeTabIndex = 0;
 
   constructor(
     private layoutService: LayoutService,
@@ -46,6 +47,14 @@ export class AppService {
 
   get appDatas(): VisualizationDatas | undefined {
     return this._appDatas?.datas;
+  }
+
+  setActiveTabIndex(activeTab: number) {
+    this.activeTabIndex = activeTab;
+  }
+
+  getActiveTabIndex(): number {
+    return this.activeTabIndex;
   }
 
   /**

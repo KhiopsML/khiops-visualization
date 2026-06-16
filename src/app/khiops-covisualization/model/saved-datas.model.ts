@@ -21,6 +21,7 @@ export class SavedDatasModel {
   isAxisInverted: boolean | undefined;
   matrixOption: string | undefined;
   matrixMode: number | undefined;
+  activeTabIndex: number | undefined;
 
   constructor(
     viewsLayout: ViewLayoutVO | undefined,
@@ -37,6 +38,7 @@ export class SavedDatasModel {
     matrixOption?: string,
     matrixMode?: number,
     isAxisInverted?: boolean,
+    activeTabIndex?: number,
   ) {
     this.viewsLayout = viewsLayout;
     this.splitSizes = splitSizes;
@@ -52,5 +54,6 @@ export class SavedDatasModel {
     this.matrixOption = matrixOption || undefined;
     this.matrixMode = matrixMode || undefined;
     this.isAxisInverted = isAxisInverted || undefined;
+    this.activeTabIndex = activeTabIndex;
   }
 }

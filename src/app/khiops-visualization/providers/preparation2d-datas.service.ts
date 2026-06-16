@@ -72,6 +72,12 @@ export class Preparation2dDatasService {
       }
       if (defaultVariable) {
         this.setSelectedVariable(defaultVariable.name1, defaultVariable.name2);
+
+        // Restore selected cell
+        const savedSelected2dCell = this.appService.getSavedDatas('selected2dCell');
+        if (savedSelected2dCell !== undefined && savedSelected2dCell !== null) {
+          this.setSelectedCellIndex(savedSelected2dCell);
+        }
       }
     }
     this.preparation2dDatas.isSupervised = this.isSupervised();

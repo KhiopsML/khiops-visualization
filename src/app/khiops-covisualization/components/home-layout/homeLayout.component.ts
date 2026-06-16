@@ -236,9 +236,18 @@ export class HomeLayoutComponent implements OnInit, OnDestroy {
   private selectFirstTab() {
     this.openContextView = false;
     this.selectedTab = undefined;
-    this.activeTab = this.selectTabName
-      ? this.getTabIndexByName(this.selectTabName)
-      : 0;
+
+    // Restore active tab: savedDatas takes priority, then config, then default
+    const savedActiveTabIndex =
+      this.appService.getSavedDatas('activeTabIndex');
+    if (savedActiveTabIndex !== undefined && savedActiveTabIndex !== null) {
+      this.activeTab = savedActiveTabIndex;
+    } else if (this.selectTabName) {
+      this.activeTab = this.getTabIndexByName(this.selectTabName);
+    } else {
+      this.activeTab = 0;
+    }
+
     if (this.activeTab === 1 && this.isContextDimensions) {
       this.openContextView = true;
     }
