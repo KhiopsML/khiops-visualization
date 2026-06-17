@@ -45,6 +45,12 @@ export class SaveService {
     private annotationService: AnnotationService,
   ) {}
 
+  private dirtyOverride: boolean | null = null;
+
+  setDirtyOverride(value: boolean): void {
+    this.dirtyOverride = value;
+  }
+
   /**
    * Captures the baseline state of the dirty-trackable fields from the loaded file's savedDatas.
    * Must be called each time a file is loaded so that isDirty() can detect changes.
@@ -52,6 +58,8 @@ export class SaveService {
    * @param savedDatas - The savedDatas object from the loaded file.
    */
   setInitialDirtyState(savedDatas: any): void {
+    this.dirtyOverride = null;
+
     // collapsedNodes: an empty object is treated as undefined by the service
     const collapsedNodes = savedDatas?.collapsedNodes;
     const normalizedCollapsed =
@@ -77,6 +85,7 @@ export class SaveService {
    * Only tracks: collapsedNodes, nodesNames, annotations, importedDatas.
    */
   isDirty(): boolean {
+    if (this.dirtyOverride !== null) return this.dirtyOverride;
     if (!this.initialDirtyState) {
       return false;
     }
@@ -102,11 +111,13 @@ export class SaveService {
    * made since the last save rather than since the last file load.
    */
   markSaved(): void {
+    this.dirtyOverride = null;
     const currentImportedDatas = (
       this.importExtDatasService.getImportedDatas() ?? []
     ).map(({ file: _file, ...rest }: any) => rest);
 
-    const currentCollapsedNodes = this.treenodesService.getSavedCollapsedNodes();
+    const currentCollapsedNodes =
+      this.treenodesService.getSavedCollapsedNodes();
     const normalizedCollapsed =
       currentCollapsedNodes && Object.keys(currentCollapsedNodes).length > 0
         ? currentCollapsedNodes

@@ -132,19 +132,43 @@ export class AppComponent
 
     this.element.nativeElement.getDatas = () =>
       this.saveService.constructDatasToSave();
-    this.element.nativeElement.setDatas = (datas: CovisualizationDatas) => {
-      // Set data into ngzone to detect change into another context (electron for instance)
+    this.element.nativeElement.setDatas = (
+      datas: CovisualizationDatas & { _isDirty?: boolean },
+    ) => {
       this.ngzone.run(() => {
-        // Don't clean, just set the new data
-        this.appdatas = {
-          ...datas,
-        };
-        this.element.nativeElement.value = datas;
-        // Set data to both services - appService manages the data state
-        this.appService.setFileDatas(datas);
-        this.fileLoaderService.setDatas(datas);
-        // Capture the baseline dirty state so isDirty() can detect user changes
-        this.saveService.setInitialDirtyState(datas?.savedDatas);
+        if (!datas) return;
+
+        const isDirtyOverride = datas._isDirty ?? false;
+        const { _isDirty, ...cleanDatas } = datas as any;
+
+        this.appdatas = { ...cleanDatas };
+        this.element.nativeElement.value = cleanDatas;
+        this.appService.setFileDatas(cleanDatas);
+        this.fileLoaderService.setDatas(cleanDatas);
+        this.saveService.setInitialDirtyState(cleanDatas?.savedDatas);
+
+        if (isDirtyOverride) {
+          this.saveService.setDirtyOverride(true);
+          this.element.nativeElement.dispatchEvent(
+            new CustomEvent('dirty-state-changed', {
+              bubbles: true,
+              detail: { isDirty: true },
+            }),
+          );
+        }
+      });
+    };
+    this.element.nativeElement.setDirty = () => {
+      // Bypass the clean baseline — mark the component as dirty immediately.
+      // Used when restoring a tab that was dirty before being moved to a new window.
+      this.ngzone.run(() => {
+        this.saveService.setDirtyOverride(true);
+        this.element.nativeElement.dispatchEvent(
+          new CustomEvent('dirty-state-changed', {
+            bubbles: true,
+            detail: { isDirty: true },
+          }),
+        );
       });
     };
     this.element.nativeElement.openSaveBeforeQuitDialog = (
