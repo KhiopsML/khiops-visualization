@@ -26,6 +26,7 @@ import { ExtDatasModel } from '@khiops-covisualization/model/ext-datas.model';
 import { ImportExtDatasService } from '@khiops-covisualization/providers/import-ext-datas.service';
 import { getCompositionDisplayedColumns } from './composition.config';
 import { CompositionService } from '@khiops-covisualization/providers/composition.service';
+import { CompositionSelectionService } from '@khiops-covisualization/providers/composition-selection.service';
 import { ICellRendererParams } from '@ag-grid-community/core';
 import { CompositionDetailedPartsComponent } from '../composition-detailed-parts/composition-detailed-parts.component';
 import { DimensionsDatasService } from '../../../providers/dimensions-datas.service';
@@ -61,6 +62,7 @@ export class CompositionComponent implements OnInit, OnDestroy, AfterViewInit {
     private translate: TranslateService,
     private importExtDatasService: ImportExtDatasService,
     private compositionService: CompositionService,
+    private compositionSelectionService: CompositionSelectionService,
     private eventsService: EventsService,
     private dialogService: DialogService,
     private dimensionsDatasService: DimensionsDatasService,
@@ -194,6 +196,11 @@ export class CompositionComponent implements OnInit, OnDestroy, AfterViewInit {
     this.selectedComposition = this.compositionValues?.find(
       (e) => e._id === item._id,
     );
+    // Persist the selected composition for this dimension
+    this.compositionSelectionService.setSelectedComposition(
+      this.position,
+      this.selectedComposition,
+    );
     this.selectedCompositionChanged.emit(this.selectedComposition);
   }
 
@@ -234,6 +241,21 @@ export class CompositionComponent implements OnInit, OnDestroy, AfterViewInit {
 
           if (foundComposition) {
             this.selectedComposition = foundComposition;
+            this.selectedCompositionChanged.emit(this.selectedComposition);
+            return;
+          }
+        }
+
+        // Try to restore the previously selected composition for this dimension
+        const savedCompositionId = this.compositionSelectionService.getSelectedCompositionId(
+          this.position,
+        );
+        if (savedCompositionId) {
+          const restoredComposition = this.compositionValues.find(
+            (comp) => comp._id === savedCompositionId,
+          );
+          if (restoredComposition) {
+            this.selectedComposition = restoredComposition;
             this.selectedCompositionChanged.emit(this.selectedComposition);
             return;
           }

@@ -41,6 +41,7 @@ import { ImportFileLoaderService } from '@khiops-library/components/import-file-
 import { ProjectDatasService } from './providers/project-datas.service';
 import { VariableSearchService } from './providers/variable-search.service';
 import { ViewManagerService } from './providers/view-manager.service';
+import { CompositionSelectionService } from './providers/composition-selection.service';
 import { Overlay, OverlayContainer } from '@angular/cdk/overlay';
 import { DialogService } from '@khiops-library/providers/dialog.service';
 import { ConfirmDialogComponent } from '@khiops-library/components/confirm-dialog/confirm-dialog.component';
@@ -107,6 +108,7 @@ export class AppComponent
     fileLoaderService: FileLoaderService,
     private treenodesService: TreenodesService,
     private saveService: SaveService,
+    private compositionSelectionService: CompositionSelectionService,
     private element: ElementRef,
     private copyImageService: CopyImageService,
     private copyDatasService: CopyDatasService,
@@ -146,6 +148,15 @@ export class AppComponent
         this.appService.setFileDatas(cleanDatas);
         this.fileLoaderService.setDatas(cleanDatas);
         this.saveService.setInitialDirtyState(cleanDatas?.savedDatas);
+
+        // Restore composition selections from saved data
+        if (cleanDatas?.savedDatas?.selectedCompositions) {
+          this.compositionSelectionService.restoreSelectedCompositions(
+            cleanDatas.savedDatas.selectedCompositions,
+          );
+        } else {
+          this.compositionSelectionService.clearAllSelectedCompositions();
+        }
 
         if (isDirtyOverride) {
           this.saveService.setDirtyOverride(true);

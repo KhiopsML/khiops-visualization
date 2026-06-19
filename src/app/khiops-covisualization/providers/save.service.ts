@@ -18,6 +18,7 @@ import { ViewManagerService } from './view-manager.service';
 import { TreenodesService } from './treenodes.service';
 import { AnnotationService } from './annotation.service';
 import { ImportExtDatasService } from './import-ext-datas.service';
+import { CompositionSelectionService } from './composition-selection.service';
 import { UtilsService } from '@khiops-library/providers/utils.service';
 import { DimensionCovisualizationModel } from '@khiops-library/model/dimension.covisualization.model';
 import { TYPES } from '@khiops-library/enum/types';
@@ -43,6 +44,7 @@ export class SaveService {
     private treenodesService: TreenodesService,
     private importExtDatasService: ImportExtDatasService,
     private annotationService: AnnotationService,
+    private compositionSelectionService: CompositionSelectionService,
   ) {}
 
   private dirtyOverride: boolean | null = null;
@@ -211,6 +213,7 @@ export class SaveService {
     const isAxisInverted =
       this.dimensionsDatasService.dimensionsDatas.isAxisInverted;
     const activeTabIndex = this.appService.getActiveTabIndex();
+    const selectedCompositions = this.compositionSelectionService.getAllSelectedCompositions();
 
     initialDatas.savedDatas = new SavedDatasModel(
       viewsLayout,
@@ -228,6 +231,7 @@ export class SaveService {
       matrixMode,
       isAxisInverted,
       activeTabIndex,
+      selectedCompositions,
     );
 
     return initialDatas;
