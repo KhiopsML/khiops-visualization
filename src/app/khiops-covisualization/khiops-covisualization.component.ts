@@ -43,6 +43,7 @@ import { VariableSearchService } from './providers/variable-search.service';
 import { ViewManagerService } from './providers/view-manager.service';
 import { CompositionSelectionService } from './providers/composition-selection.service';
 import { MatrixInnerVariablesSelectionService } from './providers/matrix-inner-variables-selection.service';
+import { UnfoldHierarchySelectionService } from './providers/unfold-hierarchy-selection.service';
 import { Overlay, OverlayContainer } from '@angular/cdk/overlay';
 import { DialogService } from '@khiops-library/providers/dialog.service';
 import { ConfirmDialogComponent } from '@khiops-library/components/confirm-dialog/confirm-dialog.component';
@@ -111,6 +112,7 @@ export class AppComponent
     private saveService: SaveService,
     private compositionSelectionService: CompositionSelectionService,
     private matrixInnerVariablesSelectionService: MatrixInnerVariablesSelectionService,
+    private unfoldHierarchySelectionService: UnfoldHierarchySelectionService,
     private element: ElementRef,
     private copyImageService: CopyImageService,
     private copyDatasService: CopyDatasService,
@@ -167,6 +169,15 @@ export class AppComponent
           );
         } else {
           this.matrixInnerVariablesSelectionService.clearSelectedInnerVariables();
+        }
+
+        // Restore unfold hierarchy checkbox states from saved data
+        if (cleanDatas?.savedDatas?.hierarchyFoldStates) {
+          this.unfoldHierarchySelectionService.restoreHierarchyFoldStates(
+            cleanDatas.savedDatas.hierarchyFoldStates,
+          );
+        } else {
+          this.unfoldHierarchySelectionService.clearAllHierarchyFoldStates();
         }
 
         if (isDirtyOverride) {

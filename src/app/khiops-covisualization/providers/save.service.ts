@@ -20,6 +20,7 @@ import { AnnotationService } from './annotation.service';
 import { ImportExtDatasService } from './import-ext-datas.service';
 import { CompositionSelectionService } from './composition-selection.service';
 import { MatrixInnerVariablesSelectionService } from './matrix-inner-variables-selection.service';
+import { UnfoldHierarchySelectionService } from './unfold-hierarchy-selection.service';
 import { UtilsService } from '@khiops-library/providers/utils.service';
 import { DimensionCovisualizationModel } from '@khiops-library/model/dimension.covisualization.model';
 import { TYPES } from '@khiops-library/enum/types';
@@ -47,6 +48,7 @@ export class SaveService {
     private annotationService: AnnotationService,
     private compositionSelectionService: CompositionSelectionService,
     private matrixInnerVariablesSelectionService: MatrixInnerVariablesSelectionService,
+    private unfoldHierarchySelectionService: UnfoldHierarchySelectionService,
   ) {}
 
   private dirtyOverride: boolean | null = null;
@@ -219,6 +221,8 @@ export class SaveService {
       this.compositionSelectionService.getAllSelectedCompositions();
     const selectedInnerVariables =
       this.matrixInnerVariablesSelectionService.getSelectedInnerVariables();
+    const hierarchyFoldStates =
+      this.unfoldHierarchySelectionService.getAllHierarchyFoldStates();
 
     initialDatas.savedDatas = new SavedDatasModel(
       viewsLayout,
@@ -238,6 +242,7 @@ export class SaveService {
       activeTabIndex,
       selectedCompositions,
       selectedInnerVariables,
+      hierarchyFoldStates,
     );
 
     return initialDatas;

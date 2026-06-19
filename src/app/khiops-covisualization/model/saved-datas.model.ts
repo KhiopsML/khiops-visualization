@@ -24,6 +24,7 @@ export class SavedDatasModel {
   activeTabIndex: number | undefined;
   selectedCompositions: { [dimensionIndex: number]: string } | undefined; // Maps dimension index to selected composition _id
   selectedInnerVariables: string[] | undefined; // Selected inner variables in matrix filter
+  hierarchyFoldStates: { [dimensionName: string]: boolean } | undefined; // Hierarchy fold checkbox states per dimension
 
   constructor(
     viewsLayout: ViewLayoutVO | undefined,
@@ -43,6 +44,7 @@ export class SavedDatasModel {
     activeTabIndex?: number,
     selectedCompositions?: { [dimensionIndex: number]: string },
     selectedInnerVariables?: string[],
+    hierarchyFoldStates?: { [dimensionName: string]: boolean },
   ) {
     this.viewsLayout = viewsLayout;
     this.splitSizes = splitSizes;
@@ -61,5 +63,6 @@ export class SavedDatasModel {
     this.activeTabIndex = activeTabIndex;
     this.selectedCompositions = selectedCompositions || undefined;
     this.selectedInnerVariables = selectedInnerVariables || undefined;
+    this.hierarchyFoldStates = hierarchyFoldStates || undefined;
   }
 }

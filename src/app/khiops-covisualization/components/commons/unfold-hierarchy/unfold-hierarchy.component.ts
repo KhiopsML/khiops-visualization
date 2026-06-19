@@ -11,6 +11,7 @@ import { TranslateService } from '@ngstack/translate';
 import cloneDeep from 'lodash-es/cloneDeep';
 import { TreenodesService } from '@khiops-covisualization/providers/treenodes.service';
 import { ClustersService } from '@khiops-covisualization/providers/clusters.service';
+import { UnfoldHierarchySelectionService } from '@khiops-covisualization/providers/unfold-hierarchy-selection.service';
 import { AppConfig } from '../../../../../environments/environment';
 import { UtilsService } from '@khiops-library/providers/utils.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -69,6 +70,7 @@ export class UnfoldHierarchyComponent implements OnInit {
     private clustersService: ClustersService,
     private dialogService: DialogService,
     private khiopsLibraryService: KhiopsLibraryService,
+    private unfoldHierarchySelectionService: UnfoldHierarchySelectionService,
   ) {
     this.borderColor = '#000000';
 
@@ -291,6 +293,12 @@ export class UnfoldHierarchyComponent implements OnInit {
         dimension.setHierarchyFold(event.state);
       }
     }
+
+    // Persist the hierarchy fold state
+    this.unfoldHierarchySelectionService.setHierarchyFoldState(
+      event.data.name,
+      event.state,
+    );
   }
 
   /**
@@ -333,8 +341,20 @@ export class UnfoldHierarchyComponent implements OnInit {
 
     // Restore checkbox states after cloning
     if (this.dimensions) {
+      const savedHierarchyFoldStates =
+        this.unfoldHierarchySelectionService.getAllHierarchyFoldStates();
       for (const dim of this.dimensions) {
-        if (currentCheckboxStates.hasOwnProperty(dim.name)) {
+        // First try to restore from saved state
+        if (
+          savedHierarchyFoldStates &&
+          savedHierarchyFoldStates.hasOwnProperty(dim.name)
+        ) {
+          const savedState = savedHierarchyFoldStates[dim.name];
+          if (savedState !== undefined) {
+            dim.setHierarchyFold(savedState);
+          }
+        } else if (currentCheckboxStates.hasOwnProperty(dim.name)) {
+          // Fall back to current state if no saved state exists
           const checkboxState = currentCheckboxStates[dim.name];
           if (checkboxState !== undefined) {
             dim.setHierarchyFold(checkboxState);
