@@ -23,6 +23,7 @@ export class SavedDatasModel {
   matrixMode: number | undefined;
   activeTabIndex: number | undefined;
   selectedCompositions: { [dimensionIndex: number]: string } | undefined; // Maps dimension index to selected composition _id
+  selectedInnerVariables: string[] | undefined; // Selected inner variables in matrix filter
 
   constructor(
     viewsLayout: ViewLayoutVO | undefined,
@@ -41,6 +42,7 @@ export class SavedDatasModel {
     isAxisInverted?: boolean,
     activeTabIndex?: number,
     selectedCompositions?: { [dimensionIndex: number]: string },
+    selectedInnerVariables?: string[],
   ) {
     this.viewsLayout = viewsLayout;
     this.splitSizes = splitSizes;
@@ -58,5 +60,6 @@ export class SavedDatasModel {
     this.isAxisInverted = isAxisInverted || undefined;
     this.activeTabIndex = activeTabIndex;
     this.selectedCompositions = selectedCompositions || undefined;
+    this.selectedInnerVariables = selectedInnerVariables || undefined;
   }
 }

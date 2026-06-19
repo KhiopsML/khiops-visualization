@@ -42,6 +42,7 @@ import { ProjectDatasService } from './providers/project-datas.service';
 import { VariableSearchService } from './providers/variable-search.service';
 import { ViewManagerService } from './providers/view-manager.service';
 import { CompositionSelectionService } from './providers/composition-selection.service';
+import { MatrixInnerVariablesSelectionService } from './providers/matrix-inner-variables-selection.service';
 import { Overlay, OverlayContainer } from '@angular/cdk/overlay';
 import { DialogService } from '@khiops-library/providers/dialog.service';
 import { ConfirmDialogComponent } from '@khiops-library/components/confirm-dialog/confirm-dialog.component';
@@ -109,6 +110,7 @@ export class AppComponent
     private treenodesService: TreenodesService,
     private saveService: SaveService,
     private compositionSelectionService: CompositionSelectionService,
+    private matrixInnerVariablesSelectionService: MatrixInnerVariablesSelectionService,
     private element: ElementRef,
     private copyImageService: CopyImageService,
     private copyDatasService: CopyDatasService,
@@ -156,6 +158,15 @@ export class AppComponent
           );
         } else {
           this.compositionSelectionService.clearAllSelectedCompositions();
+        }
+
+        // Restore inner variables selection from saved data
+        if (cleanDatas?.savedDatas?.selectedInnerVariables) {
+          this.matrixInnerVariablesSelectionService.restoreSelectedInnerVariables(
+            cleanDatas.savedDatas.selectedInnerVariables,
+          );
+        } else {
+          this.matrixInnerVariablesSelectionService.clearSelectedInnerVariables();
         }
 
         if (isDirtyOverride) {

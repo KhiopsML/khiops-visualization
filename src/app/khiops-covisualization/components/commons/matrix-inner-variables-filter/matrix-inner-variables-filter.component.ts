@@ -14,6 +14,7 @@ import {
   SimpleChanges,
 } from '@angular/core';
 import { DimensionCovisualizationModel } from '@khiops-library/model/dimension.covisualization.model';
+import { MatrixInnerVariablesSelectionService } from '@khiops-covisualization/providers/matrix-inner-variables-selection.service';
 import { TranslateService } from '@ngstack/translate';
 
 export interface InnerVariablesSelectionEvent {
@@ -39,7 +40,10 @@ export class MatrixInnerVariablesFilterComponent implements OnInit, OnChanges {
   public selectAllCheckboxText?: string;
   private isToggling = false;
 
-  constructor(private translate: TranslateService) {}
+  constructor(
+    private translate: TranslateService,
+    private matrixInnerVariablesSelectionService: MatrixInnerVariablesSelectionService,
+  ) {}
 
   ngOnInit() {
     this.selectAllCheckboxText = this.translate.get('GLOBAL.UNSELECT_ALL');
@@ -80,6 +84,16 @@ export class MatrixInnerVariablesFilterComponent implements OnInit, OnChanges {
             this.selectedInnerVariables = previousSelection.filter((variable) =>
               this.innerVariables.includes(variable),
             );
+          }
+
+          // Try to restore the previously saved selection for this dimension
+          if (this.selectedInnerVariables.length === 0) {
+            const savedSelection = this.matrixInnerVariablesSelectionService.getSelectedInnerVariables();
+            if (savedSelection && savedSelection.length > 0) {
+              this.selectedInnerVariables = savedSelection.filter((variable) =>
+                this.innerVariables.includes(variable),
+              );
+            }
           }
 
           // Fallback: If no valid selection, select all inner variables
@@ -152,6 +166,10 @@ export class MatrixInnerVariablesFilterComponent implements OnInit, OnChanges {
    */
   private emitSelectionChange() {
     this.updateSelectAllText();
+    // Persist the selected inner variables
+    this.matrixInnerVariablesSelectionService.setSelectedInnerVariables(
+      this.selectedInnerVariables,
+    );
     this.selectionChanged.emit({
       selectedInnerVariables: this.selectedInnerVariables,
       allSelected: this.allInnerVariablesSelected(),
