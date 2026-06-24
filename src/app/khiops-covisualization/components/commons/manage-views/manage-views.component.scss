@@ -5,10 +5,8 @@
  */
 
 #manage-views-comp {
-  padding: 0 10px 10px 10px;
-
   #manage-views-header {
-    height: 68px;
+    height: 48px;
 
     h2 {
       margin-left: 1em;
@@ -24,12 +22,12 @@
     max-height: 70vh;
 
     .views-container {
-      background-color: white;
-      border: 1px solid var(--primary);
+      background-color: var(--bg-color);
+      border: 1px solid var(--border-color);
       border-radius: var(--border-radius);
-      box-shadow: 0 2px 6px 0px rgba(0, 0, 0, 0.1);
+      box-shadow: none;
       padding: 3px;
-      margin-top: 20px;
+      margin-top: 11px;
       display: flex;
       overflow: auto;
 
@@ -54,7 +52,7 @@
         }
 
         .child-box.disabled {
-          border: 2px #333 dashed;
+          border: 2px var(--primary) dashed;
         }
       }
 
@@ -65,22 +63,27 @@
         cursor: pointer;
         height: 140px;
         text-align: center;
-        background: white;
+        background: var(--bg-color);
         color: var(--primary);
         font-size: 0.9em;
-        box-shadow: 0 2px 6px 0px rgba(0, 0, 0, 0.1);
+        box-shadow: none;
         border-radius: 3px;
         padding: 5px;
         overflow-wrap: anywhere;
       }
-
+      .box:hover {
+        background: var(--bg-color-30);
+      }
       .box.disabled {
-        background: #ddd;
-        color: #777;
+        background: var(--bg-color-30);
+        color: var(--primary-30);
         box-shadow: none;
-        border: 2px #333 dashed;
+        border: 2px var(--primary-30) dashed;
       }
 
+      .box.disabled:hover {
+        background: var(--bg-color);
+      }
       .box-dimension {
         border: 0px !important;
         box-shadow: none;
@@ -89,11 +92,7 @@
       }
 
       .box-dimension:hover {
-        background: white;
-      }
-
-      .box-dimension.disabled:hover {
-        background: #ddd;
+        background: var(--bg-color);
       }
 
       .status-badge {
@@ -120,15 +119,15 @@
     }
 
     .views-container.disabled {
-      background: #ddd;
-      color: #777;
-      border: 1px #333 dashed;
+      background: var(--bg-color-30);
+      color: var(--primary-30);
+      border: 1px var(--primary-30) dashed;
 
       .box,
       .child-box {
-        background: #ddd !important;
-        color: #777 !important;
-        border: 2px #333 dashed !important;
+        background: var(--bg-color-30) !important;
+        color: var(--primary-30) !important;
+        border: 2px var(--primary-30) dashed !important;
       }
       .box-dimension {
         border: 0px !important;
@@ -137,7 +136,7 @@
     }
 
     #views-container-right {
-      margin-left: 1rem;
+      margin-left: 11px;
     }
   }
 }
