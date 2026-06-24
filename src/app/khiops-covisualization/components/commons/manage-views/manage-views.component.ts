@@ -48,11 +48,6 @@ export class ManageViewsComponent {
     dimensionLayout.isChecked = !dimensionLayout.isChecked;
   }
 
-  changeDimensionChecked(event: Event): void {
-    event.stopPropagation();
-    event.preventDefault();
-  }
-
   /**
    * Computes the visibility of dimension views layouts based on the active tab index.
    * If the active tab index is 0, hides views layouts of contexts (i.e., dimensions with index >= 2).
