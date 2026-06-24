@@ -40,6 +40,7 @@
 
       .parent-box {
         height: 150px;
+        flex: 1 1 130%;
 
         .child-box {
           border: 2px var(--primary);
@@ -69,8 +70,8 @@
         font-size: 0.9em;
         box-shadow: 0 2px 6px 0px rgba(0, 0, 0, 0.1);
         border-radius: 3px;
-        min-width: 90px;
         padding: 5px;
+        overflow-wrap: anywhere;
       }
 
       .box.disabled {
@@ -83,6 +84,8 @@
       .box-dimension {
         border: 0px !important;
         box-shadow: none;
+        margin: 0px !important;
+        padding: 5px 0 0 5px !important;
       }
 
       .box-dimension:hover {
@@ -92,12 +95,34 @@
       .box-dimension.disabled:hover {
         background: #ddd;
       }
+
+      .status-badge {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        padding: 2px 8px;
+        border-radius: var(--border-radius);
+        font-size: 0.9em;
+        font-weight: 500;
+        white-space: nowrap;
+        flex-shrink: 0;
+      }
+
+      .badge-active {
+        background-color: var(--selected);
+        color: var(--primary-10);
+      }
+
+      .badge-disabled {
+        background-color: var(--bg-color-50);
+        color: var(--primary-10);
+      }
     }
 
     .views-container.disabled {
       background: #ddd;
       color: #777;
-      border: 2px #333 dashed;
+      border: 1px #333 dashed;
 
       .box,
       .child-box {
