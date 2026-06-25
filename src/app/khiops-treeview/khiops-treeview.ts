@@ -145,7 +145,12 @@ function render(self: TreeView) {
         'tree-expando ' + (item.isCollapsed ? '' : 'expanded'),
       );
       expando.setAttribute('id', 'tree-expando-' + item.id);
-      expando.textContent = item.isCollapsed ? '+' : '-';
+      // Chevron SVG — rotation handled via CSS (.expanded class)
+      expando.innerHTML = `<svg width="12" height="12" viewBox="0 0 12 12"
+        fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <path d="M2 4L6 8L10 4" stroke="currentColor"
+          stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>`;
       if (!item.isUnfoldedByDefault) {
         content.appendChild(expando);
       }
@@ -305,7 +310,11 @@ function render(self: TreeView) {
   };
 
   const clickExpandIcon = function (e: Event) {
-    const target = (e.target || e.currentTarget) as HTMLElement;
+    // Walk up to the actual .tree-expando element (click may land on inner svg/path)
+    const target = (e.target as HTMLElement).closest(
+      '.tree-expando',
+    ) as HTMLElement;
+    if (!target) return;
     const parent = target.parentNode as HTMLElement;
     const data = parseDataItem(parent);
     const leaves = parent.parentNode?.querySelector(
@@ -409,7 +418,8 @@ export default class TreeView {
    */
   expand(node: HTMLElement, leaves: HTMLElement, skipEmit?: boolean) {
     const expando = node.querySelector('.tree-expando') as HTMLElement | null;
-    if (expando) expando.textContent = '-';
+    if (expando) expando.classList.add('expanded');
+
     const icon = node.querySelector('.tree-icon') as HTMLElement | null;
     if (icon) icon.textContent = 'folder_open';
     leaves.classList.remove('hidden');
@@ -613,8 +623,8 @@ export default class TreeView {
 
     if (currentNode && propagateEvent) {
       if (
-        (state === 'collapse' && currentNode.textContent === '-') ||
-        (state === 'expand' && currentNode.textContent === '+')
+        (state === 'collapse' && currentNode.classList.contains('expanded')) ||
+        (state === 'expand' && !currentNode.classList.contains('expanded'))
       ) {
         currentNode.click();
       }
@@ -628,7 +638,8 @@ export default class TreeView {
    */
   collapse(node: HTMLElement, leaves: HTMLElement, skipEmit?: boolean) {
     const expando = node.querySelector('.tree-expando') as HTMLElement | null;
-    if (expando) expando.textContent = '+';
+    if (expando) expando.classList.remove('expanded');
+
     const icon = node.querySelector('.tree-icon') as HTMLElement | null;
     if (icon) icon.textContent = 'folder';
     leaves.classList.add('hidden');

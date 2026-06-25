@@ -24,24 +24,41 @@
 }
 
 .tree-leaf .tree-expando {
-  background: rgba(200, 200, 200, 0.4);
   color: black;
   border-radius: 2px;
   cursor: pointer;
   float: left;
-  height: 16px;
-  line-height: 16px;
+  height: 20px;
+  line-height: 20px;
   position: relative;
   text-align: center;
-  min-width: 15px;
+  min-width: 20px;
   padding-left: 1px;
   padding-right: 1px;
   user-select: none;
   font-weight: bold;
-}
 
+  /* Chevron animation */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  svg {
+    pointer-events: none; /* Let clicks pass through to the .tree-expando div */
+    display: block;
+    // transition: transform 0.1s ease;
+    transform: rotate(-90deg); /* collapsed: pointing right */
+  }
+
+  &.expanded svg {
+    transform: rotate(0deg); /* expanded: pointing down */
+  }
+}
+.tree-leaf .tree-leaf-content.tree-selected .tree-expando {
+  color: white;
+}
 .tree-leaf .tree-icon {
-  margin-left: 0.4em !important;
+  margin-left: 0.2em !important;
   color: var(--orange-main);
   -webkit-user-select: none;
   user-select: none;
@@ -62,13 +79,6 @@
 
 .tree-leaf .hidden {
   visibility: hidden;
-}
-
-.tree-leaf .tree-leaf-content:not(.tree-selected) .tree-expando:hover {
-  background: rgba(0, 0, 0, 0.15);
-}
-.tree-leaf .tree-leaf-content .tree-expando:hover {
-  background: rgba(255, 255, 255, 0.5);
 }
 
 .tree-leaf .tree-leaf-text {
@@ -116,6 +126,7 @@
     width: 16px;
     height: 16px;
     fill: currentColor;
+    pointer-events: none; /* Let clicks pass through to the .tree-expando div */
   }
 }
 
