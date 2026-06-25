@@ -10,6 +10,7 @@ import { DimensionsDatasService } from '@khiops-covisualization/providers/dimens
 import { TreenodesService } from './treenodes.service';
 import { DimensionCovisualizationModel } from '@khiops-library/model/dimension.covisualization.model';
 import { SaveService } from './save.service';
+import { EventsService } from './events.service';
 
 @Injectable({
   providedIn: 'root',
@@ -21,6 +22,7 @@ export class HierarchyService {
     private appService: AppService,
     private dimensionsDatasService: DimensionsDatasService,
     private treenodesService: TreenodesService,
+    private eventsService: EventsService,
     private saveService: SaveService,
   ) {}
 
@@ -86,5 +88,8 @@ export class HierarchyService {
     this.dimensionsDatasService.constructDimensionsTrees();
     this.dimensionsDatasService.getMatrixDatas();
     this.dimensionsDatasService.computeMatrixDataFreqMap();
+    setTimeout(() => {
+      this.eventsService.emitUnfoldHierarchyChanged();
+    });
   }
 }

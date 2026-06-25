@@ -48,6 +48,7 @@ export class TreeSelectComponent
 
   public id: string | undefined = undefined;
   private treeSelectedNodeChangedSub: Subscription;
+  private unfoldHierarchyChangedSub: Subscription;
   private tree: any | undefined;
   private nodeInSelection: string | undefined;
 
@@ -61,6 +62,12 @@ export class TreeSelectComponent
     private snackBar: MatSnackBar,
     public translate: TranslateService,
   ) {
+    this.unfoldHierarchyChangedSub =
+      this.eventsService.unfoldHierarchyChanged.subscribe(() => {
+        // Reinitialize the tree when the hierarchy is unfolded
+        this.initTree(this.selectedNode);
+      });
+
     this.treeSelectedNodeChangedSub =
       this.eventsService.treeSelectedNodeChanged.subscribe((e) => {
         if (
@@ -103,14 +110,27 @@ export class TreeSelectComponent
 
   ngOnDestroy() {
     this.treeSelectedNodeChangedSub.unsubscribe();
+    this.unfoldHierarchyChangedSub.unsubscribe();
   }
 
   ngOnChanges(changes: SimpleChanges) {
     if (
       changes?.selectedDimension?.currentValue &&
-      !changes.selectedDimension.firstChange
+      !changes.selectedDimension.firstChange &&
+      // Avoid reinitializing the tree if only the object reference changed but the dimension name is the same
+      changes.selectedDimension.currentValue.name !==
+        changes.selectedDimension.previousValue?.name
     ) {
       this.initTree(this.selectedNode);
+    } else {
+      const nodeTree = this.treenodesService.getNodeFromName(
+        this.selectedDimension?.name ?? '',
+        this.selectedNode?._id.toString() || '',
+      );
+      const nodeTreeId = nodeTree?.id;
+      if (nodeTreeId !== undefined && nodeTreeId >= 0) {
+        this.tree.selectNode(nodeTreeId, true);
+      }
     }
   }
 

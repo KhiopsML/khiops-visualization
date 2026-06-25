@@ -29,6 +29,8 @@ This is the Khiops Visualization NPM Component - an Angular application that pro
 - `yarn` for dependency installation
 - You do not have access to .json files, look for alternative ways to achieve what you want
 
+**Never create a Markdown file for explanations.**
+
 ## Code Standards
 
 - Use `// @ts-nocheck` at the top of unit test files to ignore TypeScript errors

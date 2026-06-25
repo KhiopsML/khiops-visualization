@@ -15,6 +15,7 @@ export class EventsService {
   public importedDatasChanged: EventEmitter<any> = new EventEmitter();
   public conditionalOnContextChanged: EventEmitter<any> = new EventEmitter();
   public contextSelectionChanged: EventEmitter<any> = new EventEmitter();
+  public unfoldHierarchyChanged: EventEmitter<any> = new EventEmitter();
 
   /**
    * Emits an event when the selected tree node changes.
@@ -46,5 +47,13 @@ export class EventsService {
    */
   emitContextSelectionChanged() {
     this.contextSelectionChanged.emit();
+  }
+
+  /**
+   * Emits an event when the hierarchy is unfolded.
+   * @param event - The event data to emit.
+   */
+  emitUnfoldHierarchyChanged() {
+    this.unfoldHierarchyChanged.emit();
   }
 }
