@@ -153,9 +153,7 @@ export class HomeLayoutComponent implements OnInit {
     this.selectTabName = this.configService.getConfig().selectTabName;
     if (!this.isCompatibleJson) {
       this.closeFile();
-      const basename = (datas as any).filename
-        ? (datas as any).filename.split(/[\/\\]/).pop()
-        : '';
+      const basename = UtilsService.getFileBasename(datas);
       this.snackBar.open(
         basename
           ? this.translate.get('SNACKS.FILE_OPEN_ERROR', { filename: basename })
@@ -171,9 +169,7 @@ export class HomeLayoutComponent implements OnInit {
         config.onFileError((datas as any).filename);
       }
     } else {
-      const basename = (datas as any).filename
-        ? (datas as any).filename.split(/[\/\\]/).pop()
-        : '';
+      const basename = UtilsService.getFileBasename(datas);
       this.snackBar.open(
         basename
           ? this.translate.get('SNACKS.FILE_LOADED', { filename: basename })

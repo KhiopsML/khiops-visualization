@@ -238,8 +238,7 @@ export class HomeLayoutComponent implements OnInit, OnDestroy {
     this.selectedTab = undefined;
 
     // Restore active tab: savedDatas takes priority, then config, then default
-    const savedActiveTabIndex =
-      this.appService.getSavedDatas('activeTabIndex');
+    const savedActiveTabIndex = this.appService.getSavedDatas('activeTabIndex');
     if (savedActiveTabIndex !== undefined && savedActiveTabIndex !== null) {
       this.activeTab = savedActiveTabIndex;
     } else if (this.selectTabName) {
@@ -282,9 +281,7 @@ export class HomeLayoutComponent implements OnInit, OnDestroy {
     }
     this.selectTabName = this.configService.getConfig().selectTabName;
     if (datas && !UtilsService.isEmpty(datas)) {
-      const basename = (datas as any).filename
-        ? (datas as any).filename.split(/[\/\\]/).pop()
-        : '';
+      const basename = UtilsService.getFileBasename(datas);
       if (!this.isCompatibleJson) {
         this.closeFile();
         this.snackBar.open(

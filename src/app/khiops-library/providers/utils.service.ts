@@ -1803,4 +1803,14 @@ export class UtilsService {
       targetElement.dispatchEvent(trustedClick);
     }
   }
+
+  /**
+   * Extracts the basename (file name without path) from the given data object.
+   * @param datas - The data object containing the filename.
+   * @returns The basename of the file.
+   */
+  static getFileBasename(datas: any) {
+    const basename = (datas as any).filename?.name || (datas as any).filename;
+    return basename ? basename.split(/[\/\\]/).pop() : '';
+  }
 }
