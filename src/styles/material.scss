@@ -51,6 +51,7 @@
 .mat-mdc-outlined-button,
 mat-button-toggle-group {
   box-shadow: 0 2px 4px -2px rgba(0, 0, 0, 0.2) !important;
+  border-color: var(--btn-border-color) !important;
 }
 
 .mat-mdc-flat-button:hover,
@@ -390,7 +391,7 @@ mat-button-toggle-group,
 button,
 .search-input-btn {
   border-width: 1px !important;
-  border-color: black !important;
+  border-color: var(--btn-border-color) !important;
   border-radius: var(--border-radius) !important;
 }
 

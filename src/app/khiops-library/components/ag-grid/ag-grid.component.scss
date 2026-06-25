@@ -15,10 +15,6 @@
     overflow-y: hidden;
     padding-bottom: 20px;
 
-    // h1 {
-      // margin-top: 0 !important;
-    // }
-
     .comp-header-tools {
       .mdc-button--unelevated {
         height: 33px !important;
@@ -66,6 +62,12 @@
           padding-top: 2px;
         }
       }
+    }
+
+    button {
+      min-width: 34px !important;
+      max-width: 34px !important;
+      padding: 0 1rem;
     }
   }
 

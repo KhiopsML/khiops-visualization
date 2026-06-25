@@ -7,7 +7,7 @@
 :root {
   --mat-tab-active-indicator-height: 1px;
   --header-height: 60px;
-  --border-radius: 2px;
+  --border-radius: 3px;
   --gripOpacity: 1;
 }
 
@@ -36,6 +36,7 @@
   --cell-type-num: #d1dcee;
   --cell-type-cat: #f5ddaf;
   --border-color: rgba(4, 32, 69, 0.1);
+  --btn-border-color: #00000099;
   --selected-style: dashed;
 }
 
