@@ -449,7 +449,7 @@
     "PREPARATION": {
       "VARIABLES": {
         "TITLE": "Univariate data analysis results",
-        "TYPE": "Type of the variable :\n\t Cat for Categorical \n\t Num for Numerical",
+        "TYPE": "Type of the variable:\n\t Cat for Categorical \n\t Num for Numerical",
         "RANK": "Rank of the variable, sorted by decreasing Level",
         "NAME": "Name of the variable",
         "LEVEL": "Evaluation of the predictive importance of the variable. The Level is a value between 0 (variable without predictive interest) and 1 (variable with optimal predictive importance).",
@@ -489,7 +489,7 @@
         "AUC": "Area under the ROC curve (AUC); evaluates the ordering of the predicted scores per target value.",
         "COMPRESSION": "Evaluates the predicted target probabilities using a negative log likelihood approach and is normalized (between 0 and 1) using the baseline predictor.",
         "ACCURACY": "Evaluates the proportion of correct prediction",
-        "GINI": "GINI Index : evaluates the ordering of the predicted scores for all targets. Gini coefficient is closely related to AUC GINI = 2 * AUC -1. Value 0 means a random model and value 1 means Perfect Model.",
+        "GINI": "GINI Index: evaluates the ordering of the predicted scores for all targets. Gini coefficient is closely related to AUC GINI = 2 * AUC -1. Value 0 means a random model and value 1 means Perfect Model.",
         "ROBUSTNESS": "Evaluation of the model overfitting. The closest to 1 the value, the smallest the overfitting.",
         "RMSE": "Root mean square error between the predicted value and the actual value",
         "MAE": "Mean average error",
@@ -546,7 +546,7 @@
       }
     },
     "MATRIX": {
-      "CELL_STATS_FREQUENCY": "Frequency : number of occurences in the selected co-cluster",
+      "CELL_STATS_FREQUENCY": "Frequency: number of occurences in the selected co-cluster",
       "CELL_STATS_EXPECTED_FREQUENCY": "Expected frequency in case of independence of the two dimensions",
       "F": "Number of occurences",
       "I": "Mutual information",
