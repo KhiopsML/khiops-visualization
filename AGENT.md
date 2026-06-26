@@ -20,3 +20,9 @@ Example:
 
 - quand un tab est modifié dans KC, il passe à dirty dans KVD
 - quand on move ce tab dans une nouvelle instance, j'envoie un `CustomEvent dirty-state-changed` à KC
+
+## Refactoring guides
+
+When asked to migrate @Input() + ngOnChanges to a service pattern, follow the guide at:
+`.github/skills/refactor-nginput/SKILL.md`
+Read it entirely before starting.
