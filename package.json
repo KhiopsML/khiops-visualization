@@ -115,7 +115,7 @@
     "ng-packagr": "^21.2.5",
     "ngx-build-plus": "^20.0.0",
     "postcss-loader": "^8.2.1",
-    "prettier": "^3.8.4",
+    "prettier": "^3.8.5",
     "source-map-explorer": "^2.5.3",
     "ts-node": "^10.9.2",
     "typescript": "^5.9.3",
