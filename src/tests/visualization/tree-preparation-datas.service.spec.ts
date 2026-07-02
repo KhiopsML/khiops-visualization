@@ -12,6 +12,7 @@ import { PreparationDatasService } from '@khiops-visualization/providers/prepara
 import { TranslateModule } from '@ngstack/translate';
 import { provideHttpClient } from '@angular/common/http';
 import { provideMockStore } from '@ngrx/store/testing';
+import { TreePreparationStore } from '@khiops-visualization/stores/tree-preparation.store';
 import { TreePreparationDatasModel } from '@khiops-visualization/model/tree-preparation-datas.model';
 import { TreeNodeModel } from '@khiops-visualization/model/tree-node.model';
 
@@ -45,6 +46,7 @@ describe('Visualization', () => {
       imports: [TranslateModule.forRoot()],
       providers: [
         TreePreparationDatasService,
+        TreePreparationStore,
         AppService,
         PreparationDatasService,
         provideHttpClient(),

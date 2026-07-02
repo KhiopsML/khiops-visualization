@@ -14,6 +14,9 @@ import { AppService } from '../../app/khiops-visualization/providers/app.service
 import { PreparationDatasService } from '../../app/khiops-visualization/providers/preparation-datas.service';
 import { REPORT } from '../../app/khiops-library/enum/report';
 import { CellModel } from '@khiops-library/model/cell.model';
+import { TreePreparationDatasService } from '@khiops-visualization/providers/tree-preparation-datas.service';
+import { TreePreparationStore } from '@khiops-visualization/stores/tree-preparation.store';
+import { provideMockStore } from '@ngrx/store/testing';
 
 let preparation2dDatasService: Preparation2dDatasService;
 let preparationDatasService: PreparationDatasService;
@@ -24,7 +27,14 @@ describe('Visualization', () => {
     beforeEach(() => {
       TestBed.configureTestingModule({
         imports: [TranslateModule.forRoot()],
-  providers: [provideHttpClient()],
+        providers: [
+          provideHttpClient(),
+          provideMockStore({ initialState: {} }),
+          TreePreparationDatasService,
+          TreePreparationStore,
+          PreparationDatasService,
+          AppService,
+        ],
       });
 
       // Inject services

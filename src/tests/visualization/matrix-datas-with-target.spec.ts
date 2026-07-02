@@ -10,6 +10,9 @@ import { AppService } from '@khiops-visualization/providers/app.service';
 import { Preparation2dDatasService } from '@khiops-visualization/providers/preparation2d-datas.service';
 import { provideHttpClient } from '@angular/common/http';
 import { TranslateModule } from '@ngstack/translate';
+import { TreePreparationDatasService } from '@khiops-visualization/providers/tree-preparation-datas.service';
+import { TreePreparationStore } from '@khiops-visualization/stores/tree-preparation.store';
+import { provideMockStore } from '@ngrx/store/testing';
 
 let appService: AppService;
 let preparation2dDatasService: Preparation2dDatasService;
@@ -21,7 +24,13 @@ describe('Visualization', () => {
     beforeEach(() => {
       TestBed.configureTestingModule({
         imports: [TranslateModule.forRoot()],
-  providers: [provideHttpClient()],
+        providers: [
+          provideHttpClient(),
+          provideMockStore({ initialState: {} }),
+          TreePreparationDatasService,
+          TreePreparationStore,
+          AppService,
+        ],
       });
 
       // Inject services

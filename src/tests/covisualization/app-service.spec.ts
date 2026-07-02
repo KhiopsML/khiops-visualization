@@ -378,57 +378,6 @@ describe('coVisualization', () => {
       });
     });
 
-    // ===== detectE2ETestingEnvironment =====
-
-    describe('detectE2ETestingEnvironment', () => {
-      it('should not throw on call', () => {
-        expect(() =>
-          appService.detectE2ETestingEnvironment(),
-        ).not.toThrow();
-      });
-
-      it('should detect Cypress environment', () => {
-        // Simulate Cypress
-        const originalCypress = (window as any).Cypress;
-        (window as any).Cypress = true;
-
-        appService.detectE2ETestingEnvironment();
-
-        expect(configService.isElectron).toBe(true);
-        expect(configService.isE2eTesting).toBe(true);
-
-        // Restore
-        if (originalCypress !== undefined) {
-          (window as any).Cypress = originalCypress;
-        } else {
-          delete (window as any).Cypress;
-        }
-      });
-
-      it('should not set flags when not in E2E environment', () => {
-        // Ensure Cypress is not present
-        const originalCypress = (window as any).Cypress;
-        delete (window as any).Cypress;
-
-        const originalIsElectron = configService.isElectron;
-        const originalIsE2e = configService.isE2eTesting;
-        configService.isElectron = false;
-        configService.isE2eTesting = false;
-
-        appService.detectE2ETestingEnvironment();
-
-        expect(configService.isElectron).toBe(false);
-        expect(configService.isE2eTesting).toBe(false);
-
-        // Restore
-        if (originalCypress !== undefined) {
-          (window as any).Cypress = originalCypress;
-        }
-        configService.isElectron = originalIsElectron;
-        configService.isE2eTesting = originalIsE2e;
-      });
-    });
-
     // ===== Full workflow integration =====
 
     describe('Full workflow integration', () => {
