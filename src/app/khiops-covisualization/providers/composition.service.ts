@@ -78,12 +78,23 @@ export class CompositionService {
         }
         currentInitialDimensionDetails.setPartition(dimensionPartition);
 
+        // The node coming from the signal-based selectedNodes[] can be a
+        // collapse-pruned instance (children not attached when isCollapsed),
+        // unlike the RxJS treeSelectedNodeChanged path which already resolves
+        // the full, non-pruned node via dimensionsClusters (see
+        // TreenodesService.setSelectedNode's realNodeVO). Resolve the same
+        // full node here so childrenLeafList is always complete.
+        const fullNode =
+          this.dimensionsDatasService.dimensionsDatas.dimensionsClusters[
+            currentIndex
+          ]?.find((e) => e.name === node.name) ?? node;
+
         if (currentDimensionDetails?.isVarPart) {
           // Individuals * Variables case
           return this.getIndiVarCompositionValues(
             currentDimensionDetails,
             currentInitialDimensionDetails,
-            node,
+            fullNode,
             currentIndex,
           );
         } else {
@@ -91,7 +102,7 @@ export class CompositionService {
           return this.getVarVarCompositionValues(
             currentDimensionDetails,
             currentInitialDimensionDetails,
-            node,
+            fullNode,
             currentIndex,
           );
         }
