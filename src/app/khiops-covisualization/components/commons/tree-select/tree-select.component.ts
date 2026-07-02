@@ -116,10 +116,12 @@ export class TreeSelectComponent
   ngOnChanges(changes: SimpleChanges) {
     if (
       changes?.selectedDimension?.currentValue &&
-      !changes.selectedDimension.firstChange &&
+      !changes.selectedDimension.firstChange
+      // do not do that in case of collapse/expand tu update clusters details view
+      //  &&
       // Avoid reinitializing the tree if only the object reference changed but the dimension name is the same
-      changes.selectedDimension.currentValue.name !==
-        changes.selectedDimension.previousValue?.name
+      // changes.selectedDimension.currentValue.name !==
+      //   changes.selectedDimension.previousValue?.name
     ) {
       this.initTree(this.selectedNode);
     } else {
