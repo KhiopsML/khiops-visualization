@@ -47,10 +47,8 @@ export class TreeSelectComponent
   @Input() private dimensionsTree: TreeNodeModel[] | undefined;
 
   public id: string | undefined = undefined;
-  private treeSelectedNodeChangedSub: Subscription;
   private unfoldHierarchyChangedSub: Subscription;
   private tree: any | undefined;
-  private nodeInSelection: string | undefined;
 
   constructor(
     private dimensionsDatasService: DimensionsDatasService,
@@ -67,35 +65,9 @@ export class TreeSelectComponent
         // Reinitialize the tree when the hierarchy is unfolded
         this.initTree(this.selectedNode);
       });
-
-    this.treeSelectedNodeChangedSub =
-      this.eventsService.treeSelectedNodeChanged.subscribe((e) => {
-        if (
-          this.tree &&
-          e.selectedNode &&
-          e.hierarchyName === this.selectedDimension?.name
-        ) {
-          let propagateEvent = true;
-          if (e.stopPropagation) {
-            propagateEvent = false;
-          }
-          // Check if current id is in selection to avoid infinite loop and remove propagation if not in selection
-          propagateEvent = this.nodeInSelection === e.selectedNode.id;
-
-          // get corresponding node into tree
-          const treeNode = this.treenodesService.getNodeFromName(
-            e.hierarchyName,
-            e.selectedNode.name,
-          );
-          this.tree.selectNode(treeNode?.id, propagateEvent);
-        }
-      });
   }
 
   public selectNextNode(keyCode: number) {
-    // Keep id into node selection
-    this.nodeInSelection = this.id;
-
     // propagate event
     this.tree?.selectNextNode('tree-comp-' + this.position, keyCode);
   }
@@ -109,7 +81,6 @@ export class TreeSelectComponent
   }
 
   ngOnDestroy() {
-    this.treeSelectedNodeChangedSub.unsubscribe();
     this.unfoldHierarchyChangedSub.unsubscribe();
   }
 
