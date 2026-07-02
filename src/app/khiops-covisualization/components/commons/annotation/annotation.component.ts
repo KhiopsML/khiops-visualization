@@ -4,14 +4,7 @@
  * at https://spdx.org/licenses/BSD-3-Clause-Clear.html or see the "LICENSE" file for more details.
  */
 
-import {
-  Component,
-  Input,
-  NgZone,
-  SimpleChanges,
-  OnChanges,
-  OnInit,
-} from '@angular/core';
+import { Component, effect, input, NgZone, OnInit } from '@angular/core';
 import { TreeNodeModel } from '@khiops-covisualization/model/tree-node.model';
 import { SelectableService } from '@khiops-library/components/selectable/selectable.service';
 import { SelectableComponent } from '@khiops-library/components/selectable/selectable.component';
@@ -22,18 +15,16 @@ import { DimensionCovisualizationModel } from '@khiops-library/model/dimension.c
 import { COMPONENT_TYPES } from '../../../../khiops-library/enum/component-types';
 
 @Component({
-    selector: 'app-annotation',
-    templateUrl: './annotation.component.html',
-    styleUrls: ['./annotation.component.scss'],
-    standalone: false
+  selector: 'app-annotation',
+  templateUrl: './annotation.component.html',
+  styleUrls: ['./annotation.component.scss'],
+  standalone: false,
 })
-export class AnnotationComponent
-  extends SelectableComponent
-  implements OnInit, OnChanges
-{
-  @Input() private selectedDimension: DimensionCovisualizationModel | undefined;
-  @Input() public selectedNode: TreeNodeModel | undefined;
-  @Input() private position: number = 0;
+export class AnnotationComponent extends SelectableComponent implements OnInit {
+  public selectedDimension = input<DimensionCovisualizationModel>();
+  public position = input<number>(0);
+  public selectedNode = input<TreeNodeModel>();
+
   public value: string = '';
   public override id: string | undefined = undefined;
   public componentType = COMPONENT_TYPES.ANNOTATIONS; // needed to copy datas
@@ -47,28 +38,32 @@ export class AnnotationComponent
     private translate: TranslateService,
   ) {
     super(selectableService, ngzone, configService);
+
+    // React to selectedNode changes to update value and title,
+    effect(() => {
+      const node = this.selectedNode();
+      if (node) {
+        this.value = node.annotation;
+        this.title = this.translate.get('GLOBAL.ANNOTATION_OF', {
+          name: node.shortDescription,
+        });
+      }
+    });
   }
 
   ngOnInit() {
-    this.id = 'cluster-annotation-' + this.position;
-  }
-
-  ngOnChanges(changes: SimpleChanges) {
-    if (changes?.selectedNode?.currentValue) {
-      this.value = changes.selectedNode.currentValue.annotation;
-      this.title = this.translate.get('GLOBAL.ANNOTATION_OF', {
-        name: changes.selectedNode.currentValue.shortDescription,
-      });
-    }
+    this.id = 'cluster-annotation-' + this.position();
   }
 
   onAnnotationChanged(annotation: string) {
     this.value = annotation;
-    if (this.selectedNode && this.selectedDimension) {
-      this.selectedNode.updateAnnotation(annotation);
+    const node = this.selectedNode();
+    const dimension = this.selectedDimension();
+    if (node && dimension) {
+      node.updateAnnotation(annotation);
       this.annotationService.setNodeAnnotation(
-        this.selectedDimension.name,
-        this.selectedNode.name,
+        dimension.name,
+        node.name,
         annotation,
       );
     }
