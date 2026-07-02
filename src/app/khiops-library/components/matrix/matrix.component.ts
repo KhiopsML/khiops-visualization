@@ -274,6 +274,7 @@ export class MatrixComponent extends SelectableComponent implements OnChanges {
     this.conditionalOnContextChangedSub.unsubscribe();
     this.settingsChangedSub.unsubscribe();
     this.matrixCursorService.destroy();
+    this.removeEventsListeners(); // Prevent DOM listener leaks when component is recreated
   }
 
   @HostListener('window:keyup', ['$event'])
@@ -551,32 +552,13 @@ export class MatrixComponent extends SelectableComponent implements OnChanges {
   }
 
   private addEventsListeners() {
-    if (this.matrixSelectedDiv?.nativeElement) {
-      // Remove existing listeners
-      this.matrixSelectedDiv.nativeElement.removeEventListener(
-        'click',
-        this.clickOnCellHandler,
-      );
-      this.matrixSelectedDiv.nativeElement.removeEventListener(
-        'mouseout',
-        this.mouseoutHandler,
-      );
-      this.matrixSelectedDiv.nativeElement.removeEventListener(
-        'mousemove',
-        this.mousemoveHandler,
-      );
-      this.matrixSelectedDiv.nativeElement.removeEventListener(
-        'wheel',
-        this.wheelHandler,
-      );
+    this.removeEventsListeners(); // Always remove before re-adding, avoids duplicates
 
-      // Add event listeners with passive options
-      this.matrixSelectedDiv?.nativeElement.addEventListener(
+    if (this.matrixSelectedDiv?.nativeElement) {
+      this.matrixSelectedDiv.nativeElement.addEventListener(
         'click',
         this.clickOnCellHandler,
-        {
-          passive: true,
-        },
+        { passive: true },
       );
       this.matrixSelectedDiv.nativeElement.addEventListener(
         'mouseout',
@@ -593,18 +575,10 @@ export class MatrixComponent extends SelectableComponent implements OnChanges {
         this.wheelHandler,
         { passive: true },
       );
-      this.matrixSelectedDiv.nativeElement.removeEventListener(
-        'mousedown',
-        this.mouseDownHandler,
-      );
       this.matrixSelectedDiv.nativeElement.addEventListener(
         'mousedown',
         this.mouseDownHandler,
         { passive: true },
-      );
-      this.matrixSelectedDiv.nativeElement.removeEventListener(
-        'mouseup',
-        this.mouseUpHandler,
       );
       this.matrixSelectedDiv.nativeElement.addEventListener(
         'mouseup',
@@ -614,17 +588,50 @@ export class MatrixComponent extends SelectableComponent implements OnChanges {
     }
 
     if (this.matrixArea?.nativeElement) {
-      // Remove the existing listener for the scroll event
-      this.matrixArea.nativeElement.removeEventListener(
-        'scroll',
-        this.scrollHandler,
-      );
-
-      // Add the scroll event listener
       this.matrixArea.nativeElement.addEventListener(
         'scroll',
         this.scrollHandler,
         { passive: true },
+      );
+    }
+  }
+
+  /**
+   * Removes all DOM event listeners.
+   * Called before re-adding (to avoid duplicates) and on component destroy (to avoid leaks).
+   */
+  private removeEventsListeners() {
+    if (this.matrixSelectedDiv?.nativeElement) {
+      this.matrixSelectedDiv.nativeElement.removeEventListener(
+        'click',
+        this.clickOnCellHandler,
+      );
+      this.matrixSelectedDiv.nativeElement.removeEventListener(
+        'mouseout',
+        this.mouseoutHandler,
+      );
+      this.matrixSelectedDiv.nativeElement.removeEventListener(
+        'mousemove',
+        this.mousemoveHandler,
+      );
+      this.matrixSelectedDiv.nativeElement.removeEventListener(
+        'wheel',
+        this.wheelHandler,
+      );
+      this.matrixSelectedDiv.nativeElement.removeEventListener(
+        'mousedown',
+        this.mouseDownHandler,
+      );
+      this.matrixSelectedDiv.nativeElement.removeEventListener(
+        'mouseup',
+        this.mouseUpHandler,
+      );
+    }
+
+    if (this.matrixArea?.nativeElement) {
+      this.matrixArea.nativeElement.removeEventListener(
+        'scroll',
+        this.scrollHandler,
       );
     }
   }
