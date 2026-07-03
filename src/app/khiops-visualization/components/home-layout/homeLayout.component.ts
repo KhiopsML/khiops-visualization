@@ -4,7 +4,13 @@
  * at https://spdx.org/licenses/BSD-3-Clause-Clear.html or see the "LICENSE" file for more details.
  */
 
-import { Component, OnInit, ViewChild, Input } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  ViewChild,
+  Input,
+  ChangeDetectionStrategy,
+} from '@angular/core';
 
 import { FileLoaderComponent } from '@khiops-library/components/file-loader/file-loader.component';
 import { TranslateService } from '@ngstack/translate';
@@ -34,6 +40,7 @@ import { DialogService } from '@khiops-library/providers/dialog.service';
   selector: 'app-home-layout',
   templateUrl: './homeLayout.component.html',
   styleUrls: ['./homeLayout.component.scss'],
+  changeDetection: ChangeDetectionStrategy.Eager,
   standalone: false,
 })
 export class HomeLayoutComponent implements OnInit {

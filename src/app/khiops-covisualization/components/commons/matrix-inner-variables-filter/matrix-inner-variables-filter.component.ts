@@ -12,6 +12,7 @@ import {
   OnInit,
   OnChanges,
   SimpleChanges,
+  ChangeDetectionStrategy,
 } from '@angular/core';
 import { DimensionCovisualizationModel } from '@khiops-library/model/dimension.covisualization.model';
 import { MatrixInnerVariablesSelectionService } from '@khiops-covisualization/providers/matrix-inner-variables-selection.service';
@@ -26,6 +27,7 @@ export interface InnerVariablesSelectionEvent {
   selector: 'app-matrix-inner-variables-filter',
   templateUrl: './matrix-inner-variables-filter.component.html',
   styleUrls: ['./matrix-inner-variables-filter.component.scss'],
+  changeDetection: ChangeDetectionStrategy.Eager,
   standalone: false,
 })
 export class MatrixInnerVariablesFilterComponent implements OnInit, OnChanges {
@@ -88,7 +90,8 @@ export class MatrixInnerVariablesFilterComponent implements OnInit, OnChanges {
 
           // Try to restore the previously saved selection for this dimension
           if (this.selectedInnerVariables.length === 0) {
-            const savedSelection = this.matrixInnerVariablesSelectionService.getSelectedInnerVariables();
+            const savedSelection =
+              this.matrixInnerVariablesSelectionService.getSelectedInnerVariables();
             if (savedSelection && savedSelection.length > 0) {
               this.selectedInnerVariables = savedSelection.filter((variable) =>
                 this.innerVariables.includes(variable),

@@ -6,7 +6,7 @@
 // @ts-nocheck
 
 import { TestBed } from '@angular/core/testing';
-import { provideHttpClient } from '@angular/common/http';
+import { provideHttpClient, withXhr } from '@angular/common/http';
 import { TranslateModule } from '@ngstack/translate';
 import { MATRIX_MODES } from '@khiops-library/enum/matrix-modes';
 import { MatrixUtilsService } from '@khiops-library/components/matrix/matrix.utils.service';
@@ -18,7 +18,7 @@ describe('Visualization', () => {
     beforeEach(() => {
       TestBed.configureTestingModule({
         imports: [TranslateModule.forRoot()],
-  providers: [provideHttpClient()],
+        providers: [provideHttpClient(withXhr())],
       });
     });
 

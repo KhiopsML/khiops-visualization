@@ -11,6 +11,7 @@ import {
   Input,
   SimpleChanges,
   OnChanges,
+  ChangeDetectionStrategy,
 } from '@angular/core';
 import { SelectedClusterModel } from '@khiops-covisualization/model/selected-cluster.model';
 import { TreeNodeModel } from '@khiops-covisualization/model/tree-node.model';
@@ -26,6 +27,7 @@ import { getClustersDisplayedColumns } from './selected-clusters.config';
   selector: 'app-selected-clusters',
   templateUrl: './selected-clusters.component.html',
   styleUrls: ['./selected-clusters.component.scss'],
+  changeDetection: ChangeDetectionStrategy.Eager,
   standalone: false,
 })
 export class SelectedClustersComponent implements OnInit, OnDestroy, OnChanges {

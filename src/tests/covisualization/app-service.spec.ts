@@ -6,7 +6,7 @@
 // @ts-nocheck
 
 import { TestBed } from '@angular/core/testing';
-import { provideHttpClient } from '@angular/common/http';
+import { provideHttpClient, withXhr } from '@angular/common/http';
 import { TranslateModule } from '@ngstack/translate';
 import { AppService } from '@khiops-covisualization/providers/app.service';
 import { KhiopsLibraryService } from '@khiops-library/providers/khiops-library.service';
@@ -22,7 +22,7 @@ describe('coVisualization', () => {
     beforeEach(() => {
       TestBed.configureTestingModule({
         imports: [TranslateModule.forRoot()],
-        providers: [provideHttpClient()],
+        providers: [provideHttpClient(withXhr())],
       });
 
       appService = TestBed.inject(AppService);

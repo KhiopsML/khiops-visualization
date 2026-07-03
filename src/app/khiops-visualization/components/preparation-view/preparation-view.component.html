@@ -109,7 +109,11 @@
                     [showColumnsSelection]="true"
                     [inputDatas]="variablesDatas"
                     [displayedColumns]="variablesDisplayedColumns"
-                    [selectedVariable]="preparationDatas?.selectedVariable"
+                    [selectedVariable]="
+                      $safeNavigationMigration(
+                        preparationDatas?.selectedVariable
+                      )
+                    "
                     [noDataMessage]="getNoDataMessage()"
                   >
                     @if (hasLevelData()) {
@@ -137,7 +141,11 @@
                         <app-description-block
                           id="preparation-description-block-variable"
                           title="{{ 'GLOBAL.NAME' | translate }}"
-                          [value]="preparationDatas?.selectedVariable?.name"
+                          [value]="
+                            $safeNavigationMigration(
+                              preparationDatas?.selectedVariable?.name
+                            )
+                          "
                         ></app-description-block>
                       }
                       @if (!preparationDatas?.selectedVariable) {

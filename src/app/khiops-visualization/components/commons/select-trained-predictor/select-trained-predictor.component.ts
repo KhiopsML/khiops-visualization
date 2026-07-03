@@ -4,7 +4,14 @@
  * at https://spdx.org/licenses/BSD-3-Clause-Clear.html or see the "LICENSE" file for more details.
  */
 
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  Input,
+  Output,
+  EventEmitter,
+  ChangeDetectionStrategy,
+} from '@angular/core';
 import { LS } from '@khiops-library/enum/ls';
 import { TrainedPredictor } from '@khiops-visualization/interfaces/modeling-report.interface';
 import { AppService } from '@khiops-visualization/providers/app.service';
@@ -13,6 +20,7 @@ import { AppService } from '@khiops-visualization/providers/app.service';
   selector: 'app-select-trained-predictor',
   templateUrl: './select-trained-predictor.component.html',
   styleUrls: ['./select-trained-predictor.component.scss'],
+  changeDetection: ChangeDetectionStrategy.Eager,
   standalone: false,
 })
 export class SelectTrainedPredictorComponent implements OnInit {

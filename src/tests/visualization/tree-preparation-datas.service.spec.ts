@@ -10,7 +10,7 @@ import { TreePreparationDatasService } from '@khiops-visualization/providers/tre
 import { AppService } from '@khiops-visualization/providers/app.service';
 import { PreparationDatasService } from '@khiops-visualization/providers/preparation-datas.service';
 import { TranslateModule } from '@ngstack/translate';
-import { provideHttpClient } from '@angular/common/http';
+import { provideHttpClient, withXhr } from '@angular/common/http';
 import { provideMockStore } from '@ngrx/store/testing';
 import { TreePreparationStore } from '@khiops-visualization/stores/tree-preparation.store';
 import { TreePreparationDatasModel } from '@khiops-visualization/model/tree-preparation-datas.model';
@@ -23,7 +23,9 @@ describe('Visualization', () => {
 
   function initWithTreeEducation() {
     const mockDatas = JSON.parse(
-      JSON.stringify(require('../../assets/mocks/kv/tree-education_AllReports.json')),
+      JSON.stringify(
+        require('../../assets/mocks/kv/tree-education_AllReports.json'),
+      ),
     );
     appService.initialize();
     appService.setFileDatas(mockDatas);
@@ -49,7 +51,7 @@ describe('Visualization', () => {
         TreePreparationStore,
         AppService,
         PreparationDatasService,
-        provideHttpClient(),
+        provideHttpClient(withXhr()),
         provideMockStore({
           initialState: {
             TreePreparationState: {
@@ -118,7 +120,9 @@ describe('Visualization', () => {
       it('should not select any variable when file has no tree preparation report', () => {
         initWithAdultAllReports();
         expect(treePreparationDatasService.isValid()).toBe(false);
-        expect(treePreparationDatasService.getSelectedVariable()).toBeUndefined();
+        expect(
+          treePreparationDatasService.getSelectedVariable(),
+        ).toBeUndefined();
       });
     });
 
@@ -204,23 +208,19 @@ describe('Visualization', () => {
       it('should return undefined for non-existent variable name', () => {
         initWithTreeEducation();
         const result =
-          treePreparationDatasService.setSelectedVariable(
-            'NonExistentVar',
-          );
+          treePreparationDatasService.setSelectedVariable('NonExistentVar');
         expect(result).toBeUndefined();
       });
 
       it('should return undefined for empty string', () => {
         initWithTreeEducation();
-        const result =
-          treePreparationDatasService.setSelectedVariable('');
+        const result = treePreparationDatasService.setSelectedVariable('');
         expect(result).toBeUndefined();
       });
 
       it('should return undefined for null', () => {
         initWithTreeEducation();
-        const result =
-          treePreparationDatasService.setSelectedVariable(null);
+        const result = treePreparationDatasService.setSelectedVariable(null);
         expect(result).toBeUndefined();
       });
 
@@ -354,7 +354,10 @@ describe('Visualization', () => {
 
       it('should return 2 TreeNodeModels for [L0, L1]', () => {
         initWithTreeEducation();
-        const result = treePreparationDatasService.setSelectedNodes(['L0', 'L1']);
+        const result = treePreparationDatasService.setSelectedNodes([
+          'L0',
+          'L1',
+        ]);
         expect(result.length).toBe(2);
         expect(result[0].nodeId).toBe('L0');
         expect(result[1].nodeId).toBe('L1');
@@ -403,30 +406,28 @@ describe('Visualization', () => {
         initWithTreeEducation();
         const datas = treePreparationDatasService.getDatas();
         datas.isRegressionAnalysis = false;
-        const result =
-          treePreparationDatasService.convertIntervalIdsToValues([
-            'A',
-            'B',
-          ]);
+        const result = treePreparationDatasService.convertIntervalIdsToValues([
+          'A',
+          'B',
+        ]);
         expect(result).toEqual(['A', 'B']);
       });
 
       it('should return original values when no target partition', () => {
         const mockModel = new TreePreparationDatasModel();
         mockModel.isRegressionAnalysis = true;
-        (treePreparationDatasService as any).treePreparationDatas =
-          mockModel;
-        const result =
-          treePreparationDatasService.convertIntervalIdsToValues([
-            'I0',
-            'I1',
-          ]);
+        (treePreparationDatasService as any).treePreparationDatas = mockModel;
+        const result = treePreparationDatasService.convertIntervalIdsToValues([
+          'I0',
+          'I1',
+        ]);
         expect(result).toEqual(['I0', 'I1']);
       });
 
       it('should handle empty array', () => {
-        const result =
-          treePreparationDatasService.convertIntervalIdsToValues([]);
+        const result = treePreparationDatasService.convertIntervalIdsToValues(
+          [],
+        );
         expect(result).toEqual([]);
       });
     });
@@ -435,8 +436,7 @@ describe('Visualization', () => {
 
     describe('getFormattedTargetValues', () => {
       it('should return empty array when node has no targetValues', () => {
-        const result =
-          treePreparationDatasService.getFormattedTargetValues({});
+        const result = treePreparationDatasService.getFormattedTargetValues({});
         expect(result).toEqual([]);
       });
 
@@ -475,7 +475,9 @@ describe('Visualization', () => {
         );
         expect(leafNode.nodeId).toBe('L67');
         const treeNodeModel = new TreeNodeModel(leafNode, datas);
-        const result = treePreparationDatasService.getTreeDetails([treeNodeModel]);
+        const result = treePreparationDatasService.getTreeDetails([
+          treeNodeModel,
+        ]);
         expect(result.displayedColumns.length).toBe(3);
         expect(result.title).toContain('L67');
       });
@@ -508,11 +510,10 @@ describe('Visualization', () => {
       });
 
       it('should return undefined for undefined node', () => {
-        const rules =
-          treePreparationDatasService.getRecursiveNodeDatasRules(
-            undefined,
-            [],
-          );
+        const rules = treePreparationDatasService.getRecursiveNodeDatasRules(
+          undefined,
+          [],
+        );
         expect(rules).toEqual([]);
       });
 
@@ -521,11 +522,10 @@ describe('Visualization', () => {
           children: [{ children: [] }],
           nodeId: 'N1',
         };
-        const rules =
-          treePreparationDatasService.getRecursiveNodeDatasRules(
-            parentNode,
-            [],
-          );
+        const rules = treePreparationDatasService.getRecursiveNodeDatasRules(
+          parentNode,
+          [],
+        );
         expect(rules.length).toBe(1);
         expect(rules[0].nodeId).toBe('N1');
       });
@@ -542,8 +542,7 @@ describe('Visualization', () => {
       });
 
       it('should not throw when treePreparationDatas is undefined', () => {
-        (treePreparationDatasService as any).treePreparationDatas =
-          undefined;
+        (treePreparationDatasService as any).treePreparationDatas = undefined;
         expect(() =>
           treePreparationDatasService.computeRegressionClassesCount(),
         ).not.toThrow();
@@ -563,8 +562,7 @@ describe('Visualization', () => {
       });
 
       it('should return undefined when no selected variable', () => {
-        const result =
-          treePreparationDatasService.computeTreeColorsMap();
+        const result = treePreparationDatasService.computeTreeColorsMap();
         expect(result).toBeUndefined();
       });
     });
@@ -573,16 +571,12 @@ describe('Visualization', () => {
 
     describe('hasDetailedStatistics', () => {
       it('should return false when no selected variable', () => {
-        expect(
-          treePreparationDatasService.hasDetailedStatistics(),
-        ).toBe(false);
+        expect(treePreparationDatasService.hasDetailedStatistics()).toBe(false);
       });
 
       it('should return true for Tree_1 (R1) which has detailed statistics', () => {
         initWithTreeEducation();
-        expect(
-          treePreparationDatasService.hasDetailedStatistics(),
-        ).toBe(true);
+        expect(treePreparationDatasService.hasDetailedStatistics()).toBe(true);
       });
     });
 
@@ -591,22 +585,19 @@ describe('Visualization', () => {
     describe('getNodesLinkedToOneIndex', () => {
       it('should return partition[0] = [L61, L91, L35, L40] for index 0', () => {
         initWithTreeEducation();
-        const result =
-          treePreparationDatasService.getNodesLinkedToOneIndex(0);
+        const result = treePreparationDatasService.getNodesLinkedToOneIndex(0);
         expect(result).toEqual(['L61', 'L91', 'L35', 'L40']);
       });
 
       it('should return partition[1] = [L54, L32] for index 1', () => {
         initWithTreeEducation();
-        const result =
-          treePreparationDatasService.getNodesLinkedToOneIndex(1);
+        const result = treePreparationDatasService.getNodesLinkedToOneIndex(1);
         expect(result).toEqual(['L54', 'L32']);
       });
 
       it('should return partition[2] = [L73] for index 2', () => {
         initWithTreeEducation();
-        const result =
-          treePreparationDatasService.getNodesLinkedToOneIndex(2);
+        const result = treePreparationDatasService.getNodesLinkedToOneIndex(2);
         expect(result).toEqual(['L73']);
       });
     });
@@ -665,7 +656,9 @@ describe('Visualization', () => {
     describe('with regression data', () => {
       it('should initialize with regression iris data: 2 vars, isRegressionAnalysis=true', () => {
         const mockDatas = JSON.parse(
-          JSON.stringify(require('../../assets/mocks/kv/AnalysisResults_regtree_iris.json')),
+          JSON.stringify(
+            require('../../assets/mocks/kv/AnalysisResults_regtree_iris.json'),
+          ),
         );
         appService.initialize();
         appService.setFileDatas(mockDatas);

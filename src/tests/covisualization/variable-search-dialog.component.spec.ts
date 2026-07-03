@@ -7,7 +7,7 @@
 
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { TranslateModule } from '@ngstack/translate';
-import { provideHttpClient } from '@angular/common/http';
+import { provideHttpClient, withXhr } from '@angular/common/http';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { VariableSearchDialogComponent } from '../../app/khiops-covisualization/components/commons/variable-search-dialog/variable-search-dialog.component';
@@ -53,7 +53,7 @@ describe('VariableSearchDialogComponent', () => {
       declarations: [VariableSearchDialogComponent],
       imports: [TranslateModule.forRoot(), NoopAnimationsModule],
       providers: [
-        provideHttpClient(),
+        provideHttpClient(withXhr()),
         { provide: DialogService, useValue: dialogServiceSpy },
         { provide: VariableSearchService, useValue: variableSearchServiceSpy },
         { provide: TreenodesService, useValue: treenodesServiceSpy },

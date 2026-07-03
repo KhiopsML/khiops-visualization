@@ -12,6 +12,7 @@ import {
   AfterViewInit,
   EventEmitter,
   Output,
+  ChangeDetectionStrategy,
 } from '@angular/core';
 import { trigger, transition, animate, style } from '@angular/animations';
 import { DimensionCovisualizationModel } from '@khiops-library/model/dimension.covisualization.model';
@@ -47,6 +48,7 @@ import { LayoutService } from '@khiops-library/providers/layout.service';
       ]),
     ]),
   ],
+  changeDetection: ChangeDetectionStrategy.Eager,
   standalone: false,
 })
 export class HierarchySelectComponent implements OnChanges, AfterViewInit {

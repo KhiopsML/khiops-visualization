@@ -11,6 +11,7 @@ import {
   OnChanges,
   Output,
   EventEmitter,
+  ChangeDetectionStrategy,
 } from '@angular/core';
 import { TranslateService } from '@ngstack/translate';
 import { ChartColorsSetI } from '../../interfaces/chart-colors-set.interface';
@@ -23,6 +24,7 @@ import { HistogramType } from '@khiops-visualization/components/commons/histogra
   selector: 'kl-legend',
   templateUrl: './legend.component.html',
   styleUrls: ['./legend.component.scss'],
+  changeDetection: ChangeDetectionStrategy.Eager,
   standalone: false,
 })
 export class LegendComponent implements OnChanges {

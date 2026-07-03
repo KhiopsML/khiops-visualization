@@ -27,7 +27,9 @@
             id="cooccurrence-matrix-comp-container"
             fxFlex="1 1 100%"
             (selectCellRowChanged)="onSelectCellRowChanged()"
-            [selectedVariable]="preparation2dDatas?.selectedVariable"
+            [selectedVariable]="
+              $safeNavigationMigration(preparation2dDatas?.selectedVariable)
+            "
           >
           </app-cooccurrence-matrix>
         </as-split-area>
@@ -51,7 +53,11 @@
               }}"
               id="preparation-2d-target-distribution-graph"
               [inputDatas]="distribution2dDatas.targetDistributionGraphDatas"
-              [variableType]="preparation2dDatas?.selectedVariable?.type"
+              [variableType]="
+                $safeNavigationMigration(
+                  preparation2dDatas?.selectedVariable?.type
+                )
+              "
               [scaleValue]="scaleValue"
               (graphTypeChanged)="onTargetDistributionGraphTypeChanged($event)"
             >
@@ -75,9 +81,15 @@
             [displayCount]="false"
             [showLineSelection]="true"
             [showColumnsSelection]="false"
-            [inputDatas]="preparation2dDatas?.currentCellDatas?.values?.[0]"
+            [inputDatas]="
+              $safeNavigationMigration(
+                preparation2dDatas?.currentCellDatas?.values?.[0]
+              )
+            "
             [displayedColumns]="
-              preparation2dDatas?.currentCellDatas?.displayedColumns?.[0]
+              $safeNavigationMigration(
+                preparation2dDatas?.currentCellDatas?.displayedColumns?.[0]
+              )
             "
           >
           </kl-ag-grid>
@@ -91,9 +103,15 @@
             [displayCount]="false"
             [showLineSelection]="true"
             [showColumnsSelection]="false"
-            [inputDatas]="preparation2dDatas?.currentCellDatas?.values?.[1]"
+            [inputDatas]="
+              $safeNavigationMigration(
+                preparation2dDatas?.currentCellDatas?.values?.[1]
+              )
+            "
             [displayedColumns]="
-              preparation2dDatas?.currentCellDatas?.displayedColumns?.[1]
+              $safeNavigationMigration(
+                preparation2dDatas?.currentCellDatas?.displayedColumns?.[1]
+              )
             "
           >
           </kl-ag-grid>

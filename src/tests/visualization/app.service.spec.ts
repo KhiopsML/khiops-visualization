@@ -8,7 +8,7 @@
 import { TestBed } from '@angular/core/testing';
 import { AppService } from '@khiops-visualization/providers/app.service';
 import { TranslateModule } from '@ngstack/translate';
-import { provideHttpClient } from '@angular/common/http';
+import { provideHttpClient, withXhr } from '@angular/common/http';
 
 describe('Visualization', () => {
   let appService: AppService;
@@ -16,7 +16,7 @@ describe('Visualization', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [TranslateModule.forRoot()],
-      providers: [AppService, provideHttpClient()],
+      providers: [AppService, provideHttpClient(withXhr())],
     }).compileComponents();
 
     appService = TestBed.inject(AppService);
@@ -42,9 +42,7 @@ describe('Visualization', () => {
 
       it('should preserve existing data when preserveData=true', () => {
         const mockDatas = JSON.parse(
-          JSON.stringify(
-            require('src/assets/mocks/kv/AdultAllReports.json'),
-          ),
+          JSON.stringify(require('src/assets/mocks/kv/AdultAllReports.json')),
         );
         appService.initialize();
         appService.setFileDatas(mockDatas);
@@ -55,9 +53,7 @@ describe('Visualization', () => {
 
       it('should reset data when preserveData=false after setting data', () => {
         const mockDatas = JSON.parse(
-          JSON.stringify(
-            require('src/assets/mocks/kv/AdultAllReports.json'),
-          ),
+          JSON.stringify(require('src/assets/mocks/kv/AdultAllReports.json')),
         );
         appService.initialize();
         appService.setFileDatas(mockDatas);
@@ -104,9 +100,7 @@ describe('Visualization', () => {
 
       it('should return datas after setFileDatas', () => {
         const mockDatas = JSON.parse(
-          JSON.stringify(
-            require('src/assets/mocks/kv/AdultAllReports.json'),
-          ),
+          JSON.stringify(require('src/assets/mocks/kv/AdultAllReports.json')),
         );
         appService.initialize();
         appService.setFileDatas(mockDatas);
@@ -119,9 +113,7 @@ describe('Visualization', () => {
     describe('setFileDatas', () => {
       it('should set file data from AdultAllReports', () => {
         const mockDatas = JSON.parse(
-          JSON.stringify(
-            require('src/assets/mocks/kv/AdultAllReports.json'),
-          ),
+          JSON.stringify(require('src/assets/mocks/kv/AdultAllReports.json')),
         );
         appService.initialize();
         appService.setFileDatas(mockDatas);
@@ -131,9 +123,7 @@ describe('Visualization', () => {
 
       it('should set file data from C100_AllReports', () => {
         const mockDatas = JSON.parse(
-          JSON.stringify(
-            require('src/assets/mocks/kv/C100_AllReports.json'),
-          ),
+          JSON.stringify(require('src/assets/mocks/kv/C100_AllReports.json')),
         );
         appService.initialize();
         appService.setFileDatas(mockDatas);
@@ -154,9 +144,7 @@ describe('Visualization', () => {
 
       it('should work when _appDatas is not initialized first', () => {
         const mockDatas = JSON.parse(
-          JSON.stringify(
-            require('src/assets/mocks/kv/AdultAllReports.json'),
-          ),
+          JSON.stringify(require('src/assets/mocks/kv/AdultAllReports.json')),
         );
         appService.setFileDatas(mockDatas);
         expect(appService.appDatas).toBeDefined();
@@ -173,9 +161,7 @@ describe('Visualization', () => {
 
       it('should return undefined for unknown type', () => {
         const mockDatas = JSON.parse(
-          JSON.stringify(
-            require('src/assets/mocks/kv/AdultAllReports.json'),
-          ),
+          JSON.stringify(require('src/assets/mocks/kv/AdultAllReports.json')),
         );
         appService.initialize();
         appService.setFileDatas(mockDatas);
@@ -184,9 +170,7 @@ describe('Visualization', () => {
 
       it('should return saved datas when they exist in the file', () => {
         const mockDatas = JSON.parse(
-          JSON.stringify(
-            require('src/assets/mocks/kv/AdultAllReports.json'),
-          ),
+          JSON.stringify(require('src/assets/mocks/kv/AdultAllReports.json')),
         );
         if (mockDatas.savedDatas) {
           mockDatas.savedDatas['testKey'] = 'testValue';
@@ -284,9 +268,7 @@ describe('Visualization', () => {
 
       it('should return true for AdultAllReports mock', () => {
         const mockDatas = JSON.parse(
-          JSON.stringify(
-            require('src/assets/mocks/kv/AdultAllReports.json'),
-          ),
+          JSON.stringify(require('src/assets/mocks/kv/AdultAllReports.json')),
         );
         expect(appService.isCompatibleJson(mockDatas)).toBe(true);
       });

@@ -44,7 +44,7 @@ import { MatrixInnerVariablesFilterComponent } from './components/commons/matrix
 import { UnfoldHierarchyHeaderComponent } from './components/commons/unfold-hierarchy-header/unfold-hierarchy-header.component';
 import { UnfoldHierarchyClustersGraphComponent } from './components/commons/unfold-hierarchy-clusters-graph/unfold-hierarchy-clusters-graph.component';
 import { UnfoldHierarchyInfoRateGraphComponent } from './components/commons/unfold-hierarchy-info-rate-graph/unfold-hierarchy-info-rate-graph.component';
-import { provideHttpClient } from '@angular/common/http';
+import { provideHttpClient, withXhr } from '@angular/common/http';
 import { CovisualizationRoutingModule } from './khiops-covisualization-routing.module';
 
 @NgModule({
@@ -92,7 +92,7 @@ import { CovisualizationRoutingModule } from './khiops-covisualization-routing.m
     CovisualizationRoutingModule,
   ],
   providers: [
-    provideHttpClient(),
+    provideHttpClient(withXhr()),
     { provide: OverlayContainer, useClass: InAppOverlayContainer },
   ],
   exports: [AppComponent, VariableSearchDialogComponent],

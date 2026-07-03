@@ -11,6 +11,7 @@ import {
   ElementRef,
   AfterViewInit,
   NgZone,
+  ChangeDetectionStrategy,
 } from '@angular/core';
 import { AppService } from './providers/app.service';
 import { ConfigService } from '@khiops-library/providers/config.service';
@@ -55,6 +56,7 @@ import { TranslateService } from '@ngstack/translate';
   templateUrl: './khiops-covisualization.component.html',
   encapsulation: ViewEncapsulation.ShadowDom,
   standalone: false,
+  changeDetection: ChangeDetectionStrategy.Eager,
   providers: [
     AnnotationService,
     ClustersService,

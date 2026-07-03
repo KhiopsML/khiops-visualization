@@ -44,7 +44,7 @@
         </div>
         <button
           class="grey-btn close-btn"
-          mat-icon-button
+          mat-stroked-button
           matTooltip="{{ 'GLOBAL.CLOSE' | translate }}"
           (click)="onClickOnClose()"
         >
@@ -65,9 +65,11 @@
         [showSearch]="true"
         [showLineSelection]="true"
         [showColumnsSelection]="false"
-        [inputDatas]="searchResults?.values"
+        [inputDatas]="$safeNavigationMigration(searchResults?.values)"
         [title]="''"
-        [displayedColumns]="searchResults?.displayedColumns"
+        [displayedColumns]="
+          $safeNavigationMigration(searchResults?.displayedColumns)
+        "
         (selectListItem)="onSelectRowChanged($event)"
       >
       </kl-ag-grid>

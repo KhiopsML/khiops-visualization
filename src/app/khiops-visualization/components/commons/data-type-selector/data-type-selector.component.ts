@@ -4,7 +4,13 @@
  * at https://spdx.org/licenses/BSD-3-Clause-Clear.html or see the "LICENSE" file for more details.
  */
 
-import { Component, Output, EventEmitter, OnInit } from '@angular/core';
+import {
+  Component,
+  Output,
+  EventEmitter,
+  OnInit,
+  ChangeDetectionStrategy,
+} from '@angular/core';
 import { GridOptionsModel } from '@khiops-library/model/grid-options.model';
 import { Ls } from '@khiops-library/providers/ls.service';
 import { LS } from '@khiops-library/enum/ls';
@@ -13,6 +19,7 @@ import { LS } from '@khiops-library/enum/ls';
   selector: 'app-data-type-selector',
   templateUrl: './data-type-selector.component.html',
   styleUrls: ['./data-type-selector.component.scss'],
+  changeDetection: ChangeDetectionStrategy.Eager,
   standalone: false,
 })
 export class DataTypeSelectorComponent implements OnInit {

@@ -15,6 +15,7 @@ import {
   ViewChild,
   ElementRef,
   OnDestroy,
+  ChangeDetectionStrategy,
 } from '@angular/core';
 import { SelectableComponent } from '@khiops-library/components/selectable/selectable.component';
 import { SelectableService } from '@khiops-library/components/selectable/selectable.service';
@@ -31,9 +32,7 @@ import { AppService } from '@khiops-visualization/providers/app.service';
 import { LS } from '@khiops-library/enum/ls';
 import { TreeHyperService } from './tree-hyper.service';
 import { Hypertree, N } from '@khiops-hypertree';
-import {
-  TreePreparationDatasModel,
-} from '@khiops-visualization/model/tree-preparation-datas.model';
+import { TreePreparationDatasModel } from '@khiops-visualization/model/tree-preparation-datas.model';
 import { DistributionDatasModel } from '@khiops-visualization/model/distribution-datas.model';
 import { firstValueFrom, Observable, take } from 'rxjs';
 import { TreePreparationStore } from '@khiops-visualization/stores/tree-preparation.store';
@@ -43,11 +42,13 @@ import { AppConfig } from '../../../../../environments/environment';
   selector: 'app-tree-hyper',
   templateUrl: './tree-hyper.component.html',
   styleUrls: ['./tree-hyper.component.scss'],
+  changeDetection: ChangeDetectionStrategy.Eager,
   standalone: false,
 })
 export class TreeHyperComponent
   extends SelectableComponent
-  implements OnInit, AfterViewInit, OnChanges, OnDestroy {
+  implements OnInit, AfterViewInit, OnChanges, OnDestroy
+{
   @ViewChild('hyperTree') private hyperTree?: ElementRef<HTMLElement>;
 
   @Input() public dimensionTree?: [TreeNodeModel];
@@ -118,7 +119,9 @@ export class TreeHyperComponent
         let previousSelectedNodes: TreeNodeModel[] = [];
         this.store.previousSelectedNodes$
           .pipe(take(1))
-          .subscribe((nodes: TreeNodeModel[]) => (previousSelectedNodes = nodes));
+          .subscribe(
+            (nodes: TreeNodeModel[]) => (previousSelectedNodes = nodes),
+          );
 
         this.removeNodes(previousSelectedNodes);
         this.selectNodes(selectedNodes);

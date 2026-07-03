@@ -8,7 +8,7 @@
 import { TestBed } from '@angular/core/testing';
 import { AppService } from '@khiops-covisualization/providers/app.service';
 import { DimensionsDatasService } from '@khiops-covisualization/providers/dimensions-datas.service';
-import { provideHttpClient } from '@angular/common/http';
+import { provideHttpClient, withXhr } from '@angular/common/http';
 import { TranslateModule } from '@ngstack/translate';
 import { MATRIX_MODES } from '@khiops-library/enum/matrix-modes';
 import { MatrixUtilsService } from '@khiops-library/components/matrix/matrix.utils.service';
@@ -24,7 +24,7 @@ describe('CoVisualization', () => {
     beforeEach(() => {
       TestBed.configureTestingModule({
         imports: [TranslateModule.forRoot()],
-  providers: [provideHttpClient()],
+        providers: [provideHttpClient(withXhr())],
       });
 
       // Inject services
@@ -109,7 +109,7 @@ describe('CoVisualization', () => {
     beforeEach(() => {
       TestBed.configureTestingModule({
         imports: [TranslateModule.forRoot()],
-  providers: [provideHttpClient()],
+        providers: [provideHttpClient(withXhr())],
       });
 
       // Inject services
@@ -150,7 +150,7 @@ describe('CoVisualization', () => {
     beforeEach(() => {
       TestBed.configureTestingModule({
         imports: [TranslateModule.forRoot()],
-  providers: [provideHttpClient()],
+        providers: [provideHttpClient(withXhr())],
       });
 
       // Inject services
@@ -190,7 +190,7 @@ describe('CoVisualization', () => {
     beforeEach(() => {
       TestBed.configureTestingModule({
         imports: [TranslateModule.forRoot()],
-  providers: [provideHttpClient()],
+        providers: [provideHttpClient(withXhr())],
       });
 
       // Inject services
@@ -234,7 +234,7 @@ describe('CoVisualization', () => {
     beforeEach(() => {
       TestBed.configureTestingModule({
         imports: [TranslateModule.forRoot()],
-  providers: [provideHttpClient()],
+        providers: [provideHttpClient(withXhr())],
       });
 
       // Inject services
@@ -284,7 +284,7 @@ describe('CoVisualization', () => {
     beforeEach(() => {
       TestBed.configureTestingModule({
         imports: [TranslateModule.forRoot()],
-  providers: [provideHttpClient()],
+        providers: [provideHttpClient(withXhr())],
       });
 
       // Inject services
@@ -334,7 +334,7 @@ describe('CoVisualization', () => {
     beforeEach(() => {
       TestBed.configureTestingModule({
         imports: [TranslateModule.forRoot()],
-  providers: [provideHttpClient()],
+        providers: [provideHttpClient(withXhr())],
       });
 
       // Inject services

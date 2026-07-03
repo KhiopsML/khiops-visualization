@@ -47,7 +47,7 @@
       <mat-paginator
         (page)="onPageChange($event)"
         (click)="$event.stopPropagation()"
-        [length]="displayedValues?.length"
+        [length]="$safeNavigationMigration(displayedValues?.length)"
         [pageSize]="pageSize"
       >
       </mat-paginator>

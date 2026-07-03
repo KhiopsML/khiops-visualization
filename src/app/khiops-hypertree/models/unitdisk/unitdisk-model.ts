@@ -7,6 +7,7 @@
  * This software is distributed under the BSD 3-Clause-clear License, the text of which is available
  * at https://spdx.org/licenses/BSD-3-Clause-Clear.html or see the "LICENSE" file for more details.
  */
+// @ts-nocheck
 
 import { ILayer } from '../../components/layerstack/layer';
 import { IUnitDisk } from '../../components/unitdisk/unitdisk';
@@ -30,7 +31,7 @@ export interface UnitDiskArgs {
   data?: N;
   transform?: (n: N) => C;
 
-  decorator: { new(view: UnitDiskView, args: UnitDiskArgs): IUnitDisk };
+  decorator: { new (view: UnitDiskView, args: UnitDiskArgs): IUnitDisk };
   transformation: Transformation<N>;
   cacheUpdate: (ud: IUnitDisk, cache: TransformationCache) => void;
 

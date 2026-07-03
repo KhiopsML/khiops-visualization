@@ -2,7 +2,7 @@ import { Injector, NgModule } from '@angular/core';
 import { createCustomElement } from '@angular/elements';
 import { BrowserModule } from '@angular/platform-browser';
 import { provideAnimations } from '@angular/platform-browser/animations';
-import { provideHttpClient } from '@angular/common/http';
+import { provideHttpClient, withXhr } from '@angular/common/http';
 import { AppComponent as visualizationComponent } from '@khiops-visualization/khiops-visualization.component';
 import { AppComponent as covisualizationComponent } from '@khiops-covisualization/khiops-covisualization.component';
 import { KhiopsCovisualizationModule } from '@khiops-covisualization/khiops-covisualization.module';
@@ -19,7 +19,7 @@ import { EffectsModule } from '@ngrx/effects';
     KhiopsVisualizationModule,
     KhiopsCovisualizationModule,
   ],
-  providers: [provideAnimations(), provideHttpClient()],
+  providers: [provideAnimations(), provideHttpClient(withXhr())],
 })
 export class AppModule {
   constructor(private injector: Injector) {

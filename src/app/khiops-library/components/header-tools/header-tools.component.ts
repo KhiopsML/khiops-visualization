@@ -4,7 +4,13 @@
  * at https://spdx.org/licenses/BSD-3-Clause-Clear.html or see the "LICENSE" file for more details.
  */
 
-import { Component, Input, EventEmitter, Output } from '@angular/core';
+import {
+  Component,
+  Input,
+  EventEmitter,
+  Output,
+  ChangeDetectionStrategy,
+} from '@angular/core';
 // @ts-ignore
 import { saveAs } from 'file-saver';
 
@@ -17,6 +23,7 @@ import { CopyImageService } from '@khiops-library/providers/copy.image.service';
   selector: 'kl-header-tools',
   templateUrl: './header-tools.component.html',
   styleUrls: ['./header-tools.component.scss'],
+  changeDetection: ChangeDetectionStrategy.Eager,
   standalone: false,
 })
 export class HeaderToolsComponent {
@@ -28,8 +35,7 @@ export class HeaderToolsComponent {
   public copyImageShortcut: string;
 
   private isMac =
-    typeof navigator !== 'undefined' &&
-    /mac/i.test(navigator.userAgent);
+    typeof navigator !== 'undefined' && /mac/i.test(navigator.userAgent);
 
   constructor(
     public selectableService: SelectableService,

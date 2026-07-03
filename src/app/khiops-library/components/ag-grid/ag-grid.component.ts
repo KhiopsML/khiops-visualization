@@ -15,6 +15,7 @@ import {
   OnChanges,
   ElementRef,
   NgZone,
+  ChangeDetectionStrategy,
 } from '@angular/core';
 import { AgGridAngular } from '@ag-grid-community/angular';
 import { SelectableComponent } from '@khiops-library/components/selectable/selectable.component';
@@ -53,11 +54,13 @@ ModuleRegistry.registerModules([ClientSideRowModelModule]);
   selector: 'kl-ag-grid',
   templateUrl: './ag-grid.component.html',
   styleUrls: ['./ag-grid.component.scss'],
+  changeDetection: ChangeDetectionStrategy.Eager,
   standalone: false,
 })
 export class AgGridComponent
   extends SelectableComponent
-  implements OnChanges, AfterViewInit {
+  implements OnChanges, AfterViewInit
+{
   private settingsChangedSub: Subscription;
   @ViewChild('agGrid', {
     static: false,
@@ -80,13 +83,11 @@ export class AgGridComponent
   @Input() public displayCount = false;
   @Input() public noDataMessage: string | undefined;
   @Input() public rowSelection:
-    | 'single'
-    | 'multiple'
-    | RowSelectionOptions<any> = {
-      mode: 'singleRow',
-      enableClickSelection: true,
-      checkboxes: false,
-    };
+    'single' | 'multiple' | RowSelectionOptions<any> = {
+    mode: 'singleRow',
+    enableClickSelection: true,
+    checkboxes: false,
+  };
   @Input() public enableClickSelection = true;
   @Input() private showLineSelection = true;
   @Input() private selectedVariable: any; // Can be any types of data
@@ -108,8 +109,8 @@ export class AgGridComponent
   public context: {
     componentParent: AgGridComponent;
   } = {
-      componentParent: this, // used by CheckboxCellComponent
-    };
+    componentParent: this, // used by CheckboxCellComponent
+  };
   public isSmallDiv: boolean = false;
 
   public gridOptions = <GridOptions>{
@@ -154,26 +155,27 @@ export class AgGridComponent
     super(selectableService, ngzone, configService);
     this.AppConfig = this.khiopsLibraryService.getAppConfig().common;
 
-    this.settingsChangedSub = this.khiopsLibraryService.settingsChanged$.subscribe(() => {
-      if (this.isGridApiAvailable()) {
-        this.agGrid!.api.refreshCells({ force: true });
-      }
-    });
+    this.settingsChangedSub =
+      this.khiopsLibraryService.settingsChanged$.subscribe(() => {
+        if (this.isGridApiAvailable()) {
+          this.agGrid!.api.refreshCells({ force: true });
+        }
+      });
 
     this.title = this.translate.get('GLOBAL.VARIABLES') || this.title;
 
     try {
       const PREV_CELL_AG_GRID = this.ls.get(LS.CELL_AG_GRID);
       this.cellsSizes = PREV_CELL_AG_GRID || {};
-    } catch (e) { }
+    } catch (e) {}
     try {
       const PREV_COLUMNS_AG_GRID = this.ls.get(LS.COLUMNS_AG_GRID);
       this.visibleColumns = PREV_COLUMNS_AG_GRID || {};
-    } catch (e) { }
+    } catch (e) {}
     try {
       const PREV_MODES_AG_GRID = this.ls.get(LS.MODES_AG_GRID);
       this.gridModes = PREV_MODES_AG_GRID || {}; // 'fitToSpace' or 'fitToContent'
-    } catch (e) { }
+    } catch (e) {}
   }
 
   override ngOnDestroy() {
@@ -488,9 +490,7 @@ export class AgGridComponent
    * Gets the row selection configuration object for AG Grid v32+
    */
   private getRowSelectionConfig():
-    | 'single'
-    | 'multiple'
-    | RowSelectionOptions<any> {
+    'single' | 'multiple' | RowSelectionOptions<any> {
     // Handle legacy object format or new object format
     if (typeof this.rowSelection === 'object' && this.rowSelection !== null) {
       return this.rowSelection as RowSelectionOptions<any>;

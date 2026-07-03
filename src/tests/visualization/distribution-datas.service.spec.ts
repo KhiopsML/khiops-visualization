@@ -21,7 +21,7 @@ import { LS } from '@khiops-library/enum/ls';
 import { TestBed } from '@angular/core/testing';
 
 import { DistributionDatasService } from '@khiops-visualization/providers/distribution-datas.service';
-import { provideHttpClient } from '@angular/common/http';
+import { provideHttpClient, withXhr } from '@angular/common/http';
 import { AppService } from '@khiops-visualization/providers/app.service';
 import { PreparationDatasService } from '@khiops-visualization/providers/preparation-datas.service';
 import { TreePreparationDatasService } from '@khiops-visualization/providers/tree-preparation-datas.service';
@@ -43,7 +43,7 @@ describe('Visualization', () => {
       TestBed.configureTestingModule({
         imports: [TranslateModule.forRoot()],
         providers: [
-          provideHttpClient(),
+          provideHttpClient(withXhr()),
           provideMockStore({ initialState: {} }),
           DistributionDatasService,
           PreparationDatasService,

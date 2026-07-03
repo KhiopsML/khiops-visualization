@@ -107,7 +107,11 @@
                   [showColumnsSelection]="true"
                   [inputDatas]="variablesDatas"
                   [displayedColumns]="variablesDisplayedColumns"
-                  [selectedVariable]="treePreparationDatas?.selectedVariable"
+                  [selectedVariable]="
+                    $safeNavigationMigration(
+                      treePreparationDatas?.selectedVariable
+                    )
+                  "
                   [noDataMessage]="getNoDataMessage()"
                 >
                   @if (hasLevelData()) {
@@ -139,9 +143,15 @@
                     #appVariableGraphDetails
                     [preparationSource]="preparationSource"
                     [displayedValues]="
-                      distributionDatas?.targetDistributionDisplayedValues
+                      $safeNavigationMigration(
+                        distributionDatas?.targetDistributionDisplayedValues
+                      )
                     "
-                    [selectedVariable]="treePreparationDatas?.selectedVariable"
+                    [selectedVariable]="
+                      $safeNavigationMigration(
+                        treePreparationDatas?.selectedVariable
+                      )
+                    "
                     [selectedGraphItemIndex]="selectedBarIndex"
                     (selectedItemChanged)="onSelectedGraphItemChanged($event)"
                     fxFlex="1 1 100%"
@@ -169,7 +179,11 @@
               >
                 <app-tree-select
                   id="tree-preparation-select"
-                  [dimensionTree]="treePreparationDatas?.dimensionTree"
+                  [dimensionTree]="
+                    $safeNavigationMigration(
+                      treePreparationDatas?.dimensionTree
+                    )
+                  "
                 ></app-tree-select>
               </as-split-area>
               <as-split-area
@@ -194,7 +208,9 @@
                       <app-tree-leaf-details
                         fxFlexFill
                         [displayedValues]="
-                          distributionDatas?.targetDistributionDisplayedValues
+                          $safeNavigationMigration(
+                            distributionDatas?.targetDistributionDisplayedValues
+                          )
                         "
                       >
                       </app-tree-leaf-details>
@@ -213,9 +229,13 @@
         <app-tree-hyper
           id="tree-preparation-hyper"
           [displayedValues]="
-            distributionDatas?.targetDistributionDisplayedValues
+            $safeNavigationMigration(
+              distributionDatas?.targetDistributionDisplayedValues
+            )
           "
-          [dimensionTree]="treePreparationDatas?.dimensionTree"
+          [dimensionTree]="
+            $safeNavigationMigration(treePreparationDatas?.dimensionTree)
+          "
         >
         </app-tree-hyper>
       </as-split-area>

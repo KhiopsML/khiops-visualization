@@ -4,12 +4,10 @@
  * at https://spdx.org/licenses/BSD-3-Clause-Clear.html or see the "LICENSE" file for more details.
  */
 
-import { Component, ViewChild } from '@angular/core';
+import { Component, ViewChild, ChangeDetectionStrategy } from '@angular/core';
 import { TreePreparationDatasService } from '@khiops-visualization/providers/tree-preparation-datas.service';
 import { VariableGraphDetailsComponent } from '../variable-graph-details/variable-graph-details.component';
-import {
-  TreePreparationDatasModel,
-} from '@khiops-visualization/model/tree-preparation-datas.model';
+import { TreePreparationDatasModel } from '@khiops-visualization/model/tree-preparation-datas.model';
 import { LayoutService } from '@khiops-library/providers/layout.service';
 import { SplitGutterInteractionEvent } from 'angular-split';
 import { DynamicI } from '@khiops-library/interfaces/globals.interface';
@@ -23,6 +21,7 @@ import { REPORT } from '@khiops-library/enum/report';
 @Component({
   selector: 'app-var-details-tree-preparation',
   templateUrl: './var-details-tree-preparation.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   standalone: false,
 })
 export class VarDetailsTreePreparationComponent {

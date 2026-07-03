@@ -8,7 +8,7 @@
 import { TestBed } from '@angular/core/testing';
 import { AppService } from '@khiops-covisualization/providers/app.service';
 import { DimensionsDatasService } from '@khiops-covisualization/providers/dimensions-datas.service';
-import { provideHttpClient } from '@angular/common/http';
+import { provideHttpClient, withXhr } from '@angular/common/http';
 import { TreenodesService } from '@khiops-covisualization/providers/treenodes.service';
 import { EventsService } from '@khiops-covisualization/providers/events.service';
 import { TranslateModule } from '@ngstack/translate';
@@ -23,7 +23,7 @@ describe('coVisualization', () => {
     beforeEach(() => {
       TestBed.configureTestingModule({
         imports: [TranslateModule.forRoot()],
-  providers: [provideHttpClient()],
+        providers: [provideHttpClient(withXhr())],
       });
 
       // Inject services
@@ -141,7 +141,7 @@ describe('coVisualization', () => {
     beforeEach(() => {
       TestBed.configureTestingModule({
         imports: [TranslateModule.forRoot()],
-  providers: [provideHttpClient()],
+        providers: [provideHttpClient(withXhr())],
       });
 
       // Inject services
@@ -215,7 +215,7 @@ describe('coVisualization', () => {
     beforeEach(() => {
       TestBed.configureTestingModule({
         imports: [TranslateModule.forRoot()],
-        providers: [provideHttpClient()],
+        providers: [provideHttpClient(withXhr())],
       });
 
       dimensionsDatasService = TestBed.inject(DimensionsDatasService);
@@ -306,9 +306,7 @@ describe('coVisualization', () => {
 
         treenodesService.updateSelectedNodeName('dim1', 'node1', 'renamed');
 
-        expect(
-          dimensionsDatasService.dimensionsDatas.nodesNames,
-        ).toBeDefined();
+        expect(dimensionsDatasService.dimensionsDatas.nodesNames).toBeDefined();
         expect(
           dimensionsDatasService.dimensionsDatas.nodesNames['dim1']['node1'],
         ).toBe('renamed');
@@ -351,7 +349,9 @@ describe('coVisualization', () => {
         const obj2 = { dim1: ['A2', 'A3'] };
         const result = treenodesService.mergeCollapsedNodes(obj1, obj2);
 
-        expect(result.dim1).toEqual(jasmine.arrayContaining(['A1', 'A2', 'A3']));
+        expect(result.dim1).toEqual(
+          jasmine.arrayContaining(['A1', 'A2', 'A3']),
+        );
         expect(result.dim1.length).toBe(3); // unique values only
       });
 
@@ -423,12 +423,10 @@ describe('coVisualization', () => {
         loadV4();
         const dimName = dimensionsDatasService.getSelectedDimensions()[0].name;
         const cluster =
-          dimensionsDatasService.dimensionsDatas.currentDimensionsClusters[0][0];
+          dimensionsDatasService.dimensionsDatas
+            .currentDimensionsClusters[0][0];
 
-        const result = treenodesService.setSelectedNode(
-          dimName,
-          cluster.name,
-        );
+        const result = treenodesService.setSelectedNode(dimName, cluster.name);
 
         expect(result).toBeDefined();
       });
@@ -448,10 +446,7 @@ describe('coVisualization', () => {
 
       it('should return undefined for non-existent dimension', () => {
         loadV4();
-        const result = treenodesService.setSelectedNode(
-          'nonExistent',
-          'node1',
-        );
+        const result = treenodesService.setSelectedNode('nonExistent', 'node1');
         expect(result).toBeUndefined();
       });
 
@@ -460,7 +455,8 @@ describe('coVisualization', () => {
         treenodesService.initSelectedNodes();
         const dimName = dimensionsDatasService.getSelectedDimensions()[0].name;
         const cluster =
-          dimensionsDatasService.dimensionsDatas.currentDimensionsClusters[0][0];
+          dimensionsDatasService.dimensionsDatas
+            .currentDimensionsClusters[0][0];
 
         treenodesService.setSelectedNode(dimName, cluster.name);
 
@@ -477,13 +473,12 @@ describe('coVisualization', () => {
 
         const dimName = dimensionsDatasService.getSelectedDimensions()[0].name;
         const cluster =
-          dimensionsDatasService.dimensionsDatas.currentDimensionsClusters[0][0];
+          dimensionsDatasService.dimensionsDatas
+            .currentDimensionsClusters[0][0];
 
         treenodesService.setSelectedNode(dimName, cluster.name, false);
 
-        expect(
-          eventsService.emitTreeSelectedNodeChanged,
-        ).toHaveBeenCalled();
+        expect(eventsService.emitTreeSelectedNodeChanged).toHaveBeenCalled();
       });
 
       it('should not emit event when stopPropagation is true', () => {
@@ -494,7 +489,8 @@ describe('coVisualization', () => {
 
         const dimName = dimensionsDatasService.getSelectedDimensions()[0].name;
         const cluster =
-          dimensionsDatasService.dimensionsDatas.currentDimensionsClusters[0][0];
+          dimensionsDatasService.dimensionsDatas
+            .currentDimensionsClusters[0][0];
 
         treenodesService.setSelectedNode(dimName, cluster.name, true);
 
@@ -513,16 +509,32 @@ describe('coVisualization', () => {
 
         const dims = dimensionsDatasService.getSelectedDimensions();
         // Set initial selected nodes
-        treenodesService.setSelectedNode(dims[0].name, dimensionsDatasService.dimensionsDatas.currentDimensionsClusters[0][0].name, true);
-        treenodesService.setSelectedNode(dims[1].name, dimensionsDatasService.dimensionsDatas.currentDimensionsClusters[1][0].name, true);
+        treenodesService.setSelectedNode(
+          dims[0].name,
+          dimensionsDatasService.dimensionsDatas.currentDimensionsClusters[0][0]
+            .name,
+          true,
+        );
+        treenodesService.setSelectedNode(
+          dims[1].name,
+          dimensionsDatasService.dimensionsDatas.currentDimensionsClusters[1][0]
+            .name,
+          true,
+        );
 
-        const node0Before = dimensionsDatasService.dimensionsDatas.selectedNodes[0];
-        const node1Before = dimensionsDatasService.dimensionsDatas.selectedNodes[1];
+        const node0Before =
+          dimensionsDatasService.dimensionsDatas.selectedNodes[0];
+        const node1Before =
+          dimensionsDatasService.dimensionsDatas.selectedNodes[1];
 
         treenodesService.updateSelectedNodes(dims[1], 0);
 
-        expect(dimensionsDatasService.dimensionsDatas.selectedNodes[0]).toEqual(node1Before);
-        expect(dimensionsDatasService.dimensionsDatas.selectedNodes[1]).toEqual(node0Before);
+        expect(dimensionsDatasService.dimensionsDatas.selectedNodes[0]).toEqual(
+          node1Before,
+        );
+        expect(dimensionsDatasService.dimensionsDatas.selectedNodes[1]).toEqual(
+          node0Before,
+        );
       });
 
       it('should not change anything when dimension not found', () => {
@@ -530,7 +542,9 @@ describe('coVisualization', () => {
         treenodesService.initSelectedNodes();
         const fakeDim = { name: 'nonExistent' };
 
-        expect(() => treenodesService.updateSelectedNodes(fakeDim, 0)).not.toThrow();
+        expect(() =>
+          treenodesService.updateSelectedNodes(fakeDim, 0),
+        ).not.toThrow();
       });
     });
 
@@ -590,10 +604,7 @@ describe('coVisualization', () => {
             parentCluster: null,
           },
         ];
-        const result = treenodesService.getFirstVisibleNode(
-          nodes,
-          nodes[0],
-        );
+        const result = treenodesService.getFirstVisibleNode(nodes, nodes[0]);
         expect(result).toBeUndefined();
       });
 
@@ -629,9 +640,9 @@ describe('coVisualization', () => {
 
         treenodesService.initSelectedNodes();
 
-        expect(
-          dimensionsDatasService.dimensionsDatas.selectedNodes,
-        ).toEqual([]);
+        expect(dimensionsDatasService.dimensionsDatas.selectedNodes).toEqual(
+          [],
+        );
       });
     });
 
@@ -651,7 +662,8 @@ describe('coVisualization', () => {
         treenodesService.initSelectedNodes();
         const dimName = dimensionsDatasService.getSelectedDimensions()[0].name;
         const cluster =
-          dimensionsDatasService.dimensionsDatas.currentDimensionsClusters[0][0];
+          dimensionsDatasService.dimensionsDatas
+            .currentDimensionsClusters[0][0];
 
         treenodesService.setSelectedNode(dimName, cluster.name, true);
 
@@ -833,16 +845,17 @@ describe('coVisualization', () => {
 
         const dimName = dimensionsDatasService.getSelectedDimensions()[0].name;
         const cluster =
-          dimensionsDatasService.dimensionsDatas.currentDimensionsClusters[0][0];
+          dimensionsDatasService.dimensionsDatas
+            .currentDimensionsClusters[0][0];
         treenodesService.setSelectedNode(dimName, cluster.name, true);
 
         const existingNode =
           dimensionsDatasService.dimensionsDatas.selectedNodes[0];
         treenodesService.ensureAllDimensionsHaveSelection();
 
-        expect(
-          dimensionsDatasService.dimensionsDatas.selectedNodes[0],
-        ).toBe(existingNode);
+        expect(dimensionsDatasService.dimensionsDatas.selectedNodes[0]).toBe(
+          existingNode,
+        );
       });
     });
 

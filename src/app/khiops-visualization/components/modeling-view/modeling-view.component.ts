@@ -4,7 +4,7 @@
  * at https://spdx.org/licenses/BSD-3-Clause-Clear.html or see the "LICENSE" file for more details.
  */
 
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { ModelingDatasService } from '@khiops-visualization/providers/modeling-datas.service';
 import { PreparationDatasService } from '@khiops-visualization/providers/preparation-datas.service';
 import { SelectableTabComponent } from '@khiops-library/components/selectable-tab/selectable-tab.component';
@@ -32,6 +32,7 @@ import { DialogService } from '@khiops-library/providers/dialog.service';
   selector: 'app-modeling-view',
   templateUrl: './modeling-view.component.html',
   styleUrls: ['./modeling-view.component.scss'],
+  changeDetection: ChangeDetectionStrategy.Eager,
   standalone: false,
 })
 export class ModelingViewComponent extends SelectableTabComponent {

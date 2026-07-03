@@ -6,7 +6,7 @@
 // @ts-nocheck
 
 import { TestBed } from '@angular/core/testing';
-import { provideHttpClient } from '@angular/common/http';
+import { provideHttpClient, withXhr } from '@angular/common/http';
 import { TranslateModule } from '@ngstack/translate';
 import { AppService } from '@khiops-covisualization/providers/app.service';
 import { DimensionsDatasService } from '@khiops-covisualization/providers/dimensions-datas.service';
@@ -28,7 +28,7 @@ describe('coVisualization', () => {
     beforeEach(() => {
       TestBed.configureTestingModule({
         imports: [TranslateModule.forRoot()],
-        providers: [provideHttpClient()],
+        providers: [provideHttpClient(withXhr())],
       });
 
       appService = TestBed.inject(AppService);
@@ -51,11 +51,15 @@ describe('coVisualization', () => {
       it('should reset dimensionsDatas to a fresh model', () => {
         // Load some data first
         loadV4Data();
-        expect(dimensionsDatasService.dimensionsDatas.dimensions.length).toBeGreaterThan(0);
+        expect(
+          dimensionsDatasService.dimensionsDatas.dimensions.length,
+        ).toBeGreaterThan(0);
 
         // Reset
         dimensionsDatasService.initialize();
-        expect(dimensionsDatasService.dimensionsDatas.dimensions.length).toBe(0);
+        expect(dimensionsDatasService.dimensionsDatas.dimensions.length).toBe(
+          0,
+        );
       });
 
       it('should set default values on model', () => {
@@ -194,9 +198,9 @@ describe('coVisualization', () => {
       it('should return false for unknown dimension name', () => {
         loadV4Data();
         // findIndex returns -1 which is not > 1
-        expect(
-          dimensionsDatasService.isContextDimension('nonExistent'),
-        ).toBe(false);
+        expect(dimensionsDatasService.isContextDimension('nonExistent')).toBe(
+          false,
+        );
       });
     });
 
@@ -252,9 +256,8 @@ describe('coVisualization', () => {
 
       it('should return -1 for non-existent dimension', () => {
         loadV4Data();
-        const pos = dimensionsDatasService.getDimensionPositionFromName(
-          'nonExistentDim',
-        );
+        const pos =
+          dimensionsDatasService.getDimensionPositionFromName('nonExistentDim');
         expect(pos).toBe(-1);
       });
     });
@@ -459,8 +462,7 @@ describe('coVisualization', () => {
       it('should return correct count after building trees', () => {
         loadV4Data();
         dimensionsDatasService.constructDimensionsTrees();
-        const dimName =
-          dimensionsDatasService.getSelectedDimensions()[0].name;
+        const dimName = dimensionsDatasService.getSelectedDimensions()[0].name;
         const result = dimensionsDatasService.getDimensionIntervals(dimName);
         expect(result).toBeGreaterThan(0);
       });
@@ -520,8 +522,7 @@ describe('coVisualization', () => {
             { isLeaf: true, isCollapsed: false, children: [] },
           ],
         };
-        const result =
-          dimensionsDatasService.getNodeIntervalsCount(nestedNode);
+        const result = dimensionsDatasService.getNodeIntervalsCount(nestedNode);
         expect(result).toBe(3);
       });
     });
@@ -685,8 +686,7 @@ describe('coVisualization', () => {
           'computeMatrixDataFreqMap',
         ).and.callThrough();
 
-        const dimName =
-          dimensionsDatasService.getSelectedDimensions()[0].name;
+        const dimName = dimensionsDatasService.getSelectedDimensions()[0].name;
         dimensionsDatasService.recomputeDatasFromNewJson(dimName);
 
         expect(dimensionsDatasService.getDimensions).toHaveBeenCalled();

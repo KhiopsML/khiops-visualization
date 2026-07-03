@@ -7,6 +7,7 @@
  * This software is distributed under the BSD 3-Clause-clear License, the text of which is available
  * at https://spdx.org/licenses/BSD-3-Clause-Clear.html or see the "LICENSE" file for more details.
  */
+// @ts-nocheck
 
 import { N } from '../n/n';
 import { T } from './hyperbolic-math';
@@ -80,7 +81,10 @@ export class PanTransformation implements Transformation<N> {
   onDragEnd = (m: C) => (this.dST = undefined);
   isMoving = () => this.dST !== undefined;
   onDragP = (s: C, e: C) =>
-    CassignC(this.state.P, maxR(CaddC(this.dST.P, (s && e) ? CsubC(e, s) : { re: 0, im: 0 }), 0.95));
+    CassignC(
+      this.state.P,
+      maxR(CaddC(this.dST.P, s && e ? CsubC(e, s) : { re: 0, im: 0 }), 0.95),
+    );
   onDragθ = (s: C, e: C) => CassignC(this.state.θ, setR(e, 1));
   onDragλ = (l: number) => (this.state.λ = l);
 }

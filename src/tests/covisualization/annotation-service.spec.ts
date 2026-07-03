@@ -6,7 +6,7 @@
 // @ts-nocheck
 
 import { TestBed } from '@angular/core/testing';
-import { provideHttpClient } from '@angular/common/http';
+import { provideHttpClient, withXhr } from '@angular/common/http';
 import { TranslateModule } from '@ngstack/translate';
 import { AnnotationService } from '@khiops-covisualization/providers/annotation.service';
 import { AppService } from '@khiops-covisualization/providers/app.service';
@@ -21,7 +21,7 @@ describe('coVisualization', () => {
     beforeEach(() => {
       TestBed.configureTestingModule({
         imports: [TranslateModule.forRoot()],
-        providers: [provideHttpClient()],
+        providers: [provideHttpClient(withXhr())],
       });
 
       annotationService = TestBed.inject(AnnotationService);
@@ -127,9 +127,7 @@ describe('coVisualization', () => {
         );
 
         expect(
-          dimensionsDatasService.dimensionsDatas.annotations['newDim'][
-            'node1'
-          ],
+          dimensionsDatasService.dimensionsDatas.annotations['newDim']['node1'],
         ).toBe('new annotation');
       });
 

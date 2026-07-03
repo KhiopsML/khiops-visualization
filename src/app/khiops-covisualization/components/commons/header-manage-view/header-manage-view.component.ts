@@ -4,7 +4,7 @@
  * at https://spdx.org/licenses/BSD-3-Clause-Clear.html or see the "LICENSE" file for more details.
  */
 
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { DialogService } from '@khiops-library/providers/dialog.service';
 import { AppConfig } from '../../../../../environments/environment';
 import { UnfoldHierarchyComponent } from '../unfold-hierarchy/unfold-hierarchy.component';
@@ -15,6 +15,7 @@ import { ImportExtDatasListComponent } from '../import-ext-datas-list/import-ext
   selector: 'app-header-manage-view',
   templateUrl: './header-manage-view.component.html',
   styleUrls: ['./header-manage-view.component.scss'],
+  changeDetection: ChangeDetectionStrategy.Eager,
   standalone: false,
 })
 export class HeaderManageViewComponent {

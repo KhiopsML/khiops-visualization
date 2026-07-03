@@ -12,6 +12,7 @@ import {
   ViewContainerRef,
   ComponentRef,
   OnDestroy,
+  ChangeDetectionStrategy,
 } from '@angular/core';
 import {
   DialogService,
@@ -23,6 +24,7 @@ import { Observable, Subscription } from 'rxjs';
   selector: 'kl-dialog-wrapper',
   templateUrl: './dialog-wrapper.component.html',
   styleUrls: ['./dialog-wrapper.component.scss'],
+  changeDetection: ChangeDetectionStrategy.Eager,
   standalone: false,
 })
 export class DialogWrapperComponent

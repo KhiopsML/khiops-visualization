@@ -4,12 +4,19 @@
  * at https://spdx.org/licenses/BSD-3-Clause-Clear.html or see the "LICENSE" file for more details.
  */
 
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import {
+  Component,
+  Input,
+  Output,
+  EventEmitter,
+  ChangeDetectionStrategy,
+} from '@angular/core';
 
 @Component({
   selector: 'kl-unfold-hierarchy-settings',
   templateUrl: './unfold-hierarchy-settings.component.html',
   styleUrls: ['./unfold-hierarchy-settings.component.scss'],
+  changeDetection: ChangeDetectionStrategy.Eager,
   standalone: false,
 })
 export class UnfoldHierarchySettingsComponent {

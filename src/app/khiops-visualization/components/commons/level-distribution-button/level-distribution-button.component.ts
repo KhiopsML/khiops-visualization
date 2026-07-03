@@ -4,7 +4,13 @@
  * at https://spdx.org/licenses/BSD-3-Clause-Clear.html or see the "LICENSE" file for more details.
  */
 
-import { Component, Output, EventEmitter, Input } from '@angular/core';
+import {
+  Component,
+  Output,
+  EventEmitter,
+  Input,
+  ChangeDetectionStrategy,
+} from '@angular/core';
 import { TranslateService } from '@ngstack/translate';
 import { TYPES } from '@khiops-library/enum/types';
 import { DistributionType } from '@khiops-visualization/types/distribution-type';
@@ -13,6 +19,7 @@ import { DistributionType } from '@khiops-visualization/types/distribution-type'
   selector: 'app-level-distribution-button',
   templateUrl: './level-distribution-button.component.html',
   styleUrls: ['./level-distribution-button.component.scss'],
+  changeDetection: ChangeDetectionStrategy.Eager,
   standalone: false,
 })
 export class LevelDistributionButtonComponent {

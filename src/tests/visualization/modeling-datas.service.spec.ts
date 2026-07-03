@@ -8,7 +8,7 @@
 import { TestBed } from '@angular/core/testing';
 
 import { ModelingDatasService } from '@khiops-visualization/providers/modeling-datas.service';
-import { provideHttpClient } from '@angular/common/http';
+import { provideHttpClient, withXhr } from '@angular/common/http';
 import { AppService } from '@khiops-visualization/providers/app.service';
 import { PreparationDatasService } from '@khiops-visualization/providers/preparation-datas.service';
 import { REPORT } from '@khiops-library/enum/report';
@@ -23,7 +23,7 @@ describe('Visualization', () => {
     beforeEach(() => {
       TestBed.configureTestingModule({
         imports: [TranslateModule.forRoot()],
-  providers: [provideHttpClient()],
+        providers: [provideHttpClient(withXhr())],
       });
 
       // Inject services
@@ -122,14 +122,18 @@ describe('Visualization', () => {
       });
 
       it('should return ModelingDatasModel with selectedVariable after initialize with C100', () => {
-        const fileDatas = JSON.parse(JSON.stringify(require('../../assets/mocks/kv/C100_AllReports.json')));
+        const fileDatas = JSON.parse(
+          JSON.stringify(require('../../assets/mocks/kv/C100_AllReports.json')),
+        );
         appService.setFileDatas(fileDatas);
         preparationDatasService.initialize();
         modelingDatasService.initialize();
         const datas = modelingDatasService.getDatas();
         // After init, selectedVariable is the first preparation variable (R001)
         expect(datas.selectedVariable).toBeTruthy();
-        expect(datas.selectedVariable.name).toBe('Mean(LLFields.missing energy magnitude)');
+        expect(datas.selectedVariable.name).toBe(
+          'Mean(LLFields.missing energy magnitude)',
+        );
       });
     });
 
@@ -137,7 +141,9 @@ describe('Visualization', () => {
 
     describe('setSelectedVariable', () => {
       it('should set selected variable', () => {
-        const fileDatas = JSON.parse(JSON.stringify(require('../../assets/mocks/kv/C100_AllReports.json')));
+        const fileDatas = JSON.parse(
+          JSON.stringify(require('../../assets/mocks/kv/C100_AllReports.json')),
+        );
         appService.setFileDatas(fileDatas);
         preparationDatasService.initialize();
         modelingDatasService.initialize();
@@ -148,7 +154,9 @@ describe('Visualization', () => {
       });
 
       it('should call initSelectedVariable when object is falsy', () => {
-        const fileDatas = JSON.parse(JSON.stringify(require('../../assets/mocks/kv/C100_AllReports.json')));
+        const fileDatas = JSON.parse(
+          JSON.stringify(require('../../assets/mocks/kv/C100_AllReports.json')),
+        );
         appService.setFileDatas(fileDatas);
         preparationDatasService.initialize();
         modelingDatasService.initialize();
@@ -163,7 +171,9 @@ describe('Visualization', () => {
 
     describe('removeSelectedVariable', () => {
       it('should remove selected variable', () => {
-        const fileDatas = JSON.parse(JSON.stringify(require('../../assets/mocks/kv/C100_AllReports.json')));
+        const fileDatas = JSON.parse(
+          JSON.stringify(require('../../assets/mocks/kv/C100_AllReports.json')),
+        );
         appService.setFileDatas(fileDatas);
         preparationDatasService.initialize();
         modelingDatasService.initialize();
@@ -185,7 +195,9 @@ describe('Visualization', () => {
       });
 
       it('should return "Mean(LLFields.missing energy magnitude)" after C100 initialization (first preparation variable)', () => {
-        const fileDatas = JSON.parse(JSON.stringify(require('../../assets/mocks/kv/C100_AllReports.json')));
+        const fileDatas = JSON.parse(
+          JSON.stringify(require('../../assets/mocks/kv/C100_AllReports.json')),
+        );
         appService.setFileDatas(fileDatas);
         preparationDatasService.initialize();
         modelingDatasService.initialize();
@@ -201,7 +213,9 @@ describe('Visualization', () => {
 
     describe('initSelectedVariable', () => {
       it('should select "Mean(LLFields.lepton pT)" from R1 first var in C100', () => {
-        const fileDatas = JSON.parse(JSON.stringify(require('../../assets/mocks/kv/C100_AllReports.json')));
+        const fileDatas = JSON.parse(
+          JSON.stringify(require('../../assets/mocks/kv/C100_AllReports.json')),
+        );
         appService.setFileDatas(fileDatas);
         preparationDatasService.initialize();
         modelingDatasService.initialize();
@@ -217,7 +231,9 @@ describe('Visualization', () => {
       });
 
       it('should select "capital_gain" from R1 first var in AdultAllReports', () => {
-        const fileDatas = JSON.parse(JSON.stringify(require('../../assets/mocks/kv/AdultAllReports.json')));
+        const fileDatas = JSON.parse(
+          JSON.stringify(require('../../assets/mocks/kv/AdultAllReports.json')),
+        );
         appService.setFileDatas(fileDatas);
         preparationDatasService.initialize();
         modelingDatasService.initialize();
@@ -242,22 +258,32 @@ describe('Visualization', () => {
 
     describe('getSummaryDatas', () => {
       it('should return summary with dictionary=RootHIGGSOne, targetVariable=Class, instances=10500000 for C100', () => {
-        const fileDatas = JSON.parse(JSON.stringify(require('../../assets/mocks/kv/C100_AllReports.json')));
+        const fileDatas = JSON.parse(
+          JSON.stringify(require('../../assets/mocks/kv/C100_AllReports.json')),
+        );
         appService.setFileDatas(fileDatas);
         preparationDatasService.initialize();
         modelingDatasService.initialize();
 
         const summaryDatas = modelingDatasService.getSummaryDatas();
         expect(summaryDatas.length).toBe(6);
-        const dictItem = summaryDatas.find(e => e.title === 'GLOBAL.DICTIONARY');
+        const dictItem = summaryDatas.find(
+          (e) => e.title === 'GLOBAL.DICTIONARY',
+        );
         expect(dictItem.value).toBe('RootHIGGSOne');
-        const targetItem = summaryDatas.find(e => e.title === 'GLOBAL.TARGET_VARIABLE');
+        const targetItem = summaryDatas.find(
+          (e) => e.title === 'GLOBAL.TARGET_VARIABLE',
+        );
         expect(targetItem.value).toBe('Class');
-        const instancesItem = summaryDatas.find(e => e.title === 'GLOBAL.INSTANCES');
+        const instancesItem = summaryDatas.find(
+          (e) => e.title === 'GLOBAL.INSTANCES',
+        );
         expect(instancesItem.value).toBe(10500000);
-        const dbItem = summaryDatas.find(e => e.title === 'GLOBAL.DATABASE');
+        const dbItem = summaryDatas.find((e) => e.title === 'GLOBAL.DATABASE');
         expect(dbItem.value).toBe('MTRootHiggsTrain.txt');
-        const taskItem = summaryDatas.find(e => e.title === 'GLOBAL.LEARNING_TASK');
+        const taskItem = summaryDatas.find(
+          (e) => e.title === 'GLOBAL.LEARNING_TASK',
+        );
         expect(taskItem.value).toBe('Classification analysis');
       });
 
@@ -272,7 +298,9 @@ describe('Visualization', () => {
 
     describe('getTrainedPredictorsSummaryDatas', () => {
       it('should return 2 predictors for C100: MAP Naive Bayes (19 vars) and Selective Naive Bayes (100 vars)', () => {
-        const fileDatas = JSON.parse(JSON.stringify(require('../../assets/mocks/kv/C100_AllReports.json')));
+        const fileDatas = JSON.parse(
+          JSON.stringify(require('../../assets/mocks/kv/C100_AllReports.json')),
+        );
         appService.setFileDatas(fileDatas);
         preparationDatasService.initialize();
         modelingDatasService.initialize();
@@ -286,7 +314,9 @@ describe('Visualization', () => {
       });
 
       it('should return 1 predictor for AdultAllReports: Selective Naive Bayes (13 vars)', () => {
-        const fileDatas = JSON.parse(JSON.stringify(require('../../assets/mocks/kv/AdultAllReports.json')));
+        const fileDatas = JSON.parse(
+          JSON.stringify(require('../../assets/mocks/kv/AdultAllReports.json')),
+        );
         appService.setFileDatas(fileDatas);
         preparationDatasService.initialize();
         modelingDatasService.initialize();
@@ -299,7 +329,9 @@ describe('Visualization', () => {
 
       it('should throw when appDatas not initialized', () => {
         appService.initialize();
-        expect(() => modelingDatasService.getTrainedPredictorsSummaryDatas()).toThrow();
+        expect(() =>
+          modelingDatasService.getTrainedPredictorsSummaryDatas(),
+        ).toThrow();
       });
     });
 
@@ -307,11 +339,15 @@ describe('Visualization', () => {
 
     describe('setSelectedPredictor', () => {
       it('should throw when modelingDatas not initialized', () => {
-        expect(() => modelingDatasService.setSelectedPredictor({ rank: 'R1' })).toThrow();
+        expect(() =>
+          modelingDatasService.setSelectedPredictor({ rank: 'R1' }),
+        ).toThrow();
       });
 
       it('should set predictor with exact properties when initialized', () => {
-        const fileDatas = JSON.parse(JSON.stringify(require('../../assets/mocks/kv/C100_AllReports.json')));
+        const fileDatas = JSON.parse(
+          JSON.stringify(require('../../assets/mocks/kv/C100_AllReports.json')),
+        );
         appService.setFileDatas(fileDatas);
         preparationDatasService.initialize();
         modelingDatasService.initialize();
@@ -340,7 +376,9 @@ describe('Visualization', () => {
       });
 
       it('should return predictor with rank=R2, name=Selective Naive Bayes after set', () => {
-        const fileDatas = JSON.parse(JSON.stringify(require('../../assets/mocks/kv/C100_AllReports.json')));
+        const fileDatas = JSON.parse(
+          JSON.stringify(require('../../assets/mocks/kv/C100_AllReports.json')),
+        );
         appService.setFileDatas(fileDatas);
         preparationDatasService.initialize();
         modelingDatasService.initialize();
@@ -364,11 +402,15 @@ describe('Visualization', () => {
 
     describe('getTrainedPredictorListDatas', () => {
       it('should throw when modelingDatas not initialized', () => {
-        expect(() => modelingDatasService.getTrainedPredictorListDatas()).toThrow();
+        expect(() =>
+          modelingDatasService.getTrainedPredictorListDatas(),
+        ).toThrow();
       });
 
       it('should return undefined when no predictor is selected', () => {
-        const fileDatas = JSON.parse(JSON.stringify(require('../../assets/mocks/kv/C100_AllReports.json')));
+        const fileDatas = JSON.parse(
+          JSON.stringify(require('../../assets/mocks/kv/C100_AllReports.json')),
+        );
         appService.setFileDatas(fileDatas);
         preparationDatasService.initialize();
         modelingDatasService.initialize();
@@ -379,7 +421,9 @@ describe('Visualization', () => {
       });
 
       it('should return 100 vars for R2 predictor, first var = "Mean(LLFields.jet 1 pt) where jet 1 b-tag > 0.5" with weight=0.887891', () => {
-        const fileDatas = JSON.parse(JSON.stringify(require('../../assets/mocks/kv/C100_AllReports.json')));
+        const fileDatas = JSON.parse(
+          JSON.stringify(require('../../assets/mocks/kv/C100_AllReports.json')),
+        );
         appService.setFileDatas(fileDatas);
         preparationDatasService.initialize();
         modelingDatasService.initialize();
@@ -393,18 +437,24 @@ describe('Visualization', () => {
         });
         const result = modelingDatasService.getTrainedPredictorListDatas();
         expect(result.length).toBe(100);
-        expect(result[0].name).toBe('Mean(LLFields.jet 1 pt) where jet 1 b-tag > 0.5');
+        expect(result[0].name).toBe(
+          'Mean(LLFields.jet 1 pt) where jet 1 b-tag > 0.5',
+        );
         expect(result[0].level).toBe(0.00618118);
         expect(result[0].weight).toBe(0.887891);
         expect(result[0].map).toBe(true);
         // Last var should not have map=true
         const lastVar = result[result.length - 1];
-        expect(lastVar.name).toBe('Mean(LLFields.jet 3 pt) where jet 4 pt > 0.8681');
+        expect(lastVar.name).toBe(
+          'Mean(LLFields.jet 3 pt) where jet 4 pt > 0.8681',
+        );
         expect(lastVar.weight).toBe(0.00840457);
       });
 
       it('should return 19 vars for R1 predictor, first var = "Mean(LLFields.lepton pT)" with level=0.00707239', () => {
-        const fileDatas = JSON.parse(JSON.stringify(require('../../assets/mocks/kv/C100_AllReports.json')));
+        const fileDatas = JSON.parse(
+          JSON.stringify(require('../../assets/mocks/kv/C100_AllReports.json')),
+        );
         appService.setFileDatas(fileDatas);
         preparationDatasService.initialize();
         modelingDatasService.initialize();
@@ -423,7 +473,9 @@ describe('Visualization', () => {
       });
 
       it('should return undefined for non-existent predictor rank', () => {
-        const fileDatas = JSON.parse(JSON.stringify(require('../../assets/mocks/kv/C100_AllReports.json')));
+        const fileDatas = JSON.parse(
+          JSON.stringify(require('../../assets/mocks/kv/C100_AllReports.json')),
+        );
         appService.setFileDatas(fileDatas);
         preparationDatasService.initialize();
         modelingDatasService.initialize();
@@ -444,17 +496,22 @@ describe('Visualization', () => {
 
     describe('getTrainedPredictorDisplayedColumns', () => {
       it('should return empty array when no predictor list has been loaded', () => {
-        const fileDatas = JSON.parse(JSON.stringify(require('../../assets/mocks/kv/C100_AllReports.json')));
+        const fileDatas = JSON.parse(
+          JSON.stringify(require('../../assets/mocks/kv/C100_AllReports.json')),
+        );
         appService.setFileDatas(fileDatas);
         preparationDatasService.initialize();
         modelingDatasService.initialize();
 
-        const result = modelingDatasService.getTrainedPredictorDisplayedColumns();
+        const result =
+          modelingDatasService.getTrainedPredictorDisplayedColumns();
         expect(result.length).toBe(0);
       });
 
       it('should return [Name, Level] columns for R1 (MAP Naive Bayes, no weight/map)', () => {
-        const fileDatas = JSON.parse(JSON.stringify(require('../../assets/mocks/kv/C100_AllReports.json')));
+        const fileDatas = JSON.parse(
+          JSON.stringify(require('../../assets/mocks/kv/C100_AllReports.json')),
+        );
         appService.setFileDatas(fileDatas);
         preparationDatasService.initialize();
         modelingDatasService.initialize();
@@ -481,7 +538,9 @@ describe('Visualization', () => {
 
     describe('getVariableFromName (additional)', () => {
       it('should return undefined for non-existent variable name', () => {
-        const fileDatas = JSON.parse(JSON.stringify(require('../../assets/mocks/kv/C100_AllReports.json')));
+        const fileDatas = JSON.parse(
+          JSON.stringify(require('../../assets/mocks/kv/C100_AllReports.json')),
+        );
         appService.setFileDatas(fileDatas);
         preparationDatasService.initialize();
         modelingDatasService.initialize();
@@ -501,7 +560,9 @@ describe('Visualization', () => {
 
     describe('with AdultAllReports', () => {
       it('should auto-select "relationship" variable after initialize (first preparation variable)', () => {
-        const fileDatas = JSON.parse(JSON.stringify(require('../../assets/mocks/kv/AdultAllReports.json')));
+        const fileDatas = JSON.parse(
+          JSON.stringify(require('../../assets/mocks/kv/AdultAllReports.json')),
+        );
         appService.setFileDatas(fileDatas);
         preparationDatasService.initialize();
         modelingDatasService.initialize();
@@ -513,22 +574,28 @@ describe('Visualization', () => {
       });
 
       it('should return summary with dictionary=Adult, targetVariable=class for AdultAllReports', () => {
-        const fileDatas = JSON.parse(JSON.stringify(require('../../assets/mocks/kv/AdultAllReports.json')));
+        const fileDatas = JSON.parse(
+          JSON.stringify(require('../../assets/mocks/kv/AdultAllReports.json')),
+        );
         appService.setFileDatas(fileDatas);
         preparationDatasService.initialize();
         modelingDatasService.initialize();
 
         const result = modelingDatasService.getSummaryDatas();
-        const dictItem = result.find(e => e.title === 'GLOBAL.DICTIONARY');
+        const dictItem = result.find((e) => e.title === 'GLOBAL.DICTIONARY');
         expect(dictItem.value).toBe('Adult');
-        const targetItem = result.find(e => e.title === 'GLOBAL.TARGET_VARIABLE');
+        const targetItem = result.find(
+          (e) => e.title === 'GLOBAL.TARGET_VARIABLE',
+        );
         expect(targetItem.value).toBe('class');
-        const taskItem = result.find(e => e.title === 'GLOBAL.LEARNING_TASK');
+        const taskItem = result.find((e) => e.title === 'GLOBAL.LEARNING_TASK');
         expect(taskItem.value).toBe('Classification analysis');
       });
 
       it('should return 13 vars for R1 predictor, first var = "capital_gain" with level=0.134729, weight=0.869419', () => {
-        const fileDatas = JSON.parse(JSON.stringify(require('../../assets/mocks/kv/AdultAllReports.json')));
+        const fileDatas = JSON.parse(
+          JSON.stringify(require('../../assets/mocks/kv/AdultAllReports.json')),
+        );
         appService.setFileDatas(fileDatas);
         preparationDatasService.initialize();
         modelingDatasService.initialize();
@@ -549,12 +616,15 @@ describe('Visualization', () => {
       });
 
       it('should find variable "capital_gain" by name with level=0.134729', () => {
-        const fileDatas = JSON.parse(JSON.stringify(require('../../assets/mocks/kv/AdultAllReports.json')));
+        const fileDatas = JSON.parse(
+          JSON.stringify(require('../../assets/mocks/kv/AdultAllReports.json')),
+        );
         appService.setFileDatas(fileDatas);
         preparationDatasService.initialize();
         modelingDatasService.initialize();
 
-        const variable = modelingDatasService.getVariableFromName('capital_gain');
+        const variable =
+          modelingDatasService.getVariableFromName('capital_gain');
         expect(variable.name).toBe('capital_gain');
         expect(variable.level).toBe(0.134729);
         expect(variable.weight).toBe(0.869419);

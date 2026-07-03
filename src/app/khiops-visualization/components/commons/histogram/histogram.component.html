@@ -55,7 +55,7 @@
                 [step]="1"
                 (input)="
                   onInterpretableHistogramChanged(
-                    $event?.target?.['valueAsNumber']
+                    $safeNavigationMigration($event?.target?.['valueAsNumber'])
                   )
                 "
                 style="width: 100%"

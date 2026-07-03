@@ -6,7 +6,7 @@
 
 // @ts-nocheck
 import { TestBed } from '@angular/core/testing';
-import { provideHttpClient } from '@angular/common/http';
+import { provideHttpClient, withXhr } from '@angular/common/http';
 import { CopyService } from '@khiops-library/providers/copy.service';
 import { ConfigService } from '@khiops-library/providers/config.service';
 import { UtilsService } from '@khiops-library/providers/utils.service';
@@ -24,7 +24,7 @@ describe('CopyService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [TranslateModule.forRoot()],
-      providers: [provideHttpClient(), CopyService, ConfigService],
+      providers: [provideHttpClient(withXhr()), CopyService, ConfigService],
     });
 
     service = TestBed.inject(CopyService);
@@ -1014,9 +1014,7 @@ describe('CopyService', () => {
 
     it('should format tree data with numerical selected cluster', () => {
       const mockSelectedArea: DynamicI = {
-        dimensionsTree: [
-          /* mock tree structure */
-        ],
+        dimensionsTree: [/* mock tree structure */],
         selectedTreeCluster: {
           dimensionType: 'Numerical',
           intervals: 5,
@@ -1039,9 +1037,7 @@ describe('CopyService', () => {
 
     it('should format tree data with categorical selected cluster', () => {
       const mockSelectedArea: DynamicI = {
-        dimensionsTree: [
-          /* mock tree structure */
-        ],
+        dimensionsTree: [/* mock tree structure */],
         selectedTreeCluster: {
           dimensionType: 'Categorical',
           intervals: 3,
@@ -1063,9 +1059,7 @@ describe('CopyService', () => {
 
     it('should format tree data without selected cluster', () => {
       const mockSelectedArea: DynamicI = {
-        dimensionsTree: [
-          /* mock tree structure */
-        ],
+        dimensionsTree: [/* mock tree structure */],
         selectedTreeCluster: null,
       };
 
@@ -1181,7 +1175,7 @@ describe('CopyService - Real Data Tests', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [TranslateModule.forRoot()],
-      providers: [provideHttpClient(), CopyService, ConfigService],
+      providers: [provideHttpClient(withXhr()), CopyService, ConfigService],
     });
 
     service = TestBed.inject(CopyService);

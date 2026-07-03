@@ -4,7 +4,7 @@
  * at https://spdx.org/licenses/BSD-3-Clause-Clear.html or see the "LICENSE" file for more details.
  */
 
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { AppService } from '@khiops-covisualization/providers/app.service';
 import { DialogService } from '@khiops-library/providers/dialog.service';
 import { ViewLayoutVO } from '@khiops-covisualization/model/view-layout.model';
@@ -17,6 +17,7 @@ import { DimensionViewLayoutModel } from '@khiops-covisualization/model/dimensio
   selector: 'app-manage-views',
   templateUrl: './manage-views.component.html',
   styleUrls: ['./manage-views.component.scss'],
+  changeDetection: ChangeDetectionStrategy.Eager,
   standalone: false,
 })
 export class ManageViewsComponent {

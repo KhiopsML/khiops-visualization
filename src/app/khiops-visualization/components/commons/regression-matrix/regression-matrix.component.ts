@@ -13,6 +13,7 @@ import {
   ViewChild,
   AfterViewInit,
   OnChanges,
+  ChangeDetectionStrategy,
 } from '@angular/core';
 import { PreparationDatasService } from '@khiops-visualization/providers/preparation-datas.service';
 import { Preparation2dDatasService } from '@khiops-visualization/providers/preparation2d-datas.service';
@@ -36,6 +37,7 @@ import { TranslateService } from '@ngstack/translate';
   selector: 'app-regression-matrix',
   templateUrl: './regression-matrix.component.html',
   styleUrls: ['./regression-matrix.component.scss'],
+  changeDetection: ChangeDetectionStrategy.Eager,
   standalone: false,
 })
 export class RegressionMatrixComponent implements AfterViewInit, OnChanges {

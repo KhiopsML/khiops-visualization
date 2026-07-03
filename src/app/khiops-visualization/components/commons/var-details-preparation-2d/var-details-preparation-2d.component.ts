@@ -4,7 +4,7 @@
  * at https://spdx.org/licenses/BSD-3-Clause-Clear.html or see the "LICENSE" file for more details.
  */
 
-import { Component, ViewChild } from '@angular/core';
+import { Component, ViewChild, ChangeDetectionStrategy } from '@angular/core';
 import { AppService } from '@khiops-visualization/providers/app.service';
 import { Preparation2dDatasService } from '@khiops-visualization/providers/preparation2d-datas.service';
 import { TargetDistributionGraphComponent } from '../target-distribution-graph/target-distribution-graph.component';
@@ -17,10 +17,11 @@ import { SplitGutterInteractionEvent } from 'angular-split';
 import { DynamicI } from '@khiops-library/interfaces/globals.interface';
 
 @Component({
-    selector: 'app-var-details-preparation-2d',
-    templateUrl: './var-details-preparation-2d.component.html',
-    styleUrls: ['./var-details-preparation-2d.component.scss'],
-    standalone: false
+  selector: 'app-var-details-preparation-2d',
+  templateUrl: './var-details-preparation-2d.component.html',
+  styleUrls: ['./var-details-preparation-2d.component.scss'],
+  changeDetection: ChangeDetectionStrategy.Eager,
+  standalone: false,
 })
 export class VarDetailsPreparation2dComponent {
   @ViewChild('targetDistributionGraph', {

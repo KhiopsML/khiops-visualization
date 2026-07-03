@@ -4,7 +4,7 @@
  * at https://spdx.org/licenses/BSD-3-Clause-Clear.html or see the "LICENSE" file for more details.
  */
 
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { LS } from '@khiops-library/enum/ls';
 import { HistogramType } from '../histogram/histogram.type';
 import { AppService } from '@khiops-visualization/providers/app.service';
@@ -21,6 +21,7 @@ export interface ScaleSettings {
   selector: 'app-change-scale-dialog',
   templateUrl: './change-scale-dialog.component.html',
   styleUrls: ['./change-scale-dialog.component.scss'],
+  changeDetection: ChangeDetectionStrategy.Eager,
   standalone: false,
 })
 export class ChangeScaleDialogComponent implements OnInit {

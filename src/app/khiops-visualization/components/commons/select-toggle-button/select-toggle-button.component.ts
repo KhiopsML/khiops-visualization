@@ -12,6 +12,7 @@ import {
   OnInit,
   Output,
   SimpleChanges,
+  ChangeDetectionStrategy,
 } from '@angular/core';
 import { TranslateService } from '@ngstack/translate';
 import { ChartToggleValuesI } from '@khiops-visualization/interfaces/chart-toggle-values.interface';
@@ -24,6 +25,7 @@ import { AppConfig } from '../../../../../environments/environment';
   selector: 'app-select-toggle-button',
   templateUrl: './select-toggle-button.component.html',
   styleUrls: ['./select-toggle-button.component.scss'],
+  changeDetection: ChangeDetectionStrategy.Eager,
   standalone: false,
 })
 export class SelectToggleButtonComponent implements OnInit, OnChanges {

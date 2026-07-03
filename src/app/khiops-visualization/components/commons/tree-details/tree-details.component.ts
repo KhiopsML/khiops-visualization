@@ -4,7 +4,7 @@
  * at https://spdx.org/licenses/BSD-3-Clause-Clear.html or see the "LICENSE" file for more details.
  */
 
-import { Component, NgZone } from '@angular/core';
+import { Component, NgZone, ChangeDetectionStrategy } from '@angular/core';
 import { SelectableService } from '@khiops-library/components/selectable/selectable.service';
 import { GridDatasI } from '@khiops-library/interfaces/grid-datas.interface';
 import { TranslateService } from '@ngstack/translate';
@@ -17,7 +17,8 @@ import { TreePreparationStore } from '@khiops-visualization/stores/tree-preparat
   selector: 'app-tree-details',
   templateUrl: './tree-details.component.html',
   styleUrls: ['./tree-details.component.scss'],
-  standalone: false
+  changeDetection: ChangeDetectionStrategy.Eager,
+  standalone: false,
 })
 export class TreeDetailsComponent {
   public treeDetails?: GridDatasI;

@@ -15,6 +15,7 @@ import {
   Output,
   EventEmitter,
   SimpleChanges,
+  ChangeDetectionStrategy,
 } from '@angular/core';
 import { TranslateService } from '@ngstack/translate';
 import { DistributionGraphComponent } from '@khiops-library/components/distribution-graph/distribution-graph.component';
@@ -35,6 +36,7 @@ import { DimensionsDatasService } from '../../../providers/dimensions-datas.serv
   selector: 'app-variable-graph-details',
   templateUrl: './variable-graph-details.component.html',
   styleUrls: ['./variable-graph-details.component.scss'],
+  changeDetection: ChangeDetectionStrategy.Eager,
   standalone: false,
 })
 export class VariableGraphDetailsComponent
@@ -50,8 +52,7 @@ export class VariableGraphDetailsComponent
   @Input() public position: number = 0;
   @Input() private dimensionsTree: TreeNodeModel[] | undefined;
   @Input() private selectedDimensions:
-    | DimensionCovisualizationModel[]
-    | undefined;
+    DimensionCovisualizationModel[] | undefined;
 
   public scrollPosition = 0;
   public scaleValue: number = 0;

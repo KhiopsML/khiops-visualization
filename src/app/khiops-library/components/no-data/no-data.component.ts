@@ -4,13 +4,14 @@
  * at https://spdx.org/licenses/BSD-3-Clause-Clear.html or see the "LICENSE" file for more details.
  */
 
-import { Component, Input } from '@angular/core';
+import { Component, Input, ChangeDetectionStrategy } from '@angular/core';
 import { TranslateService } from '@ngstack/translate';
 
 @Component({
-    selector: 'kl-no-data',
-    templateUrl: './no-data.component.html',
-    standalone: false
+  selector: 'kl-no-data',
+  templateUrl: './no-data.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
+  standalone: false,
 })
 export class NoDataComponent {
   @Input() private message?: string;

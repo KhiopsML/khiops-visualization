@@ -4,7 +4,7 @@
  * at https://spdx.org/licenses/BSD-3-Clause-Clear.html or see the "LICENSE" file for more details.
  */
 
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { GridColumnsI } from '@khiops-library/interfaces/grid-columns.interface';
 import { ProjectLogModel } from '@khiops-library/model/project-log.model';
 import { ProjectDatasService } from '@khiops-visualization/providers/project-datas.service';
@@ -17,6 +17,7 @@ import { GravityCellComponent } from './gravity-cell/gravity-cell.component';
   selector: 'app-project-logs',
   templateUrl: './project-logs.component.html',
   styleUrls: ['./project-logs.component.scss'],
+  changeDetection: ChangeDetectionStrategy.Eager,
   standalone: false,
 })
 export class ProjectLogsComponent {

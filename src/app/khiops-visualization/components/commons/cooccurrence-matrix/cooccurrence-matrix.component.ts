@@ -13,6 +13,7 @@ import {
   ViewChild,
   Output,
   EventEmitter,
+  ChangeDetectionStrategy,
 } from '@angular/core';
 import { Preparation2dDatasService } from '@khiops-visualization/providers/preparation2d-datas.service';
 import { SelectableService } from '@khiops-library/components/selectable/selectable.service';
@@ -38,6 +39,7 @@ import { CooccurrenceMatrixConfigService } from './cooccurrence-matrix-config.se
   selector: 'app-cooccurrence-matrix',
   templateUrl: './cooccurrence-matrix.component.html',
   styleUrls: ['./cooccurrence-matrix.component.scss'],
+  changeDetection: ChangeDetectionStrategy.Eager,
   standalone: false,
 })
 export class CooccurrenceMatrixComponent implements OnChanges, AfterViewInit {
@@ -144,7 +146,9 @@ export class CooccurrenceMatrixComponent implements OnChanges, AfterViewInit {
    */
   onSelectedMatrixTabChanged(e: { index: number }) {
     const rootElement = this.configService.getRootElementDom();
-    const matrixOptionsToggle = rootElement?.querySelector<HTMLElement>('#matrix-option-toggle');
+    const matrixOptionsToggle = rootElement?.querySelector<HTMLElement>(
+      '#matrix-option-toggle',
+    );
 
     if (e.index === this.CELLS_TAB_INDEX) {
       matrixOptionsToggle!.style.display = 'none';

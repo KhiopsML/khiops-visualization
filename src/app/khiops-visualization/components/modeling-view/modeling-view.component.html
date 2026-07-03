@@ -16,19 +16,25 @@
  } -->
   @if (!loadingView) {
     <as-split direction="vertical" (dragEnd)="onSplitDragEnd($event, 'row')">
-      <as-split-area [size]="sizes?.row[0]">
+      <as-split-area [size]="$safeNavigationMigration(sizes?.row[0])">
         <as-split
           direction="horizontal"
           (dragEnd)="onSplitDragEnd($event, 'row0Col')"
         >
-          <as-split-area [size]="sizes?.row0Col[0]" class="kl-card">
+          <as-split-area
+            [size]="$safeNavigationMigration(sizes?.row0Col[0])"
+            class="kl-card"
+          >
             <kl-informations-block
               id="modeling-informations-block-summary"
               title="{{ 'GLOBAL.SUMMARY' | translate }}"
               [inputDatas]="summaryDatas"
             ></kl-informations-block>
           </as-split-area>
-          <as-split-area [size]="sizes?.row0Col[1]" class="kl-card">
+          <as-split-area
+            [size]="$safeNavigationMigration(sizes?.row0Col[1])"
+            class="kl-card"
+          >
             @if (targetVariableStatsDatas) {
               <app-target-variable-stats
                 id="modeling-target-variable-stats"
@@ -51,7 +57,7 @@
               ></kl-informations-block>
             }
           </as-split-area>
-          <as-split-area [size]="sizes?.row0Col[2]">
+          <as-split-area [size]="$safeNavigationMigration(sizes?.row0Col[2])">
             <as-split direction="vertical" disabled unit="pixel">
               <as-split-area class="kl-card">
                 <kl-informations-block
@@ -68,7 +74,7 @@
           </as-split-area>
         </as-split>
       </as-split-area>
-      <as-split-area [size]="sizes?.row[1]">
+      <as-split-area [size]="$safeNavigationMigration(sizes?.row[1])">
         @if (!modelingDatas?.trainedPredictorsListDatas) {
           <div fxLayout="column" fxFlexFill>
             <app-select-trained-predictor
@@ -92,7 +98,7 @@
             direction="horizontal"
             (dragEnd)="onSplitDragEnd($event, 'row1Col')"
           >
-            <as-split-area [size]="sizes?.row1Col[0]">
+            <as-split-area [size]="$safeNavigationMigration(sizes?.row1Col[0])">
               <as-split
                 direction="vertical"
                 (dragEnd)="onSplitDragEnd($event, 'row1Col0Row')"
@@ -109,11 +115,17 @@
                     [showSearch]="true"
                     [watchResize]="true"
                     [displayCount]="true"
-                    [selectedVariable]="modelingDatas?.selectedVariable"
+                    [selectedVariable]="
+                      $safeNavigationMigration(modelingDatas?.selectedVariable)
+                    "
                     (selectListItem)="onSelectListItemChanged($event)"
                     [showLineSelection]="true"
                     [showColumnsSelection]="true"
-                    [inputDatas]="modelingDatas?.trainedPredictorsListDatas"
+                    [inputDatas]="
+                      $safeNavigationMigration(
+                        modelingDatas?.trainedPredictorsListDatas
+                      )
+                    "
                     [displayedColumns]="trainedPredictorsDisplayedColumns"
                   >
                     @if (hasLevelData()) {
@@ -144,7 +156,7 @@
                 </as-split-area>
               </as-split>
             </as-split-area>
-            <as-split-area [size]="sizes?.row1Col[1]">
+            <as-split-area [size]="$safeNavigationMigration(sizes?.row1Col[1])">
               @if (
                 modelingDatas?.selectedVariable?.variableType ===
                   'preparation' ||

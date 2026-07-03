@@ -11,6 +11,7 @@ import {
   EventEmitter,
   NgZone,
   Output,
+  ChangeDetectionStrategy,
 } from '@angular/core';
 import { SelectableService } from '@khiops-library/components/selectable/selectable.service';
 import { KhiopsLibraryService } from '@khiops-library/providers/khiops-library.service';
@@ -34,6 +35,7 @@ import { ChartLabelTruncationUtils } from '@khiops-library/components/chart/char
   templateUrl: './target-distribution-graph.component.html',
   styleUrls: ['./target-distribution-graph.component.scss'],
   providers: [ToPrecisionPipe],
+  changeDetection: ChangeDetectionStrategy.Eager,
   standalone: false,
 })
 export class TargetDistributionGraphComponent

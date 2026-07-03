@@ -17,7 +17,7 @@
     [title]="matrixModes.selected?.tooltip || ''"
     [matMenuTriggerFor]="matrixModesTypes"
   >
-    {{ matrixModes.selected?.title | translate }}
+    {{ $safeNavigationMigration(matrixModes.selected?.title) | translate }}
     <em class="screenshot-hide"><mat-icon>keyboard_arrow_down</mat-icon> </em>
   </button>
   <mat-menu #matrixModesTypes>
@@ -28,7 +28,7 @@
         (click)="changeMatrixMode(opt)"
       >
         <span [title]="opt.tooltip || ''">
-          {{ (opt.title || '') | translate }}
+          {{ opt.title || '' | translate }}
         </span>
       </button>
     }

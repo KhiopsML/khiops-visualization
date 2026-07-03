@@ -6,7 +6,7 @@
 // @ts-nocheck
 
 import { TestBed } from '@angular/core/testing';
-import { provideHttpClient } from '@angular/common/http';
+import { provideHttpClient, withXhr } from '@angular/common/http';
 import { TranslateModule } from '@ngstack/translate';
 import { EventsService } from '@khiops-covisualization/providers/events.service';
 
@@ -17,7 +17,7 @@ describe('coVisualization', () => {
     beforeEach(() => {
       TestBed.configureTestingModule({
         imports: [TranslateModule.forRoot()],
-        providers: [provideHttpClient()],
+        providers: [provideHttpClient(withXhr())],
       });
 
       eventsService = TestBed.inject(EventsService);
@@ -235,10 +235,11 @@ describe('coVisualization', () => {
       it('should not receive tree events after unsubscribing', () => {
         let received = false;
 
-        const subscription =
-          eventsService.treeSelectedNodeChanged.subscribe(() => {
+        const subscription = eventsService.treeSelectedNodeChanged.subscribe(
+          () => {
             received = true;
-          });
+          },
+        );
 
         subscription.unsubscribe();
 

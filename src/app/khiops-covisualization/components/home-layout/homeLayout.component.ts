@@ -4,7 +4,14 @@
  * at https://spdx.org/licenses/BSD-3-Clause-Clear.html or see the "LICENSE" file for more details.
  */
 
-import { Component, OnInit, ViewChild, OnDestroy, Input } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  ViewChild,
+  OnDestroy,
+  Input,
+  ChangeDetectionStrategy,
+} from '@angular/core';
 import {
   MatTabGroup,
   MatTabHeader,
@@ -36,6 +43,7 @@ import { DialogService } from '@khiops-library/providers/dialog.service';
   selector: 'app-home-layout',
   templateUrl: './homeLayout.component.html',
   styleUrls: ['./homeLayout.component.scss'],
+  changeDetection: ChangeDetectionStrategy.Eager,
   standalone: false,
 })
 export class HomeLayoutComponent implements OnInit, OnDestroy {

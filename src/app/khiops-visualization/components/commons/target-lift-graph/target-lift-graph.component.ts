@@ -11,6 +11,7 @@ import {
   NgZone,
   SimpleChanges,
   ViewChild,
+  ChangeDetectionStrategy,
 } from '@angular/core';
 import { EvaluationDatasService } from '@khiops-visualization/providers/evaluation-datas.service';
 import { TranslateService } from '@ngstack/translate';
@@ -32,6 +33,7 @@ import { TargetLiftGraphService } from './target-lift-graph.service';
   selector: 'app-target-lift-graph',
   templateUrl: './target-lift-graph.component.html',
   styleUrls: ['./target-lift-graph.component.scss'],
+  changeDetection: ChangeDetectionStrategy.Eager,
   standalone: false,
 })
 export class TargetLiftGraphComponent

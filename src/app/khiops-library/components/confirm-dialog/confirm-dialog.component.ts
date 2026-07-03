@@ -4,7 +4,7 @@
  * at https://spdx.org/licenses/BSD-3-Clause-Clear.html or see the "LICENSE" file for more details.
  */
 
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { DialogService } from '@khiops-library/providers/dialog.service';
 import { TranslateService } from '@ngstack/translate';
 
@@ -12,6 +12,7 @@ import { TranslateService } from '@ngstack/translate';
   selector: 'kl-confirm-dialog',
   templateUrl: './confirm-dialog.component.html',
   styleUrls: ['./confirm-dialog.component.scss'],
+  changeDetection: ChangeDetectionStrategy.Eager,
   standalone: false,
 })
 export class ConfirmDialogComponent implements OnInit {

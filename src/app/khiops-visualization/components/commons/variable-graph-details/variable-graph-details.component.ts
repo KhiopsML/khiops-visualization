@@ -14,6 +14,7 @@ import {
   OnChanges,
   OnInit,
   OnDestroy,
+  ChangeDetectionStrategy,
 } from '@angular/core';
 import { PreparationDatasService } from '@khiops-visualization/providers/preparation-datas.service';
 import { DistributionDatasService } from '@khiops-visualization/providers/distribution-datas.service';
@@ -37,6 +38,7 @@ import { Subscription } from 'rxjs';
   selector: 'app-variable-graph-details',
   templateUrl: './variable-graph-details.component.html',
   styleUrls: ['./variable-graph-details.component.scss'],
+  changeDetection: ChangeDetectionStrategy.Eager,
   standalone: false,
 })
 export class VariableGraphDetailsComponent
@@ -59,8 +61,7 @@ export class VariableGraphDetailsComponent
   @Input() public showTargetDistributionGraph = true;
   @Input() public showDistributionGraph = true;
   @Input() public selectedVariable?:
-    | PreparationVariableModel
-    | TreePreparationVariableModel;
+    PreparationVariableModel | TreePreparationVariableModel;
   @Input() private selectedGraphItemIndex = 0;
   @Input() private preparationSource?: string;
   @Input() public displayedValues?: ChartToggleValuesI[]; // optional input to update chart on value changes (for instance when another component of tree preparation view changed)

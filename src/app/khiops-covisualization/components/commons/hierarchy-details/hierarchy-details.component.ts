@@ -10,6 +10,7 @@ import {
   NgZone,
   HostListener,
   ViewChild,
+  ChangeDetectionStrategy,
 } from '@angular/core';
 import { DimensionCovisualizationModel } from '@khiops-library/model/dimension.covisualization.model';
 import { TreeNodeModel } from '@khiops-covisualization/model/tree-node.model';
@@ -24,6 +25,7 @@ import { SelectedTreeClusterModel } from '@khiops-covisualization/model/selected
   selector: 'app-hierarchy-details',
   templateUrl: './hierarchy-details.component.html',
   styleUrls: ['./hierarchy-details.component.scss'],
+  changeDetection: ChangeDetectionStrategy.Eager,
   standalone: false,
 })
 export class HierarchyDetailsComponent extends SelectableComponent {

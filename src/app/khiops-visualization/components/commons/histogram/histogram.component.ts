@@ -14,6 +14,7 @@ import {
   Output,
   SimpleChanges,
   ViewChild,
+  ChangeDetectionStrategy,
 } from '@angular/core';
 import { HistogramService } from './histogram.service';
 import { HistogramRendererService } from './histogram-renderer.service';
@@ -43,6 +44,7 @@ import { Selection } from 'd3';
   selector: 'app-histogram',
   templateUrl: './histogram.component.html',
   styleUrls: ['./histogram.component.scss'],
+  changeDetection: ChangeDetectionStrategy.Eager,
   standalone: false,
 })
 export class HistogramComponent extends SelectableComponent implements OnInit {

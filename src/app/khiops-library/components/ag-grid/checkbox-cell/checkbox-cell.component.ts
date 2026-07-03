@@ -4,7 +4,7 @@
  * at https://spdx.org/licenses/BSD-3-Clause-Clear.html or see the "LICENSE" file for more details.
  */
 
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 
 import { AgRendererComponent } from '@ag-grid-community/angular';
 import { ICellRendererParams } from '@ag-grid-community/core';
@@ -14,6 +14,7 @@ import { GridCheckboxEventI } from '@khiops-library/interfaces/events.interface'
   selector: 'kl-checkbox-cell',
   templateUrl: './checkbox-cell.component.html',
   styleUrls: ['./checkbox-cell.component.scss'],
+  changeDetection: ChangeDetectionStrategy.Eager,
   standalone: false,
 })
 export class CheckboxCellComponent implements AgRendererComponent {

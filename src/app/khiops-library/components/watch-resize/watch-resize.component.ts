@@ -4,7 +4,13 @@
  * at https://spdx.org/licenses/BSD-3-Clause-Clear.html or see the "LICENSE" file for more details.
  */
 
-import { Component, Input, AfterViewInit, NgZone } from '@angular/core';
+import {
+  Component,
+  Input,
+  AfterViewInit,
+  NgZone,
+  ChangeDetectionStrategy,
+} from '@angular/core';
 import { ConfigService } from '@khiops-library/providers/config.service';
 
 /**
@@ -22,8 +28,9 @@ import { ConfigService } from '@khiops-library/providers/config.service';
  *
  */
 @Component({
-    template: '',
-    standalone: false
+  template: '',
+  changeDetection: ChangeDetectionStrategy.Eager,
+  standalone: false,
 })
 export class WatchResizeComponent implements AfterViewInit {
   [sizeChanged: string]: any; // Index signature for sizeChanged callback

@@ -34,9 +34,15 @@
               class="target-distribution-graph"
               [displayedValues]="displayedValues"
               [inputDatas]="
-                distributionDatas?.treeNodeTargetDistributionGraphDatas
+                $safeNavigationMigration(
+                  distributionDatas?.treeNodeTargetDistributionGraphDatas
+                )
               "
-              [variableType]="treePreparationDatas?.selectedVariable?.type"
+              [variableType]="
+                $safeNavigationMigration(
+                  treePreparationDatas?.selectedVariable?.type
+                )
+              "
               (graphTypeChanged)="
                 onTreeNodeTargetDistributionGraphTypeChanged($event)
               "
@@ -66,7 +72,10 @@
                     }}"
                   >
                     {{ 'GLOBAL.PURITY' | translate }} :
-                    {{ selectedNode?.purity | toPrecision }}
+                    {{
+                      $safeNavigationMigration(selectedNode?.purity)
+                        | toPrecision
+                    }}
                   </h2>
                 </div>
               </div>

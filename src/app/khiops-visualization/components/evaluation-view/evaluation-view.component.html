@@ -37,10 +37,20 @@
               (selectListItem)="onSelectEvaluationTypeChanged($event)"
               [showLineSelection]="true"
               [showColumnsSelection]="false"
-              [inputDatas]="evaluationDatas.evaluationTypesSummary?.values"
-              [title]="evaluationDatas.evaluationTypesSummary?.title"
+              [inputDatas]="
+                $safeNavigationMigration(
+                  evaluationDatas.evaluationTypesSummary?.values
+                )
+              "
+              [title]="
+                $safeNavigationMigration(
+                  evaluationDatas.evaluationTypesSummary?.title
+                )
+              "
               [displayedColumns]="
-                evaluationDatas.evaluationTypesSummary?.displayedColumns
+                $safeNavigationMigration(
+                  evaluationDatas.evaluationTypesSummary?.displayedColumns
+                )
               "
             >
             </kl-ag-grid>
@@ -59,10 +69,20 @@
               }}"
               [showLineSelection]="true"
               [showColumnsSelection]="false"
-              [inputDatas]="evaluationDatas.predictorEvaluations?.values"
-              [title]="evaluationDatas.predictorEvaluations?.title"
+              [inputDatas]="
+                $safeNavigationMigration(
+                  evaluationDatas.predictorEvaluations?.values
+                )
+              "
+              [title]="
+                $safeNavigationMigration(
+                  evaluationDatas.predictorEvaluations?.title
+                )
+              "
               [displayedColumns]="
-                evaluationDatas.predictorEvaluations?.displayedColumns
+                $safeNavigationMigration(
+                  evaluationDatas.predictorEvaluations?.displayedColumns
+                )
               "
               [selectedVariable]="
                 evaluationDatas.selectedPredictorEvaluationVariable

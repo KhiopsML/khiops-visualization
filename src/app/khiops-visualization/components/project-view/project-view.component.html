@@ -15,7 +15,7 @@
     direction="vertical"
     (dragEnd)="onSplitDragEnd($event, 'row')"
   >
-    <as-split-area [size]="sizes?.row[0]">
+    <as-split-area [size]="$safeNavigationMigration(sizes?.row[0])">
       <as-split fxFlex direction="horizontal" disabled="true" unit="pixel">
         <as-split-area
           fxLayout="column"
@@ -51,7 +51,10 @@
         }
       </as-split>
     </as-split-area>
-    <as-split-area [size]="sizes?.row[1]" class="kl-card">
+    <as-split-area
+      [size]="$safeNavigationMigration(sizes?.row[1])"
+      class="kl-card"
+    >
       <app-project-logs></app-project-logs>
     </as-split-area>
   </as-split>

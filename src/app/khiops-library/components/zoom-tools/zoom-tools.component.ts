@@ -4,14 +4,15 @@
  * at https://spdx.org/licenses/BSD-3-Clause-Clear.html or see the "LICENSE" file for more details.
  */
 
-import { Component, Input } from '@angular/core';
+import { Component, Input, ChangeDetectionStrategy } from '@angular/core';
 import { ZoomToolsEventsService } from '@khiops-library/components/zoom-tools/zoom-tools.service';
 
 @Component({
-    selector: 'kl-zoom-tools',
-    templateUrl: './zoom-tools.component.html',
-    styleUrls: ['./zoom-tools.component.scss'],
-    standalone: false
+  selector: 'kl-zoom-tools',
+  templateUrl: './zoom-tools.component.html',
+  styleUrls: ['./zoom-tools.component.scss'],
+  changeDetection: ChangeDetectionStrategy.Eager,
+  standalone: false,
 })
 export class ZoomToolsComponent {
   @Input() public alignment: string = 'column';

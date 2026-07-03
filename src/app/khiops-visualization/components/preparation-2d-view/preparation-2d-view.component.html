@@ -94,7 +94,11 @@
                   titleTooltip="{{
                     'TOOLTIPS.PREPARATION_2D.VARIABLES.TITLE' | translate
                   }}"
-                  [selectedVariable]="preparation2dDatas?.selectedVariable"
+                  [selectedVariable]="
+                    $safeNavigationMigration(
+                      preparation2dDatas?.selectedVariable
+                    )
+                  "
                   [noDataMessage]="getNoDataMessage()"
                 >
                   @if (hasLevelData()) {

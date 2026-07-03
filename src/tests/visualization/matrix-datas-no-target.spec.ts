@@ -8,7 +8,7 @@
 import { TestBed } from '@angular/core/testing';
 import { AppService } from '@khiops-visualization/providers/app.service';
 import { Preparation2dDatasService } from '@khiops-visualization/providers/preparation2d-datas.service';
-import { provideHttpClient } from '@angular/common/http';
+import { provideHttpClient, withXhr } from '@angular/common/http';
 import { PreparationDatasService } from '@khiops-visualization/providers/preparation-datas.service';
 import { REPORT } from '@khiops-library/enum/report';
 import { TranslateModule } from '@ngstack/translate';
@@ -29,7 +29,7 @@ describe('Visualization', () => {
       TestBed.configureTestingModule({
         imports: [TranslateModule.forRoot()],
         providers: [
-          provideHttpClient(),
+          provideHttpClient(withXhr()),
           provideMockStore({ initialState: {} }),
           TreePreparationDatasService,
           TreePreparationStore,
@@ -82,7 +82,7 @@ describe('Visualization', () => {
       TestBed.configureTestingModule({
         imports: [TranslateModule.forRoot()],
         providers: [
-          provideHttpClient(),
+          provideHttpClient(withXhr()),
           provideMockStore({ initialState: {} }),
           TreePreparationDatasService,
           TreePreparationStore,

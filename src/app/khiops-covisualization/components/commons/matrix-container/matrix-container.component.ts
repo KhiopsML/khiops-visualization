@@ -12,6 +12,7 @@ import {
   Input,
   SimpleChanges,
   OnChanges,
+  ChangeDetectionStrategy,
 } from '@angular/core';
 import { DimensionsDatasService } from '@khiops-covisualization/providers/dimensions-datas.service';
 import { MatrixComponent } from '@khiops-library/components/matrix/matrix.component';
@@ -40,6 +41,7 @@ import { LS } from '@khiops-library/enum/ls';
   selector: 'app-matrix-container',
   templateUrl: './matrix-container.component.html',
   styleUrls: ['./matrix-container.component.scss'],
+  changeDetection: ChangeDetectionStrategy.Eager,
   standalone: false,
 })
 export class MatrixContainerComponent implements OnInit, OnDestroy, OnChanges {
@@ -150,17 +152,27 @@ export class MatrixContainerComponent implements OnInit, OnDestroy, OnChanges {
     multiSelection?: boolean;
     selectedCells?: CellModel[];
   }) {
-    if (event.multiSelection && event.selectedCells && event.selectedCells.length > 1) {
+    if (
+      event.multiSelection &&
+      event.selectedCells &&
+      event.selectedCells.length > 1
+    ) {
       // Multi-cell selection - find common parent via hierarchy traversal
       const xnamePart = event.datas.xnamePart ?? '';
       const ynamePart = event.datas.ynamePart ?? '';
 
       // Find common parent for X axis
-      const xAxisParts = this.getUniqueAxisParts(event.selectedCells, 'xaxisPart');
+      const xAxisParts = this.getUniqueAxisParts(
+        event.selectedCells,
+        'xaxisPart',
+      );
       const commonParentX = this.findCommonParentNode(xAxisParts, xnamePart);
 
       // Find common parent for Y axis
-      const yAxisParts = this.getUniqueAxisParts(event.selectedCells, 'yaxisPart');
+      const yAxisParts = this.getUniqueAxisParts(
+        event.selectedCells,
+        'yaxisPart',
+      );
       const commonParentY = this.findCommonParentNode(yAxisParts, ynamePart);
 
       this.treenodesService.setSelectedNode(xnamePart, commonParentX);

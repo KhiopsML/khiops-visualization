@@ -19,7 +19,9 @@
           <app-variable-graph-details
             #appVariableGraphDetails
             [preparationSource]="REPORT.TREE_PREPARATION_REPORT"
-            [selectedVariable]="treePreparationDatas?.selectedVariable"
+            [selectedVariable]="
+              $safeNavigationMigration(treePreparationDatas?.selectedVariable)
+            "
             [selectedGraphItemIndex]="selectedBarIndex"
             (selectedItemChanged)="onSelectedGraphItemChanged($event)"
             (interpretableHistogramChanged)="onSelectedGraphItemChanged($event)"
@@ -39,10 +41,12 @@
       [showSearch]="true"
       [displayCount]="false"
       [showLineSelection]="true"
-      [title]="currentIntervalDatas?.title"
+      [title]="$safeNavigationMigration(currentIntervalDatas?.title)"
       [showColumnsSelection]="false"
-      [inputDatas]="currentIntervalDatas?.values"
-      [displayedColumns]="currentIntervalDatas?.displayedColumns"
+      [inputDatas]="$safeNavigationMigration(currentIntervalDatas?.values)"
+      [displayedColumns]="
+        $safeNavigationMigration(currentIntervalDatas?.displayedColumns)
+      "
     >
     </kl-ag-grid>
   </as-split-area>

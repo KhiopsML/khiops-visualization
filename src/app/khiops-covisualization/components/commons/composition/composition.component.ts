@@ -13,6 +13,7 @@ import {
   OnInit,
   SimpleChanges,
   AfterViewInit,
+  ChangeDetectionStrategy,
 } from '@angular/core';
 import { TranslateService } from '@ngstack/translate';
 import { CompositionModel } from '@khiops-covisualization/model/composition.model';
@@ -36,6 +37,7 @@ import { DialogService } from '@khiops-library/providers/dialog.service';
   selector: 'app-composition',
   templateUrl: './composition.component.html',
   styleUrls: ['./composition.component.scss'],
+  changeDetection: ChangeDetectionStrategy.Eager,
   standalone: false,
 })
 export class CompositionComponent implements OnInit, OnDestroy, AfterViewInit {
@@ -180,14 +182,18 @@ export class CompositionComponent implements OnInit, OnDestroy, AfterViewInit {
     const detailedParts: CompositionModel | undefined =
       this.compositionService.getCompositionDetailedPartsFromId(e.data._id);
 
-    this.dialogService.openDialog(CompositionDetailedPartsComponent, {
-      width: '600px',
-      height: '400px',
-      panelClass: 'draggable-dialog',
-      noOverlay: true,
-    }, {
-      detailedParts: detailedParts,
-    });
+    this.dialogService.openDialog(
+      CompositionDetailedPartsComponent,
+      {
+        width: '600px',
+        height: '400px',
+        panelClass: 'draggable-dialog',
+        noOverlay: true,
+      },
+      {
+        detailedParts: detailedParts,
+      },
+    );
   }
 
   onSelectRowChanged(item: CompositionModel) {
@@ -247,9 +253,10 @@ export class CompositionComponent implements OnInit, OnDestroy, AfterViewInit {
         }
 
         // Try to restore the previously selected composition for this dimension
-        const savedCompositionId = this.compositionSelectionService.getSelectedCompositionId(
-          this.position,
-        );
+        const savedCompositionId =
+          this.compositionSelectionService.getSelectedCompositionId(
+            this.position,
+          );
         if (savedCompositionId) {
           const restoredComposition = this.compositionValues.find(
             (comp) => comp._id === savedCompositionId,

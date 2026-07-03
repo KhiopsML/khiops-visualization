@@ -4,7 +4,7 @@
  * at https://spdx.org/licenses/BSD-3-Clause-Clear.html or see the "LICENSE" file for more details.
  */
 
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { ImportExtDatasService } from '@khiops-covisualization/providers/import-ext-datas.service';
 import { TranslateService } from '@ngstack/translate';
 import { EventsService } from '@khiops-covisualization/providers/events.service';
@@ -14,6 +14,7 @@ import { DialogService } from '@khiops-library/providers/dialog.service';
   selector: 'app-load-ext-datas',
   templateUrl: './load-ext-datas.component.html',
   styleUrls: ['./load-ext-datas.component.scss'],
+  changeDetection: ChangeDetectionStrategy.Eager,
   standalone: false,
 })
 export class LoadExtDatasComponent implements OnInit {

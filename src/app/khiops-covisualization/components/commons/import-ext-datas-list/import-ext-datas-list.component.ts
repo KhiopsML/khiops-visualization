@@ -4,7 +4,7 @@
  * at https://spdx.org/licenses/BSD-3-Clause-Clear.html or see the "LICENSE" file for more details.
  */
 
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { ImportExtDatasService } from '@khiops-covisualization/providers/import-ext-datas.service';
 import { TranslateService } from '@ngstack/translate';
 import { FileModel } from '@khiops-library/model/file.model';
@@ -21,6 +21,7 @@ import { DialogService } from '@khiops-library/providers/dialog.service';
   selector: 'app-import-ext-datas-list',
   templateUrl: './import-ext-datas-list.component.html',
   styleUrls: ['./import-ext-datas-list.component.scss'],
+  changeDetection: ChangeDetectionStrategy.Eager,
   standalone: false,
 })
 export class ImportExtDatasListComponent {

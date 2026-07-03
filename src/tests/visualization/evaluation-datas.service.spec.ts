@@ -8,7 +8,7 @@
 import { TestBed } from '@angular/core/testing';
 
 import { EvaluationDatasService } from '@khiops-visualization/providers/evaluation-datas.service';
-import { provideHttpClient } from '@angular/common/http';
+import { provideHttpClient, withXhr } from '@angular/common/http';
 import { AppService } from '@khiops-visualization/providers/app.service';
 import { TranslateModule } from '@ngstack/translate';
 import { EvaluationTypeModel } from '@khiops-visualization/model/evaluation-type.model';
@@ -32,7 +32,7 @@ describe('Visualization', () => {
     beforeEach(() => {
       TestBed.configureTestingModule({
         imports: [TranslateModule.forRoot()],
-  providers: [provideHttpClient()],
+        providers: [provideHttpClient(withXhr())],
       });
 
       // Inject services
@@ -91,7 +91,9 @@ describe('Visualization', () => {
       const predictors = evaluationDatasService.getDatas().predictorEvaluations;
       const predictor = predictors.values[1];
       evaluationDatasService.setSelectedPredictorEvaluationVariable(predictor);
-      expect(evaluationDatasService.getDatas().selectedPredictorEvaluationVariable).toBe(predictor);
+      expect(
+        evaluationDatasService.getDatas().selectedPredictorEvaluationVariable,
+      ).toBe(predictor);
     });
 
     // ---- getEvaluationTypes ----
@@ -105,7 +107,9 @@ describe('Visualization', () => {
     });
 
     it('getEvaluationTypes should return empty array when no evaluation reports exist', () => {
-      appService.setFileDatas({ preparationReport: { reportType: 'Preparation' } });
+      appService.setFileDatas({
+        preparationReport: { reportType: 'Preparation' },
+      });
       evaluationDatasService.initialize();
       const types = evaluationDatasService.getEvaluationTypes();
       expect(types).toBeTruthy();
@@ -164,7 +168,9 @@ describe('Visualization', () => {
     });
 
     it('getEvaluationTypesSummary should return empty values when no evaluation types', () => {
-      appService.setFileDatas({ preparationReport: { reportType: 'Preparation' } });
+      appService.setFileDatas({
+        preparationReport: { reportType: 'Preparation' },
+      });
       evaluationDatasService.initialize();
       evaluationDatasService.getEvaluationTypes();
       const res = evaluationDatasService.getEvaluationTypesSummary();
@@ -190,7 +196,9 @@ describe('Visualization', () => {
       initAdultBivar();
       const datas = evaluationDatasService.getDatas();
       expect(datas.selectedPredictorEvaluationVariable).toBeTruthy();
-      expect(datas.selectedPredictorEvaluationVariable.name).toBe('MAP Naive Bayes');
+      expect(datas.selectedPredictorEvaluationVariable.name).toBe(
+        'MAP Naive Bayes',
+      );
     });
 
     it('getPredictorEvaluations should not override existing predictor selection', () => {
@@ -202,22 +210,31 @@ describe('Visualization', () => {
 
       // Manually set a predictor selection before calling getPredictorEvaluations
       const mockPredictor = new EvaluationPredictorModel('Test', 'Test', {
-        rank: 'R2', type: 'Classifier', family: 'Selective Naive Bayes',
-        name: 'Selective Naive Bayes', accuracy: 0.869035, compression: 0.469923, auc: 0.920437,
+        rank: 'R2',
+        type: 'Classifier',
+        family: 'Selective Naive Bayes',
+        name: 'Selective Naive Bayes',
+        accuracy: 0.869035,
+        compression: 0.469923,
+        auc: 0.920437,
       });
-      evaluationDatasService.setSelectedPredictorEvaluationVariable(mockPredictor);
+      evaluationDatasService.setSelectedPredictorEvaluationVariable(
+        mockPredictor,
+      );
       evaluationDatasService.getPredictorEvaluations();
 
       const datas = evaluationDatasService.getDatas();
-      expect(datas.selectedPredictorEvaluationVariable.name).toBe('Selective Naive Bayes');
+      expect(datas.selectedPredictorEvaluationVariable.name).toBe(
+        'Selective Naive Bayes',
+      );
     });
 
     it('getPredictorEvaluations should have displayedColumns with hidden fields', () => {
       initAdultBivar();
       const res = evaluationDatasService.getPredictorEvaluations();
       expect(res.displayedColumns).toBeTruthy();
-      const hiddenFields = res.displayedColumns.filter(c => !c.show);
-      const hiddenFieldNames = hiddenFields.map(c => c.field);
+      const hiddenFields = res.displayedColumns.filter((c) => !c.show);
+      const hiddenFieldNames = hiddenFields.map((c) => c.field);
       expect(hiddenFieldNames).toContain('_id');
       expect(hiddenFieldNames).toContain('rank');
       expect(hiddenFieldNames).toContain('family');
@@ -227,7 +244,7 @@ describe('Visualization', () => {
     it('getPredictorEvaluations should compute robustness for Test predictors', () => {
       initAdultBivar();
       const res = evaluationDatasService.getPredictorEvaluations();
-      const testPredictors = res.values.filter(v => v.type === 'Test');
+      const testPredictors = res.values.filter((v) => v.type === 'Test');
       for (const pred of testPredictors) {
         if (pred.name !== 'Optimal') {
           expect(pred.robustness).toBeDefined();
@@ -272,7 +289,9 @@ describe('Visualization', () => {
       const res = evaluationDatasService.getConfusionMatrix(TYPES.COVERAGE);
       expect(res).toBeTruthy();
       // Non-target columns should have % prefix
-      const nonTargetColumns = res.displayedColumns.filter(c => c.field !== 'target');
+      const nonTargetColumns = res.displayedColumns.filter(
+        (c) => c.field !== 'target',
+      );
       for (const col of nonTargetColumns) {
         expect(col.headerName.startsWith('%')).toBe(true);
       }
@@ -298,7 +317,9 @@ describe('Visualization', () => {
       initAdultBivar();
       // Select the Test evaluation type
       const datas = evaluationDatasService.getDatas();
-      const testType = datas.evaluationTypesSummary.values.find(v => v.type === 'Test');
+      const testType = datas.evaluationTypesSummary.values.find(
+        (v) => v.type === 'Test',
+      );
       evaluationDatasService.setSelectedEvaluationTypeVariable(testType);
 
       const res = evaluationDatasService.getConfusionMatrix();
@@ -329,28 +350,40 @@ describe('Visualization', () => {
     // ---- getPredictorEvaluationVariableFromEvaluationType ----
     it('getPredictorEvaluationVariableFromEvaluationType should find matching predictor', () => {
       initAdultBivar();
-      const result = evaluationDatasService.getPredictorEvaluationVariableFromEvaluationType('Train');
+      const result =
+        evaluationDatasService.getPredictorEvaluationVariableFromEvaluationType(
+          'Train',
+        );
       expect(result).toBeTruthy();
       expect(result.type).toBe('Train');
     });
 
     it('getPredictorEvaluationVariableFromEvaluationType should return undefined for unknown type', () => {
       initAdultBivar();
-      const result = evaluationDatasService.getPredictorEvaluationVariableFromEvaluationType('Unknown');
+      const result =
+        evaluationDatasService.getPredictorEvaluationVariableFromEvaluationType(
+          'Unknown',
+        );
       expect(result).toBeUndefined();
     });
 
     // ---- getEvaluationVariableFromPredictorEvaluationType ----
     it('getEvaluationVariableFromPredictorEvaluationType should find matching evaluation type', () => {
       initAdultBivar();
-      const result = evaluationDatasService.getEvaluationVariableFromPredictorEvaluationType('Train');
+      const result =
+        evaluationDatasService.getEvaluationVariableFromPredictorEvaluationType(
+          'Train',
+        );
       expect(result).toBeTruthy();
       expect(result.type).toBe('Train');
     });
 
     it('getEvaluationVariableFromPredictorEvaluationType should return undefined for unknown type', () => {
       initAdultBivar();
-      const result = evaluationDatasService.getEvaluationVariableFromPredictorEvaluationType('Unknown');
+      const result =
+        evaluationDatasService.getEvaluationVariableFromPredictorEvaluationType(
+          'Unknown',
+        );
       expect(result).toBeUndefined();
     });
 
@@ -381,7 +414,9 @@ describe('Visualization', () => {
     });
 
     it('getLiftTargets should return undefined when no evaluation report', () => {
-      appService.setFileDatas({ preparationReport: { reportType: 'Preparation' } });
+      appService.setFileDatas({
+        preparationReport: { reportType: 'Preparation' },
+      });
       evaluationDatasService.initialize();
       const result = evaluationDatasService.getLiftTargets();
       expect(result).toBeUndefined();
@@ -390,8 +425,12 @@ describe('Visualization', () => {
     it('getLiftTargets should handle Test predictor selection', () => {
       initAdultBivar();
       const datas = evaluationDatasService.getDatas();
-      const testPredictor = datas.predictorEvaluations.values.find(v => v.type === 'Test');
-      evaluationDatasService.setSelectedPredictorEvaluationVariable(testPredictor);
+      const testPredictor = datas.predictorEvaluations.values.find(
+        (v) => v.type === 'Test',
+      );
+      evaluationDatasService.setSelectedPredictorEvaluationVariable(
+        testPredictor,
+      );
       const result = evaluationDatasService.getLiftTargets();
       expect(result).toBeTruthy();
       expect(result.targets).toBeTruthy();
@@ -445,11 +484,13 @@ describe('Visualization', () => {
     it('getLiftGraphDatas called twice should reuse displayed values', () => {
       initAdultBivar();
       evaluationDatasService.getLiftGraphDatas('more');
-      const firstValues = evaluationDatasService.getDatas().liftGraphDisplayedValues;
+      const firstValues =
+        evaluationDatasService.getDatas().liftGraphDisplayedValues;
       const firstLength = firstValues.length;
 
       evaluationDatasService.getLiftGraphDatas('more');
-      const secondValues = evaluationDatasService.getDatas().liftGraphDisplayedValues;
+      const secondValues =
+        evaluationDatasService.getDatas().liftGraphDisplayedValues;
       expect(secondValues.length).toBe(firstLength);
     });
 
@@ -465,7 +506,12 @@ describe('Visualization', () => {
     it('generateLiftCurveValuesForEvaluation should return data for Train type', () => {
       initAdultBivar();
       const xAxis = ['0', '0.1', '0.2'];
-      const result = evaluationDatasService.generateLiftCurveValuesForEvaluation(xAxis, 'Train', 'more');
+      const result =
+        evaluationDatasService.generateLiftCurveValuesForEvaluation(
+          xAxis,
+          'Train',
+          'more',
+        );
       expect(result).toBeTruthy();
       expect(result.length).toBeGreaterThan(0);
       for (const entry of result) {
@@ -477,7 +523,12 @@ describe('Visualization', () => {
     it('generateLiftCurveValuesForEvaluation should return data for Test type', () => {
       initAdultBivar();
       const xAxis = ['0', '0.1'];
-      const result = evaluationDatasService.generateLiftCurveValuesForEvaluation(xAxis, 'Test', 'less');
+      const result =
+        evaluationDatasService.generateLiftCurveValuesForEvaluation(
+          xAxis,
+          'Test',
+          'less',
+        );
       expect(result).toBeTruthy();
       expect(result.length).toBeGreaterThan(0);
       for (const entry of result) {
@@ -488,7 +539,12 @@ describe('Visualization', () => {
     it('generateLiftCurveValuesForEvaluation should return empty for non-matching target', () => {
       initAdultBivar();
       const xAxis = ['0', '0.1'];
-      const result = evaluationDatasService.generateLiftCurveValuesForEvaluation(xAxis, 'Train', 'nonexistent');
+      const result =
+        evaluationDatasService.generateLiftCurveValuesForEvaluation(
+          xAxis,
+          'Train',
+          'nonexistent',
+        );
       expect(result).toBeTruthy();
       expect(result.length).toBe(0);
     });
@@ -496,7 +552,10 @@ describe('Visualization', () => {
     // ---- generateRandomLiftDatas ----
     it('generateRandomLiftDatas should return diagonal data', () => {
       const xAxis = [0, 1, 2, 3];
-      const result = evaluationDatasService.generateRandomLiftDatas(xAxis, 'GLOBAL.RANDOM');
+      const result = evaluationDatasService.generateRandomLiftDatas(
+        xAxis,
+        'GLOBAL.RANDOM',
+      );
       expect(result).toBeTruthy();
       expect(result.length).toBe(1);
       expect(result[0].series.length).toBe(4);

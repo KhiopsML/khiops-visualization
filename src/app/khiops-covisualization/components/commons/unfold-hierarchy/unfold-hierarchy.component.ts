@@ -4,7 +4,12 @@
  * at https://spdx.org/licenses/BSD-3-Clause-Clear.html or see the "LICENSE" file for more details.
  */
 
-import { Component, HostListener, OnInit } from '@angular/core';
+import {
+  Component,
+  HostListener,
+  OnInit,
+  ChangeDetectionStrategy,
+} from '@angular/core';
 import { DimensionsDatasService } from '@khiops-covisualization/providers/dimensions-datas.service';
 import { KhiopsLibraryService } from '@khiops-library/providers/khiops-library.service';
 import { TranslateService } from '@ngstack/translate';
@@ -35,6 +40,7 @@ import { DialogService } from '@khiops-library/providers/dialog.service';
   selector: 'app-unfold-hierarchy',
   templateUrl: './unfold-hierarchy.component.html',
   styleUrls: ['./unfold-hierarchy.component.scss'],
+  changeDetection: ChangeDetectionStrategy.Eager,
   standalone: false,
 })
 export class UnfoldHierarchyComponent implements OnInit {

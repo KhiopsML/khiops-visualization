@@ -20,8 +20,8 @@
     <div fxLayout="row">
       <div fxLayout="column" class="unfold-hierarchy-settings-slider">
         <mat-slider
-          [max]="hierarchyDatas?.totalClusters"
-          [min]="hierarchyDatas?.minClusters"
+          [max]="$safeNavigationMigration(hierarchyDatas?.totalClusters)"
+          [min]="$safeNavigationMigration(hierarchyDatas?.minClusters)"
           [step]="1"
           (input)="onHierarchyChanged($event)"
         >

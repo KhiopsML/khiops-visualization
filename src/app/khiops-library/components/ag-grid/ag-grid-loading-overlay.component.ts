@@ -4,7 +4,7 @@
  * at https://spdx.org/licenses/BSD-3-Clause-Clear.html or see the "LICENSE" file for more details.
  */
 
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { ILoadingOverlayAngularComp } from '@ag-grid-community/angular';
 
 @Component({
@@ -14,11 +14,10 @@ import { ILoadingOverlayAngularComp } from '@ag-grid-community/angular';
     color="accent"
     mode="indeterminate"
   ></mat-spinner>`,
+  changeDetection: ChangeDetectionStrategy.Eager,
   standalone: false,
 })
-export class AgGridLoadingOverlayComponent
-  implements ILoadingOverlayAngularComp
-{
+export class AgGridLoadingOverlayComponent implements ILoadingOverlayAngularComp {
   agInit(): void {
     // Component initialized
   }

@@ -6,7 +6,7 @@
 // @ts-nocheck
 
 import { TestBed } from '@angular/core/testing';
-import { provideHttpClient } from '@angular/common/http';
+import { provideHttpClient, withXhr } from '@angular/common/http';
 import { TranslateModule } from '@ngstack/translate';
 import { CompositionUtils } from '../../app/khiops-covisualization/providers/composition.utils.service';
 import { CompositionService } from '../../app/khiops-covisualization/providers/composition.service';
@@ -29,7 +29,7 @@ describe('coVisualization', () => {
     beforeEach(() => {
       TestBed.configureTestingModule({
         imports: [TranslateModule.forRoot()],
-  providers: [provideHttpClient()],
+        providers: [provideHttpClient(withXhr())],
       });
 
       // Inject services
@@ -898,7 +898,9 @@ describe('coVisualization', () => {
           },
         } as any;
         compositionService['importExtDatasService'] = {
-          getImportedDatasFromDimension: jasmine.createSpy().and.returnValue({}),
+          getImportedDatasFromDimension: jasmine
+            .createSpy()
+            .and.returnValue({}),
         } as any;
 
         const result = compositionService['processNodeCompositions'](
@@ -912,9 +914,9 @@ describe('coVisualization', () => {
         // All 5 values must be present and defined
         expect(result.length).toBe(5);
         expect(result[0].value).toBe('12');
-        expect(result[1].value).toBe('7');  // was undefined with old code
+        expect(result[1].value).toBe('7'); // was undefined with old code
         expect(result[2].value).toBe('19'); // was undefined with old code
-        expect(result[3].value).toBe('3');  // was undefined with old code
+        expect(result[3].value).toBe('3'); // was undefined with old code
         expect(result[4].value).toBe('21'); // was undefined with old code
         result.forEach((comp) => expect(comp.value).toBeDefined());
       });
@@ -969,7 +971,9 @@ describe('coVisualization', () => {
           },
         } as any;
         compositionService['importExtDatasService'] = {
-          getImportedDatasFromDimension: jasmine.createSpy().and.returnValue({}),
+          getImportedDatasFromDimension: jasmine
+            .createSpy()
+            .and.returnValue({}),
         } as any;
 
         const result = compositionService['processNodeCompositions'](
@@ -1683,7 +1687,8 @@ describe('coVisualization', () => {
         // end up in collapsedNodes. B5's initial subtree contains B9 as a child.
         const unfoldRank = 6;
         treenodesService.setSelectedUnfoldHierarchy(unfoldRank);
-        const collapsedNodes = treenodesService.getLeafNodesForARank(unfoldRank);
+        const collapsedNodes =
+          treenodesService.getLeafNodesForARank(unfoldRank);
 
         // Both B5 and B9 must be in the collapsed set for this regression to be meaningful
         expect(collapsedNodes['education']).toContain('B5');
@@ -1756,7 +1761,8 @@ describe('coVisualization', () => {
 
         const unfoldRank = 6;
         treenodesService.setSelectedUnfoldHierarchy(unfoldRank);
-        const collapsedNodes = treenodesService.getLeafNodesForARank(unfoldRank);
+        const collapsedNodes =
+          treenodesService.getLeafNodesForARank(unfoldRank);
         treenodesService.setSavedCollapsedNodes(collapsedNodes);
         const croppedDatas = saveService.constructSavedJson(collapsedNodes);
         appService.setCroppedFileDatas(croppedDatas);

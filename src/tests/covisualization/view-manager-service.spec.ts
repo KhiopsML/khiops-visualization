@@ -6,7 +6,7 @@
 // @ts-nocheck
 
 import { TestBed } from '@angular/core/testing';
-import { provideHttpClient } from '@angular/common/http';
+import { provideHttpClient, withXhr } from '@angular/common/http';
 import { TranslateModule } from '@ngstack/translate';
 import { ViewManagerService } from '@khiops-covisualization/providers/view-manager.service';
 import { AppService } from '@khiops-covisualization/providers/app.service';
@@ -22,7 +22,7 @@ describe('coVisualization', () => {
     beforeEach(() => {
       TestBed.configureTestingModule({
         imports: [TranslateModule.forRoot()],
-        providers: [provideHttpClient()],
+        providers: [provideHttpClient(withXhr())],
       });
 
       viewManagerService = TestBed.inject(ViewManagerService);
@@ -55,9 +55,15 @@ describe('coVisualization', () => {
 
         expect(result.dimensionsViewsLayoutsVO.length).toBe(3);
         // isContextView sets isDistributionChecked = !isContextView
-        expect(result.dimensionsViewsLayoutsVO[0].isDistributionChecked).toBe(true);
-        expect(result.dimensionsViewsLayoutsVO[1].isDistributionChecked).toBe(true);
-        expect(result.dimensionsViewsLayoutsVO[2].isDistributionChecked).toBe(false);
+        expect(result.dimensionsViewsLayoutsVO[0].isDistributionChecked).toBe(
+          true,
+        );
+        expect(result.dimensionsViewsLayoutsVO[1].isDistributionChecked).toBe(
+          true,
+        );
+        expect(result.dimensionsViewsLayoutsVO[2].isDistributionChecked).toBe(
+          false,
+        );
       });
 
       it('should handle empty dimensions array', () => {
@@ -106,7 +112,9 @@ describe('coVisualization', () => {
 
         expect(result.dimensionsViewsLayoutsVO.length).toBe(1);
         expect(result.dimensionsViewsLayoutsVO[0].name).toBe('onlyDim');
-        expect(result.dimensionsViewsLayoutsVO[0].isDistributionChecked).toBe(true);
+        expect(result.dimensionsViewsLayoutsVO[0].isDistributionChecked).toBe(
+          true,
+        );
       });
     });
 

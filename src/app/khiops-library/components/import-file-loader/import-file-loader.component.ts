@@ -4,17 +4,25 @@
  * at https://spdx.org/licenses/BSD-3-Clause-Clear.html or see the "LICENSE" file for more details.
  */
 
-import { Component, OnInit, Output, NgZone, EventEmitter } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  Output,
+  NgZone,
+  EventEmitter,
+  ChangeDetectionStrategy,
+} from '@angular/core';
 import { ImportFileLoaderService } from './import-file-loader.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { TranslateService } from '@ngstack/translate';
 import { FileModel } from '../../model/file.model';
 
 @Component({
-    selector: 'kl-import-file-loader',
-    templateUrl: './import-file-loader.component.html',
-    styleUrls: ['./import-file-loader.component.scss'],
-    standalone: false
+  selector: 'kl-import-file-loader',
+  templateUrl: './import-file-loader.component.html',
+  styleUrls: ['./import-file-loader.component.scss'],
+  changeDetection: ChangeDetectionStrategy.Eager,
+  standalone: false,
 })
 export class ImportFileLoaderComponent implements OnInit {
   @Output() datasLoaded: EventEmitter<any> = new EventEmitter();

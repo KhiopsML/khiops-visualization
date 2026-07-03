@@ -3,13 +3,19 @@
  * This software is distributed under the BSD 3-Clause-clear License, the text of which is available
  * at https://spdx.org/licenses/BSD-3-Clause-Clear.html or see the "LICENSE" file for more details.
  */
-import { Component, Input, OnInit } from '@angular/core';
+import {
+  Component,
+  Input,
+  OnInit,
+  ChangeDetectionStrategy,
+} from '@angular/core';
 import { TranslateService } from '@ngstack/translate';
 
 @Component({
   selector: 'kl-keyboard-tooltip',
   templateUrl: './keyboard-tooltip.component.html',
   styleUrls: ['./keyboard-tooltip.component.scss'],
+  changeDetection: ChangeDetectionStrategy.Eager,
   standalone: false,
 })
 export class KeyboardTooltipComponent implements OnInit {

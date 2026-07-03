@@ -15,6 +15,7 @@ import {
   ElementRef,
   OnDestroy,
   ChangeDetectorRef,
+  ChangeDetectionStrategy,
 } from '@angular/core';
 import * as ChartJs from 'chart.js';
 import type { ChartEvent, ActiveElement } from 'chart.js';
@@ -31,6 +32,7 @@ import { ChartManagerService } from './chart-manager.service';
   templateUrl: './chart.component.html',
   styleUrls: ['./chart.component.scss'],
   standalone: false,
+  changeDetection: ChangeDetectionStrategy.Eager,
   providers: [ChartManagerService],
 })
 export class ChartComponent implements AfterViewInit, OnChanges, OnDestroy {
@@ -145,7 +147,7 @@ export class ChartComponent implements AfterViewInit, OnChanges, OnDestroy {
     if (this.updateGraphTimeout) {
       clearTimeout(this.updateGraphTimeout);
     }
-    
+
     // Debounce the update to avoid multiple calls
     this.updateGraphTimeout = setTimeout(() => {
       if (this.inputDatas) {

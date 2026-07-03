@@ -13,6 +13,7 @@ import {
   SimpleChanges,
   AfterViewInit,
   Input,
+  ChangeDetectionStrategy,
 } from '@angular/core';
 import { SelectableComponent } from '@khiops-library/components/selectable/selectable.component';
 import { SelectableService } from '@khiops-library/components/selectable/selectable.service';
@@ -29,6 +30,7 @@ import { TreeView } from '@khiops-treeview';
   selector: 'app-tree-select',
   templateUrl: './tree-select.component.html',
   styleUrls: ['./tree-select.component.scss'],
+  changeDetection: ChangeDetectionStrategy.Eager,
   standalone: false,
 })
 export class TreeSelectComponent

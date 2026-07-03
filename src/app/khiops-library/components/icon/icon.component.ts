@@ -4,13 +4,14 @@
  * at https://spdx.org/licenses/BSD-3-Clause-Clear.html or see the "LICENSE" file for more details.
  */
 
-import { Component, Input } from '@angular/core';
+import { Component, Input, ChangeDetectionStrategy } from '@angular/core';
 import { SafeHtml, DomSanitizer } from '@angular/platform-browser';
 import { ICONS } from './icons.list';
 
 @Component({
   selector: 'kl-icon',
   standalone: false,
+  changeDetection: ChangeDetectionStrategy.Eager,
   template: `<span style="display: flex;" [innerHTML]="svgContent"></span>`,
 })
 export class IconComponent {

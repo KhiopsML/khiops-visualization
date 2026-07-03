@@ -4,7 +4,7 @@
  * at https://spdx.org/licenses/BSD-3-Clause-Clear.html or see the "LICENSE" file for more details.
  */
 
-import { Component, ViewChild } from '@angular/core';
+import { Component, ViewChild, ChangeDetectionStrategy } from '@angular/core';
 import { SelectableTabComponent } from '@khiops-library/components/selectable-tab/selectable-tab.component';
 import { ModelingDatasService } from '@khiops-visualization/providers/modeling-datas.service';
 import { LevelDistributionGraphComponent } from '../commons/level-distribution-graph/level-distribution-graph.component';
@@ -16,9 +16,7 @@ import { ChartDatasModel } from '@khiops-library/model/chart-datas.model';
 import { InfosDatasI } from '@khiops-library/interfaces/infos-datas.interface';
 import { VariableModel } from '@khiops-visualization/model/variable.model';
 import { DistributionDatasModel } from '@khiops-visualization/model/distribution-datas.model';
-import {
-  TreePreparationDatasModel,
-} from '@khiops-visualization/model/tree-preparation-datas.model';
+import { TreePreparationDatasModel } from '@khiops-visualization/model/tree-preparation-datas.model';
 import { TreePreparationVariableModel } from '@khiops-visualization/model/tree-preparation-variable.model';
 import { TrackerService } from '@khiops-library/providers/tracker.service';
 import { TranslateService } from '@ngstack/translate';
@@ -38,6 +36,7 @@ import { DialogService } from '@khiops-library/providers/dialog.service';
   selector: 'app-tree-preparation-view',
   templateUrl: './tree-preparation-view.component.html',
   styleUrls: ['./tree-preparation-view.component.scss'],
+  changeDetection: ChangeDetectionStrategy.Eager,
   standalone: false,
 })
 export class TreePreparationViewComponent extends SelectableTabComponent {

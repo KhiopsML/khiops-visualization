@@ -4,7 +4,12 @@
  * at https://spdx.org/licenses/BSD-3-Clause-Clear.html or see the "LICENSE" file for more details.
  */
 
-import { AfterViewInit, Component, NgZone } from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  NgZone,
+  ChangeDetectionStrategy,
+} from '@angular/core';
 import { CompositionModel } from '@khiops-covisualization/model/composition.model';
 import { SelectableComponent } from '@khiops-library/components/selectable/selectable.component';
 import { SelectableService } from '@khiops-library/components/selectable/selectable.service';
@@ -18,6 +23,7 @@ import { DialogService } from '@khiops-library/providers/dialog.service';
   selector: 'app-composition-detailed-parts',
   templateUrl: './composition-detailed-parts.component.html',
   styleUrls: ['./composition-detailed-parts.component.scss'],
+  changeDetection: ChangeDetectionStrategy.Eager,
   standalone: false,
 })
 export class CompositionDetailedPartsComponent

@@ -6,7 +6,12 @@
 
 <div id="regression-matrix-comp" fxFlexFill fxLayout="column">
   @if (preparation2dDatas?.matrixDatas) {
-    <div fxFlexFill fxLayout="column" [ngClass]="{ fullscreen: isFullscreen }" [appFullscreenAnimation]="isFullscreen">
+    <div
+      fxFlexFill
+      fxLayout="column"
+      [ngClass]="{ fullscreen: isFullscreen }"
+      [appFullscreenAnimation]="isFullscreen"
+    >
       <div fxLayout="row" fxLayoutAlign="start center" class="comp-header">
         <div fxFlex fxLayout="row" fxLayoutAlign="start center">
           <div fxFlex fxLayout="row" fxLayoutAlign="start center">
@@ -36,10 +41,14 @@
         fxLayout="row"
         [id]="'regression-matrix-comp'"
         (cellSelected)="onCellSelected($event)"
-        [isAxisInverted]="preparation2dDatas?.isAxisInverted"
+        [isAxisInverted]="
+          $safeNavigationMigration(preparation2dDatas?.isAxisInverted)
+        "
         (matrixAxisInverted)="onMatrixAxisInverted()"
-        [selectedCell]="preparation2dDatas?.selectedCell"
-        [inputDatas]="preparation2dDatas?.matrixDatas"
+        [selectedCell]="
+          $safeNavigationMigration(preparation2dDatas?.selectedCell)
+        "
+        [inputDatas]="$safeNavigationMigration(preparation2dDatas?.matrixDatas)"
         [graphType]="matrixOptions.selected"
         [minMaxValues]="minMaxValues"
         [graphMode]="matrixModes.selected"

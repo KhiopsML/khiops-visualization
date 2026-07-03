@@ -15,6 +15,7 @@ import {
   NgZone,
   ViewChild,
   ElementRef,
+  ChangeDetectionStrategy,
 } from '@angular/core';
 import { SelectableService } from '../selectable/selectable.service';
 import { SelectableComponent } from '../selectable/selectable.component';
@@ -43,6 +44,7 @@ import { UtilsService } from '@khiops-library/providers/utils.service';
   selector: 'kl-matrix',
   templateUrl: './matrix.component.html',
   styleUrls: ['./matrix.component.scss'],
+  changeDetection: ChangeDetectionStrategy.Eager,
   standalone: false,
 })
 export class MatrixComponent extends SelectableComponent implements OnChanges {

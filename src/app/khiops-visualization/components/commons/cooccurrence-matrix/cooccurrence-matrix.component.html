@@ -77,7 +77,10 @@
                       </em>
                     </button>
                     <mat-menu #matrixSelectTargets>
-                      @for (target of matrixTargets.targets; track target.value || target.name || $index) {
+                      @for (
+                        target of matrixTargets.targets;
+                        track target.value || target.name || $index
+                      ) {
                         <button
                           mat-menu-item
                           [class.selected-item]="
@@ -99,11 +102,17 @@
               fxLayout="row"
               (cellSelected)="onCellSelected($event)"
               [id]="'cooccurrence-matrix-comp'"
-              [selectedCell]="preparation2dDatas?.selectedCell"
-              [isAxisInverted]="preparation2dDatas?.isAxisInverted"
+              [selectedCell]="
+                $safeNavigationMigration(preparation2dDatas?.selectedCell)
+              "
+              [isAxisInverted]="
+                $safeNavigationMigration(preparation2dDatas?.isAxisInverted)
+              "
               [minMaxValues]="minMaxValues"
               (matrixAxisInverted)="onMatrixAxisInverted()"
-              [inputDatas]="preparation2dDatas?.matrixDatas"
+              [inputDatas]="
+                $safeNavigationMigration(preparation2dDatas?.matrixDatas)
+              "
               [graphTargets]="matrixTargets.targets"
               [graphType]="matrixOptions.selected"
               [graphMode]="matrixModes.selected"
@@ -123,13 +132,17 @@
               [showFullscreenBtn]="false"
               [showSearch]="false"
               [displayCount]="false"
-              [selectedVariable]="preparation2dDatas?.selectedCell"
+              [selectedVariable]="
+                $safeNavigationMigration(preparation2dDatas?.selectedCell)
+              "
               (selectListItem)="onSelectCellRowChanged($event)"
               [showLineSelection]="true"
               [showColumnsSelection]="false"
-              [inputDatas]="matrixCells?.values"
-              [title]="matrixCells?.title"
-              [displayedColumns]="matrixCells?.displayedColumns"
+              [inputDatas]="$safeNavigationMigration(matrixCells?.values)"
+              [title]="$safeNavigationMigration(matrixCells?.title)"
+              [displayedColumns]="
+                $safeNavigationMigration(matrixCells?.displayedColumns)
+              "
             >
             </kl-ag-grid>
           </div>
@@ -138,7 +151,7 @@
     </mat-tab-group>
     <kl-no-data
       fxFlexFill
-      [hidden]="preparation2dDatas?.matrixDatas"
+      [hidden]="$safeNavigationMigration(preparation2dDatas?.matrixDatas)"
     ></kl-no-data>
   </div>
 </div>

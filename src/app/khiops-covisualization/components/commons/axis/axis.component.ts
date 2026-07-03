@@ -4,7 +4,12 @@
  * at https://spdx.org/licenses/BSD-3-Clause-Clear.html or see the "LICENSE" file for more details.
  */
 
-import { Component, OnInit, Input } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  Input,
+  ChangeDetectionStrategy,
+} from '@angular/core';
 import { CompositionModel } from '@khiops-covisualization/model/composition.model';
 import { DimensionsDatasModel } from '@khiops-covisualization/model/dimensions-data.model';
 import { LayoutService } from '@khiops-library/providers/layout.service';
@@ -14,10 +19,11 @@ import { SplitGutterInteractionEvent } from 'angular-split';
 import { DynamicI } from '@khiops-library/interfaces/globals.interface';
 
 @Component({
-    selector: 'app-axis',
-    templateUrl: './axis.component.html',
-    styleUrls: ['./axis.component.scss'],
-    standalone: false
+  selector: 'app-axis',
+  templateUrl: './axis.component.html',
+  styleUrls: ['./axis.component.scss'],
+  changeDetection: ChangeDetectionStrategy.Eager,
+  standalone: false,
 })
 export class AxisComponent implements OnInit {
   @Input() public sizeId: string = '';

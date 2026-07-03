@@ -4,7 +4,7 @@
  * at https://spdx.org/licenses/BSD-3-Clause-Clear.html or see the "LICENSE" file for more details.
  */
 
-import { Component, Input } from '@angular/core';
+import { Component, Input, ChangeDetectionStrategy } from '@angular/core';
 import { DimensionCovisualizationModel } from '@khiops-library/model/dimension.covisualization.model';
 import {
   VariableSearchDialogComponent,
@@ -16,6 +16,7 @@ import { DialogService } from '@khiops-library/providers/dialog.service';
   selector: 'app-variable-search-button',
   templateUrl: './variable-search-button.component.html',
   styleUrls: ['./variable-search-button.component.scss'],
+  changeDetection: ChangeDetectionStrategy.Eager,
   standalone: false,
 })
 export class VariableSearchButtonComponent {

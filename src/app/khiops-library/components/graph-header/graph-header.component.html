@@ -41,7 +41,11 @@
           [max]="maxScale()"
           [min]="minScale()"
           [step]="stepScale()"
-          (input)="onScaleChanged($event?.target?.['valueAsNumber'])"
+          (input)="
+            onScaleChanged(
+              $safeNavigationMigration($event?.target?.['valueAsNumber'])
+            )
+          "
         >
           <input
             [ngModel]="scaleValue()"

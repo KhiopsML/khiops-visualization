@@ -13,7 +13,7 @@
     >
       @if (axisLayout.isHierarchyChecked) {
         <as-split-area
-          [size]="sizes?.[sizeId]?.[column0Index]"
+          [size]="$safeNavigationMigration(sizes?.[sizeId]?.[column0Index])"
           order="1"
           [visible]="axisLayout.isHierarchyChecked"
           class="kl-card"
@@ -29,7 +29,7 @@
       }
       @if (axisLayout.isClustersChecked) {
         <as-split-area
-          [size]="sizes?.[sizeId]?.[column1Index]"
+          [size]="$safeNavigationMigration(sizes?.[sizeId]?.[column1Index])"
           class="app-cluster-details-container kl-card"
           order="2"
         >
@@ -42,7 +42,10 @@
         </as-split-area>
       }
       @if (axisLayout.isAnnotationChecked || axisLayout.isCompositionChecked) {
-        <as-split-area [size]="sizes?.[sizeId]?.[column2Index]" order="3">
+        <as-split-area
+          [size]="$safeNavigationMigration(sizes?.[sizeId]?.[column2Index])"
+          order="3"
+        >
           <as-split direction="vertical" fxFlexFill>
             @if (axisLayout.isAnnotationChecked) {
               <as-split-area [size]="30" order="1" class="kl-card">
@@ -75,7 +78,7 @@
       }
       @if (axisLayout.isExternalDataChecked) {
         <as-split-area
-          [size]="sizes?.[sizeId]?.[column3Index]"
+          [size]="$safeNavigationMigration(sizes?.[sizeId]?.[column3Index])"
           order="4"
           class="kl-card"
         >
@@ -86,7 +89,9 @@
             [selectedDimension]="dimensionsDatas.selectedDimensions[position]"
             [selectedComposition]="selectedComposition"
             [externalData]="
-              dimensionsDatas.selectedNodes[position]?.externalData
+              $safeNavigationMigration(
+                dimensionsDatas.selectedNodes[position]?.externalData
+              )
             "
           >
           </app-external-datas>
@@ -96,7 +101,7 @@
         axisLayout.isDistributionChecked && (position === 0 || position === 1)
       ) {
         <as-split-area
-          [size]="sizes?.[sizeId]?.[column4Index]"
+          [size]="$safeNavigationMigration(sizes?.[sizeId]?.[column4Index])"
           order="5"
           class="kl-card"
         >

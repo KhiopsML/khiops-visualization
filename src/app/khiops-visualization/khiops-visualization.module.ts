@@ -7,7 +7,7 @@
 import { CommonModule } from '@angular/common';
 import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { provideHttpClient } from '@angular/common/http';
+import { provideHttpClient, withXhr } from '@angular/common/http';
 import { AppComponent } from './khiops-visualization.component';
 import { HomeLayoutComponent } from './components/home-layout/homeLayout.component';
 import { PreparationViewComponent } from './components/preparation-view/preparation-view.component';
@@ -97,7 +97,7 @@ import { VisualizationRoutingModule } from './khiops-visualization-routing.modul
     VisualizationRoutingModule,
   ],
   providers: [
-    provideHttpClient(),
+    provideHttpClient(withXhr()),
     { provide: OverlayContainer, useClass: InAppOverlayContainer },
   ],
   exports: [AppComponent],

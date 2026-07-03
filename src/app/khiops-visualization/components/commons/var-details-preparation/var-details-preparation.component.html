@@ -9,17 +9,25 @@
   direction="vertical"
   (dragEnd)="onSplitDragEnd($event, 'row1Col1Row')"
 >
-  <as-split-area [size]="sizes?.row1Col1Row[0]" fxLayout="column">
+  <as-split-area
+    [size]="$safeNavigationMigration(sizes?.row1Col1Row[0])"
+    fxLayout="column"
+  >
     <as-split
       direction="vertical"
       (dragEnd)="onSplitDragEnd($event, 'row1Col1Row0Col')"
     >
-      <as-split-area class="kl-card" [size]="sizes?.row1Col1Row0Col[0]">
+      <as-split-area
+        class="kl-card"
+        [size]="$safeNavigationMigration(sizes?.row1Col1Row0Col[0])"
+      >
         @if (preparationDatas?.selectedVariable) {
           <app-variable-graph-details
             #appVariableGraphDetails
             [preparationSource]="preparationSource"
-            [selectedVariable]="preparationDatas?.selectedVariable"
+            [selectedVariable]="
+              $safeNavigationMigration(preparationDatas?.selectedVariable)
+            "
             [selectedGraphItemIndex]="distributionSelectedBarIndex"
             (selectedItemChanged)="onSelectedGraphItemChanged($event)"
             (interpretableHistogramChanged)="onSelectedGraphItemChanged($event)"
@@ -33,14 +41,19 @@
         }
       </as-split-area>
       @if (isRegressionAnalysis) {
-        <as-split-area class="kl-card" [size]="sizes?.row1Col1Row0Col[1]">
+        <as-split-area
+          class="kl-card"
+          [size]="$safeNavigationMigration(sizes?.row1Col1Row0Col[1])"
+        >
           <app-regression-matrix
             fxFlex="1 1 100%"
             id="preparation-matrix-comp-container"
             [preparationSource]="preparationSource"
             (selectedCellChanged)="onSelectedMatrixCellChanged($event)"
             [selectedCell]="matrixRegSelectedCell"
-            [selectedVariable]="preparationDatas?.selectedVariable"
+            [selectedVariable]="
+              $safeNavigationMigration(preparationDatas?.selectedVariable)
+            "
           >
           </app-regression-matrix>
         </as-split-area>
@@ -49,7 +62,7 @@
   </as-split-area>
   <as-split-area
     class="variables-list-container kl-card"
-    [size]="sizes?.row1Col1Row[1]"
+    [size]="$safeNavigationMigration(sizes?.row1Col1Row[1])"
   >
     @if (
       preparationDatas?.currentIntervalDatas?.values && !isRegressionAnalysis
@@ -62,11 +75,21 @@
         [displayCount]="false"
         [showLineSelection]="true"
         titleTooltip="{{ 'TOOLTIPS.PREPARATION.INTERVAL.TITLE' | translate }}"
-        [title]="preparationDatas?.currentIntervalDatas?.title"
+        [title]="
+          $safeNavigationMigration(
+            preparationDatas?.currentIntervalDatas?.title
+          )
+        "
         [showColumnsSelection]="false"
-        [inputDatas]="preparationDatas?.currentIntervalDatas?.values"
+        [inputDatas]="
+          $safeNavigationMigration(
+            preparationDatas?.currentIntervalDatas?.values
+          )
+        "
         [displayedColumns]="
-          preparationDatas?.currentIntervalDatas?.displayedColumns
+          $safeNavigationMigration(
+            preparationDatas?.currentIntervalDatas?.displayedColumns
+          )
         "
       >
       </kl-ag-grid>

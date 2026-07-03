@@ -4,7 +4,12 @@
  * at https://spdx.org/licenses/BSD-3-Clause-Clear.html or see the "LICENSE" file for more details.
  */
 
-import { Component, OnInit, NgZone } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  NgZone,
+  ChangeDetectionStrategy,
+} from '@angular/core';
 import { FileLoaderService } from '../../providers/file-loader.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { TranslateService } from '@ngstack/translate';
@@ -15,6 +20,7 @@ import { Ls } from '@khiops-library/providers/ls.service';
   selector: 'kl-file-loader',
   templateUrl: './file-loader.component.html',
   styleUrls: ['./file-loader.component.scss'],
+  changeDetection: ChangeDetectionStrategy.Eager,
   standalone: false,
 })
 export class FileLoaderComponent implements OnInit {

@@ -4,7 +4,13 @@
  * at https://spdx.org/licenses/BSD-3-Clause-Clear.html or see the "LICENSE" file for more details.
  */
 
-import { Component, OnInit, NgZone, Input } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  NgZone,
+  Input,
+  ChangeDetectionStrategy,
+} from '@angular/core';
 import { CompositionModel } from '@khiops-covisualization/model/composition.model';
 import { SelectableComponent } from '@khiops-library/components/selectable/selectable.component';
 import { SelectableService } from '@khiops-library/components/selectable/selectable.service';
@@ -17,11 +23,13 @@ import { DynamicI } from '@khiops-library/interfaces/globals.interface';
   selector: 'app-external-datas',
   templateUrl: './external-datas.component.html',
   styleUrls: ['./external-datas.component.scss'],
-  standalone: false
+  changeDetection: ChangeDetectionStrategy.Eager,
+  standalone: false,
 })
 export class ExternalDatasComponent
   extends SelectableComponent
-  implements OnInit {
+  implements OnInit
+{
   @Input() private position: number = 0;
   @Input() private externalData: any[] | DynamicI | undefined;
   @Input() private selectedComposition: CompositionModel | undefined;

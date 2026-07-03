@@ -10,6 +10,7 @@ import {
   AfterViewInit,
   OnInit,
   NgZone,
+  ChangeDetectionStrategy,
 } from '@angular/core';
 import { DimensionCovisualizationModel } from '@khiops-library/model/dimension.covisualization.model';
 import { GridDatasI } from '@khiops-library/interfaces/grid-datas.interface';
@@ -39,6 +40,7 @@ export interface VariableSearchResult {
   selector: 'app-variable-search-dialog',
   templateUrl: './variable-search-dialog.component.html',
   styleUrls: ['./variable-search-dialog.component.scss'],
+  changeDetection: ChangeDetectionStrategy.Eager,
   standalone: false,
 })
 export class VariableSearchDialogComponent

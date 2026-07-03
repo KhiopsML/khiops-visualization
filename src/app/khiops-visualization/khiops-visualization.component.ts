@@ -11,6 +11,7 @@ import {
   ElementRef,
   AfterViewInit,
   NgZone,
+  ChangeDetectionStrategy,
 } from '@angular/core';
 
 import { AppService } from './providers/app.service';
@@ -55,6 +56,7 @@ import { TreePreparationStore } from './stores/tree-preparation.store';
   templateUrl: './khiops-visualization.component.html',
   encapsulation: ViewEncapsulation.ShadowDom,
   standalone: false,
+  changeDetection: ChangeDetectionStrategy.Eager,
   providers: [
     AppService,
     SaveService,
@@ -216,9 +218,15 @@ export class AppComponent
         SETTING_NUMBER_PRECISION: AppService.Ls.get('SETTING_NUMBER_PRECISION'),
         SETTING_MATRIX_CONTRAST: AppService.Ls.get('SETTING_MATRIX_CONTRAST'),
         SETTING_AUTO_SCALE: AppService.Ls.get('SETTING_AUTO_SCALE'),
-        SETTING_AUTO_SCALE_FACTOR: AppService.Ls.get('SETTING_AUTO_SCALE_FACTOR'),
-        DISTRIBUTION_GRAPH_OPTION_X: AppService.Ls.get('DISTRIBUTION_GRAPH_OPTION_X'),
-        DISTRIBUTION_GRAPH_OPTION_Y: AppService.Ls.get('DISTRIBUTION_GRAPH_OPTION_Y'),
+        SETTING_AUTO_SCALE_FACTOR: AppService.Ls.get(
+          'SETTING_AUTO_SCALE_FACTOR',
+        ),
+        DISTRIBUTION_GRAPH_OPTION_X: AppService.Ls.get(
+          'DISTRIBUTION_GRAPH_OPTION_X',
+        ),
+        DISTRIBUTION_GRAPH_OPTION_Y: AppService.Ls.get(
+          'DISTRIBUTION_GRAPH_OPTION_Y',
+        ),
       };
       this.element.nativeElement.dispatchEvent(
         new CustomEvent('save-file-requested', {

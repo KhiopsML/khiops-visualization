@@ -12,6 +12,7 @@ import {
   OnDestroy,
   NgZone,
   SimpleChanges,
+  ChangeDetectionStrategy,
 } from '@angular/core';
 import { TranslateService } from '@ngstack/translate';
 import { DimensionCovisualizationModel } from '@khiops-library/model/dimension.covisualization.model';
@@ -30,6 +31,7 @@ import cloneDeep from 'lodash-es/cloneDeep';
   selector: 'app-cluster-details',
   templateUrl: './cluster-details.component.html',
   styleUrls: ['./cluster-details.component.scss'],
+  changeDetection: ChangeDetectionStrategy.Eager,
   standalone: false,
 })
 export class ClusterDetailsComponent implements OnInit, OnChanges, OnDestroy {

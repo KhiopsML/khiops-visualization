@@ -4,7 +4,14 @@
  * at https://spdx.org/licenses/BSD-3-Clause-Clear.html or see the "LICENSE" file for more details.
  */
 
-import { Component, effect, input, NgZone, OnInit } from '@angular/core';
+import {
+  Component,
+  effect,
+  input,
+  NgZone,
+  OnInit,
+  ChangeDetectionStrategy,
+} from '@angular/core';
 import { TreeNodeModel } from '@khiops-covisualization/model/tree-node.model';
 import { SelectableService } from '@khiops-library/components/selectable/selectable.service';
 import { SelectableComponent } from '@khiops-library/components/selectable/selectable.component';
@@ -18,6 +25,7 @@ import { COMPONENT_TYPES } from '../../../../khiops-library/enum/component-types
   selector: 'app-annotation',
   templateUrl: './annotation.component.html',
   styleUrls: ['./annotation.component.scss'],
+  changeDetection: ChangeDetectionStrategy.Eager,
   standalone: false,
 })
 export class AnnotationComponent extends SelectableComponent implements OnInit {

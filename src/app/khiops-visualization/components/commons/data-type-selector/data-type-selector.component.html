@@ -9,7 +9,7 @@
   mat-stroked-button
   [matMenuTriggerFor]="dataOptionsTypes"
 >
-  {{ dataOptions?.selected | translate }}
+  {{ $safeNavigationMigration(dataOptions?.selected) | translate }}
   <em><mat-icon>keyboard_arrow_down</mat-icon> </em>
 </button>
 <mat-menu #dataOptionsTypes>

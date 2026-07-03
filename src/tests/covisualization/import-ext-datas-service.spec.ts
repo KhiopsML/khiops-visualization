@@ -6,7 +6,7 @@
 // @ts-nocheck
 
 import { TestBed } from '@angular/core/testing';
-import { provideHttpClient } from '@angular/common/http';
+import { provideHttpClient, withXhr } from '@angular/common/http';
 import { TranslateModule } from '@ngstack/translate';
 import { ImportExtDatasService } from '@khiops-covisualization/providers/import-ext-datas.service';
 import { AppService } from '@khiops-covisualization/providers/app.service';
@@ -19,7 +19,7 @@ describe('coVisualization', () => {
     beforeEach(() => {
       TestBed.configureTestingModule({
         imports: [TranslateModule.forRoot()],
-        providers: [provideHttpClient()],
+        providers: [provideHttpClient(withXhr())],
       });
 
       importExtDatasService = TestBed.inject(ImportExtDatasService);
@@ -506,10 +506,9 @@ describe('coVisualization', () => {
           'JoinKey',
           1,
           () => {
-            const result =
-              importExtDatasService.getImportedDatasFromDimension({
-                name: 'TestDim',
-              });
+            const result = importExtDatasService.getImportedDatasFromDimension({
+              name: 'TestDim',
+            });
             expect(result).toBeDefined();
             expect(result['val1']).toBeDefined();
             expect(result['val1'][0].key).toBe('FieldName');

@@ -11,15 +11,14 @@ import {
   Input,
   OnChanges,
   SimpleChanges,
+  ChangeDetectionStrategy,
 } from '@angular/core';
 import { SelectableService } from '@khiops-library/components/selectable/selectable.service';
 import { DistributionDatasService } from '@khiops-visualization/providers/distribution-datas.service';
 import { TranslateService } from '@ngstack/translate';
 import { TreePreparationDatasService } from '@khiops-visualization/providers/tree-preparation-datas.service';
 import { GridDatasI } from '@khiops-library/interfaces/grid-datas.interface';
-import {
-  TreePreparationDatasModel,
-} from '@khiops-visualization/model/tree-preparation-datas.model';
+import { TreePreparationDatasModel } from '@khiops-visualization/model/tree-preparation-datas.model';
 import { DistributionDatasModel } from '@khiops-visualization/model/distribution-datas.model';
 import { UtilsService } from '@khiops-library/providers/utils.service';
 import { ChartToggleValuesI } from '@khiops-visualization/interfaces/chart-toggle-values.interface';
@@ -31,6 +30,7 @@ import { TreePreparationStore } from '@khiops-visualization/stores/tree-preparat
   selector: 'app-tree-leaf-details',
   templateUrl: './tree-leaf-details.component.html',
   styleUrls: ['./tree-leaf-details.component.scss'],
+  changeDetection: ChangeDetectionStrategy.Eager,
   standalone: false,
 })
 export class TreeLeafDetailsComponent implements OnInit, OnChanges {

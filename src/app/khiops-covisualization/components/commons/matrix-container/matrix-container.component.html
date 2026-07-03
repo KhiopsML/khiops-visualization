@@ -7,9 +7,15 @@
 <div class="matrix-container-comp" fxFlexFill>
   <as-split direction="vertical" (dragEnd)="onSplitDragEnd($event, sizeId)">
     @if (viewsLayout?.isDimensionsChecked) {
-      <as-split-area [size]="sizes?.[sizeId]?.[0]" order="1" class="kl-card">
+      <as-split-area
+        [size]="$safeNavigationMigration(sizes?.[sizeId]?.[0])"
+        order="1"
+        class="kl-card"
+      >
         <app-selected-clusters
-          [selectedNodes]="dimensionsDatas?.selectedNodes"
+          [selectedNodes]="
+            $safeNavigationMigration(dimensionsDatas?.selectedNodes)
+          "
           [selectedDimensions]="selectedDimensions"
         >
         </app-selected-clusters>
@@ -18,7 +24,7 @@
     @if (viewsLayout?.isCooccurrenceChecked) {
       <as-split-area
         class="matrix-container-comp-wrapper kl-card"
-        [size]="sizes?.[sizeId]?.[1]"
+        [size]="$safeNavigationMigration(sizes?.[sizeId]?.[1])"
         order="2"
       >
         <div
@@ -54,7 +60,11 @@
               <mat-checkbox
                 color="accent"
                 class="kl-checkbox"
-                [checked]="dimensionsDatas?.conditionalOnContext"
+                [checked]="
+                  $safeNavigationMigration(
+                    dimensionsDatas?.conditionalOnContext
+                  )
+                "
                 (change)="changeConditionalOnContext()"
                 matTooltipPosition="above"
                 matTooltip="{{
@@ -84,11 +94,17 @@
             (cellSelected)="onCellSelected($event)"
             [isAxisInverted]="dimensionsDatas?.isAxisInverted || false"
             (matrixAxisInverted)="onMatrixAxisInverted()"
-            [contextSelection]="dimensionsDatas?.contextSelection"
+            [contextSelection]="
+              $safeNavigationMigration(dimensionsDatas?.contextSelection)
+            "
             [graphMode]="matrixModes.selected"
             [contrast]="dimensionsDatas!.matrixContrast"
-            [selectedNodes]="dimensionsDatas?.selectedNodes"
-            [inputDatas]="dimensionsDatas?.matrixDatas"
+            [selectedNodes]="
+              $safeNavigationMigration(dimensionsDatas?.selectedNodes)
+            "
+            [inputDatas]="
+              $safeNavigationMigration(dimensionsDatas?.matrixDatas)
+            "
             [graphType]="matrixOptions.selected"
             [matrixFilterOption]="matrixFilterOptions.selected"
             [selectedInnerVariables]="

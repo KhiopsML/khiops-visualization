@@ -4,7 +4,7 @@
  * at https://spdx.org/licenses/BSD-3-Clause-Clear.html or see the "LICENSE" file for more details.
  */
 
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { SelectableTabComponent } from '@khiops-library/components/selectable-tab/selectable-tab.component';
 import { EvaluationDatasService } from '@khiops-visualization/providers/evaluation-datas.service';
 import { EvaluationDatasModel } from '@khiops-visualization/model/evaluation-datas.model';
@@ -19,6 +19,7 @@ import { DynamicI } from '@khiops-library/interfaces/globals.interface';
   selector: 'app-evaluation-view',
   templateUrl: './evaluation-view.component.html',
   styleUrls: ['./evaluation-view.component.scss'],
+  changeDetection: ChangeDetectionStrategy.Eager,
   standalone: false,
 })
 export class EvaluationViewComponent

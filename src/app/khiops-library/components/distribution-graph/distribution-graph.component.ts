@@ -14,6 +14,7 @@ import {
   OnDestroy,
   SimpleChanges,
   EventEmitter,
+  ChangeDetectionStrategy,
 } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { SelectableService } from '../selectable/selectable.service';
@@ -38,6 +39,7 @@ import { ChartLabelTruncationUtils } from '@khiops-library/components/chart/char
   templateUrl: './distribution-graph.component.html',
   styleUrls: ['./distribution-graph.component.scss'],
   providers: [ToPrecisionPipe],
+  changeDetection: ChangeDetectionStrategy.Eager,
   standalone: false,
 })
 export class DistributionGraphComponent

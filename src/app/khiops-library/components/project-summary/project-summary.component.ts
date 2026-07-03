@@ -4,7 +4,12 @@
  * at https://spdx.org/licenses/BSD-3-Clause-Clear.html or see the "LICENSE" file for more details.
  */
 
-import { Component, Input, OnInit } from '@angular/core';
+import {
+  Component,
+  Input,
+  OnInit,
+  ChangeDetectionStrategy,
+} from '@angular/core';
 import { Subscription } from 'rxjs';
 import { FileLoaderService } from '@khiops-library/providers/file-loader.service';
 import { InfosDatasI } from '@khiops-library/interfaces/infos-datas.interface';
@@ -12,6 +17,7 @@ import { InfosDatasI } from '@khiops-library/interfaces/infos-datas.interface';
 @Component({
   selector: 'kl-project-summary',
   templateUrl: './project-summary.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   standalone: false,
 })
 export class ProjectSummaryComponent implements OnInit {

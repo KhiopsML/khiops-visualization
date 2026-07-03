@@ -8,7 +8,7 @@
 import { TestBed } from '@angular/core/testing';
 import { AppService } from '@khiops-visualization/providers/app.service';
 import { Preparation2dDatasService } from '@khiops-visualization/providers/preparation2d-datas.service';
-import { provideHttpClient } from '@angular/common/http';
+import { provideHttpClient, withXhr } from '@angular/common/http';
 import { TranslateModule } from '@ngstack/translate';
 import { TreePreparationDatasService } from '@khiops-visualization/providers/tree-preparation-datas.service';
 import { TreePreparationStore } from '@khiops-visualization/stores/tree-preparation.store';
@@ -25,7 +25,7 @@ describe('Visualization', () => {
       TestBed.configureTestingModule({
         imports: [TranslateModule.forRoot()],
         providers: [
-          provideHttpClient(),
+          provideHttpClient(withXhr()),
           provideMockStore({ initialState: {} }),
           TreePreparationDatasService,
           TreePreparationStore,
@@ -43,7 +43,7 @@ describe('Visualization', () => {
       preparation2dDatasService.initialize();
       preparation2dDatasService.setSelectedVariable(
         fileDatas.bivariatePreparationReport.variablesPairsStatistics[11].name1,
-        fileDatas.bivariatePreparationReport.variablesPairsStatistics[11].name2
+        fileDatas.bivariatePreparationReport.variablesPairsStatistics[11].name2,
       );
       const preparation2dDatas = preparation2dDatasService.getDatas();
       const result = preparation2dDatasService.getMatrixDatas(

@@ -29,7 +29,11 @@
           [max]="maxScale"
           [min]="minScale"
           [step]="stepScale"
-          (input)="onScaleChanged($event?.target?.['valueAsNumber'])"
+          (input)="
+            onScaleChanged(
+              $safeNavigationMigration($event?.target?.['valueAsNumber'])
+            )
+          "
           attr.aria-label="{{ 'ARIA.CHARTS.UPDATE_GRAPH_SCALE' | translate }}"
         >
           <input [(ngModel)]="scaleValue" matSliderThumb />
@@ -40,7 +44,7 @@
         [id]="graphIdContainer + '-close-btn'"
         color="primary"
         class="screenshot-hide"
-        mat-icon-button
+        mat-stroked-button
         fxLayoutAlign="center center"
         (click)="close()"
       >

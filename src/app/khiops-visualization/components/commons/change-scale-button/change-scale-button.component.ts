@@ -4,7 +4,7 @@
  * at https://spdx.org/licenses/BSD-3-Clause-Clear.html or see the "LICENSE" file for more details.
  */
 
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import {
   ChangeScaleDialogComponent,
   ScaleSettings,
@@ -21,6 +21,7 @@ import { VariableScaleSettingsService } from '@khiops-visualization/providers/va
   selector: 'app-change-scale-button',
   templateUrl: './change-scale-button.component.html',
   styleUrls: ['./change-scale-button.component.scss'],
+  changeDetection: ChangeDetectionStrategy.Eager,
   standalone: false,
 })
 export class ChangeScaleButtonComponent {

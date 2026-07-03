@@ -24,7 +24,10 @@
   }
   @if (!loadingView && dimensionsDatasService.dimensionsDatas.matrixDatas) {
     <as-split direction="horizontal" (dragEnd)="onSplitDragEnd($event, 'col')">
-      <as-split-area id="axis-container" [size]="sizes?.col[0]">
+      <as-split-area
+        id="axis-container"
+        [size]="$safeNavigationMigration(sizes?.col[0])"
+      >
         @if (
           dimensionsDatasService.dimensionsDatas.dimensionsTrees && viewsLayout
         ) {
@@ -35,7 +38,11 @@
             <as-split-area
               [size]="sizes && sizes.col0Row[0]"
               order="1"
-              [visible]="viewsLayout.dimensionsViewsLayoutsVO[0]?.isChecked"
+              [visible]="
+                $safeNavigationMigration(
+                  viewsLayout.dimensionsViewsLayoutsVO[0]?.isChecked
+                )
+              "
             >
               <app-axis
                 [sizeId]="'col0Row0Col'"
@@ -47,9 +54,13 @@
               </app-axis>
             </as-split-area>
             <as-split-area
-              [size]="sizes?.col0Row[1]"
+              [size]="$safeNavigationMigration(sizes?.col0Row[1])"
               order="2"
-              [visible]="viewsLayout.dimensionsViewsLayoutsVO[1]?.isChecked"
+              [visible]="
+                $safeNavigationMigration(
+                  viewsLayout.dimensionsViewsLayoutsVO[1]?.isChecked
+                )
+              "
             >
               <app-axis
                 [sizeId]="'col0Row1Col'"
@@ -84,7 +95,11 @@
                 [sizeId]="'col0Row0Col'"
                 [viewId]="'contextView'"
                 [position]="i + 2"
-                [axisLayout]="viewsLayout?.dimensionsViewsLayoutsVO?.[i + 2]"
+                [axisLayout]="
+                  $safeNavigationMigration(
+                    viewsLayout?.dimensionsViewsLayoutsVO?.[i + 2]
+                  )
+                "
                 [dimensionsDatas]="dimensionsDatasService.dimensionsDatas"
               >
               </app-axis>
@@ -93,7 +108,7 @@
         </as-split>
       </as-split-area>
       <as-split-area
-        [size]="sizes?.col[1]"
+        [size]="$safeNavigationMigration(sizes?.col[1])"
         [visible]="
           viewsLayout?.isDimensionsChecked || viewsLayout?.isCooccurrenceChecked
         "

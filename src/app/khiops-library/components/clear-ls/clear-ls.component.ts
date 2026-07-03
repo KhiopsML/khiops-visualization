@@ -4,7 +4,7 @@
  * at https://spdx.org/licenses/BSD-3-Clause-Clear.html or see the "LICENSE" file for more details.
  */
 
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Ls } from '@khiops-library/providers/ls.service';
 import { TranslateService } from '@ngstack/translate';
@@ -13,6 +13,7 @@ import { TranslateService } from '@ngstack/translate';
   selector: 'kl-clear-ls',
   templateUrl: './clear-ls.component.html',
   styleUrls: ['./clear-ls.component.scss'],
+  changeDetection: ChangeDetectionStrategy.Eager,
   standalone: false,
 })
 export class ClearLsComponent {

@@ -11,6 +11,7 @@ import {
   SimpleChanges,
   EventEmitter,
   Output,
+  ChangeDetectionStrategy,
 } from '@angular/core';
 import { AppConfig } from '../../../../../environments/environment';
 import { TrackerService } from '../../../../khiops-library/providers/tracker.service';
@@ -21,13 +22,16 @@ import { DimensionsDatasService } from '@khiops-covisualization/providers/dimens
 import { covisualizationCommonEnvironment } from '../../../../../environments/covisualization-common';
 
 // Capture default values before AppConfig mutations can overwrite them
-const DEFAULT_NUMBER_PRECISION = covisualizationCommonEnvironment.GLOBAL.TO_FIXED;
-const DEFAULT_MATRIX_CONTRAST = covisualizationCommonEnvironment.GLOBAL.MATRIX_CONTRAST;
+const DEFAULT_NUMBER_PRECISION =
+  covisualizationCommonEnvironment.GLOBAL.TO_FIXED;
+const DEFAULT_MATRIX_CONTRAST =
+  covisualizationCommonEnvironment.GLOBAL.MATRIX_CONTRAST;
 
 @Component({
   selector: 'app-user-settings',
   templateUrl: './user-settings.component.html',
   styleUrls: ['./user-settings.component.scss'],
+  changeDetection: ChangeDetectionStrategy.Eager,
   standalone: false,
 })
 export class UserSettingsComponent implements OnChanges {
