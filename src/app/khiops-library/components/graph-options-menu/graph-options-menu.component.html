@@ -10,15 +10,15 @@
     color="primary"
     [matMenuTriggerFor]="graphOptionsTypes"
   >
-    {{ graphOptions?.selected | translate }}
+    {{ selectedOption() | translate }}
     <em><mat-icon>keyboard_arrow_down</mat-icon> </em>
   </button>
   <mat-menu #graphOptionsTypes>
-    @for (opt of graphOptions?.types; track opt) {
+    @for (opt of graphOptions()?.types; track opt) {
       <button
         mat-menu-item
         (click)="changeGraphOption(opt)"
-        [class.selected-item]="opt === graphOptions?.selected"
+        [class.selected-item]="opt === selectedOption()"
       >
         {{ opt | translate }}
       </button>

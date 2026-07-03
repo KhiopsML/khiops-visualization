@@ -5,11 +5,12 @@
  */
 
 import {
+  effect,
   Component,
-  Input,
+  input,
   ChangeDetectionStrategy,
-  EventEmitter,
-  Output,
+  output,
+  signal,
 } from '@angular/core';
 import { DistributionOptionsI } from '@khiops-library/interfaces/distribution-options.interface';
 
@@ -21,12 +22,20 @@ import { DistributionOptionsI } from '@khiops-library/interfaces/distribution-op
     standalone: false
 })
 export class GraphOptionsMenuComponent {
-  @Input() graphOptions: DistributionOptionsI | undefined;
-  @Output() graphOptionsChange = new EventEmitter<string>();
+  graphOptions = input<DistributionOptionsI | undefined>(undefined);
+  graphOptionsChange = output<string>();
+
+  protected readonly selectedOption = signal<string | undefined>(undefined);
+
+  constructor() {
+    effect(() => {
+      this.selectedOption.set(this.graphOptions()?.selected);
+    });
+  }
 
   changeGraphOption(option: string) {
-    if (this.graphOptions) {
-      this.graphOptions.selected = option;
+    if (this.graphOptions()) {
+      this.selectedOption.set(option);
       this.graphOptionsChange.emit(option);
     }
   }
