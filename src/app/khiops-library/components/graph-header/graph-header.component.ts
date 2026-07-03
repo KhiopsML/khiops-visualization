@@ -6,11 +6,13 @@
 
 import {
   Component,
-  OnInit,
-  Input,
-  Output,
-  EventEmitter,
   ChangeDetectionStrategy,
+  input,
+  output,
+  signal,
+  inject,
+  computed,
+  afterNextRender,
 } from '@angular/core';
 import { KhiopsLibraryService } from '../../providers/khiops-library.service';
 import { LS } from '../../enum/ls';
@@ -23,69 +25,60 @@ import { Ls } from '@khiops-library/providers/ls.service';
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: false,
 })
-export class GraphHeaderComponent implements OnInit {
-  @Output() public toggleFullscreen?: EventEmitter<boolean> =
-    new EventEmitter();
-  @Output() private scaleValueChanged: EventEmitter<number> =
-    new EventEmitter();
+export class GraphHeaderComponent {
+  // Inputs
+  selectedVariable = input<any>(null); // Type depends on context
+  title = input<string>('');
+  smallTitle = input<boolean>(false);
+  hideScale = input<boolean>(false);
+  hidePersistScale = input<boolean>(false);
+  showZoom = input<boolean>(false);
+  subTitle = input<string | undefined>();
 
-  @Input() public selectedVariable: any; // Type depends of the context
-  @Input() public title: string = '';
-  @Input() public smallTitle = false;
-  @Input() public hideScale = false;
-  @Input() public hidePersistScale = false;
-  @Input() public showZoom = false;
-  @Input() public subTitle?: string;
+  // Outputs
+  toggleFullscreen = output<boolean>();
+  scaleValueChanged = output<number>();
 
-  public maxScale: number;
-  public minScale: number;
-  public stepScale: number;
-  public scaleValue: number;
-  public persistScaleOptions: boolean = false;
+  // Services
+  private ls = inject(Ls);
+  private khiopsLibraryService = inject(KhiopsLibraryService);
 
-  constructor(
-    private ls: Ls,
-    private khiopsLibraryService: KhiopsLibraryService,
-  ) {
-    this.maxScale =
-      this.khiopsLibraryService.getAppConfig().common.GLOBAL.MAX_GRAPH_SCALE;
-    this.minScale =
-      this.khiopsLibraryService.getAppConfig().common.GLOBAL.MIN_GRAPH_SCALE;
-    this.stepScale =
-      this.khiopsLibraryService.getAppConfig().common.GLOBAL.STEP_GRAPH_SCALE;
-    this.scaleValue =
-      this.khiopsLibraryService.getAppConfig().common.GLOBAL.DEFAULT_GRAPH_SCALE;
+  // State signals
+  private readonly appConfig =
+    this.khiopsLibraryService.getAppConfig().common.GLOBAL;
+
+  maxScale = signal(this.appConfig.MAX_GRAPH_SCALE);
+  minScale = signal(this.appConfig.MIN_GRAPH_SCALE);
+  stepScale = signal(this.appConfig.STEP_GRAPH_SCALE);
+  scaleValue = signal(this.appConfig.DEFAULT_GRAPH_SCALE);
+
+  persistScaleOptions = computed(() => {
+    const stored = this.ls.get(LS.SETTING_PERSIST_SCALE_OPTIONS);
+    return stored?.toString() === 'true';
+  });
+
+  constructor() {
+    // Initialize: emit default scale on first render
+    afterNextRender(() => {
+      this.scaleValueChanged.emit(this.scaleValue());
+    });
   }
 
-  ngOnInit() {
-    this.initializePersistScaleOptions();
-    this.scaleValueChanged.emit(this.scaleValue);
-  }
-
-  /**
-   * Initialize the persist scale options based on the current context
-   */
-  private initializePersistScaleOptions() {
-    this.persistScaleOptions =
-      this.ls.get(LS.SETTING_PERSIST_SCALE_OPTIONS)?.toString() === 'true' ||
-      false;
-  }
-
-  /**
-   * Handle changes to the persist scale options checkbox
-   */
   onPersistScaleOptionsChange(checked: boolean) {
-    this.persistScaleOptions = checked;
     this.ls.set(LS.SETTING_PERSIST_SCALE_OPTIONS, checked);
     this.ls.setAll();
   }
 
-  onToggleFullscreen($event: boolean | undefined) {
-    this.toggleFullscreen?.emit($event);
+  onToggleFullscreen(event: boolean) {
+    this.toggleFullscreen.emit(event);
   }
 
   onScaleChanged(value: number) {
-    // Save current scale value into ls
+    this.scaleValue.set(value);
     this.scaleValueChanged.emit(value);
+  }
+
+  onScaleValueChanged(value: number) {
+    this.scaleValue.set(value);
   }
 }

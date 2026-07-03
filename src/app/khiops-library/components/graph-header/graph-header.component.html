@@ -15,19 +15,21 @@
     <h1
       fxLayout="row"
       fxLayoutAlign="start center"
-      [ngClass]="{ 'small-title': smallTitle === true }"
+      [ngClass]="{ 'small-title': smallTitle() }"
     >
       <mat-icon>equalizer</mat-icon>
-      <span>{{ title || (selectedVariable && selectedVariable.name) }}</span>
+      <span>{{
+        title() || (selectedVariable() && selectedVariable().name)
+      }}</span>
     </h1>
-    @if (subTitle) {
+    @if (subTitle()) {
       <h2 class="subtitle">
-        {{ subTitle }}
+        {{ subTitle() }}
       </h2>
     }
   </div>
   <div id="graph-header-tools" fxLayout="row" fxLayoutAlign="start center">
-    @if (!hideScale) {
+    @if (!hideScale()) {
       <div
         fxLayout="column"
         fxLayoutAlign="center center"
@@ -36,21 +38,23 @@
         <h2>{{ 'GLOBAL.SCALE' | translate }}</h2>
         <mat-slider
           attr.aria-label="{{ 'ARIA.CHARTS.UPDATE_GRAPH_SCALE' | translate }}"
-          [max]="maxScale"
-          [min]="minScale"
-          [step]="stepScale"
+          [max]="maxScale()"
+          [min]="minScale()"
+          [step]="stepScale()"
           (input)="onScaleChanged($event?.target?.['valueAsNumber'])"
         >
-          <input [(ngModel)]="scaleValue" matSliderThumb />
+          <input
+            [ngModel]="scaleValue()"
+            (ngModelChange)="scaleValue.set($event)"
+            matSliderThumb
+          />
         </mat-slider>
       </div>
     }
   </div>
-  @if (showZoom) {
+  @if (showZoom()) {
     <kl-zoom-tools [alignment]="'row'"></kl-zoom-tools>
   }
-  @if (toggleFullscreen?.observers.length > 0) {
-    <kl-btn-fullscreen (toggleFullscreen)="onToggleFullscreen($event)">
-    </kl-btn-fullscreen>
-  }
+  <kl-btn-fullscreen (toggleFullscreen)="onToggleFullscreen($event)">
+  </kl-btn-fullscreen>
 </div>
