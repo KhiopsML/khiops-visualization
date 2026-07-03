@@ -6,9 +6,9 @@
 
 import {
   Component,
-  OnInit,
-  Input,
   ChangeDetectionStrategy,
+  computed,
+  input,
 } from '@angular/core';
 
 @Component({
@@ -18,16 +18,16 @@ import {
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: false,
 })
-export class HeaderTitleComponent implements OnInit {
-  @Input() title?: string = '';
-  displayedTitle: string[] = [];
-  appName: string | undefined;
+export class HeaderTitleComponent {
+  readonly title = input<string>('');
 
-  ngOnInit() {
-    if (this.title) {
-      this.displayedTitle = this.title.split(' ');
-      this.appName =
-        this.displayedTitle[1] && this.displayedTitle[1].toLowerCase();
-    }
-  }
+  readonly displayedTitle = computed(() => {
+    const value = this.title().trim();
+    return value ? value.split(/\s+/) : [];
+  });
+
+  readonly appName = computed(() => {
+    const secondWord = this.displayedTitle()[1];
+    return secondWord?.toLowerCase();
+  });
 }
