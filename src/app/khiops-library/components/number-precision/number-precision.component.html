@@ -9,11 +9,9 @@
   <div fxLayout="row" fxLayoutAlign="start center">
     <mat-slider
       color="primary"
-      attr.aria-label="{{
-        'ARIA.SETTINGS.UPDATE_NUMBER_PRECISION' | translate
-      }}"
-      [min]="1"
-      [max]="8"
+      [attr.aria-label]="'ARIA.SETTINGS.UPDATE_NUMBER_PRECISION' | translate"
+      [min]="minPrecision"
+      [max]="maxPrecision"
       [step]="1"
     >
       <input
