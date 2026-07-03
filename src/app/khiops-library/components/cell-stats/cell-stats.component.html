@@ -10,23 +10,23 @@
   fxFlexFill
   fxLayoutAlign="center center"
 >
-  @if (cellStats) {
+  @if (cellStats(); as stats) {
     <div class="cell-stats-content">
       <b>{{ 'GLOBAL.CELL_STATS' | translate }}</b>
       <span title="{{ 'TOOLTIPS.MATRIX.CELL_STATS_FREQUENCY' | translate }}"
-        >F= {{ cellStats.F | toPrecision }}</span
+        >F= {{ stats.F | toPrecision }}</span
       >
       <span
         title="{{
           'TOOLTIPS.MATRIX.CELL_STATS_EXPECTED_FREQUENCY' | translate
         }}"
-        >EF= {{ cellStats.EF | toPrecision }}</span
+        >EF= {{ stats.EF | toPrecision }}</span
       >
-      @if (cellStats.I) {
-        <span>I= {{ cellStats.I | toPrecision }}</span>
+      @if (stats.I !== undefined) {
+        <span>I= {{ stats.I | toPrecision }}</span>
       }
-      @if (cellStats.Total) {
-        <span>Total= {{ cellStats.Total | toPrecision }} </span>
+      @if (stats.Total !== undefined) {
+        <span>Total= {{ stats.Total | toPrecision }} </span>
       }
     </div>
   }
