@@ -13,17 +13,18 @@
   margin-bottom: 5px;
 }
 
-#keyboard-tooltip {
+.keyboard-tooltip {
+  display: inline-block;
   border: 1px solid var(--primary-10);
   border-radius: 3px;
   border-bottom: 4px solid var(--primary-10);
   padding: 2px 2px 7px 3px;
   font-size: 9px;
-  font-family: monospace !important;
+  font-family: monospace;
   pointer-events: none;
 }
 
-.keyboard-tooltip-wrapper:hover #keyboard-tooltip {
+.keyboard-tooltip-wrapper:hover .keyboard-tooltip {
   transform: translateY(3px);
   border-bottom: 2px solid var(--primary-10);
 }

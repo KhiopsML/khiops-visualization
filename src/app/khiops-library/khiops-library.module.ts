@@ -134,10 +134,10 @@ import EnTransaltion from '../../assets/i18n/en.json';
     }),
     // Standalone directives
     FullscreenAnimationDirective,
+    KeyboardTooltipComponent,
   ],
   declarations: [
     WarningInformationComponent,
-    KeyboardTooltipComponent,
     NumberPrecisionComponent,
     MatrixContrastSettingComponent,
     ScalePersistenceSettingComponent,

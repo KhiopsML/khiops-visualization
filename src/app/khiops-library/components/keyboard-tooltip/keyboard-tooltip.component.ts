@@ -3,45 +3,44 @@
  * This software is distributed under the BSD 3-Clause-clear License, the text of which is available
  * at https://spdx.org/licenses/BSD-3-Clause-Clear.html or see the "LICENSE" file for more details.
  */
-import {
-  Component,
-  Input,
-  OnInit,
-  ChangeDetectionStrategy,
-} from '@angular/core';
+import { Component, computed, inject, input } from '@angular/core';
+import { MatTooltipModule } from '@angular/material/tooltip';
 import { TranslateService } from '@ngstack/translate';
 
 @Component({
   selector: 'kl-keyboard-tooltip',
   templateUrl: './keyboard-tooltip.component.html',
   styleUrls: ['./keyboard-tooltip.component.scss'],
-  changeDetection: ChangeDetectionStrategy.Eager,
-  standalone: false,
+  imports: [MatTooltipModule],
 })
-export class KeyboardTooltipComponent implements OnInit {
-  @Input() key: string = '';
-  @Input() tooltip: string = '';
+export class KeyboardTooltipComponent {
+  private static readonly ctrlLabelRegex = /\bCtrl\b/g;
 
-  displayKey: string = '';
-  tooltipWithCorrectKey: string = '';
+  private readonly translate = inject(TranslateService);
 
-  private isMac =
+  readonly key = input('', { alias: 'key' });
+  readonly tooltip = input('', { alias: 'tooltip' });
+
+  private readonly isMac =
     typeof navigator !== 'undefined' && /mac/i.test(navigator.userAgent);
 
-  constructor(private translate: TranslateService) {}
+  readonly displayKey = computed(() => {
+    const key = this.key();
 
-  ngOnInit(): void {
-    // Detect platform and use CMD for Mac, CTRL for others
-    if (this.key) {
-      this.displayKey = this.key === 'CTRL' && this.isMac ? 'CMD' : this.key;
+    return key === 'CTRL' && this.isMac ? 'CMD' : key;
+  });
+
+  readonly tooltipWithCorrectKey = computed(() => {
+    const tooltipKey = this.tooltip();
+
+    if (!tooltipKey) {
+      return '';
     }
 
-    // Replace the key in the tooltip to show the correct key for the platform
-    if (this.tooltip) {
-      const correctKey = this.isMac ? 'Cmd' : 'Ctrl';
-      this.tooltipWithCorrectKey = this.translate
-        .get(this.tooltip)
-        .replace('Ctrl', correctKey);
-    }
-  }
+    const correctKey = this.isMac ? 'Cmd' : 'Ctrl';
+
+    return this.translate
+      .get(tooltipKey)
+      .replace(KeyboardTooltipComponent.ctrlLabelRegex, correctKey);
+  });
 }
