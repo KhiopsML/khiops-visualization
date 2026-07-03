@@ -4,12 +4,7 @@
  * at https://spdx.org/licenses/BSD-3-Clause-Clear.html or see the "LICENSE" file for more details.
  */
 
-import {
-  ChangeDetectionStrategy,
-  Component,
-  inject,
-  input,
-} from '@angular/core';
+import { Component, inject, input } from '@angular/core';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
@@ -21,7 +16,6 @@ import { ZoomToolsEventsService } from '@khiops-library/components/zoom-tools/zo
   selector: 'kl-zoom-tools',
   templateUrl: './zoom-tools.component.html',
   styleUrl: './zoom-tools.component.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
   imports: [
     FlexLayoutModule,
