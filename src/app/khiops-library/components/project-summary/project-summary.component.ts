@@ -6,39 +6,48 @@
 
 import {
   Component,
-  Input,
+  DestroyRef,
   OnInit,
-  ChangeDetectionStrategy,
+  inject,
+  input,
+  signal,
 } from '@angular/core';
-import { Subscription } from 'rxjs';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FileLoaderService } from '@khiops-library/providers/file-loader.service';
 import { InfosDatasI } from '@khiops-library/interfaces/infos-datas.interface';
+
+interface ProjectDatasProvider {
+  getProjectSummaryDatas(): InfosDatasI[] | undefined;
+}
 
 @Component({
   selector: 'kl-project-summary',
   templateUrl: './project-summary.component.html',
-  changeDetection: ChangeDetectionStrategy.Eager,
   standalone: false,
 })
 export class ProjectSummaryComponent implements OnInit {
-  private fileLoadedSub?: Subscription;
-  @Input() private projectDatasService: any;
-  public projectSummaryDatas?: InfosDatasI[];
+  readonly projectDatasService = input<ProjectDatasProvider | null>(null);
+  protected readonly projectSummaryDatas = signal<InfosDatasI[] | undefined>(
+    undefined,
+  );
 
-  constructor(private fileLoaderService: FileLoaderService) {}
+  private readonly fileLoaderService = inject(FileLoaderService);
+  private readonly destroyRef = inject(DestroyRef);
 
-  ngOnInit() {
-    this.fileLoadedSub = this.fileLoaderService.fileLoaded$.subscribe(
-      (datas) => {
-        if (this.projectDatasService && datas) {
-          this.projectSummaryDatas =
-            this.projectDatasService.getProjectSummaryDatas();
+  ngOnInit(): void {
+    this.fileLoaderService.fileLoaded$
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe((datas) => {
+        if (!datas) {
+          return;
         }
-      },
-    );
-  }
 
-  ngOnDestroy(): void {
-    this.fileLoadedSub?.unsubscribe();
+        const provider = this.projectDatasService();
+        if (!provider) {
+          return;
+        }
+
+        this.projectSummaryDatas.set(provider.getProjectSummaryDatas());
+      });
   }
 }
