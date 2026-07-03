@@ -41,7 +41,7 @@ export class FileLoaderComponent implements OnInit {
 
   ngOnInit() {
     const associationFiles = ['.json'];
-    if (this.ls.LS_ID === 'KHIOPS_VISUALIZATION_') {
+    if (this.ls.LS_ID.startsWith('KHIOPS_VISUALIZATION')) {
       associationFiles.push('.khj');
     } else {
       associationFiles.push('.khcj');
