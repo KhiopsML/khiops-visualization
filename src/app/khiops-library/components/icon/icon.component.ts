@@ -10,7 +10,6 @@ import { ICONS } from './icons.list';
 
 @Component({
   selector: 'kl-icon',
-  standalone: false,
   changeDetection: ChangeDetectionStrategy.Eager,
   template: `<span style="display: flex;" [innerHTML]="svgContent"></span>`,
 })
