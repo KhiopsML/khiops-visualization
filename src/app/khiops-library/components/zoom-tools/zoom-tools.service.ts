@@ -9,21 +9,24 @@ import { Subject } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
 export class ZoomToolsEventsService {
-  private zoomIn = new Subject<string>();
-  zoomIn$ = this.zoomIn.asObservable();
-  emitZoomIn() {
-    this.zoomIn.next('');
+  private readonly zoomIn = new Subject<void>();
+  public readonly zoomIn$ = this.zoomIn.asObservable();
+
+  public emitZoomIn(): void {
+    this.zoomIn.next();
   }
 
-  private zoomReset = new Subject<string>();
-  zoomReset$ = this.zoomReset.asObservable();
-  emitZoomReset() {
-    this.zoomReset.next('');
+  private readonly zoomReset = new Subject<void>();
+  public readonly zoomReset$ = this.zoomReset.asObservable();
+
+  public emitZoomReset(): void {
+    this.zoomReset.next();
   }
 
-  private zoomOut = new Subject<string>();
-  zoomOut$ = this.zoomOut.asObservable();
-  emitZoomOut() {
-    this.zoomOut.next('');
+  private readonly zoomOut = new Subject<void>();
+  public readonly zoomOut$ = this.zoomOut.asObservable();
+
+  public emitZoomOut(): void {
+    this.zoomOut.next();
   }
 }

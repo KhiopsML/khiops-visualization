@@ -4,30 +4,47 @@
  * at https://spdx.org/licenses/BSD-3-Clause-Clear.html or see the "LICENSE" file for more details.
  */
 
-import { Component, Input, ChangeDetectionStrategy } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  inject,
+  input,
+} from '@angular/core';
+import { FlexLayoutModule } from '@angular/flex-layout';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { TranslateModule } from '@ngstack/translate';
 import { ZoomToolsEventsService } from '@khiops-library/components/zoom-tools/zoom-tools.service';
 
 @Component({
   selector: 'kl-zoom-tools',
   templateUrl: './zoom-tools.component.html',
-  styleUrls: ['./zoom-tools.component.scss'],
-  changeDetection: ChangeDetectionStrategy.Eager,
-  standalone: false,
+  styleUrl: './zoom-tools.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: true,
+  imports: [
+    FlexLayoutModule,
+    MatButtonModule,
+    MatIconModule,
+    MatTooltipModule,
+    TranslateModule,
+  ],
 })
 export class ZoomToolsComponent {
-  @Input() public alignment: string = 'column';
+  public readonly alignment = input<string>('column');
 
-  constructor(private zoomToolsEventsService: ZoomToolsEventsService) {}
+  private readonly zoomToolsEventsService = inject(ZoomToolsEventsService);
 
-  onClickOnZoomIn() {
+  public onClickOnZoomIn(): void {
     this.zoomToolsEventsService.emitZoomIn();
   }
 
-  onClickOnResetZoom() {
+  public onClickOnResetZoom(): void {
     this.zoomToolsEventsService.emitZoomReset();
   }
 
-  onClickOnZoomOut() {
+  public onClickOnZoomOut(): void {
     this.zoomToolsEventsService.emitZoomOut();
   }
 }

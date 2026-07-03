@@ -136,6 +136,7 @@ import EnTransaltion from '../../assets/i18n/en.json';
     // Standalone directives
     FullscreenAnimationDirective,
     KeyboardTooltipComponent,
+    ZoomToolsComponent,
   ],
   declarations: [
     WarningInformationComponent,
@@ -144,7 +145,6 @@ import EnTransaltion from '../../assets/i18n/en.json';
     ScalePersistenceSettingComponent,
     ClearLsComponent,
     NpmVersionComponent,
-    ZoomToolsComponent,
     KhiopsLibraryComponent,
     CellStatsComponent,
     WatchResizeComponent,
