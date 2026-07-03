@@ -4,7 +4,13 @@
  * at https://spdx.org/licenses/BSD-3-Clause-Clear.html or see the "LICENSE" file for more details.
  */
 
-import { Component, Input, ChangeDetectionStrategy } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  computed,
+  input,
+  numberAttribute,
+} from '@angular/core';
 
 @Component({
   selector: 'kl-gauge',
@@ -14,89 +20,64 @@ import { Component, Input, ChangeDetectionStrategy } from '@angular/core';
   standalone: false,
 })
 export class GaugeComponent {
-  @Input() value: number = 0;
-  @Input() size: number = 60;
+  private static readonly defaultSize = 60;
+  private static readonly minStrokeWidth = 2;
+  readonly fontSize = 16;
 
-  /**
-   * Get the percentage value ensuring it's between 0 and 100
-   * @returns The percentage as a number (0-100)
-   */
-  getPercentageValue(): number {
-    return Math.max(0, Math.min(100, this.value));
-  }
+  readonly value = input(0, {
+    transform: (value: unknown) => GaugeComponent.toFiniteNumber(value, 0),
+  });
 
-  /**
-   * Calculate the radius based on size
-   * @returns The radius for the circles
-   */
-  getRadius(): number {
-    return this.size * 0.4; // 40% of the size for the radius
-  }
+  readonly size = input(GaugeComponent.defaultSize, {
+    transform: (value: unknown) =>
+      Math.max(
+        GaugeComponent.defaultSize,
+        GaugeComponent.toFiniteNumber(value, GaugeComponent.defaultSize),
+      ),
+  });
 
-  /**
-   * Get the center coordinates
-   * @returns The center position
-   */
-  getCenter(): number {
-    return this.size / 2;
-  }
+  readonly percentageValue = computed(() =>
+    GaugeComponent.clamp(this.value(), 0, 100),
+  );
 
-  /**
-   * Get the viewBox dimensions
-   * @returns The viewBox string
-   */
-  getViewBox(): string {
-    const padding = this.size * 0.1; // 10% padding
-    return `${-padding} ${-padding} ${this.size + 2 * padding} ${this.size + 2 * padding}`;
-  }
+  readonly center = computed(() => this.size() / 2);
 
-  /**
-   * Calculate stroke dash offset for the circular progress
-   * @returns The dash offset value
-   */
-  getStrokeDashOffset(): number {
-    const circumference = 2 * Math.PI * this.getRadius();
-    return circumference - (this.getPercentageValue() / 100) * circumference;
-  }
+  readonly radius = computed(() => this.size() * 0.4);
 
-  /**
-   * Get the stroke dash array for the circular progress
-   * @returns The circumference value for dash array
-   */
-  getStrokeDashArray(): number {
-    return 2 * Math.PI * this.getRadius();
-  }
+  readonly viewBox = computed(() => {
+    const size = this.size();
+    const padding = size * 0.1;
 
-  /**
-   * Get the font size - always 13px regardless of component size
-   * @returns The font size in pixels (always 13px)
-   */
-  getFontSize(): number {
-    return 16; // Fixed size regardless of component size
-  }
+    return `${-padding} ${-padding} ${size + 2 * padding} ${size + 2 * padding}`;
+  });
 
-  /**
-   * Get the stroke width for the background circle
-   * @returns The stroke width
-   */
-  getBackgroundStrokeWidth(): number {
-    return Math.max(2, this.size * 0.07);
-  }
+  readonly strokeDashArray = computed(() => 2 * Math.PI * this.radius());
 
-  /**
-   * Get the stroke width for the progress circle
-   * @returns The stroke width
-   */
-  getProgressStrokeWidth(): number {
-    return Math.max(2, this.size * 0.08);
-  }
+  readonly strokeDashOffset = computed(
+    () => this.strokeDashArray() * (1 - this.percentageValue() / 100),
+  );
 
-  /**
-   * Get the SVG transform to position the circle start at the top
-   * @returns The transform string to rotate the circle -90 degrees around its center
-   */
-  getCircleTransform(): string {
-    const center = this.getCenter();
+  readonly backgroundStrokeWidth = computed(() =>
+    Math.max(GaugeComponent.minStrokeWidth, this.size() * 0.07),
+  );
+
+  readonly progressStrokeWidth = computed(() =>
+    Math.max(GaugeComponent.minStrokeWidth, this.size() * 0.08),
+  );
+
+  readonly circleTransform = computed(() => {
+    const center = this.center();
+
     return `rotate(-90 ${center} ${center})`;
+  });
+
+  private static clamp(value: number, min: number, max: number): number {
+    return Math.max(min, Math.min(max, value));
+  }
+
+  private static toFiniteNumber(value: unknown, fallback: number): number {
+    const parsedValue = numberAttribute(value, fallback);
+
+    return Number.isFinite(parsedValue) ? parsedValue : fallback;
   }
 }

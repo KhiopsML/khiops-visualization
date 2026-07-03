@@ -5,46 +5,46 @@
  -->
 
 <svg
-  [attr.width]="size"
-  [attr.height]="size"
-  [attr.viewBox]="getViewBox()"
+  [attr.width]="size()"
+  [attr.height]="size()"
+  [attr.viewBox]="viewBox()"
   version="1.1"
   xmlns="http://www.w3.org/2000/svg"
 >
   <!-- Background circle -->
   <circle
-    [attr.r]="getRadius()"
-    [attr.cx]="getCenter()"
-    [attr.cy]="getCenter()"
+    [attr.r]="radius()"
+    [attr.cx]="center()"
+    [attr.cy]="center()"
     fill="transparent"
     stroke="#eee"
-    [attr.stroke-width]="getBackgroundStrokeWidth()"
+    [attr.stroke-width]="backgroundStrokeWidth()"
   ></circle>
 
   <!-- Progress circle -->
   <circle
-    [attr.r]="getRadius()"
-    [attr.cx]="getCenter()"
-    [attr.cy]="getCenter()"
+    [attr.r]="radius()"
+    [attr.cx]="center()"
+    [attr.cy]="center()"
     stroke="#4a5264"
-    [attr.stroke-width]="getProgressStrokeWidth()"
+    [attr.stroke-width]="progressStrokeWidth()"
     stroke-linecap="butt"
-    [attr.stroke-dashoffset]="getStrokeDashOffset()"
+    [attr.stroke-dashoffset]="strokeDashOffset()"
     fill="transparent"
-    [attr.stroke-dasharray]="getStrokeDashArray()"
-    [attr.transform]="getCircleTransform()"
+    [attr.stroke-dasharray]="strokeDashArray()"
+    [attr.transform]="circleTransform()"
   ></circle>
 
   <!-- Percentage text -->
   <text
-    [attr.x]="getCenter()"
-    [attr.y]="getCenter()"
+    [attr.x]="center()"
+    [attr.y]="center()"
     fill="#4a5264"
-    [attr.font-size]="getFontSize() + 'px'"
+    [attr.font-size]="fontSize + 'px'"
     font-weight="bold"
     text-anchor="middle"
     dominant-baseline="central"
   >
-    {{ getPercentageValue() }}%
+    {{ percentageValue() }}%
   </text>
 </svg>
