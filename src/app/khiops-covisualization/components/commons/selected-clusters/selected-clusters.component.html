@@ -9,7 +9,12 @@
     id="selected-clusters-grid"
     fxFlexFill
     [selectedVariable]="activeClusters"
-    [rowSelection]="{ mode: 'multiRow', enableClickSelection: false, checkboxes: false, headerCheckbox: false }"
+    [rowSelection]="{
+      mode: 'multiRow',
+      enableClickSelection: false,
+      checkboxes: false,
+      headerCheckbox: false,
+    }"
     titleTooltip="{{ 'TOOLTIPS.AXIS.SELECTED_CLUSTERS.TITLE' | translate }}"
     [showSearch]="false"
     [enableClickSelection]="false"
@@ -18,5 +23,6 @@
     [title]="title"
     [watchResize]="true"
     [displayedColumns]="clustersDisplayedColumns"
+    [noDataMessage]="''"
   ></kl-ag-grid>
 </div>
