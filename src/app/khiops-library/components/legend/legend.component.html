@@ -4,20 +4,20 @@
  * at https://spdx.org/licenses/BSD-3-Clause-Clear.html or see the "LICENSE" file for more details.
  -->
 
-<div class="legend-comp" [ngClass]="position">
-  @if (legend && legend.length !== 0) {
+<div class="legend-comp" [ngClass]="position()">
+  @if (legend().length !== 0) {
     <div class="legend scrollbar-thin" tabindex="0">
-      @for (data of legend; track data.value || data.title || $index) {
+      @for (data of legend(); track data.value || data.title || $index) {
         <div
           class="legend-item"
           fxLayout="row"
           fxLayoutAlign="start center"
           (click)="selectLegendItem(data.name)"
-          [ngClass]="{ 'legend-selected': selectedItem === data.name }"
+          [ngClass]="{ 'legend-selected': selectedItem() === data.name }"
           title="{{
             data.name === defaultGroupName
               ? ('TOOLTIPS.DEFAULT_GROUP_INDEX' | translate)
-              : tooltip || data.name
+              : tooltip() || data.name
           }}"
         >
           <div
