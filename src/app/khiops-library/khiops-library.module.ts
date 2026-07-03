@@ -132,6 +132,7 @@ import EnTransaltion from '../../assets/i18n/en.json';
       activeLang: 'en',
       supportedLangs: ['en'],
     }),
+    NoDataComponent,
     // Standalone directives
     FullscreenAnimationDirective,
     KeyboardTooltipComponent,
@@ -158,7 +159,6 @@ import EnTransaltion from '../../assets/i18n/en.json';
     ToPrecisionPipe,
     LibVersionComponent,
     HeaderTitleComponent,
-    NoDataComponent,
     LegendComponent,
     SelectableTabComponent,
     GaugeComponent,
@@ -203,7 +203,6 @@ import EnTransaltion from '../../assets/i18n/en.json';
     HeaderToolsComponent,
     LibVersionComponent,
     HeaderTitleComponent,
-    NoDataComponent,
     LegendComponent,
     SelectableTabComponent,
     GaugeComponent,
@@ -231,6 +230,7 @@ import EnTransaltion from '../../assets/i18n/en.json';
     // Directives
     MenuFocusSelectedDirective,
     FullscreenAnimationDirective,
+    NoDataComponent,
     // Modules for re-export
     CommonModule,
     FormsModule,

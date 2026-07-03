@@ -4,34 +4,20 @@
  * at https://spdx.org/licenses/BSD-3-Clause-Clear.html or see the "LICENSE" file for more details.
  */
 
-import { Component, Input, ChangeDetectionStrategy } from '@angular/core';
+import { Component, computed, inject, input } from '@angular/core';
+import { FlexLayoutModule } from '@angular/flex-layout';
 import { TranslateService } from '@ngstack/translate';
 
 @Component({
   selector: 'kl-no-data',
   templateUrl: './no-data.component.html',
-  changeDetection: ChangeDetectionStrategy.Eager,
-  standalone: false,
+  imports: [FlexLayoutModule],
 })
 export class NoDataComponent {
-  @Input() private message?: string;
-  public text: string = '';
+  private readonly translate = inject(TranslateService);
+  readonly message = input<string>();
 
-  constructor(private translate: TranslateService) {}
-
-  ngOnInit() {
-    this.updateText();
-  }
-
-  ngOnChanges(): void {
-    this.updateText();
-  }
-
-  updateText() {
-    if (!this.message) {
-      this.text = this.translate.get('NO_DATAS.DEFAULT');
-    } else {
-      this.text = this.translate.get(this.message);
-    }
-  }
+  readonly text = computed(() =>
+    this.translate.get(this.message() ?? 'NO_DATAS.DEFAULT'),
+  );
 }
