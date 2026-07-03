@@ -4,17 +4,18 @@
  * at https://spdx.org/licenses/BSD-3-Clause-Clear.html or see the "LICENSE" file for more details.
  */
 
-import { Component, Input, ChangeDetectionStrategy } from '@angular/core';
+import { Component, input } from '@angular/core';
+
+type WarningInformationVariant = 'default' | 'inline';
 
 @Component({
   selector: 'kl-warning-information',
   templateUrl: './warning-information.component.html',
   styleUrls: ['./warning-information.component.scss'],
-  changeDetection: ChangeDetectionStrategy.Eager,
   standalone: false,
 })
 export class WarningInformationComponent {
-  @Input() text: string = '';
-  @Input() tooltipText: string = '';
-  @Input() variant: 'default' | 'inline' = 'default';
+  readonly text = input<string>('');
+  readonly tooltipText = input<string>('');
+  readonly variant = input<WarningInformationVariant>('default');
 }

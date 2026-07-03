@@ -6,11 +6,14 @@
 
 <div
   class="kl-warning-information"
-  [ngClass]="{ inline: variant === 'inline' }"
+  [class.inline]="variant() === 'inline'"
   fxLayout="row"
   fxLayoutAlign="start center"
-  [matTooltip]="tooltipText"
+  [matTooltip]="tooltipText()"
+  [matTooltipDisabled]="!tooltipText()"
+  role="note"
+  aria-live="polite"
 >
   <kl-icon name="warning" />
-  <span class="warning-text">{{ text }}</span>
+  <span class="warning-text">{{ text() }}</span>
 </div>
