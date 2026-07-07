@@ -228,7 +228,6 @@ export class TreePreparationDatasService {
    * @returns {TreePreparationVariableModel | undefined} The selected variable.
    */
   setSelectedVariable(name: string): TreePreparationVariableModel | undefined {
-    console.log("🚀 ~ TreePreparationDatasService ~ setSelectedVariable ~ name:", name)
     if (this.treePreparationDatas && name) {
       const variable: TreePreparationVariableStatistic =
         this.preparationDatasService.getVariableFromName(

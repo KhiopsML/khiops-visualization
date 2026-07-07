@@ -867,22 +867,20 @@ describe('Visualization', () => {
         const catVar = fileDatas.preparationReport.variablesStatistics.find(
           (v) => v.type === 'Categorical',
         );
-        if (catVar) {
-          preparationDatasService.setSelectedVariable(
-            catVar.name,
-            REPORT.PREPARATION_REPORT,
-          );
-          const selectedVariable = preparationDatasService.getSelectedVariable(
-            REPORT.PREPARATION_REPORT,
-          );
-          const res = distributionDatasService.getHistogramGraphDatas(
-            selectedVariable!,
-          );
-          // May return undefined or empty for categorical variable
-          if (res) {
-            expect(Array.isArray(res)).toBe(true);
-          }
-        }
+        expect(catVar).toBeDefined();
+
+        preparationDatasService.setSelectedVariable(
+          catVar.name,
+          REPORT.PREPARATION_REPORT,
+        );
+        const selectedVariable = preparationDatasService.getSelectedVariable(
+          REPORT.PREPARATION_REPORT,
+        );
+        const res = distributionDatasService.getHistogramGraphDatas(
+          selectedVariable!,
+        );
+
+        expect(res).toBeUndefined();
       });
     });
   });
