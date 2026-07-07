@@ -142,12 +142,12 @@ import EnTransaltion from '../../assets/i18n/en.json';
     WarningInformationComponent,
     IconComponent,
     CellStatsComponent,
+    ClearLsComponent,
   ],
   declarations: [
     NumberPrecisionComponent,
     MatrixContrastSettingComponent,
     ScalePersistenceSettingComponent,
-    ClearLsComponent,
     NpmVersionComponent,
     KhiopsLibraryComponent,
     WatchResizeComponent,

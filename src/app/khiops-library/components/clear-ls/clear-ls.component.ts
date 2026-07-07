@@ -4,26 +4,25 @@
  * at https://spdx.org/licenses/BSD-3-Clause-Clear.html or see the "LICENSE" file for more details.
  */
 
-import { Component, ChangeDetectionStrategy } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
+import { FlexLayoutModule } from '@angular/flex-layout';
+import { MatButtonModule } from '@angular/material/button';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Ls } from '@khiops-library/providers/ls.service';
-import { TranslateService } from '@ngstack/translate';
+import { TranslateModule, TranslateService } from '@ngstack/translate';
 
 @Component({
   selector: 'kl-clear-ls',
   templateUrl: './clear-ls.component.html',
   styleUrls: ['./clear-ls.component.scss'],
-  changeDetection: ChangeDetectionStrategy.Eager,
-  standalone: false,
+  imports: [FlexLayoutModule, MatButtonModule, TranslateModule],
 })
 export class ClearLsComponent {
-  constructor(
-    private translate: TranslateService,
-    private snackBar: MatSnackBar,
-    private ls: Ls,
-  ) {}
+  private readonly translate = inject(TranslateService);
+  private readonly snackBar = inject(MatSnackBar);
+  private readonly ls = inject(Ls);
 
-  onClickOnClearDatas() {
+  public onClickOnClearDatas(): void {
     this.ls.clear();
     this.snackBar.open(this.translate.get('SNACKS.DATAS_DELETED'), undefined, {
       duration: 2000,
