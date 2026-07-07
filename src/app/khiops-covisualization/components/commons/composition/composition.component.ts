@@ -11,7 +11,6 @@ import {
   EventEmitter,
   Output,
   OnInit,
-  SimpleChanges,
   AfterViewInit,
   ChangeDetectionStrategy,
 } from '@angular/core';
@@ -55,7 +54,6 @@ export class CompositionComponent implements OnInit, OnDestroy, AfterViewInit {
   public compositionDisplayedColumns: GridColumnsI[] = [];
 
   private currentNode: TreeNodeModel | undefined; // Store the actual node to use for updates
-  private treeSelectedNodeChangedSub: Subscription;
   private importedDatasChangedSub: Subscription;
   private conditionalOnContextChangedSub: Subscription;
   private contextSelectionChangedSub: Subscription;
@@ -69,15 +67,6 @@ export class CompositionComponent implements OnInit, OnDestroy, AfterViewInit {
     private dialogService: DialogService,
     private dimensionsDatasService: DimensionsDatasService,
   ) {
-    this.treeSelectedNodeChangedSub =
-      this.eventsService.treeSelectedNodeChanged.subscribe((e) => {
-        if (e.realNodeVO && e.hierarchyName === this.selectedDimension?.name) {
-          // Store the realNodeVO to use it for subsequent updates
-          this.currentNode = e.realNodeVO;
-          this.updateTable(e.realNodeVO, e.selectedValue);
-        }
-      });
-
     this.conditionalOnContextChangedSub =
       this.eventsService.conditionalOnContextChanged.subscribe(() => {
         // Update columns to show Expected Frequency when conditional on context is enabled
@@ -139,28 +128,20 @@ export class CompositionComponent implements OnInit, OnDestroy, AfterViewInit {
     this.updateTable(this.selectedNode);
   }
 
-  ngOnChanges(changes: SimpleChanges) {
-    // update when dimension change (with combo)
-    const dimensionChanged =
-      changes.selectedDimension?.currentValue?.name !==
-      changes.selectedDimension?.previousValue?.name;
-
-    if (dimensionChanged && changes.selectedNode) {
-      this.compositionDisplayedColumns = getCompositionDisplayedColumns(
-        this.translate,
-        this.selectedDimension?.isVarPart,
-        (e) => this.showDetailedPartsDialog(e),
-        this.dimensionsDatasService,
-        this.position,
-      );
-      // Update currentNode when dimension changes
-      this.currentNode = this.selectedNode;
-      this.updateTable(this.selectedNode);
-    }
+  ngOnChanges() {
+    this.compositionDisplayedColumns = getCompositionDisplayedColumns(
+      this.translate,
+      this.selectedDimension?.isVarPart,
+      (e) => this.showDetailedPartsDialog(e),
+      this.dimensionsDatasService,
+      this.position,
+    );
+    // Update currentNode when dimension changes
+    this.currentNode = this.selectedNode;
+    this.updateTable(this.selectedNode);
   }
 
   ngOnDestroy() {
-    this.treeSelectedNodeChangedSub?.unsubscribe();
     this.importedDatasChangedSub?.unsubscribe();
     this.conditionalOnContextChangedSub?.unsubscribe();
     this.contextSelectionChangedSub?.unsubscribe();
