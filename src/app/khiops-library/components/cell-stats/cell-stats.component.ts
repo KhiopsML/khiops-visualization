@@ -4,23 +4,21 @@
  * at https://spdx.org/licenses/BSD-3-Clause-Clear.html or see the "LICENSE" file for more details.
  */
 
-import {
-  ChangeDetectionStrategy,
-  Component,
-  computed,
-  input,
-} from '@angular/core';
+import { Component, computed, inject, input } from '@angular/core';
 import { UtilsService } from '../../providers/utils.service';
 import { CellModel } from '@khiops-library/model/cell.model';
 import { MATRIX_MODES } from '@khiops-library/enum/matrix-modes';
 import { CellStatsI } from '@khiops-library/interfaces/cell-stats.interface';
+import { FlexModule } from '@angular/flex-layout';
+import { TranslateService } from '@ngstack/translate';
+import { TranslateModule } from '@ngstack/translate';
+import { ToPrecisionPipe } from '@khiops-library/pipes/to-precision.pipe';
 
 @Component({
   selector: 'kl-cell-stats',
   templateUrl: './cell-stats.component.html',
   styleUrls: ['./cell-stats.component.scss'],
-  standalone: false,
-  changeDetection: ChangeDetectionStrategy.OnPush,
+  imports: [FlexModule, TranslateModule, ToPrecisionPipe],
 })
 export class CellStatsComponent {
   readonly selectedCells = input<CellModel[]>([]);
@@ -28,6 +26,8 @@ export class CellStatsComponent {
   readonly cellStats = computed<CellStatsI | undefined>(() =>
     this.computeCellStats(this.selectedCells()),
   );
+
+  public readonly translate = inject(TranslateService);
 
   private computeCellStats(selectedCells: CellModel[]): CellStatsI | undefined {
     if (!selectedCells?.length) {

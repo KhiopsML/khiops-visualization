@@ -11,7 +11,7 @@ import { UtilsService } from '../providers/utils.service';
 @Pipe({
   name: 'toPrecision',
   pure: false,
-  standalone: false,
+  standalone: true,
 })
 export class ToPrecisionPipe implements PipeTransform {
   constructor(private khiopsLibraryService: KhiopsLibraryService) {}
