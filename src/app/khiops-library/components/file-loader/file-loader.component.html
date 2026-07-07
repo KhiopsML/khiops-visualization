@@ -5,7 +5,7 @@
  -->
 
 <div class="file-loader-comp">
-  @if (!fileLoaderDatas.isLoadingDatas) {
+  @if (!fileLoaderDatas().isLoadingDatas) {
     <div fxLayout="column" fxLayoutAlign="center center">
       <button
         type="button"
@@ -21,31 +21,31 @@
         #fileInput
         type="file"
         id="file"
-        [accept]="associationFiles"
+        [accept]="associationFiles().join(',')"
       />
     </div>
   }
-  @if (fileLoaderDatas.isLoadingDatas && !fileLoaderDatas.datas) {
+  @if (fileLoaderDatas().isLoadingDatas && !fileLoaderDatas().datas) {
     <div id="loading-indicator">
       <mat-spinner
         diameter="40"
         color="accent"
         mode="indeterminate"
       ></mat-spinner>
-      @if (!fileLoaderDatas.isBigJsonFile) {
+      @if (!fileLoaderDatas().isBigJsonFile) {
         <span attr.aria-label="{{ translate.get('GLOBAL.LOADING_FILE') }}"
           >{{ translate.get('GLOBAL.LOADING_FILE') }} ...</span
         >
       }
-      @if (fileLoaderDatas.isBigJsonFile) {
+      @if (fileLoaderDatas().isBigJsonFile) {
         <span attr.aria-label="{{ translate.get('GLOBAL.LOADING_FILE') }}">{{
           translate.get('GLOBAL.BIG_FILES_LOADING_WARNING')
         }}</span>
       }
-      @if (fileLoaderDatas.isBigJsonFile) {
+      @if (fileLoaderDatas().isBigJsonFile) {
         <span
           >{{ translate.get('GLOBAL.LOADING') }}
-          {{ fileLoaderDatas.loadingInfo }}</span
+          {{ fileLoaderDatas().loadingInfo }}</span
         >
       }
     </div>
@@ -57,12 +57,13 @@
       type="button"
       mat-flat-button
       color="primary"
-      (click)="loadDebugFile(cyInputText)"
+      (click)="loadDebugFile(cyInputText())"
     >
       {{ translate.get('GLOBAL.OPEN_FILE') }}
     </button>
     <input
-      [(ngModel)]="cyInputText"
+      [ngModel]="cyInputText()"
+      (ngModelChange)="cyInputText.set($event)"
       #fileInput
       type="text"
       id="open-file-input"

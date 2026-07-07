@@ -4,49 +4,63 @@
  * at https://spdx.org/licenses/BSD-3-Clause-Clear.html or see the "LICENSE" file for more details.
  */
 
-import {
-  Component,
-  OnInit,
-  NgZone,
-  ChangeDetectionStrategy,
-} from '@angular/core';
+import { Component, NgZone, computed, inject, signal } from '@angular/core';
 import { FileLoaderService } from '../../providers/file-loader.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { TranslateService } from '@ngstack/translate';
 import { ConfigService } from '@khiops-library/providers/config.service';
 import { Ls } from '@khiops-library/providers/ls.service';
+import { toSignal } from '@angular/core/rxjs-interop';
+import { FormsModule } from '@angular/forms';
+import { MatButtonModule } from '@angular/material/button';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { FlexLayoutModule } from '@angular/flex-layout';
 
 @Component({
   selector: 'kl-file-loader',
   templateUrl: './file-loader.component.html',
   styleUrls: ['./file-loader.component.scss'],
-  changeDetection: ChangeDetectionStrategy.Eager,
-  standalone: false,
+  imports: [
+    FormsModule,
+    MatButtonModule,
+    MatProgressSpinnerModule,
+    FlexLayoutModule,
+  ],
 })
-export class FileLoaderComponent implements OnInit {
-  public fileLoaderDatas: any;
-  public associationFiles: string[] = [];
-  public cyInputText: string = ''; // cypress input field, used to load files in cypress
+export class FileLoaderComponent {
+  private readonly fileLoaderService = inject(FileLoaderService);
+  private readonly snackBar = inject(MatSnackBar);
+  public readonly translate = inject(TranslateService);
+  private readonly configService = inject(ConfigService);
+  private readonly ls = inject(Ls);
 
-  constructor(
-    private ngzone: NgZone,
-    private fileLoaderService: FileLoaderService,
-    private snackBar: MatSnackBar,
-    public translate: TranslateService,
-    private configService: ConfigService,
-    private ls: Ls,
-  ) {
-    this.fileLoaderDatas = this.fileLoaderService.getDatas();
-  }
+  // Trigger UI updates from service stream
+  private readonly fileLoadedSignal = toSignal(
+    this.fileLoaderService.fileLoaded$,
+    {
+      initialValue: this.fileLoaderService.getDatas().datas,
+    },
+  );
 
-  ngOnInit() {
+  public readonly fileLoaderDatas = computed(() => {
+    this.fileLoadedSignal();
+    return { ...this.fileLoaderService.getDatas() };
+  });
+  public readonly associationFiles = signal<string[]>(
+    this.getAssociationFiles(),
+  );
+  public readonly cyInputText = signal<string>(''); // Cypress input field used to load files in tests.
+
+  constructor(private ngzone: NgZone) {}
+
+  private getAssociationFiles(): string[] {
     const associationFiles = ['.json'];
     if (this.ls.LS_ID.startsWith('KHIOPS_VISUALIZATION')) {
       associationFiles.push('.khj');
     } else {
       associationFiles.push('.khcj');
     }
-    this.associationFiles = [...associationFiles];
+    return associationFiles;
   }
 
   loadDebugFile(fileName?: string) {
@@ -89,7 +103,7 @@ export class FileLoaderComponent implements OnInit {
               },
             );
             this.closeFile();
-            this.fileLoaderDatas.isLoadingDatas = false;
+            this.fileLoaderService.getDatas().isLoadingDatas = false;
           });
       });
     }
