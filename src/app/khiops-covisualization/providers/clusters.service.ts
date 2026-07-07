@@ -130,20 +130,16 @@ export class ClustersService {
     filteredDimensionsClusters = this.getCurrentClusterDetailsFromNode(
       this.dimensionsDatasService.dimensionsDatas.dimensionsTrees[0] || [],
     );
-    let selectedNode =
-      this.dimensionsDatasService.dimensionsDatas.selectedNodes[0];
+    let selectedNode = this.getSelectedNodeFromIndex(0);
 
-    let otherselectedNode =
-      this.dimensionsDatasService.dimensionsDatas.selectedNodes[1];
+    let otherselectedNode = this.getSelectedNodeFromIndex(1);
 
     if (position === 1) {
       filteredDimensionsClusters = this.getCurrentClusterDetailsFromNode(
         this.dimensionsDatasService.dimensionsDatas.dimensionsTrees[1] || [],
       );
-      selectedNode =
-        this.dimensionsDatasService.dimensionsDatas.selectedNodes[1];
-      otherselectedNode =
-        this.dimensionsDatasService.dimensionsDatas.selectedNodes[0];
+      selectedNode = this.getSelectedNodeFromIndex(1);
+      otherselectedNode = this.getSelectedNodeFromIndex(0);
     }
 
     selectedNode && selectedNode.getChildrenList();
@@ -177,14 +173,8 @@ export class ClustersService {
     );
 
     // For distribution chart, we want to show the label of the OTHER dimension
-    const otherPosition = position === 0 ? 1 : 0;
     const currentDataSet = new ChartDatasetModel(
-      (this.dimensionsDatasService.dimensionsDatas.selectedNodes[
-        otherPosition
-      ] &&
-        this.dimensionsDatasService.dimensionsDatas.selectedNodes[otherPosition]
-          .shortDescription) ||
-        '',
+      otherselectedNode?.shortDescription || otherselectedNode?.name || '',
     );
 
     let distributionsGraphDetails: ChartDatasModel | undefined =
@@ -284,6 +274,34 @@ export class ClustersService {
       distributionsGraphDetails = undefined;
     }
     return distributionsGraphDetails;
+  }
+
+  /**
+   * Retrieves the selected node from the dimensions data based on the given index.
+   * @param position - The index of the selected node.
+   * @returns The selected TreeNodeModel or undefined if not found.
+   */
+  private getSelectedNodeFromIndex(
+    position: number,
+  ): TreeNodeModel | undefined {
+    const dimensionsDatas = this.dimensionsDatasService.dimensionsDatas;
+    if (!dimensionsDatas) {
+      return undefined;
+    }
+
+    const selectedNode = dimensionsDatas.selectedNodes[position];
+    const selectedDimension = dimensionsDatas.selectedDimensions[position];
+
+    if (!selectedNode || !selectedDimension) {
+      return selectedNode;
+    }
+
+    return (
+      this.treenodesService.getNodeFromName(
+        selectedDimension.name,
+        selectedNode.name,
+      ) || selectedNode
+    );
   }
 
   /**
