@@ -6,61 +6,53 @@
 
 import {
   Component,
-  OnInit,
-  AfterViewInit,
-  ViewChild,
-  ViewContainerRef,
   ComponentRef,
+  effect,
+  inject,
   OnDestroy,
-  ChangeDetectionStrategy,
+  ViewContainerRef,
+  viewChild,
 } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { FlexLayoutModule } from '@angular/flex-layout';
 import {
   DialogService,
   DialogContentI,
 } from '@khiops-library/providers/dialog.service';
-import { Observable, Subscription } from 'rxjs';
+import { toSignal } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'kl-dialog-wrapper',
   templateUrl: './dialog-wrapper.component.html',
   styleUrls: ['./dialog-wrapper.component.scss'],
-  changeDetection: ChangeDetectionStrategy.Eager,
-  standalone: false,
+  imports: [CommonModule, FlexLayoutModule],
 })
-export class DialogWrapperComponent
-  implements OnInit, AfterViewInit, OnDestroy
-{
-  public dialogContent$: Observable<DialogContentI>;
+export class DialogWrapperComponent implements OnDestroy {
+  private readonly dialogService = inject(DialogService);
 
-  @ViewChild('dynamicComponentContainer', {
-    read: ViewContainerRef,
-    static: false,
-  })
-  dynamicComponentContainer?: ViewContainerRef;
+  public readonly dialogContent = toSignal(this.dialogService.dialogContent$, {
+    initialValue: { type: 'none' } as DialogContentI,
+  });
+
+  private readonly dynamicComponentContainer = viewChild(
+    'dynamicComponentContainer',
+    { read: ViewContainerRef },
+  );
 
   private componentRef?: ComponentRef<any>;
-  private subscription?: Subscription;
 
-  constructor(private dialogService: DialogService) {
-    this.dialogContent$ = this.dialogService.dialogContent$;
-  }
+  constructor() {
+    effect(() => {
+      const content = this.dialogContent();
+      const container = this.dynamicComponentContainer();
 
-  ngOnInit(): void {
-    // Don't subscribe here - wait for view initialization
-  }
+      if (content.type === 'none') {
+        this.clearDynamicComponent(container);
+        return;
+      }
 
-  ngAfterViewInit(): void {
-    // Now that the view is initialized, dynamicComponentContainer is available
-    this.subscription = this.dialogContent$.subscribe((content) => {
-      if (content.type === 'component' && content.componentType) {
-        // If container not ready yet, defer to next tick
-        if (!this.dynamicComponentContainer) {
-          setTimeout(() => this.createDialogComponent(content), 0);
-          return;
-        }
-        this.createDialogComponent(content);
-      } else if (content.type === 'none') {
-        this.clearDynamicComponent();
+      if (content.type === 'component' && content.componentType && container) {
+        this.createDialogComponent(content, container);
       }
     });
   }
@@ -68,18 +60,19 @@ export class DialogWrapperComponent
   /**
    * Create the dialog component with data
    */
-  private createDialogComponent(content: DialogContentI): void {
-    if (!this.dynamicComponentContainer || !content.componentType) {
+  private createDialogComponent(
+    content: DialogContentI,
+    container: ViewContainerRef,
+  ): void {
+    if (!content.componentType) {
       return;
     }
 
     // Clear previous component
-    this.clearDynamicComponent();
+    this.clearDynamicComponent(container);
 
     // Create new component dynamically
-    this.componentRef = this.dynamicComponentContainer.createComponent(
-      content.componentType,
-    );
+    this.componentRef = container.createComponent(content.componentType);
 
     // Pass data via setInput() to support both @Input() and signal input()
     if (content.data && this.componentRef) {
@@ -117,10 +110,7 @@ export class DialogWrapperComponent
   }
 
   ngOnDestroy(): void {
-    if (this.subscription) {
-      this.subscription.unsubscribe();
-    }
-    this.clearDynamicComponent();
+    this.clearDynamicComponent(this.dynamicComponentContainer());
   }
 
   /**
@@ -134,7 +124,7 @@ export class DialogWrapperComponent
    * Handle backdrop click with disableClose check
    */
   onBackdropClick(): void {
-    const currentContent = this.dialogService.getDialogContent();
+    const currentContent = this.dialogContent();
     if (!currentContent.config?.disableClose) {
       this.closeDialog();
     }
@@ -143,13 +133,13 @@ export class DialogWrapperComponent
   /**
    * Clear the dynamic component
    */
-  private clearDynamicComponent(): void {
+  private clearDynamicComponent(container?: ViewContainerRef): void {
     if (this.componentRef) {
       this.componentRef.destroy();
       this.componentRef = undefined;
     }
-    if (this.dynamicComponentContainer) {
-      this.dynamicComponentContainer.clear();
+    if (container) {
+      container.clear();
     }
   }
 }

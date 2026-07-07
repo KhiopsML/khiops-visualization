@@ -144,6 +144,7 @@ import EnTransaltion from '../../assets/i18n/en.json';
     CellStatsComponent,
     ClearLsComponent,
     ConfirmDialogComponent,
+    DialogWrapperComponent,
   ],
   declarations: [
     NumberPrecisionComponent,
@@ -178,7 +179,6 @@ import EnTransaltion from '../../assets/i18n/en.json';
     ImportFileLoaderComponent,
     ProjectSummaryComponent,
     MenuFocusSelectedDirective,
-    DialogWrapperComponent,
   ],
   providers: [
     TranslateService,
