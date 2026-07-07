@@ -126,19 +126,19 @@ describe('Behaviors tests for Khiops Covisualization', () => {
       cy.get('#unfold-hierarchy-table').contains('22');
 
       cy.get('.unfold-information-rate').contains('112 530');
-      cy.get('#unfold-hierarchy-settings').contains('Number of clusters : 378');
+      cy.get('#unfold-hierarchy-settings').contains('Number of clusters: 378');
 
       cy.get('.button-reduce-hierarchy').click();
       // Check table values
       cy.get('#unfold-hierarchy-table').contains('340');
 
       cy.get('.unfold-information-rate').contains('112 200');
-      cy.get('#unfold-hierarchy-settings').contains('Number of clusters : 377');
+      cy.get('#unfold-hierarchy-settings').contains('Number of clusters: 377');
 
       cy.get('.button-increase-hierarchy').click();
 
       cy.get('.unfold-information-rate').contains('112 530');
-      cy.get('#unfold-hierarchy-settings').contains('Number of clusters : 378');
+      cy.get('#unfold-hierarchy-settings').contains('Number of clusters: 378');
     });
   });
 
