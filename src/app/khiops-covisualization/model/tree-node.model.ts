@@ -172,12 +172,12 @@ export class TreeNodeModel {
       // it's a leaf node
       // valueGroups are already set
       // Merge identical elements in innerValues
-      const mergedGroums = UtilsService.mergeIdenticalValues(
+      const mergedGroups = UtilsService.mergeIdenticalValues(
         this.valueGroups?.values,
       );
 
       //@ts-ignore
-      this.innerValues.push(mergedGroums);
+      this.innerValues.push(mergedGroups);
     } else {
       // it's a node
       // get valueGroups of children
@@ -189,11 +189,11 @@ export class TreeNodeModel {
           );
           if (valueGroups) {
             // Merge identical elements in innerValues
-            const mergedGroums = UtilsService.mergeIdenticalValues(
+            const mergedGroups = UtilsService.mergeIdenticalValues(
               valueGroups?.values,
             );
             //@ts-ignore
-            this.innerValues.push(mergedGroums);
+            this.innerValues.push(mergedGroups);
           }
         }
       }
