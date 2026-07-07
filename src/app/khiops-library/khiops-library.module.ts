@@ -133,6 +133,7 @@ import EnTransaltion from '../../assets/i18n/en.json';
       supportedLangs: ['en'],
     }),
     NoDataComponent,
+    BtnFullscreenComponent,
     // Standalone directives
     FullscreenAnimationDirective,
     KeyboardTooltipComponent,
@@ -154,7 +155,6 @@ import EnTransaltion from '../../assets/i18n/en.json';
     FileLoaderComponent,
     ConfirmDialogComponent,
     HeaderToolsComponent,
-    BtnFullscreenComponent,
     GraphHeaderComponent,
     RowIdentifierPipe,
     ToPrecisionPipe,
