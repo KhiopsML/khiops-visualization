@@ -4,50 +4,57 @@
  * at https://spdx.org/licenses/BSD-3-Clause-Clear.html or see the "LICENSE" file for more details.
  */
 
-import { Component, computed, inject, input } from '@angular/core';
-import { MatButtonModule } from '@angular/material/button';
-import { TranslateModule, TranslateService } from '@ngstack/translate';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { DialogService } from '@khiops-library/providers/dialog.service';
+import { TranslateService } from '@ngstack/translate';
 
 @Component({
   selector: 'kl-confirm-dialog',
   templateUrl: './confirm-dialog.component.html',
   styleUrls: ['./confirm-dialog.component.scss'],
-  imports: [MatButtonModule, TranslateModule],
+  changeDetection: ChangeDetectionStrategy.Eager,
+  standalone: false,
 })
-export class ConfirmDialogComponent {
-  private readonly dialogService = inject(DialogService);
-  private readonly translate = inject(TranslateService);
+export class ConfirmDialogComponent implements OnInit {
+  public title: string = '';
+  public message: string = '';
+  public displayRejectBtn: boolean = false;
+  public displayCancelBtn: boolean = true;
+  public displayYesToAllBtn: boolean = false;
+  public displayNoToAllBtn: boolean = false;
+  public confirmButtonText: string;
+  public confirmTranslation: string = '';
 
-  readonly title = input('');
-  readonly message = input('');
-  readonly displayRejectBtn = input(false);
-  readonly displayCancelBtn = input(true);
-  readonly displayYesToAllBtn = input(false);
-  readonly displayNoToAllBtn = input(false);
-  readonly confirmTranslation = input('');
+  constructor(
+    private dialogService: DialogService,
+    private translate: TranslateService,
+  ) {
+    this.confirmButtonText = this.translate.get('GLOBAL.YES');
+  }
 
-  readonly confirmButtonText = computed(
-    () => this.confirmTranslation() || this.translate.get('GLOBAL.YES'),
-  );
+  ngOnInit() {
+    if (this.confirmTranslation) {
+      this.confirmButtonText = this.confirmTranslation;
+    }
+  }
 
-  confirm(): void {
+  confirm() {
     this.dialogService.closeDialog('confirm');
   }
 
-  confirmAll(): void {
+  confirmAll() {
     this.dialogService.closeDialog('confirmAll');
   }
 
-  reject(): void {
+  reject() {
     this.dialogService.closeDialog('reject');
   }
 
-  rejectAll(): void {
+  rejectAll() {
     this.dialogService.closeDialog('rejectAll');
   }
 
-  cancel(): void {
+  cancel() {
     this.dialogService.closeDialog('cancel');
   }
 }

@@ -69,6 +69,7 @@ import { ChartComponent } from './components/chart/chart.component';
 import { RowIdentifierPipe } from './pipes/row-identifie.pipe';
 import { ImportFileLoaderComponent } from './components/import-file-loader/import-file-loader.component';
 import { WatchResizeComponent } from './components/watch-resize/watch-resize.component';
+import { ConfirmDialogComponent } from './components/confirm-dialog/confirm-dialog.component';
 import { KhiopsLibraryComponent } from './khiops-library.component';
 import { BtnFullscreenComponent } from './components/btn-fullscreen/btn-fullscreen.component';
 import { MatrixToggleComponent } from './components/matrix-toggle/matrix-toggle.component';
@@ -85,7 +86,6 @@ import { KeyboardTooltipComponent } from './components/keyboard-tooltip/keyboard
 import { WarningInformationComponent } from './components/warning-information/warning-information.component';
 import { DialogWrapperComponent } from './components/dialog-wrapper/dialog-wrapper.component';
 import { DialogService } from './providers/dialog.service';
-import { ConfirmDialogComponent } from './components/confirm-dialog/confirm-dialog.component';
 import { FullscreenAnimationDirective } from './directives/fullscreen-animation.directive';
 
 // Translation data
@@ -143,7 +143,6 @@ import EnTransaltion from '../../assets/i18n/en.json';
     IconComponent,
     CellStatsComponent,
     ClearLsComponent,
-    ConfirmDialogComponent,
     LibVersionComponent,
   ],
   declarations: [
@@ -154,6 +153,7 @@ import EnTransaltion from '../../assets/i18n/en.json';
     KhiopsLibraryComponent,
     WatchResizeComponent,
     SelectableComponent,
+    ConfirmDialogComponent,
     HeaderToolsComponent,
     GraphHeaderComponent,
     RowIdentifierPipe,
