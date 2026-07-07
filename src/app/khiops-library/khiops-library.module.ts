@@ -76,7 +76,6 @@ import { MatrixModeComponent } from './components/matrix-mode/matrix-mode.compon
 import { GraphOptionsMenuComponent } from './components/graph-options-menu/graph-options-menu.component';
 import { ProjectSummaryComponent } from './components/project-summary/project-summary.component';
 import { ZoomToolsComponent } from './components/zoom-tools/zoom-tools.component';
-import { NpmVersionComponent } from './components/npm-version/npm-version.component';
 import { ClearLsComponent } from './components/clear-ls/clear-ls.component';
 import { MatrixContrastSettingComponent } from './components/matrix-contrast-setting/matrix-contrast-setting.component';
 import { NumberPrecisionComponent } from './components/number-precision/number-precision.component';
@@ -145,12 +144,12 @@ import EnTransaltion from '../../assets/i18n/en.json';
     ClearLsComponent,
     ConfirmDialogComponent,
     DialogWrapperComponent,
+    LibVersionComponent,
   ],
   declarations: [
     NumberPrecisionComponent,
     MatrixContrastSettingComponent,
     ScalePersistenceSettingComponent,
-    NpmVersionComponent,
     KhiopsLibraryComponent,
     WatchResizeComponent,
     SelectableComponent,
@@ -158,7 +157,6 @@ import EnTransaltion from '../../assets/i18n/en.json';
     HeaderToolsComponent,
     GraphHeaderComponent,
     RowIdentifierPipe,
-    LibVersionComponent,
     HeaderTitleComponent,
     LegendComponent,
     SelectableTabComponent,
@@ -192,7 +190,6 @@ import EnTransaltion from '../../assets/i18n/en.json';
     MatrixContrastSettingComponent,
     ScalePersistenceSettingComponent,
     ClearLsComponent,
-    NpmVersionComponent,
     ZoomToolsComponent, // Add missing component
     KhiopsLibraryComponent,
     CellStatsComponent,

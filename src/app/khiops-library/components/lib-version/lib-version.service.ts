@@ -4,15 +4,12 @@
  * at https://spdx.org/licenses/BSD-3-Clause-Clear.html or see the "LICENSE" file for more details.
  */
 
-import { Injectable } from '@angular/core';
+import { Injectable, signal } from '@angular/core';
 import pjson from '../../../../../package.json';
 
 @Injectable({
   providedIn: 'root',
 })
 export class LibVersionService {
-
-  static getVersion() {
-    return pjson?.version || undefined;
-  }
+  readonly version = signal<string | undefined>(pjson?.version || undefined);
 }

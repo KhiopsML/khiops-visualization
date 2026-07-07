@@ -4,19 +4,15 @@
  * at https://spdx.org/licenses/BSD-3-Clause-Clear.html or see the "LICENSE" file for more details.
  */
 
-import { Component, ChangeDetectionStrategy } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { LibVersionService } from './lib-version.service';
 
 @Component({
   selector: 'kl-lib-version',
-  template: ` <p>Khiops-library {{ libVersion }}</p> `,
-  changeDetection: ChangeDetectionStrategy.Eager,
-  standalone: false,
+  template: ` <p class="kl-lib-version">{{ libVersion() }}</p> `,
+  styleUrls: ['./lib-version.component.scss'],
 })
 export class LibVersionComponent {
-  libVersion: string | undefined;
-
-  constructor() {
-    this.libVersion = LibVersionService.getVersion();
-  }
+  private readonly libVersionService = inject(LibVersionService);
+  readonly libVersion = this.libVersionService.version;
 }
