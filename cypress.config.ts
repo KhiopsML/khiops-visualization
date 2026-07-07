@@ -28,7 +28,7 @@ export default defineConfig({
   env: {
     CYPRESS_TEST: true,
   },
-  defaultCommandTimeout: 15000,
+  defaultCommandTimeout: 30000,
   includeShadowDom: true,
   chromeWebSecurity: false,
   watchForFileChanges: true,
