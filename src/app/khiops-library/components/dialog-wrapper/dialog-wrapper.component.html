@@ -1,35 +1,35 @@
-@if (dialogContent(); as dialogContent) {
+<div
+  class="kl-dialog-wrapper"
+  [class.active]="
+    (dialogContent$ | async)?.type !== 'none' &&
+    !(dialogContent$ | async)?.config?.noOverlay
+  "
+  [class.no-overlay]="(dialogContent$ | async)?.config?.noOverlay"
+  fxLayout="row"
+  fxFlexFill
+  fxLayoutAlign="center center"
+  [hidden]="$safeNavigationMigration(dialogContent.config?.hidden)"
+  *ngIf="dialogContent$ | async as dialogContent"
+>
   <div
-    class="kl-dialog-wrapper"
-    [class.active]="
-      dialogContent.type !== 'none' && !dialogContent.config?.noOverlay
-    "
-    [class.no-overlay]="dialogContent.config?.noOverlay"
-    fxLayout="row"
+    class="dialog-overlay"
     fxFlexFill
-    fxLayoutAlign="center center"
-    [hidden]="!!dialogContent.config?.hidden"
+    (click)="onBackdropClick()"
+    *ngIf="dialogContent.type !== 'none' && !dialogContent.config?.noOverlay"
+  ></div>
+  <div
+    class="dialog-content"
+    fxLayout="column"
+    *ngIf="dialogContent.type !== 'none'"
+    [style.width]="dialogContent.config?.width"
+    [style.height]="dialogContent.config?.height"
+    [style.max-width]="dialogContent.config?.maxWidth"
+    [style.max-height]="dialogContent.config?.maxHeight"
+    [class]="dialogContent.config?.panelClass"
   >
-    @if (dialogContent.type !== 'none' && !dialogContent.config?.noOverlay) {
-      <div class="dialog-overlay" fxFlexFill (click)="onBackdropClick()"></div>
-    }
-
-    @if (dialogContent.type !== 'none') {
-      <div
-        class="dialog-content"
-        fxLayout="column"
-        [style.width]="dialogContent.config?.width"
-        [style.height]="dialogContent.config?.height"
-        [style.max-width]="dialogContent.config?.maxWidth"
-        [style.max-height]="dialogContent.config?.maxHeight"
-        [class]="dialogContent.config?.panelClass"
-      >
-        @if (dialogContent.componentType) {
-          <div class="dialog-body" fxFlex>
-            <ng-container #dynamicComponentContainer></ng-container>
-          </div>
-        }
-      </div>
-    }
+    <!-- Dynamic Component Container -->
+    <div class="dialog-body" fxFlex *ngIf="dialogContent.componentType">
+      <ng-container #dynamicComponentContainer></ng-container>
+    </div>
   </div>
-}
+</div>

@@ -144,11 +144,11 @@ import EnTransaltion from '../../assets/i18n/en.json';
     CellStatsComponent,
     ClearLsComponent,
     ConfirmDialogComponent,
-    DialogWrapperComponent,
     LibVersionComponent,
   ],
   declarations: [
     NumberPrecisionComponent,
+    DialogWrapperComponent,
     MatrixContrastSettingComponent,
     ScalePersistenceSettingComponent,
     KhiopsLibraryComponent,
