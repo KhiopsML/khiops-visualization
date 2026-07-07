@@ -99,7 +99,8 @@ export class TreeSelectComponent
         this.selectedNode?._id.toString() || '',
       );
       const nodeTreeId = nodeTree?.id;
-      if (nodeTreeId !== undefined && nodeTreeId >= 0) {
+      // Guard against ngOnChanges firing before ngAfterViewInit has created the tree
+      if (this.tree && nodeTreeId !== undefined && nodeTreeId >= 0) {
         this.tree.selectNode(nodeTreeId, true);
       }
     }
