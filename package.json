@@ -95,7 +95,7 @@
   "devDependencies": {
     "@angular-devkit/build-angular": "^21.2.19",
     "@angular/build": "^21.2.19",
-    "@angular/cli": "^21.2.19",
+    "@angular/cli": "^22.0.6",
     "@angular/compiler-cli": "^21.2.18",
     "@cypress/schematic": "^5.0.0",
     "@types/d3": "^7.4.3",
