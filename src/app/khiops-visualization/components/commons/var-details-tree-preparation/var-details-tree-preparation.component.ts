@@ -62,6 +62,18 @@ export class VarDetailsTreePreparationComponent implements DoCheck {
       this.selectionScope,
     );
 
+    // When entering from Modeling with a Tree_* variable, reuse modeling chart index.
+    if (this.selectionScope === 'modeling') {
+      const modelingIndex = this.graphSelectionSessionService.getSelectedIndex(
+        'modeling',
+      );
+      this.selectedBarIndex = modelingIndex;
+      this.graphSelectionSessionService.setSelectedIndex(
+        'treePreparation',
+        modelingIndex,
+      );
+    }
+
     this.onSelectedGraphItemChanged(this.selectedBarIndex);
   }
 
@@ -82,15 +94,27 @@ export class VarDetailsTreePreparationComponent implements DoCheck {
   onSelectedGraphItemChanged(index: number) {
     // Keep in memory to keep bar charts index on type change
     this.selectedBarIndex = index;
-    this.graphSelectionSessionService.setSelectedIndex(this.selectionScope, index);
+    this.graphSelectionSessionService.setSelectedIndex(
+      this.selectionScope,
+      index,
+    );
+    // Keep treePreparation scope aligned with modeling for Tree_* variables.
+    if (this.selectionScope === 'modeling') {
+      this.graphSelectionSessionService.setSelectedIndex(
+        'treePreparation',
+        index,
+      );
+    }
+
     this.currentIntervalDatas =
       this.preparationDatasService.getCurrentIntervalDatas(
         REPORT.TREE_PREPARATION_REPORT,
         this.selectedBarIndex,
       );
-    const nodes = this.currentIntervalDatas?.values?.map((e: any) => e.values);
-    this.store.selectNodesFromId({
-      id: nodes,
+
+    // Select decision-tree nodes corresponding to selected chart index/modalities.
+    this.store.selectNodesFromIndex({
+      index: this.selectedBarIndex,
     });
   }
 
