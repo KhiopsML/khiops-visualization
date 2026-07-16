@@ -4,7 +4,12 @@
  * at https://spdx.org/licenses/BSD-3-Clause-Clear.html or see the "LICENSE" file for more details.
  */
 
-import { Component, ViewChild, ChangeDetectionStrategy } from '@angular/core';
+import {
+  Component,
+  ViewChild,
+  ChangeDetectionStrategy,
+  DoCheck,
+} from '@angular/core';
 import { SelectableTabComponent } from '@khiops-library/components/selectable-tab/selectable-tab.component';
 import { ModelingDatasService } from '@khiops-visualization/providers/modeling-datas.service';
 import { LevelDistributionGraphComponent } from '../commons/level-distribution-graph/level-distribution-graph.component';
@@ -31,6 +36,7 @@ import { Observable } from 'rxjs';
 import { TreePreparationStore } from '@khiops-visualization/stores/tree-preparation.store';
 import { getTreePreparationVariablesGridColumns } from './tree-preparation-view.config';
 import { DialogService } from '@khiops-library/providers/dialog.service';
+import { GraphSelectionSessionService } from '@khiops-visualization/providers/graph-selection-session.service';
 
 @Component({
   selector: 'app-tree-preparation-view',
@@ -39,7 +45,10 @@ import { DialogService } from '@khiops-library/providers/dialog.service';
   changeDetection: ChangeDetectionStrategy.Eager,
   standalone: false,
 })
-export class TreePreparationViewComponent extends SelectableTabComponent {
+export class TreePreparationViewComponent
+  extends SelectableTabComponent
+  implements DoCheck
+{
   @ViewChild('appVariableGraphDetails', {
     static: false,
   })
@@ -61,6 +70,7 @@ export class TreePreparationViewComponent extends SelectableTabComponent {
 
   selectedNodes$: Observable<TreeNodeModel[]>;
   selectedNode$: Observable<TreeNodeModel | undefined>;
+  private previousSelectedVariableRank?: string;
 
   constructor(
     private preparationDatasService: PreparationDatasService,
@@ -73,6 +83,7 @@ export class TreePreparationViewComponent extends SelectableTabComponent {
     private store: TreePreparationStore,
     private distributionService: DistributionService,
     private dialogService: DialogService,
+    private graphSelectionSessionService: GraphSelectionSessionService,
   ) {
     super();
 
@@ -86,6 +97,8 @@ export class TreePreparationViewComponent extends SelectableTabComponent {
 
   ngOnInit() {
     this.trackerService.trackEvent('page_view', 'treePreparation');
+    this.selectedBarIndex =
+      this.graphSelectionSessionService.getSelectedIndex('treePreparation');
 
     this.treePreparationDatas = this.treePreparationDatasService.getDatas();
     this.sizes = this.layoutService.getViewSplitSizes('treePreparationView');
@@ -110,15 +123,48 @@ export class TreePreparationViewComponent extends SelectableTabComponent {
     );
     this.distributionDatas = this.distributionDatasService.getDatas();
 
+    // Reapply session index into tree store when entering tab.
+    this.store.selectNodesFromIndex({
+      index: this.selectedBarIndex,
+    });
+
     this.selectedNode$?.subscribe((selectedNode) => {
       if (selectedNode?._id) {
         let [index, _nodesToSelect] =
           this.treePreparationDatasService.getNodesLinkedToOneNode(
             selectedNode._id,
           );
-        this.selectedBarIndex = index || 0;
+        if (index !== undefined && index !== null) {
+          this.selectedBarIndex = index;
+          this.graphSelectionSessionService.setSelectedIndex(
+            'treePreparation',
+            index,
+          );
+          this.graphSelectionSessionService.setSelectedTreeNodeId(
+            'treePreparation',
+            selectedNode._id,
+          );
+        }
       }
     });
+  }
+
+  ngDoCheck() {
+    const currentRank = this.treePreparationDatas?.selectedVariable?.rank;
+
+    if (this.previousSelectedVariableRank === undefined) {
+      this.previousSelectedVariableRank = currentRank;
+      return;
+    }
+
+    if (
+      currentRank !== undefined &&
+      currentRank !== this.previousSelectedVariableRank
+    ) {
+      this.onSelectedGraphItemChanged(0);
+    }
+
+    this.previousSelectedVariableRank = currentRank;
   }
 
   onSplitDragEnd(event: SplitGutterInteractionEvent, item: string) {
@@ -166,6 +212,10 @@ export class TreePreparationViewComponent extends SelectableTabComponent {
   onSelectedGraphItemChanged(index: number) {
     // Keep in memory to keep bar charts index on type change
     this.selectedBarIndex = index;
+    this.graphSelectionSessionService.setSelectedIndex(
+      'treePreparation',
+      index,
+    );
 
     this.store.selectNodesFromIndex({
       index: this.selectedBarIndex,

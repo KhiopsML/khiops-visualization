@@ -10,6 +10,7 @@ import {
   ViewChild,
   Input,
   OnChanges,
+  DoCheck,
   ChangeDetectionStrategy,
 } from '@angular/core';
 import { EvaluationDatasService } from '@khiops-visualization/providers/evaluation-datas.service';
@@ -22,6 +23,10 @@ import { PreparationVariableModel } from '@khiops-visualization/model/preparatio
 import { LayoutService } from '@khiops-library/providers/layout.service';
 import { SplitGutterInteractionEvent } from 'angular-split';
 import { DynamicI } from '@khiops-library/interfaces/globals.interface';
+import {
+  GraphSelectionScope,
+  GraphSelectionSessionService,
+} from '@khiops-visualization/providers/graph-selection-session.service';
 
 @Component({
   selector: 'app-var-details-preparation',
@@ -30,13 +35,16 @@ import { DynamicI } from '@khiops-library/interfaces/globals.interface';
   changeDetection: ChangeDetectionStrategy.Eager,
   standalone: false,
 })
-export class VarDetailsPreparationComponent implements OnInit, OnChanges {
+export class VarDetailsPreparationComponent
+  implements OnInit, OnChanges, DoCheck
+{
   @ViewChild('appVariableGraphDetails', {
     static: false,
   })
   private appVariableGraphDetails?: VariableGraphDetailsComponent;
 
   @Input() public preparationSource?: string;
+  @Input() public selectionScope: GraphSelectionScope = 'preparation';
 
   public isRegressionAnalysis?: boolean;
   public preparationDatas?: {
@@ -47,15 +55,19 @@ export class VarDetailsPreparationComponent implements OnInit, OnChanges {
   public matrixRegSelectedCell = 0;
   public distributionSelectedBarIndex = 0;
   public preparation2dDatas?: Preparation2dDatasModel;
+  private previousSelectedVariableRank?: string;
 
   constructor(
     private preparationDatasService: PreparationDatasService,
     private evaluationDatasService: EvaluationDatasService,
     private preparation2dDatasService: Preparation2dDatasService,
     private layoutService: LayoutService,
+    private graphSelectionSessionService: GraphSelectionSessionService,
   ) {}
 
   ngOnInit() {
+    this.distributionSelectedBarIndex =
+      this.graphSelectionSessionService.getSelectedIndex(this.selectionScope);
     this.sizes = this.layoutService.getViewSplitSizes('preparationView');
     this.isRegressionAnalysis =
       this.evaluationDatasService.isRegressionAnalysis();
@@ -70,6 +82,25 @@ export class VarDetailsPreparationComponent implements OnInit, OnChanges {
     } else {
       this.preparationDatas = undefined;
     }
+  }
+
+  ngDoCheck() {
+    const currentRank = this.preparationDatas?.selectedVariable?.rank;
+
+    if (this.previousSelectedVariableRank === undefined) {
+      this.previousSelectedVariableRank = currentRank;
+      return;
+    }
+
+    if (
+      currentRank !== undefined &&
+      currentRank !== this.previousSelectedVariableRank
+    ) {
+      this.distributionSelectedBarIndex = 0;
+      this.graphSelectionSessionService.setSelectedIndex(this.selectionScope, 0);
+    }
+
+    this.previousSelectedVariableRank = currentRank;
   }
 
   onSplitDragEnd(event: SplitGutterInteractionEvent, item: string) {
@@ -94,11 +125,16 @@ export class VarDetailsPreparationComponent implements OnInit, OnChanges {
       this.preparation2dDatasService.computeDistributionIndexFromMatrixCellIndex(
         index,
       );
+    this.graphSelectionSessionService.setSelectedIndex(
+      this.selectionScope,
+      this.distributionSelectedBarIndex,
+    );
   }
 
   onSelectedGraphItemChanged(index: number) {
     // Keep in memory to keep bar charts index on type change
     this.distributionSelectedBarIndex = index;
+    this.graphSelectionSessionService.setSelectedIndex(this.selectionScope, index);
 
     // Callback when user click on bar distribution to select matrix corresponding cell
     if (this.isRegressionAnalysis) {

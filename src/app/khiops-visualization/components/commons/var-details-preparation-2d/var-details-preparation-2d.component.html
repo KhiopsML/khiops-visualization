@@ -47,6 +47,7 @@
             <app-target-distribution-graph
               #targetDistributionGraph
               fxFlex="1 1 100%"
+              [selectedGraphItemIndex]="selectedBarIndex"
               [showFullscreenBtn]="true"
               titleTooltip="{{
                 'TOOLTIPS.PREPARATION_2D.TARGET_DISTRIBUTION.TITLE' | translate
@@ -60,6 +61,7 @@
               "
               [scaleValue]="scaleValue"
               (graphTypeChanged)="onTargetDistributionGraphTypeChanged($event)"
+              (selectedItemChanged)="onSelectedGraphItemChanged($event)"
             >
             </app-target-distribution-graph>
           </as-split-area>

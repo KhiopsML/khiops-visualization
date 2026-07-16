@@ -135,7 +135,6 @@ export class VariableGraphDetailsComponent
     }
 
     if (changes.selectedVariable?.currentValue) {
-      this.selectedGraphItemIndex = 0;
       this.initActiveEntries(this.selectedGraphItemIndex);
 
       this.distributionDatasService.setPreparationSource(

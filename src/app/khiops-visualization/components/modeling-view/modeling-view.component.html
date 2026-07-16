@@ -166,6 +166,7 @@
                 <app-var-details-preparation
                   fxFlex
                   [preparationSource]="preparationSource"
+                  [selectionScope]="'modeling'"
                 >
                 </app-var-details-preparation>
               }
@@ -173,14 +174,19 @@
                 modelingDatas?.selectedVariable?.variableType ===
                 'preparation-2d'
               ) {
-                <app-var-details-preparation-2d fxFlex>
+                <app-var-details-preparation-2d
+                  fxFlex
+                  [selectionScope]="'modeling'"
+                >
                 </app-var-details-preparation-2d>
               }
               @if (
                 modelingDatas?.selectedVariable?.variableType ===
                 'tree-preparation'
               ) {
-                <app-var-details-tree-preparation>
+                <app-var-details-tree-preparation
+                  [selectionScope]="'modeling'"
+                >
                 </app-var-details-tree-preparation>
               }
               @if (!modelingDatas?.selectedVariable) {

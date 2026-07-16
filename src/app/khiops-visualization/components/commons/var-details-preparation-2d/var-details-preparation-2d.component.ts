@@ -4,7 +4,13 @@
  * at https://spdx.org/licenses/BSD-3-Clause-Clear.html or see the "LICENSE" file for more details.
  */
 
-import { Component, ViewChild, ChangeDetectionStrategy } from '@angular/core';
+import {
+  Component,
+  ViewChild,
+  ChangeDetectionStrategy,
+  Input,
+  DoCheck,
+} from '@angular/core';
 import { AppService } from '@khiops-visualization/providers/app.service';
 import { Preparation2dDatasService } from '@khiops-visualization/providers/preparation2d-datas.service';
 import { TargetDistributionGraphComponent } from '../target-distribution-graph/target-distribution-graph.component';
@@ -15,6 +21,10 @@ import { LS } from '@khiops-library/enum/ls';
 import { LayoutService } from '@khiops-library/providers/layout.service';
 import { SplitGutterInteractionEvent } from 'angular-split';
 import { DynamicI } from '@khiops-library/interfaces/globals.interface';
+import {
+  GraphSelectionScope,
+  GraphSelectionSessionService,
+} from '@khiops-visualization/providers/graph-selection-session.service';
 
 @Component({
   selector: 'app-var-details-preparation-2d',
@@ -23,22 +33,26 @@ import { DynamicI } from '@khiops-library/interfaces/globals.interface';
   changeDetection: ChangeDetectionStrategy.Eager,
   standalone: false,
 })
-export class VarDetailsPreparation2dComponent {
+export class VarDetailsPreparation2dComponent implements DoCheck {
   @ViewChild('targetDistributionGraph', {
     static: false,
   })
   private targetDistributionGraph?: TargetDistributionGraphComponent;
 
   public sizes: DynamicI;
+  @Input() public selectionScope: GraphSelectionScope = 'preparation2d';
   public preparation2dDatas?: Preparation2dDatasModel;
   public distribution2dDatas: DistributionDatasModel;
   public scaleValue: number = 0;
+  public selectedBarIndex: number = 0;
   private targetDistributionGraphType: string;
+  private previousSelectedVariableRank?: string;
 
   constructor(
     private distribution2dDatasService: Distribution2dDatasService,
     private preparation2dDatasService: Preparation2dDatasService,
     private layoutService: LayoutService,
+    private graphSelectionSessionService: GraphSelectionSessionService,
   ) {
     this.targetDistributionGraphType = AppService.Ls.get(
       LS.TARGET_DISTRIBUTION_GRAPH_OPTION,
@@ -46,6 +60,9 @@ export class VarDetailsPreparation2dComponent {
 
     this.preparation2dDatas = this.preparation2dDatasService.getDatas();
     this.distribution2dDatas = this.distribution2dDatasService.getDatas();
+    this.selectedBarIndex = this.graphSelectionSessionService.getSelectedIndex(
+      this.selectionScope,
+    );
 
     this.sizes = this.layoutService.getViewSplitSizes('preparation2dView');
     this.distribution2dDatasService.getTargetDistributionGraphDatas(
@@ -84,6 +101,29 @@ export class VarDetailsPreparation2dComponent {
     this.distribution2dDatasService.getTargetDistributionGraphDatas(
       this.targetDistributionGraphType,
     );
+  }
+
+  onSelectedGraphItemChanged(index: number) {
+    this.selectedBarIndex = index;
+    this.graphSelectionSessionService.setSelectedIndex(this.selectionScope, index);
+  }
+
+  ngDoCheck() {
+    const currentRank = this.preparation2dDatas?.selectedVariable?.rank;
+
+    if (this.previousSelectedVariableRank === undefined) {
+      this.previousSelectedVariableRank = currentRank;
+      return;
+    }
+
+    if (
+      currentRank !== undefined &&
+      currentRank !== this.previousSelectedVariableRank
+    ) {
+      this.onSelectedGraphItemChanged(0);
+    }
+
+    this.previousSelectedVariableRank = currentRank;
   }
 
   /**

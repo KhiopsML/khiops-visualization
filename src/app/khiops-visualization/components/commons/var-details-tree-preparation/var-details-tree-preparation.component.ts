@@ -4,7 +4,13 @@
  * at https://spdx.org/licenses/BSD-3-Clause-Clear.html or see the "LICENSE" file for more details.
  */
 
-import { Component, ViewChild, ChangeDetectionStrategy } from '@angular/core';
+import {
+  Component,
+  ViewChild,
+  ChangeDetectionStrategy,
+  Input,
+  DoCheck,
+} from '@angular/core';
 import { TreePreparationDatasService } from '@khiops-visualization/providers/tree-preparation-datas.service';
 import { VariableGraphDetailsComponent } from '../variable-graph-details/variable-graph-details.component';
 import { TreePreparationDatasModel } from '@khiops-visualization/model/tree-preparation-datas.model';
@@ -17,6 +23,10 @@ import { GridDatasI } from '@khiops-library/interfaces/grid-datas.interface';
 import { TreePreparationStore } from '@khiops-visualization/stores/tree-preparation.store';
 import { PreparationDatasService } from '@khiops-visualization/providers/preparation-datas.service';
 import { REPORT } from '@khiops-library/enum/report';
+import {
+  GraphSelectionScope,
+  GraphSelectionSessionService,
+} from '@khiops-visualization/providers/graph-selection-session.service';
 
 @Component({
   selector: 'app-var-details-tree-preparation',
@@ -24,7 +34,7 @@ import { REPORT } from '@khiops-library/enum/report';
   changeDetection: ChangeDetectionStrategy.Eager,
   standalone: false,
 })
-export class VarDetailsTreePreparationComponent {
+export class VarDetailsTreePreparationComponent implements DoCheck {
   @ViewChild('appVariableGraphDetails', {
     static: false,
   })
@@ -35,18 +45,24 @@ export class VarDetailsTreePreparationComponent {
   public selectedNodes$: Observable<TreeNodeModel[]>;
   public currentIntervalDatas: GridDatasI | undefined;
   public REPORT = REPORT;
+  @Input() public selectionScope: GraphSelectionScope = 'treePreparation';
+  private previousSelectedVariableRank?: string;
 
   constructor(
     private treePreparationDatasService: TreePreparationDatasService,
     private preparationDatasService: PreparationDatasService,
     private layoutService: LayoutService,
     private store: TreePreparationStore,
+    private graphSelectionSessionService: GraphSelectionSessionService,
   ) {
     this.selectedNodes$ = this.store.selectedNodes$;
     this.treePreparationDatas = this.treePreparationDatasService.getDatas();
     this.sizes = this.layoutService.getViewSplitSizes('treePreparationView');
+    this.selectedBarIndex = this.graphSelectionSessionService.getSelectedIndex(
+      this.selectionScope,
+    );
 
-    this.onSelectedGraphItemChanged(0);
+    this.onSelectedGraphItemChanged(this.selectedBarIndex);
   }
 
   onSplitDragEnd(event: SplitGutterInteractionEvent, item: string) {
@@ -66,6 +82,7 @@ export class VarDetailsTreePreparationComponent {
   onSelectedGraphItemChanged(index: number) {
     // Keep in memory to keep bar charts index on type change
     this.selectedBarIndex = index;
+    this.graphSelectionSessionService.setSelectedIndex(this.selectionScope, index);
     this.currentIntervalDatas =
       this.preparationDatasService.getCurrentIntervalDatas(
         REPORT.TREE_PREPARATION_REPORT,
@@ -75,5 +92,23 @@ export class VarDetailsTreePreparationComponent {
     this.store.selectNodesFromId({
       id: nodes,
     });
+  }
+
+  ngDoCheck() {
+    const currentRank = this.treePreparationDatas?.selectedVariable?.rank;
+
+    if (this.previousSelectedVariableRank === undefined) {
+      this.previousSelectedVariableRank = currentRank;
+      return;
+    }
+
+    if (
+      currentRank !== undefined &&
+      currentRank !== this.previousSelectedVariableRank
+    ) {
+      this.onSelectedGraphItemChanged(0);
+    }
+
+    this.previousSelectedVariableRank = currentRank;
   }
 }

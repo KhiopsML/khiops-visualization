@@ -181,6 +181,11 @@
                 <app-var-details-preparation
                   fxFlex
                   [preparationSource]="preparationSource"
+                  [selectionScope]="
+                    preparationSource === 'textPreparationReport'
+                      ? 'textPreparation'
+                      : 'preparation'
+                  "
                 ></app-var-details-preparation>
               }
             </as-split-area>

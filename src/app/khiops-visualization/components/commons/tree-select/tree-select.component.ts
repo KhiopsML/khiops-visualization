@@ -25,6 +25,7 @@ import { COMPONENT_TYPES } from '@khiops-library/enum/component-types';
 import { firstValueFrom, Observable } from 'rxjs';
 import { TreePreparationStore } from '@khiops-visualization/stores/tree-preparation.store';
 import { TreeView } from '@khiops-treeview';
+import { GraphSelectionSessionService } from '@khiops-visualization/providers/graph-selection-session.service';
 
 @Component({
   selector: 'app-tree-select',
@@ -55,6 +56,7 @@ export class TreeSelectComponent
     public translate: TranslateService,
     private snackBar: MatSnackBar,
     private store: TreePreparationStore,
+    private graphSelectionSessionService: GraphSelectionSessionService,
   ) {
     super(selectableService, ngzone, configService);
     this.selectedNodes$ = this.store.selectedNodes$;
@@ -104,7 +106,17 @@ export class TreeSelectComponent
       this.tree.on('init', async () => {
         // Keep subscriptions blocked during reset
         this.isTreeReady = false;
-        this.store.initSelectedNodes();
+
+        // Restore from in-session node selection if available.
+        const sessionNodeId = this.graphSelectionSessionService.getSelectedTreeNodeId(
+          'treePreparation',
+        );
+        if (sessionNodeId) {
+          this.store.selectNodesFromId({ id: sessionNodeId });
+        } else {
+          this.store.initSelectedNodes();
+        }
+
         // Re-enable subscriptions after the store has settled, then apply initial selection
         queueMicrotask(() => {
           this.isTreeReady = true;
@@ -117,6 +129,10 @@ export class TreeSelectComponent
       this.tree.on('select', (e: any) => {
         // Do ngzone to emit event
         this.ngzone.run(() => {
+          this.graphSelectionSessionService.setSelectedTreeNodeId(
+            'treePreparation',
+            e.data.id,
+          );
           this.store.selectNodesFromId({
             id: e.data.id,
           });
