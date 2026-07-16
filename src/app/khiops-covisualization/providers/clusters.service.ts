@@ -290,7 +290,7 @@ export class ClustersService {
     }
 
     const selectedNode = dimensionsDatas.selectedNodes[position];
-    const selectedDimension = dimensionsDatas.selectedDimensions[position];
+    const selectedDimension = dimensionsDatas.selectedDimensions?.[position];
 
     if (!selectedNode || !selectedDimension) {
       return selectedNode;
