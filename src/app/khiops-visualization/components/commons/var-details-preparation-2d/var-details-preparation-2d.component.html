@@ -27,6 +27,7 @@
             id="cooccurrence-matrix-comp-container"
             fxFlex="1 1 100%"
             (selectCellRowChanged)="onSelectCellRowChanged()"
+            [selectionScope]="selectionScope"
             [selectedVariable]="
               $safeNavigationMigration(preparation2dDatas?.selectedVariable)
             "

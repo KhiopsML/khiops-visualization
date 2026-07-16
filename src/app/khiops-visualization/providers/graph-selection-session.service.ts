@@ -19,6 +19,10 @@ export type GraphSelectionScope =
 export class GraphSelectionSessionService {
   private readonly DEFAULT_INDEX = 0;
   private readonly selectedIndexByScope = new Map<GraphSelectionScope, number>();
+  private readonly selectedMatrixCellIndexByScope = new Map<
+    GraphSelectionScope,
+    number
+  >();
   private readonly selectedTreeNodeIdByScope = new Map<
     GraphSelectionScope,
     string
@@ -30,6 +34,14 @@ export class GraphSelectionSessionService {
 
   setSelectedIndex(scope: GraphSelectionScope, index: number): void {
     this.selectedIndexByScope.set(scope, index);
+  }
+
+  getSelectedMatrixCellIndex(scope: GraphSelectionScope): number | undefined {
+    return this.selectedMatrixCellIndexByScope.get(scope);
+  }
+
+  setSelectedMatrixCellIndex(scope: GraphSelectionScope, index: number): void {
+    this.selectedMatrixCellIndexByScope.set(scope, index);
   }
 
   getSelectedTreeNodeId(scope: GraphSelectionScope): string | undefined {

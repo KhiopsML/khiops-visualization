@@ -31,6 +31,10 @@ import { ConfigService } from '@khiops-library/providers/config.service';
 import { MatrixRangeValuesI } from '@khiops-visualization/interfaces/matrix-range-values.interface';
 import { LS } from '@khiops-library/enum/ls';
 import { CooccurrenceMatrixConfigService } from './cooccurrence-matrix-config.service';
+import {
+  GraphSelectionScope,
+  GraphSelectionSessionService,
+} from '@khiops-visualization/providers/graph-selection-session.service';
 
 /**
  * Test it with iris2d file
@@ -50,6 +54,7 @@ export class CooccurrenceMatrixComponent implements OnChanges, AfterViewInit {
 
   public preparation2dDatas?: Preparation2dDatasModel;
   @Input() selectedVariable?: Preparation2dVariableModel; // used to detect var change
+  @Input() selectionScope: GraphSelectionScope = 'preparation2d';
   @Output() private selectCellRowChanged: EventEmitter<number> =
     new EventEmitter();
 
@@ -69,6 +74,7 @@ export class CooccurrenceMatrixComponent implements OnChanges, AfterViewInit {
     private appService: AppService,
     private preparation2dDatasService: Preparation2dDatasService,
     private cooccurrenceMatrixConfigService: CooccurrenceMatrixConfigService,
+    private graphSelectionSessionService: GraphSelectionSessionService,
   ) {
     this.preparation2dDatas = this.preparation2dDatasService.getDatas();
   }
@@ -85,11 +91,20 @@ export class CooccurrenceMatrixComponent implements OnChanges, AfterViewInit {
       this.preparation2dDatas?.selectedVariable!,
     );
 
-    // Check if there is a saved selected cell into json
+    // Restore selected cell from runtime session scope first, then json fallback.
+    const sessionCellIndex =
+      this.graphSelectionSessionService.getSelectedMatrixCellIndex(
+        this.selectionScope,
+      );
     const defaultCellIndex =
-      this.appService.getSavedDatas('selected2dCell') ||
+      sessionCellIndex ??
+      this.appService.getSavedDatas('selected2dCell') ??
       this.DEFAULT_CELL_INDEX;
     this.preparation2dDatasService.setSelectedCellIndex(defaultCellIndex);
+    this.graphSelectionSessionService.setSelectedMatrixCellIndex(
+      this.selectionScope,
+      defaultCellIndex,
+    );
 
     this.preparation2dDatasService.getCurrentCellDatas();
   }
@@ -111,19 +126,33 @@ export class CooccurrenceMatrixComponent implements OnChanges, AfterViewInit {
       this.preparation2dDatasService.getMatrixDatas(
         this.preparation2dDatas?.selectedVariable!,
       );
-      this.preparation2dDatasService.setSelectedCellIndex(
-        this.DEFAULT_CELL_INDEX,
-      );
+
+      // On first change (tab entry), restore session cell index.
+      // On subsequent changes (variable changed), reset to 0.
+      if (changes.selectedVariable.firstChange) {
+        const sessionCellIndex =
+          this.graphSelectionSessionService.getSelectedMatrixCellIndex(
+            this.selectionScope,
+          );
+        const restoreIndex = sessionCellIndex ?? this.DEFAULT_CELL_INDEX;
+        this.preparation2dDatasService.setSelectedCellIndex(restoreIndex);
+      } else {
+        this.preparation2dDatasService.setSelectedCellIndex(this.DEFAULT_CELL_INDEX);
+        this.graphSelectionSessionService.setSelectedMatrixCellIndex(
+          this.selectionScope,
+          this.DEFAULT_CELL_INDEX,
+        );
+      }
 
       this.preparation2dDatasService.getCurrentCellDatas();
 
       this.matrixCells =
         this.preparation2dDatasService.getMatrixCooccurrenceCellsDatas();
 
-      // initialize with first cell index
+      // initialize with restored or default cell index
       this.onCellSelected({
         datas: {
-          index: this.DEFAULT_CELL_INDEX,
+          index: this.preparation2dDatas?.selectedCellIndex ?? this.DEFAULT_CELL_INDEX,
         },
       });
     }
@@ -215,6 +244,10 @@ export class CooccurrenceMatrixComponent implements OnChanges, AfterViewInit {
    */
   private updateSelectedCell(index: number): void {
     this.preparation2dDatasService.setSelectedCellIndex(index);
+    this.graphSelectionSessionService.setSelectedMatrixCellIndex(
+      this.selectionScope,
+      index,
+    );
     this.preparation2dDatasService.getCurrentCellDatas();
     this.selectCellRowChanged.emit(index);
   }
