@@ -148,7 +148,7 @@ export class TreeSelectComponent
   }
 
   public hideActiveEntries() {
-    this.tree.unselectNodes();
+    return this.tree?.unselectNodes();
   }
 
   public async showActiveEntries() {

@@ -73,11 +73,19 @@ export class TreeSelectComponent
   }
 
   public hideActiveEntries() {
-    this.tree.unselectNodes();
+    return this.tree?.unselectNodes();
   }
 
   public showActiveEntries() {
-    this.tree.selectNode(this.selectedNode);
+    const nodeTree = this.treenodesService.getNodeFromName(
+      this.selectedDimension?.name ?? '',
+      this.selectedNode?._id.toString() || '',
+    );
+    const nodeTreeId = nodeTree?.id;
+
+    if (this.tree && nodeTreeId !== undefined && nodeTreeId >= 0) {
+      this.tree.selectNode(nodeTreeId, false);
+    }
   }
 
   ngOnDestroy() {

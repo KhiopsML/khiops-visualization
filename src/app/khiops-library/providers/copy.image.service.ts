@@ -39,12 +39,12 @@ export class CopyImageService {
     if (currentSelectedArea) {
       this.isCopyingImage$.next(true);
       try {
-        setTimeout(() => {
+        setTimeout(async () => {
           const componentInstance =
             this.getComponentInstance(currentSelectedArea);
 
           if ('hideActiveEntries' in componentInstance) {
-            componentInstance.hideActiveEntries();
+            await componentInstance.hideActiveEntries();
           }
 
           const rootElement = this.configService.getRootElementDom();
@@ -103,7 +103,7 @@ export class CopyImageService {
               });
 
           capturePromise
-            .then((dataUrl) => {
+            .then(async (dataUrl) => {
               if (!this.configService.getConfig().onCopyImage) {
                 // Convert dataUrl to blob for file download
                 fetch(dataUrl)
@@ -136,7 +136,7 @@ export class CopyImageService {
 
               this.isCopyingImage$.next(false);
               if ('showActiveEntries' in componentInstance) {
-                componentInstance.showActiveEntries();
+                await componentInstance.showActiveEntries();
               }
             })
             .catch((e) => {

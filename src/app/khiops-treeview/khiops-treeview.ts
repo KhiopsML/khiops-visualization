@@ -524,16 +524,24 @@ export default class TreeView {
   }
 
   unselectNodes() {
-    setTimeout(() => {
-      // When we make multiple nodes,
-      // we must override simple select node selection with a timeout
-      const el = this.rootElementDom.querySelector(
-        '#' + this.node,
-      ) as HTMLElement | null;
-      if (!el) return;
+    return new Promise<void>((resolve) => {
+      setTimeout(() => {
+        // When we make multiple nodes,
+        // we must override simple select node selection with a timeout
+        const el = this.rootElementDom.querySelector(
+          '#' + this.node,
+        ) as HTMLElement | null;
+        if (!el) {
+          resolve();
+          return;
+        }
 
-      el.querySelectorAll<HTMLElement>('.tree-leaf-text').forEach((node) => {
-        (node.parentNode as HTMLElement).classList.remove('tree-selected');
+        this.currentSelectedNodeId = undefined;
+
+        el.querySelectorAll<HTMLElement>('.tree-leaf-text').forEach((node) => {
+          (node.parentNode as HTMLElement).classList.remove('tree-selected');
+        });
+        resolve();
       });
     });
   }
