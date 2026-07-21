@@ -181,6 +181,7 @@ export class SaveService {
       // Reuse the reference to coclusteringReport because it will not be modified in this method
       coclusteringReport: this.appService.initialDatas.coclusteringReport,
       khiops_encoding: this.appService.initialDatas.khiops_encoding,
+      logs: this.appService.initialDatas.logs,
       // savedDatas will be added below
       savedDatas: {},
     };

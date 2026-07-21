@@ -5,6 +5,7 @@
  */
 
 import { DynamicI } from '@khiops-library/interfaces/globals.interface';
+import { Log } from '@khiops-library/interfaces/log.interface';
 
 export interface AppDatasI {
   datas: CovisualizationDatas | undefined;
@@ -16,6 +17,7 @@ export interface CovisualizationDatas {
   shortDescription: string;
   coclusteringReport: CoclusteringReport;
   khiops_encoding: string;
+  logs: Log[];
   savedDatas: DynamicI;
 }
 

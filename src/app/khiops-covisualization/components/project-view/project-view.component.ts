@@ -9,6 +9,9 @@ import { ProjectDatasService } from '@khiops-covisualization/providers/project-d
 import { SelectableTabComponent } from '@khiops-library/components/selectable-tab/selectable-tab.component';
 import { ConfigService } from '@khiops-library/providers/config.service';
 import { TrackerService } from '@khiops-library/providers/tracker.service';
+import { FileLoaderService } from '@khiops-library/providers/file-loader.service';
+import { ProjectLogModel } from '@khiops-library/model/project-log.model';
+import { Subscription } from 'rxjs';
 import { AppConfig } from '../../../../environments/environment';
 
 @Component({
@@ -27,10 +30,13 @@ export class ProjectViewComponent
   isElectron: boolean = false;
   public debugFile = AppConfig.debugFile;
   public showOpenFileBtn: boolean | undefined = false;
+  public projectLogsDatas?: ProjectLogModel[];
+  private fileLoadedSub?: Subscription;
 
   constructor(
     private trackerService: TrackerService,
     private configService: ConfigService,
+    private fileLoaderService: FileLoaderService,
     public projectDatasService: ProjectDatasService,
   ) {
     super();
@@ -40,5 +46,19 @@ export class ProjectViewComponent
   ngOnInit() {
     this.trackerService.trackEvent('page_view', 'project');
     this.showOpenFileBtn = this.configService.getConfig().showOpenFileBtn;
+  }
+
+  ngAfterViewInit() {
+    this.fileLoadedSub = this.fileLoaderService.fileLoaded$.subscribe(
+      (datas) => {
+        if (datas) {
+          this.projectLogsDatas = this.projectDatasService.getProjectLogsDatas();
+        }
+      },
+    );
+  }
+
+  ngOnDestroy(): void {
+    this.fileLoadedSub?.unsubscribe();
   }
 }

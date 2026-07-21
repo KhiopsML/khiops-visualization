@@ -1,0 +1,26 @@
+<!--
+ * Copyright (c) 2023-2026 Orange. All rights reserved.
+ * This software is distributed under the BSD 3-Clause-clear License, the text of which is available
+ * at https://spdx.org/licenses/BSD-3-Clause-Clear.html or see the "LICENSE" file for more details.
+ -->
+
+<div class="project-logs-comp" fxFlexFill>
+  @if (projectLogsDatas) {
+    <kl-ag-grid
+      id="project-logs"
+      class="variables-list"
+      fxFlexFill
+      [showSearch]="false"
+      [displayCount]="false"
+      [showLineSelection]="false"
+      [title]="logsTitle"
+      [showColumnsSelection]="false"
+      [inputDatas]="projectLogsDatas"
+      [displayedColumns]="logsDisplayedColumns"
+    >
+    </kl-ag-grid>
+  }
+  @if (!projectLogsDatas) {
+    <kl-no-data fxFlexFill [message]="'NO_DATAS.NO_LOGS'"> </kl-no-data>
+  }
+</div>

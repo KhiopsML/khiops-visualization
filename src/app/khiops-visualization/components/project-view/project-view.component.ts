@@ -14,6 +14,7 @@ import { FileLoaderService } from '@khiops-library/providers/file-loader.service
 import { Subscription } from 'rxjs';
 import { SplitGutterInteractionEvent } from 'angular-split';
 import { DynamicI } from '@khiops-library/interfaces/globals.interface';
+import { ProjectLogModel } from '@khiops-library/model/project-log.model';
 import { AppConfig } from '../../../../environments/environment';
 
 @Component({
@@ -33,6 +34,7 @@ export class ProjectViewComponent
   public isElectron: boolean = false;
   public debugFile = AppConfig.debugFile;
   public showOpenFileBtn: boolean | undefined = false;
+  public projectLogsDatas?: ProjectLogModel[];
 
   // managed by selectable-tab component
   public override tabIndex = 0;
@@ -60,6 +62,7 @@ export class ProjectViewComponent
       (datas) => {
         if (datas) {
           this.sizes = this.layoutService.getViewSplitSizes('projectView');
+          this.projectLogsDatas = this.projectDatasService.getProjectLogsDatas();
         }
       },
     );

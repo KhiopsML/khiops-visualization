@@ -4,7 +4,7 @@
  * at https://spdx.org/licenses/BSD-3-Clause-Clear.html or see the "LICENSE" file for more details.
  */
 
-import { Log } from '../../khiops-visualization/interfaces/app-datas.interface';
+import { Log } from '@khiops-library/interfaces/log.interface';
 
 export class ProjectLogModel {
   task: string;

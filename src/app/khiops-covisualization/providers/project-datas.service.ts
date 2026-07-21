@@ -7,6 +7,7 @@
 import { Injectable } from '@angular/core';
 import { InfosDatasI } from '@khiops-library/interfaces/infos-datas.interface';
 import { ProjectSummaryModel } from '@khiops-library/model/project-summary.model';
+import { ProjectLogModel } from '@khiops-library/model/project-log.model';
 import { AppService } from './app.service';
 import { REPORT } from '@khiops-library/enum/report';
 
@@ -33,5 +34,29 @@ export class ProjectDatasService {
     } else {
       return undefined;
     }
+  }
+
+  /**
+   * Retrieves project logs data from the application service.
+   * @returns {ProjectLogModel[] | undefined} An array of project log models or undefined if no logs.
+   */
+  getProjectLogsDatas(): ProjectLogModel[] | undefined {
+    let logs;
+    if (this.appService.appDatas?.logs) {
+      logs = [];
+      for (let i = 0; i < this.appService.appDatas.logs.length; i++) {
+        const currentLog = this.appService.appDatas.logs[i];
+        if (currentLog) {
+          for (let j = 0; j < currentLog.messages.length; j++) {
+            const message = currentLog.messages[j];
+            if (message) {
+              const log = new ProjectLogModel(currentLog, message);
+              logs.push(log);
+            }
+          }
+        }
+      }
+    }
+    return logs;
   }
 }

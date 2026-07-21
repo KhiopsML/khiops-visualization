@@ -40,8 +40,6 @@ import { VarDetailsPreparation2dComponent } from './components/commons/var-detai
 import { HistogramComponent } from './components/commons/histogram/histogram.component';
 import { AngularResizeEventModule } from 'angular-resize-event-package';
 import { HistogramTooltipComponent } from './components/commons/histogram/histogram.tooltip.component';
-import { ProjectLogsComponent } from './components/commons/project-logs/project-logs.component';
-import { GravityCellComponent } from './components/commons/project-logs/gravity-cell/gravity-cell.component';
 import { OverlayContainer } from '@angular/cdk/overlay';
 import { InAppOverlayContainer } from '../khiops-library/overlay/in-app-overlay-provider';
 import { DataTypeSelectorComponent } from './components/commons/data-type-selector/data-type-selector.component';
@@ -52,8 +50,6 @@ import { VisualizationRoutingModule } from './khiops-visualization-routing.modul
 @NgModule({
   declarations: [
     HistogramComponent,
-    ProjectLogsComponent,
-    GravityCellComponent,
     HistogramTooltipComponent,
     AppComponent,
     HomeLayoutComponent,

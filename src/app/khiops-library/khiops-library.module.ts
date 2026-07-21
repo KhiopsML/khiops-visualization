@@ -76,6 +76,8 @@ import { MatrixToggleComponent } from './components/matrix-toggle/matrix-toggle.
 import { MatrixModeComponent } from './components/matrix-mode/matrix-mode.component';
 import { GraphOptionsMenuComponent } from './components/graph-options-menu/graph-options-menu.component';
 import { ProjectSummaryComponent } from './components/project-summary/project-summary.component';
+import { ProjectLogsComponent } from './components/project-logs/project-logs.component';
+import { GravityCellComponent } from './components/project-logs/gravity-cell/gravity-cell.component';
 import { ZoomToolsComponent } from './components/zoom-tools/zoom-tools.component';
 import { ClearLsComponent } from './components/clear-ls/clear-ls.component';
 import { MatrixContrastSettingComponent } from './components/matrix-contrast-setting/matrix-contrast-setting.component';
@@ -176,6 +178,8 @@ import EnTransaltion from '../../assets/i18n/en.json';
     ChartComponent,
     ImportFileLoaderComponent,
     ProjectSummaryComponent,
+    ProjectLogsComponent,
+    GravityCellComponent,
     MenuFocusSelectedDirective,
   ],
   providers: [
@@ -221,6 +225,7 @@ import EnTransaltion from '../../assets/i18n/en.json';
     ChartComponent,
     ImportFileLoaderComponent,
     ProjectSummaryComponent,
+    ProjectLogsComponent,
     // Pipes
     ToPrecisionPipe,
     RowIdentifierPipe,
