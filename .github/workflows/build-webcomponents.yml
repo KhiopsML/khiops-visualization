@@ -5,7 +5,7 @@ on:
     branches:
       - main
       # Add more branches below to automatically trigger builds when pushing to them:
-      - feat-dock
+      - feat-multi-tabs
   workflow_dispatch:
     inputs:
       branch:
