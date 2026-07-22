@@ -116,7 +116,7 @@ describe('Test Plan for Khiops Covisualization', () => {
         if (!isNumericalDimension(datas, 0)) {
           cy.get('#cluster-composition-0').contains(newName);
         }
-        cy.get('#cluster-distribution-1').contains(newName);
+        cy.get('#cluster-distribution-1').find('kl-legend').contains(newName);
         cy.get('#selected-clusters-grid').contains(newName);
         cy.get('#cluster-annotation-0').contains(newName);
 
