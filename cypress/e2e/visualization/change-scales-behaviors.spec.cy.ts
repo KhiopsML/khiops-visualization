@@ -18,9 +18,17 @@ describe('Level distribution Test Plan for Khiops Visualization', () => {
         cy.wait(100);
         cy.checkCanvasIsNotEmpty('#histogram-canvas');
 
+        // Enable Auto mode first; settings slider stays disabled otherwise.
+        cy.get('#change-scale-button').click();
+        cy.get('#scale-toggle-mode-auto-button').click();
+        cy.get('#change-scale-dialog-apply-btn').click();
+
         // Set auto-scale factor to 1 via Settings UI so auto-detection picks yLog
         cy.get('#header-tools-comp button').first().click();
         cy.get('#user-settings-comp').should('be.visible');
+        cy.get('.kl-auto-scale-setting input[matSliderThumb]').should(
+          'not.be.disabled',
+        );
         cy.get('.kl-auto-scale-setting input[matSliderThumb]').then(
           ($input) => {
             cy.wrap($input).invoke('val', 1).trigger('input').trigger('change');
@@ -29,7 +37,7 @@ describe('Level distribution Test Plan for Khiops Visualization', () => {
         cy.get('#user-settings-comp button').contains('Save').click();
         cy.get('#user-settings-comp').should('not.be.visible');
 
-        // Apply Auto mode to recalculate with factor 1
+        // Re-apply Auto mode to recalculate with factor 1
         cy.get('#change-scale-button').click();
         cy.get('#scale-toggle-mode-auto-button').click();
         cy.get('#change-scale-dialog-apply-btn').click();

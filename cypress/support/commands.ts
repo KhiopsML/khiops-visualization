@@ -50,12 +50,19 @@ Cypress.Commands.add('initViews', () => {
 });
 
 Cypress.Commands.add('checkCanvasIsNotEmpty', (canvasSelector: string) => {
-  cy.get(canvasSelector).then(($canvas) => {
-    const canvas = $canvas[0];
-    const context = canvas.getContext('2d');
-    const pixels = context.getImageData(0, 0, canvas.width, canvas.height).data;
+  cy.get(canvasSelector).should(($canvas) => {
+    const canvas = $canvas[0] as HTMLCanvasElement;
 
-    // Checks if at least one pixel is not transparent
+    expect(canvas.width).to.be.greaterThan(0);
+    expect(canvas.height).to.be.greaterThan(0);
+
+    const context = canvas.getContext('2d');
+    expect(context).to.not.be.null;
+
+    const pixels = context!.getImageData(0, 0, canvas.width, canvas.height)
+      .data;
+
+    // Retry until chart paints at least one non-transparent pixel.
     const isNotEmpty = Array.from(pixels).some((value) => value !== 0);
     expect(isNotEmpty).to.be.true;
   });
