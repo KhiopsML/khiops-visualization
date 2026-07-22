@@ -8,7 +8,7 @@
   <kl-ag-grid
     id="selected-clusters-grid"
     fxFlexFill
-    [selectedVariable]="activeClusters"
+    [selectedVariable]="activeClusters()"
     [rowSelection]="{
       mode: 'multiRow',
       enableClickSelection: false,
@@ -19,7 +19,7 @@
     [showSearch]="false"
     [enableClickSelection]="false"
     [showColumnsSelection]="false"
-    [inputDatas]="selectedClusters"
+    [inputDatas]="selectedClusters()"
     [title]="title"
     [watchResize]="true"
     [displayedColumns]="clustersDisplayedColumns"
