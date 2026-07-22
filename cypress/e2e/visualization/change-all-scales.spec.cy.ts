@@ -8,22 +8,15 @@ import '../../support/commands';
 
 /**
  * Helper: change the auto-scale factor via the Settings panel.
- * Sets the value in localStorage first, then opens the panel (which reads it
- * via onNavDrawerOpen), then clicks Save to persist through the UI flow.
  * Auto mode must already be enabled before calling this.
  */
 function changeAutoScaleFactorViaUI(value: number) {
-  // Pre-set the factor in localStorage so the panel reads it on open
-  cy.window().then((win) => {
-    win.localStorage.setItem(
-      'KHIOPS_VISUALIZATION_SETTING_AUTO_SCALE_FACTOR',
-      value.toString(),
-    );
-  });
-
-  // Open the Settings panel — onNavDrawerOpen() will read the factor from LS
+  // Open the Settings panel and change the factor through the actual slider
   cy.get('#header-tools-comp button').first().click();
   cy.get('#user-settings-comp').should('be.visible');
+  cy.get('.kl-auto-scale-setting input[matSliderThumb]').then(($input) => {
+    cy.wrap($input).invoke('val', value).trigger('input').trigger('change');
+  });
 
   // Save to persist via the component's save logic
   cy.get('#user-settings-comp button').contains('Save').click();

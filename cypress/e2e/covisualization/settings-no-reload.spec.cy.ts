@@ -6,6 +6,12 @@
 // @ts-nocheck
 import '../../support/commands';
 
+function setSliderValue(selector: string, value: number) {
+  cy.get(selector).then(($input) => {
+    cy.wrap($input).invoke('val', value).trigger('input').trigger('change');
+  });
+}
+
 describe('Settings changes without reload for Khiops Covisualization', () => {
   it('Should preserve selected node AND update precision in cluster interest cells', () => {
     cy.initViews();
@@ -17,15 +23,9 @@ describe('Settings changes without reload for Khiops Covisualization', () => {
 
       cy.get('.tree-selected').should('exist');
 
-      // Set precision to 2 via localStorage, open panel, save
-      cy.window().then((win) => {
-        win.localStorage.setItem(
-          'KHIOPS_COVISUALIZATION_SETTING_NUMBER_PRECISION',
-          '2',
-        );
-      });
       cy.get('#header-tools-comp button').first().click();
       cy.get('#user-settings-comp').should('be.visible');
+      setSliderValue('.kl-number-precision input[matSliderThumb]', 2);
       cy.get('#user-settings-comp button').contains('Save').click();
       cy.get('#user-settings-comp').should('not.be.visible');
 
@@ -33,22 +33,16 @@ describe('Settings changes without reload for Khiops Covisualization', () => {
       cy.get('.tree-selected').should('exist');
 
       // Capture app-cluster-details text at precision 2
-          let textAt2: string;
-          cy.get('app-cluster-details')
-            .invoke('text')
-            .then((text) => {
-              textAt2 = text;
-            });
+      let textAt2: string;
+      cy.get('app-cluster-details')
+        .invoke('text')
+        .then((text) => {
+          textAt2 = text;
+        });
 
-      // Set precision to 6 via localStorage, open panel, save
-      cy.window().then((win) => {
-        win.localStorage.setItem(
-          'KHIOPS_COVISUALIZATION_SETTING_NUMBER_PRECISION',
-          '6',
-        );
-      });
       cy.get('#header-tools-comp button').first().click();
       cy.get('#user-settings-comp').should('be.visible');
+      setSliderValue('.kl-number-precision input[matSliderThumb]', 6);
       cy.get('#user-settings-comp button').contains('Save').click();
       cy.get('#user-settings-comp').should('not.be.visible');
 
@@ -56,9 +50,7 @@ describe('Settings changes without reload for Khiops Covisualization', () => {
       cy.get('.tree-selected').should('exist');
 
       // Verify app-cluster-details text changed (precision 6 shows more digits)
-      cy.get('app-cluster-details')
-        .invoke('text')
-        .should('not.eq', textAt2);
+      cy.get('app-cluster-details').invoke('text').should('not.eq', textAt2);
     });
   });
 
@@ -72,15 +64,9 @@ describe('Settings changes without reload for Khiops Covisualization', () => {
 
       cy.get('.tree-selected').should('exist');
 
-      // Set contrast to 10 via localStorage, open panel, save — establish baseline
-      cy.window().then((win) => {
-        win.localStorage.setItem(
-          'KHIOPS_COVISUALIZATION_SETTING_MATRIX_CONTRAST',
-          '10',
-        );
-      });
       cy.get('#header-tools-comp button').first().click();
       cy.get('#user-settings-comp').should('be.visible');
+      setSliderValue('.kl-matrix-contrast-setting input[matSliderThumb]', 10);
       cy.get('#user-settings-comp button').contains('Save').click();
       cy.get('#user-settings-comp').should('not.be.visible');
 
@@ -100,15 +86,9 @@ describe('Settings changes without reload for Khiops Covisualization', () => {
         );
       });
 
-      // Set contrast to 80 via localStorage, open panel, save
-      cy.window().then((win) => {
-        win.localStorage.setItem(
-          'KHIOPS_COVISUALIZATION_SETTING_MATRIX_CONTRAST',
-          '80',
-        );
-      });
       cy.get('#header-tools-comp button').first().click();
       cy.get('#user-settings-comp').should('be.visible');
+      setSliderValue('.kl-matrix-contrast-setting input[matSliderThumb]', 80);
       cy.get('#user-settings-comp button').contains('Save').click();
       cy.get('#user-settings-comp').should('not.be.visible');
 
@@ -142,15 +122,9 @@ describe('Settings changes without reload for Khiops Covisualization', () => {
       cy.get('#tree-expando-6').first().click();
       cy.get('#cluster-composition-0').contains('A11');
 
-      // Set contrast to 10 via localStorage, open panel, save — establish baseline
-      cy.window().then((win) => {
-        win.localStorage.setItem(
-          'KHIOPS_COVISUALIZATION_SETTING_MATRIX_CONTRAST',
-          '10',
-        );
-      });
       cy.get('#header-tools-comp button').first().click();
       cy.get('#user-settings-comp').should('be.visible');
+      setSliderValue('.kl-matrix-contrast-setting input[matSliderThumb]', 10);
       cy.get('#user-settings-comp button').contains('Save').click();
       cy.get('#user-settings-comp').should('not.be.visible');
 
@@ -170,15 +144,9 @@ describe('Settings changes without reload for Khiops Covisualization', () => {
         );
       });
 
-      // Set contrast to 80 via localStorage, open panel, save
-      cy.window().then((win) => {
-        win.localStorage.setItem(
-          'KHIOPS_COVISUALIZATION_SETTING_MATRIX_CONTRAST',
-          '80',
-        );
-      });
       cy.get('#header-tools-comp button').first().click();
       cy.get('#user-settings-comp').should('be.visible');
+      setSliderValue('.kl-matrix-contrast-setting input[matSliderThumb]', 80);
       cy.get('#user-settings-comp button').contains('Save').click();
       cy.get('#user-settings-comp').should('not.be.visible');
 
@@ -210,15 +178,9 @@ describe('Settings changes without reload for Khiops Covisualization', () => {
     cy.readFile('./src/assets/mocks/kc/adult2var.json').then(() => {
       cy.get('#cluster-details-grid-0').should('be.visible');
 
-      // Set precision to 2 via localStorage, open panel, save
-      cy.window().then((win) => {
-        win.localStorage.setItem(
-          'KHIOPS_COVISUALIZATION_SETTING_NUMBER_PRECISION',
-          '2',
-        );
-      });
       cy.get('#header-tools-comp button').first().click();
       cy.get('#user-settings-comp').should('be.visible');
+      setSliderValue('.kl-number-precision input[matSliderThumb]', 2);
       cy.get('#user-settings-comp button').contains('Save').click();
       cy.get('#user-settings-comp').should('not.be.visible');
 
@@ -230,26 +192,17 @@ describe('Settings changes without reload for Khiops Covisualization', () => {
           textAt2 = text;
         });
 
-      // Set precision to 6 via localStorage, open panel, save
-      cy.window().then((win) => {
-        win.localStorage.setItem(
-          'KHIOPS_COVISUALIZATION_SETTING_NUMBER_PRECISION',
-          '6',
-        );
-      });
       cy.get('#header-tools-comp button').first().click();
       cy.get('#user-settings-comp').should('be.visible');
+      setSliderValue('.kl-number-precision input[matSliderThumb]', 6);
       cy.get('#user-settings-comp button').contains('Save').click();
       cy.get('#user-settings-comp').should('not.be.visible');
 
       // Verify app-cluster-details text changed (precision 6 shows more digits)
-      cy.get('app-cluster-details')
-        .invoke('text')
-        .should('not.eq', textAt2);
+      cy.get('app-cluster-details').invoke('text').should('not.eq', textAt2);
     });
   });
 });
-
 
 describe('Settings changes without reload for Khiops Covisualization', () => {
   it('Should preserve selected node after changing number precision', () => {

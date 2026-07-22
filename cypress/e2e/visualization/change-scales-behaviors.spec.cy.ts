@@ -20,14 +20,13 @@ describe('Level distribution Test Plan for Khiops Visualization', () => {
         cy.checkCanvasIsNotEmpty('#histogram-canvas');
 
         // Set auto-scale factor to 1 via Settings UI so auto-detection picks yLog
-        cy.window().then((win) => {
-          win.localStorage.setItem(
-            'KHIOPS_VISUALIZATION_SETTING_AUTO_SCALE_FACTOR',
-            '1',
-          );
-        });
         cy.get('#header-tools-comp button').first().click();
         cy.get('#user-settings-comp').should('be.visible');
+        cy.get('.kl-auto-scale-setting input[matSliderThumb]').then(
+          ($input) => {
+            cy.wrap($input).invoke('val', 1).trigger('input').trigger('change');
+          },
+        );
         cy.get('#user-settings-comp button').contains('Save').click();
         cy.get('#user-settings-comp').should('not.be.visible');
 

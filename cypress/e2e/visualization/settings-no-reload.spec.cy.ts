@@ -6,6 +6,12 @@
 // @ts-nocheck
 import '../../support/commands';
 
+function setSliderValue(selector: string, value: number) {
+  cy.get(selector).then(($input) => {
+    cy.wrap($input).invoke('val', value).trigger('input').trigger('change');
+  });
+}
+
 describe('Settings changes without reload for Khiops Visualization', () => {
   it('Should preserve selected variable AND update precision in level cells', () => {
     cy.initViews();
@@ -18,15 +24,9 @@ describe('Settings changes without reload for Khiops Visualization', () => {
         .find('.ag-row:eq(1)')
         .should('have.class', 'ag-row-selected');
 
-      // Set precision to 2 via localStorage before opening the panel
-      cy.window().then((win) => {
-        win.localStorage.setItem(
-          'KHIOPS_VISUALIZATION_SETTING_NUMBER_PRECISION',
-          '2',
-        );
-      });
       cy.get('#header-tools-comp button').first().click();
       cy.get('#user-settings-comp').should('be.visible');
+      setSliderValue('.kl-number-precision input[matSliderThumb]', 2);
       cy.get('#user-settings-comp button').contains('Save').click();
       cy.get('#user-settings-comp').should('not.be.visible');
 
@@ -43,15 +43,9 @@ describe('Settings changes without reload for Khiops Visualization', () => {
           textAt2 = text;
         });
 
-      // Set precision to 6 via localStorage before opening the panel
-      cy.window().then((win) => {
-        win.localStorage.setItem(
-          'KHIOPS_VISUALIZATION_SETTING_NUMBER_PRECISION',
-          '6',
-        );
-      });
       cy.get('#header-tools-comp button').first().click();
       cy.get('#user-settings-comp').should('be.visible');
+      setSliderValue('.kl-number-precision input[matSliderThumb]', 6);
       cy.get('#user-settings-comp button').contains('Save').click();
       cy.get('#user-settings-comp').should('not.be.visible');
 
@@ -75,15 +69,17 @@ describe('Settings changes without reload for Khiops Visualization', () => {
       cy.get('.mat-mdc-tab:contains("Preparation 2D")').first().click();
       cy.get('app-cooccurrence-matrix').should('be.visible');
 
-      // Set contrast to 10 via localStorage, open panel, save — establish baseline
-      cy.window().then((win) => {
-        win.localStorage.setItem(
-          'KHIOPS_VISUALIZATION_SETTING_MATRIX_CONTRAST',
-          '10',
-        );
-      });
+      // Select Target Frequency from matrix mode dropdown
+      cy.get('kl-matrix-mode button').click();
+      cy.contains('[role="menuitem"]', 'Target Frequency').click();
+
       cy.get('#header-tools-comp button').first().click();
       cy.get('#user-settings-comp').should('be.visible');
+      cy.get('.kl-matrix-contrast-setting input[matSliderThumb]').then(
+        ($input) => {
+          cy.wrap($input).invoke('val', 10).trigger('input').trigger('change');
+        },
+      );
       cy.get('#user-settings-comp button').contains('Save').click();
       cy.get('#user-settings-comp').should('not.be.visible');
 
@@ -103,20 +99,21 @@ describe('Settings changes without reload for Khiops Visualization', () => {
         );
       });
 
-      // Set contrast to 80 via localStorage, open panel, save
-      cy.window().then((win) => {
-        win.localStorage.setItem(
-          'KHIOPS_VISUALIZATION_SETTING_MATRIX_CONTRAST',
-          '80',
-        );
-      });
+      // Set contrast to 80 via settings panel, save
       cy.get('#header-tools-comp button').first().click();
       cy.get('#user-settings-comp').should('be.visible');
+      cy.get('.kl-matrix-contrast-setting input[matSliderThumb]').then(
+        ($input) => {
+          cy.wrap($input).invoke('val', 80).trigger('input').trigger('change');
+        },
+      );
       cy.get('#user-settings-comp button').contains('Save').click();
       cy.get('#user-settings-comp').should('not.be.visible');
 
       // Verify the matrix component is still visible (not reloaded)
       cy.get('app-cooccurrence-matrix').should('be.visible');
+
+      cy.wait(500); // Wait for the canvas to update after contrast change
 
       // Verify canvas pixel data changed (contrast was applied)
       cy.get('#matrix').then(($canvas) => {
@@ -143,15 +140,9 @@ describe('Settings changes without reload for Khiops Visualization', () => {
     cy.readFile('./src/assets/mocks/kv/AdultAllReports.json').then(() => {
       cy.get('#preparation-variables-list .ag-row:eq(0)').should('be.visible');
 
-      // Set precision to 2 via localStorage, open panel, save
-      cy.window().then((win) => {
-        win.localStorage.setItem(
-          'KHIOPS_VISUALIZATION_SETTING_NUMBER_PRECISION',
-          '2',
-        );
-      });
       cy.get('#header-tools-comp button').first().click();
       cy.get('#user-settings-comp').should('be.visible');
+      setSliderValue('.kl-number-precision input[matSliderThumb]', 2);
       cy.get('#user-settings-comp button').contains('Save').click();
       cy.get('#user-settings-comp').should('not.be.visible');
 
@@ -163,15 +154,9 @@ describe('Settings changes without reload for Khiops Visualization', () => {
           textAt2 = text;
         });
 
-      // Set precision to 6 via localStorage, open panel, save
-      cy.window().then((win) => {
-        win.localStorage.setItem(
-          'KHIOPS_VISUALIZATION_SETTING_NUMBER_PRECISION',
-          '6',
-        );
-      });
       cy.get('#header-tools-comp button').first().click();
       cy.get('#user-settings-comp').should('be.visible');
+      setSliderValue('.kl-number-precision input[matSliderThumb]', 6);
       cy.get('#user-settings-comp button').contains('Save').click();
       cy.get('#user-settings-comp').should('not.be.visible');
 
