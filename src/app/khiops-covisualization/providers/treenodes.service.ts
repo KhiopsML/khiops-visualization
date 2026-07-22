@@ -88,6 +88,29 @@ export class TreenodesService {
     this.dimensionsDatasService.dimensionsDatas.nodesNames[dimensionName][
       name
     ] = newName;
+
+    // Also update shortDescription on the actual TreeNodeModel and selectedNodes clone
+    const currentIndex =
+      this.dimensionsDatasService.dimensionsDatas.selectedDimensions.findIndex(
+        (e) => dimensionName === e.name,
+      );
+    if (currentIndex !== -1) {
+      const node =
+        this.dimensionsDatasService.dimensionsDatas.dimensionsClusters[
+          currentIndex
+        ]?.find((e) => e.name === name);
+      if (node) {
+        node.shortDescription = newName;
+      }
+      const selectedNode =
+        this.dimensionsDatasService.dimensionsDatas.selectedNodes?.[
+          currentIndex
+        ];
+      if (selectedNode?.name === name) {
+        selectedNode.shortDescription = newName;
+      }
+    }
+
     this.khiopsLibraryService.dirtyStateChanged$.next();
   }
 
@@ -99,9 +122,10 @@ export class TreenodesService {
    * @returns {string} - The display name (renamed or original).
    */
   getDisplayNodeName(dimensionName: string, originalName: string): string {
-    const renamed = this.dimensionsDatasService.dimensionsDatas.nodesNames?.[
-      dimensionName
-    ]?.[originalName];
+    const renamed =
+      this.dimensionsDatasService.dimensionsDatas.nodesNames?.[dimensionName]?.[
+        originalName
+      ];
     return renamed ?? originalName;
   }
 

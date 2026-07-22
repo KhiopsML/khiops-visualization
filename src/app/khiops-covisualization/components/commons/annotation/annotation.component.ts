@@ -4,14 +4,7 @@
  * at https://spdx.org/licenses/BSD-3-Clause-Clear.html or see the "LICENSE" file for more details.
  */
 
-import {
-  Component,
-  effect,
-  input,
-  NgZone,
-  OnInit,
-  ChangeDetectionStrategy,
-} from '@angular/core';
+import { Component, effect, input, NgZone, OnInit } from '@angular/core';
 import { TreeNodeModel } from '@khiops-covisualization/model/tree-node.model';
 import { SelectableService } from '@khiops-library/components/selectable/selectable.service';
 import { SelectableComponent } from '@khiops-library/components/selectable/selectable.component';
@@ -20,12 +13,12 @@ import { AnnotationService } from '@khiops-covisualization/providers/annotation.
 import { ConfigService } from '@khiops-library/providers/config.service';
 import { DimensionCovisualizationModel } from '@khiops-library/model/dimension.covisualization.model';
 import { COMPONENT_TYPES } from '../../../../khiops-library/enum/component-types';
+import { EventsService } from '@khiops-covisualization/providers/events.service';
 
 @Component({
   selector: 'app-annotation',
   templateUrl: './annotation.component.html',
   styleUrls: ['./annotation.component.scss'],
-  changeDetection: ChangeDetectionStrategy.Eager,
   standalone: false,
 })
 export class AnnotationComponent extends SelectableComponent implements OnInit {
@@ -44,11 +37,13 @@ export class AnnotationComponent extends SelectableComponent implements OnInit {
     public override configService: ConfigService,
     private annotationService: AnnotationService,
     private translate: TranslateService,
+    private eventsService: EventsService,
   ) {
     super(selectableService, ngzone, configService);
 
-    // React to selectedNode changes to update value and title,
+    // React to selectedNode changes and node renames to update value and title,
     effect(() => {
+      this.eventsService.treeNodeNameChanged();
       const node = this.selectedNode();
       if (node) {
         this.value = node.annotation;
