@@ -428,11 +428,13 @@ export class TreenodesService {
       let node = dimension && this.getNodeFromName(dimension.name, nodeName);
 
       if (node) {
+        node.getChildrenList();
         this.dimensionsDatasService.dimensionsDatas.selectedNodes[index] = node;
       } else if (dimension) {
         // If saved node is not found, select the first available node as fallback
         const firstNode = this.getFirstAvailableNode(dimension.name);
         if (firstNode) {
+          firstNode.getChildrenList();
           this.dimensionsDatasService.dimensionsDatas.selectedNodes[index] =
             firstNode;
         }
@@ -590,6 +592,7 @@ export class TreenodesService {
           selectedDimensions[i]?.name || '',
         );
         if (firstNode) {
+          firstNode.getChildrenList();
           this.dimensionsDatasService.dimensionsDatas.selectedNodes[i] =
             firstNode;
         }
