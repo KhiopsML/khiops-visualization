@@ -118,7 +118,11 @@ describe('Test Plan for Khiops Covisualization', () => {
         }
         cy.get('#cluster-distribution-1').find('kl-legend').contains(newName);
         cy.get('#selected-clusters-grid').contains(newName);
-        cy.get('#cluster-annotation-0').contains(newName);
+        cy.get('#cluster-annotation-0 .ag-center-cols-container', {
+          timeout: 60000,
+        })
+          .should('be.visible')
+          .and('contain.text', newName);
 
         // Open unfold Hierarchy view
         cy.get('.button-unfold-hierarchy').click();
