@@ -9,7 +9,7 @@ import '../../support/commands';
 
 describe('Expected Frequency in unsupervised analysis #309', () => {
   it('should show Expected Frequency in matrix tooltip for unsupervised analysis', () => {
-    cy.initViews();
+    
     // bi2.json has learningTask = "Unsupervised analysis"
     cy.loadFile('visualization', 'bi2.json');
 
@@ -26,7 +26,7 @@ describe('Expected Frequency in unsupervised analysis #309', () => {
   });
 
   it('should NOT show Expected Frequency in matrix tooltip for classification analysis', () => {
-    cy.initViews();
+    
     // adult-bivar.json has learningTask = "Classification analysis"
     cy.loadFile('visualization', 'adult-bivar.json');
 

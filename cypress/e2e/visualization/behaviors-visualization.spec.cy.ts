@@ -11,7 +11,6 @@ describe('Behaviors Test Plan for Khiops Visualization', () => {
 
   files.forEach((fileName) => {
     it(`Check values for ${fileName}`, () => {
-      cy.initViews();
 
       cy.loadFile('visualization', fileName);
 
@@ -147,7 +146,7 @@ describe('Behaviors Test Plan for Khiops Visualization', () => {
 
   files.forEach((fileName) => {
     it(`Check Matrix tooltip values if unsupervised for ${fileName}`, () => {
-      cy.initViews();
+      
 
       cy.loadFile('visualization', fileName);
 
@@ -172,7 +171,7 @@ describe('Behaviors Test Plan for Khiops Visualization', () => {
 
   files.forEach((fileName) => {
     it(`Check Matrix tooltip values if supervised for ${fileName}`, () => {
-      cy.initViews();
+      
 
       cy.loadFile('visualization', fileName);
 
@@ -203,7 +202,7 @@ describe('Behaviors Test Plan for Khiops Visualization', () => {
 
   files.forEach((fileName) => {
     it(`Check Matrix tooltip values if supervised for ${fileName}`, () => {
-      cy.initViews();
+      
 
       cy.loadFile('visualization', fileName);
 

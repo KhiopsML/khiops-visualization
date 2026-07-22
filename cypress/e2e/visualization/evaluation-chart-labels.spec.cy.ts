@@ -12,7 +12,7 @@ describe('Evaluation chart labels and axis precision #80', () => {
     const fileName = 'ALLREPORTS_Std_Iris_AnalysisResults.khj';
 
     it('should display correct axis labels and curve names', () => {
-      cy.initViews();
+      
       cy.loadFile('visualization', fileName);
 
       // Navigate to Evaluation tab
@@ -69,7 +69,7 @@ describe('Evaluation chart labels and axis precision #80', () => {
     });
 
     it('should have x-axis values ranging from 0 to 100', () => {
-      cy.initViews();
+      
       cy.loadFile('visualization', fileName);
 
       cy.get('.mat-mdc-tab:contains("Evaluation")').first().click();
@@ -99,7 +99,7 @@ describe('Evaluation chart labels and axis precision #80', () => {
     const fileName = 'Regression_AllReports_All.json';
 
     it('should display correct axis labels for regression', () => {
-      cy.initViews();
+      
       cy.loadFile('visualization', fileName);
 
       // Navigate to Evaluation tab
@@ -126,7 +126,7 @@ describe('Evaluation chart labels and axis precision #80', () => {
     });
 
     it('should have x-axis values ranging from 0 to 100', () => {
-      cy.initViews();
+      
       cy.loadFile('visualization', fileName);
 
       cy.get('.mat-mdc-tab:contains("Evaluation")').first().click();

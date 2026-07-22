@@ -9,7 +9,6 @@ import '../../support/commands';
 
 describe('Zero values displayed in variables table #347', () => {
   it('should display 0 for Level when value is zero', () => {
-    cy.initViews();
     // AdultAllReports.json has variables with level=0 (Label at row 13)
     cy.loadFile('visualization', 'AdultAllReports.json');
 
@@ -28,7 +27,6 @@ describe('Zero values displayed in variables table #347', () => {
   });
 
   it('should display 0 for Min when value is zero', () => {
-    cy.initViews();
     // AdultAllReports.json has capital_gain with min=0
     cy.loadFile('visualization', 'AdultAllReports.json');
 

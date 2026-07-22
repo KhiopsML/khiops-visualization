@@ -11,7 +11,7 @@ describe('Histogram initialization with misspelled field #79', () => {
   const fileName = 'AdultAgeAllReports.json';
 
   it('should render the histogram canvas even when data contains intrepretableHistogramNumber typo', () => {
-    cy.initViews();
+    
     cy.loadFile('visualization', fileName);
 
     // The first variable "age" (R1, Numerical) is selected by default
@@ -24,7 +24,7 @@ describe('Histogram initialization with misspelled field #79', () => {
   });
 
   it('should display the interpretable histogram slider with multiple thumbs', () => {
-    cy.initViews();
+    
     cy.loadFile('visualization', fileName);
 
     // The slider should be visible since histogramNumber > 1 (9 histograms)

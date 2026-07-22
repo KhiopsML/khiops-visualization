@@ -47,7 +47,7 @@ function applyScaleMode(
 
 describe('Change all scales - Auto / Manual modes', () => {
   it('Should apply Manual Lin to all variables', () => {
-    cy.initViews();
+    
     cy.loadFile('visualization', 'ylogAdultAllReports.json');
 
     cy.readFile('./src/assets/mocks/kv/ylogAdultAllReports.json').then(() => {
@@ -71,7 +71,7 @@ describe('Change all scales - Auto / Manual modes', () => {
   });
 
   it('Should apply Manual Log to all variables', () => {
-    cy.initViews();
+    
     cy.loadFile('visualization', 'ylogAdultAllReports.json');
 
     cy.readFile('./src/assets/mocks/kv/ylogAdultAllReports.json').then(() => {
@@ -88,7 +88,7 @@ describe('Change all scales - Auto / Manual modes', () => {
   });
 
   it('Should restore Auto scale after Manual was applied (bug fix)', () => {
-    cy.initViews();
+    
     cy.loadFile('visualization', 'ylogAdultAllReports.json');
 
     cy.readFile('./src/assets/mocks/kv/ylogAdultAllReports.json').then(() => {
@@ -110,7 +110,7 @@ describe('Change all scales - Auto / Manual modes', () => {
   });
 
   it('Should restore Auto after individual manual change on a variable', () => {
-    cy.initViews();
+    
     cy.loadFile('visualization', 'ylogAdultAllReports.json');
 
     cy.readFile('./src/assets/mocks/kv/ylogAdultAllReports.json').then(() => {
@@ -135,7 +135,7 @@ describe('Change all scales - Auto / Manual modes', () => {
 
 describe('Auto scale threshold factor', () => {
   it('Should detect yLog on first variable with factor 1 (easy switch to Log)', () => {
-    cy.initViews();
+    
     cy.loadFile('visualization', 'ylogAdultAllReports.json');
 
     cy.readFile('./src/assets/mocks/kv/ylogAdultAllReports.json').then(() => {
@@ -151,7 +151,7 @@ describe('Auto scale threshold factor', () => {
   });
 
   it('Should detect yLin on first variable with factor 5 (hard switch to Log)', () => {
-    cy.initViews();
+    
     cy.loadFile('visualization', 'ylogAdultAllReports.json');
 
     cy.readFile('./src/assets/mocks/kv/ylogAdultAllReports.json').then(() => {
@@ -167,7 +167,7 @@ describe('Auto scale threshold factor', () => {
   });
 
   it('Should affect some variables differently at factor 1 vs factor 5', () => {
-    cy.initViews();
+    
     cy.loadFile('visualization', 'ylogAdultAllReports.json');
 
     cy.readFile('./src/assets/mocks/kv/ylogAdultAllReports.json').then(() => {
@@ -204,7 +204,7 @@ describe('Auto scale threshold factor', () => {
   });
 
   it('Should toggle first variable between yLog and yLin when changing factor', () => {
-    cy.initViews();
+    
     cy.loadFile('visualization', 'ylogAdultAllReports.json');
 
     cy.readFile('./src/assets/mocks/kv/ylogAdultAllReports.json').then(() => {
@@ -229,7 +229,7 @@ describe('Auto scale threshold factor', () => {
 
 describe('Manual scale persistence across variables', () => {
   it('Should apply Manual yLog to all variables (numerical and categorical)', () => {
-    cy.initViews();
+    
     cy.loadFile('visualization', 'ylogAdultAllReports.json');
 
     cy.readFile('./src/assets/mocks/kv/ylogAdultAllReports.json').then(() => {
@@ -259,7 +259,7 @@ describe('Manual scale persistence across variables', () => {
   });
 
   it('Should preserve individual scale override when navigating away and back', () => {
-    cy.initViews();
+    
     cy.loadFile('visualization', 'ylogAdultAllReports.json');
 
     cy.readFile('./src/assets/mocks/kv/ylogAdultAllReports.json').then(() => {
@@ -288,7 +288,7 @@ describe('Manual scale persistence across variables', () => {
   });
 
   it('Should preserve individual xLog override when navigating away and back', () => {
-    cy.initViews();
+    
     cy.loadFile('visualization', 'ylogAdultAllReports.json');
 
     cy.readFile('./src/assets/mocks/kv/ylogAdultAllReports.json').then(() => {
@@ -315,7 +315,7 @@ describe('Manual scale persistence across variables', () => {
   });
 
   it('Should allow different manual overrides on different variables', () => {
-    cy.initViews();
+    
     cy.loadFile('visualization', 'ylogAdultAllReports.json');
 
     cy.readFile('./src/assets/mocks/kv/ylogAdultAllReports.json').then(() => {

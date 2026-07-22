@@ -11,7 +11,6 @@ describe('Test Plan for Khiops Covisualization', () => {
 
   files.forEach((fileName) => {
     it(`Check values for ${fileName}`, () => {
-      cy.initViews();
 
       cy.loadFile('visualization', fileName);
 

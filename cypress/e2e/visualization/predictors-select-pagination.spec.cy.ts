@@ -11,7 +11,6 @@ describe('Level distribution Test Plan for Khiops Visualization', () => {
 
   files.forEach((fileName) => {
     it(`Check values for ${fileName}`, () => {
-      cy.initViews();
 
       cy.loadFile('visualization', fileName);
 

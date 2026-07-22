@@ -8,7 +8,7 @@ import '../../support/commands';
 
 describe('Matrix visualization Test Plan for Khiops Visualization', () => {
   it(`Check matrix in cooccurrence`, () => {
-    cy.initViews();
+    
     cy.loadFile('visualization', 'co-oc.json');
     cy.readFile('./src/assets/mocks/kv/co-oc.json').then(() => {
 
@@ -32,7 +32,7 @@ describe('Matrix visualization Test Plan for Khiops Visualization', () => {
     });
   });
   it(`Check matrix in regression`, () => {
-    cy.initViews();
+    
     cy.loadFile('visualization', 'reg.json');
     cy.readFile('./src/assets/mocks/kv/reg.json').then(() => {
 

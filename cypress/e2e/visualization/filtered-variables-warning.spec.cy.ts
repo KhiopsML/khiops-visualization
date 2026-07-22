@@ -9,7 +9,7 @@ import '../../support/commands';
 
 describe('Filtered variables warning #351', () => {
   it('should display warning when evaluatedVariables > displayed variables', () => {
-    cy.initViews();
+    
     // NGrams10_AnalysisResults.9vars.json has preparationReport with
     // evaluatedVariables=10 but only 9 variablesStatistics entries
     cy.loadFile('visualization', 'NGrams10_AnalysisResults.9vars.json');
@@ -30,7 +30,7 @@ describe('Filtered variables warning #351', () => {
   });
 
   it('should also display warning in Text preparation tab', () => {
-    cy.initViews();
+    
     cy.loadFile('visualization', 'NGrams10_AnalysisResults.9vars.json');
 
     // Navigate to Text preparation tab
@@ -42,7 +42,7 @@ describe('Filtered variables warning #351', () => {
   });
 
   it('should NOT display warning when all variables are shown', () => {
-    cy.initViews();
+    
     // AdultAllReports.json has evaluatedVariables == variablesStatistics.length
     cy.loadFile('visualization', 'AdultAllReports.json');
 

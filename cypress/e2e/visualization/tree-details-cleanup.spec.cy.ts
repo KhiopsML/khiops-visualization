@@ -9,7 +9,6 @@ import '../../support/commands';
 
 describe('Tree details component cleanup on file change #78', () => {
   it('should clear tree details when loading a file without trees after one with trees', () => {
-    cy.initViews();
 
     // 1. Load a file WITH tree preparation data
     cy.loadFile('visualization', 'demo-visualization.json');
@@ -34,7 +33,6 @@ describe('Tree details component cleanup on file change #78', () => {
   });
 
   it('should show fresh tree details when loading a second file with trees', () => {
-    cy.initViews();
 
     // 1. Load a file WITH tree preparation data (10 tree vars, first is Tree_6)
     cy.loadFile('visualization', 'demo-visualization.json');

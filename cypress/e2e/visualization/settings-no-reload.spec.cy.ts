@@ -14,7 +14,6 @@ function setSliderValue(selector: string, value: number) {
 
 describe('Settings changes without reload for Khiops Visualization', () => {
   it('Should preserve selected variable AND update precision in level cells', () => {
-    cy.initViews();
     cy.loadFile('visualization', 'AdultAllReports.json');
 
     cy.readFile('./src/assets/mocks/kv/AdultAllReports.json').then(() => {
@@ -62,7 +61,7 @@ describe('Settings changes without reload for Khiops Visualization', () => {
   });
 
   it('Should preserve variable selection AND verify canvas changes with contrast', () => {
-    cy.initViews();
+    
     cy.loadFile('visualization', 'co-oc.json');
 
     cy.readFile('./src/assets/mocks/kv/co-oc.json').then(() => {
@@ -134,7 +133,7 @@ describe('Settings changes without reload for Khiops Visualization', () => {
   });
 
   it('Should update ag-grid level cell values when number precision changes', () => {
-    cy.initViews();
+    
     cy.loadFile('visualization', 'AdultAllReports.json');
 
     cy.readFile('./src/assets/mocks/kv/AdultAllReports.json').then(() => {
@@ -168,7 +167,7 @@ describe('Settings changes without reload for Khiops Visualization', () => {
   });
 
   it('Should preserve selected tab across settings changes', () => {
-    cy.initViews();
+    
     cy.loadFile('visualization', 'co-oc.json');
 
     cy.readFile('./src/assets/mocks/kv/co-oc.json').then(() => {
@@ -197,7 +196,7 @@ describe('Settings changes without reload for Khiops Visualization', () => {
 
 describe('Settings changes without reload for Khiops Visualization', () => {
   it('Should preserve selected variable after changing number precision', () => {
-    cy.initViews();
+    
     cy.loadFile('visualization', 'AdultAllReports.json');
 
     cy.readFile('./src/assets/mocks/kv/AdultAllReports.json').then(() => {
@@ -231,7 +230,7 @@ describe('Settings changes without reload for Khiops Visualization', () => {
   });
 
   it('Should preserve selected variable after changing matrix contrast', () => {
-    cy.initViews();
+    
     cy.loadFile('visualization', 'co-oc.json');
 
     cy.readFile('./src/assets/mocks/kv/co-oc.json').then(() => {
@@ -266,7 +265,7 @@ describe('Settings changes without reload for Khiops Visualization', () => {
   });
 
   it('Should update ag-grid number formatting after precision change', () => {
-    cy.initViews();
+    
     cy.loadFile('visualization', 'AdultAllReports.json');
 
     cy.readFile('./src/assets/mocks/kv/AdultAllReports.json').then(() => {
@@ -313,7 +312,6 @@ describe('Settings changes without reload for Khiops Visualization', () => {
   });
 
   it('Should preserve selected tab and variable across settings changes', () => {
-    cy.initViews();
     cy.loadFile('visualization', 'co-oc.json');
 
     cy.readFile('./src/assets/mocks/kv/co-oc.json').then(() => {

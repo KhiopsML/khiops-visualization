@@ -9,7 +9,7 @@ import '../../support/commands';
 
 describe('Current interval Frequency column #321', () => {
   it('should display a Frequency column for numerical variables in Preparation', () => {
-    cy.initViews();
+    
     // AdultAllReports.json has numerical variable "age" (R04)
     cy.loadFile('visualization', 'AdultAllReports.json');
 
@@ -34,7 +34,7 @@ describe('Current interval Frequency column #321', () => {
   });
 
   it('should display a Frequency column for categorical variables in Preparation', () => {
-    cy.initViews();
+    
     cy.loadFile('visualization', 'AdultAllReports.json');
 
     cy.get('.mat-mdc-tab:contains("Preparation")').first().click();
@@ -59,7 +59,7 @@ describe('Current interval Frequency column #321', () => {
   });
 
   it('should display interval as [min, max] format for numerical variables', () => {
-    cy.initViews();
+    
     cy.loadFile('visualization', 'AdultAllReports.json');
 
     cy.get('.mat-mdc-tab:contains("Preparation")').first().click();
