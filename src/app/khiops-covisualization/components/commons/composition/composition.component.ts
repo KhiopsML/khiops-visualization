@@ -13,6 +13,7 @@ import {
   OnInit,
   AfterViewInit,
   ChangeDetectionStrategy,
+  effect,
 } from '@angular/core';
 import { TranslateService } from '@ngstack/translate';
 import { CompositionModel } from '@khiops-covisualization/model/composition.model';
@@ -112,6 +113,20 @@ export class CompositionComponent implements OnInit, OnDestroy, AfterViewInit {
           this.selectedCompositionChanged.emit(this.selectedComposition);
         }
       });
+
+    effect(() => {
+      const event = this.eventsService.treeNodeCompositionSelectionChanged();
+      if (!event || !this.selectedDimension || !this.currentNode) {
+        return;
+      }
+
+      if (
+        event.hierarchyName === this.selectedDimension.name &&
+        event.selectedNodeName === this.currentNode.name
+      ) {
+        this.updateTable(this.currentNode, event.selectedValue);
+      }
+    });
   }
 
   ngOnInit() {

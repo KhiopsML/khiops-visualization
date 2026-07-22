@@ -16,6 +16,11 @@ export class EventsService {
   public conditionalOnContextChanged: EventEmitter<any> = new EventEmitter();
   public contextSelectionChanged: EventEmitter<any> = new EventEmitter();
   public unfoldHierarchyChanged: EventEmitter<any> = new EventEmitter();
+  public treeNodeCompositionSelectionChanged = signal<{
+    hierarchyName: string;
+    selectedNodeName: string;
+    selectedValue: string;
+  } | null>(null);
   public treeNodeNameChanged = signal<{name: string; newName: string} | null>(null);
 
   /**
@@ -56,6 +61,18 @@ export class EventsService {
    */
   emitUnfoldHierarchyChanged() {
     this.unfoldHierarchyChanged.emit();
+  }
+
+  /**
+   * Emits a signal when composition selection must be updated from variable search.
+   * @param event - The event data to emit.
+   */
+  emitTreeNodeCompositionSelectionChanged(event: {
+    hierarchyName: string;
+    selectedNodeName: string;
+    selectedValue: string;
+  }) {
+    this.treeNodeCompositionSelectionChanged.set(event);
   }
 
   /**

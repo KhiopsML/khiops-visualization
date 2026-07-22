@@ -26,6 +26,7 @@ import { COMPONENT_TYPES } from '@khiops-library/enum/component-types';
 import { DialogService } from '@khiops-library/providers/dialog.service';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { KhiopsLibraryModule } from '@khiops-library/khiops-library.module';
+import { EventsService } from '@khiops-covisualization/providers/events.service';
 
 export interface VariableSearchDialogData {
   selectedDimension: DimensionCovisualizationModel;
@@ -91,6 +92,7 @@ export class VariableSearchDialogComponent
   constructor(
     public translate: TranslateService,
     private dialogService: DialogService,
+    private eventsService: EventsService,
     private treenodesService: TreenodesService,
     private variableSearchService: VariableSearchService,
     public override selectableService: SelectableService,
@@ -267,6 +269,12 @@ export class VariableSearchDialogComponent
           false,
           selectedValue,
         );
+
+        this.eventsService.emitTreeNodeCompositionSelectionChanged({
+          hierarchyName: this.data.selectedDimension.name,
+          selectedNodeName: clusterInfo.cluster,
+          selectedValue,
+        });
       }
     }
 
