@@ -22,16 +22,16 @@
             color="accent"
             [matMenuTriggerFor]="selectInnerVariable"
           >
-            {{ selectedInnerVariable || 'GLOBAL.SELECT_VARIABLE' | translate }}
+            {{ selectedInnerVariable() || 'GLOBAL.SELECT_VARIABLE' | translate }}
             <em class="screenshot-hide">
               <mat-icon>keyboard_arrow_down</mat-icon>
             </em>
           </button>
           <mat-menu #selectInnerVariable>
-            @for (variable of innerVariables; track $index; let i = $index) {
+            @for (variable of innerVariables(); track $index; let i = $index) {
               <button
                 mat-menu-item
-                [class.selected-item]="variable === selectedInnerVariable"
+                [class.selected-item]="variable === selectedInnerVariable()"
                 (click)="onInnerVariableSelected(variable)"
               >
                 {{ variable }}
@@ -65,10 +65,10 @@
         [showSearch]="true"
         [showLineSelection]="true"
         [showColumnsSelection]="false"
-        [inputDatas]="$safeNavigationMigration(searchResults?.values)"
+        [inputDatas]="$safeNavigationMigration(searchResults().values)"
         [title]="''"
         [displayedColumns]="
-          $safeNavigationMigration(searchResults?.displayedColumns)
+          $safeNavigationMigration(searchResults().displayedColumns)
         "
         (selectListItem)="onSelectRowChanged($event)"
       >

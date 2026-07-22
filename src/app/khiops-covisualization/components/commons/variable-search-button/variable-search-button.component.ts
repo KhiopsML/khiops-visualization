@@ -4,25 +4,39 @@
  * at https://spdx.org/licenses/BSD-3-Clause-Clear.html or see the "LICENSE" file for more details.
  */
 
-import { Component, Input, ChangeDetectionStrategy } from '@angular/core';
+import {
+  Component,
+  computed,
+  input,
+  signal,
+} from '@angular/core';
 import { DimensionCovisualizationModel } from '@khiops-library/model/dimension.covisualization.model';
 import {
   VariableSearchDialogComponent,
   VariableSearchDialogData,
 } from '../variable-search-dialog/variable-search-dialog.component';
 import { DialogService } from '@khiops-library/providers/dialog.service';
+import { KhiopsLibraryModule } from '@khiops-library/khiops-library.module';
+import { take } from 'rxjs/operators';
 
 @Component({
   selector: 'app-variable-search-button',
   templateUrl: './variable-search-button.component.html',
   styleUrls: ['./variable-search-button.component.scss'],
-  changeDetection: ChangeDetectionStrategy.Eager,
-  standalone: false,
+  imports: [KhiopsLibraryModule],
 })
 export class VariableSearchButtonComponent {
-  @Input() public selectedDimension: DimensionCovisualizationModel | undefined;
-  private lastSelectedInnerVariable: string | undefined;
-  private lastSearchInput: string | undefined;
+  public selectedDimension = input<DimensionCovisualizationModel | undefined>();
+
+  readonly isSearchModeAvailable = computed(
+    () =>
+      !!this.selectedDimension()?.innerVariables?.dimensionSummaries?.length,
+  );
+
+  private readonly lastSelectedInnerVariable = signal<string | undefined>(
+    undefined,
+  );
+  private readonly lastSearchInput = signal<string | undefined>(undefined);
 
   constructor(private dialogService: DialogService) {}
 
@@ -30,14 +44,16 @@ export class VariableSearchButtonComponent {
    * Open variable search dialog
    */
   openVariableSearchDialog() {
-    if (!this.selectedDimension?.innerVariables?.dimensionSummaries) {
+    const selectedDimension = this.selectedDimension();
+
+    if (!selectedDimension?.innerVariables?.dimensionSummaries) {
       return;
     }
 
     const data: VariableSearchDialogData = {
-      selectedDimension: this.selectedDimension,
-      selectedInnerVariable: this.lastSelectedInnerVariable,
-      searchInput: this.lastSearchInput,
+      selectedDimension,
+      selectedInnerVariable: this.lastSelectedInnerVariable(),
+      searchInput: this.lastSearchInput(),
     };
 
     const dialogRef = this.dialogService.openDialog(
@@ -51,18 +67,14 @@ export class VariableSearchButtonComponent {
       { data },
     );
 
-    dialogRef.afterClosed().subscribe((result) => {
+    dialogRef
+      .afterClosed()
+      .pipe(take(1))
+      .subscribe((result) => {
       if (result?.selectedInnerVariable) {
-        this.lastSelectedInnerVariable = result.selectedInnerVariable;
-        this.lastSearchInput = result.searchInput;
+        this.lastSelectedInnerVariable.set(result.selectedInnerVariable);
+        this.lastSearchInput.set(result.searchInput);
       }
-    });
-  }
-
-  /**
-   * Check if search mode is available for this dimension
-   */
-  isSearchModeAvailable(): boolean {
-    return !!this.selectedDimension?.innerVariables?.dimensionSummaries?.length;
+      });
   }
 }

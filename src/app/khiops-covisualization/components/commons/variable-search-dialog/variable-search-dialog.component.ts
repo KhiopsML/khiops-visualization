@@ -5,12 +5,13 @@
  */
 
 import {
+  afterNextRender,
   Component,
   ViewChild,
   AfterViewInit,
   OnInit,
   NgZone,
-  ChangeDetectionStrategy,
+  signal,
 } from '@angular/core';
 import { DimensionCovisualizationModel } from '@khiops-library/model/dimension.covisualization.model';
 import { GridDatasI } from '@khiops-library/interfaces/grid-datas.interface';
@@ -23,6 +24,8 @@ import { SelectableService } from '@khiops-library/components/selectable/selecta
 import { ConfigService } from '@khiops-library/providers/config.service';
 import { COMPONENT_TYPES } from '@khiops-library/enum/component-types';
 import { DialogService } from '@khiops-library/providers/dialog.service';
+import { FlexLayoutModule } from '@angular/flex-layout';
+import { KhiopsLibraryModule } from '@khiops-library/khiops-library.module';
 
 export interface VariableSearchDialogData {
   selectedDimension: DimensionCovisualizationModel;
@@ -40,18 +43,18 @@ export interface VariableSearchResult {
   selector: 'app-variable-search-dialog',
   templateUrl: './variable-search-dialog.component.html',
   styleUrls: ['./variable-search-dialog.component.scss'],
-  changeDetection: ChangeDetectionStrategy.Eager,
-  standalone: false,
+  imports: [FlexLayoutModule, KhiopsLibraryModule],
 })
 export class VariableSearchDialogComponent
   extends SelectableComponent
   implements OnInit, AfterViewInit
 {
-  innerVariables: string[] = [];
-  selectedInnerVariable = '';
-  searchValue = '';
-  searchResults: GridDatasI | undefined;
-  searchInput = '';
+  readonly innerVariables = signal<string[]>([]);
+  readonly selectedInnerVariable = signal('');
+  readonly searchResults = signal<GridDatasI>({
+    displayedColumns: [],
+    values: [],
+  });
   // Map to quickly find cluster info by row data
   private rowToClusterMap: Map<string, { cluster: string; _id: string }> =
     new Map();
@@ -106,9 +109,9 @@ export class VariableSearchDialogComponent
       // Restore selectedInnerVariable if provided in data
       if (
         this.data.selectedInnerVariable &&
-        this.innerVariables.includes(this.data.selectedInnerVariable)
+        this.innerVariables().includes(this.data.selectedInnerVariable)
       ) {
-        this.selectedInnerVariable = this.data.selectedInnerVariable;
+        this.selectedInnerVariable.set(this.data.selectedInnerVariable);
       }
       this.performSearch();
     }
@@ -124,18 +127,18 @@ export class VariableSearchDialogComponent
         this.agGridComponent.search();
       }
     }
-    setTimeout(() => {
+    afterNextRender(() => {
       // Set focus on the search input field
       this.agGridComponent?.focusSearch();
 
       // Trigger click event for copy functionality
       this.triggerClickEvent();
-    }, 250);
+    });
   }
 
   private initializeInnerVariables() {
     if (this.data.selectedDimension?.innerVariables?.dimensionSummaries) {
-      this.innerVariables =
+      const nextInnerVariables =
         this.data.selectedDimension.innerVariables.dimensionSummaries
           .map((dim) => dim.name)
           .sort((a, b) =>
@@ -144,22 +147,23 @@ export class VariableSearchDialogComponent
               sensitivity: 'base',
             }),
           );
-      if (this.innerVariables.length > 0) {
-        this.selectedInnerVariable = this.innerVariables[0] || '';
+      this.innerVariables.set(nextInnerVariables);
+
+      if (nextInnerVariables.length > 0) {
+        this.selectedInnerVariable.set(nextInnerVariables[0] || '');
       }
     }
   }
 
   private initializeSearchResults() {
-    this.searchResults = {
+    this.searchResults.set({
       displayedColumns: [],
       values: [],
-    };
+    });
   }
 
   onInnerVariableSelected(variable: string) {
-    this.selectedInnerVariable = variable;
-    this.searchValue = '';
+    this.selectedInnerVariable.set(variable);
     // Reset search input when changing inner variable
     if (this.agGridComponent) {
       this.agGridComponent.searchInput = '';
@@ -172,7 +176,7 @@ export class VariableSearchDialogComponent
     // Get current search input from AgGrid component
     const currentSearchInput = this.agGridComponent?.searchInput || '';
     this.dialogService.closeDialog({
-      selectedInnerVariable: this.selectedInnerVariable,
+      selectedInnerVariable: this.selectedInnerVariable(),
       searchInput: currentSearchInput,
     });
   }
@@ -187,13 +191,10 @@ export class VariableSearchDialogComponent
       this.agGridComponent.search();
     }
 
-    if (this.searchResults) {
-      this.searchResults.displayedColumns = [];
-      this.searchResults.values = [];
-    }
+    this.searchResults.set({ displayedColumns: [], values: [] });
     this.rowToClusterMap.clear(); // Reset row to cluster mapping
 
-    if (!this.selectedInnerVariable) {
+    if (!this.selectedInnerVariable()) {
       // Clear copy data properties when no variable selected
       this.updateCopyDataProperties();
       return;
@@ -202,11 +203,11 @@ export class VariableSearchDialogComponent
     // Use the service to perform the search
     const searchData = this.variableSearchService.performVariableSearch(
       this.data.selectedDimension,
-      this.selectedInnerVariable,
+      this.selectedInnerVariable(),
     );
 
     if (searchData) {
-      this.searchResults = searchData.searchResults;
+      this.searchResults.set(searchData.searchResults);
       this.rowToClusterMap = searchData.clusterMapping;
 
       // Update properties for data copy functionality
@@ -218,25 +219,23 @@ export class VariableSearchDialogComponent
    * Updates the properties needed for the copy data functionality
    */
   private updateCopyDataProperties() {
-    if (
-      this.searchResults &&
-      this.searchResults.values &&
-      this.searchResults.displayedColumns
-    ) {
+    const searchResults = this.searchResults();
+    const displayedColumns = searchResults.displayedColumns ?? [];
+    const values = searchResults.values ?? [];
+
+    if (displayedColumns.length > 0 || values.length > 0) {
       // Set title for the copied data
-      this.title = `${this.translate.get('GLOBAL.INNER_VARIABLE')} - ${this.selectedInnerVariable}`;
+      this.title = `${this.translate.get('GLOBAL.INNER_VARIABLE')} - ${this.selectedInnerVariable()}`;
 
       // Set displayed columns for copy functionality
-      this.displayedColumns = this.searchResults.displayedColumns.map(
-        (col) => ({
+      this.displayedColumns = displayedColumns.map((col) => ({
           headerName: col.headerName,
           field: col.field,
           show: true,
-        }),
-      );
+        }));
 
       // Set inputDatas directly from searchResults.values - no copy needed!
-      this.inputDatas = this.searchResults.values as any[];
+      this.inputDatas = values as any[];
     } else {
       // Clear properties when no data
       this.title = '';
@@ -274,7 +273,7 @@ export class VariableSearchDialogComponent
     // Get current search input from AgGrid component
     const currentSearchInput = this.agGridComponent?.searchInput || '';
     this.dialogService.closeDialog({
-      selectedInnerVariable: this.selectedInnerVariable,
+      selectedInnerVariable: this.selectedInnerVariable(),
       searchInput: currentSearchInput,
     });
   }

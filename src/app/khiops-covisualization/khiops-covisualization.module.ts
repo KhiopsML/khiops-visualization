@@ -72,8 +72,6 @@ import { CovisualizationRoutingModule } from './khiops-covisualization-routing.m
     ImportExtDatasComponent,
     ImportExtDatasListComponent,
     CompositionDetailedPartsComponent,
-    VariableSearchDialogComponent,
-    VariableSearchButtonComponent,
     MatrixInnerVariablesFilterComponent,
     ExternalDatasComponent,
     UnfoldHierarchyHeaderComponent,
@@ -89,6 +87,8 @@ import { CovisualizationRoutingModule } from './khiops-covisualization-routing.m
     AgGridModule,
     DragDropModule,
     DraggableDialogDirective,
+    VariableSearchDialogComponent,
+    VariableSearchButtonComponent,
     CovisualizationRoutingModule,
   ],
   providers: [
