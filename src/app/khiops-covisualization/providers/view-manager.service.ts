@@ -44,19 +44,19 @@ export class ViewManagerService {
       this.viewsLayout.addDimensionViewLayout(dimName, isContextView);
     }
 
-    // View manager behavior #129
-    // Do not restore LS values because we have a save functionnality
-    if (AppConfig.cypress) {
-      // Do it only for cypress tests
-      const lsStorage = initLS();
-      // Merge current values with values from LS
-      this.viewsLayout.mergeWithPreviousValues(lsStorage);
-    }
     // Then get saved json state
     const savedDatas = this.appService.getSavedDatas('viewsLayout');
     if (savedDatas) {
-      // Merge current values with values from LS
       this.viewsLayout.mergeWithPreviousValues(savedDatas);
+    }
+
+    // View manager behavior #129
+    // Do not restore LS values because we have a save functionnality
+    if (AppConfig.cypress) {
+      // For cypress tests, force all views visible by applying LS defaults
+      // AFTER saved data, so test layout always wins over file's savedDatas
+      const lsStorage = initLS();
+      this.viewsLayout.mergeWithPreviousValues(lsStorage);
     }
 
     return this.viewsLayout;
