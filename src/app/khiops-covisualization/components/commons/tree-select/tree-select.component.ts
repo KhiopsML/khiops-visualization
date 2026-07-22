@@ -216,6 +216,11 @@ export class TreeSelectComponent
             this.selectedDimension.name,
             this.treenodesService.getSavedCollapsedNodes(),
           );
+          // Notify selected-clusters and other components about the node name change
+          this.eventsService.emitTreeNodeNameChanged({
+            name: e.data.name,
+            newName: e.data.newName,
+          });
         }
       });
     });

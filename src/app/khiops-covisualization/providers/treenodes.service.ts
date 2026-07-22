@@ -92,6 +92,20 @@ export class TreenodesService {
   }
 
   /**
+   * Gets the display name of a node, applying any renames.
+   *
+   * @param {string} dimensionName - The name of the dimension.
+   * @param {string} originalName - The original name of the node.
+   * @returns {string} - The display name (renamed or original).
+   */
+  getDisplayNodeName(dimensionName: string, originalName: string): string {
+    const renamed = this.dimensionsDatasService.dimensionsDatas.nodesNames?.[
+      dimensionName
+    ]?.[originalName];
+    return renamed ?? originalName;
+  }
+
+  /**
    * Initializes the saved unfold rank from the application data.
    */
   initSavedUnfoldRank() {

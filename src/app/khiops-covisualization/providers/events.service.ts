@@ -4,7 +4,7 @@
  * at https://spdx.org/licenses/BSD-3-Clause-Clear.html or see the "LICENSE" file for more details.
  */
 
-import { Injectable, EventEmitter } from '@angular/core';
+import { Injectable, EventEmitter, signal } from '@angular/core';
 import { TreeNodeChangedEventI } from '@khiops-covisualization/interfaces/events.interface';
 
 @Injectable({
@@ -16,6 +16,7 @@ export class EventsService {
   public conditionalOnContextChanged: EventEmitter<any> = new EventEmitter();
   public contextSelectionChanged: EventEmitter<any> = new EventEmitter();
   public unfoldHierarchyChanged: EventEmitter<any> = new EventEmitter();
+  public treeNodeNameChanged = signal<{name: string; newName: string} | null>(null);
 
   /**
    * Emits an event when the selected tree node changes.
@@ -55,5 +56,13 @@ export class EventsService {
    */
   emitUnfoldHierarchyChanged() {
     this.unfoldHierarchyChanged.emit();
+  }
+
+  /**
+   * Emits an event when a tree node name changes.
+   * @param event - The event data to emit.
+   */
+  emitTreeNodeNameChanged(event: {name: string; newName: string}) {
+    this.treeNodeNameChanged.set(event);
   }
 }

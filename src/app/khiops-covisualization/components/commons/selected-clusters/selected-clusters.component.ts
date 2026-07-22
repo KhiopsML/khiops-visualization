@@ -19,6 +19,7 @@ import { TreeNodeModel } from '@khiops-covisualization/model/tree-node.model';
 import { EventsService } from '@khiops-covisualization/providers/events.service';
 import { TranslateService } from '@ngstack/translate';
 import { ClustersService } from '@khiops-covisualization/providers/clusters.service';
+import { TreenodesService } from '@khiops-covisualization/providers/treenodes.service';
 import { GridColumnsI } from '@khiops-library/interfaces/grid-columns.interface';
 import { DimensionCovisualizationModel } from '@khiops-library/model/dimension.covisualization.model';
 import { getClustersDisplayedColumns } from './selected-clusters.config';
@@ -39,6 +40,7 @@ export class SelectedClustersComponent {
   readonly clustersDisplayedColumns: GridColumnsI[];
 
   readonly selectedClusters = computed(() => {
+    this.eventsService.treeNodeNameChanged(); // Watch signal changes
     this.refreshTick();
     this.selectedDimensions();
 
@@ -48,13 +50,20 @@ export class SelectedClustersComponent {
     }
 
     const details = this.clustersService.getSelectedClustersDetails();
+    const dimensions = this.selectedDimensions();
 
     return nodes.reduce<SelectedClusterModel[]>((clusters, node, index) => {
       if (node) {
+        const dimension = dimensions?.[index];
+        // Get display name with rename lookup
+        const displayName = dimension
+          ? this.treenodesService.getDisplayNodeName(dimension.name, node.name)
+          : node.shortDescription;
+
         clusters.push(
           new SelectedClusterModel(
             node.hierarchy,
-            node.shortDescription,
+            displayName,
             details[index]?.length ?? 0,
           ),
         );
@@ -78,6 +87,7 @@ export class SelectedClustersComponent {
     private translate: TranslateService,
     private clustersService: ClustersService,
     private eventsService: EventsService,
+    private treenodesService: TreenodesService,
   ) {
     this.title = this.translate.get('GLOBAL.SELECTED_CLUSTERS');
     this.clustersDisplayedColumns = getClustersDisplayedColumns(this.translate);
