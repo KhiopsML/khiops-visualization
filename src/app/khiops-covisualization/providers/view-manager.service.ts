@@ -52,7 +52,7 @@ export class ViewManagerService {
 
     // View manager behavior #129
     // Do not restore LS values because we have a save functionnality
-    if (AppConfig.cypress) {
+    if (AppConfig.cypress && !(window as any).cypressSkipLsMerge) {
       // For cypress tests, force all views visible by applying LS defaults
       // AFTER saved data, so test layout always wins over file's savedDatas
       const lsStorage = initLS();

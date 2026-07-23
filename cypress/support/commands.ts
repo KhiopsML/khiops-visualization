@@ -5,29 +5,38 @@
  */
 // @ts-nocheck
 
-Cypress.Commands.add('loadFile', (ctx: string, file: string) => {
-  // Load the visualization or covisualization page
-  cy.visit('/' + ctx + '/', {
-    onBeforeLoad: (win) => {
-      // Intercept localStorage.getItem to always return '8' for SETTING_NUMBER_PRECISION
-      // regardless of the dynamic LS_ID prefix (which includes Date.now() and Math.random())
-      const originalGetItem = win.localStorage.getItem.bind(win.localStorage);
-      win.localStorage.getItem = (key: string) => {
-        if (key.endsWith('SETTING_NUMBER_PRECISION')) {
-          return '8';
+Cypress.Commands.add(
+  'loadFile',
+  (ctx: string, file: string, options?: { skipLsMerge?: boolean }) => {
+    // Load the visualization or covisualization page
+    cy.visit('/' + ctx + '/', {
+      onBeforeLoad: (win) => {
+        // Intercept localStorage.getItem to always return '8' for SETTING_NUMBER_PRECISION
+        // regardless of the dynamic LS_ID prefix (which includes Date.now() and Math.random())
+        const originalGetItem = win.localStorage.getItem.bind(win.localStorage);
+        win.localStorage.getItem = (key: string) => {
+          if (key.endsWith('SETTING_NUMBER_PRECISION')) {
+            return '8';
+          }
+          return originalGetItem(key);
+        };
+
+        // When skipLsMerge is true, preserve the file's savedDatas view layout
+        // instead of forcing all views visible via LS defaults
+        if (options?.skipLsMerge) {
+          (win as any).cypressSkipLsMerge = true;
         }
-        return originalGetItem(key);
-      };
-    },
-  });
+      },
+    });
 
-  // Switch to the desired tab (assuming it's the last tab)
-  cy.get('.mat-mdc-tab').last().click();
+    // Switch to the desired tab (assuming it's the last tab)
+    cy.get('.mat-mdc-tab').last().click();
 
-  // Upload the file
-  cy.get('#open-file-input').first().type(file, { force: true });
-  cy.get('#open-file-button').first().click({ force: true });
-});
+    // Upload the file
+    cy.get('#open-file-input').first().type(file, { force: true });
+    cy.get('#open-file-button').first().click({ force: true });
+  },
+);
 
 Cypress.Commands.add('initViews', () => {
   const viewsLayout: any = {
@@ -59,8 +68,12 @@ Cypress.Commands.add('checkCanvasIsNotEmpty', (canvasSelector: string) => {
     const context = canvas.getContext('2d');
     expect(context).to.not.be.null;
 
-    const pixels = context!.getImageData(0, 0, canvas.width, canvas.height)
-      .data;
+    const pixels = context!.getImageData(
+      0,
+      0,
+      canvas.width,
+      canvas.height,
+    ).data;
 
     // Retry until chart paints at least one non-transparent pixel.
     const isNotEmpty = Array.from(pixels).some((value) => value !== 0);

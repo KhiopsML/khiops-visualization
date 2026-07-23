@@ -9,8 +9,7 @@ import '../../support/commands';
 
 describe('Hidden hierarchy should not prevent dimension table display #64', () => {
   it('should display selected clusters and cluster details when hierarchy is hidden (2 dims - v4.1.json)', () => {
-    cy.initViews();
-    cy.loadFile('covisualization', 'v4.1.json');
+    cy.loadFile('covisualization', 'v4.1.json', { skipLsMerge: true });
 
     // v4.1.json savedDatas has:
     // - occupation (pos 0): isHierarchyChecked=true, isClustersChecked=false
@@ -44,8 +43,9 @@ describe('Hidden hierarchy should not prevent dimension table display #64', () =
   });
 
   it('should display selected clusters and cluster details when hierarchy is hidden (3+ dims - CC_3 via manage views)', () => {
-    cy.initViews();
-    cy.loadFile('covisualization', 'CC_3_Coclustering.json');
+    cy.loadFile('covisualization', 'CC_3_Coclustering.json', {
+      skipLsMerge: true,
+    });
 
     // CC_3_Coclustering.json has 3 dimensions (with context)
     // First verify everything loads normally with all hierarchies visible
