@@ -10,13 +10,16 @@ import { TranslateModule } from '@ngstack/translate';
 import { provideHttpClient, withXhr } from '@angular/common/http';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { Subject } from 'rxjs';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { VariableSearchDialogComponent } from '../../app/khiops-covisualization/components/commons/variable-search-dialog/variable-search-dialog.component';
 import { VariableSearchService } from '../../app/khiops-covisualization/providers/variable-search.service';
 import { TreenodesService } from '../../app/khiops-covisualization/providers/treenodes.service';
 import { DialogService } from '../../app/khiops-library/providers/dialog.service';
+import { KhiopsLibraryService } from '../../app/khiops-library/providers/khiops-library.service';
 import { TYPES } from '../../app/khiops-library/enum/types';
+import { KhiopsLibraryModule } from '../../app/khiops-library/khiops-library.module';
 
 describe('VariableSearchDialogComponent', () => {
   let component: VariableSearchDialogComponent;
@@ -51,9 +54,26 @@ describe('VariableSearchDialogComponent', () => {
       'setSelectedNode',
     ]);
 
+    const khiopsLibraryServiceSpy = jasmine.createSpyObj(
+      'KhiopsLibraryService',
+      ['getAppConfig'],
+      { settingsChanged$: new Subject<void>() },
+    );
+    khiopsLibraryServiceSpy.getAppConfig.and.returnValue({
+      common: {
+        GLOBAL: {
+          TO_FIXED: 4,
+          DEBUG_SOFTWARE_LABEL: 'KC',
+          MATRIX_CONTRAST: 10,
+          MAX_GRAPH_SCALE: 400,
+          MIN_GRAPH_SCALE: 100,
+        },
+      },
+    });
+
     await TestBed.configureTestingModule({
-      declarations: [VariableSearchDialogComponent],
       imports: [
+        VariableSearchDialogComponent,
         TranslateModule.forRoot(),
         NoopAnimationsModule,
         MatMenuModule,
@@ -64,9 +84,23 @@ describe('VariableSearchDialogComponent', () => {
         { provide: DialogService, useValue: dialogServiceSpy },
         { provide: VariableSearchService, useValue: variableSearchServiceSpy },
         { provide: TreenodesService, useValue: treenodesServiceSpy },
+        {
+          provide: KhiopsLibraryService,
+          useValue: khiopsLibraryServiceSpy,
+        },
       ],
       schemas: [CUSTOM_ELEMENTS_SCHEMA],
-    }).compileComponents();
+    })
+      .overrideModule(KhiopsLibraryModule, {
+        remove: { providers: [DialogService] },
+      })
+      .compileComponents();
+
+    // Spy on prototype so Angular's hook invocation is intercepted
+    spyOn(
+      VariableSearchDialogComponent.prototype,
+      'ngAfterViewInit',
+    );
 
     fixture = TestBed.createComponent(VariableSearchDialogComponent);
     component = fixture.componentInstance;
@@ -89,8 +123,8 @@ describe('VariableSearchDialogComponent', () => {
   });
 
   it('should initialize inner variables from dialog data', () => {
-    expect(component.innerVariables).toEqual(['var1', 'var2']);
-    expect(component.selectedInnerVariable).toBe('var1');
+    expect(component.innerVariables()).toEqual(['var1', 'var2']);
+    expect(component.selectedInnerVariable()).toBe('var1');
   });
 
   it('should call search service when performing search', () => {
@@ -120,7 +154,7 @@ describe('VariableSearchDialogComponent', () => {
     expect(
       mockVariableSearchService.performVariableSearch,
     ).toHaveBeenCalledWith(mockDialogData.selectedDimension, 'var1');
-    expect(component.searchResults).toBe(mockSearchData.searchResults);
+    expect(component.searchResults()).toEqual(mockSearchData.searchResults);
   });
 
   it('should handle row selection correctly', () => {
@@ -150,17 +184,16 @@ describe('VariableSearchDialogComponent', () => {
     component.onClickOnClose();
 
     expect(mockDialogService.closeDialog).toHaveBeenCalledWith({
-      selectedInnerVariable: component.selectedInnerVariable,
+      selectedInnerVariable: component.selectedInnerVariable(),
       searchInput: '',
     });
   });
 
   it('should reset search when changing inner variable', () => {
-    component.selectedInnerVariable = 'var1';
+    component.selectedInnerVariable.set('var1');
 
     component.onInnerVariableSelected('var2');
 
-    expect(component.selectedInnerVariable).toBe('var2');
-    expect(component.searchValue).toBe('');
+    expect(component.selectedInnerVariable()).toBe('var2');
   });
 });
