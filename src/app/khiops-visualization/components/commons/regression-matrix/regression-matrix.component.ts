@@ -29,6 +29,10 @@ import { CellModel } from '@khiops-library/model/cell.model';
 import { Preparation2dVariableModel } from '@khiops-visualization/model/preparation2d-variable.model';
 import { MATRIX_MODES } from '@khiops-library/enum/matrix-modes';
 import { TranslateService } from '@ngstack/translate';
+import {
+  GraphSelectionScope,
+  GraphSelectionSessionService,
+} from '@khiops-visualization/providers/graph-selection-session.service';
 
 /**
  * Test it with irisR file
@@ -51,17 +55,21 @@ export class RegressionMatrixComponent implements AfterViewInit, OnChanges {
   @Input() selectedVariable?: PreparationVariableModel;
   @Input() selectedCell?: number;
   @Input() private preparationSource?: string;
+  @Input() selectionScope: GraphSelectionScope = 'preparation';
   public preparation2dDatas?: Preparation2dDatasModel;
   public isFullscreen = false;
   public matrixOptions: MatrixOptionsModel = new MatrixOptionsModel();
   public matrixModes: MatrixModesModel = new MatrixModesModel();
   public minMaxValues?: MatrixRangeValuesI;
 
+  private readonly DEFAULT_CELL_INDEX = 0;
+
   constructor(
     private preparationDatasService: PreparationDatasService,
     private translate: TranslateService,
     private appService: AppService,
     private preparation2dDatasService: Preparation2dDatasService,
+    private graphSelectionSessionService: GraphSelectionSessionService,
   ) {
     this.preparation2dDatas = this.preparation2dDatasService.getDatas();
   }
@@ -78,10 +86,20 @@ export class RegressionMatrixComponent implements AfterViewInit, OnChanges {
         this.preparation2dDatas.selectedVariable,
       );
     }
-    // Check if there is a saved selected cell into json
+    // Restore selected cell from runtime session scope first, then json fallback
+    const sessionCellIndex =
+      this.graphSelectionSessionService.getSelectedMatrixCellIndex(
+        this.selectionScope,
+      );
     const defaultCellIndex =
-      this.appService.getSavedDatas('selected2dCell') || 0;
+      sessionCellIndex ??
+      this.appService.getSavedDatas('selected2dCell') ??
+      this.DEFAULT_CELL_INDEX;
     this.preparation2dDatasService.setSelectedCellIndex(defaultCellIndex);
+    this.graphSelectionSessionService.setSelectedMatrixCellIndex(
+      this.selectionScope,
+      defaultCellIndex,
+    );
     this.preparation2dDatasService.getCurrentCellDatas();
   }
 
@@ -111,16 +129,45 @@ export class RegressionMatrixComponent implements AfterViewInit, OnChanges {
           this.preparation2dDatas.selectedVariable,
         );
       }
-      this.preparation2dDatasService.setSelectedCellIndex(0);
+
+      // On first change (tab entry), restore session cell index.
+      // On subsequent changes (variable changed), reset to 0.
+      if (changes.selectedVariable.firstChange) {
+        const sessionCellIndex =
+          this.graphSelectionSessionService.getSelectedMatrixCellIndex(
+            this.selectionScope,
+          );
+        const restoreIndex = sessionCellIndex ?? this.DEFAULT_CELL_INDEX;
+        this.preparation2dDatasService.setSelectedCellIndex(restoreIndex);
+      } else {
+        this.preparation2dDatasService.setSelectedCellIndex(
+          this.DEFAULT_CELL_INDEX,
+        );
+        this.graphSelectionSessionService.setSelectedMatrixCellIndex(
+          this.selectionScope,
+          this.DEFAULT_CELL_INDEX,
+        );
+      }
+
       this.preparation2dDatasService.getCurrentCellDatas();
     }
 
     if (changes.selectedCell && changes.selectedCell.currentValue >= 0) {
       // Matrix regression case : on click on distribution graph bar
+      // Force update selected cell
       this.preparation2dDatasService.setSelectedCellIndex(
         changes.selectedCell.currentValue,
       );
+      this.graphSelectionSessionService.setSelectedMatrixCellIndex(
+        this.selectionScope,
+        changes.selectedCell.currentValue,
+      );
       this.preparation2dDatasService.getCurrentCellDatas();
+
+      // Trigger visual update in matrix component
+      if (this.matrix) {
+        this.matrix.drawMatrix();
+      }
     }
   }
 
@@ -169,6 +216,10 @@ export class RegressionMatrixComponent implements AfterViewInit, OnChanges {
     if (event.datas) {
       const currentIndex = event.datas.index;
       this.preparation2dDatasService.setSelectedCell(event.datas);
+      this.graphSelectionSessionService.setSelectedMatrixCellIndex(
+        this.selectionScope,
+        currentIndex,
+      );
       this.preparation2dDatasService.getCurrentCellDatas();
       this.selectedCellChanged.emit(currentIndex);
     }

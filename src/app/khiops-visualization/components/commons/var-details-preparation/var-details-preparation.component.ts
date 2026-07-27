@@ -68,6 +68,10 @@ export class VarDetailsPreparationComponent
   ngOnInit() {
     this.distributionSelectedBarIndex =
       this.graphSelectionSessionService.getSelectedIndex(this.selectionScope);
+    this.matrixRegSelectedCell =
+      this.graphSelectionSessionService.getSelectedMatrixCellIndex(
+        this.selectionScope,
+      ) ?? 0;
     this.sizes = this.layoutService.getViewSplitSizes('preparationView');
     this.isRegressionAnalysis =
       this.evaluationDatasService.isRegressionAnalysis();
@@ -97,7 +101,15 @@ export class VarDetailsPreparationComponent
       currentRank !== this.previousSelectedVariableRank
     ) {
       this.distributionSelectedBarIndex = 0;
-      this.graphSelectionSessionService.setSelectedIndex(this.selectionScope, 0);
+      this.matrixRegSelectedCell = 0;
+      this.graphSelectionSessionService.setSelectedIndex(
+        this.selectionScope,
+        0,
+      );
+      this.graphSelectionSessionService.setSelectedMatrixCellIndex(
+        this.selectionScope,
+        0,
+      );
     }
 
     this.previousSelectedVariableRank = currentRank;
@@ -119,6 +131,10 @@ export class VarDetailsPreparationComponent
 
   onSelectedMatrixCellChanged(index: number) {
     this.matrixRegSelectedCell = index;
+    this.graphSelectionSessionService.setSelectedMatrixCellIndex(
+      this.selectionScope,
+      index,
+    );
 
     // Callback when user click on matrix cell to select corresponding bar distribution
     this.distributionSelectedBarIndex =
@@ -134,7 +150,10 @@ export class VarDetailsPreparationComponent
   onSelectedGraphItemChanged(index: number) {
     // Keep in memory to keep bar charts index on type change
     this.distributionSelectedBarIndex = index;
-    this.graphSelectionSessionService.setSelectedIndex(this.selectionScope, index);
+    this.graphSelectionSessionService.setSelectedIndex(
+      this.selectionScope,
+      index,
+    );
 
     // Callback when user click on bar distribution to select matrix corresponding cell
     if (this.isRegressionAnalysis) {
