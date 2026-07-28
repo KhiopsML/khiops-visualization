@@ -126,14 +126,16 @@ Cypress.Commands.add('setGlobalAutoScale', (value: boolean) => {
 Cypress.Commands.add(
   'testComponentCopyDatas',
   (id: string, mockFileName: string) => {
-    // Wait for the component to be visible and trigger trustedClick
-    cy.get(id, { timeout: 1000 })
-      .should('exist')
-      .should('be.visible')
-      .trigger('trustedClick');
+    // Break Cypress chain to avoid acting on a stale DOM subject after re-render.
+    cy.get(id, { timeout: 10000 }).should('exist').should('be.visible');
+    cy.get(id, { timeout: 10000 }).then(($component) => {
+      $component[0].dispatchEvent(
+        new Event('trustedClick', { bubbles: true, cancelable: true }),
+      );
+    });
 
     // Verify the component is selected (has selected class)
-    cy.get(id).should('have.class', 'selected');
+    cy.get(id, { timeout: 10000 }).should('have.class', 'selected');
 
     cy.window().then((win) => {
       cy.get('#header-tools-copy-datas-button').first().click({ force: true });
@@ -174,11 +176,16 @@ Cypress.Commands.add('testComponentScreenshot', (id: string, tab?: string) => {
     `Testing screenshot copy for component with id: ${id} for tab: ${tab}`,
   );
 
-  // Wait for the component to be visible and trigger trustedClick
-  cy.get(id).should('exist').should('be.visible').trigger('trustedClick');
+  // Break Cypress chain to avoid acting on a stale DOM subject after re-render.
+  cy.get(id, { timeout: 10000 }).should('exist').should('be.visible');
+  cy.get(id, { timeout: 10000 }).then(($component) => {
+    $component[0].dispatchEvent(
+      new Event('trustedClick', { bubbles: true, cancelable: true }),
+    );
+  });
 
   // Verify the component is selected (has selected class)
-  cy.get(id).should('have.class', 'selected');
+  cy.get(id, { timeout: 10000 }).should('have.class', 'selected');
 
   cy.get('#header-tools-copy-image-button').first().click({ force: true });
 
