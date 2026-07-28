@@ -140,6 +140,9 @@ export class MatrixComponent extends SelectableComponent implements OnChanges {
   // Hover cell border
   private hoveredCell: CellModel | undefined;
 
+  // Cancel previous click emit on rapid clicks
+  private pendingClickTimeout: ReturnType<typeof setTimeout> | undefined;
+
   constructor(
     private ls: Ls,
     public override selectableService: SelectableService,
@@ -655,7 +658,12 @@ export class MatrixComponent extends SelectableComponent implements OnChanges {
       this.selectedCells = [clicked];
       this.drawSelectedCell(clicked);
 
-      setTimeout(() => {
+      // Cancel previous pending click to avoid cascading updates on rapid clicks
+      if (this.pendingClickTimeout !== undefined) {
+        clearTimeout(this.pendingClickTimeout);
+      }
+      this.pendingClickTimeout = setTimeout(() => {
+        this.pendingClickTimeout = undefined;
         this.cellSelected.emit({
           datas: clicked,
         });
