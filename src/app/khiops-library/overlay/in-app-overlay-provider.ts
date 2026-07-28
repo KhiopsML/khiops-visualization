@@ -6,16 +6,14 @@
 import { Inject, Injectable, DOCUMENT } from '@angular/core';
 import { OverlayContainer } from '@angular/cdk/overlay';
 import { ConfigService } from '@khiops-library/providers/config.service';
-import { Platform } from '@angular/cdk/platform';
 
 @Injectable({ providedIn: 'root' })
 export class InAppOverlayContainer extends OverlayContainer {
   constructor(
     @Inject(DOCUMENT) _document: any,
-    platform: Platform,
     private configService: ConfigService,
   ) {
-    super(_document, platform);
+    super();
   }
 
   /**
