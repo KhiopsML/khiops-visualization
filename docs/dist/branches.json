@@ -2,5 +2,9 @@
   {
     "name": "main",
     "safe": "main"
+  },
+  {
+    "name": "feat-multi-tabs",
+    "safe": "feat-multi-tabs"
   }
 ]

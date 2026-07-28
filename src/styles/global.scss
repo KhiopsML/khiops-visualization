@@ -452,7 +452,7 @@ kl-dialog-wrapper {
 
 .kl-card {
   border: 1px solid var(--border-color);
-  background-color: white !important;
+  background-color: var(--bg-color) !important;
   color: var(--primary-10);
   border-radius: var(--border-radius);
   padding: 12px;
