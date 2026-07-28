@@ -35,12 +35,14 @@ import { VisualizationDatas } from '@khiops-visualization/interfaces/app-datas.i
 import { AppConfig } from '../../../../environments/environment';
 import { REPORT } from '@khiops-library/enum/report';
 import { DialogService } from '@khiops-library/providers/dialog.service';
+import { GraphSelectionSessionService } from '@khiops-visualization/providers/graph-selection-session.service';
 
 @Component({
   selector: 'app-home-layout',
   templateUrl: './homeLayout.component.html',
   styleUrls: ['./homeLayout.component.scss'],
   changeDetection: ChangeDetectionStrategy.Eager,
+  providers: [GraphSelectionSessionService],
   standalone: false,
 })
 export class HomeLayoutComponent implements OnInit {
