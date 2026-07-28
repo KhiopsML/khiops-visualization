@@ -49,6 +49,7 @@ export class TreeSelectComponent
   public id: string | undefined = undefined;
   private unfoldHierarchyChangedSub: Subscription;
   private tree: any | undefined;
+  private isSettingNode: boolean = false;
 
   constructor(
     private dimensionsDatasService: DimensionsDatasService,
@@ -93,6 +94,11 @@ export class TreeSelectComponent
   }
 
   ngOnChanges(changes: SimpleChanges) {
+    // Avoid reacting to input changes while we're setting a node (prevents infinite loop)
+    if (this.isSettingNode) {
+      return;
+    }
+
     if (
       changes?.selectedDimension?.currentValue &&
       !changes.selectedDimension.firstChange &&
@@ -159,11 +165,13 @@ export class TreeSelectComponent
     this.tree.on('select', (e: TreeViewNodeEventI) => {
       // Do ngzone to emit event
       this.ngzone.run(() => {
+        this.isSettingNode = true;
         setTimeout(() => {
           this.treenodesService.setSelectedNode(
             this.selectedDimension?.name ?? '',
             e.data.name,
           );
+          this.isSettingNode = false;
         });
       });
     });
