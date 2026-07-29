@@ -26,6 +26,7 @@ import { LevelDistributionGraphComponent } from '@khiops-visualization/component
 import { TrainedPredictorModel } from '@khiops-visualization/model/trained-predictor.model';
 import { VisualizationDatas } from '@khiops-visualization/interfaces/app-datas.interface';
 import { DialogService } from '@khiops-library/providers/dialog.service';
+import { DistributionType } from '@khiops-visualization/types/distribution-type';
 
 @Component({
   selector: 'app-modeling-view',
@@ -183,7 +184,7 @@ export class ModelingViewComponent extends SelectableTabComponent {
 
   onShowDistributionGraph(
     datas: VariableModel[],
-    distributionType: 'level' | 'importance',
+    distributionType: DistributionType,
   ) {
     this.dialogService.openDialog(
       LevelDistributionGraphComponent,
