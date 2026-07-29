@@ -4,14 +4,12 @@
  * at https://spdx.org/licenses/BSD-3-Clause-Clear.html or see the "LICENSE" file for more details.
  */
 
-import {
-  Component,
-  OnInit,
-  Input,
-  Output,
-  EventEmitter,
-  ChangeDetectionStrategy,
-} from '@angular/core';
+import { Component, effect, input, output, signal } from '@angular/core';
+import { FlexLayoutModule } from '@angular/flex-layout';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
+import { MatMenuModule } from '@angular/material/menu';
+import { TranslateModule } from '@ngstack/translate';
 import { LS } from '@khiops-library/enum/ls';
 import { TrainedPredictor } from '@khiops-visualization/interfaces/modeling-report.interface';
 import { AppService } from '@khiops-visualization/providers/app.service';
@@ -20,51 +18,56 @@ import { AppService } from '@khiops-visualization/providers/app.service';
   selector: 'app-select-trained-predictor',
   templateUrl: './select-trained-predictor.component.html',
   styleUrls: ['./select-trained-predictor.component.scss'],
-  changeDetection: ChangeDetectionStrategy.Eager,
-  standalone: false,
+  imports: [
+    FlexLayoutModule,
+    TranslateModule,
+    MatButtonModule,
+    MatMenuModule,
+    MatIconModule,
+  ],
 })
-export class SelectTrainedPredictorComponent implements OnInit {
-  @Input() inputDatas: TrainedPredictor[] | undefined;
-  selectedPredictor?: string;
+export class SelectTrainedPredictorComponent {
+  readonly inputDatas = input<TrainedPredictor[] | undefined>(undefined);
+  readonly selectedPredictor = signal<string | undefined>(undefined);
 
-  @Output() private selectedPredictorChanged: EventEmitter<any> =
-    new EventEmitter();
+  readonly selectedPredictorChanged = output<TrainedPredictor | undefined>();
 
-  constructor() {}
+  constructor() {
+    effect(() => {
+      const predictors = this.inputDatas();
 
-  ngOnInit() {
-    // select by default Selective Naive Bayes
-    let defaultSelection = this.inputDatas?.find(
-      (e) => e.name === 'Selective Naive Bayes',
-    );
-
-    // Get previous selected target if compatible
-    let previousSelectedPredictor;
-    try {
-      previousSelectedPredictor = AppService.Ls.get(
-        LS.SELECTED_TRAIN_PREDICTOR,
+      // Select by default Selective Naive Bayes
+      let defaultSelection = predictors?.find(
+        (predictor) => predictor.name === 'Selective Naive Bayes',
       );
-    } catch (e) {}
-    if (previousSelectedPredictor) {
+
+      // Get previous selected predictor if compatible
+      let previousSelectedPredictor;
+      try {
+        previousSelectedPredictor = AppService.Ls.get(
+          LS.SELECTED_TRAIN_PREDICTOR,
+        );
+      } catch (e) {}
+
       if (
-        this.inputDatas?.find((e) => e.name === previousSelectedPredictor.name)
+        previousSelectedPredictor &&
+        predictors?.find(
+          (predictor) => predictor.name === previousSelectedPredictor.name,
+        )
       ) {
         defaultSelection = previousSelectedPredictor;
       }
-    }
-    if (defaultSelection) {
-      this.selectedPredictor = defaultSelection.name;
-    } else {
-      // else select first predictor
-      this.selectedPredictor = this.inputDatas?.[0]?.name;
-    }
-    this.selectedPredictorChanged.emit(defaultSelection);
+
+      const selectedPredictor = defaultSelection ?? predictors?.[0];
+      this.selectedPredictor.set(selectedPredictor?.name);
+      this.selectedPredictorChanged.emit(selectedPredictor);
+    });
   }
 
   changeTrainedPredictorsType(opt: TrainedPredictor) {
     // this.trackerService.trackEvent('click', 'select_trained_predictor');
     AppService.Ls.set(LS.SELECTED_TRAIN_PREDICTOR, opt);
-    this.selectedPredictor = opt.name;
+    this.selectedPredictor.set(opt.name);
     this.selectedPredictorChanged.emit(opt);
   }
 }

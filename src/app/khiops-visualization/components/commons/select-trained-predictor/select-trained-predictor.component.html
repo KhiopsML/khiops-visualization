@@ -17,13 +17,14 @@
       color="accent"
       [matMenuTriggerFor]="trainedPredictors"
     >
-      {{ selectedPredictor }} <em><mat-icon>keyboard_arrow_down</mat-icon> </em>
+      {{ selectedPredictor() }}
+      <em><mat-icon>keyboard_arrow_down</mat-icon> </em>
     </button>
     <mat-menu #trainedPredictors>
-      @for (opt of inputDatas; track opt.name) {
+      @for (opt of inputDatas(); track opt.name) {
         <button
           mat-menu-item
-          [class.selected-item]="opt.name === selectedPredictor"
+          [class.selected-item]="opt.name === selectedPredictor()"
           (click)="changeTrainedPredictorsType(opt)"
         >
           {{ opt.name }}
