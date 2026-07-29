@@ -330,6 +330,8 @@ export class HistogramRendererService {
     let xAxis;
     shift = shift + xPadding;
 
+    if (!isFinite(shift)) return;
+
     if (graphOptionsX?.selected === HistogramType.XLIN) {
       xAxis = scaleLinear().domain(domain).range([0, width]);
     } else {
