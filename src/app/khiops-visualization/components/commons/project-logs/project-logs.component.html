@@ -5,7 +5,7 @@
  -->
 
 <div class="project-logs-comp" fxFlexFill>
-  @if (projectLogsDatas) {
+  @if (projectLogsDatas()) {
     <kl-ag-grid
       id="project-logs"
       class="variables-list"
@@ -13,14 +13,14 @@
       [showSearch]="false"
       [displayCount]="false"
       [showLineSelection]="false"
-      [title]="logsTitle"
+      [title]="logsTitle()"
       [showColumnsSelection]="false"
-      [inputDatas]="projectLogsDatas"
-      [displayedColumns]="logsDisplayedColumns"
+      [inputDatas]="projectLogsDatas()"
+      [displayedColumns]="logsDisplayedColumns()"
     >
     </kl-ag-grid>
   }
-  @if (!projectLogsDatas) {
+  @if (!projectLogsDatas()) {
     <kl-no-data fxFlexFill [message]="'NO_DATAS.NO_LOGS'"> </kl-no-data>
   }
 </div>
