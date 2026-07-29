@@ -128,12 +128,12 @@ Cypress.Commands.add(
   (id: string, mockFileName: string) => {
     // Break Cypress chain to avoid acting on a stale DOM subject after re-render.
     cy.get(id, { timeout: 10000 }).should('exist').should('be.visible');
-    cy.get(id, { timeout: 10000 }).then(($component) => {
-      $component[0].dispatchEvent(
-        new Event('trustedClick', { bubbles: true, cancelable: true }),
-      );
-    });
 
+    // Wait for the component to be visible and trigger trustedClick
+    cy.get(id, { timeout: 1000 })
+      .should('exist')
+      .should('be.visible')
+      .trigger('trustedClick');
     // Verify the component is selected (has selected class)
     cy.get(id, { timeout: 10000 }).should('have.class', 'selected');
 
@@ -178,11 +178,11 @@ Cypress.Commands.add('testComponentScreenshot', (id: string, tab?: string) => {
 
   // Break Cypress chain to avoid acting on a stale DOM subject after re-render.
   cy.get(id, { timeout: 10000 }).should('exist').should('be.visible');
-  cy.get(id, { timeout: 10000 }).then(($component) => {
-    $component[0].dispatchEvent(
-      new Event('trustedClick', { bubbles: true, cancelable: true }),
-    );
-  });
+  // Wait for the component to be visible and trigger trustedClick
+  cy.get(id, { timeout: 1000 })
+    .should('exist')
+    .should('be.visible')
+    .trigger('trustedClick');
 
   // Verify the component is selected (has selected class)
   cy.get(id, { timeout: 10000 }).should('have.class', 'selected');
