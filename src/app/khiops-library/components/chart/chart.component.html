@@ -5,7 +5,7 @@
  -->
 
 <div class="chart-comp" (keyup)="onKeyUp($event)" tabindex="-1">
-  @if (isLoading) {
+  @if (isLoading()) {
     <div
       fxLayout="column"
       class="kl-chart-loading-indicator"
@@ -18,7 +18,7 @@
       ></mat-spinner>
     </div>
   }
-  <div class="kl-chart-comp" [class.chart-ready]="isChartReady">
-    <canvas id="{{ canvasIdContainer }}"></canvas>
+  <div class="kl-chart-comp" [class.chart-ready]="isChartReady()">
+    <canvas id="{{ canvasIdContainer() }}"></canvas>
   </div>
 </div>

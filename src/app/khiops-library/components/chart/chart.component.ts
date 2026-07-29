@@ -6,17 +6,17 @@
 
 import {
   Component,
-  Input,
-  EventEmitter,
-  Output,
+  input,
+  output,
+  signal,
+  effect,
   AfterViewInit,
-  OnChanges,
-  SimpleChanges,
   ElementRef,
   OnDestroy,
   ChangeDetectorRef,
-  ChangeDetectionStrategy,
 } from '@angular/core';
+import { FlexLayoutModule } from '@angular/flex-layout';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import * as ChartJs from 'chart.js';
 import type { ChartEvent, ActiveElement } from 'chart.js';
 
@@ -31,25 +31,29 @@ import { ChartManagerService } from './chart-manager.service';
   selector: 'kl-chart',
   templateUrl: './chart.component.html',
   styleUrls: ['./chart.component.scss'],
-  standalone: false,
-  changeDetection: ChangeDetectionStrategy.Eager,
+  standalone: true,
+  imports: [FlexLayoutModule, MatProgressSpinnerModule],
   providers: [ChartManagerService],
 })
-export class ChartComponent implements AfterViewInit, OnChanges, OnDestroy {
-  @Input() public canvasIdContainer = 'kl-chart'; // May be updated if multiple graph
-  @Input() private inputDatas: ChartDatasModel | undefined;
-  @Input() private activeEntries: number | undefined;
-  @Input() private type: ChartJs.ChartType = CHART_TYPES.BAR;
-  @Input() private chartOptions: ChartOptions | undefined;
-  @Input() private colorSet: ChartColorsSetI | undefined;
-  @Input() private enableSelection = true;
-  @Input() private selectedLineChartItem: string | undefined;
+export class ChartComponent implements AfterViewInit, OnDestroy {
+  public canvasIdContainer = input('kl-chart'); // May be updated if multiple graph
+  protected inputDatas = input<ChartDatasModel | undefined>(undefined);
+  protected activeEntries = input<number | undefined>(undefined);
+  protected type = input<ChartJs.ChartType>(CHART_TYPES.BAR);
+  protected chartOptions = input<ChartOptions | undefined>(undefined);
+  protected colorSet = input<ChartColorsSetI | undefined>(undefined);
+  protected enableSelection = input(true);
+  protected selectedLineChartItem = input<string | undefined>(undefined);
 
-  @Output() private selectBarIndex: EventEmitter<number> = new EventEmitter();
+  protected selectBarIndex = output<number>();
 
-  public isLoading: boolean = false;
-  public isChartReady: boolean = false;
+  public isLoading = signal(false);
+  public isChartReady = signal(false);
   private updateGraphTimeout: any;
+  private chartInitialized = signal(false);
+  private currentActiveEntries = signal<number | undefined>(undefined);
+  private chartOptionsHandled = false;
+  private readonly defaultColorSet: ChartColorsSetI | undefined;
 
   constructor(
     private el: ElementRef,
@@ -57,7 +61,62 @@ export class ChartComponent implements AfterViewInit, OnChanges, OnDestroy {
     private chartManagerService: ChartManagerService,
     private cdr: ChangeDetectorRef,
   ) {
-    this.colorSet = this.khiopsLibraryService.getGraphColorSet()[0];
+    this.defaultColorSet = this.khiopsLibraryService.getGraphColorSet()[0];
+
+    effect(() => {
+      if (!this.chartInitialized()) {
+        return;
+      }
+
+      const selectedLineChartItem = this.selectedLineChartItem();
+      const inputDatas = this.inputDatas();
+
+      if (
+        this.chartManagerService.getChart() &&
+        selectedLineChartItem !== undefined
+      ) {
+        if (inputDatas) {
+          this.chartManagerService.colorize(
+            inputDatas,
+            this.getCurrentColorSet(),
+            selectedLineChartItem,
+          );
+        }
+        this.chartManagerService.updateChart();
+      }
+    });
+
+    effect(() => {
+      if (!this.chartInitialized()) {
+        return;
+      }
+
+      const chartOptions = this.chartOptions();
+      if (!this.chartOptionsHandled) {
+        this.chartOptionsHandled = true;
+        return;
+      }
+
+      if (chartOptions !== undefined) {
+        this.isChartReady.set(false);
+        this.chartManagerService.destroy();
+        this.initChart();
+      }
+    });
+
+    effect(() => {
+      if (!this.chartInitialized()) {
+        return;
+      }
+
+      const inputDatas = this.inputDatas();
+      const activeEntries = this.activeEntries();
+      this.currentActiveEntries.set(activeEntries);
+
+      if (inputDatas || activeEntries !== undefined) {
+        this.updateGraph();
+      }
+    });
   }
 
   ngOnInit() {
@@ -67,6 +126,8 @@ export class ChartComponent implements AfterViewInit, OnChanges, OnDestroy {
 
   ngAfterViewInit(): void {
     this.initChart();
+    this.chartInitialized.set(true);
+    this.updateGraph();
   }
 
   ngOnDestroy(): void {
@@ -82,60 +143,12 @@ export class ChartComponent implements AfterViewInit, OnChanges, OnDestroy {
 
   private initChart() {
     this.chartManagerService.initChart(
-      this.canvasIdContainer,
-      this.type,
-      this.chartOptions,
+      this.canvasIdContainer(),
+      this.type(),
+      this.chartOptions(),
       this.graphClickEvent.bind(this),
       this.el.nativeElement,
     );
-  }
-
-  /**
-   * Handles changes to input properties and updates the chart accordingly.
-   * @param changes - The changes detected in input properties.
-   */
-  ngOnChanges(changes: SimpleChanges) {
-    if (
-      this.chartManagerService.getChart() &&
-      changes.selectedLineChartItem &&
-      changes.selectedLineChartItem.currentValue !== undefined
-    ) {
-      // can be ''
-      if (this.inputDatas) {
-        this.chartManagerService.colorize(
-          this.inputDatas,
-          this.colorSet,
-          this.selectedLineChartItem,
-        );
-      }
-      this.chartManagerService.updateChart();
-    }
-
-    if (changes.inputDatas?.currentValue) {
-      this.updateGraph();
-    }
-
-    if (
-      changes.chartOptions?.currentValue &&
-      !changes.chartOptions.firstChange
-    ) {
-      // We must reconstruct the chart if the scale change
-      this.isChartReady = false;
-      this.chartManagerService.destroy(); // Clean up existing chart
-      this.initChart();
-    }
-
-    if (
-      changes.activeEntries &&
-      changes.activeEntries.currentValue !== undefined
-    ) {
-      // can be 0
-      this.updateGraph();
-    }
-
-    if (changes.scaleValue?.currentValue && !changes.scaleValue.firstChange) {
-      this.updateGraph();
-    }
   }
 
   /**
@@ -150,20 +163,21 @@ export class ChartComponent implements AfterViewInit, OnChanges, OnDestroy {
 
     // Debounce the update to avoid multiple calls
     this.updateGraphTimeout = setTimeout(() => {
-      if (this.inputDatas) {
+      const inputDatas = this.inputDatas();
+      if (inputDatas) {
         this.chartManagerService.updateGraph(
-          this.inputDatas,
-          this.activeEntries,
-          this.colorSet,
-          this.selectedLineChartItem,
-          this.isLoading,
+          inputDatas,
+          this.currentActiveEntries(),
+          this.getCurrentColorSet(),
+          this.selectedLineChartItem(),
+          this.isLoading(),
         );
-        this.isLoading = false;
+        this.isLoading.set(false);
         // Wait for Chart.js ResizeObserver to settle before revealing the chart
-        if (!this.isChartReady) {
+        if (!this.isChartReady()) {
           requestAnimationFrame(() => {
             requestAnimationFrame(() => {
-              this.isChartReady = true;
+              this.isChartReady.set(true);
               this.cdr.detectChanges();
             });
           });
@@ -177,9 +191,9 @@ export class ChartComponent implements AfterViewInit, OnChanges, OnDestroy {
    */
   public hideActiveEntries() {
     this.chartManagerService.hideActiveEntries(
-      this.inputDatas,
-      this.colorSet,
-      this.selectedLineChartItem,
+      this.inputDatas(),
+      this.getCurrentColorSet(),
+      this.selectedLineChartItem(),
     );
   }
 
@@ -188,10 +202,10 @@ export class ChartComponent implements AfterViewInit, OnChanges, OnDestroy {
    */
   public showActiveEntries() {
     this.chartManagerService.showActiveEntries(
-      this.activeEntries,
-      this.inputDatas,
-      this.colorSet,
-      this.selectedLineChartItem,
+      this.currentActiveEntries(),
+      this.inputDatas(),
+      this.getCurrentColorSet(),
+      this.selectedLineChartItem(),
     );
   }
 
@@ -201,19 +215,20 @@ export class ChartComponent implements AfterViewInit, OnChanges, OnDestroy {
    * @param items - The active elements clicked on the chart.
    */
   private graphClickEvent(_e: ChartEvent, items: ActiveElement[]) {
-    if (this.enableSelection) {
+    if (this.enableSelection()) {
       const l = items.length;
       if (l > 0) {
         for (let i = 0; i < l; i++) {
           // undefined if click outside bar
           const item = items[i];
           if (item && item.index !== undefined) {
+            this.currentActiveEntries.set(item.index);
             this.chartManagerService.selectCurrentBarIndex(
               item.index,
-              this.enableSelection,
-              this.inputDatas,
-              this.colorSet,
-              this.selectedLineChartItem,
+              this.enableSelection(),
+              this.inputDatas(),
+              this.getCurrentColorSet(),
+              this.selectedLineChartItem(),
             );
             this.selectBarIndex.emit(item.index);
             this.chartManagerService.updateChart();
@@ -228,26 +243,35 @@ export class ChartComponent implements AfterViewInit, OnChanges, OnDestroy {
    * @param event - The keyboard event.
    */
   onKeyUp(event: KeyboardEvent) {
-    if (this.activeEntries !== undefined) {
+    const activeEntries = this.currentActiveEntries();
+    const inputDatas = this.inputDatas();
+
+    if (activeEntries !== undefined && inputDatas) {
+      let nextActiveEntries = activeEntries;
       // can be 0
-      if (event.key === 'ArrowLeft' && this.activeEntries > 0) {
-        this.activeEntries = this.activeEntries - 1;
+      if (event.key === 'ArrowLeft' && nextActiveEntries > 0) {
+        nextActiveEntries = nextActiveEntries - 1;
       }
       if (
         event.code === 'ArrowRight' &&
-        this.activeEntries < this.inputDatas!.labels.length - 1
+        nextActiveEntries < inputDatas.labels.length - 1
       ) {
-        this.activeEntries = this.activeEntries + 1;
+        nextActiveEntries = nextActiveEntries + 1;
       }
+      this.currentActiveEntries.set(nextActiveEntries);
       this.chartManagerService.selectCurrentBarIndex(
-        this.activeEntries,
-        this.enableSelection,
-        this.inputDatas,
-        this.colorSet,
-        this.selectedLineChartItem,
+        nextActiveEntries,
+        this.enableSelection(),
+        inputDatas,
+        this.getCurrentColorSet(),
+        this.selectedLineChartItem(),
       );
       this.chartManagerService.updateChart();
-      this.selectBarIndex.emit(this.activeEntries);
+      this.selectBarIndex.emit(nextActiveEntries);
     }
+  }
+
+  private getCurrentColorSet(): ChartColorsSetI | undefined {
+    return this.colorSet() ?? this.defaultColorSet;
   }
 }

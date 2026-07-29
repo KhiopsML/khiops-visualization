@@ -147,6 +147,7 @@ import EnTransaltion from '../../assets/i18n/en.json';
     ClearLsComponent,
     LibVersionComponent,
     GraphOptionsMenuComponent,
+    ChartComponent,
   ],
   declarations: [
     NumberPrecisionComponent,
@@ -175,7 +176,6 @@ import EnTransaltion from '../../assets/i18n/en.json';
     IconCellComponent,
     DistributionGraphComponent,
     ScrollableGraphComponent,
-    ChartComponent,
     ImportFileLoaderComponent,
     ProjectSummaryComponent,
     ProjectLogsComponent,
