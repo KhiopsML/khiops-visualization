@@ -4,15 +4,8 @@
  * at https://spdx.org/licenses/BSD-3-Clause-Clear.html or see the "LICENSE" file for more details.
  */
 
-import {
-  Component,
-  computed,
-  DestroyRef,
-  inject,
-  input,
-  signal,
-} from '@angular/core';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { Component, computed, inject, input } from '@angular/core';
+import { toSignal } from '@angular/core/rxjs-interop';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { SelectedClusterModel } from '@khiops-covisualization/model/selected-cluster.model';
 import { TreeNodeModel } from '@khiops-covisualization/model/tree-node.model';
@@ -23,6 +16,7 @@ import { GridColumnsI } from '@khiops-library/interfaces/grid-columns.interface'
 import { DimensionCovisualizationModel } from '@khiops-library/model/dimension.covisualization.model';
 import { getClustersDisplayedColumns } from './selected-clusters.config';
 import { KhiopsLibraryModule } from '@khiops-library/khiops-library.module';
+import { scan, startWith } from 'rxjs';
 
 @Component({
   selector: 'app-selected-clusters',
@@ -40,7 +34,7 @@ export class SelectedClustersComponent {
 
   readonly selectedClusters = computed(() => {
     this.eventsService.treeNodeNameChanged(); // Watch signal changes
-    this.refreshTick();
+    this.treeSelectedNodeTick();
     this.selectedDimensions();
 
     const nodes = this.selectedNodes();
@@ -72,21 +66,19 @@ export class SelectedClustersComponent {
   readonly id = 'selected-clusters-grid';
   readonly title: string;
 
-  private readonly destroyRef = inject(DestroyRef);
-  private readonly refreshTick = signal(0);
+  private readonly translate = inject(TranslateService);
+  private readonly clustersService = inject(ClustersService);
+  private readonly eventsService = inject(EventsService);
+  private readonly treeSelectedNodeTick = toSignal(
+    this.eventsService.treeSelectedNodeChanged.pipe(
+      startWith(0),
+      scan((tick) => tick + 1, 0),
+    ),
+    { initialValue: 0 },
+  );
 
-  constructor(
-    private translate: TranslateService,
-    private clustersService: ClustersService,
-    private eventsService: EventsService,
-  ) {
+  constructor() {
     this.title = this.translate.get('GLOBAL.SELECTED_CLUSTERS');
     this.clustersDisplayedColumns = getClustersDisplayedColumns(this.translate);
-
-    this.eventsService.treeSelectedNodeChanged
-      .pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe(() => {
-        this.refreshTick.update((v) => v + 1);
-      });
   }
 }
