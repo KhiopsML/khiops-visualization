@@ -5,7 +5,6 @@
  */
 
 import {
-  afterNextRender,
   Component,
   ViewChild,
   AfterViewInit,
@@ -129,7 +128,7 @@ export class VariableSearchDialogComponent
         this.agGridComponent.search();
       }
     }
-    afterNextRender(() => {
+    setTimeout(() => {
       // Set focus on the search input field
       this.agGridComponent?.focusSearch();
 

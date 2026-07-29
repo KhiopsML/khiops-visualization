@@ -241,6 +241,7 @@ mat-pseudo-checkbox {
 }
 
 .mat-drawer-container {
+  position: unset !important; // prevent e2e issue
   color: var(--bg-color-contrast) !important;
 }
 

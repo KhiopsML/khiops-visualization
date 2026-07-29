@@ -19,6 +19,8 @@ describe('Copy datas Test Plan for Khiops Covisualization', () => {
         cy.readFile('./src/assets/mocks/kc/' + fileName).then(() => {
           cy.get('.mat-mdc-tab:contains("Axis")').first().click();
 
+          cy.wait(1000); // Wait for the component to be visible and trigger trustedClick
+
           // Open statistics panels
           cy.get('.hierarchy-infos-button').eq(0).click({ force: true });
 

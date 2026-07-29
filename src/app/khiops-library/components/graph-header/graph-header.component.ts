@@ -12,7 +12,6 @@ import {
   signal,
   inject,
   computed,
-  afterNextRender,
 } from '@angular/core';
 import { KhiopsLibraryService } from '../../providers/khiops-library.service';
 import { LS } from '../../enum/ls';
@@ -58,8 +57,8 @@ export class GraphHeaderComponent {
   });
 
   constructor() {
-    // Initialize: emit default scale on first render
-    afterNextRender(() => {
+    // Emit default scale after initial render cycle.
+    setTimeout(() => {
       this.scaleValueChanged.emit(this.scaleValue());
     });
   }
