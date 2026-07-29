@@ -76,7 +76,6 @@ import { VisualizationRoutingModule } from './khiops-visualization-routing.modul
     CooccurrenceMatrixComponent,
     RegressionMatrixComponent,
     TargetDistributionGraphComponent,
-    LevelDistributionButtonComponent,
   ],
   imports: [
     CommonModule,
@@ -91,6 +90,7 @@ import { VisualizationRoutingModule } from './khiops-visualization-routing.modul
     DescriptionBlockComponent,
     ChangeScaleButtonComponent,
     ChangeScaleDialogComponent,
+    LevelDistributionButtonComponent,
   ],
   providers: [
     provideHttpClient(withXhr()),

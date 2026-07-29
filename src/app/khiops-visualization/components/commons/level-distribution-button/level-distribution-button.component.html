@@ -5,9 +5,9 @@
  -->
 
 <button
-  [ngClass]="{ 'small-div': isSmallDiv || searchFormVisible }"
-  attr.aria-label="{{ ariaLabel | translate }}"
-  [title]="title"
+  [ngClass]="{ 'small-div': isSmallDiv() || searchFormVisible() }"
+  attr.aria-label="{{ ariaLabel() | translate }}"
+  [title]="displayTitle()"
   class="level-distribution-btn"
   mat-stroked-button
   (click)="onOpenLevelDistribution()"
@@ -15,10 +15,10 @@
   <mat-icon
     fxLayoutAlign="center center"
     matTooltipPosition="above"
-    matTooltip="{{ tooltipKey | translate }}"
+    matTooltip="{{ tooltipKey() | translate }}"
     >show_chart</mat-icon
   >
-  @if (!isSmallDiv && !searchFormVisible) {
-    <span>{{ title }}</span>
+  @if (!isSmallDiv() && !searchFormVisible()) {
+    <span>{{ displayTitle() }}</span>
   }
 </button>
