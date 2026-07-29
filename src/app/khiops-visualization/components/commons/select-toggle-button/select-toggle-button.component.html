@@ -11,11 +11,11 @@
     color="primary"
     matBadge="-"
     matBadgeSize="small"
-    [matBadgeHidden]="isSelectAllChecked"
+    [matBadgeHidden]="isSelectAllChecked()"
     matBadgeColor="accent"
     [matMenuTriggerFor]="selectToggleButton"
   >
-    {{ buttonTitle }} <em><mat-icon>keyboard_arrow_down</mat-icon> </em>
+    {{ buttonTitle() }} <em><mat-icon>keyboard_arrow_down</mat-icon> </em>
   </button>
   <mat-menu #selectToggleButton>
     <button
@@ -24,13 +24,17 @@
       (click)="$event.stopPropagation()"
     >
       <mat-checkbox
-        [checked]="isSelectAllChecked"
-        [indeterminate]="isSelectAllIndeterminate"
+        [checked]="isSelectAllChecked()"
+        [indeterminate]="isSelectAllIndeterminate()"
         (change)="toggleGraphOptionAllValue($event)"
-        >{{ selectAllCheckboxText }}</mat-checkbox
+        >{{ selectAllCheckboxText() }}</mat-checkbox
       >
     </button>
-    @for (opt of currentItemsToShow; track opt.name || $index; let i = $index) {
+    @for (
+      opt of currentItemsToShow();
+      track opt.name || $index;
+      let i = $index
+    ) {
       <button
         mat-menu-item
         class="mat-menu-item-checkbox checkbox-select"
@@ -43,11 +47,11 @@
         >
       </button>
     }
-    @if (displayedValues?.length > pageSize) {
+    @if (displayedValues()?.length > pageSize) {
       <mat-paginator
         (page)="onPageChange($event)"
         (click)="$event.stopPropagation()"
-        [length]="$safeNavigationMigration(displayedValues?.length)"
+        [length]="$safeNavigationMigration(displayedValues()?.length)"
         [pageSize]="pageSize"
       >
       </mat-paginator>

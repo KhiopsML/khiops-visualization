@@ -6,18 +6,25 @@
 
 import {
   Component,
-  Input,
-  OnChanges,
-  EventEmitter,
-  OnInit,
-  Output,
-  SimpleChanges,
-  ChangeDetectionStrategy,
+  effect,
+  inject,
+  input,
+  output,
+  signal,
 } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { MatBadgeModule } from '@angular/material/badge';
+import { MatButtonModule } from '@angular/material/button';
 import { TranslateService } from '@ngstack/translate';
 import { ChartToggleValuesI } from '@khiops-visualization/interfaces/chart-toggle-values.interface';
 import { PageChangeEventI } from '@khiops-visualization/interfaces/page-change-event.interface';
-import { MatCheckboxChange } from '@angular/material/checkbox';
+import {
+  MatCheckboxChange,
+  MatCheckboxModule,
+} from '@angular/material/checkbox';
+import { MatIconModule } from '@angular/material/icon';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatPaginatorModule } from '@angular/material/paginator';
 import { deepEqual } from 'fast-equals';
 import { AppConfig } from '../../../../../environments/environment';
 
@@ -25,55 +32,84 @@ import { AppConfig } from '../../../../../environments/environment';
   selector: 'app-select-toggle-button',
   templateUrl: './select-toggle-button.component.html',
   styleUrls: ['./select-toggle-button.component.scss'],
-  changeDetection: ChangeDetectionStrategy.Eager,
-  standalone: false,
+  imports: [
+    CommonModule,
+    MatBadgeModule,
+    MatButtonModule,
+    MatCheckboxModule,
+    MatIconModule,
+    MatMenuModule,
+    MatPaginatorModule,
+  ],
 })
-export class SelectToggleButtonComponent implements OnInit, OnChanges {
-  @Input() public buttonTitle?: string;
-  @Input() public displayedValues?: ChartToggleValuesI[];
+export class SelectToggleButtonComponent {
+  public buttonTitle = input<string>();
+  public displayedValues = input<ChartToggleValuesI[]>();
 
-  @Output() private selectToggleButtonChanged: EventEmitter<
-    ChartToggleValuesI[]
-  > = new EventEmitter();
+  public selectToggleButtonChanged = output<ChartToggleValuesI[]>();
 
-  public isSelectAllChecked = true;
-  public isSelectAllIndeterminate = false;
-  public selectAllCheckboxText?: string;
-  public currentItemsToShow?: ChartToggleValuesI[];
+  public isSelectAllChecked = signal(true);
+  public isSelectAllIndeterminate = signal(false);
+  public selectAllCheckboxText = signal('');
+  public currentItemsToShow = signal<ChartToggleValuesI[]>([]);
   public pageSize: number =
     AppConfig.visualizationCommon.GLOBAL.MAT_MENU_PAGINATION;
+  private currentPageIndex = signal(0);
+  private localDisplayedValues = signal<ChartToggleValuesI[]>([]);
+  private previousDisplayedValues: ChartToggleValuesI[] = [];
 
-  constructor(private translate: TranslateService) {}
+  private translate = inject(TranslateService);
 
-  ngOnChanges(changes: SimpleChanges): void {
-    if (
-      changes?.displayedValues?.currentValue &&
-      // Do not close the filter curves evaluation dialog on each change. #263
-      !deepEqual(
-        changes?.displayedValues?.currentValue,
-        changes?.displayedValues?.previousValue,
-      )
-    ) {
-      // simulate page change if only one page
-      this.onPageChange({
-        pageIndex: 0,
-        pageSize: this.pageSize,
-      });
-    }
-    // At init some elts may be hidden from last context
-    if (this.displayedValues) {
-      this.updateSelectElts(this.displayedValues);
-    }
-  }
+  constructor() {
+    this.selectAllCheckboxText.set(this.translate.get('GLOBAL.UNSELECT_ALL'));
 
-  ngOnInit() {
-    this.selectAllCheckboxText = this.translate.get('GLOBAL.UNSELECT_ALL');
+    effect(() => {
+      const displayedValues = this.displayedValues() ?? [];
+      const hasChanged = !deepEqual(
+        displayedValues,
+        this.previousDisplayedValues,
+      );
+
+      this.localDisplayedValues.set(
+        displayedValues.map((value) => ({ ...value })),
+      );
+
+      if (hasChanged && displayedValues.length > 0) {
+        this.onPageChange({
+          pageIndex: 0,
+          pageSize: this.pageSize,
+        });
+      } else {
+        this.updateCurrentItemsToShow();
+      }
+
+      if (displayedValues.length > 0) {
+        this.updateSelectElts(this.localDisplayedValues());
+      }
+
+      this.previousDisplayedValues = displayedValues.map((value) => ({
+        ...value,
+      }));
+    });
   }
 
   onPageChange($event: PageChangeEventI) {
-    this.currentItemsToShow = this.displayedValues?.slice(
-      $event.pageIndex * $event.pageSize,
-      $event.pageIndex * $event.pageSize + $event.pageSize,
+    this.currentPageIndex.set($event.pageIndex);
+    this.currentItemsToShow.set(
+      this.localDisplayedValues().slice(
+        $event.pageIndex * $event.pageSize,
+        $event.pageIndex * $event.pageSize + $event.pageSize,
+      ),
+    );
+  }
+
+  private updateCurrentItemsToShow() {
+    const pageIndex = this.currentPageIndex();
+    this.currentItemsToShow.set(
+      this.localDisplayedValues().slice(
+        pageIndex * this.pageSize,
+        pageIndex * this.pageSize + this.pageSize,
+      ),
     );
   }
 
@@ -86,66 +122,56 @@ export class SelectToggleButtonComponent implements OnInit, OnChanges {
       (e) => e.show === false,
     ).length;
 
-    if (valuesShown === this.displayedValues?.length) {
-      this.isSelectAllChecked = true;
-      this.isSelectAllIndeterminate = false;
-      this.selectAllCheckboxText = this.translate.get('GLOBAL.UNSELECT_ALL');
-    } else if (valuesHidden === this.displayedValues?.length) {
-      this.isSelectAllChecked = false;
-      this.isSelectAllIndeterminate = false;
+    if (valuesShown === currentDisplayedValues.length) {
+      this.isSelectAllChecked.set(true);
+      this.isSelectAllIndeterminate.set(false);
+      this.selectAllCheckboxText.set(this.translate.get('GLOBAL.UNSELECT_ALL'));
+    } else if (valuesHidden === currentDisplayedValues.length) {
+      this.isSelectAllChecked.set(false);
+      this.isSelectAllIndeterminate.set(false);
+      this.selectAllCheckboxText.set(this.translate.get('GLOBAL.SELECT_ALL'));
     } else {
-      this.isSelectAllChecked = false;
-      this.isSelectAllIndeterminate = true;
-      this.selectAllCheckboxText = this.translate.get('GLOBAL.SELECT_ALL');
+      this.isSelectAllChecked.set(false);
+      this.isSelectAllIndeterminate.set(true);
+      this.selectAllCheckboxText.set(this.translate.get('GLOBAL.SELECT_ALL'));
     }
   }
 
   toggleGraphOptionValue($event: MatCheckboxChange, opt: ChartToggleValuesI) {
-    const currentOpt: ChartToggleValuesI | undefined =
-      this.displayedValues?.find((e) => e.name === opt.name);
-    if (currentOpt) {
-      currentOpt.show = $event.checked;
-    }
-
-    // Force update
-    if (this.displayedValues) {
-      this.displayedValues = [...this.displayedValues];
-    }
+    const updatedValues = this.localDisplayedValues().map((value) =>
+      value.name === opt.name ? { ...value, show: $event.checked } : value,
+    );
+    this.localDisplayedValues.set(updatedValues);
+    this.updateCurrentItemsToShow();
+    this.updateSelectElts(updatedValues);
 
     // emit to update graph
-    this.selectToggleButtonChanged.emit(this.displayedValues);
+    this.selectToggleButtonChanged.emit(updatedValues);
   }
 
   toggleGraphOptionAllValue($event: any) {
     // update all checkbox status
-    this.isSelectAllIndeterminate = false;
-    this.isSelectAllChecked = $event.checked;
+    this.isSelectAllIndeterminate.set(false);
+    this.isSelectAllChecked.set($event.checked);
 
-    // update checkboxes
-    if (this.displayedValues) {
-      for (let i = 0; i < this.displayedValues.length; i++) {
-        const opt: ChartToggleValuesI | undefined = this.displayedValues[i];
-        if (opt) {
-          opt.show = $event.checked;
-        }
-      }
-    }
+    const updatedValues = this.localDisplayedValues().map((value) => ({
+      ...value,
+      show: $event.checked,
+    }));
+    this.localDisplayedValues.set(updatedValues);
+
     if ($event.checked) {
-      this.selectAllCheckboxText = this.translate.get('GLOBAL.UNSELECT_ALL');
+      this.selectAllCheckboxText.set(this.translate.get('GLOBAL.UNSELECT_ALL'));
     } else {
-      this.selectAllCheckboxText = this.translate.get('GLOBAL.SELECT_ALL');
+      this.selectAllCheckboxText.set(this.translate.get('GLOBAL.SELECT_ALL'));
     }
 
-    // Force update
-    if (this.displayedValues) {
-      this.displayedValues = [...this.displayedValues];
-    }
     // emit to update graph
-    this.selectToggleButtonChanged.emit(this.displayedValues);
+    this.selectToggleButtonChanged.emit(updatedValues);
 
     // simulate page change to recompute currentItemsToShow
     this.onPageChange({
-      pageIndex: 0,
+      pageIndex: this.currentPageIndex(),
       pageSize: this.pageSize,
     });
   }

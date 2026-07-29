@@ -71,7 +71,6 @@ import { VisualizationRoutingModule } from './khiops-visualization-routing.modul
     SelectTrainedPredictorComponent,
     VariableGraphDetailsComponent,
     TargetLiftGraphComponent,
-    SelectToggleButtonComponent,
     UserSettingsComponent,
     CooccurrenceMatrixComponent,
     RegressionMatrixComponent,
@@ -91,6 +90,7 @@ import { VisualizationRoutingModule } from './khiops-visualization-routing.modul
     ChangeScaleButtonComponent,
     ChangeScaleDialogComponent,
     LevelDistributionButtonComponent,
+    SelectToggleButtonComponent,
   ],
   providers: [
     provideHttpClient(withXhr()),
