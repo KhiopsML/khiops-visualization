@@ -79,7 +79,6 @@ import { VisualizationRoutingModule } from './khiops-visualization-routing.modul
     TargetDistributionGraphComponent,
     DataTypeSelectorComponent,
     LevelDistributionButtonComponent,
-    ChangeScaleButtonComponent,
     ChangeScaleDialogComponent,
   ],
   imports: [
@@ -91,6 +90,7 @@ import { VisualizationRoutingModule } from './khiops-visualization-routing.modul
     FlexLayoutModule,
     AngularResizeEventModule,
     VisualizationRoutingModule,
+    ChangeScaleButtonComponent,
   ],
   providers: [
     provideHttpClient(withXhr()),

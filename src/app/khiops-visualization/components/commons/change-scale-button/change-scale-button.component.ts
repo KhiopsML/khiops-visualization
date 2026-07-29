@@ -4,7 +4,7 @@
  * at https://spdx.org/licenses/BSD-3-Clause-Clear.html or see the "LICENSE" file for more details.
  */
 
-import { Component, ChangeDetectionStrategy } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import {
   ChangeScaleDialogComponent,
   ScaleSettings,
@@ -16,21 +16,35 @@ import { DistributionDatasService } from '@khiops-visualization/providers/distri
 import { ScaleChangeEventsService } from '@khiops-visualization/providers/scale-change-events.service';
 import { DialogService } from '@khiops-library/providers/dialog.service';
 import { VariableScaleSettingsService } from '@khiops-visualization/providers/variable-scale-settings.service';
+import { FlexModule } from '@angular/flex-layout';
+import { TranslateModule } from '@ngstack/translate';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
 
 @Component({
   selector: 'app-change-scale-button',
   templateUrl: './change-scale-button.component.html',
   styleUrls: ['./change-scale-button.component.scss'],
-  changeDetection: ChangeDetectionStrategy.Eager,
-  standalone: false,
+  imports: [
+    FlexModule,
+    TranslateModule,
+    MatTooltipModule,
+    MatIconModule,
+    MatButtonModule,
+  ],
 })
 export class ChangeScaleButtonComponent {
-  constructor(
-    private dialogService: DialogService,
-    private distributionDatasService: DistributionDatasService,
-    private scaleChangeEventsService: ScaleChangeEventsService,
-    private variableScaleSettingsService: VariableScaleSettingsService,
-  ) {}
+  private readonly dialogService = inject(DialogService);
+  private readonly distributionDatasService = inject(DistributionDatasService);
+  private readonly scaleChangeEventsService = inject(ScaleChangeEventsService);
+  private readonly variableScaleSettingsService = inject(
+    VariableScaleSettingsService,
+  );
+
+  private readonly lastAppliedScaleSettings = signal<ScaleSettings | null>(
+    null,
+  );
 
   openChangeScaleDialog() {
     const dialogRef = this.dialogService.openDialog(
@@ -50,6 +64,17 @@ export class ChangeScaleButtonComponent {
   }
 
   private applyScaleSettings(scaleSettings: ScaleSettings) {
+    const previousSettings = this.lastAppliedScaleSettings();
+    if (
+      previousSettings?.mode === scaleSettings.mode &&
+      previousSettings?.xScale === scaleSettings.xScale &&
+      previousSettings?.yScale === scaleSettings.yScale
+    ) {
+      return;
+    }
+
+    this.lastAppliedScaleSettings.set({ ...scaleSettings });
+
     if (scaleSettings.mode === 'auto') {
       // Enable auto scale mode globally
       AppService.Ls.set(LS.SETTING_AUTO_SCALE, true);
