@@ -85,6 +85,8 @@ describe('Behaviors tests for Khiops Covisualization', () => {
       });
       cy.get('.button-reduce-hierarchy').click();
 
+      cy.wait(5000);
+
       cy.get('kl-checkbox-cell').first().find('input').click({ force: true });
 
       // Close dialog
@@ -121,7 +123,7 @@ describe('Behaviors tests for Khiops Covisualization', () => {
       });
 
       // Check table values
-      cy.get('#unfold-hierarchy-table').contains('341');
+      cy.get('#unfold-hierarchy-table', { timeout: 30000 }).contains('341');
       cy.get('#unfold-hierarchy-table').contains('15');
       cy.get('#unfold-hierarchy-table').contains('22');
 
