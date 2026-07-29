@@ -13,7 +13,8 @@
     <!-- Mode selection -->
     <div class="mode-toggle-group">
       <mat-button-toggle-group
-        [(ngModel)]="mode"
+        [value]="mode()"
+        (valueChange)="onModeChange($event)"
         aria-label="Scale mode"
         class="scale-toggle-group"
       >
@@ -27,7 +28,7 @@
     </div>
 
     <!-- Description box -->
-    @if (mode === 'manual') {
+    @if (mode() === 'manual') {
       <div class="mode-description manual-description">
         <p>{{ 'GLOBAL.MANUAL_SCALE_DESCRIPTION' | translate }}</p>
       </div>
@@ -37,7 +38,8 @@
         <div class="scale-group">
           <h3>{{ 'GLOBAL.X_AXIS' | translate }}</h3>
           <mat-button-toggle-group
-            [(ngModel)]="xScale"
+            [value]="xScale()"
+            (valueChange)="onXScaleChange($event)"
             aria-label="X-axis scale"
             class="scale-toggle-group"
           >
@@ -52,7 +54,8 @@
         <div class="scale-group">
           <h3>{{ 'GLOBAL.Y_AXIS' | translate }}</h3>
           <mat-button-toggle-group
-            [(ngModel)]="yScale"
+            [value]="yScale()"
+            (valueChange)="onYScaleChange($event)"
             aria-label="Y-axis scale"
             class="scale-toggle-group"
           >
@@ -66,7 +69,7 @@
         </div>
       </div>
     }
-    @if (mode === 'auto') {
+    @if (mode() === 'auto') {
       <div class="mode-description auto-description">
         <kl-icon name="magic" />
         <p>{{ 'GLOBAL.AUTO_SCALE_DESCRIPTION' | translate }}</p>
