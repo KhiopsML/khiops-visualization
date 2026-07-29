@@ -9,7 +9,7 @@
   mat-stroked-button
   [matMenuTriggerFor]="dataOptionsTypes"
 >
-  {{ $safeNavigationMigration(dataOptions?.selected) | translate }}
+  {{ selectedDataType() | translate }}
   <em><mat-icon>keyboard_arrow_down</mat-icon> </em>
 </button>
 <mat-menu #dataOptionsTypes>
@@ -19,7 +19,7 @@
         'ARIA.AG_GRID.CHANGE_TO' | translate: { type: opt | translate }
       }}"
       mat-menu-item
-      [class.selected-item]="opt === dataOptions?.selected"
+      [class.selected-item]="opt === selectedDataType()"
       (click)="changeDataType(opt)"
     >
       {{ opt | translate }}

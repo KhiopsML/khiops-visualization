@@ -6,12 +6,12 @@
 
 import { Component, inject, output, signal } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
-import { MatMenuModule } from '@angular/material/menu';
 import { MatIconModule } from '@angular/material/icon';
-import { TranslateModule } from '@ngstack/translate';
+import { MatMenuModule } from '@angular/material/menu';
 import { GridOptionsModel } from '@khiops-library/model/grid-options.model';
 import { Ls } from '@khiops-library/providers/ls.service';
 import { LS } from '@khiops-library/enum/ls';
+import { TranslateModule } from '@ngstack/translate';
 
 @Component({
   selector: 'app-data-type-selector',
@@ -23,21 +23,24 @@ export class DataTypeSelectorComponent {
   private readonly ls = inject(Ls);
 
   readonly dataTypeChanged = output<string>();
-  readonly dataOptions = signal(new GridOptionsModel());
 
-  constructor() {
-    const options = this.dataOptions();
-    options.selected = this.ls.get(LS.AG_GRID_GRAPH_OPTION, options.types[0]);
-  }
+  readonly dataOptions: GridOptionsModel = new GridOptionsModel();
+
+  readonly selectedDataType = signal(
+    this.ls.get(LS.AG_GRID_GRAPH_OPTION, this.dataOptions.types[0]),
+  );
 
   /**
    * Changes the data type and emits the change.
    * @param type - The new data type to be set.
    */
-  changeDataType(type: string): void {
+  changeDataType(type: string) {
+    if (type === this.selectedDataType()) {
+      return;
+    }
+
     this.ls.set(LS.AG_GRID_GRAPH_OPTION, type);
-    const options = this.dataOptions();
-    options.selected = type;
+    this.selectedDataType.set(type);
     this.dataTypeChanged.emit(type);
   }
 }
