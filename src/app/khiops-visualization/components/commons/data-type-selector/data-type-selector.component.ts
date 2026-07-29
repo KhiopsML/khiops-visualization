@@ -4,13 +4,11 @@
  * at https://spdx.org/licenses/BSD-3-Clause-Clear.html or see the "LICENSE" file for more details.
  */
 
-import {
-  Component,
-  Output,
-  EventEmitter,
-  OnInit,
-  ChangeDetectionStrategy,
-} from '@angular/core';
+import { Component, inject, output, signal } from '@angular/core';
+import { MatButtonModule } from '@angular/material/button';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatIconModule } from '@angular/material/icon';
+import { TranslateModule } from '@ngstack/translate';
 import { GridOptionsModel } from '@khiops-library/model/grid-options.model';
 import { Ls } from '@khiops-library/providers/ls.service';
 import { LS } from '@khiops-library/enum/ls';
@@ -19,30 +17,27 @@ import { LS } from '@khiops-library/enum/ls';
   selector: 'app-data-type-selector',
   templateUrl: './data-type-selector.component.html',
   styleUrls: ['./data-type-selector.component.scss'],
-  changeDetection: ChangeDetectionStrategy.Eager,
-  standalone: false,
+  imports: [MatButtonModule, MatMenuModule, MatIconModule, TranslateModule],
 })
-export class DataTypeSelectorComponent implements OnInit {
-  @Output() dataTypeChanged: EventEmitter<string> = new EventEmitter();
+export class DataTypeSelectorComponent {
+  private readonly ls = inject(Ls);
 
-  public dataOptions: GridOptionsModel = new GridOptionsModel();
+  readonly dataTypeChanged = output<string>();
+  readonly dataOptions = signal(new GridOptionsModel());
 
-  constructor(private ls: Ls) {}
-
-  ngOnInit() {
-    this.dataOptions.selected = this.ls.get(
-      LS.AG_GRID_GRAPH_OPTION,
-      this.dataOptions.types[0],
-    );
+  constructor() {
+    const options = this.dataOptions();
+    options.selected = this.ls.get(LS.AG_GRID_GRAPH_OPTION, options.types[0]);
   }
 
   /**
    * Changes the data type and emits the change.
    * @param type - The new data type to be set.
    */
-  changeDataType(type: string) {
+  changeDataType(type: string): void {
     this.ls.set(LS.AG_GRID_GRAPH_OPTION, type);
-    this.dataOptions.selected = type;
+    const options = this.dataOptions();
+    options.selected = type;
     this.dataTypeChanged.emit(type);
   }
 }
