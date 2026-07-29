@@ -4,20 +4,20 @@
  * at https://spdx.org/licenses/BSD-3-Clause-Clear.html or see the "LICENSE" file for more details.
  */
 
-import { Component, Input, ChangeDetectionStrategy } from '@angular/core';
+import { Component, input } from '@angular/core';
+import { FlexLayoutModule } from '@angular/flex-layout';
 
 import { SelectableComponent } from '@khiops-library/components/selectable/selectable.component';
 import { COMPONENT_TYPES } from '@khiops-library/enum/component-types';
 
 @Component({
-    selector: 'app-description-block',
-    templateUrl: './description-block.component.html',
-    styleUrls: ['./description-block.component.scss'],
-    changeDetection: ChangeDetectionStrategy.OnPush,
-    standalone: false
+  selector: 'app-description-block',
+  templateUrl: './description-block.component.html',
+  styleUrls: ['./description-block.component.scss'],
+  imports: [FlexLayoutModule],
 })
 export class DescriptionBlockComponent extends SelectableComponent {
-  @Input() title?: string;
-  @Input() value?: string;
+  readonly title = input<string>();
+  readonly value = input<string>();
   componentType = COMPONENT_TYPES.DESCRIPTIONS; // needed to copy datas
 }
