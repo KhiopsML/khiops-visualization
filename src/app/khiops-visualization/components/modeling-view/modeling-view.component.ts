@@ -20,7 +20,6 @@ import { LayoutService } from '@khiops-library/providers/layout.service';
 import { SplitGutterInteractionEvent } from 'angular-split';
 import { DynamicI } from '@khiops-library/interfaces/globals.interface';
 import { VariableModel } from '@khiops-visualization/model/variable.model';
-import { AppService } from '../../../khiops-visualization/providers/app.service';
 import { TrainedPredictor } from '@khiops-visualization/interfaces/modeling-report.interface';
 import { DistributionService } from '@khiops-visualization/providers/distribution.service';
 import { LevelDistributionGraphComponent } from '@khiops-visualization/components/commons/level-distribution-graph/level-distribution-graph.component';
@@ -57,7 +56,6 @@ export class ModelingViewComponent extends SelectableTabComponent {
     private preparationDatasService: PreparationDatasService,
     private treePreparationDatasService: TreePreparationDatasService,
     private layoutService: LayoutService,
-    private appService: AppService,
     private distributionService: DistributionService,
     private dialogService: DialogService,
   ) {
@@ -69,8 +67,7 @@ export class ModelingViewComponent extends SelectableTabComponent {
 
   ngOnInit() {
     this.trackerService.trackEvent('page_view', 'modeling');
-    this.trainedPredictors =
-      this.appService.appDatas?.modelingReport?.trainedPredictors;
+    this.trainedPredictors = this.modelingDatasService.getTrainedPredictors();
 
     this.preparationSource =
       this.preparationDatasService.getAvailablePreparationReport();

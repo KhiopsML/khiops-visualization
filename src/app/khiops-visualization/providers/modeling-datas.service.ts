@@ -225,19 +225,13 @@ export class ModelingDatasService {
    */
   getTrainedPredictorsSummaryDatas(): InfosDatasI[] {
     const trainedPredictorsSummaryDatas: InfosDatasI[] = [];
-    if (this.appService.appDatas) {
-      for (
-        let i = 0;
-        i < this.appService.appDatas.modelingReport.trainedPredictors.length;
-        i++
-      ) {
+    const trainedPredictors = this.getTrainedPredictors();
+    if (trainedPredictors) {
+      for (let i = 0; i < trainedPredictors.length; i++) {
         trainedPredictorsSummaryDatas.push({
-          title:
-            this.appService.appDatas.modelingReport.trainedPredictors[i]
-              ?.name ?? '',
+          title: trainedPredictors[i]?.name ?? '',
           value:
-            this.appService.appDatas.modelingReport.trainedPredictors[i]
-              ?.variables +
+            trainedPredictors[i]?.variables +
             ' ' +
             this.translate.get('GLOBAL.VARIABLES'),
         });
@@ -247,6 +241,36 @@ export class ModelingDatasService {
     }
 
     return trainedPredictorsSummaryDatas;
+  }
+
+  /**
+   * Retrieves trained predictors with duplicate entries removed.
+   * Duplicate key is based on rank, type, family, name and variables.
+   */
+  getTrainedPredictors(): TrainedPredictor[] | undefined {
+    const predictors =
+      this.appService.appDatas?.modelingReport?.trainedPredictors;
+    if (!predictors) {
+      return undefined;
+    }
+
+    const seen = new Set<string>();
+    return predictors.filter((predictor) => {
+      const key = [
+        predictor.rank,
+        predictor.type,
+        predictor.family,
+        predictor.name,
+        predictor.variables,
+      ].join('||');
+
+      if (seen.has(key)) {
+        return false;
+      }
+
+      seen.add(key);
+      return true;
+    });
   }
 
   /**
