@@ -376,8 +376,10 @@ export class CopyService {
   getDescriptionsDatas(selectedArea: DynamicI) {
     let formattedDatas = '';
 
-    formattedDatas += selectedArea.title + '\n';
-    formattedDatas += selectedArea.value + '\n';
+    const title = selectedArea.title();
+    const value = selectedArea.value();
+    formattedDatas += title + '\n';
+    formattedDatas += value + '\n';
 
     return formattedDatas;
   }
