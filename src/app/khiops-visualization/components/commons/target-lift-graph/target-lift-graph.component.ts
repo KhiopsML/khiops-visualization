@@ -4,15 +4,8 @@
  * at https://spdx.org/licenses/BSD-3-Clause-Clear.html or see the "LICENSE" file for more details.
  */
 
-import {
-  Component,
-  OnChanges,
-  Input,
-  NgZone,
-  SimpleChanges,
-  ViewChild,
-  ChangeDetectionStrategy,
-} from '@angular/core';
+import { Component, NgZone, ViewChild, effect, input } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { EvaluationDatasService } from '@khiops-visualization/providers/evaluation-datas.service';
 import { TranslateService } from '@ngstack/translate';
 import { SelectableComponent } from '@khiops-library/components/selectable/selectable.component';
@@ -26,21 +19,32 @@ import { TargetLiftValuesI } from '@khiops-visualization/interfaces/target-lift-
 import { COMPONENT_TYPES } from '@khiops-library/enum/component-types';
 import { EvaluationPredictorModel } from '@khiops-visualization/model/evaluation-predictor.model';
 import { ChartToggleValuesI } from '@khiops-visualization/interfaces/chart-toggle-values.interface';
-import { MatMenuTrigger } from '@angular/material/menu';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
+import { MatMenuModule, MatMenuTrigger } from '@angular/material/menu';
+import { FlexLayoutModule } from '@angular/flex-layout';
+import { KhiopsLibraryModule } from '@khiops-library/khiops-library.module';
+import { TranslateModule } from '@ngstack/translate';
+import { SelectToggleButtonComponent } from '../select-toggle-button/select-toggle-button.component';
 import { TargetLiftGraphService } from './target-lift-graph.service';
 
 @Component({
   selector: 'app-target-lift-graph',
   templateUrl: './target-lift-graph.component.html',
   styleUrls: ['./target-lift-graph.component.scss'],
-  changeDetection: ChangeDetectionStrategy.Eager,
-  standalone: false,
+  imports: [
+    CommonModule,
+    FlexLayoutModule,
+    MatButtonModule,
+    MatIconModule,
+    MatMenuModule,
+    TranslateModule,
+    KhiopsLibraryModule,
+    SelectToggleButtonComponent,
+  ],
 })
-export class TargetLiftGraphComponent
-  extends SelectableComponent
-  implements OnChanges
-{
-  @Input() selectedVariable?: EvaluationPredictorModel;
+export class TargetLiftGraphComponent extends SelectableComponent {
+  public selectedVariable = input<EvaluationPredictorModel | undefined>();
   @ViewChild(MatMenuTrigger) menuTrigger?: MatMenuTrigger;
 
   public targetLift?: TargetLiftValuesI;
@@ -82,12 +86,12 @@ export class TargetLiftGraphComponent
     };
 
     this.buttonTitle = this.translate.get('GLOBAL.FILTER_CURVES');
-  }
 
-  ngOnChanges(changes: SimpleChanges) {
-    if (changes?.selectedVariable?.currentValue) {
-      this.computeTargetLiftDatas();
-    }
+    effect(() => {
+      if (this.selectedVariable()) {
+        this.computeTargetLiftDatas();
+      }
+    });
   }
 
   onToggleFullscreen(isFullscreen: boolean) {
