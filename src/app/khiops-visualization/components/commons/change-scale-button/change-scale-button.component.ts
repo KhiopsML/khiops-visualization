@@ -4,7 +4,7 @@
  * at https://spdx.org/licenses/BSD-3-Clause-Clear.html or see the "LICENSE" file for more details.
  */
 
-import { Component, inject, signal } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import {
   ChangeScaleDialogComponent,
   ScaleSettings,
@@ -42,10 +42,6 @@ export class ChangeScaleButtonComponent {
     VariableScaleSettingsService,
   );
 
-  private readonly lastAppliedScaleSettings = signal<ScaleSettings | null>(
-    null,
-  );
-
   openChangeScaleDialog() {
     const dialogRef = this.dialogService.openDialog(
       ChangeScaleDialogComponent,
@@ -64,17 +60,6 @@ export class ChangeScaleButtonComponent {
   }
 
   private applyScaleSettings(scaleSettings: ScaleSettings) {
-    const previousSettings = this.lastAppliedScaleSettings();
-    if (
-      previousSettings?.mode === scaleSettings.mode &&
-      previousSettings?.xScale === scaleSettings.xScale &&
-      previousSettings?.yScale === scaleSettings.yScale
-    ) {
-      return;
-    }
-
-    this.lastAppliedScaleSettings.set({ ...scaleSettings });
-
     if (scaleSettings.mode === 'auto') {
       // Enable auto scale mode globally
       AppService.Ls.set(LS.SETTING_AUTO_SCALE, true);
