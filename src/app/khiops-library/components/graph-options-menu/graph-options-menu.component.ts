@@ -5,37 +5,31 @@
  */
 
 import {
-  effect,
   Component,
   input,
-  ChangeDetectionStrategy,
   output,
-  signal,
 } from '@angular/core';
 import { DistributionOptionsI } from '@khiops-library/interfaces/distribution-options.interface';
+import { MatButtonModule } from '@angular/material/button';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatIconModule } from '@angular/material/icon';
+import { TranslateModule } from '@ngstack/translate';
 
 @Component({
     selector: 'kl-graph-options-menu',
     templateUrl: './graph-options-menu.component.html',
     styleUrls: ['./graph-options-menu.component.scss'],
-    changeDetection: ChangeDetectionStrategy.OnPush,
-    standalone: false
+    imports: [MatButtonModule, MatMenuModule, MatIconModule, TranslateModule]
 })
 export class GraphOptionsMenuComponent {
-  graphOptions = input<DistributionOptionsI | undefined>(undefined);
+  graphOptions = input<DistributionOptionsI | undefined>();
   graphOptionsChange = output<string>();
 
-  protected readonly selectedOption = signal<string | undefined>(undefined);
-
-  constructor() {
-    effect(() => {
-      this.selectedOption.set(this.graphOptions()?.selected);
-    });
-  }
-
   changeGraphOption(option: string) {
-    if (this.graphOptions()) {
-      this.selectedOption.set(option);
+    const graphOptions = this.graphOptions();
+
+    if (graphOptions) {
+      graphOptions.selected = option;
       this.graphOptionsChange.emit(option);
     }
   }

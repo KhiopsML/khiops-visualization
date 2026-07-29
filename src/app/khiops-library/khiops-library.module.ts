@@ -146,6 +146,7 @@ import EnTransaltion from '../../assets/i18n/en.json';
     CellStatsComponent,
     ClearLsComponent,
     LibVersionComponent,
+    GraphOptionsMenuComponent,
   ],
   declarations: [
     NumberPrecisionComponent,
@@ -170,7 +171,6 @@ import EnTransaltion from '../../assets/i18n/en.json';
     MatrixTooltipComponent,
     MatrixToggleComponent,
     MatrixModeComponent,
-    GraphOptionsMenuComponent,
     CheckboxCellComponent,
     IconCellComponent,
     DistributionGraphComponent,
