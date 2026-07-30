@@ -36,4 +36,23 @@ describe('Preparation 2D non-informative variable display', () => {
     // Non-informative message displayed again
     cy.get('#preparation-2d-view-comp').contains('Non-informative variable');
   });
+
+  it('should show details for R001 and non-informative for R002 in missing-zero.json', () => {
+    cy.initViews();
+    cy.loadFile('visualization', 'missing-zero.json');
+
+    cy.get('.mat-mdc-tab:contains("Preparation 2D")').first().click();
+
+    // R001 (index 0) is informative — details component visible
+    cy.get('#preparation-2d-variables-list').find('.ag-row:eq(0)').click();
+    cy.get('app-var-details-preparation-2d').should('be.visible');
+    cy.get('#preparation-2d-view-comp').should(
+      'not.contain',
+      'Non-informative variable',
+    );
+
+    // R002 (index 1) has level=0 — non-informative
+    cy.get('#preparation-2d-variables-list').find('.ag-row:eq(1)').click();
+    cy.get('#preparation-2d-view-comp').contains('Non-informative variable');
+  });
 });
