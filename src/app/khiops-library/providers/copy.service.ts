@@ -350,17 +350,25 @@ export class CopyService {
   getInformationsDatas(selectedArea: DynamicI) {
     let formattedDatas = '';
 
+    const title =
+      typeof selectedArea?.title === 'function'
+        ? selectedArea.title()
+        : selectedArea?.title;
+    const inputDatas =
+      typeof selectedArea?.inputDatas === 'function'
+        ? selectedArea.inputDatas()
+        : selectedArea?.inputDatas;
+
     // TITLE
-    if (selectedArea.title) {
-      formattedDatas += selectedArea.title + '\n';
+    if (title) {
+      formattedDatas += title + '\n';
     }
 
     // CONTENT
-    for (let i = 0; i < selectedArea.inputDatas.length; i++) {
+    for (let i = 0; i < inputDatas.length; i++) {
+      formattedDatas += this.translate.get(inputDatas[i].title) + '\t';
       formattedDatas +=
-        this.translate.get(selectedArea.inputDatas[i].title) + '\t';
-      formattedDatas +=
-        this.formatNumberWithPrecision(selectedArea.inputDatas[i].value) + '\t';
+        this.formatNumberWithPrecision(inputDatas[i].value) + '\t';
       formattedDatas += '\n';
     }
 
