@@ -13,19 +13,19 @@
   <div class="comp-header">
     <h1>
       {{ 'GLOBAL.NUMBER_OF_CLUSTERS' | translate }}:
-      {{ currentUnfoldHierarchy }}
+      {{ currentUnfoldHierarchy() }}
     </h1>
   </div>
   <div fxLayout="column" class="unfold-hierarchy-settings-container">
     <div fxLayout="row">
       <div fxLayout="column" class="unfold-hierarchy-settings-slider">
         <mat-slider
-          [max]="$safeNavigationMigration(hierarchyDatas?.totalClusters)"
-          [min]="$safeNavigationMigration(hierarchyDatas?.minClusters)"
+          [max]="$safeNavigationMigration(hierarchyDatas()?.totalClusters)"
+          [min]="$safeNavigationMigration(hierarchyDatas()?.minClusters)"
           [step]="1"
           (input)="onHierarchyChanged($event)"
         >
-          <input [(ngModel)]="currentUnfoldHierarchy" matSliderThumb />
+          <input [ngModel]="currentUnfoldHierarchy()" matSliderThumb />
         </mat-slider>
       </div>
       <div fxLayout="column" class="increment">
@@ -46,8 +46,8 @@
       </div>
       <!-- DO NOT REMOVE - used by cypress to load files -->
       <div id="cy-unfold-form" style="visibility: hidden; width: 0">
-        <input [(ngModel)]="cyInput" type="text" id="cy-unfold-value-input" />
-        <button id="cy-unfold-value-button" (click)="setCypressInput(cyInput)">
+        <input [ngModel]="cyInput()" type="text" id="cy-unfold-value-input" />
+        <button id="cy-unfold-value-button" (click)="setCypressInput(cyInput())">
           cyoress set
         </button>
       </div>
@@ -57,14 +57,14 @@
       <span>
         {{ 'GLOBAL.CELLS' | translate }}:
         <em>
-          {{ currentCellsPerCluster | toPrecision }}
+          {{ currentCellsPerCluster() | toPrecision }}
         </em>
       </span>
       <span>
         {{ 'GLOBAL.INFORMATION_RATE' | translate }}:
-        <em>{{ currentInformationPerCluster | toPrecision: 3 }}%</em>
+        <em>{{ currentInformationPerCluster() | toPrecision: 3 }}%</em>
       </span>
-      @if (currentInformationPerCluster === 0) {
+      @if (currentInformationPerCluster() === 0) {
         <span class="non-info-warning" fxLayoutAlign="start center">
           {{ 'GLOBAL.NON_INFORMATIVE_COCLUSTERING' | translate }}
           <mat-icon fxLayoutAlign="center center">warning</mat-icon>

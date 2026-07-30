@@ -14,21 +14,21 @@
     <kl-legend
       fxLayoutAlign="end end"
       fxLayout="row"
-      [inputDatas]="legend"
+      [inputDatas]="legend()"
       [type]="'chart-nd'"
       [tooltip]="'TOOLTIPS.AXIS.UNFOLD_HIERARCHY.LEGEND' | translate"
       (legendItemClicked)="highlightChartLine($event)"
-      [colorSet]="colorSetClusterPerDim"
+      [colorSet]="colorSetClusterPerDim()"
     >
     </kl-legend>
   </div>
   <kl-chart
     [canvasIdContainer]="'clusters-per-dim-graph'"
-    [inputDatas]="clustersPerDimDatas"
+    [inputDatas]="clustersPerDimDatas()"
     [enableSelection]="false"
-    [colorSet]="colorSetClusterPerDim"
-    [selectedLineChartItem]="selectedLineChartItem"
-    [chartOptions]="chartOptions"
+    [colorSet]="colorSetClusterPerDim()"
+    [selectedLineChartItem]="selectedLineChartItem()"
+    [chartOptions]="chartOptions()"
   >
   </kl-chart>
 </div>

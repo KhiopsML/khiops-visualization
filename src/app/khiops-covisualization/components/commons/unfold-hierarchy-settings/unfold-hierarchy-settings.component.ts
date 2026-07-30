@@ -6,33 +6,45 @@
 
 import {
   Component,
-  Input,
-  Output,
-  EventEmitter,
-  ChangeDetectionStrategy,
+  input,
+  output,
 } from '@angular/core';
+import { FlexLayoutModule } from '@angular/flex-layout';
+import { TranslateModule } from '@ngstack/translate';
+import { ToPrecisionPipe } from '@khiops-library/pipes/to-precision.pipe';
+import { MatSliderModule } from '@angular/material/slider';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'kl-unfold-hierarchy-settings',
   templateUrl: './unfold-hierarchy-settings.component.html',
   styleUrls: ['./unfold-hierarchy-settings.component.scss'],
-  changeDetection: ChangeDetectionStrategy.Eager,
-  standalone: false,
+  imports: [
+    FlexLayoutModule,
+    TranslateModule,
+    ToPrecisionPipe,
+    MatSliderModule,
+    MatButtonModule,
+    MatIconModule,
+    FormsModule,
+  ],
 })
 export class UnfoldHierarchySettingsComponent {
-  @Input() currentUnfoldHierarchy!: number;
-  @Input() hierarchyDatas: {
+  readonly currentUnfoldHierarchy = input.required<number>();
+  readonly hierarchyDatas = input<{
     totalClusters: number;
     minClusters: number;
-  } | null = null;
-  @Input() currentCellsPerCluster!: number;
-  @Input() currentInformationPerCluster!: number;
-  @Input() cyInput: string = '';
+  } | null>(null);
+  readonly currentCellsPerCluster = input.required<number>();
+  readonly currentInformationPerCluster = input.required<number>();
+  readonly cyInput = input<string>('');
 
-  @Output() hierarchyChanged = new EventEmitter<number>();
-  @Output() increase = new EventEmitter<void>();
-  @Output() decrease = new EventEmitter<void>();
-  @Output() cyInputSet = new EventEmitter<string>();
+  readonly hierarchyChanged = output<number>();
+  readonly increase = output<void>();
+  readonly decrease = output<void>();
+  readonly cyInputSet = output<string>();
 
   onHierarchyChanged(event: Event) {
     const value = (event.target as HTMLInputElement).valueAsNumber;

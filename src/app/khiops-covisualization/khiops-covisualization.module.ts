@@ -24,7 +24,6 @@ import { VariableGraphDetailsComponent } from './components/commons/variable-gra
 import { SelectedClustersComponent } from './components/commons/selected-clusters/selected-clusters.component';
 import { MatrixContainerComponent } from './components/commons/matrix-container/matrix-container.component';
 import { UnfoldHierarchyComponent } from './components/commons/unfold-hierarchy/unfold-hierarchy.component';
-import { UnfoldHierarchySettingsComponent } from './components/commons/unfold-hierarchy-settings/unfold-hierarchy-settings.component';
 import { LoadExtDatasComponent } from './components/commons/load-ext-datas/load-ext-datas.component';
 import { ImportExtDatasComponent } from './components/commons/import-ext-datas/import-ext-datas.component';
 import { ImportExtDatasListComponent } from './components/commons/import-ext-datas-list/import-ext-datas-list.component';
@@ -41,9 +40,6 @@ import { CompositionDetailedPartsComponent } from './components/commons/composit
 import { VariableSearchDialogComponent } from './components/commons/variable-search-dialog/variable-search-dialog.component';
 import { VariableSearchButtonComponent } from './components/commons/variable-search-button/variable-search-button.component';
 import { MatrixInnerVariablesFilterComponent } from './components/commons/matrix-inner-variables-filter/matrix-inner-variables-filter.component';
-import { UnfoldHierarchyHeaderComponent } from './components/commons/unfold-hierarchy-header/unfold-hierarchy-header.component';
-import { UnfoldHierarchyClustersGraphComponent } from './components/commons/unfold-hierarchy-clusters-graph/unfold-hierarchy-clusters-graph.component';
-import { UnfoldHierarchyInfoRateGraphComponent } from './components/commons/unfold-hierarchy-info-rate-graph/unfold-hierarchy-info-rate-graph.component';
 import { provideHttpClient, withXhr } from '@angular/common/http';
 import { CovisualizationRoutingModule } from './khiops-covisualization-routing.module';
 
@@ -64,8 +60,6 @@ import { CovisualizationRoutingModule } from './khiops-covisualization-routing.m
     CompositionComponent,
     VariableGraphDetailsComponent,
     MatrixContainerComponent,
-    UnfoldHierarchyComponent,
-    UnfoldHierarchySettingsComponent,
     ManageViewsComponent,
     LoadExtDatasComponent,
     ImportExtDatasComponent,
@@ -73,9 +67,6 @@ import { CovisualizationRoutingModule } from './khiops-covisualization-routing.m
     CompositionDetailedPartsComponent,
     MatrixInnerVariablesFilterComponent,
     ExternalDatasComponent,
-    UnfoldHierarchyHeaderComponent,
-    UnfoldHierarchyClustersGraphComponent,
-    UnfoldHierarchyInfoRateGraphComponent,
   ],
   imports: [
     CommonModule,
@@ -89,6 +80,7 @@ import { CovisualizationRoutingModule } from './khiops-covisualization-routing.m
     SelectedClustersComponent,
     VariableSearchDialogComponent,
     VariableSearchButtonComponent,
+    UnfoldHierarchyComponent,
     CovisualizationRoutingModule,
   ],
   providers: [

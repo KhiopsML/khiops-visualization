@@ -4,35 +4,30 @@
  * at https://spdx.org/licenses/BSD-3-Clause-Clear.html or see the "LICENSE" file for more details.
  */
 
-import { Component, Input, ChangeDetectionStrategy } from '@angular/core';
+import { Component, input } from '@angular/core';
+import { FlexLayoutModule } from '@angular/flex-layout';
+import { TranslateModule } from '@ngstack/translate';
 import { ChartDatasModel } from '@khiops-library/model/chart-datas.model';
 import { ChartColorsSetI } from '@khiops-library/interfaces/chart-colors-set.interface';
 import { ChartOptions } from 'chart.js';
 import { SelectableComponent } from '@khiops-library/components/selectable/selectable.component';
 import { COMPONENT_TYPES } from '@khiops-library/enum/component-types';
+import { ChartComponent } from '@khiops-library/components/chart/chart.component';
 
 @Component({
   selector: 'kl-unfold-hierarchy-info-rate-graph',
   templateUrl: './unfold-hierarchy-info-rate-graph.component.html',
-  changeDetection: ChangeDetectionStrategy.Eager,
-  standalone: false,
+  imports: [FlexLayoutModule, TranslateModule, ChartComponent],
 })
 export class UnfoldHierarchyInfoRateGraphComponent extends SelectableComponent {
-  private _infoPerCluster: ChartDatasModel | undefined;
-  datas: ChartDatasModel | undefined;
+  readonly infoPerCluster = input<ChartDatasModel | undefined>(undefined);
 
-  @Input()
-  set infoPerCluster(value: ChartDatasModel | undefined) {
-    this._infoPerCluster = value;
-    this.datas = value; // Automatic assignment
+  readonly colorSetInfoPerCluster = input<ChartColorsSetI | undefined>();
+  readonly chartOptions = input<ChartOptions | undefined>();
+
+  get datas(): ChartDatasModel | undefined {
+    return this.infoPerCluster();
   }
-
-  get infoPerCluster(): ChartDatasModel | undefined {
-    return this._infoPerCluster;
-  }
-
-  @Input() colorSetInfoPerCluster: ChartColorsSetI | undefined;
-  @Input() chartOptions: ChartOptions | undefined;
 
   public componentType = COMPONENT_TYPES.ND_LINE_CHART; // needed to copy datas
 }

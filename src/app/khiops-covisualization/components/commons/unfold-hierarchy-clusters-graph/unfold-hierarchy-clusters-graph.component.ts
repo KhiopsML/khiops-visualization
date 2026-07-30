@@ -6,44 +6,37 @@
 
 import {
   Component,
-  Input,
-  Output,
-  EventEmitter,
-  ChangeDetectionStrategy,
+  input,
+  output,
 } from '@angular/core';
+import { FlexLayoutModule } from '@angular/flex-layout';
+import { TranslateModule } from '@ngstack/translate';
 import { SelectableComponent } from '@khiops-library/components/selectable/selectable.component';
 import { COMPONENT_TYPES } from '@khiops-library/enum/component-types';
 import { ChartColorsSetI } from '@khiops-library/interfaces/chart-colors-set.interface';
 import { ChartDatasModel } from '@khiops-library/model/chart-datas.model';
 import { ChartOptions } from 'chart.js';
+import { KhiopsLibraryModule } from '@khiops-library/khiops-library.module';
 
 @Component({
   selector: 'kl-unfold-hierarchy-clusters-graph',
   templateUrl: './unfold-hierarchy-clusters-graph.component.html',
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  standalone: false,
+  imports: [FlexLayoutModule, TranslateModule, KhiopsLibraryModule],
 })
 export class UnfoldHierarchyClustersGraphComponent extends SelectableComponent {
-  @Input() legend: { series: { name: string }[] }[] | undefined;
-  @Input() colorSetClusterPerDim: ChartColorsSetI | undefined;
+  readonly legend = input<{ series: { name: string }[] }[] | undefined>();
+  readonly colorSetClusterPerDim = input<ChartColorsSetI | undefined>();
 
-  private _clustersPerDimDatas: ChartDatasModel | undefined;
-  datas: ChartDatasModel | undefined;
+  readonly clustersPerDimDatas = input<ChartDatasModel | undefined>(undefined);
 
-  @Input()
-  set clustersPerDimDatas(value: ChartDatasModel | undefined) {
-    this._clustersPerDimDatas = value;
-    this.datas = value; // Automatic assignment
+  get datas(): ChartDatasModel | undefined {
+    return this.clustersPerDimDatas();
   }
 
-  get clustersPerDimDatas(): ChartDatasModel | undefined {
-    return this._clustersPerDimDatas;
-  }
+  readonly selectedLineChartItem = input('');
+  readonly chartOptions = input<ChartOptions | undefined>();
 
-  @Input() selectedLineChartItem = '';
-  @Input() chartOptions: ChartOptions | undefined;
-
-  @Output() legendItemClicked = new EventEmitter<any>();
+  readonly legendItemClicked = output<any>();
 
   public componentType = COMPONENT_TYPES.ND_LINE_CHART; // needed to copy datas
 

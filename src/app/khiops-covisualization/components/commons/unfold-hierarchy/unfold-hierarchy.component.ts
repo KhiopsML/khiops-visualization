@@ -4,14 +4,11 @@
  * at https://spdx.org/licenses/BSD-3-Clause-Clear.html or see the "LICENSE" file for more details.
  */
 
-import {
-  Component,
-  HostListener,
-  OnInit,
-  ChangeDetectionStrategy,
-} from '@angular/core';
+import { AfterViewInit, ChangeDetectorRef, Component, HostListener } from '@angular/core';
+import { FlexLayoutModule } from '@angular/flex-layout';
 import { DimensionsDatasService } from '@khiops-covisualization/providers/dimensions-datas.service';
 import { KhiopsLibraryService } from '@khiops-library/providers/khiops-library.service';
+import { KhiopsLibraryModule } from '@khiops-library/khiops-library.module';
 import { TranslateService } from '@ngstack/translate';
 import cloneDeep from 'lodash-es/cloneDeep';
 import { TreenodesService } from '@khiops-covisualization/providers/treenodes.service';
@@ -35,15 +32,29 @@ import {
 } from './unfold-hierarchy.config';
 import { ChartOptions } from 'chart.js';
 import { DialogService } from '@khiops-library/providers/dialog.service';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { AngularSplitModule } from 'angular-split';
+import { UnfoldHierarchyHeaderComponent } from '../unfold-hierarchy-header/unfold-hierarchy-header.component';
+import { UnfoldHierarchySettingsComponent } from '../unfold-hierarchy-settings/unfold-hierarchy-settings.component';
+import { UnfoldHierarchyInfoRateGraphComponent } from '../unfold-hierarchy-info-rate-graph/unfold-hierarchy-info-rate-graph.component';
+import { UnfoldHierarchyClustersGraphComponent } from '../unfold-hierarchy-clusters-graph/unfold-hierarchy-clusters-graph.component';
 
 @Component({
   selector: 'app-unfold-hierarchy',
   templateUrl: './unfold-hierarchy.component.html',
   styleUrls: ['./unfold-hierarchy.component.scss'],
-  changeDetection: ChangeDetectionStrategy.Eager,
-  standalone: false,
+  imports: [
+    FlexLayoutModule,
+    MatProgressSpinnerModule,
+    AngularSplitModule,
+    KhiopsLibraryModule,
+    UnfoldHierarchyHeaderComponent,
+    UnfoldHierarchySettingsComponent,
+    UnfoldHierarchyInfoRateGraphComponent,
+    UnfoldHierarchyClustersGraphComponent,
+  ],
 })
-export class UnfoldHierarchyComponent implements OnInit {
+export class UnfoldHierarchyComponent implements AfterViewInit {
   public currentUnfoldHierarchy: number = 0;
   public hierarchyDatas: HierarchyDatasModel | undefined;
   public loadingHierarchy: boolean = false;
@@ -77,6 +88,7 @@ export class UnfoldHierarchyComponent implements OnInit {
     private dialogService: DialogService,
     private khiopsLibraryService: KhiopsLibraryService,
     private unfoldHierarchySelectionService: UnfoldHierarchySelectionService,
+    private cdr: ChangeDetectorRef,
   ) {
     this.borderColor = '#000000';
 
@@ -116,7 +128,7 @@ export class UnfoldHierarchyComponent implements OnInit {
     this.onHierarchyChanged(cyInput);
   }
 
-  ngOnInit() {
+  ngAfterViewInit() {
     this.hierarchyService.initialize();
 
     this.previousHierarchyRank = cloneDeep(
@@ -174,6 +186,8 @@ export class UnfoldHierarchyComponent implements OnInit {
           this.clustersPerDimDatas.datasets.length - 1
         ] = this.borderColor;
       }
+      this.loadingHierarchy = false;
+      this.cdr.markForCheck();
     }); // Do not freeze ui during graph render
   }
 
@@ -248,6 +262,7 @@ export class UnfoldHierarchyComponent implements OnInit {
       );
       this.hierarchyService.unfoldHierarchy(this.currentUnfoldHierarchy);
       this.loadingHierarchy = false;
+      this.cdr.markForCheck();
       this.dialogService.closeDialog();
     }); // do not freeze during computing
   }
