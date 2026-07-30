@@ -16,7 +16,6 @@ import { ZoomToolsEventsService } from '@khiops-library/components/zoom-tools/zo
   selector: 'kl-zoom-tools',
   templateUrl: './zoom-tools.component.html',
   styleUrl: './zoom-tools.component.scss',
-  standalone: true,
   imports: [
     FlexLayoutModule,
     MatButtonModule,
