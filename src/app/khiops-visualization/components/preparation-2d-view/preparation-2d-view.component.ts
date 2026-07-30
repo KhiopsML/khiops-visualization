@@ -157,10 +157,8 @@ export class Preparation2dViewComponent extends SelectableTabComponent {
    * @returns true if the selected variable has level 0
    */
   isNonInformativeVariable(): boolean {
-    const hasLevel0 = this.preparation2dDatas?.selectedVariable?.level === 0;
-    const hasDetailedStats =
-      this.preparation2dDatasService.hasDetailedStatistics();
-    return hasLevel0 || !hasDetailedStats;
+    const selectedVariable = this.preparation2dDatas?.selectedVariable;
+    return !!selectedVariable?.noCorrelation || selectedVariable?.level === 0;
   }
 
   /**

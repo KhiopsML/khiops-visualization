@@ -105,7 +105,10 @@ export class VarDetailsPreparation2dComponent implements DoCheck {
 
   onSelectedGraphItemChanged(index: number) {
     this.selectedBarIndex = index;
-    this.graphSelectionSessionService.setSelectedIndex(this.selectionScope, index);
+    this.graphSelectionSessionService.setSelectedIndex(
+      this.selectionScope,
+      index,
+    );
   }
 
   ngDoCheck() {
@@ -133,7 +136,8 @@ export class VarDetailsPreparation2dComponent implements DoCheck {
   getNoDataMessage(): string | undefined {
     if (
       this.preparation2dDatas?.selectedVariable &&
-      this.preparation2dDatas.selectedVariable.level === 0
+      (this.preparation2dDatas.selectedVariable.level === 0 ||
+        this.preparation2dDatas.selectedVariable.noCorrelation)
     ) {
       return 'NO_DATAS.NON_INFORMATIVE_VARIABLE';
     }
