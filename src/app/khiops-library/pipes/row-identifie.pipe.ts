@@ -7,8 +7,7 @@
 import { Pipe, PipeTransform } from '@angular/core';
 
 @Pipe({
-    name: 'rowIdentifierPipe',
-    standalone: false
+  name: 'rowIdentifierPipe',
 })
 export class RowIdentifierPipe implements PipeTransform {
   transform(value: any, ..._args: any[]): any {

@@ -9,8 +9,8 @@
   fxFlexFill
   fxLayout="column"
   tabindex="0"
-  [ngClass]="{ fullscreen: isFullscreen }"
-  [appFullscreenAnimation]="isFullscreen"
+  [ngClass]="{ fullscreen: isFullscreen() }"
+  [appFullscreenAnimation]="isFullscreen()"
 >
   @if (inputDatas?.length > 0) {
     <div fxLayout="row" class="comp-header" #headerContainer>
@@ -51,22 +51,23 @@
                 'ARIA.AG_GRID.OPEN_SEARCH_INPUT' | translate
               }}"
               mat-icon-button
-              [disabled]="this.searchFormVisible"
+              [disabled]="searchFormVisible()"
               (click)="showSearchForm()"
             >
               <mat-icon>search</mat-icon>
             </button>
-            @if (showSearch && this.searchFormVisible) {
+            @if (showSearch && searchFormVisible()) {
               <input
                 #searchInputEl
                 name="searchInput"
                 (keyup)="search()"
                 placeholder="{{ 'GLOBAL.SEARCH' | translate }}"
-                [(ngModel)]="searchInput"
+                [ngModel]="searchInput"
+                (ngModelChange)="onSearchInputChange($event)"
                 autocomplete="off"
               />
             }
-            @if (this.searchFormVisible) {
+            @if (searchFormVisible()) {
               <button
                 attr.aria-label="{{
                   'ARIA.AG_GRID.CLOSE_SEARCH_INPUT' | translate
@@ -113,7 +114,7 @@
           <button
             matBadge="-"
             matBadgeSize="small"
-            [matBadgeHidden]="hideFilterBadge"
+            [matBadgeHidden]="hideFilterBadge()"
             attr.aria-label="{{ 'ARIA.AG_GRID.FILTER_DATAS_GRID' | translate }}"
             matBadgeColor="accent"
             mat-stroked-button
@@ -157,7 +158,7 @@
       </div>
     </div>
   }
-  @if (inputDatas?.length !== 0 && this.agGridVisible) {
+  @if (inputDatas?.length !== 0 && agGridVisible()) {
     <ag-grid-angular
       fxFlex
       [context]="context"

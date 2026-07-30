@@ -15,16 +15,26 @@ import {
   OnChanges,
   ElementRef,
   NgZone,
-  ChangeDetectionStrategy,
+  signal,
 } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 import { AgGridAngular } from '@ag-grid-community/angular';
+import { AgGridModule } from '@ag-grid-community/angular';
+import { FlexLayoutModule } from '@angular/flex-layout';
 import { SelectableComponent } from '@khiops-library/components/selectable/selectable.component';
 import { SelectableService } from '@khiops-library/components/selectable/selectable.service';
-import { TranslateService } from '@ngstack/translate';
+import { TranslateModule, TranslateService } from '@ngstack/translate';
 import { KhiopsLibraryService } from '@khiops-library/providers/khiops-library.service';
 import { ConfigService } from '@khiops-library/providers/config.service';
 import { GridColumnsI } from '@khiops-library/interfaces/grid-columns.interface';
-import { MatCheckboxChange } from '@angular/material/checkbox';
+import { MatCheckboxChange, MatCheckboxModule } from '@angular/material/checkbox';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatBadgeModule } from '@angular/material/badge';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatRippleModule } from '@angular/material/core';
 import {
   Module,
   ColDef,
@@ -46,6 +56,10 @@ import { GridCheckboxEventI } from '@khiops-library/interfaces/events.interface'
 import { DynamicI } from '@khiops-library/interfaces/globals.interface';
 import { AgGridService } from '@khiops-library/components/ag-grid/ag-grid.service';
 import { AgGridLoadingOverlayComponent } from '@khiops-library/components/ag-grid/ag-grid-loading-overlay.component';
+import { BtnFullscreenComponent } from '@khiops-library/components/btn-fullscreen/btn-fullscreen.component';
+import { NoDataComponent } from '@khiops-library/components/no-data/no-data.component';
+import { FullscreenAnimationDirective } from '@khiops-library/directives/fullscreen-animation.directive';
+import { RowIdentifierPipe } from '@khiops-library/pipes/row-identifie.pipe';
 import { Subscription } from 'rxjs';
 
 ModuleRegistry.registerModules([ClientSideRowModelModule]);
@@ -54,8 +68,24 @@ ModuleRegistry.registerModules([ClientSideRowModelModule]);
   selector: 'kl-ag-grid',
   templateUrl: './ag-grid.component.html',
   styleUrls: ['./ag-grid.component.scss'],
-  changeDetection: ChangeDetectionStrategy.Eager,
-  standalone: false,
+  imports: [
+    CommonModule,
+    FormsModule,
+    FlexLayoutModule,
+    TranslateModule,
+    AgGridModule,
+    MatButtonModule,
+    MatIconModule,
+    MatMenuModule,
+    MatCheckboxModule,
+    MatBadgeModule,
+    MatTooltipModule,
+    MatRippleModule,
+    BtnFullscreenComponent,
+    NoDataComponent,
+    FullscreenAnimationDirective,
+    RowIdentifierPipe,
+  ],
 })
 export class AgGridComponent
   extends SelectableComponent
@@ -98,20 +128,19 @@ export class AgGridComponent
     new EventEmitter();
 
   public AppConfig: any;
-  public hideFilterBadge = true;
-  public isFullscreen = false;
-  public searchFormVisible = false;
+  public hideFilterBadge = signal(true);
+  public isFullscreen = signal(false);
+  public searchFormVisible = signal(false);
   public modules: Module[] = [ClientSideRowModelModule];
   public componentType = COMPONENT_TYPES.GRID; // needed to copy datas
   public columnDefs: ColDef[] = [];
-  public searchInput: string | null = '';
   public rowData: any = [];
   public context: {
     componentParent: AgGridComponent;
   } = {
     componentParent: this, // used by CheckboxCellComponent
   };
-  public isSmallDiv: boolean = false;
+  public isSmallDiv = signal(false);
 
   public gridOptions = <GridOptions>{
     suppressAnimationFrame: false, // Changed to false to enable proper virtualization
@@ -140,8 +169,18 @@ export class AgGridComponent
   private gridModes: DynamicI = {}; //  values can be: 'fitToSpace' or 'fitToContent'
   private divWidth: number = 0;
 
-  public agGridVisible = true;
+  public agGridVisible = signal(true);
   public shouldShowPagination = false;
+
+  private readonly searchInputSignal = signal<string>('');
+
+  public get searchInput(): string {
+    return this.searchInputSignal();
+  }
+
+  public set searchInput(value: string | null) {
+    this.searchInputSignal.set(value ?? '');
+  }
 
   constructor(
     public override selectableService: SelectableService,
@@ -188,7 +227,7 @@ export class AgGridComponent
     super.ngAfterViewInit();
 
     if (this.showFullSearch) {
-      this.searchFormVisible = true;
+      this.searchFormVisible.set(true);
     }
     setTimeout(() => {
       // Set the rowSelection configuration using new AG Grid v32+ API
@@ -359,8 +398,9 @@ export class AgGridComponent
       (e) => e.show === false,
     );
     // _id is always hidden
-    this.hideFilterBadge =
-      (hiddenColumns && hiddenColumns.length <= 1) || false;
+    this.hideFilterBadge.set(
+      (hiddenColumns && hiddenColumns.length <= 1) || false,
+    );
   }
 
   /**
@@ -377,7 +417,7 @@ export class AgGridComponent
    * @param isFullscreen - A boolean indicating whether the grid should be in fullscreen mode.
    */
   onToggleFullscreen(isFullscreen: boolean) {
-    this.isFullscreen = isFullscreen;
+    this.isFullscreen.set(isFullscreen);
     this.fitToSpace();
   }
 
@@ -572,7 +612,7 @@ export class AgGridComponent
    * Updates the isSmallDiv property accordingly.
    */
   checkIsSmallDiv() {
-    this.isSmallDiv = this.divWidth <= 500;
+    this.isSmallDiv.set(this.divWidth <= 500);
   }
 
   /**
@@ -581,9 +621,9 @@ export class AgGridComponent
    * Sets the focus on the search input element after a short delay.
    */
   showSearchForm() {
-    this.searchFormVisible = true;
+    this.searchFormVisible.set(true);
 
-    if (this.searchFormVisible) {
+    if (this.searchFormVisible()) {
       this.divWidth -= 100;
     } else {
       this.divWidth += 100;
@@ -607,8 +647,12 @@ export class AgGridComponent
     this.searchInput = '';
     this.search();
     if (!this.showFullSearch) {
-      this.searchFormVisible = false;
+      this.searchFormVisible.set(false);
     }
+  }
+
+  onSearchInputChange(value: string) {
+    this.searchInput = value;
   }
 
   /**

@@ -66,7 +66,6 @@ import { IconComponent } from './components/icon/icon.component';
 import { DistributionGraphComponent } from './components/distribution-graph/distribution-graph.component';
 import { ScrollableGraphComponent } from './components/scrollable-graph/scrollable-graph.component';
 import { ChartComponent } from './components/chart/chart.component';
-import { RowIdentifierPipe } from './pipes/row-identifie.pipe';
 import { ImportFileLoaderComponent } from './components/import-file-loader/import-file-loader.component';
 import { WatchResizeComponent } from './components/watch-resize/watch-resize.component';
 import { ConfirmDialogComponent } from './components/confirm-dialog/confirm-dialog.component';
@@ -152,6 +151,7 @@ import EnTransaltion from '../../assets/i18n/en.json';
     InformationsBlockComponent,
     GaugeComponent,
     GravityCellComponent,
+    AgGridComponent,
     AgGridLoadingOverlayComponent,
     CheckboxCellComponent,
     IconCellComponent,
@@ -166,12 +166,10 @@ import EnTransaltion from '../../assets/i18n/en.json';
     ConfirmDialogComponent,
     HeaderToolsComponent,
     GraphHeaderComponent,
-    RowIdentifierPipe,
     HeaderTitleComponent,
     LegendComponent,
     SelectableTabComponent,
     MatrixComponent,
-    AgGridComponent,
     MatrixTooltipComponent,
     MatrixToggleComponent,
     MatrixModeComponent,
@@ -227,7 +225,6 @@ import EnTransaltion from '../../assets/i18n/en.json';
     ProjectLogsComponent,
     // Pipes
     ToPrecisionPipe,
-    RowIdentifierPipe,
     // Directives
     MenuFocusSelectedDirective,
     FullscreenAnimationDirective,
