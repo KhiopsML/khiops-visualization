@@ -5,10 +5,9 @@
  -->
 
 <div class="menu">
-  <a mat-stroked-button color="primary" routerLink="visualization">
-    Khiops-visualization
-  </a>
-  <a mat-stroked-button color="primary" routerLink="covisualization">
-    Khiops-covisualization
-  </a>
+  @for (entry of menuEntries(); track entry.path) {
+    <a mat-stroked-button color="primary" [routerLink]="entry.path">
+      {{ entry.label }}
+    </a>
+  }
 </div>

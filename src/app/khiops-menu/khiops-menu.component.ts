@@ -4,16 +4,28 @@
  * at https://spdx.org/licenses/BSD-3-Clause-Clear.html or see the "LICENSE" file for more details.
  */
 
-import { Component, ChangeDetectionStrategy } from '@angular/core';
+import { Component, signal } from '@angular/core';
+import { MatButtonModule } from '@angular/material/button';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'khiops-menu',
   templateUrl: './khiops-menu.component.html',
   styleUrls: ['./khiops-menu.component.scss'],
-  changeDetection: ChangeDetectionStrategy.Eager,
-  standalone: false,
+  imports: [MatButtonModule, RouterLink],
 })
 /**
  * Main Menu component used to choose Visu or Covisu in dev mode
  */
-export class KhiopsMenuComponent {}
+export class KhiopsMenuComponent {
+  readonly menuEntries = signal([
+    {
+      path: 'visualization',
+      label: 'Khiops-visualization',
+    },
+    {
+      path: 'covisualization',
+      label: 'Khiops-covisualization',
+    },
+  ]);
+}

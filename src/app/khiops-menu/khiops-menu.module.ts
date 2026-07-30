@@ -7,14 +7,10 @@
 import { RouterModule } from '@angular/router';
 import { KhiopsMenuComponent } from './khiops-menu.component';
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { MatButtonModule } from '@angular/material/button';
 
 @NgModule({
-  declarations: [KhiopsMenuComponent],
   imports: [
-    CommonModule,
-    MatButtonModule, // for mat-stroked-button
+    KhiopsMenuComponent,
     RouterModule.forChild([{ path: '', component: KhiopsMenuComponent }]),
   ],
 })
