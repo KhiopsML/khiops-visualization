@@ -38,7 +38,7 @@ export class Preparation2dVariableModel implements VariablePairStatistics {
 
     this.variableType = VARIABLE_TYPES.PREPARATION_2D;
 
-    if (object.variables < 2 || object.level1 === 0 || object.level2 === 0) {
+    if (object.variables < 2) {
       this.noCorrelation = true;
     } else {
       this.noCorrelation = false;
