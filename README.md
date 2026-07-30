@@ -165,6 +165,12 @@ Run e2e tests with Cypress:
 yarn e2e
 ```
 
+Run e2e headless file
+
+```bash
+yarn cypress run --spec "cypress/e2e/visualization/preparation-2d-non-informative-variable.spec.cy.ts" --browser chrome --headless
+```
+
 ### Bundle Compilation
 
 ```powershell
