@@ -4,7 +4,8 @@
  * at https://spdx.org/licenses/BSD-3-Clause-Clear.html or see the "LICENSE" file for more details.
  */
 
-import { Component, ChangeDetectionStrategy } from '@angular/core';
+import { Component, computed, signal } from '@angular/core';
+import { NgClass } from '@angular/common';
 import { AgRendererComponent } from '@ag-grid-community/angular';
 import { ICellRendererParams } from '@ag-grid-community/core';
 
@@ -12,35 +13,33 @@ import { ICellRendererParams } from '@ag-grid-community/core';
   selector: 'kl-gravity-cell',
   templateUrl: './gravity-cell.component.html',
   styleUrls: ['./gravity-cell.component.scss'],
-  changeDetection: ChangeDetectionStrategy.Eager,
-  standalone: false,
+  imports: [NgClass],
 })
 export class GravityCellComponent implements AgRendererComponent {
   public params: ICellRendererParams | undefined;
-  public gravityValue: string = '';
-  public gravityClass: string = '';
+  public gravityValue = signal('info');
+  public gravityClass = computed(() => {
+    const gravity = this.gravityValue().toLowerCase();
+
+    if (gravity === 'error') {
+      return 'gravity-error';
+    }
+
+    if (gravity === 'warning') {
+      return 'gravity-warning';
+    }
+
+    return 'gravity-default';
+  });
 
   agInit(params: ICellRendererParams): void {
     this.params = params;
-    this.gravityValue = params.value || 'info';
-    this.setGravityClass();
+    this.gravityValue.set(String(params.value || 'info'));
   }
 
   refresh(params: ICellRendererParams): boolean {
     this.params = params;
-    this.gravityValue = params.value || 'info';
-    this.setGravityClass();
+    this.gravityValue.set(String(params.value || 'info'));
     return true;
-  }
-
-  private setGravityClass(): void {
-    const gravity = this.gravityValue.toLowerCase();
-    if (gravity === 'error') {
-      this.gravityClass = 'gravity-error';
-    } else if (gravity === 'warning') {
-      this.gravityClass = 'gravity-warning';
-    } else {
-      this.gravityClass = 'gravity-default';
-    }
   }
 }

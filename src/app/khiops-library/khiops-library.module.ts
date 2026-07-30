@@ -151,6 +151,7 @@ import EnTransaltion from '../../assets/i18n/en.json';
     ChartComponent,
     InformationsBlockComponent,
     GaugeComponent,
+    GravityCellComponent,
   ],
   declarations: [
     NumberPrecisionComponent,
@@ -179,7 +180,6 @@ import EnTransaltion from '../../assets/i18n/en.json';
     ImportFileLoaderComponent,
     ProjectSummaryComponent,
     ProjectLogsComponent,
-    GravityCellComponent,
     MenuFocusSelectedDirective,
   ],
   providers: [
