@@ -7,13 +7,17 @@
 import {
   Component,
   NgZone,
-  Input,
-  ChangeDetectionStrategy,
+  computed,
+  input,
   OnInit,
   OnDestroy,
   HostListener,
-  ChangeDetectorRef,
+  signal,
 } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { FlexModule } from '@angular/flex-layout';
+import { MatIconModule } from '@angular/material/icon';
+import { TranslateModule } from '@ngstack/translate';
 
 import { SelectableComponent } from '../../components/selectable/selectable.component';
 import { SelectableService } from '../../components/selectable/selectable.service';
@@ -26,24 +30,36 @@ import {
   DISPLAY_TYPE,
 } from '@khiops-library/enum/info-data-types';
 import { UtilsService } from '@khiops-library/providers/utils.service';
+import { GaugeComponent } from '../gauge/gauge.component';
+import { WarningInformationComponent } from '../warning-information/warning-information.component';
+import { NoDataComponent } from '../no-data/no-data.component';
+import { ToPrecisionPipe } from '../../pipes/to-precision.pipe';
 
 @Component({
   selector: 'kl-informations-block',
   templateUrl: './informations-block.component.html',
   styleUrls: ['./informations-block.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  standalone: false,
+  imports: [
+    CommonModule,
+    FlexModule,
+    MatIconModule,
+    TranslateModule,
+    GaugeComponent,
+    WarningInformationComponent,
+    NoDataComponent,
+    ToPrecisionPipe,
+  ],
 })
 export class InformationsBlockComponent
   extends SelectableComponent
   implements OnInit, OnDestroy
 {
-  @Input() public inputDatas: InfosDatasI[] | undefined;
-  @Input() public title: string = '';
-  @Input() public icon = 'tune';
-  @Input() public showFilteredVariablesWarning: boolean = false;
+  readonly inputDatas = input<InfosDatasI[] | undefined>(undefined);
+  readonly title = input<string>('');
+  readonly icon = input<string>('tune');
+  readonly showFilteredVariablesWarning = input<boolean>(false);
   public componentType = COMPONENT_TYPES.INFORMATIONS; // needed to copy datas
-  public gaugeSize: number = 0;
+  readonly gaugeSize = signal<number>(0);
 
   metricTypes = [
     INFO_DATA_TYPES.INSTANCES,
@@ -62,7 +78,6 @@ export class InformationsBlockComponent
     public override selectableService: SelectableService,
     public override ngzone: NgZone,
     public override configService: ConfigService,
-    private cdr: ChangeDetectorRef,
   ) {
     super(selectableService, ngzone, configService);
   }
@@ -86,9 +101,8 @@ export class InformationsBlockComponent
   private updateGaugeSize() {
     if (typeof window !== 'undefined') {
       const newSize = UtilsService.isSmallScreen() ? 60 : 70;
-      if (this.gaugeSize !== newSize) {
-        this.gaugeSize = newSize;
-        this.cdr.detectChanges(); // Trigger change detection
+      if (this.gaugeSize() !== newSize) {
+        this.gaugeSize.set(newSize);
       }
     }
   }
@@ -96,39 +110,41 @@ export class InformationsBlockComponent
   /**
    * Gets gauge data (sample percentage)
    */
-  get gaugeData(): ProcessedInfoDataI | undefined {
-    const data = this.inputDatas?.find(
+  readonly gaugeData = computed<ProcessedInfoDataI | undefined>(() => {
+    const data = this.inputDatas()?.find(
       (data) => data.title === INFO_DATA_TYPES.SAMPLE_PERCENTAGE,
     );
 
-    if (!data) return undefined;
+    if (!data) {
+      return undefined;
+    }
 
     return {
       ...data,
       displayType: DISPLAY_TYPE.GAUGE,
     };
-  }
+  });
 
   /**
    * Gets metric data (instances and evaluated variables)
    */
-  get metricData(): ProcessedInfoDataI[] {
+  readonly metricData = computed<ProcessedInfoDataI[]>(() => {
     return (
-      this.inputDatas
+      this.inputDatas()
         ?.filter((data) => this.metricTypes.includes(data.title as any))
         .map((data) => ({
           ...data,
           displayType: DISPLAY_TYPE.METRIC,
         })) || []
     );
-  }
+  });
 
   /**
    * Gets table data (all other information)
    */
-  get tableData(): ProcessedInfoDataI[] {
+  readonly tableData = computed<ProcessedInfoDataI[]>(() => {
     const filteredData =
-      this.inputDatas
+      this.inputDatas()
         ?.filter(
           (data) =>
             !this.metricTypes.includes(data.title as any) &&
@@ -153,7 +169,7 @@ export class InformationsBlockComponent
     }
 
     return filteredData;
-  }
+  });
 
   /**
    * Get the percentage value from the input data for sample percentage

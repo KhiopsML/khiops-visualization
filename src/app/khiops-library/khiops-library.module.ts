@@ -149,6 +149,8 @@ import EnTransaltion from '../../assets/i18n/en.json';
     LibVersionComponent,
     GraphOptionsMenuComponent,
     ChartComponent,
+    InformationsBlockComponent,
+    GaugeComponent,
   ],
   declarations: [
     NumberPrecisionComponent,
@@ -164,8 +166,6 @@ import EnTransaltion from '../../assets/i18n/en.json';
     HeaderTitleComponent,
     LegendComponent,
     SelectableTabComponent,
-    GaugeComponent,
-    InformationsBlockComponent,
     MatrixComponent,
     AgGridComponent,
     AgGridLoadingOverlayComponent,

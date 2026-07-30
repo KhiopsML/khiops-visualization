@@ -4,20 +4,12 @@
  * at https://spdx.org/licenses/BSD-3-Clause-Clear.html or see the "LICENSE" file for more details.
  */
 
-import {
-  ChangeDetectionStrategy,
-  Component,
-  computed,
-  input,
-  numberAttribute,
-} from '@angular/core';
+import { Component, computed, input, numberAttribute } from '@angular/core';
 
 @Component({
   selector: 'kl-gauge',
   templateUrl: './gauge.component.html',
   styleUrls: ['./gauge.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  standalone: false,
 })
 export class GaugeComponent {
   private static readonly defaultSize = 60;
