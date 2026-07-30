@@ -4,23 +4,20 @@
  * at https://spdx.org/licenses/BSD-3-Clause-Clear.html or see the "LICENSE" file for more details.
  */
 
-import { Component, Input, ChangeDetectionStrategy } from '@angular/core';
+import { Component, computed, inject, input } from '@angular/core';
 import { SafeHtml, DomSanitizer } from '@angular/platform-browser';
 import { ICONS } from './icons.list';
 
 @Component({
   selector: 'kl-icon',
-  changeDetection: ChangeDetectionStrategy.Eager,
-  template: `<span style="display: flex;" [innerHTML]="svgContent"></span>`,
+  template: `<span style="display: flex;" [innerHTML]="svgContent()"></span>`,
 })
 export class IconComponent {
-  @Input() set name(value: string) {
-    this.svgContent = this.sanitizer.bypassSecurityTrustHtml(
-      ICONS[value] ?? '',
-    );
-  }
-  @Input() size: number = 22;
+  readonly name = input<string>('');
+  readonly size = input<number>(22);
 
-  svgContent: SafeHtml = '';
-  constructor(private sanitizer: DomSanitizer) {}
+  private readonly sanitizer = inject(DomSanitizer);
+  readonly svgContent = computed<SafeHtml>(() => {
+    return this.sanitizer.bypassSecurityTrustHtml(ICONS[this.name()] ?? '');
+  });
 }
