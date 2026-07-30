@@ -376,10 +376,21 @@ export class CopyService {
   getDescriptionsDatas(selectedArea: DynamicI) {
     let formattedDatas = '';
 
-    const title = selectedArea.title();
-    const value = selectedArea.value();
-    formattedDatas += title + '\n';
-    formattedDatas += value + '\n';
+    const title =
+      typeof selectedArea?.title === 'function'
+        ? selectedArea.title()
+        : selectedArea?.title;
+    const value =
+      typeof selectedArea?.value === 'function'
+        ? selectedArea.value()
+        : selectedArea?.value;
+
+    if (title !== undefined && title !== null) {
+      formattedDatas += title + '\n';
+    }
+    if (value !== undefined && value !== null) {
+      formattedDatas += value + '\n';
+    }
 
     return formattedDatas;
   }
