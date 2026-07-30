@@ -156,10 +156,10 @@ import EnTransaltion from '../../assets/i18n/en.json';
     AgGridLoadingOverlayComponent,
     CheckboxCellComponent,
     IconCellComponent,
+    DialogWrapperComponent,
   ],
   declarations: [
     NumberPrecisionComponent,
-    DialogWrapperComponent,
     MatrixContrastSettingComponent,
     KhiopsLibraryComponent,
     WatchResizeComponent,
