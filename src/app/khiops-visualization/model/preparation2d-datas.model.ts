@@ -13,12 +13,15 @@ export class Preparation2dDatasModel {
   isAxisInverted = false;
   selectedVariable?: Preparation2dVariableModel = undefined;
   selectedCellIndex: number = 0;
-  selectedCell!: CellModel;
+  selectedCell?: CellModel = undefined;
   matrixDatas!: MatrixDatasModel | undefined;
   isTargetAvailable = false;
-  currentCellDatas!: {
+  currentCellDatas: {
     values: any[][]; // Dynamic values according to the input datas
     displayedColumns: GridColumnsI[][];
+  } = {
+    values: [[], []],
+    displayedColumns: [[], []],
   };
   isSupervised = false;
 }

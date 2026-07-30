@@ -134,6 +134,7 @@ export class Preparation2dDatasService {
     }
     if (this.preparation2dDatas) {
       this.preparation2dDatas.selectedCellIndex = index;
+      this.preparation2dDatas.selectedCell = undefined;
     }
     if (this.preparation2dDatas?.matrixDatas?.matrixCellDatas) {
       const currentCell =
@@ -142,7 +143,7 @@ export class Preparation2dDatasService {
         );
       if (currentCell) {
         this.setSelectedCell(currentCell);
-      }
+      } 
     }
   }
 
@@ -207,6 +208,11 @@ export class Preparation2dDatasService {
         this.getVariableFromNames(name1, name2);
       if (variable && this.preparation2dDatas) {
         this.preparation2dDatas.selectedVariable = variable;
+        this.preparation2dDatas.selectedCell = undefined;
+        this.preparation2dDatas.currentCellDatas = {
+          values: [[], []],
+          displayedColumns: [[], []],
+        };
         this.setSelectedCellIndex(0);
         return this.preparation2dDatas?.selectedVariable;
       }
@@ -389,8 +395,8 @@ export class Preparation2dDatasService {
 
     if (this.preparation2dDatas) {
       this.preparation2dDatas.currentCellDatas = {
-        values: [],
-        displayedColumns: [],
+        values: [[], []],
+        displayedColumns: [[], []],
       };
     }
 
