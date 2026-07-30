@@ -4,28 +4,22 @@
  * at https://spdx.org/licenses/BSD-3-Clause-Clear.html or see the "LICENSE" file for more details.
  */
 
-import {
-  Component,
-  EventEmitter,
-  Input,
-  Output,
-  ChangeDetectionStrategy,
-} from '@angular/core';
+import { Component, model } from '@angular/core';
+import { FlexLayoutModule } from '@angular/flex-layout';
 import { MatSlideToggleChange } from '@angular/material/slide-toggle';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { TranslateModule } from '@ngstack/translate';
 
 @Component({
   selector: 'kl-scale-persistence-setting',
   templateUrl: './scale-persistence-setting.component.html',
   styleUrls: ['./scale-persistence-setting.component.scss'],
-  changeDetection: ChangeDetectionStrategy.Eager,
-  standalone: false,
+  imports: [FlexLayoutModule, MatSlideToggleModule, TranslateModule],
 })
 export class ScalePersistenceSettingComponent {
-  @Input() persistScaleOptions: boolean = false;
-  @Output() persistScaleOptionsChange = new EventEmitter<boolean>();
+  persistScaleOptions = model<boolean>(false);
 
   onChange(newValue: MatSlideToggleChange) {
-    this.persistScaleOptions = newValue.checked;
-    this.persistScaleOptionsChange.emit(newValue.checked);
+    this.persistScaleOptions.set(newValue.checked);
   }
 }

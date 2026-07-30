@@ -14,7 +14,7 @@
   <div fxLayout="row" fxLayoutAlign="start center">
     <mat-slide-toggle
       color="primary"
-      [(ngModel)]="persistScaleOptions"
+      [checked]="persistScaleOptions()"
       (change)="onChange($event)"
     >
       {{ 'SCALE_PERSISTENCE.MESSAGE' | translate }}

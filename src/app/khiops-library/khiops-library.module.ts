@@ -136,6 +136,7 @@ import EnTransaltion from '../../assets/i18n/en.json';
     ToPrecisionPipe,
     NoDataComponent,
     BtnFullscreenComponent,
+    ScalePersistenceSettingComponent,
     // Standalone directives
     FullscreenAnimationDirective,
     KeyboardTooltipComponent,
@@ -153,7 +154,6 @@ import EnTransaltion from '../../assets/i18n/en.json';
     NumberPrecisionComponent,
     DialogWrapperComponent,
     MatrixContrastSettingComponent,
-    ScalePersistenceSettingComponent,
     KhiopsLibraryComponent,
     WatchResizeComponent,
     SelectableComponent,
