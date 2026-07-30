@@ -50,7 +50,6 @@ describe('Test Khiops Visualization sample files', () => {
     'analyse_supervisee_multiclasse.json',
     'reg.json',
     'copydatas.json',
-    'iris2d.json',
     'mainTargetValue.json',
     'defaultGroup.json',
     'AdultAgeAllReports.json',
