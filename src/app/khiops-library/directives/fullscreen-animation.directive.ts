@@ -20,7 +20,6 @@ import {
  */
 @Directive({
   selector: '[appFullscreenAnimation]',
-  standalone: true,
 })
 export class FullscreenAnimationDirective implements OnChanges, OnDestroy {
   @Input() appFullscreenAnimation: boolean = false;

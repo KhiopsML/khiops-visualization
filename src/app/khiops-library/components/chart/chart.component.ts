@@ -31,7 +31,6 @@ import { ChartManagerService } from './chart-manager.service';
   selector: 'kl-chart',
   templateUrl: './chart.component.html',
   styleUrls: ['./chart.component.scss'],
-  standalone: true,
   imports: [FlexLayoutModule, MatProgressSpinnerModule],
   providers: [ChartManagerService],
 })

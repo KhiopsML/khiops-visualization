@@ -8,7 +8,6 @@ import { Directive, ElementRef, OnInit } from '@angular/core';
 
 @Directive({
   selector: '[appDraggableDialog]',
-  standalone: true,
 })
 export class DraggableDialogDirective implements OnInit {
   constructor(private elementRef: ElementRef) {}
