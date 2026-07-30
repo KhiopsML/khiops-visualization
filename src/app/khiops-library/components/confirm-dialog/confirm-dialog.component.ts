@@ -4,39 +4,33 @@
  * at https://spdx.org/licenses/BSD-3-Clause-Clear.html or see the "LICENSE" file for more details.
  */
 
-import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { Component, computed, input, inject } from '@angular/core';
+import { FlexLayoutModule } from '@angular/flex-layout';
+import { MatButtonModule } from '@angular/material/button';
 import { DialogService } from '@khiops-library/providers/dialog.service';
-import { TranslateService } from '@ngstack/translate';
+import { TranslateModule, TranslateService } from '@ngstack/translate';
 
 @Component({
   selector: 'kl-confirm-dialog',
   templateUrl: './confirm-dialog.component.html',
   styleUrls: ['./confirm-dialog.component.scss'],
-  changeDetection: ChangeDetectionStrategy.Eager,
-  standalone: false,
+  imports: [FlexLayoutModule, MatButtonModule, TranslateModule],
 })
-export class ConfirmDialogComponent implements OnInit {
-  public title: string = '';
-  public message: string = '';
-  public displayRejectBtn: boolean = false;
-  public displayCancelBtn: boolean = true;
-  public displayYesToAllBtn: boolean = false;
-  public displayNoToAllBtn: boolean = false;
-  public confirmButtonText: string;
-  public confirmTranslation: string = '';
+export class ConfirmDialogComponent {
+  public readonly title = input<string>('');
+  public readonly message = input<string>('');
+  public readonly displayRejectBtn = input<boolean>(false);
+  public readonly displayCancelBtn = input<boolean>(true);
+  public readonly displayYesToAllBtn = input<boolean>(false);
+  public readonly displayNoToAllBtn = input<boolean>(false);
+  public readonly confirmTranslation = input<string>('');
 
-  constructor(
-    private dialogService: DialogService,
-    private translate: TranslateService,
-  ) {
-    this.confirmButtonText = this.translate.get('GLOBAL.YES');
-  }
+  private readonly dialogService = inject(DialogService);
+  private readonly translate = inject(TranslateService);
 
-  ngOnInit() {
-    if (this.confirmTranslation) {
-      this.confirmButtonText = this.confirmTranslation;
-    }
-  }
+  public readonly confirmButtonText = computed(
+    () => this.confirmTranslation() || this.translate.get('GLOBAL.YES'),
+  );
 
   confirm() {
     this.dialogService.closeDialog('confirm');

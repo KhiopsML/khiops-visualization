@@ -84,7 +84,9 @@ export class DialogWrapperComponent
     // Pass data to component SYNCHRONOUSLY before change detection
     // This ensures data is available in component's ngAfterViewInit
     if (content.data && this.componentRef.instance) {
-      Object.assign(this.componentRef.instance, content.data);
+      Object.entries(content.data).forEach(([key, value]) => {
+        this.componentRef?.setInput(key, value);
+      });
     }
 
     // Set component host element to fill available space

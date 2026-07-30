@@ -5,34 +5,34 @@
  -->
 
 <div id="confirm-dialog-comp">
-  @if (title) {
+  @if (title()) {
     <h1>
-      {{ title }}
+      {{ title() }}
     </h1>
   }
   <span>
-    {{ message }}
+    {{ message() }}
   </span>
   <div fxLayout="row" fxLayoutAlign="end center">
     <button (click)="confirm()" mat-flat-button color="warn">
-      {{ confirmButtonText }}
+      {{ confirmButtonText() }}
     </button>
-    @if (displayRejectBtn) {
+    @if (displayRejectBtn()) {
       <button mat-stroked-button (click)="reject()">
         {{ 'GLOBAL.NO' | translate }}
       </button>
     }
-    @if (displayCancelBtn) {
+    @if (displayCancelBtn()) {
       <button mat-stroked-button (click)="cancel()">
         {{ 'GLOBAL.CANCEL' | translate }}
       </button>
     }
-    @if (displayYesToAllBtn) {
+    @if (displayYesToAllBtn()) {
       <button mat-stroked-button (click)="confirmAll()">
         {{ 'GLOBAL.YES_TO_ALL' | translate }}
       </button>
     }
-    @if (displayNoToAllBtn) {
+    @if (displayNoToAllBtn()) {
       <button mat-stroked-button (click)="rejectAll()">
         {{ 'GLOBAL.NO_TO_ALL' | translate }}
       </button>
