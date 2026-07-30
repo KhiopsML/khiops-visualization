@@ -4,7 +4,8 @@
  * at https://spdx.org/licenses/BSD-3-Clause-Clear.html or see the "LICENSE" file for more details.
  */
 
-import { Component, ChangeDetectionStrategy } from '@angular/core';
+import { Component } from '@angular/core';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { ILoadingOverlayAngularComp } from '@ag-grid-community/angular';
 
 @Component({
@@ -14,8 +15,7 @@ import { ILoadingOverlayAngularComp } from '@ag-grid-community/angular';
     color="accent"
     mode="indeterminate"
   ></mat-spinner>`,
-  changeDetection: ChangeDetectionStrategy.Eager,
-  standalone: false,
+  imports: [MatProgressSpinnerModule],
 })
 export class AgGridLoadingOverlayComponent implements ILoadingOverlayAngularComp {
   agInit(): void {

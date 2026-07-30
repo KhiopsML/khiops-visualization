@@ -4,7 +4,7 @@
  * at https://spdx.org/licenses/BSD-3-Clause-Clear.html or see the "LICENSE" file for more details.
  */
 
-import { Component, ChangeDetectionStrategy } from '@angular/core';
+import { Component } from '@angular/core';
 import { AgRendererComponent } from '@ag-grid-community/angular';
 import { ICellRendererParams } from '@ag-grid-community/core';
 
@@ -12,8 +12,6 @@ import { ICellRendererParams } from '@ag-grid-community/core';
   selector: 'kl-border-text-cell',
   styleUrls: ['./border-text-cell.component.scss'],
   templateUrl: './border-text-cell.component.html',
-  changeDetection: ChangeDetectionStrategy.Eager,
-  standalone: false,
 })
 export class BorderTextCellComponent implements AgRendererComponent {
   public params: ICellRendererParams | undefined;
