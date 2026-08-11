@@ -106,7 +106,7 @@
     "@types/mousetrap": "^1.6.15",
     "@types/node": "^25.9.5",
     "autoprefixer": "^10.5.4",
-    "cypress": "^15.20.0",
+    "cypress": "^15.20.1",
     "jasmine-core": "^6.3.0",
     "karma": "^6.4.4",
     "karma-chrome-launcher": "^3.2.0",
