@@ -180,13 +180,17 @@ export class TreeNodeModel {
       this.innerValues.push(mergedGroups);
     } else {
       // it's a node
-      // get valueGroups of children
+      // get valueGroups of children — build lookup Map to avoid O(n) find per child
+      const vgMap = new Map<string, any>();
+      if (dimension.valueGroups) {
+        for (const vg of dimension.valueGroups) {
+          vgMap.set(vg.cluster, vg);
+        }
+      }
       for (let index = 0; index < this.childrenList.length; index++) {
         const node = this.childrenList[index];
         if (node !== this.name) {
-          const valueGroups = dimension.valueGroups?.find(
-            (child) => child.cluster === node,
-          );
+          const valueGroups = vgMap.get(node!);
           if (valueGroups) {
             // Merge identical elements in innerValues
             const mergedGroups = UtilsService.mergeIdenticalValues(

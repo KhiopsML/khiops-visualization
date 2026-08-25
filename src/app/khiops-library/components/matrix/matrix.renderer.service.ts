@@ -20,6 +20,8 @@ import { DynamicI } from '@khiops-library/interfaces/globals.interface';
 export class MatrixRendererService {
   private canvasPattern: HTMLCanvasElement | undefined;
   private innerVariableFilterPattern: HTMLCanvasElement | undefined;
+  private selectedInnerVarsSet: Set<string> | undefined;
+  private selectedInnerVarsSetSource: string[] | undefined;
 
   constructor() {}
 
@@ -571,21 +573,26 @@ export class MatrixRendererService {
       ? cellData.xAxisFullPart
       : [];
 
-    // Check if any value in selectedInnerVariables matches a value in yAxisFullPart or xAxisFullPart.
-    // Values are formatted as "InnerVarName PartName" (e.g. "V1 B0"), so we check for exact equality
-    // or a prefix match followed by a space to avoid "V1" matching "V11 B0".
-    const matchesInnerVar = (value: string, innerVar: string): boolean =>
-      value === innerVar || value.startsWith(innerVar + ' ');
+    // Build a Set for O(1) lookups instead of nested O(n) .some() calls
+    if (
+      !this.selectedInnerVarsSet ||
+      this.selectedInnerVarsSetSource !== selectedInnerVariables
+    ) {
+      this.selectedInnerVarsSet = new Set(selectedInnerVariables);
+      this.selectedInnerVarsSetSource = selectedInnerVariables;
+    }
+    const innerVarsSet = this.selectedInnerVarsSet;
 
-    const containsInYAxis = yAxisFullPart.some((value: string) =>
-      selectedInnerVariables.some((innerVar) => matchesInnerVar(value, innerVar)),
-    );
+    // Check if any value matches a selected inner variable.
+    // Values are formatted as "InnerVarName PartName" (e.g. "V1 B0"),
+    // so we check for exact match or prefix before space.
+    const matchesAny = (value: string): boolean => {
+      if (innerVarsSet.has(value)) return true;
+      const spaceIdx = value.indexOf(' ');
+      return spaceIdx !== -1 && innerVarsSet.has(value.substring(0, spaceIdx));
+    };
 
-    const containsInXAxis = xAxisFullPart.some((value: string) =>
-      selectedInnerVariables.some((innerVar) => matchesInnerVar(value, innerVar)),
-    );
-
-    return containsInYAxis || containsInXAxis;
+    return yAxisFullPart.some(matchesAny) || xAxisFullPart.some(matchesAny);
   }
 
   /**

@@ -684,16 +684,20 @@ export class MatrixComponent extends SelectableComponent implements OnChanges {
       } else {
         // KC
         this.selectedCells = [];
+        // Use Sets for O(1) lookups instead of O(n) .includes() on large childrenList arrays
+        const xSet = this.selectedNodes?.[0]?.childrenList
+          ? new Set(this.selectedNodes[0].childrenList)
+          : undefined;
+        const ySet = this.selectedNodes?.[1]?.childrenList
+          ? new Set(this.selectedNodes[1].childrenList)
+          : undefined;
         const cellsLength = this.inputDatas.matrixCellDatas.length;
         for (let index = 0; index < cellsLength; index++) {
           const cellDatas = this.inputDatas.matrixCellDatas[index];
 
-          // Manage selected cell (different for KV and KC)
           if (
-            this.selectedNodes?.[0]?.childrenList.includes(
-              cellDatas.xaxisPart,
-            ) &&
-            this.selectedNodes?.[1]?.childrenList.includes(cellDatas.yaxisPart)
+            xSet?.has(cellDatas.xaxisPart) &&
+            ySet?.has(cellDatas.yaxisPart)
           ) {
             this.selectedCells.push(cellDatas);
           }
