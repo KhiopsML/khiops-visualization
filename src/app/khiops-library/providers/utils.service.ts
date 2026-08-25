@@ -896,39 +896,40 @@ export class UtilsService {
 
   /**
    * Converts a flat array of objects into a nested tree structure based on parent-child relationships.
+   * Uses a single-pass Map lookup for O(n) performance instead of O(n²) repeated filtering.
    *
    * @param array - The flat array of objects to be transformed.
-   * @param parent - The parent object used to find its children. Defaults to an object with an empty `cluster` property.
-   * @param tree - The resulting tree structure. Defaults to an empty array.
-   * @returns The nested tree structure.
+   * @returns The nested tree structure (root nodes whose parentCluster is '').
    */
-  static unflatten(array: any[], parent?: any, tree?: any) {
-    tree = typeof tree !== 'undefined' ? tree : [];
-    parent =
-      typeof parent !== 'undefined'
-        ? parent
-        : {
-            cluster: '',
-          };
-
-    const children = this.fastFilter(
-      array,
-      (child: any) => child.parentCluster === parent.cluster,
-    );
-
-    if (!this.isEmpty(children)) {
-      if (parent.cluster === '') {
-        tree = children;
-      } else {
-        parent['children'] = children;
+  static unflatten(array: any[]): any[] {
+    const childrenMap = new Map<string, any[]>();
+    const arrayLength = array.length;
+    for (let i = 0; i < arrayLength; i++) {
+      const node = array[i];
+      const parentKey = node.parentCluster ?? '';
+      let siblings = childrenMap.get(parentKey);
+      if (!siblings) {
+        siblings = [];
+        childrenMap.set(parentKey, siblings);
       }
-      const childrenLength = children.length;
-      for (let i = 0; i < childrenLength; i++) {
-        this.unflatten(array, children[i]);
-      }
+      siblings.push(node);
     }
 
-    return tree;
+    const assignChildren = (node: any) => {
+      const kids = childrenMap.get(node.cluster);
+      if (kids && kids.length > 0) {
+        node['children'] = kids;
+        for (let i = 0; i < kids.length; i++) {
+          assignChildren(kids[i]);
+        }
+      }
+    };
+
+    const roots = childrenMap.get('') || [];
+    for (let i = 0; i < roots.length; i++) {
+      assignChildren(roots[i]);
+    }
+    return roots;
   }
 
   /**
@@ -1671,17 +1672,23 @@ export class UtilsService {
    * @returns An array of arrays containing the merged identical values.
    */
   static mergeIdenticalValues(values: string[] | undefined) {
-    return this.formatValueGroup(values ?? [])?.reduce((acc, current) => {
-      const existing = acc?.find((item) => item[0] === current?.[0]);
+    const formatted = this.formatValueGroup(values ?? []);
+    if (!formatted) return formatted;
+    const map = new Map<any, any>();
+    const result: any[] = [];
+    for (let i = 0; i < formatted.length; i++) {
+      const current = formatted[i];
+      const key = current?.[0];
+      const existing = map.get(key);
       if (existing) {
         // @ts-ignore
         existing[1] = existing[1].concat(current[1]);
       } else {
-        // @ts-ignore
-        acc?.push(current);
+        map.set(key, current);
+        result.push(current);
       }
-      return acc;
-    }, []);
+    }
+    return result;
   }
 
   /**
