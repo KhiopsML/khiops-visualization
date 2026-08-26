@@ -432,3 +432,8 @@ button.mat-accent {
 .mat-mdc-select-panel {
   background-color: white !important;
 }
+
+.mat-mdc-menu-panel {
+  max-height: 90vh;
+  margin-bottom: 1rem;
+}
