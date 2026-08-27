@@ -15,10 +15,33 @@
       <mat-select
         [(value)]="selectedInnerVariables"
         multiple
+        panelClass="inner-variables-filter-panel"
         (selectionChange)="onInnerVariablesSelected($event)"
+        (openedChange)="onSelectOpenedChange($event)"
       >
-        <!-- Select All option as first item -->
-        <mat-option
+        <!-- Search input to filter within all inner variables -->
+        <div class="inner-variables-search" (click)="$event.stopPropagation()">
+          <input
+            matInput
+            type="text"
+            class="inner-variables-search-input"
+            [placeholder]="'GLOBAL.SEARCH' | translate"
+            [(ngModel)]="filterText"
+            (ngModelChange)="onFilterTextChange($event)"
+            (click)="$event.stopPropagation()"
+            (keydown)="$event.stopPropagation()"
+          />
+          @if (filterText) {
+            <mat-icon
+              class="inner-variables-search-clear"
+              (click)="$event.stopPropagation(); clearFilterText()"
+              >close</mat-icon
+            >
+          }
+        </div>
+        <!-- Select All row: plain div (not mat-option) so it never enters mat-select's -->
+        <!-- internal selection model, which only tracks currently rendered options. -->
+        <div
           class="select-all-option"
           (click)="$event.stopPropagation(); toggleAllInnerVariables()"
         >
@@ -28,14 +51,26 @@
           >
             {{ selectAllCheckboxText }}
           </mat-checkbox>
-        </mat-option>
-        <!-- Individual variables -->
-        @for (variable of innerVariables; track variable.name || variable.value || $index) {
+        </div>
+        <!-- Individual variables, capped to maxDisplayedInnerVariables for performance -->
+        @for (variable of displayedInnerVariables; track variable) {
           <mat-option [value]="variable">
             <mat-checkbox
               [checked]="selectedInnerVariables.includes(variable)"
               >{{ variable }}</mat-checkbox
             >
+          </mat-option>
+        }
+        @if (isInnerVariablesTruncated) {
+          <mat-option disabled class="truncated-hint">
+            {{
+              'GLOBAL.TRUNCATED_DATAS'
+                | translate
+                  : {
+                      count: displayedInnerVariables.length,
+                      total: filteredInnerVariablesCount,
+                    }
+            }}
           </mat-option>
         }
       </mat-select>

@@ -33,6 +33,7 @@ export interface InnerVariablesSelectionEvent {
 export class MatrixInnerVariablesFilterComponent implements OnInit, OnChanges {
   @Input() selectedDimensions: DimensionCovisualizationModel[] | undefined;
   @Input() showComponent = false; // External control of visibility
+  @Input() maxDisplayedInnerVariables = 200; // Cap rendered options to avoid freezing the UI with huge lists
 
   @Output() selectionChanged = new EventEmitter<InnerVariablesSelectionEvent>();
 
@@ -40,6 +41,10 @@ export class MatrixInnerVariablesFilterComponent implements OnInit, OnChanges {
   public selectedInnerVariables: string[] = [];
   public showInnerVariablesSelect = false;
   public selectAllCheckboxText?: string;
+  public filterText = '';
+  public displayedInnerVariables: string[] = [];
+  public filteredInnerVariablesCount = 0;
+  public isInnerVariablesTruncated = false;
   private isToggling = false;
 
   constructor(
@@ -110,8 +115,57 @@ export class MatrixInnerVariablesFilterComponent implements OnInit, OnChanges {
       }
     }
 
+    this.filterText = '';
+    this.applyInnerVariablesFilter();
+
     // Emit initial state
     this.emitSelectionChange();
+  }
+
+  /**
+   * Filters the inner variables list based on the current search text
+   * and caps the number of rendered options for performance.
+   */
+  private applyInnerVariablesFilter() {
+    const search = this.filterText.trim().toLowerCase();
+    const filtered = search
+      ? this.innerVariables.filter((variable) =>
+          variable.toLowerCase().includes(search),
+        )
+      : this.innerVariables;
+
+    this.filteredInnerVariablesCount = filtered.length;
+    this.isInnerVariablesTruncated =
+      filtered.length > this.maxDisplayedInnerVariables;
+    this.displayedInnerVariables = this.isInnerVariablesTruncated
+      ? filtered.slice(0, this.maxDisplayedInnerVariables)
+      : filtered;
+  }
+
+  /**
+   * Called when the user types in the search input
+   */
+  onFilterTextChange(value: string) {
+    this.filterText = value;
+    this.applyInnerVariablesFilter();
+  }
+
+  /**
+   * Clears the search filter text
+   */
+  clearFilterText() {
+    this.filterText = '';
+    this.applyInnerVariablesFilter();
+  }
+
+  /**
+   * Resets the search filter when the select panel closes
+   */
+  onSelectOpenedChange(opened: boolean) {
+    if (!opened && this.filterText) {
+      this.filterText = '';
+      this.applyInnerVariablesFilter();
+    }
   }
 
   /**
