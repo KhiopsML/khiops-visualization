@@ -57,6 +57,11 @@
   border-radius: 4px;
   overflow: hidden;
   height: calc(100% - 32px);
+
+  .loading-results {
+    height: 100%;
+    width: 100%;
+  }
 }
 
 ::ng-deep .inner-variable-menu-panel {

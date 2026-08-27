@@ -97,20 +97,35 @@
       class="kl-card"
       fxLayoutAlign="start center"
     >
-      <kl-ag-grid
-        fxFlexFill
-        [showFullSearch]="true"
-        [showSearch]="true"
-        [showLineSelection]="true"
-        [showColumnsSelection]="false"
-        [inputDatas]="$safeNavigationMigration(searchResults().values)"
-        [title]="''"
-        [displayedColumns]="
-          $safeNavigationMigration(searchResults().displayedColumns)
-        "
-        (selectListItem)="onSelectRowChanged($event)"
-      >
-      </kl-ag-grid>
+      @if (isLoading()) {
+        <div
+          class="loading-results"
+          fxLayout="column"
+          fxFlexFill
+          fxLayoutAlign="center center"
+        >
+          <mat-spinner
+            diameter="40"
+            color="accent"
+            mode="indeterminate"
+          ></mat-spinner>
+        </div>
+      } @else {
+        <kl-ag-grid
+          fxFlexFill
+          [showFullSearch]="true"
+          [showSearch]="true"
+          [showLineSelection]="true"
+          [showColumnsSelection]="false"
+          [inputDatas]="$safeNavigationMigration(searchResults().values)"
+          [title]="''"
+          [displayedColumns]="
+            $safeNavigationMigration(searchResults().displayedColumns)
+          "
+          (selectListItem)="onSelectRowChanged($event)"
+        >
+        </kl-ag-grid>
+      }
     </div>
   </div>
 </div>

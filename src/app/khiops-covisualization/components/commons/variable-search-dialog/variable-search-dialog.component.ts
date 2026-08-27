@@ -73,6 +73,7 @@ export class VariableSearchDialogComponent
   readonly isInnerVariablesTruncated = computed(
     () => this.filteredInnerVariables().length > this.maxDisplayedInnerVariables,
   );
+  readonly isLoading = signal(false);
   // Map to quickly find cluster info by row data
   private rowToClusterMap: Map<string, { cluster: string; _id: string }> =
     new Map();
@@ -123,30 +124,41 @@ export class VariableSearchDialogComponent
     // Initialize data properties in ngOnInit to avoid ExpressionChangedAfterItHasBeenCheckedError
 
     if (this.data) {
-      this.initializeInnerVariables();
-      this.initializeSearchResults();
-      // Restore selectedInnerVariable if provided in data
-      if (
-        this.data.selectedInnerVariable &&
-        this.innerVariables().includes(this.data.selectedInnerVariable)
-      ) {
-        this.selectedInnerVariable.set(this.data.selectedInnerVariable);
-      }
-      this.performSearch();
+      this.isLoading.set(true);
+      // Defer the heavy synchronous work so the dialog shell and spinner can paint first
+      setTimeout(() => {
+        this.initializeInnerVariables();
+        this.initializeSearchResults();
+        // Restore selectedInnerVariable if provided in data
+        if (
+          this.data.selectedInnerVariable &&
+          this.innerVariables().includes(this.data.selectedInnerVariable)
+        ) {
+          this.selectedInnerVariable.set(this.data.selectedInnerVariable);
+        }
+        this.performSearch();
+        this.isLoading.set(false);
+        this.restoreSearchInputAndFocus();
+      });
     }
   }
 
   override ngAfterViewInit() {
     super.ngAfterViewInit();
+  }
 
-    // Restore search input (needs @ViewChild agGridComponent)
-    if (this.data?.searchInput) {
-      if (this.agGridComponent) {
+  /**
+   * Restores the previous search input and (re)focuses the grid search field.
+   * Runs after the search results have been computed, since the grid needs
+   * data loaded before a search/filter can be applied.
+   */
+  private restoreSearchInputAndFocus() {
+    setTimeout(() => {
+      if (this.data?.searchInput && this.agGridComponent) {
         this.agGridComponent.searchInput = this.data.searchInput;
         this.agGridComponent.search();
       }
-    }
-    setTimeout(() => {
+
       // Set focus on the search input field
       this.agGridComponent?.focusSearch();
 
@@ -188,7 +200,12 @@ export class VariableSearchDialogComponent
       this.agGridComponent.searchInput = '';
       this.agGridComponent.search();
     }
-    this.performSearch();
+    this.isLoading.set(true);
+    // Defer so the spinner paints before the potentially heavy search runs
+    setTimeout(() => {
+      this.performSearch();
+      this.isLoading.set(false);
+    });
   }
 
   onInnerVariableFilterTextChange(value: string) {
