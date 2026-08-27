@@ -12,9 +12,11 @@
     margin: 0 0 1.25rem 0 !important;
   }
 
-  .mode-toggle-group {
-    margin-bottom: 1.25rem;
+  mat-dialog-content {
+    min-height: 220px;
+  }
 
+  .mode-toggle-group {
     .scale-toggle-group {
       width: 100%;
 
@@ -33,7 +35,7 @@
     font-size: 0.9em;
     border-radius: 6px;
     padding: 0.85rem 1rem;
-    margin-top: 2rem;
+    margin-top: 1.5rem;
     p {
       margin: 0;
       line-height: 1.5;
@@ -54,6 +56,11 @@
       height: 1.6rem;
       flex-shrink: 0;
       color: var(--color-600);
+    }
+
+    p {
+      margin-top: 1rem;
+      margin-bottom: 1rem;
     }
   }
 

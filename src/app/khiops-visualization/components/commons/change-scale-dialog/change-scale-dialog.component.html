@@ -9,7 +9,7 @@
     {{ 'GLOBAL.CHANGE_ALL_SCALES' | translate }}
   </h1>
 
-  <mat-dialog-content>
+  <mat-dialog-content fxLayout="column">
     <!-- Mode selection -->
     <div class="mode-toggle-group">
       <mat-button-toggle-group
@@ -32,7 +32,7 @@
       <div class="mode-description manual-description">
         <p>{{ 'GLOBAL.MANUAL_SCALE_DESCRIPTION' | translate }}</p>
       </div>
-      <mat-divider></mat-divider>
+      <!-- <mat-divider></mat-divider> -->
       <!-- X and Y axes side by side -->
       <div class="axes-row">
         <div class="scale-group">
