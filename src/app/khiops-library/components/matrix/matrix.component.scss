@@ -148,7 +148,7 @@
       font-size: 0.9em;
 
       #legend-bar {
-        border: 1px solid #999;
+        border: 1px solid var(--color-500);
         width: 14px;
       }
 
@@ -167,7 +167,7 @@
 
 ::ng-deep .selected-cell {
   stroke-opacity: 1;
-  stroke: black;
+  stroke: var(--color-1000);
   outline: 0.1em solid var(--color-0);
 }
 
