@@ -71,7 +71,8 @@ export class VariableSearchDialogComponent
     this.filteredInnerVariables().slice(0, this.maxDisplayedInnerVariables),
   );
   readonly isInnerVariablesTruncated = computed(
-    () => this.filteredInnerVariables().length > this.maxDisplayedInnerVariables,
+    () =>
+      this.filteredInnerVariables().length > this.maxDisplayedInnerVariables,
   );
   readonly isLoading = signal(false);
   // Map to quickly find cluster info by row data
@@ -126,7 +127,7 @@ export class VariableSearchDialogComponent
     if (this.data) {
       this.isLoading.set(true);
       // Defer the heavy synchronous work so the dialog shell and spinner can paint first
-      setTimeout(() => {
+      this.deferAfterPaint(() => {
         this.initializeInnerVariables();
         this.initializeSearchResults();
         // Restore selectedInnerVariable if provided in data
@@ -145,6 +146,18 @@ export class VariableSearchDialogComponent
 
   override ngAfterViewInit() {
     super.ngAfterViewInit();
+  }
+
+  /**
+   * Runs `fn` only after the browser has had a chance to paint the current state
+   * (e.g. the loading spinner). A plain `setTimeout(fn, 0)` does not guarantee a
+   * paint happens before it fires, which can make heavy synchronous work still
+   * appear to freeze the UI before the spinner is visible.
+   */
+  private deferAfterPaint(fn: () => void) {
+    requestAnimationFrame(() => {
+      setTimeout(fn, 0);
+    });
   }
 
   /**
@@ -194,17 +207,19 @@ export class VariableSearchDialogComponent
   }
 
   onInnerVariableSelected(variable: string) {
-    this.selectedInnerVariable.set(variable);
-    // Reset search input when changing inner variable
-    if (this.agGridComponent) {
-      this.agGridComponent.searchInput = '';
-      this.agGridComponent.search();
-    }
-    this.isLoading.set(true);
-    // Defer so the spinner paints before the potentially heavy search runs
     setTimeout(() => {
-      this.performSearch();
-      this.isLoading.set(false);
+      this.selectedInnerVariable.set(variable);
+      // Reset search input when changing inner variable
+      if (this.agGridComponent) {
+        this.agGridComponent.searchInput = '';
+        this.agGridComponent.search();
+      }
+      this.isLoading.set(true);
+      // Defer so the spinner paints before the potentially heavy search runs
+      this.deferAfterPaint(() => {
+        this.performSearch();
+        this.isLoading.set(false);
+      });
     });
   }
 
@@ -277,10 +292,10 @@ export class VariableSearchDialogComponent
 
       // Set displayed columns for copy functionality
       this.displayedColumns = displayedColumns.map((col) => ({
-          headerName: col.headerName,
-          field: col.field,
-          show: true,
-        }));
+        headerName: col.headerName,
+        field: col.field,
+        show: true,
+      }));
 
       // Set inputDatas directly from searchResults.values - no copy needed!
       this.inputDatas = values as any[];
