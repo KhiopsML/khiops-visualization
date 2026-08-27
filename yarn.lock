@@ -3275,10 +3275,10 @@
   dependencies:
     "@tybys/wasm-util" "^0.10.3"
 
-"@ngrx/component-store@^21.1.1":
-  version "21.1.1"
-  resolved "https://registry.yarnpkg.com/@ngrx/component-store/-/component-store-21.1.1.tgz#7fa81ca2d35e9663af8ddea3c729deaac7e110a4"
-  integrity sha512-P0FgzOtCv8ULa4VuNnmYr9y5JfZT4T2fxb7Ozp306J0yjIv9xamMjehVmra5iA2U22TMS5L+WXmLWQ5O2I4Piw==
+"@ngrx/component-store@^22.0.0":
+  version "22.0.0"
+  resolved "https://registry.yarnpkg.com/@ngrx/component-store/-/component-store-22.0.0.tgz#54e1082ee888b161a8afe3fcc209013dbe6d4bd7"
+  integrity sha512-uK12Zeh4qTAjBa6HQ3cjsfIl2QVuqXUv3LeSA8IEUbDH4o0txr1j1eMZy5naAopuodaz56WFasjXBSmNvw11jA==
   dependencies:
     tslib "^2.0.0"
 
