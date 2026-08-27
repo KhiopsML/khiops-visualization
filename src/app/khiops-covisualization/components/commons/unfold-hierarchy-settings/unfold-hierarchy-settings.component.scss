@@ -15,8 +15,8 @@
     }
     span {
       em {
-        color: var(--primary-10);
-        background: var(--bg-color-30);
+        color: var(--color-800);
+        background: var(--color-100);
         padding: 1px 5px;
         border-radius: 4px;
         margin: 4px 0;
@@ -40,7 +40,7 @@
     .unfold-information-rate {
       margin-top: -10px;
       .non-info-warning {
-        color: var(--red-main);
+        color: var(--color-danger);
         margin-top: 5px;
 
         mat-icon {

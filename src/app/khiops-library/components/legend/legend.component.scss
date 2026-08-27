@@ -22,7 +22,7 @@
       cursor: default;
 
       span {
-        color: var(--primary) !important;
+        color: var(--color-800) !important;
         font-size: 0.8em;
       }
       .square {
@@ -34,7 +34,7 @@
       font-weight: bold;
 
       .square {
-        border: 3px solid black;
+        border: 3px solid var(--color-1000);
       }
     }
   }
@@ -47,7 +47,7 @@
     min-width: 8px;
     margin-right: 5px;
     border-radius: 50%;
-    border: 1px solid white;
+    border: 1px solid var(--color-0);
     position: relative;
 
     &.square-hatched::after {

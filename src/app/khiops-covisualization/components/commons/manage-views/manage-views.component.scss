@@ -22,8 +22,8 @@
     max-height: 70vh;
 
     .views-container {
-      background-color: var(--bg-color);
-      border: 1px solid var(--border-color);
+      background-color: var(--color-0);
+      border: 1px solid var(--color-border-subtle);
       border-radius: var(--border-radius);
       box-shadow: none;
       padding: 3px;
@@ -41,7 +41,7 @@
         flex: 1 1 130%;
 
         .child-box {
-          border: 2px var(--primary);
+          border: 2px var(--color-800);
           margin: 10px;
           border-style: solid;
           height: 0 !important;
@@ -52,19 +52,19 @@
         }
 
         .child-box.disabled {
-          border: 2px var(--primary) dashed;
+          border: 2px var(--color-800) dashed;
         }
       }
 
       .box {
-        border: 2px var(--primary);
+        border: 2px var(--color-800);
         border-style: solid;
         margin: 10px;
         cursor: pointer;
         height: 140px;
         text-align: center;
-        background: var(--bg-color);
-        color: var(--primary);
+        background: var(--color-0);
+        color: var(--color-800);
         font-size: 0.9em;
         box-shadow: none;
         border-radius: 3px;
@@ -72,17 +72,17 @@
         overflow-wrap: anywhere;
       }
       .box:hover {
-        background: var(--bg-color-30);
+        background: var(--color-100);
       }
       .box.disabled {
-        background: var(--bg-color-30);
-        color: var(--primary-30);
+        background: var(--color-100);
+        color: var(--color-600);
         box-shadow: none;
-        border: 2px var(--primary-30) dashed;
+        border: 2px var(--color-600) dashed;
       }
 
       .box.disabled:hover {
-        background: var(--bg-color);
+        background: var(--color-0);
       }
       .box-dimension {
         border: 0px !important;
@@ -92,7 +92,7 @@
       }
 
       .box-dimension:hover {
-        background: var(--bg-color);
+        background: var(--color-0);
       }
 
       .status-badge {
@@ -108,26 +108,26 @@
       }
 
       .badge-active {
-        background-color: var(--selected);
-        color: var(--primary-10);
+        background-color: var(--color-active);
+        color: var(--color-800);
       }
 
       .badge-disabled {
-        background-color: var(--bg-color-50);
-        color: var(--primary-10);
+        background-color: var(--color-400);
+        color: var(--color-800);
       }
     }
 
     .views-container.disabled {
-      background: var(--bg-color-30);
-      color: var(--primary-30);
-      border: 1px var(--primary-30) dashed;
+      background: var(--color-100);
+      color: var(--color-600);
+      border: 1px var(--color-600) dashed;
 
       .box,
       .child-box {
-        background: var(--bg-color-30) !important;
-        color: var(--primary-30) !important;
-        border: 2px var(--primary-30) dashed !important;
+        background: var(--color-100) !important;
+        color: var(--color-600) !important;
+        border: 2px var(--color-600) dashed !important;
       }
       .box-dimension {
         border: 0px !important;

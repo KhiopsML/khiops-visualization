@@ -22,7 +22,7 @@ body {
   height: 100%;
   overflow: hidden;
   font-size: 12px !important;
-  color: var(--primary-10);
+  color: var(--color-800);
 }
 
 ::-webkit-input-placeholder {
@@ -32,22 +32,22 @@ body {
 ::-webkit-scrollbar-thumb {
   width: 10px;
   height: 10px;
-  background: var(--scrollbar) !important;
+  background: var(--color-100) !important;
   border: unset !important;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: var(--bg-color-40) !important;
+  background: var(--color-300) !important;
 }
 
 ::-webkit-scrollbar-thumb:active {
-  background: var(--bg-color-40) !important;
+  background: var(--color-300) !important;
 }
 
 ::-webkit-scrollbar-track {
   width: 10px;
   height: 10px;
-  background: var(--bg-color) !important;
+  background: var(--color-0) !important;
 }
 
 ::-webkit-scrollbar-track:hover {
@@ -95,11 +95,11 @@ em {
 }
 
 p {
-  color: var(--primary-10);
+  color: var(--color-800);
 }
 
 h1 {
-  color: var(--accent);
+  color: var(--color-accent);
   margin: 0.6em 0em 1em 1em;
   font-size: 1em;
   font-weight: 500;
@@ -123,7 +123,7 @@ h2 {
   white-space: nowrap;
   font-size: 1em;
   font-weight: 400;
-  color: var(--primary-10);
+  color: var(--color-800);
 }
 
 .material-icons {
@@ -199,14 +199,14 @@ h2 {
   right: 0px;
   bottom: 0px;
   left: 0px;
-  border: 1px var(--selected);
-  border-style: var(--selected-style);
+  border: 1px var(--color-active);
+  border-style: var(--style-selected-border);
   pointer-events: none;
 }
 
 .parent-selected {
-  border: 1px var(--selected);
-  border-style: var(--selected-style);
+  border: 1px var(--color-active);
+  border-style: var(--style-selected-border);
 }
 
 .selected-area-inner-div {
@@ -233,7 +233,7 @@ app-home-layout {
 .comp-header {
   background: transparent !important;
   min-height: 42px !important;
-  background: var(--bg-color) !important;
+  background: var(--color-0) !important;
   margin: 0em 0.4em 0em 1px;
 
   h1 {
@@ -251,7 +251,7 @@ hr {
   width: 20px;
   border: 0;
   height: 1px;
-  background: var(--bg-color-40);
+  background: var(--color-300);
   margin-bottom: 15px;
   margin-top: 10px;
 }
@@ -320,7 +320,7 @@ kl-legend {
 }
 
 .titlebar .window-title {
-  color: var(--primary);
+  color: var(--color-800);
 }
 
 kl-chart {
@@ -340,7 +340,7 @@ kl-matrix {
 
 #root-loading-text {
   letter-spacing: 2px;
-  color: var(--primary);
+  color: var(--color-800);
   flex-direction: column;
   display: flex;
   font-size: 16px;
@@ -380,7 +380,7 @@ canvas:focus {
   margin: 69px 0px 0px 0px;
   left: 15px !important;
   top: 11px !important;
-  background-color: var(--bg-color) !important;
+  background-color: var(--color-0) !important;
   box-shadow: 0 1px 5px 0px rgba(0, 0, 0, 0.2);
   border-radius: var(--border-radius);
   padding: 20px !important;
@@ -421,7 +421,7 @@ kl-dialog-wrapper {
   Electron js toast
 */
 .cc-floating.cc-theme-classic {
-  background-color: var(--primary);
+  background-color: var(--color-800);
   color: white;
 }
 
@@ -450,9 +450,9 @@ kl-dialog-wrapper {
 }
 
 .kl-card {
-  border: 1px solid var(--border-color);
-  background-color: var(--bg-color) !important;
-  color: var(--primary-10);
+  border: 1px solid var(--color-border-subtle);
+  background-color: var(--color-0) !important;
+  color: var(--color-800);
   border-radius: var(--border-radius);
   padding: 12px;
   // Animation controlled by a CSS custom property set at the shadow root level
@@ -460,7 +460,7 @@ kl-dialog-wrapper {
 }
 
 app-home-layout {
-  background: var(--bg-color-20);
+  background: var(--color-50);
 }
 #home-layout-comp {
   height: calc(100% - 25px);
@@ -474,8 +474,8 @@ mat-checkbox.kl-checkbox {
   margin: auto 0.5rem !important;
   padding: 0px !important;
   border-radius: var(--border-radius);
-  background: var(--bg-color-20);
-  border: 1px solid var(--border-color);
+  background: var(--color-50);
+  border: 1px solid var(--color-border-subtle);
   .mdc-form-field {
     label {
       min-width: unset !important;

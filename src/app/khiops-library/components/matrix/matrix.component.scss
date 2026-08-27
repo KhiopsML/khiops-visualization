@@ -17,7 +17,7 @@
 
   #matrix-loading {
     position: absolute;
-    background: var(--bg-color) !important;
+    background: var(--color-0) !important;
     z-index: 100;
   }
 
@@ -34,16 +34,16 @@
 
   button.invert-axis.toggled-false {
     mat-icon {
-      color: var(--primary) !important;
+      color: var(--color-800) !important;
     }
   }
 
   button.invert-axis.toggled-true {
-    background: var(--primary) !important;
+    background: var(--color-800) !important;
     transform: rotate(180deg);
 
     mat-icon {
-      color: white;
+      color: var(--color-0);
     }
   }
 
@@ -55,13 +55,13 @@
     width: 50px; // important everything but 100% (min width)
     height: 100%;
     overflow: auto;
-    border: 1px solid var(--bg-color-10);
+    border: 1px solid var(--color-100);
 
     #matrix-container {
       height: 100%;
       width: 100%;
       position: relative;
-      background-color: var(--bg-color);
+      background-color: var(--color-0);
 
       &.cursor-pointer {
         cursor: pointer;
@@ -92,8 +92,8 @@
   .axis-matrix {
     font-size: 0.95em;
     font-weight: 500;
-    color: var(--primary-10);
-    background: var(--bg-color-30);
+    color: var(--color-800);
+    background: var(--color-100);
     padding: 1px 5px;
     border-radius: 4px;
     margin: 4px 0;
@@ -168,7 +168,7 @@
 ::ng-deep .selected-cell {
   stroke-opacity: 1;
   stroke: black;
-  outline: 0.1em solid white;
+  outline: 0.1em solid var(--color-0);
 }
 
 ::ng-deep .selected-cell-bold {

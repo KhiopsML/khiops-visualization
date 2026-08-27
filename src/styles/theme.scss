@@ -13,32 +13,33 @@
 
 [data-color-scheme='orange'] {
   color-scheme: orange;
-  --bg-color-contrast: #000;
-  --bg-color: #fff;
-  --bg-color-10: #eee;
-  --bg-color-20: #f9fafb;
-  --bg-color-30: #eeeeee;
-  --bg-color-35: #dddddd;
-  --bg-color-40: #bbb;
-  --bg-color-50: #aaa;
-  --scrollbar: #eee;
-  --primary: #393f4d;
-  --primary-10: #393f4d;
-  --primary-30: #6d778f;
-  --accent: #cd3c14;
-  --selected: #ff66008c;
-  --gutter-hover: #f1f1f1;
-  --orange-main: #ff6600;
-  --bg-tooltip: #1f1f1f;
-  --color-tooltip: #eee;
-  --chart-border: #e5e5e5;
-  --orange-accent: #531212;
-  --red-main: #fb473a;
-  --cell-type-num: #d1dcee;
-  --cell-type-cat: #f5ddaf;
-  --border-color: rgba(4, 32, 69, 0.1);
-  --btn-border-color: #00000099;
-  --selected-style: dashed;
+
+  --color-0: #ffffff;
+  --color-50: #f9fafb;
+  --color-100: #eeeeee;
+  --color-150: #e5e5e5;
+  --color-200: #dddddd;
+  --color-300: #bbbbbb;
+  --color-400: #aaaaaa;
+  --color-600: #6d778f;
+  --color-800: #393f4d;
+  --color-1000: #000000;
+
+  --color-brand-orange: #ff6600;
+  --color-brand-orange-dark: #531212;
+  --color-accent: #cd3c14;
+  --color-danger: #fb473a;
+  --color-active: #ff66008c;
+
+  --style-selected-border: dashed;
+  --color-gutter-hover: #f1f1f1;
+  --color-tooltip-bg: #1f1f1f;
+
+  --color-data-num: #d1dcee;
+  --color-data-cat: #f5ddaf;
+
+  --color-border-subtle: rgba(4, 32, 69, 0.1);
+  --color-border-button: #00000099;
 }
 
 :host ::ng-deep .ag-theme-balham {

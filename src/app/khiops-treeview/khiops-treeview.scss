@@ -24,7 +24,7 @@
 }
 
 .tree-leaf .tree-expando {
-  color: var(--bg-color-contrast);
+  color: var(--color-1000);
   border-radius: 2px;
   cursor: pointer;
   float: left;
@@ -44,7 +44,7 @@
   justify-content: center;
 
   &:hover {
-    background-color: var(--bg-color-35) !important;
+    background-color: var(--color-200) !important;
   }
 
   svg {
@@ -59,15 +59,15 @@
   }
 }
 .tree-leaf .tree-leaf-content.tree-selected .tree-expando {
-  color: var(--bg-color);
+  color: var(--color-0);
 
   &:hover {
-    background-color: var(--primary) !important;
+    background-color: var(--color-800) !important;
   }
 }
 .tree-leaf .tree-icon {
   margin-left: 0.2em !important;
-  color: var(--orange-main);
+  color: var(--color-brand-orange);
   -webkit-user-select: none;
   user-select: none;
   cursor: pointer;
@@ -79,7 +79,7 @@
 }
 
 .tree-leaf .tree-icon.is-leaf {
-  color: var(--primary);
+  color: var(--color-800);
   padding-left: 0.1em;
   padding-right: 0.1em;
   border-radius: 0px;
@@ -109,8 +109,8 @@
   right: 0px;
   top: 50%;
   transform: translateY(-50%);
-  background: color-mix(in srgb, var(--bg-color-contrast) 70%, transparent);
-  color: var(--bg-color) !important;
+  background: color-mix(in srgb, var(--color-1000) 70%, transparent);
+  color: var(--color-0) !important;
   border: none;
   border-radius: 3px;
   width: 24px !important;
@@ -139,8 +139,8 @@
 }
 
 .tree-leaf .tree-leaf-text .edit-button:hover {
-  background: color-mix(in srgb, var(--bg-color-contrast) 20%, transparent);
-  color: var(--bg-color) !important;
+  background: color-mix(in srgb, var(--color-1000) 20%, transparent);
+  color: var(--color-0) !important;
 }
 
 .tree-leaf .tree-leaf-content.tree-selected:hover .tree-leaf-text .edit-button {
@@ -148,22 +148,22 @@
 }
 
 .tree-leaf .tree-leaf-content.tree-selected .tree-leaf-text .edit-button {
-  background: color-mix(in srgb, var(--bg-color-contrast) 70%, transparent);
-  color: var(--bg-color) !important;
+  background: color-mix(in srgb, var(--color-1000) 70%, transparent);
+  color: var(--color-0) !important;
   pointer-events: auto; /* Enable clicks only on selected line */
 }
 
 .tree-leaf .tree-leaf-content.tree-selected .tree-leaf-text .edit-button:hover {
-  background: color-mix(in srgb, var(--bg-color-contrast) 20%, transparent);
-  color: var(--bg-color) !important;
+  background: color-mix(in srgb, var(--color-1000) 20%, transparent);
+  color: var(--color-0) !important;
 }
 
 .tree-leaf .tree-leaf-content:not(.tree-selected):hover {
-  background: var(--bg-color-30);
+  background: var(--color-100);
 }
 
 .tree-leaf .tree-leaf-content.tree-selected:hover {
-  background: var(--bg-color-contrast);
+  background: var(--color-1000);
 }
 
 .tree-leaf .tree-leaf-content:before,
@@ -177,7 +177,7 @@
 }
 
 .tree-leaf .tree-leaf-content.tree-selected {
-  background: var(--bg-color-contrast);
+  background: var(--color-1000);
   border-radius: 0px;
   transition: background-color 0s !important;
 
@@ -186,11 +186,11 @@
   }
 
   .tree-leaf-text {
-    color: var(--bg-color) !important;
+    color: var(--color-0) !important;
   }
 
   .tree-icon.web_asset {
-    color: var(--bg-color) !important;
+    color: var(--color-0) !important;
   }
 }
 
@@ -219,7 +219,7 @@
 
     input {
       width: 174px;
-      border: 3px solid var(--primary);
+      border: 3px solid var(--color-800);
       padding: 1px 8px 0 8px !important;
       font-size: 0.9em;
       height: 24px;
@@ -227,8 +227,8 @@
     }
 
     .edit-icons {
-      background: color-mix(in srgb, var(--bg-color-contrast) 70%, transparent);
-      color: var(--bg-color) !important;
+      background: color-mix(in srgb, var(--color-1000) 70%, transparent);
+      color: var(--color-0) !important;
       border: none;
       border-radius: 3px;
       cursor: pointer;
@@ -250,8 +250,8 @@
     }
 
     .edit-icons:hover {
-      background: color-mix(in srgb, var(--bg-color-contrast) 20%, transparent);
-      color: var(--bg-color) !important;
+      background: color-mix(in srgb, var(--color-1000) 20%, transparent);
+      color: var(--color-0) !important;
     }
   }
 }

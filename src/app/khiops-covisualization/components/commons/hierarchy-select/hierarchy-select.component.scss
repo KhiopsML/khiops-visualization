@@ -36,7 +36,7 @@
   }
 
   button.enabled {
-    color: var(--primary);
+    color: var(--color-800);
   }
 
   .comp-header-tools {
@@ -61,8 +61,8 @@
     strong {
       font-size: 0.95em;
       font-weight: 500;
-      color: var(--primary-10);
-      background: var(--bg-color-30);
+      color: var(--color-800);
+      background: var(--color-100);
       padding: 1px 5px;
       border-radius: 4px;
       margin: 1px 4px 0px 4px;

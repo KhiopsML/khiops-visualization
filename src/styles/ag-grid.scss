@@ -14,10 +14,10 @@
   font-weight: 500 !important;
 }
 .ag-grid-comp {
-  background: var(--bg-color) !important;
+  background: var(--color-0) !important;
 }
 ag-grid-angular {
-  background: var(--bg-color) !important;
+  background: var(--color-0) !important;
 }
 
 .ag-header {
@@ -25,20 +25,20 @@ ag-grid-angular {
 }
 
 .ag-theme-balham .ag-row-even:not(.ag-row-selected) {
-  background: var(--bg-color) !important;
+  background: var(--color-0) !important;
 }
 
 .ag-theme-balham .ag-row-odd:not(.ag-row-selected) {
-  background: var(--bg-color-20) !important;
+  background: var(--color-50) !important;
 }
 
 .ag-row {
-  color: var(--primary-10) !important;
+  color: var(--color-800) !important;
 }
 
 // Override grid style
 ag-grid-angular {
-  background: var(--bg-color);
+  background: var(--color-0);
 }
 
 .ag-theme-balham .ag-header-cell-resize {
@@ -52,11 +52,11 @@ ag-grid-angular {
     color: white !important;
   }
   mat-icon:hover {
-    background-color: var(--primary-30) !important;
+    background-color: var(--color-600) !important;
   }
 }
 .ag-theme-balham .ag-row-selected:hover {
-  background: var(--primary-10) !important;
+  background: var(--color-800) !important;
 }
 
 .ag-theme-balham .ag-cell {
@@ -73,12 +73,12 @@ ag-grid-angular {
 }
 
 .ag-theme-balham .ag-row:hover:not(.ag-row-selected) {
-  background-color: var(--bg-color-30) !important;
+  background-color: var(--color-100) !important;
 }
 
 .ag-paging-panel {
   border-color: transparent !important;
-  color: var(--primary-30) !important;
+  color: var(--color-600) !important;
 
   button {
     display: none;
@@ -86,7 +86,7 @@ ag-grid-angular {
 }
 
 .ag-theme-balham .ag-header {
-  background-color: var(--bg-color-20) !important;
+  background-color: var(--color-50) !important;
   font-weight: 600;
   font-size: 1.2em;
   border: none !important;
@@ -95,13 +95,13 @@ ag-grid-angular {
 
 .ag-header-cell-label .ag-header-cell-text {
   font-weight: 500;
-  color: var(--primary-30);
+  color: var(--color-600);
 }
 
 // Style for expected frequency cells when conditional on context is enabled
 .aggrid-warn-header {
   font-style: italic;
-  color: var(--orange-accent) !important;
+  color: var(--color-brand-orange-dark) !important;
 }
 
 .aggrid-warn-cell {

@@ -8,19 +8,19 @@
   as split overriding styles
 */
 .as-split-gutter {
-  background-color: var(--bg-color-20) !important;
+  background-color: var(--color-50) !important;
 }
 
 .as-vertical:not(.as-disabled) > .as-split-gutter:hover,
 .as-vertical:not(.as-disabled) > .as-split-gutter:active,
 .as-horizontal:not(.as-disabled) > .as-split-gutter:hover,
 .as-horizontal:not(.as-disabled) > .as-split-gutter:active {
-  background-color: var(--gutter-hover) !important;
+  background-color: var(--color-gutter-hover) !important;
   transition: background-color 0.1s ease-in-out 0.1s;
 }
 
 .as-split-gutter {
-  background-color: var(--bg-color-20) !important;
+  background-color: var(--color-50) !important;
 }
 
 // split area border color

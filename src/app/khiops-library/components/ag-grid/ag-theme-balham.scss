@@ -21,29 +21,29 @@
   font-size: inherit;
 
   // Color variables matching your Khiops design system
-  --ag-background-color: var(--bg-color, #fff);
-  --ag-foreground-color: var(--primary-10, #222);
-  --ag-border-color: var(--border-color, rgba(4, 32, 69, 0));
-  --ag-header-background-color: var(--bg-color-20, #f9fafb);
-  --ag-odd-row-background-color: var(--bg-color-10, #eee);
-  --ag-row-hover-color: var(--gutter-hover, #f1f1f1);
-  --ag-selected-row-background-color: var(--bg-color-contrast);
+  --ag-background-color: var(--color-0, #fff);
+  --ag-foreground-color: var(--color-800, #222);
+  --ag-border-color: var(--color-border-subtle, rgba(4, 32, 69, 0));
+  --ag-header-background-color: var(--color-50, #f9fafb);
+  --ag-odd-row-background-color: var(--color-100, #eee);
+  --ag-row-hover-color: var(--color-gutter-hover, #f1f1f1);
+  --ag-selected-row-background-color: var(--color-1000);
 
   // Header styling
-  --ag-header-foreground-color: var(--primary, #000);
+  --ag-header-foreground-color: var(--color-800, #000);
   --ag-header-font-weight: 500;
 
   // Cell styling
-  --ag-cell-horizontal-border: 1px solid var(--border-color, rgba(0, 0, 0, 0));
-  --ag-row-border-color: var(--border-color, rgba(0, 0, 0, 0));
+  --ag-cell-horizontal-border: 1px solid var(--color-border-subtle, rgba(0, 0, 0, 0));
+  --ag-row-border-color: var(--color-border-subtle, rgba(0, 0, 0, 0));
 
   // Input styling
-  --ag-input-border-color: var(--border-color, rgba(4, 32, 69, 0));
-  --ag-input-border-color-invalid: var(--red-main, #fb473a);
+  --ag-input-border-color: var(--color-border-subtle, rgba(4, 32, 69, 0));
+  --ag-input-border-color-invalid: var(--color-danger, #fb473a);
 
   // Button styling
-  --ag-button-background-color: var(--bg-color, #fff);
-  --ag-button-border-color: var(--border-color, rgba(4, 32, 69, 0));
+  --ag-button-background-color: var(--color-0, #fff);
+  --ag-button-border-color: var(--color-border-subtle, rgba(4, 32, 69, 0));
 
   // Scrollbar styling to match global theme
   ::-webkit-scrollbar {
@@ -52,13 +52,13 @@
   }
 
   ::-webkit-scrollbar-thumb {
-    background: var(--scrollbar, #eee);
+    background: var(--color-100, #eee);
     border: none;
     border-radius: 0; // Removed border radius as requested
     min-height: 80px; // Minimum height for vertical scrollbar thumb
 
     &:hover {
-      background: var(--bg-color-40, #bbb);
+      background: var(--color-300, #bbb);
     }
   }
 
@@ -68,62 +68,62 @@
   }
 
   ::-webkit-scrollbar-track {
-    background: var(--bg-color, #fff);
+    background: var(--color-0, #fff);
     border-radius: 0; // Also remove border radius from track
   }
 
   // Custom cell types for Khiops data visualization
   .cell-type-num {
-    background-color: var(--cell-type-num, #d1dcee);
+    background-color: var(--color-data-num, #d1dcee);
   }
 
   .cell-type-cat {
-    background-color: var(--cell-type-cat, #f5ddaf);
+    background-color: var(--color-data-cat, #f5ddaf);
   }
 
   // Enhanced hover effects
   .ag-row:hover {
-    background-color: var(--gutter-hover, #f1f1f1);
+    background-color: var(--color-gutter-hover, #f1f1f1);
   }
 
   // Filter panel improvements
   .ag-filter-toolpanel-search .ag-input-field-input {
-    border: 0px solid var(--border-color, rgba(4, 32, 69, 0.1));
+    border: 0px solid var(--color-border-subtle, rgba(4, 32, 69, 0.1));
     border-radius: var(--border-radius, 2px);
   }
 
   // Pagination improvements
   .ag-paging-panel {
-    border-top: 0px solid var(--border-color, rgba(4, 32, 69, 0.1));
-    background: var(--bg-color-20, #f9fafb);
+    border-top: 0px solid var(--color-border-subtle, rgba(4, 32, 69, 0.1));
+    background: var(--color-50, #f9fafb);
   }
 
   // Menu improvements
   .ag-menu {
-    border: 0px solid var(--border-color, rgba(4, 32, 69, 0.1));
+    border: 0px solid var(--color-border-subtle, rgba(4, 32, 69, 0.1));
     border-radius: var(--border-radius, 2px);
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
   }
 
   // Focus and selection improvements
   .ag-cell-focus {
-    border: 1px solid var(--accent, #cd3c14) !important;
+    border: 1px solid var(--color-accent, #cd3c14) !important;
   }
 
   // Icon customization
   .ag-icon {
-    color: var(--primary-30, #757575);
+    color: var(--color-600, #757575);
   }
 
   // Header improvements
   .ag-header-cell {
-    border-right: 0px solid var(--border-color, rgba(4, 32, 69, 0.1));
+    border-right: 0px solid var(--color-border-subtle, rgba(4, 32, 69, 0.1));
 
     &.ag-header-cell-sortable {
       cursor: pointer;
 
       &:hover {
-        background-color: var(--gutter-hover, #f1f1f1);
+        background-color: var(--color-gutter-hover, #f1f1f1);
       }
     }
   }
@@ -131,7 +131,7 @@
   // Pinned columns improvements
   .ag-pinned-left-header,
   .ag-pinned-right-header {
-    border-left: 0px solid var(--border-color, rgba(4, 32, 69, 0.1));
+    border-left: 0px solid var(--color-border-subtle, rgba(4, 32, 69, 0.1));
   }
 }
 

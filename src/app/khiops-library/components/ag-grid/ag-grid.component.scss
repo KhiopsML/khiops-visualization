@@ -5,7 +5,7 @@
  */
 
 .ag-grid-comp {
-  background: var(--bg-color) !important;
+  background: var(--color-0) !important;
   padding: 1px; // Important for selected border
 
   .comp-header {
@@ -32,7 +32,7 @@
         margin-right: 5px;
         transition: width 2s;
         margin-left: 10px;
-        border: 1px solid var(--primary);
+        border: 1px solid var(--color-800);
         max-height: 32px;
         min-width: 34px;
 

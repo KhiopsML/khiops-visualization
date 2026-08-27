@@ -148,12 +148,12 @@ html {
 :root {
   @include mat.slider-overrides(
     (
-      inactive-track-color: var(--bg-color-50),
+      inactive-track-color: var(--color-400),
     )
   );
   @include mat.progress-spinner-overrides(
     (
-      active-indicator-color: var(--selected),
+      active-indicator-color: var(--color-active),
     )
   );
 }

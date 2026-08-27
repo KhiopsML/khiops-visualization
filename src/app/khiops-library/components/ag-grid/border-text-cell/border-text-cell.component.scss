@@ -7,14 +7,14 @@
 .kl-border-text-cell {
   padding: 2px 8px;
   border-radius: var(--border-radius);
-  color: var(--bg-color-contrast) !important;
+  color: var(--color-1000) !important;
   font-size: 0.9em !important;
   font-weight: 500;
 }
 
 .kl-border-text-cell.Numerical {
-  background-color: var(--cell-type-num);
+  background-color: var(--color-data-num);
 }
 .kl-border-text-cell.Categorical {
-  background-color: var(--cell-type-cat);
+  background-color: var(--color-data-cat);
 }
