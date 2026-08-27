@@ -11,6 +11,7 @@ import {
   OnInit,
   NgZone,
   signal,
+  computed,
 } from '@angular/core';
 import { DimensionCovisualizationModel } from '@khiops-library/model/dimension.covisualization.model';
 import { GridDatasI } from '@khiops-library/interfaces/grid-datas.interface';
@@ -55,6 +56,23 @@ export class VariableSearchDialogComponent
     displayedColumns: [],
     values: [],
   });
+  readonly innerVariableFilterText = signal('');
+  // Cap rendered menu items to avoid freezing the UI with huge lists
+  readonly maxDisplayedInnerVariables = 200;
+  readonly filteredInnerVariables = computed(() => {
+    const search = this.innerVariableFilterText().trim().toLowerCase();
+    return search
+      ? this.innerVariables().filter((variable) =>
+          variable.toLowerCase().includes(search),
+        )
+      : this.innerVariables();
+  });
+  readonly displayedInnerVariables = computed(() =>
+    this.filteredInnerVariables().slice(0, this.maxDisplayedInnerVariables),
+  );
+  readonly isInnerVariablesTruncated = computed(
+    () => this.filteredInnerVariables().length > this.maxDisplayedInnerVariables,
+  );
   // Map to quickly find cluster info by row data
   private rowToClusterMap: Map<string, { cluster: string; _id: string }> =
     new Map();
@@ -171,6 +189,18 @@ export class VariableSearchDialogComponent
       this.agGridComponent.search();
     }
     this.performSearch();
+  }
+
+  onInnerVariableFilterTextChange(value: string) {
+    this.innerVariableFilterText.set(value);
+  }
+
+  clearInnerVariableFilterText() {
+    this.innerVariableFilterText.set('');
+  }
+
+  onInnerVariableMenuClosed() {
+    this.innerVariableFilterText.set('');
   }
 
   onClickOnClose() {

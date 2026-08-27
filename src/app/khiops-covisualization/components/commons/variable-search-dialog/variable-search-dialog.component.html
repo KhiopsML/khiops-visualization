@@ -27,14 +27,52 @@
               <mat-icon>keyboard_arrow_down</mat-icon>
             </em>
           </button>
-          <mat-menu #selectInnerVariable>
-            @for (variable of innerVariables(); track $index; let i = $index) {
+          <mat-menu
+            #selectInnerVariable
+            class="inner-variable-menu-panel"
+            (closed)="onInnerVariableMenuClosed()"
+          >
+            <div
+              class="inner-variable-search"
+              (click)="$event.stopPropagation()"
+            >
+              <input
+                matInput
+                type="text"
+                class="inner-variable-search-input"
+                [placeholder]="'GLOBAL.SEARCH' | translate"
+                [ngModel]="innerVariableFilterText()"
+                (ngModelChange)="onInnerVariableFilterTextChange($event)"
+                (click)="$event.stopPropagation()"
+                (keydown)="$event.stopPropagation()"
+              />
+              @if (innerVariableFilterText()) {
+                <mat-icon
+                  class="inner-variable-search-clear"
+                  (click)="$event.stopPropagation(); clearInnerVariableFilterText()"
+                  >close</mat-icon
+                >
+              }
+            </div>
+            @for (variable of displayedInnerVariables(); track variable) {
               <button
                 mat-menu-item
                 [class.selected-item]="variable === selectedInnerVariable()"
                 (click)="onInnerVariableSelected(variable)"
               >
                 {{ variable }}
+              </button>
+            }
+            @if (isInnerVariablesTruncated()) {
+              <button mat-menu-item disabled class="truncated-hint">
+                {{
+                  'GLOBAL.TRUNCATED_DATAS'
+                    | translate
+                      : {
+                          count: displayedInnerVariables().length,
+                          total: filteredInnerVariables().length,
+                        }
+                }}
               </button>
             }
           </mat-menu>
