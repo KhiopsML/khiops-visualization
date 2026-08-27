@@ -107,7 +107,7 @@
     "@types/node": "^25.9.5",
     "autoprefixer": "^10.5.4",
     "cypress": "^15.21.1",
-    "jasmine-core": "^6.3.0",
+    "jasmine-core": "^7.0.2",
     "karma": "^6.4.4",
     "karma-chrome-launcher": "^3.2.0",
     "karma-coverage": "^2.2.1",
