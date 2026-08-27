@@ -219,6 +219,7 @@ import EnTransaltion from '../../assets/i18n/en.json';
     MatrixModeComponent,
     CheckboxCellComponent,
     IconCellComponent,
+    IconComponent,
     DistributionGraphComponent,
     ScrollableGraphComponent,
     ChartComponent,
