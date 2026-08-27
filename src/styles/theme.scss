@@ -9,10 +9,7 @@
   --header-height: 60px;
   --border-radius: 2px;
   --gripOpacity: 0.5;
-}
-
-[data-color-scheme='orange'] {
-  color-scheme: orange;
+  --style-selected-border: dashed;
 
   --color-0: #ffffff;
   --color-50: #f9fafb;
@@ -32,7 +29,6 @@
   --color-danger: #fb473a;
   --color-active: #ff66008c;
 
-  --style-selected-border: dashed;
   --color-gutter-hover: #f1f1f1;
   --color-tooltip-bg: #1f1f1f;
 
