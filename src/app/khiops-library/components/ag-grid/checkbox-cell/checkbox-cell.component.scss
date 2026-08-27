@@ -29,15 +29,15 @@
   left: 0;
   height: 16px;
   width: 16px;
-  background: #fff;
-  border: 2px solid #000;
+  background: var(--color-0);
+  border: 2px solid var(--color-1000);
   border-radius: 3px;
   box-sizing: border-box;
   margin: 4px;
 }
 
 .custom-checkbox input[type='checkbox']:checked ~ .checkmark {
-  background: #000;
+  background: var(--color-1000);
 }
 
 .custom-checkbox .checkmark:after {
