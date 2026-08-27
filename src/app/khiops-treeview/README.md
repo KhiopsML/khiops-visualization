@@ -235,16 +235,6 @@ const options = {
 };
 ```
 
-## 🎨 Styling
-
-The component uses SCSS for styling with CSS custom properties for theming:
-
-```scss
-:root {
-  --primary: #1976d2; // Primary color for file icons
-}
-```
-
 ### Key CSS Classes
 
 - `.tree-leaf`: Individual tree node container

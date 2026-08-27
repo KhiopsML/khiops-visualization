@@ -96,7 +96,7 @@
 
     .zerozero-circle {
       fill: none;
-      stroke: #fff;
+      stroke: var(--color-0);
       stroke-width: 0.1;
     }
 
@@ -109,23 +109,6 @@
       .node:first-child {
         fill: rgba(255, 255, 255, 0.15);
         stroke-width: 0.003;
-      }
-
-      .cell {
-        stroke: #999;
-        fill: none;
-      }
-
-      .caption {
-        fill: #666;
-      }
-
-      .caption.P {
-        fill: #666;
-      }
-
-      .caption-background {
-        visibility: hidden;
       }
 
       .background-circle {
@@ -146,7 +129,7 @@
       }
 
       .arc {
-        stroke: #aaa; // #b77d68; //#8d6e63;
+        stroke: #aaa;
       }
     }
   }

@@ -22,6 +22,6 @@
   }
 
   ::ng-deep .mat-mdc-progress-spinner circle {
-    stroke: #ffffff !important;
+    stroke: var(--color-0) !important;
   }
 }

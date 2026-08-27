@@ -13,7 +13,7 @@
   min-width: 300px;
   color: var(--color-0);
   font-size: 13px;
-  background: rgba(0, 0, 0, 0.8);
+  background: color-mix(in srgb, var(--color-1000) 80%, transparent);
   pointer-events: none;
   border-radius: 0px;
   transition: opacity 250ms cubic-bezier(0.25, 0.46, 0.45, 0.94) 500ms;
