@@ -37,10 +37,20 @@
   }
 
   .button-accent {
-    min-width: 200px;
+    max-width: 200px !important;
     text-align: left;
     justify-content: space-between;
 
+    ::ng-deep .mdc-button__label {
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      overflow: hidden;
+      span {
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        overflow: hidden;
+      }
+    }
     em {
       margin-left: auto;
     }
@@ -107,4 +117,3 @@
     opacity: 0.7;
   }
 }
-

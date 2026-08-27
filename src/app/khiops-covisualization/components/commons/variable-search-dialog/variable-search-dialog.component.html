@@ -22,7 +22,11 @@
             color="accent"
             [matMenuTriggerFor]="selectInnerVariable"
           >
-            {{ selectedInnerVariable() || 'GLOBAL.SELECT_VARIABLE' | translate }}
+            <span>
+              {{
+                selectedInnerVariable() || 'GLOBAL.SELECT_VARIABLE' | translate
+              }}
+            </span>
             <em class="screenshot-hide">
               <mat-icon>keyboard_arrow_down</mat-icon>
             </em>
@@ -49,7 +53,9 @@
               @if (innerVariableFilterText()) {
                 <mat-icon
                   class="inner-variable-search-clear"
-                  (click)="$event.stopPropagation(); clearInnerVariableFilterText()"
+                  (click)="
+                    $event.stopPropagation(); clearInnerVariableFilterText()
+                  "
                   >close</mat-icon
                 >
               }
