@@ -59,6 +59,11 @@ mat-button-toggle-group {
   padding: 0 !important;
 }
 
+mat-progress-spinner,
+mat-spinner {
+  --mat-progress-spinner-active-indicator-color: var(--color-1000) !important;
+}
+
 .mat-mdc-flat-button:hover,
 .search-input-btn:hover,
 .mat-mdc-unelevated-button:hover,
