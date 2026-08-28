@@ -13,13 +13,16 @@
     <mat-form-field appearance="outline">
       <mat-label>{{ 'GLOBAL.INNER_VARIABLES' | translate }}</mat-label>
       <mat-select
-        [(value)]="selectedInnerVariables"
+        [value]="selectedInnerVariables"
         multiple
         panelClass="inner-variables-filter-panel"
-        (selectionChange)="onInnerVariablesSelected($event)"
         (openedChange)="onSelectOpenedChange($event)"
       >
-        <!-- Search input to filter within all inner variables -->
+        <mat-select-trigger>
+          {{ triggerLabel }}
+        </mat-select-trigger>
+        <!-- Search input: visually filters the list, but never touches -->
+        <!-- selectedInnerVariables, so a hidden checked item is never lost -->
         <div class="inner-variables-search" (click)="$event.stopPropagation()">
           <input
             matInput
@@ -39,8 +42,10 @@
             >
           }
         </div>
-        <!-- Select All row: plain div (not mat-option) so it never enters mat-select's -->
-        <!-- internal selection model, which only tracks currently rendered options. -->
+        <!-- Select All row and individual variables: plain click handlers drive -->
+        <!-- selectedInnerVariables directly, instead of relying on mat-select's -->
+        <!-- (selectionChange), which only reflects currently rendered options and -->
+        <!-- would drop the selection state of anything hidden by the search filter. -->
         <div
           class="select-all-option"
           (click)="$event.stopPropagation(); toggleAllInnerVariables()"
@@ -54,7 +59,10 @@
         </div>
         <!-- Individual variables, capped to maxDisplayedInnerVariables for performance -->
         @for (variable of displayedInnerVariables; track variable) {
-          <mat-option [value]="variable">
+          <mat-option
+            [value]="variable"
+            (click)="$event.stopPropagation(); toggleInnerVariable(variable)"
+          >
             <mat-checkbox
               [checked]="selectedInnerVariables.includes(variable)"
               >{{ variable }}</mat-checkbox

@@ -42,10 +42,13 @@ export class MatrixInnerVariablesFilterComponent implements OnInit, OnChanges {
   public showInnerVariablesSelect = false;
   public selectAllCheckboxText?: string;
   public filterText = '';
+  // Visually filtered/capped list of rendered options. Selection itself is
+  // tracked independently in `selectedInnerVariables` and is never derived
+  // from which options are currently rendered, so filtering never loses data.
   public displayedInnerVariables: string[] = [];
+  public totalInnerVariablesCount = 0;
   public filteredInnerVariablesCount = 0;
   public isInnerVariablesTruncated = false;
-  private isToggling = false;
 
   constructor(
     private translate: TranslateService,
@@ -116,6 +119,7 @@ export class MatrixInnerVariablesFilterComponent implements OnInit, OnChanges {
     }
 
     this.filterText = '';
+    this.totalInnerVariablesCount = this.innerVariables.length;
     this.applyInnerVariablesFilter();
 
     // Emit initial state
@@ -123,8 +127,9 @@ export class MatrixInnerVariablesFilterComponent implements OnInit, OnChanges {
   }
 
   /**
-   * Filters the inner variables list based on the current search text
-   * and caps the number of rendered options for performance.
+   * Filters the visible options list based on the search text (visual only).
+   * `selectedInnerVariables` is never derived from this list, so hiding a
+   * checked variable behind the filter never uncheckes/loses it.
    */
   private applyInnerVariablesFilter() {
     const search = this.filterText.trim().toLowerCase();
@@ -151,7 +156,7 @@ export class MatrixInnerVariablesFilterComponent implements OnInit, OnChanges {
   }
 
   /**
-   * Clears the search filter text
+   * Clears the search text
    */
   clearFilterText() {
     this.filterText = '';
@@ -159,7 +164,7 @@ export class MatrixInnerVariablesFilterComponent implements OnInit, OnChanges {
   }
 
   /**
-   * Resets the search filter when the select panel closes
+   * Resets the search when the select panel closes
    */
   onSelectOpenedChange(opened: boolean) {
     if (!opened && this.filterText) {
@@ -169,20 +174,17 @@ export class MatrixInnerVariablesFilterComponent implements OnInit, OnChanges {
   }
 
   /**
-   * Called when the inner variables selection changes
-   * This method filters out any non-variable selections (like from select all clicks)
+   * Toggles a single inner variable's selection. Driven entirely by our own
+   * click handler rather than mat-select's (selectionChange) output: that
+   * event only reflects currently rendered options, so diffing against it
+   * would drop the selection state of anything hidden by the search filter.
    */
-  onInnerVariablesSelected(event: any) {
-    // Don't process if we're in the middle of a toggle operation
-    if (this.isToggling) {
-      return;
-    }
-
-    // Filter only valid inner variables, excluding any non-variable values
-    const validSelections = event.value.filter((value: string) =>
-      this.innerVariables.includes(value),
-    );
-    this.selectedInnerVariables = validSelections;
+  toggleInnerVariable(variable: string) {
+    this.selectedInnerVariables = this.selectedInnerVariables.includes(
+      variable,
+    )
+      ? this.selectedInnerVariables.filter((v) => v !== variable)
+      : [...this.selectedInnerVariables, variable];
     this.emitSelectionChange();
   }
 
@@ -201,8 +203,6 @@ export class MatrixInnerVariablesFilterComponent implements OnInit, OnChanges {
   }
 
   toggleAllInnerVariables() {
-    this.isToggling = true;
-
     if (this.allInnerVariablesSelected()) {
       this.selectedInnerVariables = [];
       this.selectAllCheckboxText = this.translate.get('GLOBAL.SELECT_ALL');
@@ -211,11 +211,6 @@ export class MatrixInnerVariablesFilterComponent implements OnInit, OnChanges {
       this.selectAllCheckboxText = this.translate.get('GLOBAL.UNSELECT_ALL');
     }
     this.emitSelectionChange();
-
-    // Reset the flag after DOM update
-    setTimeout(() => {
-      this.isToggling = false;
-    }, 0);
   }
 
   /**
@@ -256,5 +251,17 @@ export class MatrixInnerVariablesFilterComponent implements OnInit, OnChanges {
    */
   get isVisible(): boolean {
     return this.showComponent && this.showInnerVariablesSelect;
+  }
+
+  /**
+   * Label shown in the closed select: the first 20 selected variables, with
+   * an ellipsis if there are more (avoids joining/rendering huge selections).
+   */
+  get triggerLabel(): string {
+    const maxShown = 20;
+    const shown = this.selectedInnerVariables.slice(0, maxShown).join(', ');
+    return this.selectedInnerVariables.length > maxShown
+      ? `${shown}, ...`
+      : shown;
   }
 }
