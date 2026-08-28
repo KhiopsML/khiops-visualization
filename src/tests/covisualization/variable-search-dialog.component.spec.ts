@@ -5,7 +5,12 @@
  */
 // @ts-nocheck
 
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import {
+  ComponentFixture,
+  TestBed,
+  fakeAsync,
+  tick,
+} from '@angular/core/testing';
 import { TranslateModule } from '@ngstack/translate';
 import { provideHttpClient, withXhr } from '@angular/common/http';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
@@ -106,7 +111,6 @@ describe('VariableSearchDialogComponent', () => {
     component = fixture.componentInstance;
     // Set data before detectChanges, simulating what DialogWrapperComponent does
     component.data = mockDialogData;
-    fixture.detectChanges();
     mockDialogService = TestBed.inject(
       DialogService,
     ) as jasmine.SpyObj<DialogService>;
@@ -118,6 +122,15 @@ describe('VariableSearchDialogComponent', () => {
     ) as jasmine.SpyObj<TreenodesService>;
   });
 
+  // ngOnInit defers heavy work via requestAnimationFrame + setTimeout
+  // (deferAfterPaint); tick() drains that chain so signals are populated
+  // before each test runs. Using a bounded tick (not flush()) avoids
+  // draining unrelated timers scheduled by the real AgGridComponent child.
+  beforeEach(fakeAsync(() => {
+    fixture.detectChanges();
+    tick(20);
+  }));
+
   it('should create', () => {
     expect(component).toBeTruthy();
   });
@@ -127,7 +140,7 @@ describe('VariableSearchDialogComponent', () => {
     expect(component.selectedInnerVariable()).toBe('var1');
   });
 
-  it('should call search service when performing search', () => {
+  it('should call search service when performing search', fakeAsync(() => {
     const mockSearchData = {
       searchResults: {
         displayedColumns: [
@@ -150,12 +163,13 @@ describe('VariableSearchDialogComponent', () => {
     );
 
     component.onInnerVariableSelected('var1');
+    tick(20);
 
     expect(
       mockVariableSearchService.performVariableSearch,
     ).toHaveBeenCalledWith(mockDialogData.selectedDimension, 'var1');
     expect(component.searchResults()).toEqual(mockSearchData.searchResults);
-  });
+  }));
 
   it('should handle row selection correctly', () => {
     const mockClusterInfo = { cluster: 'C1', _id: 'id1' };
@@ -189,11 +203,12 @@ describe('VariableSearchDialogComponent', () => {
     });
   });
 
-  it('should reset search when changing inner variable', () => {
+  it('should reset search when changing inner variable', fakeAsync(() => {
     component.selectedInnerVariable.set('var1');
 
     component.onInnerVariableSelected('var2');
+    tick(20);
 
     expect(component.selectedInnerVariable()).toBe('var2');
-  });
+  }));
 });
