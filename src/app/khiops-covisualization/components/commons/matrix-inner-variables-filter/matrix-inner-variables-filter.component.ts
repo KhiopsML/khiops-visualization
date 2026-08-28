@@ -280,14 +280,30 @@ export class MatrixInnerVariablesFilterComponent implements OnInit, OnChanges {
   }
 
   /**
-   * Label shown in the closed select: the first 20 selected variables, with
-   * an ellipsis if there are more (avoids joining/rendering huge selections).
+   * Label shown in the closed select: the first 20 selected variables (in
+   * their natural/sorted order, not toggle order, so re-selecting a variable
+   * always puts it back at the same, predictable position), with an ellipsis
+   * if there are more.
    */
   get triggerLabel(): string {
     const maxShown = 20;
-    const shown = this.selectedInnerVariables.slice(0, maxShown).join(', ');
-    return this.selectedInnerVariables.length > maxShown
-      ? `${shown}, ...`
-      : shown;
+    const selectedSet = new Set(this.selectedInnerVariables);
+    const shown: string[] = [];
+    let totalSelectedSeen = 0;
+    for (const variable of this.innerVariables) {
+      if (!selectedSet.has(variable)) {
+        continue;
+      }
+      totalSelectedSeen++;
+      if (shown.length < maxShown) {
+        shown.push(variable);
+      }
+      if (totalSelectedSeen === selectedSet.size && shown.length <= maxShown) {
+        break; // Found every selected variable, no need to scan further
+      }
+    }
+    return totalSelectedSeen > maxShown
+      ? `${shown.join(', ')}, ...`
+      : shown.join(', ');
   }
 }
