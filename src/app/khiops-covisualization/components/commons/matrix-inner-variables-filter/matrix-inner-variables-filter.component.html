@@ -57,18 +57,6 @@
             {{ selectAllCheckboxText }}
           </mat-checkbox>
         </div>
-        <!-- Individual variables, capped to maxDisplayedInnerVariables for performance -->
-        @for (variable of displayedInnerVariables; track variable) {
-          <mat-option
-            [value]="variable"
-            (click)="$event.stopPropagation(); toggleInnerVariable(variable)"
-          >
-            <mat-checkbox
-              [checked]="selectedInnerVariables.includes(variable)"
-              >{{ variable }}</mat-checkbox
-            >
-          </mat-option>
-        }
         @if (isInnerVariablesTruncated) {
           <mat-option disabled class="truncated-hint">
             {{
@@ -79,6 +67,18 @@
                       total: filteredInnerVariablesCount,
                     }
             }}
+          </mat-option>
+        }
+        <!-- Individual variables, capped to maxDisplayedInnerVariables for performance -->
+        @for (variable of displayedInnerVariables; track variable) {
+          <mat-option
+            [value]="variable"
+            (click)="$event.stopPropagation(); toggleInnerVariable(variable)"
+          >
+            <mat-checkbox
+              [checked]="selectedInnerVariables.includes(variable)"
+              >{{ variable }}</mat-checkbox
+            >
           </mat-option>
         }
       </mat-select>
