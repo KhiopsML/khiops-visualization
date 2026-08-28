@@ -16,7 +16,6 @@
         [value]="selectedInnerVariables"
         multiple
         panelClass="inner-variables-filter-panel"
-        (openedChange)="onSelectOpenedChange($event)"
       >
         <!-- Search input: visually filters the list, but never touches -->
         <!-- selectedInnerVariables, so a hidden checked item is never lost -->
@@ -64,6 +63,13 @@
                       total: filteredInnerVariablesCount,
                     }
             }}
+          </mat-option>
+        }
+        <!-- Always keep at least one mat-option rendered even with 0 matches: -->
+        <!-- an empty content list can otherwise prevent mat-select from reopening. -->
+        @if (displayedInnerVariables.length === 0) {
+          <mat-option disabled class="truncated-hint">
+            {{ 'NO_DATAS.DEFAULT' | translate }}
           </mat-option>
         }
         <!-- Individual variables, capped to maxDisplayedInnerVariables for performance -->

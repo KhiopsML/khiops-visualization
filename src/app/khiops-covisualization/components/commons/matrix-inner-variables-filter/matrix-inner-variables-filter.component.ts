@@ -179,16 +179,6 @@ export class MatrixInnerVariablesFilterComponent implements OnInit, OnChanges {
   }
 
   /**
-   * Resets the search when the select panel closes
-   */
-  onSelectOpenedChange(opened: boolean) {
-    if (!opened && this.filterText) {
-      this.filterText = '';
-      this.applyInnerVariablesFilter();
-    }
-  }
-
-  /**
    * Toggles a single inner variable's selection. Driven entirely by our own
    * click handler rather than mat-select's (selectionChange) output: that
    * event only reflects currently rendered options, so diffing against it
