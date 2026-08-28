@@ -49,6 +49,10 @@ export class MatrixInnerVariablesFilterComponent implements OnInit, OnChanges {
   public totalInnerVariablesCount = 0;
   public filteredInnerVariablesCount = 0;
   public isInnerVariablesTruncated = false;
+  // Variables toggled while outside the capped/filtered view (e.g. found via
+  // search). Kept rendered as long as they stay selected, so mat-select's
+  // internal model always has a matching option for the current selection.
+  private manuallyRevealedVariables: string[] = [];
 
   constructor(
     private translate: TranslateService,
@@ -119,6 +123,7 @@ export class MatrixInnerVariablesFilterComponent implements OnInit, OnChanges {
     }
 
     this.filterText = '';
+    this.manuallyRevealedVariables = [];
     this.totalInnerVariablesCount = this.innerVariables.length;
     this.applyInnerVariablesFilter();
 
@@ -142,9 +147,19 @@ export class MatrixInnerVariablesFilterComponent implements OnInit, OnChanges {
     this.filteredInnerVariablesCount = filtered.length;
     this.isInnerVariablesTruncated =
       filtered.length > this.maxDisplayedInnerVariables;
-    this.displayedInnerVariables = this.isInnerVariablesTruncated
+    const capped = this.isInnerVariablesTruncated
       ? filtered.slice(0, this.maxDisplayedInnerVariables)
       : filtered;
+
+    // Keep manually revealed (searched & selected) variables visible even if
+    // the current filter/cap would otherwise hide them again.
+    const stillRevealed = this.manuallyRevealedVariables.filter(
+      (variable) =>
+        this.selectedInnerVariables.includes(variable) &&
+        !capped.includes(variable),
+    );
+    this.manuallyRevealedVariables = stillRevealed;
+    this.displayedInnerVariables = [...capped, ...stillRevealed];
   }
 
   /**
@@ -180,11 +195,32 @@ export class MatrixInnerVariablesFilterComponent implements OnInit, OnChanges {
    * would drop the selection state of anything hidden by the search filter.
    */
   toggleInnerVariable(variable: string) {
-    this.selectedInnerVariables = this.selectedInnerVariables.includes(
-      variable,
-    )
+    const isSelected = this.selectedInnerVariables.includes(variable);
+    const nextSelected = isSelected
       ? this.selectedInnerVariables.filter((v) => v !== variable)
       : [...this.selectedInnerVariables, variable];
+
+    if (!isSelected && !this.displayedInnerVariables.includes(variable)) {
+      this.manuallyRevealedVariables = [
+        ...this.manuallyRevealedVariables,
+        variable,
+      ];
+      this.displayedInnerVariables = [
+        ...this.displayedInnerVariables,
+        variable,
+      ];
+      // The matching <mat-option> doesn't exist yet this tick, so mat-select
+      // can't mark it selected (its trigger would then wrongly show as
+      // "empty"). Defer the [value] update to the next tick, once Angular
+      // has rendered the newly revealed option.
+      setTimeout(() => {
+        this.selectedInnerVariables = nextSelected;
+        this.emitSelectionChange();
+      });
+      return;
+    }
+
+    this.selectedInnerVariables = nextSelected;
     this.emitSelectionChange();
   }
 

@@ -16,6 +16,7 @@
   mat-form-field {
     font-size: 0.9rem;
     min-width: 150px;
+    position: relative;
 
     mat-select {
       min-height: 2rem;
@@ -24,6 +25,28 @@
     .mat-mdc-form-field-subscript-wrapper {
       display: none;
     }
+
+    // Material's own value/placeholder text is replaced by our overlay label
+    // (see .inner-variables-value-overlay), which never lags behind the model.
+    // mat-select renders these in its own encapsulated view, hence ::ng-deep.
+    ::ng-deep .mat-mdc-select-value-text,
+    ::ng-deep .mat-mdc-select-placeholder {
+      visibility: hidden;
+    }
+  }
+
+  .inner-variables-value-overlay {
+    position: absolute;
+    font-size: 13px !important;
+    left: 10px;
+    right: 30px;
+    top: 50%;
+    transform: translateY(-50%);
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    font-size: 0.9rem;
+    pointer-events: none; // clicks pass through to open the select
   }
 
   .select-all-btn {
@@ -128,6 +151,7 @@
       min-height: 0;
       mat-select {
         max-width: calc(100% - 40px);
+        color: var(--color-0) !important;
       }
       span {
         font-size: 13px;

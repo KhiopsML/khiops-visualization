@@ -10,7 +10,7 @@
     fxLayout="row"
     fxLayoutAlign="start center"
   >
-    <mat-form-field appearance="outline">
+    <mat-form-field appearance="outline" floatLabel="always">
       <mat-label>{{ 'GLOBAL.INNER_VARIABLES' | translate }}</mat-label>
       <mat-select
         [value]="selectedInnerVariables"
@@ -18,9 +18,6 @@
         panelClass="inner-variables-filter-panel"
         (openedChange)="onSelectOpenedChange($event)"
       >
-        <mat-select-trigger>
-          {{ triggerLabel }}
-        </mat-select-trigger>
         <!-- Search input: visually filters the list, but never touches -->
         <!-- selectedInnerVariables, so a hidden checked item is never lost -->
         <div class="inner-variables-search" (click)="$event.stopPropagation()">
@@ -82,6 +79,12 @@
           </mat-option>
         }
       </mat-select>
+      <!-- Own overlay label: mat-select's built-in trigger relies on Material -->
+      <!-- matching the value against a rendered mat-option, which can lag by a -->
+      <!-- tick for variables revealed via search. Driven only by our own state. -->
+      @if (selectedInnerVariables.length > 0) {
+        <div class="inner-variables-value-overlay">{{ triggerLabel }}</div>
+      }
       <em class="screenshot-hide"><mat-icon>keyboard_arrow_down</mat-icon> </em>
     </mat-form-field>
   </div>
