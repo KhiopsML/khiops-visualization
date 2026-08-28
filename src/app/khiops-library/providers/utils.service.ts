@@ -1655,9 +1655,15 @@ export class UtilsService {
    */
   static formatValueGroup(arr?: string[]): (string | string[])[][] | undefined {
     return arr?.map((item) => {
-      const index = Math.max(item.indexOf(']'), item.indexOf('{'));
-      if (index !== -1) {
-        return [item.substring(0, index - 1), [item.substring(index)]];
+      // The value token (categorical set or numerical interval) is always the
+      // trailing part of the string, appended as "<variable name> <value>".
+      // Matching from the end (not the first bracket) is required because the
+      // variable name itself can contain a bracketed token, e.g.
+      // "Count(DNA) where Pos in ]8.5, 15.5]" or
+      // "Mode(DNA.Char) where Char not in {C, G} and Pos > 30.5 ]12.5,14.5]".
+      const match = item.match(/\s(\{[^{}]*\}|[\]\[][^\[\]{}]*[\]\[])$/);
+      if (match?.index !== undefined) {
+        return [item.substring(0, match.index), [match[1] as string]];
       }
       return [item, []];
     });

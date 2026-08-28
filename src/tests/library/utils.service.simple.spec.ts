@@ -986,15 +986,40 @@ describe('UtilsService', () => {
   });
 
   describe('formatValueGroup', () => {
-    it('formats value group with extra', () => {
+    it('splits on the trailing categorical/numerical token, not the first bracket', () => {
+      const result = UtilsService.formatValueGroup([
+        'Count(DNA) where Char = G ]13.5,18.5]',
+        'Class {IE}',
+      ]);
+      expect(result).toEqual([
+        ['Count(DNA) where Char = G', [']13.5,18.5]']],
+        ['Class', ['{IE}']],
+      ]);
+    });
+
+    it('keeps a bracketed token embedded in the variable name intact', () => {
+      const result = UtilsService.formatValueGroup([
+        'Count(DNA) where Pos in ]8.5, 15.5] ]-inf,+inf[',
+        'Mode(DNA.Char) where Char not in {C, G} and Pos > 30.5 ]12.5,14.5]',
+      ]);
+      expect(result).toEqual([
+        ['Count(DNA) where Pos in ]8.5, 15.5]', [']-inf,+inf[']],
+        [
+          'Mode(DNA.Char) where Char not in {C, G} and Pos > 30.5',
+          [']12.5,14.5]'],
+        ],
+      ]);
+    });
+
+    it('returns the string as-is when there is no trailing bracketed token', () => {
       const result = UtilsService.formatValueGroup([
         'value1]extra',
         'value2{extra',
       ]);
       expect(result).toEqual([
-        ['value', [']extra']],
-        ['value', ['{extra']],
-      ]); // The method uses index - 1, which cuts off the last character
+        ['value1]extra', []],
+        ['value2{extra', []],
+      ]);
     });
 
     it('formats simple value group', () => {
@@ -1009,10 +1034,14 @@ describe('UtilsService', () => {
   });
 
   describe('mergeIdenticalValues', () => {
-    it('merges identical values with extras', () => {
-      const values = ['value1]extra1', 'value1{extra2', 'value2]extra3'];
+    it('merges identical variable names across their partition values', () => {
+      const values = [
+        'Count(DNA) where Char = G ]13.5,18.5]',
+        'Count(DNA) where Char = G ]18.5,21.5]',
+        'Count(DNA) where Char = C ]-inf,15.5]',
+      ];
       const result = UtilsService.mergeIdenticalValues(values);
-      expect(result.length).toBe(1); // The actual method only returns 1 grouped result due to the bug in formatValueGroup
+      expect(result.length).toBe(2);
     });
 
     it('returns empty array for undefined input', () => {
