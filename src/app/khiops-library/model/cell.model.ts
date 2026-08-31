@@ -99,18 +99,22 @@ export class CellModel {
     this.x = {
       standard: xValues.standard[i]!,
       frequency: xValues.frequency[i]!,
+      balanced: xValues.balanced[i]!,
     };
     this.y = {
       standard: yValues.standard[j]!,
       frequency: yValues.frequency[j]!,
+      balanced: yValues.balanced[j]!,
     };
     this.w = {
       standard: xValues.standard[i + 1]! - this.x.standard,
       frequency: xValues.frequency[i + 1]! - this.x.frequency,
+      balanced: xValues.balanced[i + 1]! - this.x.balanced,
     };
     this.h = {
       standard: yValues.standard[j + 1]! - this.y.standard,
       frequency: yValues.frequency[j + 1]! - this.y.frequency,
+      balanced: yValues.balanced[j + 1]! - this.y.balanced,
     };
   }
 }

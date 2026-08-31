@@ -109,7 +109,8 @@ export function getCovisualizationMockFile(): string {
   // let urlKC = 'IV-AdultEducation.json';
   // let urlKC = 'Coclustering-IVAdultEducation.json';
   // let urlKC = 'Coclustering-IV-Glass.khcj';
-  let urlKC = 'Adult50_Coclustering.khcj';
+  // let urlKC = 'Adult50_Coclustering.khcj';
+  let urlKC = '285-UsagersGravityCoclustering.khcj';
   // let urlKC = 'Coclustering-IV-Iris.khcj';
   // let urlKC = 'Coclustering-IV-Pima.khcj';
   // let urlKC = 'Coclustering_NewSeparator.khcj';

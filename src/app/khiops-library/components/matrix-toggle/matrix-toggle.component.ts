@@ -13,6 +13,7 @@ import {
   Output,
 } from '@angular/core';
 import { LS } from '@khiops-library/enum/ls';
+import { TYPES } from '@khiops-library/enum/types';
 import { MatrixOptionsModel } from '@khiops-library/model/matrix-options.model';
 import { Ls } from '@khiops-library/providers/ls.service';
 
@@ -27,6 +28,7 @@ export class MatrixToggleComponent implements OnChanges {
   @Input() public matrixOptions: MatrixOptionsModel = new MatrixOptionsModel();
   @Input() private lsId: string = LS.MATRIX_TYPE_OPTION;
   @Output() private matrixOptionChange = new EventEmitter<string>();
+  public readonly types = TYPES;
 
   constructor(private ls: Ls) {}
 

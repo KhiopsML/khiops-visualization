@@ -791,6 +791,11 @@ export class Preparation2dDatasService {
               selectedVariable?.values || 0,
             );
 
+          xValues.balanced =
+            MatrixUtilsService.getBalancedAxisValues(xDimension);
+          yValues.balanced =
+            MatrixUtilsService.getBalancedAxisValues(yDimension);
+
           const cellDatas = MatrixUtilsService.getCellDatas(
             xDimension,
             yDimension,

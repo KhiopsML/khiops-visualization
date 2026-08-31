@@ -330,6 +330,7 @@
     "MATRIX": "Matrix",
     "CELLS": "Cells",
     "STANDARD": "Standard",
+    "BALANCED": "Balanced",
     "INVERT_AXIS": "Invert axis",
     "COOCCURRENCE": "Co-occurrence",
     "CELLS_OF": "Cells of",
@@ -426,6 +427,7 @@
       "LEVEL_DISTRIBUTION": "display the level distribution of the variables",
       "CONDITIONAL_ON_CONTEXT": "When checked, frequencies are calculated conditionally on the selected context.",
       "MATRIX_MODE": "Set frequency or clusters/intervals matrix.",
+      "MATRIX_BALANCED_MODE": "This mode equalizes values to facilitate the visual inspection of small clusters.",
       "MATRIX_CONTRAST": "The contrast allows to highlight the interesting patterns",
       "MATRIX_GLOBAL_LOCAL": "The scale is local when the patterns are scaled according to their local context, and global when their are scaled w.r.t. the entire dataset"
     },

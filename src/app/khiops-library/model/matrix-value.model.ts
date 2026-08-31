@@ -7,6 +7,7 @@
 export class MatrixValuesModel {
   standard: number[] = [];
   frequency: number[] = [];
+  balanced: number[] = [];
   standardInner?: number[] = [];
   frequencyInner?: number[] = [];
 }

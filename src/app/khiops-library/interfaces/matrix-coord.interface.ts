@@ -7,6 +7,7 @@
 export interface MatrixCoordI {
   standard: number;
   frequency: number;
+  balanced: number;
   standardInner?: number;
   frequencyInner?: number;
 }

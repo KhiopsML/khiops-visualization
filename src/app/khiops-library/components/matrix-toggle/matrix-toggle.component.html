@@ -15,7 +15,12 @@
   @for (opt of matrixOptions.types; track opt) {
     <mat-button-toggle
       [value]="opt"
-      title="{{ 'TOOLTIPS.COMMONS.MATRIX_MODE' | translate }}"
+      title="{{
+        (opt === types.BALANCED
+          ? 'TOOLTIPS.COMMONS.MATRIX_BALANCED_MODE'
+          : 'TOOLTIPS.COMMONS.MATRIX_MODE'
+        ) | translate
+      }}"
       (click)="changeMatrixType(opt)"
     >
       <span>{{ opt | translate }}</span>

@@ -236,10 +236,10 @@ describe('MatrixUiService', () => {
 
     beforeEach(() => {
       cell = new CellModel();
-      cell.x = { standard: 10, frequency: 20 };
-      cell.y = { standard: 30, frequency: 40 };
-      cell.w = { standard: 50, frequency: 60 };
-      cell.h = { standard: 70, frequency: 80 };
+      cell.x = { standard: 10, frequency: 20, balanced: 15 };
+      cell.y = { standard: 30, frequency: 40, balanced: 35 };
+      cell.w = { standard: 50, frequency: 60, balanced: 55 };
+      cell.h = { standard: 70, frequency: 80, balanced: 75 };
     });
 
     it('should compute canvas dimensions using standard coords when graphType is STANDARD', () => {
@@ -256,6 +256,14 @@ describe('MatrixUiService', () => {
       expect(result.yCanvas).toBe(40 * 300 * 0.01); // 120
       expect(result.wCanvas).toBe(60 * 200 * 0.01); // 120
       expect(result.hCanvas).toBe(80 * 300 * 0.01); // 240
+    });
+
+    it('should compute canvas dimensions using balanced coords when graphType is BALANCED', () => {
+      const result = MatrixUiService.adaptCellDimensionsToZoom(cell, 200, 300, TYPES.BALANCED);
+      expect(result.xCanvas).toBe(15 * 200 * 0.01); // 30
+      expect(result.yCanvas).toBe(35 * 300 * 0.01); // 105
+      expect(result.wCanvas).toBe(55 * 200 * 0.01); // 110
+      expect(result.hCanvas).toBe(75 * 300 * 0.01); // 225
     });
 
     it('should not modify cell when width is 0', () => {
@@ -277,10 +285,10 @@ describe('MatrixUiService', () => {
     });
 
     it('should use inner coords when matrixFilterOption is INNER_VARIABLES and coords exist', () => {
-      cell.x = { standard: 10, frequency: 20, standardInner: 5, frequencyInner: 15 };
-      cell.y = { standard: 30, frequency: 40, standardInner: 25, frequencyInner: 35 };
-      cell.w = { standard: 50, frequency: 60, standardInner: 45, frequencyInner: 55 };
-      cell.h = { standard: 70, frequency: 80, standardInner: 65, frequencyInner: 75 };
+      cell.x = { standard: 10, frequency: 20, balanced: 15, standardInner: 5, frequencyInner: 15 };
+      cell.y = { standard: 30, frequency: 40, balanced: 35, standardInner: 25, frequencyInner: 35 };
+      cell.w = { standard: 50, frequency: 60, balanced: 55, standardInner: 45, frequencyInner: 55 };
+      cell.h = { standard: 70, frequency: 80, balanced: 75, standardInner: 65, frequencyInner: 75 };
 
       const result = MatrixUiService.adaptCellDimensionsToZoom(
         cell, 200, 300, TYPES.STANDARD, TYPES.INNER_VARIABLES,

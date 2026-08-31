@@ -9,6 +9,7 @@ import { UtilsService } from '../../providers/utils.service';
 import { CellModel } from '../../model/cell.model';
 import { MATRIX_MODES } from '@khiops-library/enum/matrix-modes';
 import { TYPES } from '@khiops-library/enum/types';
+import { MatrixCoordI } from '@khiops-library/interfaces/matrix-coord.interface';
 
 @Injectable({
   providedIn: 'root',
@@ -296,47 +297,25 @@ export class MatrixUiService {
   ) {
     if (width && height) {
       // Use inner variables dimensions if inner variable filter is active and coordinates are available
+      // Note: balanced mode has no inner variant, it always falls back to the balanced coord
       const useInnerCoords =
         matrixFilterOption === TYPES.INNER_VARIABLES &&
         cellDatas.x.standardInner !== undefined &&
         cellDatas.x.frequencyInner !== undefined;
 
-      if (useInnerCoords) {
-        cellDatas.xCanvas =
-          graphType === TYPES.STANDARD
-            ? cellDatas.x.standardInner! * width * 0.01
-            : cellDatas.x.frequencyInner! * width * 0.01;
-        cellDatas.yCanvas =
-          graphType === TYPES.STANDARD
-            ? cellDatas.y.standardInner! * height * 0.01
-            : cellDatas.y.frequencyInner! * height * 0.01;
-        cellDatas.wCanvas =
-          graphType === TYPES.STANDARD
-            ? cellDatas.w.standardInner! * width * 0.01
-            : cellDatas.w.frequencyInner! * width * 0.01;
-        cellDatas.hCanvas =
-          graphType === TYPES.STANDARD
-            ? cellDatas.h.standardInner! * height * 0.01
-            : cellDatas.h.frequencyInner! * height * 0.01;
-      } else {
-        // Use standard coordinates
-        cellDatas.xCanvas =
-          graphType === TYPES.STANDARD
-            ? cellDatas.x.standard * width * 0.01
-            : cellDatas.x.frequency * width * 0.01;
-        cellDatas.yCanvas =
-          graphType === TYPES.STANDARD
-            ? cellDatas.y.standard * height * 0.01
-            : cellDatas.y.frequency * height * 0.01;
-        cellDatas.wCanvas =
-          graphType === TYPES.STANDARD
-            ? cellDatas.w.standard * width * 0.01
-            : cellDatas.w.frequency * width * 0.01;
-        cellDatas.hCanvas =
-          graphType === TYPES.STANDARD
-            ? cellDatas.h.standard * height * 0.01
-            : cellDatas.h.frequency * height * 0.01;
-      }
+      const getCoordValue = (coord: MatrixCoordI): number => {
+        if (graphType === TYPES.STANDARD) {
+          return useInnerCoords ? coord.standardInner! : coord.standard;
+        } else if (graphType === TYPES.BALANCED) {
+          return coord.balanced;
+        }
+        return useInnerCoords ? coord.frequencyInner! : coord.frequency;
+      };
+
+      cellDatas.xCanvas = getCoordValue(cellDatas.x) * width * 0.01;
+      cellDatas.yCanvas = getCoordValue(cellDatas.y) * height * 0.01;
+      cellDatas.wCanvas = getCoordValue(cellDatas.w) * width * 0.01;
+      cellDatas.hCanvas = getCoordValue(cellDatas.h) * height * 0.01;
     }
 
     return cellDatas;

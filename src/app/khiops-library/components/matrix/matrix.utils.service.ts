@@ -457,6 +457,21 @@ export class MatrixUtilsService {
     return axisValues;
   }
 
+  /**
+   * Generates balanced axis values that give an equal width/height to every part
+   * of a dimension, regardless of its frequency or interval size.
+   *
+   * @param dimension - The dimension object containing the number of parts.
+   * @returns An array of cumulative percentages evenly split across all parts.
+   */
+  static getBalancedAxisValues(
+    dimension: DimensionCovisualizationModel | DimensionVisualizationModel,
+  ): number[] {
+    return UtilsService.generateArrayPercentsFromArrayIntervals(
+      dimension.parts,
+    );
+  }
+
   static getFrequencyAxisValues(
     xDimension: DimensionCovisualizationModel | DimensionVisualizationModel,
     yDimension: DimensionCovisualizationModel | DimensionVisualizationModel,

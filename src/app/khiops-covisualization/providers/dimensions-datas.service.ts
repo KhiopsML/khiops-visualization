@@ -760,6 +760,13 @@ export class DimensionsDatasService {
           yDimension as any,
         );
 
+      xValues.balanced = MatrixUtilsService.getBalancedAxisValues(
+        xDimension as any,
+      );
+      yValues.balanced = MatrixUtilsService.getBalancedAxisValues(
+        yDimension as any,
+      );
+
       // To display axis names
       this.dimensionsDatas.matrixDatas.variable = {
         nameX: this.dimensionsDatas.selectedDimensions[0]
