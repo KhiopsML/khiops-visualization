@@ -60,15 +60,6 @@
                 >
               }
             </div>
-            @for (variable of displayedInnerVariables(); track variable) {
-              <button
-                mat-menu-item
-                [class.selected-item]="variable === selectedInnerVariable()"
-                (click)="onInnerVariableSelected(variable)"
-              >
-                {{ variable }}
-              </button>
-            }
             @if (isInnerVariablesTruncated()) {
               <button mat-menu-item disabled class="truncated-hint">
                 {{
@@ -79,6 +70,15 @@
                           total: filteredInnerVariables().length,
                         }
                 }}
+              </button>
+            }
+            @for (variable of displayedInnerVariables(); track variable) {
+              <button
+                mat-menu-item
+                [class.selected-item]="variable === selectedInnerVariable()"
+                (click)="onInnerVariableSelected(variable)"
+              >
+                {{ variable }}
               </button>
             }
           </mat-menu>
