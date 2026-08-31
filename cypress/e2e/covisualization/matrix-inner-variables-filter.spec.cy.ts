@@ -7,7 +7,7 @@
 import '../../support/commands';
 
 describe('Matrix inner variables filter', () => {
-  const fileName = ' qui est ';
+  const fileName = '290-Coclustering.khcj';
 
   const openCombo = () => {
     cy.get('.inner-variables-filter mat-select').click();
