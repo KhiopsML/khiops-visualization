@@ -346,24 +346,26 @@ export class MatrixRendererService {
     cell: CellModel,
   ): void {
     if (cell) {
+      // Inset strokes past half their width (+1px margin) so they never sit exactly
+      // on the canvas boundary, which causes sub-pixel clipping (a thinner border) on edge cells
       matrixSelectedCtx.strokeStyle = '#ffffff';
       matrixSelectedCtx.lineWidth = 4;
       matrixSelectedCtx.shadowBlur = 1;
       matrixSelectedCtx.shadowColor = 'white';
       matrixSelectedCtx.strokeRect(
-        cell.xCanvas,
-        cell.yCanvas,
-        cell.wCanvas,
-        cell.hCanvas,
+        cell.xCanvas + 3,
+        cell.yCanvas + 3,
+        cell.wCanvas - 6,
+        cell.hCanvas - 6,
       );
 
       matrixSelectedCtx.lineWidth = 2;
       matrixSelectedCtx.strokeStyle = '#000000';
       matrixSelectedCtx.strokeRect(
-        cell.xCanvas,
-        cell.yCanvas,
-        cell.wCanvas,
-        cell.hCanvas,
+        cell.xCanvas + 2,
+        cell.yCanvas + 2,
+        cell.wCanvas - 4,
+        cell.hCanvas - 4,
       );
     }
   }
@@ -378,24 +380,24 @@ export class MatrixRendererService {
     cell: CellModel,
   ): void {
     if (cell) {
-      // Draw white border
+      // Draw white border, inset past half its width to avoid clipping on edge cells
       matrixSelectedCtx.strokeStyle = 'rgba(255,255,255, 0.6)';
       matrixSelectedCtx.lineWidth = 2;
       matrixSelectedCtx.strokeRect(
-        cell.xCanvas,
-        cell.yCanvas,
-        cell.wCanvas,
-        cell.hCanvas,
+        cell.xCanvas + 2,
+        cell.yCanvas + 2,
+        cell.wCanvas - 4,
+        cell.hCanvas - 4,
       );
 
       // Draw black inset border
       matrixSelectedCtx.strokeStyle = 'rgba(0 0 0 / 0.6)';
       matrixSelectedCtx.lineWidth = 1;
       matrixSelectedCtx.strokeRect(
-        cell.xCanvas + 2,
-        cell.yCanvas + 2,
-        cell.wCanvas - 4,
-        cell.hCanvas - 4,
+        cell.xCanvas + 4,
+        cell.yCanvas + 4,
+        cell.wCanvas - 8,
+        cell.hCanvas - 8,
       );
     }
   }
