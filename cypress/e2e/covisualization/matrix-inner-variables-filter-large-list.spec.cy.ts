@@ -17,9 +17,7 @@ describe('Matrix inner variables filter with a large (+20k) variable list', () =
   beforeEach(() => {
     cy.initViews();
     cy.loadFile('covisualization', fileName);
-    // CI runners are slower than local dev machines, and parsing/rendering
-    // a +20k variable file takes noticeably longer, so use a generous timeout.
-    cy.get('.inner-variables-filter mat-select', { timeout: 120000 }).should(
+    cy.get('.inner-variables-filter mat-select', { timeout: 30000 }).should(
       'be.visible',
     );
   });

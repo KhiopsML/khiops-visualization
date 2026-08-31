@@ -7,7 +7,7 @@
 import '../../support/commands';
 
 describe('Matrix inner variables filter', () => {
-  const fileName = '290-Coclustering.khcj';
+  const fileName = ' qui est ';
 
   const openCombo = () => {
     cy.get('.inner-variables-filter mat-select').click();
@@ -17,7 +17,7 @@ describe('Matrix inner variables filter', () => {
   it('should display, select, unselect and filter inner variables', () => {
     cy.initViews();
     cy.loadFile('covisualization', fileName);
-    cy.get('.inner-variables-filter mat-select', { timeout: 120000 }).should(
+    cy.get('.inner-variables-filter mat-select', { timeout: 30000 }).should(
       'be.visible',
     );
 

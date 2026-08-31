@@ -1,0 +1,2691 @@
+{
+	"tool": "Khiops Coclustering",
+	"version": "VERSION",
+	"shortDescription": "",
+	"coclusteringReport": {
+		"summary": {
+			"instances": 15137,
+			"cells": 278,
+			"nullCost": 191589.2626,
+			"cost": 190509.7599,
+			"level": 0.005634463663,
+			"initialDimensions": 2,
+			"frequencyVariable": "",
+			"dictionary": "R_SpliceJunction",
+			"database": "..\/..\/..\/MTdatasets\/SpliceJunction\/SpliceJunction.txt",
+			"samplePercentage": 10,
+			"samplingMode": "Include sample",
+			"selectionVariable": "",
+			"selectionValue": ""
+		},
+		"dimensionSummaries": [
+			{
+				"name": "SampleId",
+				"type": "Categorical",
+				"parts": 13,
+				"initialParts": 13,
+				"values": 303,
+				"interest": 1,
+				"description": ""
+			},
+			{
+				"name": "Variables",
+				"isVarPart": true,
+				"type": "Categorical",
+				"parts": 23,
+				"initialParts": 23,
+				"values": 125,
+				"interest": 1,
+				"description": ""
+			}
+		],
+		"dimensionPartitions": [
+			{
+				"name": "SampleId",
+				"type": "Categorical",
+				"valueGroups": [
+					{
+						"cluster": "{HUMFIXG-NEG-12781, HUMPCNA-ACCEPTOR-2520, HUMSATA-NEG-361, ...}",
+						"values": ["HUMFIXG-NEG-12781","HUMPCNA-ACCEPTOR-2520","HUMSATA-NEG-361","HUMIL1B-ACCEPTOR-6540","HUMIL2B-ACCEPTOR-500","HUMPRP0A-NEG-2161","HUMUG3PD-NEG-61","HUMEF1A-DONOR-3546","HUMHPARS1-ACCEPTOR-3750","HUMPGK2P-NEG-361","HUMSATAX-NEG-1441","HUMHMGCOA-NEG-2101","HUMAPOBA-NEG-13261","HUMDAFA-NEG-1561","HUMCYPIIE-NEG-12121","HUMIFNB3-NEG-10201","HUMMHDOB-ACCEPTOR-4124","HUMAREPAP-NEG-61","HUMRPS14-ACCEPTOR-2108","HUMGFP40H-ACCEPTOR-2431","HUMGPP3A11-NEG-961","HUMCYPMP-NEG-181","HUMETN1-NEG-181","HUMHOM4-NEG-841","HUMCYPIIE-DONOR-2972"],
+						"valueFrequencies": [50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,49,50,50,50,48],
+						"valueTypicalities": [1,0.987002,0.982323,0.919051,0.918699,0.914268,0.891141,0.87886,0.87376,0.830459,0.821817,0.803084,0.792296,0.782429,0.77513,0.766608,0.765058,0.757334,0.721755,0.720968,0.711566,0.690449,0.580966,0.557301,0.437931]
+					},
+					{
+						"cluster": "{HUMPS12-NEG-1321, AGMRSKPNI-NEG-1141, HUMRSO5C-NEG-361, ...}",
+						"values": ["HUMPS12-NEG-1321","AGMRSKPNI-NEG-1141","HUMRSO5C-NEG-361","HUMHSDB-NEG-121","HUMPAP4-NEG-781","HUMRPS14-NEG-3421","HUMCR1-NEG-4801","HUMCAM-NEG-121","HUMAFP-DONOR-14021","HUMCYES1-NEG-1501","ORAHBBPSE-NEG-6661","HUMGHCSA-NEG-65881","HUMA1ATP-DONOR-9653","HUMALDOAP-NEG-661","HUMIL1AG-NEG-421","HUMPRPH2-NEG-3661","HUMIFNINI-DONOR-3237","HUMERG2-NEG-1321","HUMPRPH1-DONOR-1687","HUMHPARS1-DONOR-5547","HUMHF10-NEG-241","MNKHBPSBD-NEG-961","HUMSAA1A-NEG-3901","HUMPEPC1-NEG-901","CHPIGECA-DONOR-378","HUMALDB1-NEG-2761","HUMLDLRRL-NEG-2641","HUMMPRCI-NEG-601"],
+						"valueFrequencies": [50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,49,50,50,50,50,50,50,50],
+						"valueTypicalities": [1,0.970876,0.946438,0.916219,0.914302,0.861178,0.843132,0.836122,0.820838,0.815495,0.786996,0.765369,0.731919,0.724838,0.723087,0.720361,0.712653,0.710957,0.703092,0.677278,0.6703,0.656433,0.639994,0.590058,0.54868,0.537693,0.5102,0.483966]
+					},
+					{
+						"cluster": "{HUMFBRG-NEG-2641, HUMDYS-NEG-12961, ORAHBBPSE-NEG-2101, ...}",
+						"values": ["HUMFBRG-NEG-2641","HUMDYS-NEG-12961","ORAHBBPSE-NEG-2101","HUMCATF-DONOR-646","HUMPRPC4B-NEG-541","HUMERP-DONOR-1653","HUMRPS17A-NEG-1561","HUMIL2B-DONOR-560","HUMLHRH-NEG-961","HUMAFP-ACCEPTOR-16955","HUMIGHVV2-NEG-841","HUMTCAYD-NEG-1","HUMGHCSA-NEG-15721","HUMMYCC-DONOR-2852","HUMLMWOS1-NEG-301","HUMPRPH2-DONOR-2660","HUMTHROMPR-NEG-121","HUMATPSYB-NEG-9961","HUMLDHB1-NEG-2461","HUMAFP-ACCEPTOR-5216","HUMKTEP2A-NEG-1441","HUMB100DI-NEG-121","HUMATPSYB-DONOR-8947","HUMPCNA-DONOR-5730","HUMAPB13-NEG-1","HUMHSP90B-DONOR-5188","HUMGYPC-NEG-421","ORAHBPSBD-NEG-2881","HUMNID-NEG-3541"],
+						"valueFrequencies": [50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,45,50],
+						"valueTypicalities": [1,0.966553,0.881463,0.87665,0.843806,0.842058,0.830094,0.830018,0.824724,0.824433,0.817546,0.814758,0.812093,0.80093,0.79743,0.789267,0.740324,0.734249,0.713025,0.712365,0.695101,0.66389,0.659962,0.65278,0.634229,0.620876,0.607963,0.588093,0.533893]
+					},
+					{
+						"cluster": "{HUMGRP78-ACCEPTOR-2145, HUMATPSYB-NEG-841, HUMIFNAD-NEG-841, ...}",
+						"values": ["HUMGRP78-ACCEPTOR-2145","HUMATPSYB-NEG-841","HUMIFNAD-NEG-841","HUMSODA-ACCEPTOR-7572","HUMPCNA-NEG-4861","GIBHBGGL-ACCEPTOR-8438","HUMHBBAG-NEG-1441","HUMMHDOB-ACCEPTOR-4486","HUMALBGC-ACCEPTOR-7729","HUMPFKM23-NEG-1621","HUMPBG2-NEG-841","HUMVILLR1-NEG-361","HUMADAG-ACCEPTOR-32543","HUMSAA1A-ACCEPTOR-3145","HUMENKB1-NEG-1081","HUMCRYGBC-ACCEPTOR-5283","HUMMPRCI-NEG-5161","HUMMHDQOB-NEG-1"],
+						"valueFrequencies": [50,49,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50],
+						"valueTypicalities": [1,0.996347,0.937698,0.93753,0.929081,0.919852,0.919224,0.898254,0.891802,0.850562,0.845331,0.803178,0.789886,0.749482,0.680793,0.667785,0.586738,0.509234]
+					},
+					{
+						"cluster": "{HUMPLG2B-NEG-181, HUMERPA-DONOR-608, HUMPRCA-DONOR-8366, ...}",
+						"values": ["HUMPLG2B-NEG-181","HUMERPA-DONOR-608","HUMPRCA-DONOR-8366","HUMINT2-NEG-481","GCRHBBA6-DONOR-461","HUMAPOE4-DONOR-1884","HUMHBA4-DONOR-6768","BABAPOE-DONOR-30","HUMCFVII-DONOR-4425","HUMMUC18B-NEG-61","HUMU170SC-NEG-481","HUMH19-DONOR-2359","HUMCG2A1-NEG-1","MACAPOE-NEG-181","HUMMHB27B-NEG-1201","HUMTHB-DONOR-9999","HUMMHCW1B-DONOR-754","HUMVDR-NEG-1441","HUMVWFA04-NEG-301","HUMANT1-DONOR-1688","CHPRGITX-NEG-1441","HUMRASFA2-NEG-1321","HUMAPOA4C-NEG-2761"],
+						"valueFrequencies": [50,50,50,50,50,50,50,50,50,50,50,50,50,50,51,50,50,50,50,50,50,50,50],
+						"valueTypicalities": [1,0.985737,0.952576,0.942236,0.932289,0.911865,0.910651,0.906013,0.904198,0.897314,0.896338,0.887683,0.849417,0.810061,0.793555,0.762296,0.757279,0.749869,0.661096,0.651836,0.572371,0.552571,0.460822]
+					},
+					{
+						"cluster": "{MACHBGA1-DONOR-465, HUMHBBGG-DONOR-2241, HUMA1AR2-NEG-3601, ...}",
+						"values": ["MACHBGA1-DONOR-465","HUMHBBGG-DONOR-2241","HUMA1AR2-NEG-3601","HUMTFPB-DONOR-10205","HUMIR3EBA-NEG-121","HUMAPOC2-DONOR-522","HUMMG2-NEG-541","HUMGHCSA-DONOR-6212","HUMERPA-NEG-1021","HUMATP1A2-DONOR-13749","HUMHSPGC-NEG-2821","HUMADAG-DONOR-32467","HUMTKRA-DONOR-11961","HUMGHCSA-DONOR-13551","HUMNFH3-NEG-1","HUMAPOBG-NEG-121","HUMTPAR-NEG-361","HUMFXIIIB-NEG-841","HUMSPRO-DONOR-2585","HUMMYONM-NEG-1501","HUMHBB-NEG-5761","HUMMDRA3-NEG-961","HUMINIFI-NEG-481","HUMELAM1A-NEG-1141","HUMCS1-DONOR-1304","HUMGH-DONOR-1061","HUMBGPG-NEG-1021","HUMMH6-DONOR-1225","HUMATP-NEG-1981"],
+						"valueFrequencies": [50,50,50,50,48,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50],
+						"valueTypicalities": [1,0.994628,0.979271,0.912151,0.882861,0.876303,0.865023,0.860126,0.839214,0.805485,0.763961,0.754333,0.748584,0.725859,0.698867,0.69669,0.671258,0.668547,0.65908,0.650748,0.592675,0.592181,0.584342,0.558782,0.541924,0.520351,0.517104,0.501158,0.479356]
+					},
+					{
+						"cluster": "{HUMHBVINT-NEG-61, HUMHPARS1-NEG-4801, HUMAMY2A-NEG-361, ...}",
+						"values": ["HUMHBVINT-NEG-61","HUMHPARS1-NEG-4801","HUMAMY2A-NEG-361","HUMTNFAB-DONOR-5318","HUMADPRT01-NEG-61","HUMMHCW2B-DONOR-3407","HUMGCB-NEG-2281","HUMGH-DONOR-732","HUMAPA4R-NEG-2761","HUMACCYBB-ACCEPTOR-1318","HUMIRBPG-DONOR-7130","HUMGHCSA-DONOR-27878","HUMHLADP4-NEG-721","HUMIRBPG-NEG-8341","HUMATP1A2-DONOR-10208","HUMMHCP52-DONOR-569","HUMMHDRGB-NEG-121","HUMRASH-ACCEPTOR-2012"],
+						"valueFrequencies": [50,50,50,50,50,50,51,50,50,50,50,50,50,50,50,50,50,50],
+						"valueTypicalities": [1,0.924026,0.920154,0.918459,0.911532,0.893434,0.854662,0.773115,0.748327,0.746792,0.742216,0.738177,0.712442,0.67354,0.666886,0.659599,0.64861,0.517408]
+					},
+					{
+						"cluster": "{HUMMHCP52-ACCEPTOR-1763, HUMCP21OHC-DONOR-2878, HUMMHCP52-DONOR-2344, ...}",
+						"values": ["HUMMHCP52-ACCEPTOR-1763","HUMCP21OHC-DONOR-2878","HUMMHCP52-DONOR-2344","HUMACCYBA-DONOR-289","HUMERPA-ACCEPTOR-2273","HUMMIS-DONOR-1857","HUMTHY1A-DONOR-34","HUMPSAP-ACCEPTOR-993","HUMALPI-ACCEPTOR-2926","HUMTPA-ACCEPTOR-23573","HUMADAG-DONOR-4034","HUMATP1A2-ACCEPTOR-20042","HUMSPRO-ACCEPTOR-1827","HUMPRCA-ACCEPTOR-10486","HUMRGE-NEG-1801","HUMKERMII-NEG-181","HUMPRCA-ACCEPTOR-8223","HUMPSAA-NEG-2521","HUMMLC2A-NEG-1021","HUMTHB-DONOR-497","HUMGCB1-DONOR-5974","ATRINS-NEG-841","HUMALPI-DONOR-532","HUMA1MICR-NEG-1081","HUMPOMC-NEG-421"],
+						"valueFrequencies": [50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50],
+						"valueTypicalities": [1,0.957237,0.955118,0.946103,0.911304,0.894244,0.880714,0.845411,0.807417,0.807299,0.802758,0.798413,0.797398,0.795243,0.789159,0.787199,0.752862,0.751126,0.739829,0.710748,0.659809,0.639285,0.618683,0.616611,0.322123]
+					},
+					{
+						"cluster": "{HUMAPOA4A-NEG-3241, HUMALPI-ACCEPTOR-1631, HUMVWFA24-NEG-781, ...}",
+						"values": ["HUMAPOA4A-NEG-3241","HUMALPI-ACCEPTOR-1631","HUMVWFA24-NEG-781","HUMGSHPXG-ACCEPTOR-968","HUMALPHA-ACCEPTOR-1369","HUMVWFA29-NEG-661","HUMPDHA-NEG-1141","HUMCOL4A1-NEG-961","HUMC1INH-NEG-481","HUMPRCA-ACCEPTOR-9239","HUMLDL100-NEG-1381","HUMANT1-ACCEPTOR-5005","HUMBNPA-ACCEPTOR-1629","HUMBLAST1-NEG-661","HUMTBBM40-NEG-841","HUMVIM06-NEG-1","HUMMHDRCD-NEG-601","HUMIRBPG-ACCEPTOR-8736","HUMMHEA-ACCEPTOR-3545","HUMCCK2-NEG-361","HUMDAFA-ACCEPTOR-1235"],
+						"valueFrequencies": [50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50],
+						"valueTypicalities": [1,0.983882,0.983771,0.980636,0.953609,0.932732,0.885003,0.868809,0.867262,0.832444,0.830018,0.827691,0.815625,0.801825,0.784342,0.781393,0.760945,0.749052,0.72874,0.639275,0.625464]
+					},
+					{
+						"cluster": "{HUMAPOCIA-ACCEPTOR-634, HUMINSPR-NEG-61, HUMGHN-ACCEPTOR-1379, ...}",
+						"values": ["HUMAPOCIA-ACCEPTOR-634","HUMINSPR-NEG-61","HUMGHN-ACCEPTOR-1379","HUMPKCB1A-NEG-1321","HUMRGNTSA-NEG-2161","BABAPOE-NEG-1201","HUMIGVKW1-NEG-841","HUMTKRA-DONOR-2441","BABAPOE-DONOR-2817","HUMMIS-ACCEPTOR-1697","HUMTUBBM-ACCEPTOR-1265","HUMOPS-ACCEPTOR-3783","HUMIGCH5-NEG-241","HUMTCBA-NEG-2161","HUMMH6-ACCEPTOR-2724","HUMTPO13-NEG-1021","HUMCP21OHC-ACCEPTOR-3163","HUMSHBGA-DONOR-3802","HUMALPI-DONOR-762","HUMATP1A2-ACCEPTOR-21144","HUMAPOCII-ACCEPTOR-3131","HUMLKHA4-NEG-61","HUMIGHAE2-NEG-781","HUMIRBPG-ACCEPTOR-6987","HUMACCYBA-ACCEPTOR-1121"],
+						"valueFrequencies": [50,48,50,50,49,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50],
+						"valueTypicalities": [1,0.915981,0.906723,0.902799,0.886415,0.876755,0.871155,0.869949,0.852559,0.848927,0.809119,0.805668,0.794746,0.792869,0.786319,0.755568,0.730285,0.718685,0.715588,0.709814,0.692534,0.675163,0.646436,0.626837,0.581697]
+					},
+					{
+						"cluster": "{HUMGHCSA-ACCEPTOR-43393, HUMGHCSA-ACCEPTOR-6465, HUMGHVA-ACCEPTOR-741, ...}",
+						"values": ["HUMGHCSA-ACCEPTOR-43393","HUMGHCSA-ACCEPTOR-6465","HUMGHVA-ACCEPTOR-741","MNKHBD-ACCEPTOR-475","HUMMHDQBC-NEG-841","HUMKAL2-ACCEPTOR-3894","HUMTUBAG-ACCEPTOR-2858","HUMALPI-ACCEPTOR-646","HUMATCT4-NEG-1561","HUMA1ATP-ACCEPTOR-7282","HUMAPOA4A-ACCEPTOR-1382","HUMRPS17A-ACCEPTOR-3688","HUMALPPD-ACCEPTOR-421","HUMSAA-NEG-2821","HUMAPOAI1-DONOR-716","HUMG0S19B-ACCEPTOR-3484","HUM5FDX-NEG-2041","HUMTCRAI2-NEG-61"],
+						"valueFrequencies": [50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50],
+						"valueTypicalities": [1,1,1,0.90271,0.889646,0.885419,0.877963,0.863732,0.860176,0.825973,0.817003,0.816253,0.789393,0.765061,0.758778,0.75358,0.680821,0.615579]
+					},
+					{
+						"cluster": "{HUMMHDRHA-ACCEPTOR-4276, HUMTGFB-NEG-541, HUMG0S19B-DONOR-3063, ...}",
+						"values": ["HUMMHDRHA-ACCEPTOR-4276","HUMTGFB-NEG-541","HUMG0S19B-DONOR-3063","HUMSPRO-ACCEPTOR-4385","HUMIL2RX6-NEG-1","HUMPAIR1-NEG-1081","GCRHBBA1-ACCEPTOR-1385","HUMPPPA-ACCEPTOR-2425","HUMATP1A2-ACCEPTOR-15000","HUMALPHA-ACCEPTOR-2440","HUMCATR-NEG-1081","HUMMHA3-NEG-1501","HUMLDLRRL-NEG-7201","HUMARP450-NEG-2521","HUMMHCW1B-ACCEPTOR-882","HUMINCPPS-NEG-3181","HUMMHEA-NEG-2041","HUMALPHLB-NEG-901","HUMIGF27-NEG-1","HUMMHCW1B-ACCEPTOR-2261","HUMHLAB13-NEG-901","HUMGLYPL-NEG-1081","HUMCRYGBC-NEG-22021","HUMCN4GEL-NEG-2521","HUMCR1-NEG-241","HUMMHCD8A-DONOR-2891"],
+						"valueFrequencies": [50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50],
+						"valueTypicalities": [1,0.931792,0.918387,0.914537,0.909,0.904,0.902924,0.900123,0.894028,0.853973,0.852725,0.826651,0.817309,0.817198,0.802364,0.783609,0.779654,0.76488,0.750987,0.734073,0.659751,0.628349,0.626871,0.586287,0.571309,0.552761]
+					},
+					{
+						"cluster": "{HUMFIGRD-NEG-361, HUMG3PD-NEG-481, HUMIL2R-NEG-1, ...}",
+						"values": ["HUMFIGRD-NEG-361","HUMG3PD-NEG-481","HUMIL2R-NEG-1","HUMATP1A2-DONOR-22962","HUMCYC1A-ACCEPTOR-3281","HUMACTASK-NEG-1021","ORAIGECA-DONOR-904","CHPCD4A-NEG-961","HUMFMSD-NEG-661","HUMTPA-NEG-27001","HUMGIAA-NEG-901","HUMHPARS2-NEG-6961","HUMP15095-NEG-4021","HUMGHCSA-DONOR-50275","HUMHPARS1-DONOR-1016","HUMTPA-NEG-22441","HUMGGTX-NEG-1981","HUMIGHAJ-NEG-541"],
+						"valueFrequencies": [50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50],
+						"valueTypicalities": [1,0.997739,0.995728,0.904297,0.867483,0.864826,0.84487,0.829173,0.826801,0.822506,0.801309,0.787681,0.781273,0.755797,0.753512,0.69288,0.668629,0.61116]
+					}
+				],
+				"defaultGroupIndex": 12
+			},
+			{
+				"name": "Variables",
+				"type": "Categorical",
+				"innerVariables": {
+					"dimensionSummaries": [
+						{
+							"name": "Class",
+							"type": "Categorical",
+							"parts": 3,
+							"initialParts": 3,
+							"values": 3,
+							"interest": 1,
+							"description": ""
+						},
+						{
+							"name": "Count(DNA)",
+							"type": "Numerical",
+							"parts": 1,
+							"initialParts": 1,
+							"values": 303,
+							"interest": 1,
+							"description": "",
+							"min": 60,
+							"max": 60
+						},
+						{
+							"name": "Count(DNA) where Char = A",
+							"type": "Numerical",
+							"parts": 3,
+							"initialParts": 3,
+							"values": 303,
+							"interest": 1,
+							"description": "",
+							"min": 0,
+							"max": 27
+						},
+						{
+							"name": "Count(DNA) where Char = C",
+							"type": "Numerical",
+							"parts": 3,
+							"initialParts": 3,
+							"values": 303,
+							"interest": 1,
+							"description": "",
+							"min": 2,
+							"max": 34
+						},
+						{
+							"name": "Count(DNA) where Char = C and Pos <= 30.5",
+							"type": "Numerical",
+							"parts": 3,
+							"initialParts": 3,
+							"values": 300,
+							"interest": 1,
+							"description": "",
+							"min": 0,
+							"max": 21
+						},
+						{
+							"name": "Count(DNA) where Char = C and Pos > 30.5",
+							"type": "Numerical",
+							"parts": 3,
+							"initialParts": 3,
+							"values": 301,
+							"interest": 1,
+							"description": "",
+							"min": 0,
+							"max": 18
+						},
+						{
+							"name": "Count(DNA) where Char = G",
+							"type": "Numerical",
+							"parts": 4,
+							"initialParts": 4,
+							"values": 303,
+							"interest": 1,
+							"description": "",
+							"min": 0,
+							"max": 32
+						},
+						{
+							"name": "Count(DNA) where Char = G and Pos <= 30.5",
+							"type": "Numerical",
+							"parts": 3,
+							"initialParts": 3,
+							"values": 301,
+							"interest": 1,
+							"description": "",
+							"min": 0,
+							"max": 17
+						},
+						{
+							"name": "Count(DNA) where Char = G and Pos > 30.5",
+							"type": "Numerical",
+							"parts": 3,
+							"initialParts": 3,
+							"values": 302,
+							"interest": 1,
+							"description": "",
+							"min": 0,
+							"max": 18
+						},
+						{
+							"name": "Count(DNA) where Char = T",
+							"type": "Numerical",
+							"parts": 3,
+							"initialParts": 3,
+							"values": 303,
+							"interest": 1,
+							"description": "",
+							"min": 2,
+							"max": 34
+						},
+						{
+							"name": "Count(DNA) where Char not in {C, G, T, A}",
+							"type": "Numerical",
+							"parts": 1,
+							"initialParts": 1,
+							"values": 303,
+							"interest": 1,
+							"description": "",
+							"min": 0,
+							"max": 1
+						},
+						{
+							"name": "Count(DNA) where Char not in {C, G}",
+							"type": "Numerical",
+							"parts": 4,
+							"initialParts": 4,
+							"values": 303,
+							"interest": 1,
+							"description": "",
+							"min": 10,
+							"max": 47
+						},
+						{
+							"name": "Count(DNA) where Char not in {C, G} and Pos <= 30.5",
+							"type": "Numerical",
+							"parts": 4,
+							"initialParts": 4,
+							"values": 303,
+							"interest": 1,
+							"description": "",
+							"min": 3,
+							"max": 29
+						},
+						{
+							"name": "Count(DNA) where Char not in {C, G} and Pos > 30.5",
+							"type": "Numerical",
+							"parts": 5,
+							"initialParts": 5,
+							"values": 303,
+							"interest": 1,
+							"description": "",
+							"min": 4,
+							"max": 26
+						},
+						{
+							"name": "Count(DNA) where Pos <= 15.5",
+							"type": "Numerical",
+							"parts": 1,
+							"initialParts": 1,
+							"values": 303,
+							"interest": 1,
+							"description": "",
+							"min": 15,
+							"max": 15
+						},
+						{
+							"name": "Count(DNA) where Pos <= 30.5",
+							"type": "Numerical",
+							"parts": 1,
+							"initialParts": 1,
+							"values": 303,
+							"interest": 1,
+							"description": "",
+							"min": 30,
+							"max": 30
+						},
+						{
+							"name": "Count(DNA) where Pos <= 8.5",
+							"type": "Numerical",
+							"parts": 1,
+							"initialParts": 1,
+							"values": 303,
+							"interest": 1,
+							"description": "",
+							"min": 8,
+							"max": 8
+						},
+						{
+							"name": "Count(DNA) where Pos > 30.5",
+							"type": "Numerical",
+							"parts": 1,
+							"initialParts": 1,
+							"values": 303,
+							"interest": 1,
+							"description": "",
+							"min": 30,
+							"max": 30
+						},
+						{
+							"name": "Count(DNA) where Pos > 45.5",
+							"type": "Numerical",
+							"parts": 1,
+							"initialParts": 1,
+							"values": 303,
+							"interest": 1,
+							"description": "",
+							"min": 15,
+							"max": 15
+						},
+						{
+							"name": "Count(DNA) where Pos > 53.5",
+							"type": "Numerical",
+							"parts": 1,
+							"initialParts": 1,
+							"values": 303,
+							"interest": 1,
+							"description": "",
+							"min": 7,
+							"max": 7
+						},
+						{
+							"name": "Count(DNA) where Pos in ]15.5, 23.5]",
+							"type": "Numerical",
+							"parts": 1,
+							"initialParts": 1,
+							"values": 303,
+							"interest": 1,
+							"description": "",
+							"min": 8,
+							"max": 8
+						},
+						{
+							"name": "Count(DNA) where Pos in ]15.5, 30.5]",
+							"type": "Numerical",
+							"parts": 1,
+							"initialParts": 1,
+							"values": 303,
+							"interest": 1,
+							"description": "",
+							"min": 15,
+							"max": 15
+						},
+						{
+							"name": "Count(DNA) where Pos in ]23.5, 30.5]",
+							"type": "Numerical",
+							"parts": 1,
+							"initialParts": 1,
+							"values": 303,
+							"interest": 1,
+							"description": "",
+							"min": 7,
+							"max": 7
+						},
+						{
+							"name": "Count(DNA) where Pos in ]30.5, 38.5]",
+							"type": "Numerical",
+							"parts": 1,
+							"initialParts": 1,
+							"values": 303,
+							"interest": 1,
+							"description": "",
+							"min": 8,
+							"max": 8
+						},
+						{
+							"name": "Count(DNA) where Pos in ]30.5, 45.5]",
+							"type": "Numerical",
+							"parts": 1,
+							"initialParts": 1,
+							"values": 303,
+							"interest": 1,
+							"description": "",
+							"min": 15,
+							"max": 15
+						},
+						{
+							"name": "Count(DNA) where Pos in ]38.5, 45.5]",
+							"type": "Numerical",
+							"parts": 1,
+							"initialParts": 1,
+							"values": 303,
+							"interest": 1,
+							"description": "",
+							"min": 7,
+							"max": 7
+						},
+						{
+							"name": "Count(DNA) where Pos in ]45.5, 53.5]",
+							"type": "Numerical",
+							"parts": 1,
+							"initialParts": 1,
+							"values": 303,
+							"interest": 1,
+							"description": "",
+							"min": 8,
+							"max": 8
+						},
+						{
+							"name": "Count(DNA) where Pos in ]8.5, 15.5]",
+							"type": "Numerical",
+							"parts": 1,
+							"initialParts": 1,
+							"values": 303,
+							"interest": 1,
+							"description": "",
+							"min": 7,
+							"max": 7
+						},
+						{
+							"name": "Mode(DNA.Char)",
+							"type": "Categorical",
+							"parts": 4,
+							"initialParts": 4,
+							"values": 4,
+							"interest": 1,
+							"description": ""
+						},
+						{
+							"name": "Mode(DNA.Char) where Char = A",
+							"type": "Categorical",
+							"parts": 1,
+							"initialParts": 1,
+							"values": 1,
+							"interest": 1,
+							"description": ""
+						},
+						{
+							"name": "Mode(DNA.Char) where Char = C",
+							"type": "Categorical",
+							"parts": 1,
+							"initialParts": 1,
+							"values": 1,
+							"interest": 1,
+							"description": ""
+						},
+						{
+							"name": "Mode(DNA.Char) where Char = C and Pos > 30.5",
+							"type": "Categorical",
+							"parts": 1,
+							"initialParts": 1,
+							"values": 1,
+							"interest": 1,
+							"description": ""
+						},
+						{
+							"name": "Mode(DNA.Char) where Char = G",
+							"type": "Categorical",
+							"parts": 1,
+							"initialParts": 1,
+							"values": 1,
+							"interest": 1,
+							"description": ""
+						},
+						{
+							"name": "Mode(DNA.Char) where Char = G and Pos <= 30.5",
+							"type": "Categorical",
+							"parts": 1,
+							"initialParts": 1,
+							"values": 1,
+							"interest": 1,
+							"description": ""
+						},
+						{
+							"name": "Mode(DNA.Char) where Char = T",
+							"type": "Categorical",
+							"parts": 1,
+							"initialParts": 1,
+							"values": 1,
+							"interest": 1,
+							"description": ""
+						},
+						{
+							"name": "Mode(DNA.Char) where Char not in {C, G, T, A}",
+							"type": "Categorical",
+							"parts": 1,
+							"initialParts": 1,
+							"values": 2,
+							"interest": 1,
+							"description": ""
+						},
+						{
+							"name": "Mode(DNA.Char) where Char not in {C, G}",
+							"type": "Categorical",
+							"parts": 2,
+							"initialParts": 2,
+							"values": 2,
+							"interest": 1,
+							"description": ""
+						},
+						{
+							"name": "Mode(DNA.Char) where Pos <= 15.5",
+							"type": "Categorical",
+							"parts": 4,
+							"initialParts": 4,
+							"values": 4,
+							"interest": 1,
+							"description": ""
+						},
+						{
+							"name": "Mode(DNA.Char) where Pos <= 30.5",
+							"type": "Categorical",
+							"parts": 4,
+							"initialParts": 4,
+							"values": 4,
+							"interest": 1,
+							"description": ""
+						},
+						{
+							"name": "Mode(DNA.Char) where Pos <= 8.5",
+							"type": "Categorical",
+							"parts": 4,
+							"initialParts": 4,
+							"values": 4,
+							"interest": 1,
+							"description": ""
+						},
+						{
+							"name": "Mode(DNA.Char) where Pos > 30.5",
+							"type": "Categorical",
+							"parts": 4,
+							"initialParts": 4,
+							"values": 4,
+							"interest": 1,
+							"description": ""
+						},
+						{
+							"name": "Mode(DNA.Char) where Pos > 45.5",
+							"type": "Categorical",
+							"parts": 4,
+							"initialParts": 4,
+							"values": 4,
+							"interest": 1,
+							"description": ""
+						},
+						{
+							"name": "Mode(DNA.Char) where Pos > 53.5",
+							"type": "Categorical",
+							"parts": 4,
+							"initialParts": 4,
+							"values": 4,
+							"interest": 1,
+							"description": ""
+						},
+						{
+							"name": "Mode(DNA.Char) where Pos in ]15.5, 23.5]",
+							"type": "Categorical",
+							"parts": 4,
+							"initialParts": 4,
+							"values": 4,
+							"interest": 1,
+							"description": ""
+						},
+						{
+							"name": "Mode(DNA.Char) where Pos in ]15.5, 30.5]",
+							"type": "Categorical",
+							"parts": 4,
+							"initialParts": 4,
+							"values": 4,
+							"interest": 1,
+							"description": ""
+						},
+						{
+							"name": "Mode(DNA.Char) where Pos in ]23.5, 30.5]",
+							"type": "Categorical",
+							"parts": 4,
+							"initialParts": 4,
+							"values": 4,
+							"interest": 1,
+							"description": ""
+						},
+						{
+							"name": "Mode(DNA.Char) where Pos in ]30.5, 38.5]",
+							"type": "Categorical",
+							"parts": 3,
+							"initialParts": 3,
+							"values": 4,
+							"interest": 1,
+							"description": ""
+						},
+						{
+							"name": "Mode(DNA.Char) where Pos in ]30.5, 45.5]",
+							"type": "Categorical",
+							"parts": 4,
+							"initialParts": 4,
+							"values": 4,
+							"interest": 1,
+							"description": ""
+						},
+						{
+							"name": "Mode(DNA.Char) where Pos in ]38.5, 45.5]",
+							"type": "Categorical",
+							"parts": 4,
+							"initialParts": 4,
+							"values": 4,
+							"interest": 1,
+							"description": ""
+						},
+						{
+							"name": "Mode(DNA.Char) where Pos in ]45.5, 53.5]",
+							"type": "Categorical",
+							"parts": 4,
+							"initialParts": 4,
+							"values": 4,
+							"interest": 1,
+							"description": ""
+						},
+						{
+							"name": "Mode(DNA.Char) where Pos in ]8.5, 15.5]",
+							"type": "Categorical",
+							"parts": 4,
+							"initialParts": 4,
+							"values": 4,
+							"interest": 1,
+							"description": ""
+						}
+					],
+					"dimensionPartitions": [
+						{
+							"name": "Class",
+							"type": "Categorical",
+							"valueGroups": [
+								{
+									"cluster": "Class {N}",
+									"values": ["N"],
+									"valueFrequencies": [167]
+								},
+								{
+									"cluster": "Class {IE}",
+									"values": ["IE"],
+									"valueFrequencies": [69]
+								},
+								{
+									"cluster": "Class {EI}",
+									"values": ["EI"],
+									"valueFrequencies": [67]
+								}
+							],
+							"defaultGroupIndex": 2
+						},
+						{
+							"name": "Count(DNA)",
+							"type": "Numerical",
+							"intervals": [
+								{
+									"cluster": "Count(DNA) ]-inf,+inf[",
+									"bounds": [60,60]
+								}
+							]
+						},
+						{
+							"name": "Count(DNA) where Char = A",
+							"type": "Numerical",
+							"intervals": [
+								{
+									"cluster": "Count(DNA) where Char = A ]-inf,12.5]",
+									"bounds": [0,12.5]
+								},
+								{
+									"cluster": "Count(DNA) where Char = A ]12.5,16.5]",
+									"bounds": [12.5,16.5]
+								},
+								{
+									"cluster": "Count(DNA) where Char = A ]16.5,+inf[",
+									"bounds": [16.5,27]
+								}
+							]
+						},
+						{
+							"name": "Count(DNA) where Char = C",
+							"type": "Numerical",
+							"intervals": [
+								{
+									"cluster": "Count(DNA) where Char = C ]-inf,15.5]",
+									"bounds": [2,15.5]
+								},
+								{
+									"cluster": "Count(DNA) where Char = C ]15.5,18.5]",
+									"bounds": [15.5,18.5]
+								},
+								{
+									"cluster": "Count(DNA) where Char = C ]18.5,+inf[",
+									"bounds": [18.5,34]
+								}
+							]
+						},
+						{
+							"name": "Count(DNA) where Char = C and Pos <= 30.5",
+							"type": "Numerical",
+							"intervals": [
+								{
+									"cluster": "Count(DNA) where Char = C and Pos <= 30.5 ]-inf,6.5]",
+									"bounds": [0,6.5]
+								},
+								{
+									"cluster": "Count(DNA) where Char = C and Pos <= 30.5 ]6.5,9.5]",
+									"bounds": [6.5,9.5]
+								},
+								{
+									"cluster": "Count(DNA) where Char = C and Pos <= 30.5 ]9.5,+inf[",
+									"bounds": [9.5,21]
+								}
+							]
+						},
+						{
+							"name": "Count(DNA) where Char = C and Pos > 30.5",
+							"type": "Numerical",
+							"intervals": [
+								{
+									"cluster": "Count(DNA) where Char = C and Pos > 30.5 ]-inf,5.5]",
+									"bounds": [0,5.5]
+								},
+								{
+									"cluster": "Count(DNA) where Char = C and Pos > 30.5 ]5.5,8.5]",
+									"bounds": [5.5,8.5]
+								},
+								{
+									"cluster": "Count(DNA) where Char = C and Pos > 30.5 ]8.5,+inf[",
+									"bounds": [8.5,18]
+								}
+							]
+						},
+						{
+							"name": "Count(DNA) where Char = G",
+							"type": "Numerical",
+							"intervals": [
+								{
+									"cluster": "Count(DNA) where Char = G ]-inf,13.5]",
+									"bounds": [0,13.5]
+								},
+								{
+									"cluster": "Count(DNA) where Char = G ]13.5,18.5]",
+									"bounds": [13.5,18.5]
+								},
+								{
+									"cluster": "Count(DNA) where Char = G ]18.5,21.5]",
+									"bounds": [18.5,21.5]
+								},
+								{
+									"cluster": "Count(DNA) where Char = G ]21.5,+inf[",
+									"bounds": [21.5,32]
+								}
+							]
+						},
+						{
+							"name": "Count(DNA) where Char = G and Pos <= 30.5",
+							"type": "Numerical",
+							"intervals": [
+								{
+									"cluster": "Count(DNA) where Char = G and Pos <= 30.5 ]-inf,8.5]",
+									"bounds": [0,8.5]
+								},
+								{
+									"cluster": "Count(DNA) where Char = G and Pos <= 30.5 ]8.5,10.5]",
+									"bounds": [8.5,10.5]
+								},
+								{
+									"cluster": "Count(DNA) where Char = G and Pos <= 30.5 ]10.5,+inf[",
+									"bounds": [10.5,17]
+								}
+							]
+						},
+						{
+							"name": "Count(DNA) where Char = G and Pos > 30.5",
+							"type": "Numerical",
+							"intervals": [
+								{
+									"cluster": "Count(DNA) where Char = G and Pos > 30.5 ]-inf,6.5]",
+									"bounds": [0,6.5]
+								},
+								{
+									"cluster": "Count(DNA) where Char = G and Pos > 30.5 ]6.5,9.5]",
+									"bounds": [6.5,9.5]
+								},
+								{
+									"cluster": "Count(DNA) where Char = G and Pos > 30.5 ]9.5,+inf[",
+									"bounds": [9.5,18]
+								}
+							]
+						},
+						{
+							"name": "Count(DNA) where Char = T",
+							"type": "Numerical",
+							"intervals": [
+								{
+									"cluster": "Count(DNA) where Char = T ]-inf,12.5]",
+									"bounds": [2,12.5]
+								},
+								{
+									"cluster": "Count(DNA) where Char = T ]12.5,16.5]",
+									"bounds": [12.5,16.5]
+								},
+								{
+									"cluster": "Count(DNA) where Char = T ]16.5,+inf[",
+									"bounds": [16.5,34]
+								}
+							]
+						},
+						{
+							"name": "Count(DNA) where Char not in {C, G, T, A}",
+							"type": "Numerical",
+							"intervals": [
+								{
+									"cluster": "Count(DNA) where Char not in {C, G, T, A} ]-inf,+inf[",
+									"bounds": [0,1]
+								}
+							]
+						},
+						{
+							"name": "Count(DNA) where Char not in {C, G}",
+							"type": "Numerical",
+							"intervals": [
+								{
+									"cluster": "Count(DNA) where Char not in {C, G} ]-inf,21.5]",
+									"bounds": [10,21.5]
+								},
+								{
+									"cluster": "Count(DNA) where Char not in {C, G} ]21.5,24.5]",
+									"bounds": [21.5,24.5]
+								},
+								{
+									"cluster": "Count(DNA) where Char not in {C, G} ]24.5,30.5]",
+									"bounds": [24.5,30.5]
+								},
+								{
+									"cluster": "Count(DNA) where Char not in {C, G} ]30.5,+inf[",
+									"bounds": [30.5,47]
+								}
+							]
+						},
+						{
+							"name": "Count(DNA) where Char not in {C, G} and Pos <= 30.5",
+							"type": "Numerical",
+							"intervals": [
+								{
+									"cluster": "Count(DNA) where Char not in {C, G} and Pos <= 30.5 ]-inf,9.5]",
+									"bounds": [3,9.5]
+								},
+								{
+									"cluster": "Count(DNA) where Char not in {C, G} and Pos <= 30.5 ]9.5,13.5]",
+									"bounds": [9.5,13.5]
+								},
+								{
+									"cluster": "Count(DNA) where Char not in {C, G} and Pos <= 30.5 ]13.5,15.5]",
+									"bounds": [13.5,15.5]
+								},
+								{
+									"cluster": "Count(DNA) where Char not in {C, G} and Pos <= 30.5 ]15.5,+inf[",
+									"bounds": [15.5,29]
+								}
+							]
+						},
+						{
+							"name": "Count(DNA) where Char not in {C, G} and Pos > 30.5",
+							"type": "Numerical",
+							"intervals": [
+								{
+									"cluster": "Count(DNA) where Char not in {C, G} and Pos > 30.5 ]-inf,10.5]",
+									"bounds": [4,10.5]
+								},
+								{
+									"cluster": "Count(DNA) where Char not in {C, G} and Pos > 30.5 ]10.5,12.5]",
+									"bounds": [10.5,12.5]
+								},
+								{
+									"cluster": "Count(DNA) where Char not in {C, G} and Pos > 30.5 ]12.5,14.5]",
+									"bounds": [12.5,14.5]
+								},
+								{
+									"cluster": "Count(DNA) where Char not in {C, G} and Pos > 30.5 ]14.5,15.5]",
+									"bounds": [14.5,15.5]
+								},
+								{
+									"cluster": "Count(DNA) where Char not in {C, G} and Pos > 30.5 ]15.5,+inf[",
+									"bounds": [15.5,26]
+								}
+							]
+						},
+						{
+							"name": "Count(DNA) where Pos <= 15.5",
+							"type": "Numerical",
+							"intervals": [
+								{
+									"cluster": "Count(DNA) where Pos <= 15.5 ]-inf,+inf[",
+									"bounds": [15,15]
+								}
+							]
+						},
+						{
+							"name": "Count(DNA) where Pos <= 30.5",
+							"type": "Numerical",
+							"intervals": [
+								{
+									"cluster": "Count(DNA) where Pos <= 30.5 ]-inf,+inf[",
+									"bounds": [30,30]
+								}
+							]
+						},
+						{
+							"name": "Count(DNA) where Pos <= 8.5",
+							"type": "Numerical",
+							"intervals": [
+								{
+									"cluster": "Count(DNA) where Pos <= 8.5 ]-inf,+inf[",
+									"bounds": [8,8]
+								}
+							]
+						},
+						{
+							"name": "Count(DNA) where Pos > 30.5",
+							"type": "Numerical",
+							"intervals": [
+								{
+									"cluster": "Count(DNA) where Pos > 30.5 ]-inf,+inf[",
+									"bounds": [30,30]
+								}
+							]
+						},
+						{
+							"name": "Count(DNA) where Pos > 45.5",
+							"type": "Numerical",
+							"intervals": [
+								{
+									"cluster": "Count(DNA) where Pos > 45.5 ]-inf,+inf[",
+									"bounds": [15,15]
+								}
+							]
+						},
+						{
+							"name": "Count(DNA) where Pos > 53.5",
+							"type": "Numerical",
+							"intervals": [
+								{
+									"cluster": "Count(DNA) where Pos > 53.5 ]-inf,+inf[",
+									"bounds": [7,7]
+								}
+							]
+						},
+						{
+							"name": "Count(DNA) where Pos in ]15.5, 23.5]",
+							"type": "Numerical",
+							"intervals": [
+								{
+									"cluster": "Count(DNA) where Pos in ]15.5, 23.5] ]-inf,+inf[",
+									"bounds": [8,8]
+								}
+							]
+						},
+						{
+							"name": "Count(DNA) where Pos in ]15.5, 30.5]",
+							"type": "Numerical",
+							"intervals": [
+								{
+									"cluster": "Count(DNA) where Pos in ]15.5, 30.5] ]-inf,+inf[",
+									"bounds": [15,15]
+								}
+							]
+						},
+						{
+							"name": "Count(DNA) where Pos in ]23.5, 30.5]",
+							"type": "Numerical",
+							"intervals": [
+								{
+									"cluster": "Count(DNA) where Pos in ]23.5, 30.5] ]-inf,+inf[",
+									"bounds": [7,7]
+								}
+							]
+						},
+						{
+							"name": "Count(DNA) where Pos in ]30.5, 38.5]",
+							"type": "Numerical",
+							"intervals": [
+								{
+									"cluster": "Count(DNA) where Pos in ]30.5, 38.5] ]-inf,+inf[",
+									"bounds": [8,8]
+								}
+							]
+						},
+						{
+							"name": "Count(DNA) where Pos in ]30.5, 45.5]",
+							"type": "Numerical",
+							"intervals": [
+								{
+									"cluster": "Count(DNA) where Pos in ]30.5, 45.5] ]-inf,+inf[",
+									"bounds": [15,15]
+								}
+							]
+						},
+						{
+							"name": "Count(DNA) where Pos in ]38.5, 45.5]",
+							"type": "Numerical",
+							"intervals": [
+								{
+									"cluster": "Count(DNA) where Pos in ]38.5, 45.5] ]-inf,+inf[",
+									"bounds": [7,7]
+								}
+							]
+						},
+						{
+							"name": "Count(DNA) where Pos in ]45.5, 53.5]",
+							"type": "Numerical",
+							"intervals": [
+								{
+									"cluster": "Count(DNA) where Pos in ]45.5, 53.5] ]-inf,+inf[",
+									"bounds": [8,8]
+								}
+							]
+						},
+						{
+							"name": "Count(DNA) where Pos in ]8.5, 15.5]",
+							"type": "Numerical",
+							"intervals": [
+								{
+									"cluster": "Count(DNA) where Pos in ]8.5, 15.5] ]-inf,+inf[",
+									"bounds": [7,7]
+								}
+							]
+						},
+						{
+							"name": "Mode(DNA.Char)",
+							"type": "Categorical",
+							"valueGroups": [
+								{
+									"cluster": "Mode(DNA.Char) {C}",
+									"values": ["C"],
+									"valueFrequencies": [119]
+								},
+								{
+									"cluster": "Mode(DNA.Char) {G}",
+									"values": ["G"],
+									"valueFrequencies": [77]
+								},
+								{
+									"cluster": "Mode(DNA.Char) {T}",
+									"values": ["T"],
+									"valueFrequencies": [57]
+								},
+								{
+									"cluster": "Mode(DNA.Char) {A}",
+									"values": ["A"],
+									"valueFrequencies": [50]
+								}
+							],
+							"defaultGroupIndex": 3
+						},
+						{
+							"name": "Mode(DNA.Char) where Char = A",
+							"type": "Categorical",
+							"valueGroups": [
+								{
+									"cluster": "Mode(DNA.Char) where Char = A {A}",
+									"values": ["A"],
+									"valueFrequencies": [301]
+								}
+							],
+							"defaultGroupIndex": 0
+						},
+						{
+							"name": "Mode(DNA.Char) where Char = C",
+							"type": "Categorical",
+							"valueGroups": [
+								{
+									"cluster": "Mode(DNA.Char) where Char = C {C}",
+									"values": ["C"],
+									"valueFrequencies": [303]
+								}
+							],
+							"defaultGroupIndex": 0
+						},
+						{
+							"name": "Mode(DNA.Char) where Char = C and Pos > 30.5",
+							"type": "Categorical",
+							"valueGroups": [
+								{
+									"cluster": "Mode(DNA.Char) where Char = C and Pos > 30.5 {C}",
+									"values": ["C"],
+									"valueFrequencies": [301]
+								}
+							],
+							"defaultGroupIndex": 0
+						},
+						{
+							"name": "Mode(DNA.Char) where Char = G",
+							"type": "Categorical",
+							"valueGroups": [
+								{
+									"cluster": "Mode(DNA.Char) where Char = G {G}",
+									"values": ["G"],
+									"valueFrequencies": [302]
+								}
+							],
+							"defaultGroupIndex": 0
+						},
+						{
+							"name": "Mode(DNA.Char) where Char = G and Pos <= 30.5",
+							"type": "Categorical",
+							"valueGroups": [
+								{
+									"cluster": "Mode(DNA.Char) where Char = G and Pos <= 30.5 {G}",
+									"values": ["G"],
+									"valueFrequencies": [301]
+								}
+							],
+							"defaultGroupIndex": 0
+						},
+						{
+							"name": "Mode(DNA.Char) where Char = T",
+							"type": "Categorical",
+							"valueGroups": [
+								{
+									"cluster": "Mode(DNA.Char) where Char = T {T}",
+									"values": ["T"],
+									"valueFrequencies": [303]
+								}
+							],
+							"defaultGroupIndex": 0
+						},
+						{
+							"name": "Mode(DNA.Char) where Char not in {C, G, T, A}",
+							"type": "Categorical",
+							"valueGroups": [
+								{
+									"cluster": "Mode(DNA.Char) where Char not in {C, G, T, A} {D, N}",
+									"values": ["D","N"],
+									"valueFrequencies": [1,1]
+								}
+							],
+							"defaultGroupIndex": 0
+						},
+						{
+							"name": "Mode(DNA.Char) where Char not in {C, G}",
+							"type": "Categorical",
+							"valueGroups": [
+								{
+									"cluster": "Mode(DNA.Char) where Char not in {C, G} {T}",
+									"values": ["T"],
+									"valueFrequencies": [153]
+								},
+								{
+									"cluster": "Mode(DNA.Char) where Char not in {C, G} {A}",
+									"values": ["A"],
+									"valueFrequencies": [150]
+								}
+							],
+							"defaultGroupIndex": 1
+						},
+						{
+							"name": "Mode(DNA.Char) where Pos <= 15.5",
+							"type": "Categorical",
+							"valueGroups": [
+								{
+									"cluster": "Mode(DNA.Char) where Pos <= 15.5 {C}",
+									"values": ["C"],
+									"valueFrequencies": [129]
+								},
+								{
+									"cluster": "Mode(DNA.Char) where Pos <= 15.5 {G}",
+									"values": ["G"],
+									"valueFrequencies": [61]
+								},
+								{
+									"cluster": "Mode(DNA.Char) where Pos <= 15.5 {A}",
+									"values": ["A"],
+									"valueFrequencies": [57]
+								},
+								{
+									"cluster": "Mode(DNA.Char) where Pos <= 15.5 {T}",
+									"values": ["T"],
+									"valueFrequencies": [56]
+								}
+							],
+							"defaultGroupIndex": 3
+						},
+						{
+							"name": "Mode(DNA.Char) where Pos <= 30.5",
+							"type": "Categorical",
+							"valueGroups": [
+								{
+									"cluster": "Mode(DNA.Char) where Pos <= 30.5 {C}",
+									"values": ["C"],
+									"valueFrequencies": [122]
+								},
+								{
+									"cluster": "Mode(DNA.Char) where Pos <= 30.5 {T}",
+									"values": ["T"],
+									"valueFrequencies": [64]
+								},
+								{
+									"cluster": "Mode(DNA.Char) where Pos <= 30.5 {G}",
+									"values": ["G"],
+									"valueFrequencies": [61]
+								},
+								{
+									"cluster": "Mode(DNA.Char) where Pos <= 30.5 {A}",
+									"values": ["A"],
+									"valueFrequencies": [56]
+								}
+							],
+							"defaultGroupIndex": 3
+						},
+						{
+							"name": "Mode(DNA.Char) where Pos <= 8.5",
+							"type": "Categorical",
+							"valueGroups": [
+								{
+									"cluster": "Mode(DNA.Char) where Pos <= 8.5 {C}",
+									"values": ["C"],
+									"valueFrequencies": [114]
+								},
+								{
+									"cluster": "Mode(DNA.Char) where Pos <= 8.5 {A}",
+									"values": ["A"],
+									"valueFrequencies": [76]
+								},
+								{
+									"cluster": "Mode(DNA.Char) where Pos <= 8.5 {G}",
+									"values": ["G"],
+									"valueFrequencies": [68]
+								},
+								{
+									"cluster": "Mode(DNA.Char) where Pos <= 8.5 {T}",
+									"values": ["T"],
+									"valueFrequencies": [45]
+								}
+							],
+							"defaultGroupIndex": 3
+						},
+						{
+							"name": "Mode(DNA.Char) where Pos > 30.5",
+							"type": "Categorical",
+							"valueGroups": [
+								{
+									"cluster": "Mode(DNA.Char) where Pos > 30.5 {G}",
+									"values": ["G"],
+									"valueFrequencies": [110]
+								},
+								{
+									"cluster": "Mode(DNA.Char) where Pos > 30.5 {C}",
+									"values": ["C"],
+									"valueFrequencies": [85]
+								},
+								{
+									"cluster": "Mode(DNA.Char) where Pos > 30.5 {A}",
+									"values": ["A"],
+									"valueFrequencies": [56]
+								},
+								{
+									"cluster": "Mode(DNA.Char) where Pos > 30.5 {T}",
+									"values": ["T"],
+									"valueFrequencies": [52]
+								}
+							],
+							"defaultGroupIndex": 3
+						},
+						{
+							"name": "Mode(DNA.Char) where Pos > 45.5",
+							"type": "Categorical",
+							"valueGroups": [
+								{
+									"cluster": "Mode(DNA.Char) where Pos > 45.5 {C}",
+									"values": ["C"],
+									"valueFrequencies": [97]
+								},
+								{
+									"cluster": "Mode(DNA.Char) where Pos > 45.5 {A}",
+									"values": ["A"],
+									"valueFrequencies": [78]
+								},
+								{
+									"cluster": "Mode(DNA.Char) where Pos > 45.5 {G}",
+									"values": ["G"],
+									"valueFrequencies": [73]
+								},
+								{
+									"cluster": "Mode(DNA.Char) where Pos > 45.5 {T}",
+									"values": ["T"],
+									"valueFrequencies": [55]
+								}
+							],
+							"defaultGroupIndex": 3
+						},
+						{
+							"name": "Mode(DNA.Char) where Pos > 53.5",
+							"type": "Categorical",
+							"valueGroups": [
+								{
+									"cluster": "Mode(DNA.Char) where Pos > 53.5 {G}",
+									"values": ["G"],
+									"valueFrequencies": [89]
+								},
+								{
+									"cluster": "Mode(DNA.Char) where Pos > 53.5 {C}",
+									"values": ["C"],
+									"valueFrequencies": [84]
+								},
+								{
+									"cluster": "Mode(DNA.Char) where Pos > 53.5 {A}",
+									"values": ["A"],
+									"valueFrequencies": [78]
+								},
+								{
+									"cluster": "Mode(DNA.Char) where Pos > 53.5 {T}",
+									"values": ["T"],
+									"valueFrequencies": [52]
+								}
+							],
+							"defaultGroupIndex": 3
+						},
+						{
+							"name": "Mode(DNA.Char) where Pos in ]15.5, 23.5]",
+							"type": "Categorical",
+							"valueGroups": [
+								{
+									"cluster": "Mode(DNA.Char) where Pos in ]15.5, 23.5] {C}",
+									"values": ["C"],
+									"valueFrequencies": [115]
+								},
+								{
+									"cluster": "Mode(DNA.Char) where Pos in ]15.5, 23.5] {A}",
+									"values": ["A"],
+									"valueFrequencies": [77]
+								},
+								{
+									"cluster": "Mode(DNA.Char) where Pos in ]15.5, 23.5] {T}",
+									"values": ["T"],
+									"valueFrequencies": [60]
+								},
+								{
+									"cluster": "Mode(DNA.Char) where Pos in ]15.5, 23.5] {G}",
+									"values": ["G"],
+									"valueFrequencies": [51]
+								}
+							],
+							"defaultGroupIndex": 3
+						},
+						{
+							"name": "Mode(DNA.Char) where Pos in ]15.5, 30.5]",
+							"type": "Categorical",
+							"valueGroups": [
+								{
+									"cluster": "Mode(DNA.Char) where Pos in ]15.5, 30.5] {C}",
+									"values": ["C"],
+									"valueFrequencies": [114]
+								},
+								{
+									"cluster": "Mode(DNA.Char) where Pos in ]15.5, 30.5] {A}",
+									"values": ["A"],
+									"valueFrequencies": [69]
+								},
+								{
+									"cluster": "Mode(DNA.Char) where Pos in ]15.5, 30.5] {T}",
+									"values": ["T"],
+									"valueFrequencies": [61]
+								},
+								{
+									"cluster": "Mode(DNA.Char) where Pos in ]15.5, 30.5] {G}",
+									"values": ["G"],
+									"valueFrequencies": [59]
+								}
+							],
+							"defaultGroupIndex": 3
+						},
+						{
+							"name": "Mode(DNA.Char) where Pos in ]23.5, 30.5]",
+							"type": "Categorical",
+							"valueGroups": [
+								{
+									"cluster": "Mode(DNA.Char) where Pos in ]23.5, 30.5] {C}",
+									"values": ["C"],
+									"valueFrequencies": [97]
+								},
+								{
+									"cluster": "Mode(DNA.Char) where Pos in ]23.5, 30.5] {A}",
+									"values": ["A"],
+									"valueFrequencies": [88]
+								},
+								{
+									"cluster": "Mode(DNA.Char) where Pos in ]23.5, 30.5] {G}",
+									"values": ["G"],
+									"valueFrequencies": [74]
+								},
+								{
+									"cluster": "Mode(DNA.Char) where Pos in ]23.5, 30.5] {T}",
+									"values": ["T"],
+									"valueFrequencies": [44]
+								}
+							],
+							"defaultGroupIndex": 3
+						},
+						{
+							"name": "Mode(DNA.Char) where Pos in ]30.5, 38.5]",
+							"type": "Categorical",
+							"valueGroups": [
+								{
+									"cluster": "Mode(DNA.Char) where Pos in ]30.5, 38.5] {A, T}",
+									"values": ["A","T"],
+									"valueFrequencies": [85,39]
+								},
+								{
+									"cluster": "Mode(DNA.Char) where Pos in ]30.5, 38.5] {G}",
+									"values": ["G"],
+									"valueFrequencies": [106]
+								},
+								{
+									"cluster": "Mode(DNA.Char) where Pos in ]30.5, 38.5] {C}",
+									"values": ["C"],
+									"valueFrequencies": [73]
+								}
+							],
+							"defaultGroupIndex": 0
+						},
+						{
+							"name": "Mode(DNA.Char) where Pos in ]30.5, 45.5]",
+							"type": "Categorical",
+							"valueGroups": [
+								{
+									"cluster": "Mode(DNA.Char) where Pos in ]30.5, 45.5] {G}",
+									"values": ["G"],
+									"valueFrequencies": [102]
+								},
+								{
+									"cluster": "Mode(DNA.Char) where Pos in ]30.5, 45.5] {C}",
+									"values": ["C"],
+									"valueFrequencies": [84]
+								},
+								{
+									"cluster": "Mode(DNA.Char) where Pos in ]30.5, 45.5] {A}",
+									"values": ["A"],
+									"valueFrequencies": [72]
+								},
+								{
+									"cluster": "Mode(DNA.Char) where Pos in ]30.5, 45.5] {T}",
+									"values": ["T"],
+									"valueFrequencies": [45]
+								}
+							],
+							"defaultGroupIndex": 3
+						},
+						{
+							"name": "Mode(DNA.Char) where Pos in ]38.5, 45.5]",
+							"type": "Categorical",
+							"valueGroups": [
+								{
+									"cluster": "Mode(DNA.Char) where Pos in ]38.5, 45.5] {C}",
+									"values": ["C"],
+									"valueFrequencies": [91]
+								},
+								{
+									"cluster": "Mode(DNA.Char) where Pos in ]38.5, 45.5] {G}",
+									"values": ["G"],
+									"valueFrequencies": [79]
+								},
+								{
+									"cluster": "Mode(DNA.Char) where Pos in ]38.5, 45.5] {A}",
+									"values": ["A"],
+									"valueFrequencies": [76]
+								},
+								{
+									"cluster": "Mode(DNA.Char) where Pos in ]38.5, 45.5] {T}",
+									"values": ["T"],
+									"valueFrequencies": [57]
+								}
+							],
+							"defaultGroupIndex": 3
+						},
+						{
+							"name": "Mode(DNA.Char) where Pos in ]45.5, 53.5]",
+							"type": "Categorical",
+							"valueGroups": [
+								{
+									"cluster": "Mode(DNA.Char) where Pos in ]45.5, 53.5] {C}",
+									"values": ["C"],
+									"valueFrequencies": [95]
+								},
+								{
+									"cluster": "Mode(DNA.Char) where Pos in ]45.5, 53.5] {A}",
+									"values": ["A"],
+									"valueFrequencies": [82]
+								},
+								{
+									"cluster": "Mode(DNA.Char) where Pos in ]45.5, 53.5] {G}",
+									"values": ["G"],
+									"valueFrequencies": [69]
+								},
+								{
+									"cluster": "Mode(DNA.Char) where Pos in ]45.5, 53.5] {T}",
+									"values": ["T"],
+									"valueFrequencies": [57]
+								}
+							],
+							"defaultGroupIndex": 3
+						},
+						{
+							"name": "Mode(DNA.Char) where Pos in ]8.5, 15.5]",
+							"type": "Categorical",
+							"valueGroups": [
+								{
+									"cluster": "Mode(DNA.Char) where Pos in ]8.5, 15.5] {C}",
+									"values": ["C"],
+									"valueFrequencies": [115]
+								},
+								{
+									"cluster": "Mode(DNA.Char) where Pos in ]8.5, 15.5] {A}",
+									"values": ["A"],
+									"valueFrequencies": [76]
+								},
+								{
+									"cluster": "Mode(DNA.Char) where Pos in ]8.5, 15.5] {T}",
+									"values": ["T"],
+									"valueFrequencies": [61]
+								},
+								{
+									"cluster": "Mode(DNA.Char) where Pos in ]8.5, 15.5] {G}",
+									"values": ["G"],
+									"valueFrequencies": [51]
+								}
+							],
+							"defaultGroupIndex": 3
+						}
+					]
+				},
+				"valueGroups": [
+					{
+						"cluster": "{Count(DNA) where Char = A ]12.5,16.5], Count(DNA) where Char not in {C, G} ]24.5,30.5], Count(DNA) where Char not in {C, G} and Pos <= 30.5 ]13.5,15.5], ...}",
+						"values": ["Count(DNA) where Char = A ]12.5,16.5]","Count(DNA) where Char not in {C, G} ]24.5,30.5]","Count(DNA) where Char not in {C, G} and Pos <= 30.5 ]13.5,15.5]","Count(DNA) where Char not in {C, G} and Pos > 30.5 ]14.5,15.5]"],
+						"valueFrequencies": [90,95,60,24],
+						"valueTypicalities": [0,0,0,0]
+					},
+					{
+						"cluster": "{Class {N}, Count(DNA) ]-inf,+inf[, Count(DNA) where Char = C and Pos > 30.5 ]5.5,8.5], ...}",
+						"values": ["Class {N}","Count(DNA) ]-inf,+inf[","Count(DNA) where Char = C and Pos > 30.5 ]5.5,8.5]","Count(DNA) where Char not in {C, G, T, A} ]-inf,+inf[","Count(DNA) where Pos <= 15.5 ]-inf,+inf[","Count(DNA) where Pos <= 30.5 ]-inf,+inf[","Count(DNA) where Pos <= 8.5 ]-inf,+inf[","Count(DNA) where Pos > 30.5 ]-inf,+inf[","Count(DNA) where Pos > 45.5 ]-inf,+inf[","Count(DNA) where Pos > 53.5 ]-inf,+inf[","Count(DNA) where Pos in ]15.5, 23.5] ]-inf,+inf[","Count(DNA) where Pos in ]15.5, 30.5] ]-inf,+inf[","Count(DNA) where Pos in ]23.5, 30.5] ]-inf,+inf[","Count(DNA) where Pos in ]30.5, 38.5] ]-inf,+inf[","Count(DNA) where Pos in ]30.5, 45.5] ]-inf,+inf[","Count(DNA) where Pos in ]38.5, 45.5] ]-inf,+inf[","Count(DNA) where Pos in ]45.5, 53.5] ]-inf,+inf[","Count(DNA) where Pos in ]8.5, 15.5] ]-inf,+inf[","Mode(DNA.Char) where Char = A {A}","Mode(DNA.Char) where Char = C {C}","Mode(DNA.Char) where Char = C and Pos > 30.5 {C}","Mode(DNA.Char) where Char = G {G}","Mode(DNA.Char) where Char = G and Pos <= 30.5 {G}","Mode(DNA.Char) where Char = T {T}"],
+						"valueFrequencies": [167,303,105,303,303,303,303,303,303,303,303,303,303,303,303,303,303,303,301,303,301,302,301,303],
+						"valueTypicalities": [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
+					},
+					{
+						"cluster": "{Count(DNA) where Char = T ]-inf,12.5], Mode(DNA.Char) where Char not in {C, G} {A}}",
+						"values": ["Count(DNA) where Char = T ]-inf,12.5]","Mode(DNA.Char) where Char not in {C, G} {A}"],
+						"valueFrequencies": [128,150],
+						"valueTypicalities": [0,0]
+					},
+					{
+						"cluster": "{Class {IE}, Count(DNA) where Char = G ]13.5,18.5], Count(DNA) where Char = G and Pos <= 30.5 ]-inf,8.5]}",
+						"values": ["Class {IE}","Count(DNA) where Char = G ]13.5,18.5]","Count(DNA) where Char = G and Pos <= 30.5 ]-inf,8.5]"],
+						"valueFrequencies": [69,112,207],
+						"valueTypicalities": [0,0,0]
+					},
+					{
+						"cluster": "{Count(DNA) where Char = G and Pos > 30.5 ]6.5,9.5], Count(DNA) where Char = T ]12.5,16.5], Count(DNA) where Char not in {C, G} and Pos > 30.5 ]12.5,14.5]}",
+						"values": ["Count(DNA) where Char = G and Pos > 30.5 ]6.5,9.5]","Count(DNA) where Char = T ]12.5,16.5]","Count(DNA) where Char not in {C, G} and Pos > 30.5 ]12.5,14.5]"],
+						"valueFrequencies": [91,87,55],
+						"valueTypicalities": [0,0,0]
+					},
+					{
+						"cluster": "{Class {EI}, Mode(DNA.Char) where Pos <= 15.5 {G}, Mode(DNA.Char) where Pos <= 8.5 {G}, ...}",
+						"values": ["Class {EI}","Mode(DNA.Char) where Pos <= 15.5 {G}","Mode(DNA.Char) where Pos <= 8.5 {G}","Mode(DNA.Char) where Pos in ]15.5, 30.5] {G}","Mode(DNA.Char) where Pos in ]23.5, 30.5] {G}","Mode(DNA.Char) where Pos in ]30.5, 38.5] {G}","Mode(DNA.Char) where Pos in ]8.5, 15.5] {G}"],
+						"valueFrequencies": [67,61,68,59,74,106,51],
+						"valueTypicalities": [0,0,0,0,0,0,0]
+					},
+					{
+						"cluster": "{Count(DNA) where Char = C ]15.5,18.5], Count(DNA) where Char = C and Pos <= 30.5 ]6.5,9.5], Count(DNA) where Char = G and Pos <= 30.5 ]8.5,10.5], ...}",
+						"values": ["Count(DNA) where Char = C ]15.5,18.5]","Count(DNA) where Char = C and Pos <= 30.5 ]6.5,9.5]","Count(DNA) where Char = G and Pos <= 30.5 ]8.5,10.5]","Mode(DNA.Char) where Pos in ]15.5, 23.5] {G}"],
+						"valueFrequencies": [54,101,48,51],
+						"valueTypicalities": [0,0,0,0]
+					},
+					{
+						"cluster": "{Count(DNA) where Char = G ]21.5,+inf[, Count(DNA) where Char = G and Pos <= 30.5 ]10.5,+inf[, Mode(DNA.Char) {G}, ...}",
+						"values": ["Count(DNA) where Char = G ]21.5,+inf[","Count(DNA) where Char = G and Pos <= 30.5 ]10.5,+inf[","Mode(DNA.Char) {G}","Mode(DNA.Char) where Char not in {C, G, T, A} {D, N}","Mode(DNA.Char) where Pos <= 30.5 {G}"],
+						"valueFrequencies": [41,46,77,2,61],
+						"valueTypicalities": [0,0,0,0,0]
+					},
+					{
+						"cluster": "{Count(DNA) where Char = G ]18.5,21.5], Count(DNA) where Char = G and Pos > 30.5 ]9.5,+inf[, Mode(DNA.Char) where Pos > 30.5 {G}, ...}",
+						"values": ["Count(DNA) where Char = G ]18.5,21.5]","Count(DNA) where Char = G and Pos > 30.5 ]9.5,+inf[","Mode(DNA.Char) where Pos > 30.5 {G}","Mode(DNA.Char) where Pos > 45.5 {G}","Mode(DNA.Char) where Pos > 53.5 {G}","Mode(DNA.Char) where Pos in ]30.5, 45.5] {G}","Mode(DNA.Char) where Pos in ]38.5, 45.5] {G}","Mode(DNA.Char) where Pos in ]45.5, 53.5] {G}"],
+						"valueFrequencies": [48,120,110,73,89,102,79,69],
+						"valueTypicalities": [0,0,0,0,0,0,0,0]
+					},
+					{
+						"cluster": "{Count(DNA) where Char = A ]-inf,12.5], Mode(DNA.Char) where Char not in {C, G} {T}}",
+						"values": ["Count(DNA) where Char = A ]-inf,12.5]","Mode(DNA.Char) where Char not in {C, G} {T}"],
+						"valueFrequencies": [137,153],
+						"valueTypicalities": [0,0]
+					},
+					{
+						"cluster": "{Count(DNA) where Char = C and Pos > 30.5 ]8.5,+inf[, Mode(DNA.Char) where Pos > 30.5 {C}, Mode(DNA.Char) where Pos > 45.5 {C}, ...}",
+						"values": ["Count(DNA) where Char = C and Pos > 30.5 ]8.5,+inf[","Mode(DNA.Char) where Pos > 30.5 {C}","Mode(DNA.Char) where Pos > 45.5 {C}","Mode(DNA.Char) where Pos > 53.5 {C}","Mode(DNA.Char) where Pos in ]30.5, 38.5] {C}","Mode(DNA.Char) where Pos in ]30.5, 45.5] {C}","Mode(DNA.Char) where Pos in ]38.5, 45.5] {C}","Mode(DNA.Char) where Pos in ]45.5, 53.5] {C}"],
+						"valueFrequencies": [115,85,97,84,73,84,91,95],
+						"valueTypicalities": [0,0,0,0,0,0,0,0]
+					},
+					{
+						"cluster": "{Count(DNA) where Char not in {C, G} ]-inf,21.5], Count(DNA) where Char not in {C, G} and Pos <= 30.5 ]-inf,9.5], Count(DNA) where Char not in {C, G} and Pos > 30.5 ]-inf,10.5]}",
+						"values": ["Count(DNA) where Char not in {C, G} ]-inf,21.5]","Count(DNA) where Char not in {C, G} and Pos <= 30.5 ]-inf,9.5]","Count(DNA) where Char not in {C, G} and Pos > 30.5 ]-inf,10.5]"],
+						"valueFrequencies": [54,34,61],
+						"valueTypicalities": [0,0,0]
+					},
+					{
+						"cluster": "{Count(DNA) where Char not in {C, G} ]21.5,24.5], Count(DNA) where Char not in {C, G} and Pos <= 30.5 ]9.5,13.5], Count(DNA) where Char not in {C, G} and Pos > 30.5 ]10.5,12.5]}",
+						"values": ["Count(DNA) where Char not in {C, G} ]21.5,24.5]","Count(DNA) where Char not in {C, G} and Pos <= 30.5 ]9.5,13.5]","Count(DNA) where Char not in {C, G} and Pos > 30.5 ]10.5,12.5]"],
+						"valueFrequencies": [52,107,64],
+						"valueTypicalities": [0,0,0]
+					},
+					{
+						"cluster": "{Count(DNA) where Char = C ]18.5,+inf[, Count(DNA) where Char = C and Pos <= 30.5 ]9.5,+inf[, Mode(DNA.Char) {C}, ...}",
+						"values": ["Count(DNA) where Char = C ]18.5,+inf[","Count(DNA) where Char = C and Pos <= 30.5 ]9.5,+inf[","Mode(DNA.Char) {C}","Mode(DNA.Char) where Pos <= 30.5 {C}"],
+						"valueFrequencies": [114,121,119,122],
+						"valueTypicalities": [0,0,0,0]
+					},
+					{
+						"cluster": "{Mode(DNA.Char) where Pos <= 15.5 {C}, Mode(DNA.Char) where Pos <= 8.5 {C}, Mode(DNA.Char) where Pos in ]15.5, 23.5] {C}, ...}",
+						"values": ["Mode(DNA.Char) where Pos <= 15.5 {C}","Mode(DNA.Char) where Pos <= 8.5 {C}","Mode(DNA.Char) where Pos in ]15.5, 23.5] {C}","Mode(DNA.Char) where Pos in ]15.5, 30.5] {C}","Mode(DNA.Char) where Pos in ]23.5, 30.5] {C}","Mode(DNA.Char) where Pos in ]8.5, 15.5] {C}"],
+						"valueFrequencies": [129,114,115,114,97,115],
+						"valueTypicalities": [0,0,0,0,0,0]
+					},
+					{
+						"cluster": "{Count(DNA) where Char = C ]-inf,15.5], Count(DNA) where Char = C and Pos <= 30.5 ]-inf,6.5], Count(DNA) where Char = C and Pos > 30.5 ]-inf,5.5]}",
+						"values": ["Count(DNA) where Char = C ]-inf,15.5]","Count(DNA) where Char = C and Pos <= 30.5 ]-inf,6.5]","Count(DNA) where Char = C and Pos > 30.5 ]-inf,5.5]"],
+						"valueFrequencies": [135,78,81],
+						"valueTypicalities": [0,0,0]
+					},
+					{
+						"cluster": "{Count(DNA) where Char not in {C, G} ]30.5,+inf[, Count(DNA) where Char not in {C, G} and Pos <= 30.5 ]15.5,+inf[, Count(DNA) where Char not in {C, G} and Pos > 30.5 ]15.5,+inf[}",
+						"values": ["Count(DNA) where Char not in {C, G} ]30.5,+inf[","Count(DNA) where Char not in {C, G} and Pos <= 30.5 ]15.5,+inf[","Count(DNA) where Char not in {C, G} and Pos > 30.5 ]15.5,+inf["],
+						"valueFrequencies": [102,102,99],
+						"valueTypicalities": [0,0,0]
+					},
+					{
+						"cluster": "{Mode(DNA.Char) where Pos <= 15.5 {A}, Mode(DNA.Char) where Pos <= 30.5 {A}, Mode(DNA.Char) where Pos in ]15.5, 23.5] {A}, ...}",
+						"values": ["Mode(DNA.Char) where Pos <= 15.5 {A}","Mode(DNA.Char) where Pos <= 30.5 {A}","Mode(DNA.Char) where Pos in ]15.5, 23.5] {A}","Mode(DNA.Char) where Pos in ]15.5, 30.5] {A}","Mode(DNA.Char) where Pos in ]8.5, 15.5] {A}"],
+						"valueFrequencies": [57,56,77,69,76],
+						"valueTypicalities": [0,0,0,0,0]
+					},
+					{
+						"cluster": "{Count(DNA) where Char = A ]16.5,+inf[, Mode(DNA.Char) {A}, Mode(DNA.Char) where Pos > 30.5 {A}, ...}",
+						"values": ["Count(DNA) where Char = A ]16.5,+inf[","Mode(DNA.Char) {A}","Mode(DNA.Char) where Pos > 30.5 {A}","Mode(DNA.Char) where Pos > 45.5 {A}","Mode(DNA.Char) where Pos in ]30.5, 45.5] {A}"],
+						"valueFrequencies": [76,50,56,78,72],
+						"valueTypicalities": [0,0,0,0,0]
+					},
+					{
+						"cluster": "{Mode(DNA.Char) where Pos <= 8.5 {A}, Mode(DNA.Char) where Pos > 53.5 {A}, Mode(DNA.Char) where Pos in ]23.5, 30.5] {A}, ...}",
+						"values": ["Mode(DNA.Char) where Pos <= 8.5 {A}","Mode(DNA.Char) where Pos > 53.5 {A}","Mode(DNA.Char) where Pos in ]23.5, 30.5] {A}","Mode(DNA.Char) where Pos in ]30.5, 38.5] {A, T}","Mode(DNA.Char) where Pos in ]38.5, 45.5] {A}","Mode(DNA.Char) where Pos in ]45.5, 53.5] {A}"],
+						"valueFrequencies": [76,78,88,124,76,82],
+						"valueTypicalities": [0,0,0,0,0,0]
+					},
+					{
+						"cluster": "{Count(DNA) where Char = T ]16.5,+inf[, Mode(DNA.Char) {T}, Mode(DNA.Char) where Pos <= 15.5 {T}, ...}",
+						"values": ["Count(DNA) where Char = T ]16.5,+inf[","Mode(DNA.Char) {T}","Mode(DNA.Char) where Pos <= 15.5 {T}","Mode(DNA.Char) where Pos <= 30.5 {T}","Mode(DNA.Char) where Pos <= 8.5 {T}","Mode(DNA.Char) where Pos in ]15.5, 23.5] {T}","Mode(DNA.Char) where Pos in ]15.5, 30.5] {T}","Mode(DNA.Char) where Pos in ]23.5, 30.5] {T}","Mode(DNA.Char) where Pos in ]8.5, 15.5] {T}"],
+						"valueFrequencies": [88,57,56,64,45,60,61,44,61],
+						"valueTypicalities": [0,0,0,0,0,0,0,0,0]
+					},
+					{
+						"cluster": "{Count(DNA) where Char = G ]-inf,13.5], Count(DNA) where Char = G and Pos > 30.5 ]-inf,6.5]}",
+						"values": ["Count(DNA) where Char = G ]-inf,13.5]","Count(DNA) where Char = G and Pos > 30.5 ]-inf,6.5]"],
+						"valueFrequencies": [102,91],
+						"valueTypicalities": [0,0]
+					},
+					{
+						"cluster": "{Mode(DNA.Char) where Pos > 30.5 {T}, Mode(DNA.Char) where Pos > 45.5 {T}, Mode(DNA.Char) where Pos > 53.5 {T}, ...}",
+						"values": ["Mode(DNA.Char) where Pos > 30.5 {T}","Mode(DNA.Char) where Pos > 45.5 {T}","Mode(DNA.Char) where Pos > 53.5 {T}","Mode(DNA.Char) where Pos in ]30.5, 45.5] {T}","Mode(DNA.Char) where Pos in ]38.5, 45.5] {T}","Mode(DNA.Char) where Pos in ]45.5, 53.5] {T}"],
+						"valueFrequencies": [52,55,52,45,57,57],
+						"valueTypicalities": [0,0,0,0,0,0]
+					}
+				],
+				"defaultGroupIndex": 0
+			}
+		],
+		"dimensionHierarchies": [
+			{
+				"name": "SampleId",
+				"type": "Categorical",
+				"clusters": [
+					{
+						"cluster": "{HUMFIXG-NEG-12781, HUMPCNA-ACCEPTOR-2520, HUMSATA-NEG-361, ...}",
+						"parentCluster": "A24",
+						"frequency": 1247,
+						"interest": 0.957401,
+						"hierarchicalLevel": 1,
+						"rank": 1,
+						"hierarchicalRank": 36,
+						"isLeaf": true
+					},
+					{
+						"cluster": "{HUMPS12-NEG-1321, AGMRSKPNI-NEG-1141, HUMRSO5C-NEG-361, ...}",
+						"parentCluster": "A24",
+						"frequency": 1399,
+						"interest": 0.901566,
+						"hierarchicalLevel": 1,
+						"rank": 3,
+						"hierarchicalRank": 36,
+						"isLeaf": true
+					},
+					{
+						"cluster": "{HUMFBRG-NEG-2641, HUMDYS-NEG-12961, ORAHBBPSE-NEG-2101, ...}",
+						"parentCluster": "A25",
+						"frequency": 1445,
+						"interest": 1,
+						"hierarchicalLevel": 1,
+						"rank": 5,
+						"hierarchicalRank": 36,
+						"isLeaf": true
+					},
+					{
+						"cluster": "{HUMGRP78-ACCEPTOR-2145, HUMATPSYB-NEG-841, HUMIFNAD-NEG-841, ...}",
+						"parentCluster": "A25",
+						"frequency": 899,
+						"interest": 0.713603,
+						"hierarchicalLevel": 1,
+						"rank": 7,
+						"hierarchicalRank": 36,
+						"isLeaf": true
+					},
+					{
+						"cluster": "{HUMPLG2B-NEG-181, HUMERPA-DONOR-608, HUMPRCA-DONOR-8366, ...}",
+						"parentCluster": "A12",
+						"frequency": 1151,
+						"interest": 0.925058,
+						"hierarchicalLevel": 1,
+						"rank": 9,
+						"hierarchicalRank": 36,
+						"isLeaf": true
+					},
+					{
+						"cluster": "{MACHBGA1-DONOR-465, HUMHBBGG-DONOR-2241, HUMA1AR2-NEG-3601, ...}",
+						"parentCluster": "A19",
+						"frequency": 1448,
+						"interest": 0.94298,
+						"hierarchicalLevel": 1,
+						"rank": 11,
+						"hierarchicalRank": 36,
+						"isLeaf": true
+					},
+					{
+						"cluster": "{HUMHBVINT-NEG-61, HUMHPARS1-NEG-4801, HUMAMY2A-NEG-361, ...}",
+						"parentCluster": "A19",
+						"frequency": 901,
+						"interest": 0.666758,
+						"hierarchicalLevel": 1,
+						"rank": 13,
+						"hierarchicalRank": 36,
+						"isLeaf": true
+					},
+					{
+						"cluster": "{HUMMHCP52-ACCEPTOR-1763, HUMCP21OHC-DONOR-2878, HUMMHCP52-DONOR-2344, ...}",
+						"parentCluster": "A21",
+						"frequency": 1250,
+						"interest": 0.859313,
+						"hierarchicalLevel": 1,
+						"rank": 15,
+						"hierarchicalRank": 36,
+						"isLeaf": true
+					},
+					{
+						"cluster": "{HUMAPOA4A-NEG-3241, HUMALPI-ACCEPTOR-1631, HUMVWFA24-NEG-781, ...}",
+						"parentCluster": "A21",
+						"frequency": 1050,
+						"interest": 0.64454,
+						"hierarchicalLevel": 1,
+						"rank": 17,
+						"hierarchicalRank": 36,
+						"isLeaf": true
+					},
+					{
+						"cluster": "{HUMAPOCIA-ACCEPTOR-634, HUMINSPR-NEG-61, HUMGHN-ACCEPTOR-1379, ...}",
+						"parentCluster": "A23",
+						"frequency": 1247,
+						"interest": 0.918391,
+						"hierarchicalLevel": 1,
+						"rank": 19,
+						"hierarchicalRank": 36,
+						"isLeaf": true
+					},
+					{
+						"cluster": "{HUMGHCSA-ACCEPTOR-43393, HUMGHCSA-ACCEPTOR-6465, HUMGHVA-ACCEPTOR-741, ...}",
+						"parentCluster": "A23",
+						"frequency": 900,
+						"interest": 0.650132,
+						"hierarchicalLevel": 1,
+						"rank": 21,
+						"hierarchicalRank": 36,
+						"isLeaf": true
+					},
+					{
+						"cluster": "{HUMMHDRHA-ACCEPTOR-4276, HUMTGFB-NEG-541, HUMG0S19B-DONOR-3063, ...}",
+						"parentCluster": "A26",
+						"frequency": 1300,
+						"interest": 0.74773,
+						"hierarchicalLevel": 1,
+						"rank": 23,
+						"hierarchicalRank": 36,
+						"isLeaf": true
+					},
+					{
+						"cluster": "{HUMFIGRD-NEG-361, HUMG3PD-NEG-481, HUMIL2R-NEG-1, ...}",
+						"parentCluster": "A26",
+						"frequency": 900,
+						"interest": 0.646644,
+						"hierarchicalLevel": 1,
+						"rank": 25,
+						"hierarchicalRank": 36,
+						"isLeaf": true
+					},
+					{
+						"cluster": "A24",
+						"parentCluster": "A7",
+						"frequency": 2646,
+						"interest": 0.92788,
+						"hierarchicalLevel": 0.82285,
+						"rank": 2,
+						"hierarchicalRank": 25,
+						"isLeaf": false
+					},
+					{
+						"cluster": "A7",
+						"parentCluster": "A2",
+						"frequency": 4990,
+						"interest": 0.91016,
+						"hierarchicalLevel": 0.250817,
+						"rank": 4,
+						"hierarchicalRank": 8,
+						"isLeaf": false
+					},
+					{
+						"cluster": "A25",
+						"parentCluster": "A7",
+						"frequency": 2344,
+						"interest": 0.890157,
+						"hierarchicalLevel": 0.846551,
+						"rank": 6,
+						"hierarchicalRank": 26,
+						"isLeaf": false
+					},
+					{
+						"cluster": "A2",
+						"parentCluster": "",
+						"frequency": 15137,
+						"interest": 0.83292,
+						"hierarchicalLevel": -0.557698,
+						"rank": 8,
+						"hierarchicalRank": 3,
+						"isLeaf": false
+					},
+					{
+						"cluster": "A12",
+						"parentCluster": "A5",
+						"frequency": 3500,
+						"interest": 0.865979,
+						"hierarchicalLevel": 0.449551,
+						"rank": 10,
+						"hierarchicalRank": 13,
+						"isLeaf": false
+					},
+					{
+						"cluster": "A19",
+						"parentCluster": "A12",
+						"frequency": 2349,
+						"interest": 0.83703,
+						"hierarchicalLevel": 0.702847,
+						"rank": 12,
+						"hierarchicalRank": 20,
+						"isLeaf": false
+					},
+					{
+						"cluster": "A5",
+						"parentCluster": "A2",
+						"frequency": 10147,
+						"interest": 0.794936,
+						"hierarchicalLevel": 0.0959985,
+						"rank": 14,
+						"hierarchicalRank": 6,
+						"isLeaf": false
+					},
+					{
+						"cluster": "A21",
+						"parentCluster": "A9",
+						"frequency": 2300,
+						"interest": 0.761264,
+						"hierarchicalLevel": 0.763659,
+						"rank": 16,
+						"hierarchicalRank": 22,
+						"isLeaf": false
+					},
+					{
+						"cluster": "A9",
+						"parentCluster": "A5",
+						"frequency": 6647,
+						"interest": 0.757528,
+						"hierarchicalLevel": 0.322141,
+						"rank": 18,
+						"hierarchicalRank": 10,
+						"isLeaf": false
+					},
+					{
+						"cluster": "A23",
+						"parentCluster": "A11",
+						"frequency": 2147,
+						"interest": 0.80594,
+						"hierarchicalLevel": 0.799561,
+						"rank": 20,
+						"hierarchicalRank": 24,
+						"isLeaf": false
+					},
+					{
+						"cluster": "A11",
+						"parentCluster": "A9",
+						"frequency": 4347,
+						"interest": 0.755551,
+						"hierarchicalLevel": 0.405051,
+						"rank": 22,
+						"hierarchicalRank": 12,
+						"isLeaf": false
+					},
+					{
+						"cluster": "A26",
+						"parentCluster": "A11",
+						"frequency": 2200,
+						"interest": 0.706377,
+						"hierarchicalLevel": 0.866617,
+						"rank": 24,
+						"hierarchicalRank": 27,
+						"isLeaf": false
+					}
+				]
+			},
+			{
+				"name": "Variables",
+				"type": "Categorical",
+				"clusters": [
+					{
+						"cluster": "{Count(DNA) where Char = A ]12.5,16.5], Count(DNA) where Char not in {C, G} ]24.5,30.5], Count(DNA) where Char not in {C, G} and Pos <= 30.5 ]13.5,15.5], ...}",
+						"parentCluster": "B14",
+						"frequency": 269,
+						"interest": 0.545831,
+						"hierarchicalLevel": 1,
+						"rank": 1,
+						"hierarchicalRank": 36,
+						"isLeaf": true
+					},
+					{
+						"cluster": "{Class {N}, Count(DNA) ]-inf,+inf[, Count(DNA) where Char = C and Pos > 30.5 ]5.5,8.5], ...}",
+						"parentCluster": "B18",
+						"frequency": 6931,
+						"interest": 0.666125,
+						"hierarchicalLevel": 1,
+						"rank": 3,
+						"hierarchicalRank": 36,
+						"isLeaf": true
+					},
+					{
+						"cluster": "{Count(DNA) where Char = T ]-inf,12.5], Mode(DNA.Char) where Char not in {C, G} {A}}",
+						"parentCluster": "B18",
+						"frequency": 278,
+						"interest": 0.580269,
+						"hierarchicalLevel": 1,
+						"rank": 5,
+						"hierarchicalRank": 36,
+						"isLeaf": true
+					},
+					{
+						"cluster": "{Class {IE}, Count(DNA) where Char = G ]13.5,18.5], Count(DNA) where Char = G and Pos <= 30.5 ]-inf,8.5]}",
+						"parentCluster": "B34",
+						"frequency": 388,
+						"interest": 0.538949,
+						"hierarchicalLevel": 1,
+						"rank": 7,
+						"hierarchicalRank": 36,
+						"isLeaf": true
+					},
+					{
+						"cluster": "{Count(DNA) where Char = G and Pos > 30.5 ]6.5,9.5], Count(DNA) where Char = T ]12.5,16.5], Count(DNA) where Char not in {C, G} and Pos > 30.5 ]12.5,14.5]}",
+						"parentCluster": "B34",
+						"frequency": 233,
+						"interest": 0.428677,
+						"hierarchicalLevel": 1,
+						"rank": 9,
+						"hierarchicalRank": 36,
+						"isLeaf": true
+					},
+					{
+						"cluster": "{Class {EI}, Mode(DNA.Char) where Pos <= 15.5 {G}, Mode(DNA.Char) where Pos <= 8.5 {G}, ...}",
+						"parentCluster": "B33",
+						"frequency": 486,
+						"interest": 0.603842,
+						"hierarchicalLevel": 1,
+						"rank": 11,
+						"hierarchicalRank": 36,
+						"isLeaf": true
+					},
+					{
+						"cluster": "{Count(DNA) where Char = C ]15.5,18.5], Count(DNA) where Char = C and Pos <= 30.5 ]6.5,9.5], Count(DNA) where Char = G and Pos <= 30.5 ]8.5,10.5], ...}",
+						"parentCluster": "B33",
+						"frequency": 254,
+						"interest": 0.449938,
+						"hierarchicalLevel": 1,
+						"rank": 13,
+						"hierarchicalRank": 36,
+						"isLeaf": true
+					},
+					{
+						"cluster": "{Count(DNA) where Char = G ]21.5,+inf[, Count(DNA) where Char = G and Pos <= 30.5 ]10.5,+inf[, Mode(DNA.Char) {G}, ...}",
+						"parentCluster": "B16",
+						"frequency": 227,
+						"interest": 0.734992,
+						"hierarchicalLevel": 1,
+						"rank": 15,
+						"hierarchicalRank": 36,
+						"isLeaf": true
+					},
+					{
+						"cluster": "{Count(DNA) where Char = G ]18.5,21.5], Count(DNA) where Char = G and Pos > 30.5 ]9.5,+inf[, Mode(DNA.Char) where Pos > 30.5 {G}, ...}",
+						"parentCluster": "B10",
+						"frequency": 690,
+						"interest": 0.854096,
+						"hierarchicalLevel": 1,
+						"rank": 17,
+						"hierarchicalRank": 36,
+						"isLeaf": true
+					},
+					{
+						"cluster": "{Count(DNA) where Char = A ]-inf,12.5], Mode(DNA.Char) where Char not in {C, G} {T}}",
+						"parentCluster": "B20",
+						"frequency": 290,
+						"interest": 0.573573,
+						"hierarchicalLevel": 1,
+						"rank": 19,
+						"hierarchicalRank": 36,
+						"isLeaf": true
+					},
+					{
+						"cluster": "{Count(DNA) where Char = C and Pos > 30.5 ]8.5,+inf[, Mode(DNA.Char) where Pos > 30.5 {C}, Mode(DNA.Char) where Pos > 45.5 {C}, ...}",
+						"parentCluster": "B20",
+						"frequency": 724,
+						"interest": 0.78884,
+						"hierarchicalLevel": 1,
+						"rank": 21,
+						"hierarchicalRank": 36,
+						"isLeaf": true
+					},
+					{
+						"cluster": "{Count(DNA) where Char not in {C, G} ]-inf,21.5], Count(DNA) where Char not in {C, G} and Pos <= 30.5 ]-inf,9.5], Count(DNA) where Char not in {C, G} and Pos > 30.5 ]-inf,10.5]}",
+						"parentCluster": "B31",
+						"frequency": 149,
+						"interest": 0.580968,
+						"hierarchicalLevel": 1,
+						"rank": 23,
+						"hierarchicalRank": 36,
+						"isLeaf": true
+					},
+					{
+						"cluster": "{Count(DNA) where Char not in {C, G} ]21.5,24.5], Count(DNA) where Char not in {C, G} and Pos <= 30.5 ]9.5,13.5], Count(DNA) where Char not in {C, G} and Pos > 30.5 ]10.5,12.5]}",
+						"parentCluster": "B31",
+						"frequency": 223,
+						"interest": 0.526205,
+						"hierarchicalLevel": 1,
+						"rank": 25,
+						"hierarchicalRank": 36,
+						"isLeaf": true
+					},
+					{
+						"cluster": "{Count(DNA) where Char = C ]18.5,+inf[, Count(DNA) where Char = C and Pos <= 30.5 ]9.5,+inf[, Mode(DNA.Char) {C}, ...}",
+						"parentCluster": "B32",
+						"frequency": 476,
+						"interest": 0.88407,
+						"hierarchicalLevel": 1,
+						"rank": 27,
+						"hierarchicalRank": 36,
+						"isLeaf": true
+					},
+					{
+						"cluster": "{Mode(DNA.Char) where Pos <= 15.5 {C}, Mode(DNA.Char) where Pos <= 8.5 {C}, Mode(DNA.Char) where Pos in ]15.5, 23.5] {C}, ...}",
+						"parentCluster": "B32",
+						"frequency": 684,
+						"interest": 0.693947,
+						"hierarchicalLevel": 1,
+						"rank": 29,
+						"hierarchicalRank": 36,
+						"isLeaf": true
+					},
+					{
+						"cluster": "{Count(DNA) where Char = C ]-inf,15.5], Count(DNA) where Char = C and Pos <= 30.5 ]-inf,6.5], Count(DNA) where Char = C and Pos > 30.5 ]-inf,5.5]}",
+						"parentCluster": "B30",
+						"frequency": 294,
+						"interest": 0.638586,
+						"hierarchicalLevel": 1,
+						"rank": 31,
+						"hierarchicalRank": 36,
+						"isLeaf": true
+					},
+					{
+						"cluster": "{Count(DNA) where Char not in {C, G} ]30.5,+inf[, Count(DNA) where Char not in {C, G} and Pos <= 30.5 ]15.5,+inf[, Count(DNA) where Char not in {C, G} and Pos > 30.5 ]15.5,+inf[}",
+						"parentCluster": "B30",
+						"frequency": 303,
+						"interest": 0.709704,
+						"hierarchicalLevel": 1,
+						"rank": 33,
+						"hierarchicalRank": 36,
+						"isLeaf": true
+					},
+					{
+						"cluster": "{Mode(DNA.Char) where Pos <= 15.5 {A}, Mode(DNA.Char) where Pos <= 30.5 {A}, Mode(DNA.Char) where Pos in ]15.5, 23.5] {A}, ...}",
+						"parentCluster": "B27",
+						"frequency": 335,
+						"interest": 0.626958,
+						"hierarchicalLevel": 1,
+						"rank": 35,
+						"hierarchicalRank": 36,
+						"isLeaf": true
+					},
+					{
+						"cluster": "{Count(DNA) where Char = A ]16.5,+inf[, Mode(DNA.Char) {A}, Mode(DNA.Char) where Pos > 30.5 {A}, ...}",
+						"parentCluster": "B29",
+						"frequency": 332,
+						"interest": 0.733207,
+						"hierarchicalLevel": 1,
+						"rank": 37,
+						"hierarchicalRank": 36,
+						"isLeaf": true
+					},
+					{
+						"cluster": "{Mode(DNA.Char) where Pos <= 8.5 {A}, Mode(DNA.Char) where Pos > 53.5 {A}, Mode(DNA.Char) where Pos in ]23.5, 30.5] {A}, ...}",
+						"parentCluster": "B29",
+						"frequency": 524,
+						"interest": 0.553059,
+						"hierarchicalLevel": 1,
+						"rank": 39,
+						"hierarchicalRank": 36,
+						"isLeaf": true
+					},
+					{
+						"cluster": "{Count(DNA) where Char = T ]16.5,+inf[, Mode(DNA.Char) {T}, Mode(DNA.Char) where Pos <= 15.5 {T}, ...}",
+						"parentCluster": "B22",
+						"frequency": 536,
+						"interest": 1,
+						"hierarchicalLevel": 1,
+						"rank": 41,
+						"hierarchicalRank": 36,
+						"isLeaf": true
+					},
+					{
+						"cluster": "{Count(DNA) where Char = G ]-inf,13.5], Count(DNA) where Char = G and Pos > 30.5 ]-inf,6.5]}",
+						"parentCluster": "B28",
+						"frequency": 193,
+						"interest": 0.508836,
+						"hierarchicalLevel": 1,
+						"rank": 43,
+						"hierarchicalRank": 36,
+						"isLeaf": true
+					},
+					{
+						"cluster": "{Mode(DNA.Char) where Pos > 30.5 {T}, Mode(DNA.Char) where Pos > 45.5 {T}, Mode(DNA.Char) where Pos > 53.5 {T}, ...}",
+						"parentCluster": "B28",
+						"frequency": 318,
+						"interest": 0.62732,
+						"hierarchicalLevel": 1,
+						"rank": 45,
+						"hierarchicalRank": 36,
+						"isLeaf": true
+					},
+					{
+						"cluster": "B14",
+						"parentCluster": "B3",
+						"frequency": 8099,
+						"interest": 0.646259,
+						"hierarchicalLevel": 0.534552,
+						"rank": 2,
+						"hierarchicalRank": 15,
+						"isLeaf": false
+					},
+					{
+						"cluster": "B18",
+						"parentCluster": "B17",
+						"frequency": 7209,
+						"interest": 0.662814,
+						"hierarchicalLevel": 0.673443,
+						"rank": 4,
+						"hierarchicalRank": 19,
+						"isLeaf": false
+					},
+					{
+						"cluster": "B17",
+						"parentCluster": "B14",
+						"frequency": 7830,
+						"interest": 0.649709,
+						"hierarchicalLevel": 0.642057,
+						"rank": 6,
+						"hierarchicalRank": 18,
+						"isLeaf": false
+					},
+					{
+						"cluster": "B34",
+						"parentCluster": "B17",
+						"frequency": 621,
+						"interest": 0.497575,
+						"hierarchicalLevel": 0.989834,
+						"rank": 8,
+						"hierarchicalRank": 35,
+						"isLeaf": false
+					},
+					{
+						"cluster": "B3",
+						"parentCluster": "B1",
+						"frequency": 12302,
+						"interest": 0.669388,
+						"hierarchicalLevel": -0.108278,
+						"rank": 10,
+						"hierarchicalRank": 4,
+						"isLeaf": false
+					},
+					{
+						"cluster": "B33",
+						"parentCluster": "B16",
+						"frequency": 740,
+						"interest": 0.551015,
+						"hierarchicalLevel": 0.976962,
+						"rank": 12,
+						"hierarchicalRank": 34,
+						"isLeaf": false
+					},
+					{
+						"cluster": "B16",
+						"parentCluster": "B10",
+						"frequency": 967,
+						"interest": 0.594203,
+						"hierarchicalLevel": 0.60991,
+						"rank": 14,
+						"hierarchicalRank": 17,
+						"isLeaf": false
+					},
+					{
+						"cluster": "B10",
+						"parentCluster": "B4",
+						"frequency": 1657,
+						"interest": 0.702426,
+						"hierarchicalLevel": 0.367506,
+						"rank": 16,
+						"hierarchicalRank": 11,
+						"isLeaf": false
+					},
+					{
+						"cluster": "B4",
+						"parentCluster": "B3",
+						"frequency": 4203,
+						"interest": 0.713957,
+						"hierarchicalLevel": 0.115194,
+						"rank": 18,
+						"hierarchicalRank": 5,
+						"isLeaf": false
+					},
+					{
+						"cluster": "B20",
+						"parentCluster": "B8",
+						"frequency": 1014,
+						"interest": 0.727274,
+						"hierarchicalLevel": 0.728754,
+						"rank": 20,
+						"hierarchicalRank": 21,
+						"isLeaf": false
+					},
+					{
+						"cluster": "B8",
+						"parentCluster": "B4",
+						"frequency": 2546,
+						"interest": 0.721462,
+						"hierarchicalLevel": 0.299534,
+						"rank": 22,
+						"hierarchicalRank": 9,
+						"isLeaf": false
+					},
+					{
+						"cluster": "B31",
+						"parentCluster": "B15",
+						"frequency": 372,
+						"interest": 0.54814,
+						"hierarchicalLevel": 0.952818,
+						"rank": 24,
+						"hierarchicalRank": 32,
+						"isLeaf": false
+					},
+					{
+						"cluster": "B15",
+						"parentCluster": "B8",
+						"frequency": 1532,
+						"interest": 0.717614,
+						"hierarchicalLevel": 0.572203,
+						"rank": 26,
+						"hierarchicalRank": 16,
+						"isLeaf": false
+					},
+					{
+						"cluster": "B32",
+						"parentCluster": "B15",
+						"frequency": 1160,
+						"interest": 0.771963,
+						"hierarchicalLevel": 0.964479,
+						"rank": 28,
+						"hierarchicalRank": 33,
+						"isLeaf": false
+					},
+					{
+						"cluster": "B1",
+						"parentCluster": "",
+						"frequency": 15137,
+						"interest": 0.674807,
+						"hierarchicalLevel": -0.466491,
+						"rank": 30,
+						"hierarchicalRank": 2,
+						"isLeaf": false
+					},
+					{
+						"cluster": "B30",
+						"parentCluster": "B13",
+						"frequency": 597,
+						"interest": 0.674681,
+						"hierarchicalLevel": 0.939328,
+						"rank": 32,
+						"hierarchicalRank": 31,
+						"isLeaf": false
+					},
+					{
+						"cluster": "B13",
+						"parentCluster": "B6",
+						"frequency": 1788,
+						"interest": 0.640964,
+						"hierarchicalLevel": 0.495534,
+						"rank": 34,
+						"hierarchicalRank": 14,
+						"isLeaf": false
+					},
+					{
+						"cluster": "B27",
+						"parentCluster": "B13",
+						"frequency": 1191,
+						"interest": 0.624063,
+						"hierarchicalLevel": 0.885555,
+						"rank": 36,
+						"hierarchicalRank": 28,
+						"isLeaf": false
+					},
+					{
+						"cluster": "B29",
+						"parentCluster": "B27",
+						"frequency": 856,
+						"interest": 0.622929,
+						"hierarchicalLevel": 0.923364,
+						"rank": 38,
+						"hierarchicalRank": 30,
+						"isLeaf": false
+					},
+					{
+						"cluster": "B6",
+						"parentCluster": "B1",
+						"frequency": 2835,
+						"interest": 0.69832,
+						"hierarchicalLevel": 0.267908,
+						"rank": 40,
+						"hierarchicalRank": 7,
+						"isLeaf": false
+					},
+					{
+						"cluster": "B22",
+						"parentCluster": "B6",
+						"frequency": 1047,
+						"interest": 0.796269,
+						"hierarchicalLevel": 0.794009,
+						"rank": 42,
+						"hierarchicalRank": 23,
+						"isLeaf": false
+					},
+					{
+						"cluster": "B28",
+						"parentCluster": "B22",
+						"frequency": 511,
+						"interest": 0.58257,
+						"hierarchicalLevel": 0.907063,
+						"rank": 44,
+						"hierarchicalRank": 29,
+						"isLeaf": false
+					}
+				]
+			}
+		],
+		"cellPartIndexes": [
+			[5,1],
+			[2,1],
+			[1,1],
+			[11,1],
+			[0,1],
+			[7,1],
+			[9,1],
+			[4,1],
+			[8,1],
+			[12,1],
+			[3,1],
+			[6,1],
+			[10,1],
+			[9,10],
+			[2,20],
+			[7,8],
+			[5,8],
+			[9,14],
+			[3,20],
+			[2,22],
+			[7,14],
+			[0,20],
+			[0,18],
+			[1,17],
+			[5,5],
+			[9,13],
+			[4,5],
+			[11,14],
+			[11,10],
+			[1,18],
+			[12,10],
+			[0,19],
+			[7,13],
+			[1,19],
+			[11,13],
+			[4,10],
+			[8,14],
+			[6,8],
+			[5,7],
+			[2,16],
+			[4,8],
+			[4,7],
+			[0,16],
+			[10,10],
+			[1,16],
+			[8,13],
+			[8,8],
+			[3,10],
+			[5,17],
+			[0,15],
+			[10,8],
+			[10,13],
+			[2,15],
+			[1,15],
+			[5,2],
+			[10,20],
+			[8,19],
+			[2,19],
+			[4,11],
+			[10,14],
+			[7,10],
+			[11,0],
+			[5,0],
+			[6,5],
+			[11,19],
+			[11,22],
+			[5,15],
+			[5,12],
+			[9,3],
+			[1,8],
+			[8,3],
+			[2,17],
+			[10,3],
+			[7,3],
+			[5,10],
+			[9,9],
+			[2,21],
+			[1,3],
+			[2,5],
+			[4,6],
+			[5,19],
+			[8,0],
+			[12,13],
+			[0,3],
+			[7,2],
+			[7,12],
+			[4,14],
+			[1,4],
+			[1,2],
+			[1,22],
+			[8,18],
+			[11,3],
+			[11,21],
+			[9,12],
+			[12,17],
+			[10,9],
+			[6,20],
+			[12,6],
+			[12,14],
+			[7,11],
+			[11,9],
+			[9,11],
+			[2,9],
+			[0,17],
+			[3,16],
+			[7,5],
+			[4,9],
+			[2,3],
+			[12,19],
+			[6,9],
+			[6,14],
+			[7,9],
+			[11,4],
+			[11,20],
+			[4,2],
+			[6,15],
+			[6,22],
+			[12,5],
+			[12,0],
+			[12,2],
+			[3,3],
+			[6,7],
+			[6,19],
+			[1,5],
+			[8,4],
+			[2,6],
+			[3,8],
+			[5,6],
+			[8,2],
+			[9,4],
+			[3,9],
+			[3,19],
+			[1,10],
+			[1,14],
+			[0,21],
+			[9,2],
+			[2,14],
+			[12,18],
+			[6,0],
+			[6,6],
+			[9,8],
+			[2,18],
+			[3,21],
+			[11,5],
+			[5,14],
+			[9,21],
+			[9,19],
+			[2,0],
+			[0,2],
+			[3,0],
+			[3,22],
+			[7,19],
+			[9,5],
+			[12,21],
+			[10,4],
+			[6,4],
+			[1,6],
+			[12,12],
+			[3,6],
+			[4,13],
+			[5,18],
+			[8,10],
+			[8,12],
+			[0,5],
+			[0,8],
+			[10,5],
+			[10,0],
+			[10,12],
+			[0,4],
+			[3,15],
+			[8,6],
+			[2,10],
+			[12,3],
+			[0,22],
+			[11,12],
+			[3,14],
+			[11,6],
+			[1,21],
+			[8,20],
+			[6,3],
+			[12,4],
+			[0,14],
+			[6,12],
+			[6,16],
+			[11,18],
+			[4,12],
+			[8,17],
+			[0,6],
+			[11,16],
+			[4,19],
+			[5,22],
+			[8,15],
+			[7,7],
+			[0,10],
+			[6,13],
+			[7,17],
+			[4,15],
+			[8,5],
+			[3,4],
+			[11,17],
+			[4,4],
+			[8,9],
+			[12,16],
+			[10,6],
+			[10,11],
+			[6,17],
+			[5,4],
+			[5,11],
+			[8,16],
+			[10,19],
+			[10,22],
+			[3,5],
+			[3,18],
+			[11,2],
+			[1,0],
+			[1,7],
+			[2,4],
+			[12,22],
+			[7,22],
+			[0,9],
+			[10,17],
+			[3,17],
+			[7,15],
+			[4,17],
+			[4,22],
+			[1,20],
+			[5,3],
+			[8,22],
+			[9,0],
+			[2,8],
+			[2,7],
+			[12,7],
+			[12,20],
+			[12,11],
+			[10,16],
+			[11,8],
+			[5,16],
+			[8,21],
+			[8,7],
+			[9,18],
+			[9,20],
+			[9,22],
+			[2,13],
+			[12,9],
+			[10,21],
+			[3,7],
+			[7,6],
+			[12,15],
+			[12,8],
+			[0,0],
+			[0,13],
+			[10,2],
+			[3,13],
+			[6,18],
+			[6,10],
+			[6,11],
+			[7,0],
+			[7,4],
+			[7,20],
+			[11,7],
+			[11,11],
+			[4,20],
+			[1,12],
+			[5,9],
+			[5,13],
+			[5,20],
+			[8,11],
+			[9,6],
+			[9,17],
+			[10,18],
+			[3,11],
+			[3,12],
+			[6,21],
+			[7,18],
+			[7,16],
+			[4,18],
+			[4,21],
+			[1,13]
+		],
+		"cellFrequencies": [668,667,651,595,570,566,558,525,486,412,412,412,409,155,144,142,140,126,125,120,116,111,109,106,106,100,100,99,98,91,90,89,89,89,87,87,82,82,82,81,81,81,73,66,66,64,62,61,61,58,58,57,56,56,56,55,54,54,54,53,51,49,48,47,46,46,46,45,44,44,43,43,43,42,42,41,41,41,40,40,40,39,39,39,39,38,38,38,38,38,37,37,37,36,36,36,36,35,35,35,35,34,34,34,34,34,34,33,33,33,33,33,33,33,33,32,32,31,31,30,30,30,30,30,29,29,29,28,27,26,26,26,26,26,25,24,24,24,24,24,23,23,23,23,23,22,22,22,22,22,22,22,21,21,21,21,21,20,20,20,20,19,19,19,19,19,19,19,18,18,17,17,17,17,17,16,16,16,14,14,13,13,13,13,13,13,12,12,12,12,12,11,11,10,10,10,10,9,9,9,9,8,8,8,8,8,8,8,7,7,7,7,7,7,7,7,6,6,6,5,5,5,5,5,5,5,5,4,4,4,4,4,4,4,4,4,4,3,3,3,3,3,3,3,3,3,3,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,1,1,1,1,1,1,1,1,1,1,1,1]
+	},
+	"khiops_encoding": "ascii"
+}
