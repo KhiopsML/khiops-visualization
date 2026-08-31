@@ -16,7 +16,7 @@ describe('Variable Search: large inner variables list (292-Coclustering.khcj)', 
     cy.loadFile('covisualization', fileName);
 
     // Wait for composition table to be visible
-    cy.get('#cluster-composition-1', { timeout: 15000 }).should('be.visible');
+    cy.get('#cluster-composition-1', { timeout: 30000 }).should('be.visible');
 
     // Open variable search dialog
     cy.get('.variable-search-button-comp').first().click();

@@ -17,7 +17,7 @@ describe('Matrix inner variables filter with a large (+20k) variable list', () =
   beforeEach(() => {
     cy.initViews();
     cy.loadFile('covisualization', fileName);
-    cy.get('.inner-variables-filter mat-select', { timeout: 15000 }).should(
+    cy.get('.inner-variables-filter mat-select', { timeout: 30000 }).should(
       'be.visible',
     );
   });

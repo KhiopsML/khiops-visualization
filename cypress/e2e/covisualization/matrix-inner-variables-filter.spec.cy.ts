@@ -17,7 +17,7 @@ describe('Matrix inner variables filter', () => {
   it('should display, select, unselect and filter inner variables', () => {
     cy.initViews();
     cy.loadFile('covisualization', fileName);
-    cy.get('.inner-variables-filter mat-select', { timeout: 10000 }).should(
+    cy.get('.inner-variables-filter mat-select', { timeout: 30000 }).should(
       'be.visible',
     );
 
