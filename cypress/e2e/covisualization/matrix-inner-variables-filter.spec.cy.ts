@@ -14,33 +14,25 @@ describe('Matrix inner variables filter', () => {
     cy.get('.inner-variables-filter-panel').should('be.visible');
   };
 
-  beforeEach(() => {
+  it('should display, select, unselect and filter inner variables', () => {
     cy.initViews();
     cy.loadFile('covisualization', fileName);
     cy.get('.inner-variables-filter mat-select', { timeout: 10000 }).should(
       'be.visible',
     );
-  });
 
-  it('should display all inner variables (truncated) in the label at init', () => {
     cy.get('.inner-variables-value-overlay')
       .should('be.visible')
       .and('contain.text', 'Class')
       .and('contain.text', 'Count(DNA)')
       .and('contain.text', '...');
-  });
 
-  it('should open the combo and show every inner variable as checked', () => {
     openCombo();
 
     cy.get('.select-all-option input[type="checkbox"]').should('be.checked');
     cy.contains('.inner-variables-filter-panel mat-option', 'Class')
       .find('input[type="checkbox"]')
       .should('be.checked');
-  });
-
-  it('should update the label when unselecting then reselecting an item', () => {
-    openCombo();
 
     // Uncheck "Class"
     cy.contains('.inner-variables-filter-panel mat-option', 'Class').click({
@@ -62,10 +54,6 @@ describe('Matrix inner variables filter', () => {
     });
     cy.get('.inner-variables-value-overlay').should('contain.text', 'Class');
     cy.get('.select-all-option input[type="checkbox"]').should('be.checked');
-  });
-
-  it('should update the label when unselecting all then reselecting one item', () => {
-    openCombo();
 
     cy.get('.select-all-option').click({ force: true });
     cy.get('.inner-variables-value-overlay').should('not.exist');
@@ -76,10 +64,6 @@ describe('Matrix inner variables filter', () => {
     cy.get('.inner-variables-value-overlay')
       .should('be.visible')
       .and('have.text', 'Class');
-  });
-
-  it('should filter the displayed options when searching, without altering the selection', () => {
-    openCombo();
 
     cy.get('.inner-variables-search-input').type('Mode');
 
@@ -104,10 +88,6 @@ describe('Matrix inner variables filter', () => {
       timeout: 5000,
     }).should('have.length.greaterThan', 40);
     cy.get('.inner-variables-value-overlay').should('contain.text', 'Class');
-  });
-
-  it('should show a "no data" option when the search matches nothing, and stay reopenable', () => {
-    openCombo();
 
     cy.get('.inner-variables-search-input').type('zzz-no-match');
     cy.get('.inner-variables-filter-panel mat-option').should(

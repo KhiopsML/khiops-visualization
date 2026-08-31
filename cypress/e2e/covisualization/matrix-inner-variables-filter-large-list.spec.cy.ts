@@ -22,9 +22,16 @@ describe('Matrix inner variables filter with a large (+20k) variable list', () =
     );
   });
 
-  it('should cap the rendered options and show the truncation hint', () => {
+  // Merged into a single test to avoid reloading the heavy (+20k variables) file multiple times
+  it('should filter, search and select/unselect variables in a large (+20k) list', () => {
+    // Should show a truncated label (with ellipsis) at init since all variables are selected
+    cy.get('.inner-variables-value-overlay')
+      .should('be.visible')
+      .and('contain.text', '...');
+
     openCombo();
 
+    // Should cap the rendered options and show the truncation hint
     cy.get('.inner-variables-filter-panel .truncated-hint').should(
       'contain.text',
       '(200 datas displayed in 20905)',
@@ -35,17 +42,15 @@ describe('Matrix inner variables filter with a large (+20k) variable list', () =
       'have.length.lessThan',
       210,
     );
-  });
 
-  it('should show a truncated label (with ellipsis) at init since all variables are selected', () => {
-    cy.get('.inner-variables-value-overlay')
-      .should('be.visible')
-      .and('contain.text', '...');
-  });
+    // mat-select auto-scrolls the panel to reveal the active/selected option on open,
+    // but that calculation ignores the prepended search/select-all rows, so the panel
+    // can open already scrolled past them.
+    cy.contains('.select-all-option', 'Unselect all')
+      .scrollIntoView()
+      .should('be.visible');
 
-  it('should find a variable far down the alphabetical list when searching "count"', () => {
-    openCombo();
-
+    // Should find a variable far down the alphabetical list when searching "count"
     cy.get('.inner-variables-search-input').type('count');
 
     cy.contains('.inner-variables-filter-panel mat-option', 'quote(account)')
@@ -62,19 +67,8 @@ describe('Matrix inner variables filter with a large (+20k) variable list', () =
             expect(text.toLowerCase()).to.contain('count');
           });
       });
-  });
 
-  it('should update the select-all label when un/reselecting a variable hidden far down the list', () => {
-    openCombo();
-
-    // mat-select auto-scrolls the panel to reveal the active/selected option on open,
-    // but that calculation ignores the prepended search/select-all rows, so the panel
-    // can open already scrolled past them.
-    cy.contains('.select-all-option', 'Unselect all')
-      .scrollIntoView()
-      .should('be.visible');
-
-    cy.get('.inner-variables-search-input').type('count');
+    // Should update the select-all label when unselecting a variable hidden far down the list
     cy.contains('.inner-variables-filter-panel mat-option', 'quote(account)')
       .scrollIntoView()
       .click({ force: true });
@@ -85,6 +79,7 @@ describe('Matrix inner variables filter with a large (+20k) variable list', () =
       .scrollIntoView()
       .should('be.visible');
 
+    // Reselect it and confirm the select-all label flips back
     cy.contains(
       '.inner-variables-filter-panel mat-option',
       'quote(account)',
@@ -93,12 +88,8 @@ describe('Matrix inner variables filter with a large (+20k) variable list', () =
     cy.contains('.select-all-option', 'Unselect all')
       .scrollIntoView()
       .should('be.visible');
-  });
 
-  it('should clear the search and restore the truncated hint with all options selected', () => {
-    openCombo();
-
-    cy.get('.inner-variables-search-input').type('count');
+    // Should clear the search and restore the truncated hint with all options selected
     cy.get('.inner-variables-search-clear').click();
 
     cy.get('.inner-variables-filter-panel .truncated-hint').should(
