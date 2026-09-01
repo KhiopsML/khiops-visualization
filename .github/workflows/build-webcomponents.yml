@@ -67,7 +67,7 @@ jobs:
         working-directory: source
         run: |
           echo "Building Angular webcomponent..."
-          npx ng build khiops-webcomponent --single-bundle
+          npx ng build khiops-webcomponent
           echo "Build completed, checking results..."
           ls -la dist/ || echo "No dist directory"
           ls -la dist/khiops-webcomponent/ || echo "No khiops-webcomponent directory"
