@@ -261,7 +261,8 @@ describe('MatrixRendererService', () => {
       service.drawSelectedCell(mockCanvasContext, cell);
 
       expect(mockCanvasContext.strokeRect).toHaveBeenCalledTimes(2);
-      expect(mockCanvasContext.strokeRect).toHaveBeenCalledWith(10, 20, 50, 30);
+      expect(mockCanvasContext.strokeRect).toHaveBeenCalledWith(13, 23, 44, 24);
+      expect(mockCanvasContext.strokeRect).toHaveBeenCalledWith(12, 22, 46, 26);
     });
 
     it('should not draw if cell is null or undefined', () => {
