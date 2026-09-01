@@ -9,6 +9,11 @@
 @use '../../styles/responsive.scss';
 @use '../../styles/drag-drop.scss';
 
+// Needed here (not just in global styles.scss) because this component uses
+// ViewEncapsulation.ShadowDom: document-level <head> styles don't cross the
+// shadow boundary, so mat-icon font/classes must be inlined into the shadow root.
+@import 'material-icons/iconfont/material-icons.css';
+
 // Enable fade-in animation on .kl-card only within khiops-visualization
 :host {
   --kl-card-animation: klCardFadeIn;

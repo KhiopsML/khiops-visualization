@@ -9,6 +9,11 @@
 @use '../../styles/responsive.scss';
 @use '../../styles/drag-drop.scss';
 
+// Needed here (not just in global styles.scss) because this component uses
+// ViewEncapsulation.ShadowDom: document-level <head> styles don't cross the
+// shadow boundary, so mat-icon font/classes must be inlined into the shadow root.
+@import 'material-icons/iconfont/material-icons.css';
+
 // Drag and drop styles
 .mat-app-background {
   @include drag-drop.drag-drop-overlay('Drop your JSON or KHCJ file here');
