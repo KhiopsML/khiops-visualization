@@ -1,4 +1,4 @@
-ng build khiops-webcomponent --single-bundle
+ng build khiops-webcomponent
 
 # extractCss is deprecated with new Angular version so we need to convert styles manually
 # https://github.com/angular/angular-cli/issues/22198
