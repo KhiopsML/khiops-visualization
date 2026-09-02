@@ -7,6 +7,7 @@
 import {
   Component,
   OnInit,
+  AfterViewInit,
   ViewChild,
   OnDestroy,
   Input,
@@ -21,23 +22,19 @@ import {
 import { AppConfig } from '../../../../environments/environment';
 import { FileLoaderComponent } from '@khiops-library/components/file-loader/file-loader.component';
 import { AppService } from '@khiops-covisualization/providers/app.service';
-import { TranslateService } from '@ngstack/translate';
-import { SelectableService } from '@khiops-library/components/selectable/selectable.service';
-import { MatSnackBar } from '@angular/material/snack-bar';
-import { DimensionsDatasService } from '@khiops-covisualization/providers/dimensions-datas.service';
-import { ImportExtDatasService } from '@khiops-covisualization/providers/import-ext-datas.service';
-import { LoadExtDatasComponent } from '../commons/load-ext-datas/load-ext-datas.component';
-import { EventsService } from '@khiops-covisualization/providers/events.service';
 import pjson from '../../../../../package.json';
-import { TreenodesService } from '@khiops-covisualization/providers/treenodes.service';
 import { ConfigService } from '@khiops-library/providers/config.service';
 import { UtilsService } from '@khiops-library/providers/utils.service';
 import { Subscription } from 'rxjs';
 import { TrackerService } from '../../../khiops-library/providers/tracker.service';
-import { ViewManagerService } from '@khiops-covisualization/providers/view-manager.service';
 import { FileLoaderService } from '@khiops-library/providers/file-loader.service';
 import { CovisualizationDatas } from '@khiops-covisualization/interfaces/app-datas.interface';
 import { DialogService } from '@khiops-library/providers/dialog.service';
+import {
+  HomeInitializationFacade,
+  HomeInitializationState,
+} from '@khiops-covisualization/components/home-layout/homeLayout-initialization.facade';
+import { TabNavigationService } from '@khiops-covisualization/components/home-layout/homeLayout-tab-navigation.service';
 
 @Component({
   selector: 'app-home-layout',
@@ -46,7 +43,11 @@ import { DialogService } from '@khiops-library/providers/dialog.service';
   changeDetection: ChangeDetectionStrategy.Eager,
   standalone: false,
 })
-export class HomeLayoutComponent implements OnInit, OnDestroy {
+export class HomeLayoutComponent implements OnInit, AfterViewInit, OnDestroy {
+  private static readonly NAV_DRAWER_ANIM_DELAY_MS = 250;
+  private static readonly DEBUG_FILE_LOAD_DELAY_MS = 100;
+  private static readonly VIEW_RELOAD_DEFER_DELAY_MS = 0;
+
   public showProjectTab: boolean | undefined = true;
   public showLogo: boolean | undefined = false;
   public selectTabName: string | undefined;
@@ -58,7 +59,9 @@ export class HomeLayoutComponent implements OnInit, OnDestroy {
     this.isCompatibleJson = this.appService.isCompatibleJson(datas);
     this.appService.setFileDatas(datas);
   }
-  public activeTab = AppConfig.covisualizationCommon.HOME.ACTIVE_TAB_INDEX;
+  public get activeTab(): number {
+    return this.tabNavigationService.activeTab;
+  }
   @ViewChild('fileLoader', {
     static: false,
   })
@@ -69,8 +72,12 @@ export class HomeLayoutComponent implements OnInit, OnDestroy {
   public isContextDimensions = false;
   public appVersion: string = '';
   public opened = false;
-  public openContextView = false;
-  public selectedTab: Object | undefined;
+  public get openContextView(): boolean {
+    return this.tabNavigationService.openContextView;
+  }
+  public get selectedTab(): MatTabChangeEvent | undefined {
+    return this.tabNavigationService.selectedTab;
+  }
   public isCompatibleJson: boolean = false;
 
   private tabsMenu: MatTabGroup | undefined; // Hack to override click on tab
@@ -83,60 +90,26 @@ export class HomeLayoutComponent implements OnInit, OnDestroy {
       this.tabsMenu._handleClick = this.interceptTabChange.bind(this);
     }
   }
-  private importedDatasChangedSub: Subscription;
+  private importedDatasChangedSub?: Subscription;
   private fileLoadedSub?: Subscription;
 
   constructor(
     private configService: ConfigService,
     private appService: AppService,
-    private translate: TranslateService,
-    private snackBar: MatSnackBar,
     private trackerService: TrackerService,
-    public selectableService: SelectableService,
-    private importExtDatasService: ImportExtDatasService,
-    private dimensionsDatasService: DimensionsDatasService,
-    private viewManagerService: ViewManagerService,
-    private treenodesService: TreenodesService,
-    private eventsService: EventsService,
     private dialogService: DialogService,
     private fileLoaderService: FileLoaderService,
+    private homeInitializationFacade: HomeInitializationFacade,
+    private tabNavigationService: TabNavigationService,
   ) {
     if (pjson) {
       this.appTitle = pjson.title.covisualization;
       this.appVersion = pjson.version;
     }
-
-    this.importedDatasChangedSub =
-      this.eventsService.importedDatasChanged.subscribe((dimName) => {
-        if (dimName?.[0]) {
-          this.dimensionsDatasService.constructDimensionsTrees();
-          const dimIndex =
-            this.dimensionsDatasService.getDimensionPositionFromName(
-              dimName[0],
-            );
-          if (
-            this.dimensionsDatasService.dimensionsDatas.selectedDimensions[
-              dimIndex
-            ]
-          ) {
-            // Update selected nodes ext datas
-            this.treenodesService.setSelectedNode(
-              this.dimensionsDatasService.dimensionsDatas.selectedDimensions[
-                dimIndex
-              ].name,
-              this.dimensionsDatasService.dimensionsDatas.selectedNodes[
-                dimIndex
-              ]!._id,
-              false,
-            );
-            // Enable ext datas view if not displayed
-            this.viewManagerService.enableExtDatasView(dimName[0]);
-          }
-        }
-      });
   }
 
   ngOnInit() {
+    this.subscribeToImportedDatasChanges();
     this.trackerService.trackEvent('page_view', 'axis');
     this.trackerService.trackEvent('page_view', 'visit', this.appVersion);
   }
@@ -145,7 +118,7 @@ export class HomeLayoutComponent implements OnInit, OnDestroy {
     if (AppConfig.debugFile) {
       setTimeout(() => {
         this.fileLoader?.loadDebugFile();
-      }, 100);
+      }, HomeLayoutComponent.DEBUG_FILE_LOAD_DELAY_MS);
     }
     this.fileLoadedSub = this.fileLoaderService.fileLoaded$.subscribe(
       (datas) => {
@@ -160,56 +133,44 @@ export class HomeLayoutComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.fileLoadedSub?.unsubscribe();
-    this.importedDatasChangedSub.unsubscribe();
+    this.importedDatasChangedSub?.unsubscribe();
   }
 
   showAxisView() {
-    return (
-      this.activeTab === 0 || (this.activeTab === 1 && this.isContextDimensions)
-    );
+    return this.tabNavigationService.showAxisView(this.isContextDimensions);
   }
 
   showProjectView() {
-    return (
-      (this.activeTab === 1 && !this.isContextDimensions) ||
-      (this.activeTab === 2 && this.isContextDimensions)
+    return this.tabNavigationService.showProjectView(
+      this.isContextDimensions,
+      this.showProjectTab,
     );
   }
 
+  /**
+   * Intercepts Material tab clicks to reset view state before tab activation.
+   */
   private interceptTabChange(
     _tab: MatTab,
     _tabHeader: MatTabHeader,
     index: number,
   ) {
-    // Remove fullscreen class from all components when changing tab
-    this.resetAllFullscreenStates();
-
-    if (index === 1 && this.isContextDimensions) {
-      this.openContextView = true;
-      this.trackerService.trackEvent('page_view', 'context');
-    } else if (index === 0) {
-      this.trackerService.trackEvent('page_view', 'axis');
-      this.openContextView = false;
-    }
-    return MatTabGroup.prototype._handleClick.apply(this.tabsMenu, [
+    return this.tabNavigationService.interceptTabChange(
       _tab,
       _tabHeader,
       index,
-    ]);
+      this.tabsMenu,
+      this.isContextDimensions,
+      this.resetAllFullscreenStates.bind(this),
+    );
   }
 
   onSelectedTabChanged(e: MatTabChangeEvent) {
-    if (e.index === 0 || (e.index === 1 && !this.isContextDimensions)) {
-      this.openContextView = false;
-    }
-
-    // Remove fullscreen class from all components when changing tab
-    this.resetAllFullscreenStates();
-    // init selected area to undefined
-    this.selectableService.initialize();
-    this.selectedTab = e;
-    this.activeTab = e.index;
-    this.appService.setActiveTabIndex(this.activeTab);
+    this.tabNavigationService.onSelectedTabChanged(
+      e,
+      this.isContextDimensions,
+      this.resetAllFullscreenStates.bind(this),
+    );
   }
 
   onToggleNavDrawerChanged(mustReload: boolean) {
@@ -220,141 +181,71 @@ export class HomeLayoutComponent implements OnInit, OnDestroy {
     }
   }
 
-  private reloadView() {
+  /**
+   * Reloads current data after the nav drawer CSS animation has completed.
+   */
+  private async reloadView() {
     const currentDatas = this.currentDatas;
-    setTimeout(() => {
-      this.initialize();
-      this.initializeHome();
-      setTimeout(() => {
-        this.initialize(currentDatas);
-      }); // do it after timeout to be launched
-    }, 250); // do it after nav drawer anim
-  }
-
-  private getTabIndexByName(name: string): number {
-    const visibleTabs: string[] = ['AXIS'];
-    if (this.isContextDimensions) visibleTabs.push('CONTEXT');
-    if (this.showProjectTab) visibleTabs.push('PROJECT');
-    const index = visibleTabs.findIndex(
-      (t) => t.toLowerCase() === name.toLowerCase(),
+    // Keep delay so reset starts after the nav drawer closing animation ends.
+    await this.wait(HomeLayoutComponent.NAV_DRAWER_ANIM_DELAY_MS);
+    this.initialize();
+    this.applyHomeInitializationState(
+      this.homeInitializationFacade.initializeHome(
+        undefined,
+        this.closeFile.bind(this),
+      ),
     );
-    return index >= 0 ? index : 0;
+    await this.wait(HomeLayoutComponent.VIEW_RELOAD_DEFER_DELAY_MS);
+    this.initialize(currentDatas);
   }
 
+  /**
+   * Restores the initial selected tab from saved data or configuration.
+   */
   private selectFirstTab() {
-    this.openContextView = false;
-    this.selectedTab = undefined;
-
-    // Restore active tab: savedDatas takes priority, then config, then default
-    const savedActiveTabIndex = this.appService.getSavedDatas('activeTabIndex');
-    if (savedActiveTabIndex !== undefined && savedActiveTabIndex !== null) {
-      this.activeTab = savedActiveTabIndex;
-    } else if (this.selectTabName) {
-      this.activeTab = this.getTabIndexByName(this.selectTabName);
-    } else {
-      this.activeTab = 0;
-    }
-
-    if (this.activeTab === 1 && this.isContextDimensions) {
-      this.openContextView = true;
-    }
-    this.appService.setActiveTabIndex(this.activeTab);
+    this.tabNavigationService.selectFirstTab(
+      this.selectTabName,
+      this.isContextDimensions,
+      this.showProjectTab,
+    );
   }
 
   private initialize(datas: CovisualizationDatas | undefined = undefined) {
     this.currentDatas = datas;
-    this.appService.setFileDatas(datas);
+    this.homeInitializationFacade.initialize(datas);
     if (datas && !UtilsService.isEmpty(datas)) {
-      this.initializeHome(datas);
+      this.applyHomeInitializationState(
+        this.homeInitializationFacade.initializeHome(
+          datas,
+          this.closeFile.bind(this),
+        ),
+      );
       this.selectFirstTab();
     }
   }
 
-  private initializeHome(datas?: CovisualizationDatas) {
-    // Close dialogs when opening new file #148
-    this.dialogService.closeDialog();
-
-    this.isCompatibleJson = this.appService.isCompatibleJson(datas!);
-    const isCollidingJson = this.appService.isCollidingJson(datas!);
-
-    this.appService.resetSearch();
-
-    this.showProjectTab = this.configService.getConfig().showProjectTab;
-    if (this.showProjectTab === undefined) {
-      this.showProjectTab = true;
-    }
-    this.showLogo = this.configService.getConfig().showLogo;
-    if (this.showLogo === undefined) {
-      this.showLogo = true;
-    }
-    this.selectTabName = this.configService.getConfig().selectTabName;
-    if (datas && !UtilsService.isEmpty(datas)) {
-      const basename = UtilsService.getFileBasename(datas);
-      if (!this.isCompatibleJson) {
-        this.closeFile();
-        this.snackBar.open(
-          basename
-            ? this.translate.get('SNACKS.FILE_OPEN_ERROR', {
-                filename: basename,
-              })
-            : this.translate.get('SNACKS.OPEN_FILE_ERROR'),
-          undefined,
-          {
-            duration: 4000,
-            panelClass: 'error',
-          },
-        );
-      } else {
-        this.snackBar.open(
-          basename
-            ? this.translate.get('SNACKS.FILE_LOADED', { filename: basename })
-            : this.translate.get('SNACKS.DATAS_LOADED'),
-          undefined,
-          {
-            duration: 2000,
-            panelClass: 'success',
-          },
-        );
-      }
-      if (isCollidingJson) {
-        this.snackBar.open(
-          this.translate.get('SNACKS.COLLIDING_FILE'),
-          undefined,
-          {
-            duration: 10000,
-            panelClass: 'warning',
-          },
-        );
-      }
-    }
-
-    this.initializeServices();
-  }
-
-  private initializeServices() {
-    this.dimensionsDatasService.initialize();
-    this.importExtDatasService.initExtDatasFiles();
-    // Loading local files is forbidden in js
-    if (this.configService.isElectron) {
-      this.openLoadExternalDataDialog();
-    }
-    this.isContextDimensions =
-      this.dimensionsDatasService.isContextDimensions();
-  }
-
-  private openLoadExternalDataDialog() {
-    this.dialogService.openDialog(LoadExtDatasComponent, {
-      width: AppConfig.covisualizationCommon.MANAGE_VIEWS.WIDTH,
-      maxWidth: AppConfig.covisualizationCommon.MANAGE_VIEWS.MAX_WIDTH,
-      height: '500px',
-      disableClose: true,
-      hidden: true,
-    });
+  private applyHomeInitializationState(state: HomeInitializationState) {
+    this.isCompatibleJson = state.isCompatibleJson;
+    this.isContextDimensions = state.isContextDimensions;
+    this.selectTabName = state.selectTabName;
+    this.showLogo = state.showLogo;
+    this.showProjectTab = state.showProjectTab;
   }
 
   closeFile() {
     this.dialogService.closeDialog();
     this.fileLoader?.closeFile();
+  }
+
+  private wait(delayMs: number): Promise<void> {
+    return new Promise((resolve) => {
+      setTimeout(resolve, delayMs);
+    });
+  }
+
+  private subscribeToImportedDatasChanges() {
+    this.importedDatasChangedSub =
+      this.homeInitializationFacade.subscribeToImportedDatasChanges();
   }
 
   /**

@@ -49,6 +49,8 @@ import { Overlay, OverlayContainer } from '@angular/cdk/overlay';
 import { DialogService } from '@khiops-library/providers/dialog.service';
 import { ConfirmDialogComponent } from '@khiops-library/components/confirm-dialog/confirm-dialog.component';
 import { TranslateService } from '@ngstack/translate';
+import { HomeInitializationFacade } from './components/home-layout/homeLayout-initialization.facade';
+import { TabNavigationService } from './components/home-layout/homeLayout-tab-navigation.service';
 
 @Component({
   selector: 'app-root-covisualization',
@@ -71,6 +73,8 @@ import { TranslateService } from '@ngstack/translate';
     ProjectDatasService,
     ViewManagerService,
     ImportExtDatasService,
+    HomeInitializationFacade,
+    TabNavigationService,
     ImportFileLoaderService,
 
     // Lib services
