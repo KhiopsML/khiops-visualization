@@ -7,8 +7,8 @@
 .kl-warning-information {
   margin: 10px 10px;
   padding: 8px 12px;
-  background: var(--warning-bg, #fff3e0);
-  border: 1px solid var(--warning-border, #ffcc80);
+  background: var(#fff3e0);
+  border: 1px solid var(#ffcc80);
   border-radius: var(--border-radius);
 
   &.inline {
@@ -17,7 +17,6 @@
     display: inline-flex;
     align-items: center;
   }
-
   .warning-text {
     margin-left: 10px !important;
     font-size: 0.9em;
