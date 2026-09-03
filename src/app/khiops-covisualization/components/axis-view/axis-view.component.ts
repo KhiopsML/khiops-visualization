@@ -28,6 +28,7 @@ import { SplitGutterInteractionEvent } from 'angular-split';
 import { DynamicI } from '@khiops-library/interfaces/globals.interface';
 import { SaveService } from '@khiops-covisualization/providers/save.service';
 import { MatrixDatasModel } from '@khiops-library/model/matrix-datas.model';
+import { KhiopsLibraryService } from '@khiops-library/providers/khiops-library.service';
 
 @Component({
   selector: 'app-axis-view',
@@ -60,6 +61,7 @@ export class AxisViewComponent
     private viewManagerService: ViewManagerService,
     private snackBar: MatSnackBar,
     private layoutService: LayoutService,
+    private khiopsLibraryService: KhiopsLibraryService,
   ) {
     super();
   }
@@ -220,6 +222,7 @@ export class AxisViewComponent
 
       let datas = this.saveService.constructSavedJson(collapsedNodes);
       this.appService.setCroppedFileDatas(datas);
+      this.khiopsLibraryService.dirtyStateChanged$.next();
 
       this.initializeDatas();
 
