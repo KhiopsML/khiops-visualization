@@ -23,5 +23,14 @@
         margin-right: 0.5rem;
       }
     }
+
+    ::ng-deep .conditionnal-checkbox {
+      label {
+        font-size: 12px;
+        .mdc-label {
+          padding: 0 10px 0 0;
+        }
+      }
+    }
   }
 }
