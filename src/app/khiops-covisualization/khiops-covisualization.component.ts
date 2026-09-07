@@ -254,14 +254,6 @@ export class AppComponent
         cb('reject');
       }
     };
-    this.element.nativeElement.openChannelDialog = (cb: Function) => {
-      this.ngzone.run(() => {
-        setTimeout(() => {
-          cb(true);
-        }, 100);
-      });
-    };
-
     this.element.nativeElement.rightClick = (e: any, cb?: Function) => {
       UtilsService.processRightClick(e.x, e.y);
       cb && cb(e);

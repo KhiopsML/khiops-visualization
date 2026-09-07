@@ -42,6 +42,8 @@ import { EnrichDatasService } from './providers/enrich-datas.service';
 import { VariableScaleSettingsService } from './providers/variable-scale-settings.service';
 import { Distribution2dDatasService } from './providers/distribution2d-datas.service';
 import { DialogService } from '@khiops-library/providers/dialog.service';
+import { ConfirmDialogComponent } from '@khiops-library/components/confirm-dialog/confirm-dialog.component';
+import { TranslateService } from '@ngstack/translate';
 import { TargetLiftGraphService } from './components/commons/target-lift-graph/target-lift-graph.service';
 import { TreeHyperService } from './components/commons/tree-hyper/tree-hyper.service';
 import { HistogramService } from './components/commons/histogram/histogram.service';
@@ -121,6 +123,8 @@ export class AppComponent
     private copyDatasService: CopyDatasService,
     private ls: Ls,
     private khiopsLibraryService: KhiopsLibraryService,
+    private dialogService: DialogService,
+    private translate: TranslateService,
   ) {
     super(ngzone, fileLoaderService, configService);
     // Set LS_ID with unique instance identifier to prevent collision between tabs
@@ -155,14 +159,6 @@ export class AppComponent
         this.fileLoaderService.setDatas(datas);
       });
     };
-    this.element.nativeElement.openChannelDialog = (cb: Function) => {
-      this.ngzone.run(() => {
-        setTimeout(() => {
-          cb(true);
-        }, 100);
-      });
-    };
-
     this.element.nativeElement.rightClick = (e: any, cb?: Function) => {
       UtilsService.processRightClick(e.x, e.y);
       cb && cb(e);
