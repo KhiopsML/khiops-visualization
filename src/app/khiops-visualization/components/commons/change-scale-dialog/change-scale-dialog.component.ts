@@ -12,7 +12,6 @@ import { TYPES } from '@khiops-library/enum/types';
 import { DialogService } from '@khiops-library/providers/dialog.service';
 import { MatButtonModule } from '@angular/material/button';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
-import { MatDialogModule } from '@angular/material/dialog';
 import { MatDividerModule } from '@angular/material/divider';
 import { TranslateModule } from '@ngstack/translate';
 import { KhiopsLibraryModule } from '@khiops-library/khiops-library.module';
@@ -28,7 +27,6 @@ export interface ScaleSettings {
   templateUrl: './change-scale-dialog.component.html',
   styleUrls: ['./change-scale-dialog.component.scss'],
   imports: [
-    MatDialogModule,
     MatButtonToggleModule,
     MatDividerModule,
     MatButtonModule,
