@@ -316,6 +316,8 @@
     "EVALUATION_TYPE": "Evaluation type",
     "LEGEND": "Legend",
     "PREDICTOR_EVALUATIONS": "Predictor evaluations",
+    "DETAILED_PREDICTORS_AUC_VALUES": "Detailed predictors AUC values",
+    "PREDICTOR": "Predictor",
     "RANDOM": "Random",
     "POPULATION": "Population",
     "TARGET_MODALITY": "Target Modality",
@@ -510,6 +512,10 @@
       "CONFUSION_MATRIX": {
         "TITLE": "The confusion matrix allows to compare the predicted values and the actual values.",
         "TARGET": "Predicted target"
+      },
+      "DETAILED_AUC": {
+        "TITLE": "AUC computed per target modality for each predictor, against all the others.",
+        "PREDICTOR": "Name of the predictor"
       }
     },
     "PREPARATION_2D": {

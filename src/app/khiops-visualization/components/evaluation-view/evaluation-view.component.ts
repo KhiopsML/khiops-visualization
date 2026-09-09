@@ -43,6 +43,7 @@ export class EvaluationViewComponent
     this.evaluationDatasService.getEvaluationTypesSummary();
     this.evaluationDatasService.getPredictorEvaluations();
     this.evaluationDatasService.getConfusionMatrix();
+    this.evaluationDatasService.getDetailedPredictorsAucValues();
   }
 
   onSplitDragEnd(event: SplitGutterInteractionEvent, item: string) {
@@ -69,6 +70,7 @@ export class EvaluationViewComponent
         predictorEvaluationVariable,
       );
       this.evaluationDatasService.getConfusionMatrix();
+      this.evaluationDatasService.getDetailedPredictorsAucValues();
     }
   }
 
@@ -82,6 +84,7 @@ export class EvaluationViewComponent
       evaluationVariable,
     );
     this.evaluationDatasService.getConfusionMatrix();
+    this.evaluationDatasService.getDetailedPredictorsAucValues();
   }
 
   onDataTypeChanged(type: string) {

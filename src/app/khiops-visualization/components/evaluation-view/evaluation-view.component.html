@@ -91,6 +91,30 @@
             >
             </kl-ag-grid>
           </as-split-area>
+          @if (evaluationDatas.detailedPredictorsAucValues) {
+            <as-split-area
+              class="variables-list-container kl-card"
+              [size]="sizes.col0Row[2]"
+            >
+              <kl-ag-grid
+                id="evaluation-detailed-predictors-auc-values"
+                class="variables-list"
+                [showSearch]="false"
+                [displayCount]="false"
+                titleTooltip="{{
+                  'TOOLTIPS.EVALUATION.DETAILED_AUC.TITLE' | translate
+                }}"
+                [showLineSelection]="false"
+                [showColumnsSelection]="false"
+                [inputDatas]="evaluationDatas.detailedPredictorsAucValues.values"
+                [title]="evaluationDatas.detailedPredictorsAucValues.title"
+                [displayedColumns]="
+                  evaluationDatas.detailedPredictorsAucValues.displayedColumns
+                "
+              >
+              </kl-ag-grid>
+            </as-split-area>
+          }
         </as-split>
       </as-split-area>
       <as-split-area [size]="sizes.col[1]">

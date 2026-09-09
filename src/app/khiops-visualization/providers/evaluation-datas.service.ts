@@ -315,6 +315,97 @@ export class EvaluationDatasService {
   }
 
   /**
+   * Retrieves the AUC values of every predictor for each target modality.
+   * Only relevant when there are at least 3 target modalities, since with 2
+   * modalities all per-class AUC values are equal to each other and to the global AUC.
+   * @returns The detailed predictors AUC values as a GridDatasI object, or undefined if not applicable.
+   */
+  getDetailedPredictorsAucValues(): GridDatasI | undefined {
+    this.evaluationDatas.detailedPredictorsAucValues = undefined;
+
+    let currentReport: any;
+    // get the correct report : train or test
+    if (
+      this.evaluationDatas?.selectedEvaluationTypeVariable?.type ===
+      PREDICTOR_TYPES.TRAIN
+    ) {
+      currentReport = this.appService.appDatas?.trainEvaluationReport;
+    } else if (
+      this.evaluationDatas?.selectedEvaluationTypeVariable?.type ===
+      PREDICTOR_TYPES.TEST
+    ) {
+      currentReport = this.appService.appDatas?.testEvaluationReport;
+    } else {
+      currentReport = this.appService.appDatas?.evaluationReport;
+    }
+
+    if (
+      !currentReport?.predictorsDetailedPerformance ||
+      !currentReport?.predictorsPerformance
+    ) {
+      return undefined;
+    }
+
+    const ranks = Object.keys(currentReport.predictorsDetailedPerformance);
+    const targetValues: string[] | undefined = ranks
+      .map(
+        (rank) =>
+          currentReport.predictorsDetailedPerformance[rank]?.aucValues
+            ?.values,
+      )
+      .find((values: string[] | undefined) => values && values.length > 0);
+
+    // Table is only relevant when there are at least 3 target modalities
+    if (!targetValues || targetValues.length < 3) {
+      return undefined;
+    }
+
+    this.evaluationDatas.detailedPredictorsAucValues = {
+      title: this.translate.get('GLOBAL.DETAILED_PREDICTORS_AUC_VALUES'),
+      values: undefined,
+      displayedColumns: [
+        {
+          headerName: this.translate.get('GLOBAL.PREDICTOR'),
+          field: 'predictor',
+          tooltip: this.translate.get(
+            'TOOLTIPS.EVALUATION.DETAILED_AUC.PREDICTOR',
+          ),
+        },
+      ],
+    };
+
+    const targetColumns: GridColumnsI[] = targetValues.map(
+      (value: string, i: number) => ({
+        headerName: value === '' ? '-' : value,
+        field: i.toString(),
+      }),
+    );
+    this.evaluationDatas.detailedPredictorsAucValues.displayedColumns =
+      this.evaluationDatas.detailedPredictorsAucValues.displayedColumns?.concat(
+        targetColumns,
+      );
+
+    const datas: DynamicI[] = [];
+    for (const rank of ranks) {
+      const aucValues =
+        currentReport.predictorsDetailedPerformance[rank]?.aucValues;
+      if (aucValues) {
+        const predictorPerf = currentReport.predictorsPerformance.find(
+          (p: any) => p.rank === rank,
+        );
+        const row: DynamicI = { predictor: predictorPerf?.name || rank };
+        for (let i = 0; i < aucValues.aucs.length; i++) {
+          row[i.toString()] = aucValues.aucs[i];
+        }
+        datas.push(row);
+      }
+    }
+    this.evaluationDatas.detailedPredictorsAucValues.values = datas;
+
+    return this.evaluationDatas.detailedPredictorsAucValues;
+  }
+
+  /**
    * Retrieves the summary of evaluation types.
    * @returns The evaluation types summary as a GridDatasI object.
    */

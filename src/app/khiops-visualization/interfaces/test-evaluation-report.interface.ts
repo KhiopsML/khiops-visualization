@@ -49,10 +49,16 @@ export interface PredictorsDetailedPerformance {
 
 export interface PredictorDetail {
   confusionMatrix: ConfusionMatrix;
+  aucValues?: AucValues;
   dataGrid?: DataGrid;
 }
 
 export interface ConfusionMatrix {
   values: string[];
   matrix: number[][];
+}
+
+export interface AucValues {
+  values: string[];
+  aucs: number[];
 }

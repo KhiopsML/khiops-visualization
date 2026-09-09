@@ -36,11 +36,17 @@ export interface PredictorPerformance {
 
 export interface PredictorDetailedPerformance {
   confusionMatrix: ConfusionMatrix;
+  aucValues?: AucValues;
 }
 
 export interface ConfusionMatrix {
   values: string[];
   matrix: number[][];
+}
+
+export interface AucValues {
+  values: string[];
+  aucs: number[];
 }
 
 export interface LiftCurve {

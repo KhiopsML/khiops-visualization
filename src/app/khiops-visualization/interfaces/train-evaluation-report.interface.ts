@@ -45,9 +45,15 @@ export interface TrainPredictorPerformance {
 export interface PredictorDetailedPerformance {
   dataGrid: DataGrid;
   confusionMatrix: ConfusionMatrix;
+  aucValues?: AucValues;
 }
 
 export interface ConfusionMatrix {
   values: string[];
   matrix: number[][];
+}
+
+export interface AucValues {
+  values: string[];
+  aucs: number[];
 }

@@ -28,5 +28,6 @@ export class EvaluationDatasModel {
   liftGraphDisplayedValues: ChartToggleValuesI[] | undefined = undefined;
   confusionMatrix: GridDatasI | undefined = undefined;
   predictorEvaluations: GridDatasI | undefined = undefined;
+  detailedPredictorsAucValues: GridDatasI | undefined = undefined;
   confusionMatrixType: string = TYPES.FREQUENCY;
 }
