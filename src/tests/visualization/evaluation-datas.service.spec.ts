@@ -347,6 +347,142 @@ describe('Visualization', () => {
       }
     });
 
+    // ---- getDetailedPredictorsAucValues ----
+    function threeClassEvaluationMock(useEmptyModality = false) {
+      const values = useEmptyModality ? ['A', '', 'C'] : ['A', 'B', 'C'];
+      const predictorsDetailedPerformance = {
+        R1: {
+          confusionMatrix: {
+            values,
+            matrix: [
+              [1, 0, 0],
+              [0, 1, 0],
+              [0, 0, 1],
+            ],
+          },
+          aucValues: { values, aucs: [1, 0.99, 0.98] },
+        },
+        R2: {
+          confusionMatrix: {
+            values,
+            matrix: [
+              [1, 0, 0],
+              [0, 1, 0],
+              [0, 0, 1],
+            ],
+          },
+          aucValues: { values, aucs: [1, 0.95, 0.9] },
+        },
+      };
+      const predictorsPerformance = [
+        {
+          rank: 'R1',
+          type: 'Classifier',
+          family: 'Selective Naive Bayes',
+          name: 'Selective Naive Bayes',
+          accuracy: 0.98,
+          compression: 0.94,
+          auc: 0.99,
+        },
+        {
+          rank: 'R2',
+          type: 'Classifier',
+          family: 'Univariate',
+          name: 'Univariate PetalWidth',
+          accuracy: 0.97,
+          compression: 0.89,
+          auc: 0.98,
+        },
+      ];
+      return {
+        trainEvaluationReport: {
+          reportType: 'Evaluation',
+          evaluationType: 'Train',
+          summary: { dictionary: 'Iris', instances: 105 },
+          predictorsPerformance,
+          predictorsDetailedPerformance,
+          liftCurves: [],
+        },
+        testEvaluationReport: {
+          reportType: 'Evaluation',
+          evaluationType: 'Test',
+          summary: { dictionary: 'Iris', instances: 45 },
+          predictorsPerformance,
+          predictorsDetailedPerformance,
+          liftCurves: [],
+        },
+      };
+    }
+
+    function initThreeClassMock(useEmptyModality = false) {
+      appService.setFileDatas(threeClassEvaluationMock(useEmptyModality));
+      evaluationDatasService.initialize();
+      evaluationDatasService.getEvaluationTypes();
+      evaluationDatasService.getEvaluationTypesSummary();
+      evaluationDatasService.getPredictorEvaluations();
+    }
+
+    it('getDetailedPredictorsAucValues should return undefined when there are less than 3 target modalities [adult-bivar]', () => {
+      initAdultBivar();
+      const res = evaluationDatasService.getDetailedPredictorsAucValues();
+      expect(res).toBeUndefined();
+    });
+
+    it('getDetailedPredictorsAucValues should return undefined when no evaluation report is loaded', () => {
+      evaluationDatasService.initialize();
+      const res = evaluationDatasService.getDetailedPredictorsAucValues();
+      expect(res).toBeUndefined();
+    });
+
+    it('getDetailedPredictorsAucValues should return one column per target modality and one row per predictor', () => {
+      initThreeClassMock();
+      const res = evaluationDatasService.getDetailedPredictorsAucValues();
+      expect(res).toBeTruthy();
+      expect(res.displayedColumns.length).toBe(4); // predictor + A + B + C
+      expect(res.displayedColumns[0].field).toBe('predictor');
+      expect(res.displayedColumns.map((c) => c.headerName)).toEqual([
+        jasmine.any(String),
+        'A',
+        'B',
+        'C',
+      ]);
+      expect(res.values.length).toBe(2);
+      expect(res.values[0].predictor).toBe('Selective Naive Bayes');
+      expect(res.values[0]['0']).toBe(1);
+      expect(res.values[1]['1']).toBe(0.95);
+    });
+
+    it('getDetailedPredictorsAucValues should handle Test evaluation type', () => {
+      initThreeClassMock();
+      const datas = evaluationDatasService.getDatas();
+      const testType = datas.evaluationTypesSummary.values.find(
+        (v) => v.type === 'Test',
+      );
+      evaluationDatasService.setSelectedEvaluationTypeVariable(testType);
+
+      const res = evaluationDatasService.getDetailedPredictorsAucValues();
+      expect(res).toBeTruthy();
+      expect(res.values.length).toBe(2);
+    });
+
+    it('getDetailedPredictorsAucValues should replace empty modality name with a dash', () => {
+      initThreeClassMock(true);
+      const res = evaluationDatasService.getDetailedPredictorsAucValues();
+      expect(res.displayedColumns.map((c) => c.headerName)).toEqual([
+        jasmine.any(String),
+        'A',
+        '-',
+        'C',
+      ]);
+    });
+
+    it('getDetailedPredictorsAucValues should store its result into the evaluation datas model', () => {
+      initThreeClassMock();
+      const res = evaluationDatasService.getDetailedPredictorsAucValues();
+      const datas = evaluationDatasService.getDatas();
+      expect(datas.detailedPredictorsAucValues).toBe(res);
+    });
+
     // ---- getPredictorEvaluationVariableFromEvaluationType ----
     it('getPredictorEvaluationVariableFromEvaluationType should find matching predictor', () => {
       initAdultBivar();
