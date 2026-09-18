@@ -36,6 +36,13 @@
       stroke-width: 0;
     }
 
+    #nodes {
+      .node {
+        stroke: #fff;
+        stroke-width: 3px;
+      }
+    }
+
     .caption {
       paint-order: stroke;
       stroke: rgba(#fff, 0.7);
@@ -83,10 +90,6 @@
     .center-node {
       fill: rgba(#000, 0.25);
       opacity: 0.5;
-    }
-
-    .background-circle {
-      fill-opacity: 0.15;
     }
 
     .focus-circle {

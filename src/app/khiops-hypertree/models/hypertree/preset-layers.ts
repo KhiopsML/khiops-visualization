@@ -161,27 +161,13 @@ export const layerSrc = [
       invisible: false,
       hideOnDrag: false,
       name: 'labels',
-      className: 'caption',
+      className: 'caption font-code',
       data: () => ud.cache.labels,
       text: (d) => d.precalc.label,
       isVisible: () => undefined,
       delta: labeloffsets.labeloffset(ud),
       color: () => undefined,
       background: undefined,
-      transform: (d, delta) =>
-        ` translate(${d.cache.re + delta.re} ${d.cache.im + delta.im})` +
-        d.scaleStrText,
-    }),
-  (v, ud: UnitDisk) =>
-    new LabelLayer(v, {
-      invisible: true,
-      hideOnDrag: true,
-      name: 'labels2',
-      className: 'caption',
-      data: () => ud.cache.labels,
-      text: (d) => d.precalc.label,
-      delta: labeloffsets.labeloffset(ud),
-      color: () => undefined,
       transform: (d, delta) =>
         ` translate(${d.cache.re + delta.re} ${d.cache.im + delta.im})` +
         d.scaleStrText,

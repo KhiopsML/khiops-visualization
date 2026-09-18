@@ -20,8 +20,6 @@ import { TransformationCache } from '../../models/transformation/hyperbolic-tran
 import { LayerStack } from '../layerstack/layerstack';
 import { UnitDiskArgs } from '../../models/unitdisk/unitdisk-model';
 import { UnitDiskView } from '../../models/unitdisk/unitdisk-model';
-import { navBackgroundLayers } from './layers-background';
-import { navBgNodeR } from './layers-background';
 import { navParameterLayers } from './layers-parameter';
 
 //----------------------------------------------------------------------------------------
@@ -167,7 +165,6 @@ export class UnitDiskNav implements IUnitDisk {
         nodeFilter: args.nodeFilter,
         linkWidth: args.linkWidth,
         linkCurvature: args.linkCurvature,
-        layers: navBackgroundLayers,
         layerOptions: {}, //args.layerOptions,
         offsetLabels: args.offsetLabels,
         clipRadius: 1,
@@ -235,7 +232,6 @@ export class UnitDiskNav implements IUnitDisk {
         },
         transformation: navTransformation,
         transform: (n: any) => CmulR(n, -1),
-        //caption:            (n:N)=> undefined,
         nodeRadius: () => 0.16,
         nodeScale: () => 1,
         nodeFilter: () => true,

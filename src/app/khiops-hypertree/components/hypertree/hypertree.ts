@@ -465,7 +465,6 @@ export class Hypertree {
     };
     updateLabelLen_('label', 'labels-forcelen');
     updateLabelLen_('label', 'labelslen');
-    updateLabelLen_('label2', 'labels2len');
     updateLabelLen_('icon', 'emojislen');
   }
 

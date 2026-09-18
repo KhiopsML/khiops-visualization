@@ -41,7 +41,13 @@ export class BackgroundLayer implements ILayer {
       name: this.name,
       className: 'background-circle',
       elementType: 'circle',
-      create: (s) => s.attr('r', 1).attr('fill', 'rgba(180, 180, 180, 0.7)'),
+      create: (s) =>
+        s
+          .attr('r', 1)
+          .attr('fill', 'rgba(248, 250, 252, 1)')
+          .attr('stroke', '#dfe6ef')
+          .attr('stroke-width', 2)
+          .attr('vector-effect', 'non-scaling-stroke'),
       updateColor: (s) => {},
       updateTransform: (s) => {},
     });
