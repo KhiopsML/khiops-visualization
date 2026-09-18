@@ -64,10 +64,12 @@
               </as-split-area>
               <as-split-area [size]="sizes.col0Row0Col[2]">
                 <as-split direction="vertical" disabled unit="pixel">
-                  <as-split-area class="kl-card">
+                  <as-split-area class="kl-card" fxLayout="column">
                     <kl-informations-block
+                      fxFlex
+                      style="overflow: auto"
                       id="tree-preparation-informations-block-informations"
-                      icon="subject"
+                      icon="sliders-horizontal"
                       title="{{ 'GLOBAL.INFORMATIONS' | translate }}"
                       [inputDatas]="informationsDatas"
                       [showFilteredVariablesWarning]="
@@ -75,11 +77,7 @@
                       "
                     >
                     </kl-informations-block>
-                  </as-split-area>
-                  <as-split-area [size]="50" class="kl-card">
-                    <app-change-scale-button
-                      fxFlexFill
-                    ></app-change-scale-button>
+                    <app-change-scale-button></app-change-scale-button>
                   </as-split-area>
                 </as-split>
               </as-split-area>

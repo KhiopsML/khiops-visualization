@@ -39,10 +39,10 @@
             @if (appDatas?.preparationReport) {
               <mat-tab label="{{ 'TITLE.PREPARATION' | translate }}">
                 <ng-template matTabLabel>
-                  <label
-                    title="{{ 'TOOLTIPS.TABS.PREPARATION' | translate }}"
-                    >{{ 'TITLE.PREPARATION' | translate }}</label
-                  >
+                  <svg lucideIcon="database" size="18"></svg>
+                  <label title="{{ 'TOOLTIPS.TABS.PREPARATION' | translate }}">
+                    {{ 'TITLE.PREPARATION' | translate }}
+                  </label>
                 </ng-template>
                 <ng-template matTabContent>
                   <app-preparation-view
@@ -54,6 +54,7 @@
             @if (appDatas?.textPreparationReport) {
               <mat-tab label="{{ 'TITLE.TEXT_PREPARATION' | translate }}">
                 <ng-template matTabLabel>
+                  <svg lucideIcon="file-text" size="18"></svg>
                   <label
                     title="{{ 'TOOLTIPS.TABS.TEXT_PREPARATION' | translate }}"
                     >{{ 'TITLE.TEXT_PREPARATION' | translate }}</label
@@ -70,6 +71,7 @@
             @if (appDatas?.treePreparationReport) {
               <mat-tab label="{{ 'TITLE.TREE_PREPARATION' | translate }}">
                 <ng-template matTabLabel>
+                  <svg lucideIcon="git-fork" size="18"></svg>
                   <label
                     title="{{ 'TOOLTIPS.TABS.TREE_PREPARATION' | translate }}"
                     >{{ 'TITLE.TREE_PREPARATION' | translate }}</label
@@ -85,6 +87,7 @@
             @if (appDatas?.bivariatePreparationReport) {
               <mat-tab label="{{ 'TITLE.PREPARATION_2D' | translate }}">
                 <ng-template matTabLabel>
+                  <svg lucideIcon="grid-2x2" size="18"></svg>
                   <label
                     title="{{ 'TOOLTIPS.TABS.PREPARATION_2D' | translate }}"
                     >{{ 'TITLE.PREPARATION_2D' | translate }}</label
@@ -100,6 +103,7 @@
             @if (appDatas?.modelingReport) {
               <mat-tab label="{{ 'TITLE.MODELING' | translate }}">
                 <ng-template matTabLabel>
+                  <svg lucideIcon="cpu" size="18"></svg>
                   <label title="{{ 'TOOLTIPS.TABS.MODELING' | translate }}">{{
                     'TITLE.MODELING' | translate
                   }}</label>
@@ -118,6 +122,7 @@
             ) {
               <mat-tab label="{{ 'TITLE.EVALUATION' | translate }}">
                 <ng-template matTabLabel>
+                  <svg lucideIcon="chart-column-big" size="18"></svg>
                   <label title="{{ 'TOOLTIPS.TABS.EVALUATION' | translate }}">{{
                     'TITLE.EVALUATION' | translate
                   }}</label>
@@ -132,6 +137,7 @@
             @if (showProjectTab) {
               <mat-tab label="{{ 'TITLE.PROJECT' | translate }}">
                 <ng-template matTabLabel>
+                  <svg lucideIcon="folder-check" size="18"></svg>
                   <label title="{{ 'TOOLTIPS.TABS.PROJECT' | translate }}">{{
                     'TITLE.PROJECT' | translate
                   }}</label>

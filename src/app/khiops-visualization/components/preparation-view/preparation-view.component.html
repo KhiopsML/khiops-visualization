@@ -53,19 +53,18 @@
           </as-split-area>
           <as-split-area [size]="sizes.row0Col[2]">
             <as-split direction="vertical" disabled unit="pixel">
-              <as-split-area class="kl-card">
+              <as-split-area class="kl-card" fxLayout="column">
                 <kl-informations-block
-                  fxFlexFill
+                  fxFlex
+                  style="overflow: auto"
                   id="preparation-informations-block-informations"
-                  icon="subject"
+                  icon="sliders-horizontal"
                   title="{{ 'GLOBAL.INFORMATIONS' | translate }}"
                   [inputDatas]="informationsDatas"
                   [showFilteredVariablesWarning]="showFilteredVariablesWarning"
                 >
                 </kl-informations-block>
-              </as-split-area>
-              <as-split-area [size]="50" class="kl-card">
-                <app-change-scale-button fxFlexFill></app-change-scale-button>
+                <app-change-scale-button></app-change-scale-button>
               </as-split-area>
             </as-split>
           </as-split-area>
@@ -92,12 +91,13 @@
                 <as-split-area
                   class="variables-list-container kl-card"
                   [size]="sizes.row1Col0Row[0]"
+                  fxLayout="column"
                 >
                   <kl-ag-grid
                     #agGridRef
                     id="preparation-variables-list"
                     class="variables-list"
-                    fxFlexFill
+                    fxFlex
                     [showSearch]="true"
                     [watchResize]="true"
                     [displayCount]="true"
@@ -129,16 +129,11 @@
                       </app-level-distribution-button>
                     }
                   </kl-ag-grid>
-                </as-split-area>
-                <as-split-area
-                  [size]="sizes.row1Col0Row[1]"
-                  fxLayout="row"
-                  class="kl-card"
-                >
-                  <as-split direction="horizontal" disabled>
-                    <as-split-area fxFlex="50%">
+                  <div fxLayout="column">
+                    <div fxFlex="50%">
                       @if (preparationDatas?.selectedVariable) {
                         <app-description-block
+                          class="no-border-bottom"
                           id="preparation-description-block-variable"
                           title="{{ 'GLOBAL.NAME' | translate }}"
                           [value]="
@@ -151,12 +146,14 @@
                       @if (!preparationDatas?.selectedVariable) {
                         <kl-no-data fxFlex></kl-no-data>
                       }
-                    </as-split-area>
-                    <as-split-area fxFlex="50%">
+                    </div>
+                    <div fxFlex="50%">
                       @if (preparationDatas?.selectedVariable) {
                         <app-description-block
+                          class="no-border-top"
                           id="preparation-description-block-derivation"
                           title="{{ 'GLOBAL.DERIVATION_RULE' | translate }}"
+                          color="green"
                           [value]="getDerivationRuleValue()"
                         >
                         </app-description-block>
@@ -164,8 +161,8 @@
                       @if (!preparationDatas?.selectedVariable) {
                         <kl-no-data fxFlex></kl-no-data>
                       }
-                    </as-split-area>
-                  </as-split>
+                    </div>
+                  </div>
                 </as-split-area>
               </as-split>
             </as-split-area>
