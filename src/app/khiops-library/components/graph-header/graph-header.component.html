@@ -17,7 +17,7 @@
       fxLayoutAlign="start center"
       [ngClass]="{ 'small-title': smallTitle() }"
     >
-      <mat-icon>equalizer</mat-icon>
+      <svg lucideIcon="square-kanban" size="16" class="rotate-180"></svg>
       <span>{{
         title() || (selectedVariable() && selectedVariable().name)
       }}</span>
@@ -31,11 +31,11 @@
   <div id="graph-header-tools" fxLayout="row" fxLayoutAlign="start center">
     @if (!hideScale()) {
       <div
-        fxLayout="column"
+        fxLayout="row"
         fxLayoutAlign="center center"
         class="kl-slider-container"
       >
-        <h2>{{ 'GLOBAL.SCALE' | translate }}</h2>
+        <span>{{ 'GLOBAL.SCALE' | translate }}</span>
         <mat-slider
           attr.aria-label="{{ 'ARIA.CHARTS.UPDATE_GRAPH_SCALE' | translate }}"
           [max]="maxScale()"

@@ -5,7 +5,7 @@
  -->
 
 <button
-  class="btn-fullscreen-comp screenshot-hide"
+  class="btn-fullscreen-comp screenshot-hide lucid-icon-button"
   mat-stroked-button
   color="primary"
   [attr.aria-label]="
@@ -20,5 +20,5 @@
   "
   (click)="clickFullscreen()"
 >
-  <mat-icon>{{ isFullscreen() ? 'fullscreen_exit' : 'fullscreen' }}</mat-icon>
+  <svg [lucideIcon]="isFullscreen() ? 'shrink' : 'expand'"></svg>
 </button>

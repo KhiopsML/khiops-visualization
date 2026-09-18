@@ -6,15 +6,19 @@
 
 import { Component, inject, output, signal } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
-import { MatIconModule } from '@angular/material/icon';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { LucideDynamicIcon } from '@lucide/angular';
 import { TranslateService } from '@ngstack/translate';
 
 @Component({
   selector: 'kl-btn-fullscreen',
   templateUrl: './btn-fullscreen.component.html',
   styleUrls: ['./btn-fullscreen.component.scss'],
-  imports: [MatButtonModule, MatIconModule, MatTooltipModule],
+  imports: [
+    MatButtonModule,
+    MatTooltipModule,
+    LucideDynamicIcon,
+  ],
 })
 export class BtnFullscreenComponent {
   readonly isFullscreen = signal(false);

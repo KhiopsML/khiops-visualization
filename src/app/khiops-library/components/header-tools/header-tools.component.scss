@@ -9,16 +9,7 @@
   padding-right: 0.5rem;
 
   button {
-    margin: 0 0 0 0.5rem;
-    min-width: 34px !important;
-    max-width: 34px !important;
-    padding: 0 1rem;
-    border-radius: 50%;
-    mat-icon {
-      font-size: 1rem !important;
-      line-height: 1.3rem !important;
-      position: absolute;
-    }
+    margin-left: 5px;
   }
 
   ::ng-deep .mat-mdc-progress-spinner circle {

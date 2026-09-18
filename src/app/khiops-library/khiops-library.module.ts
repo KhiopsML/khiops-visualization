@@ -41,6 +41,34 @@ import { ResizableModule } from 'angular-resizable-element';
 import { TranslateModule, TranslateService } from '@ngstack/translate';
 import { AgGridModule } from '@ag-grid-community/angular';
 import { AngularSplitModule } from 'angular-split';
+import {
+  LucideDynamicIcon,
+  LucideSearch,
+  LucideChartColumn,
+  LucideChartColumnBig,
+  LucideExpand,
+  LucideShrink,
+  LucideListCheck,
+  provideLucideIcons,
+  LucideUnfoldHorizontal,
+  LucideFunnel,
+  LucideFoldHorizontal,
+  LucideSettings2,
+  LucideSlidersHorizontal,
+  LucideSquareKanban,
+  LucideSlidersVertical,
+  LucideDatabase,
+  LucideBookOpenText,
+  LucideCpu,
+  LucideFileText,
+  LucideGrid2x2,
+  LucideNetwork,
+  LucideGitFork,
+  LucideFolderCheck,
+  LucideCopy,
+  LucideImages,
+  LucideSettings,
+} from '@lucide/angular';
 
 // Component imports
 import { LibVersionComponent } from './components/lib-version/lib-version.component';
@@ -89,6 +117,7 @@ import { WarningInformationComponent } from './components/warning-information/wa
 import { DialogWrapperComponent } from './components/dialog-wrapper/dialog-wrapper.component';
 import { DialogService } from './providers/dialog.service';
 import { FullscreenAnimationDirective } from './directives/fullscreen-animation.directive';
+import { SearchInputComponent } from './components/search-input/search-input.component';
 
 // Translation data
 import EnTransaltion from '../../assets/i18n/en.json';
@@ -128,6 +157,7 @@ import EnTransaltion from '../../assets/i18n/en.json';
     AgGridModule,
     ResizableModule,
     AngularSplitModule,
+    LucideDynamicIcon,
     HotkeyModule.forRoot(),
     TranslateModule.forRoot({
       activeLang: 'en',
@@ -153,6 +183,7 @@ import EnTransaltion from '../../assets/i18n/en.json';
     GaugeComponent,
     GravityCellComponent,
     AgGridLoadingOverlayComponent,
+    SearchInputComponent,
     CheckboxCellComponent,
     IconCellComponent,
   ],
@@ -185,6 +216,32 @@ import EnTransaltion from '../../assets/i18n/en.json';
   providers: [
     TranslateService,
     DialogService,
+    provideLucideIcons(
+      LucideSearch,
+      LucideChartColumn,
+      LucideChartColumnBig,
+      LucideSquareKanban,
+      LucideSlidersVertical,
+      LucideExpand,
+      LucideShrink,
+      LucideUnfoldHorizontal,
+      LucideFunnel,
+      LucideFoldHorizontal,
+      LucideListCheck,
+      LucideSettings2,
+      LucideSlidersHorizontal,
+      LucideDatabase,
+      LucideFileText,
+      LucideNetwork,
+      LucideGrid2x2,
+      LucideCpu,
+      LucideBookOpenText,
+      LucideGitFork,
+      LucideFolderCheck,
+      LucideCopy,
+      LucideImages,
+      LucideSettings,
+    ),
     // Add Angular Material providers
     // These will be automatically provided but we ensure they're available
   ],
@@ -213,6 +270,7 @@ import EnTransaltion from '../../assets/i18n/en.json';
     MatrixComponent,
     AgGridComponent,
     AgGridLoadingOverlayComponent,
+    SearchInputComponent,
     MatrixTooltipComponent,
     MatrixToggleComponent,
     GraphOptionsMenuComponent,
@@ -240,6 +298,7 @@ import EnTransaltion from '../../assets/i18n/en.json';
     FlexLayoutModule,
     TranslateModule,
     AngularSplitModule,
+    LucideDynamicIcon,
     // Angular Material modules
     MatTableModule,
     MatProgressSpinnerModule,

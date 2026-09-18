@@ -12,18 +12,19 @@
 >
   @if (showMenu) {
     <button
+      class="lucid-icon-button"
       mat-stroked-button
       (click)="toggleSideBar()"
       attr.aria-label="{{ 'ARIA.HEADER.DISPLAY_SETTINGS' | translate }}"
       matTooltip="{{ 'GLOBAL.SETTINGS' | translate }}"
     >
-      <mat-icon fxFlexFill fxLayoutAlign="center center">settings</mat-icon>
+      <svg lucideIcon="settings"></svg>
     </button>
   }
   <button
     id="header-tools-copy-datas-button"
-    color="primary"
-    mat-flat-button
+    class="lucid-icon-button"
+    mat-stroked-button
     matTooltip="{{
       'GLOBAL.COPY_DATAS' | translate: { shortcut: copyDatasShortcut }
     }}"
@@ -32,12 +33,12 @@
       'GLOBAL.COPY_DATAS' | translate: { shortcut: copyDatasShortcut }
     }}"
   >
-    <mat-icon fxFlexFill fxLayoutAlign="center center">filter_none</mat-icon>
+    <svg lucideIcon="copy"></svg>
   </button>
   <button
     id="header-tools-copy-image-button"
-    color="primary"
-    mat-flat-button
+    class="lucid-icon-button"
+    mat-stroked-button
     matTooltip="{{
       'GLOBAL.COPY_IMAGE' | translate: { shortcut: copyImageShortcut }
     }}"
@@ -48,7 +49,7 @@
     }}"
   >
     @if (!(copyImageService.isCopyingImage$ | async)) {
-      <mat-icon fxFlexFill fxLayoutAlign="center center">filter</mat-icon>
+      <svg lucideIcon="images"></svg>
     }
     @if (copyImageService.isCopyingImage$ | async) {
       <mat-spinner
