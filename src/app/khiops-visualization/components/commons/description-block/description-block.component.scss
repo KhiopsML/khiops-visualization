@@ -5,8 +5,24 @@
  */
 
 .description-block-comp {
-  span {
-    margin: 0em 2em 1em 1.1em;
-    font-size: 0.95em;
+  background-color: var(--color-50);
+  border: 1px solid var(--color-100);
+  align-items: baseline !important;
+  h1 {
+    margin: 10px 0 10px 10px !important;
+    min-height: unset;
   }
+  kl-important-badge {
+    margin: 10px !important;
+    color: var(--color-brand-orange);
+    font-weight: bold;
+  }
+}
+
+:host(.no-border-bottom) .description-block-comp {
+  border-bottom: none;
+}
+
+:host(.no-border-top) .description-block-comp {
+  border-top: none;
 }

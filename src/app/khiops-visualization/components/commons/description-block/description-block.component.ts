@@ -6,7 +6,7 @@
 
 import { Component, input } from '@angular/core';
 import { FlexLayoutModule } from '@angular/flex-layout';
-
+import { ImportantBadgeComponent } from '@khiops-library/components/important-badge/important-badge.component';
 import { SelectableComponent } from '@khiops-library/components/selectable/selectable.component';
 import { COMPONENT_TYPES } from '@khiops-library/enum/component-types';
 
@@ -14,10 +14,11 @@ import { COMPONENT_TYPES } from '@khiops-library/enum/component-types';
   selector: 'app-description-block',
   templateUrl: './description-block.component.html',
   styleUrls: ['./description-block.component.scss'],
-  imports: [FlexLayoutModule],
+  imports: [FlexLayoutModule, ImportantBadgeComponent],
 })
 export class DescriptionBlockComponent extends SelectableComponent {
   readonly title = input<string>();
   readonly value = input<string>();
+  readonly color = input<'green' | 'orange' | undefined>(undefined);
   componentType = COMPONENT_TYPES.DESCRIPTIONS; // needed to copy datas
 }
