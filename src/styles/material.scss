@@ -80,7 +80,6 @@ mat-button-toggle-group:hover {
 .mat-mdc-tab-header {
   width: 100% !important;
   background-color: transparent !important;
-  margin-bottom: 10px;
 }
 .mat-mdc-tab-header .mat-mdc-tab {
   flex-grow: 0 !important;
@@ -125,6 +124,9 @@ button {
   flex: 1;
   z-index: 1000 !important;
   height: 100%;
+  border-top: 1px solid var(--color-border-subtle) !important;
+  padding: var(--layout-padding);
+  background-color: var(--color-50);
 }
 
 .mdc-button {
@@ -277,9 +279,9 @@ button.mdc-icon-button {
   display: none !important;
 }
 .mat-mdc-menu-item-text {
-  line-height: 1rem !important;
+  line-height: 1em !important;
   font-family: 'Poppins', Verdana, Arial, sans-serif !important;
-  font-size: 0.9rem !important;
+  font-size: 0.9em !important;
 }
 
 .cdk-overlay-connected-position-bounding-box {

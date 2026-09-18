@@ -10,7 +10,10 @@
     > ::ng-deep .mat-mdc-tab-header {
       max-width: calc(100% - 600px);
       min-width: 200px !important;
-      margin: 0 auto 10px auto;
+      margin: 0 auto 0px auto;
+    }
+    > ::ng-deep .mat-mdc-tab-body-wrapper {
+      padding: 0 !important;
     }
   }
   .mat-mdc-tab-label-container {
@@ -19,7 +22,7 @@
   #header-right {
     position: absolute;
     top: 0;
-    right: 0;
+    right: 5px;
     height: var(--header-height);
     z-index: 1000;
   }
@@ -34,16 +37,21 @@
     width: 100%;
     top: 0;
     position: absolute;
+    background-color: var(--color-0);
   }
 
   app-project-view,
   app-axis-view {
     background: var(--color-50) !important;
-    padding: 0;
-    width: 100%;
-    margin-top: calc(var(--header-height) + 10px);
+    padding: var(--layout-padding);
+    margin-top: calc(var(--header-height));
     top: 0;
     position: absolute;
-    height: calc(100% - var(--header-height) - 10px);
+    width: calc(100% - var(--layout-padding) - var(--layout-padding));
+    height: calc(
+      100% - var(--header-height) - var(--layout-padding) - var(
+          --layout-padding
+        )
+    );
   }
 }

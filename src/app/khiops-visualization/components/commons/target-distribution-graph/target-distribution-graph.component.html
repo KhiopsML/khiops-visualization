@@ -24,8 +24,9 @@
           [colorSet]="colorSet"
         ></kl-legend>
         <div
+          fxLayoutAlign="start center"
+          fxLayout="row"
           class="comp-header-tools screenshot-hide"
-          [fxLayout]="isSmallDiv ? 'column' : 'row'"
         >
           @if (displayedValues) {
             <app-select-toggle-button
@@ -39,14 +40,14 @@
             [graphOptions]="graphOptions"
             (graphOptionsChange)="changeGraphType($event)"
           ></kl-graph-options-menu>
+          @if (showFullscreenBtn) {
+            <kl-btn-fullscreen
+              class="screenshot-hide"
+              (toggleFullscreen)="onToggleFullscreen($event)"
+            >
+            </kl-btn-fullscreen>
+          }
         </div>
-        @if (showFullscreenBtn) {
-          <kl-btn-fullscreen
-            class="screenshot-hide"
-            (toggleFullscreen)="onToggleFullscreen($event)"
-          >
-          </kl-btn-fullscreen>
-        }
       </div>
       <kl-chart
         id="{{ 'target-distribution-graph-comp-' + position }}"

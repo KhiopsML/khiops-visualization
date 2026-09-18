@@ -14,6 +14,7 @@
   --border-radius: 5px;
   --border-radius-card: 8px;
   --gripOpacity: 0.5;
+  --layout-padding: 15px;
   --style-selected-border: dashed;
   --font-code: 'JetBrains Mono', monospace;
   --box-shadow-button: 0 2px 4px -2px rgba(0, 0, 0, 0);
@@ -55,14 +56,14 @@
   font-size: inherit;
 }
 
-@media screen and (max-width: 1440px) {
-  :root {
-    --header-height: 50px;
-  }
-}
+// @media screen and (max-width: 1440px) {
+//   :root {
+//     --header-height: 50px;
+//   }
+// }
 
-@media screen and (max-height: 1080px) {
-  :root {
-    --header-height: 50px;
-  }
-}
+// @media screen and (max-height: 1080px) {
+//   :root {
+//     --header-height: 50px;
+//   }
+// }

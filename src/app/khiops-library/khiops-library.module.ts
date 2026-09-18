@@ -68,6 +68,9 @@ import {
   LucideCopy,
   LucideImages,
   LucideSettings,
+  LucideLayers2,
+  LucideLayers,
+  LucideGrid3x3,
 } from '@lucide/angular';
 
 // Component imports
@@ -234,10 +237,13 @@ import EnTransaltion from '../../assets/i18n/en.json';
       LucideFileText,
       LucideNetwork,
       LucideGrid2x2,
+      LucideGrid3x3,
       LucideCpu,
       LucideBookOpenText,
       LucideGitFork,
       LucideFolderCheck,
+      LucideLayers2,
+      LucideLayers,
       LucideCopy,
       LucideImages,
       LucideSettings,

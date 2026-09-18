@@ -103,7 +103,7 @@ h1 {
   font-size: 1em;
   font-weight: 600;
   text-transform: uppercase;
-  min-height: 29px;
+  // min-height: 29px;
   em {
     font-weight: 300;
     font-size: 1em;
@@ -123,7 +123,7 @@ h1 {
 }
 
 h1.small-title {
-  font-size: 1em;
+  font-size: 0.95em;
   font-weight: 500;
   margin: 0.8em 1em;
   line-height: 1em;
@@ -248,6 +248,8 @@ app-home-layout {
   min-height: 42px !important;
   background: var(--color-0) !important;
   margin: 0em 0.4em 0em 1px;
+  overflow-x: auto;
+  overflow-y: hidden;
 
   h1 {
     margin-top: 0;
@@ -308,7 +310,7 @@ hr {
 kl-legend {
   overflow-x: auto;
   align-items: inherit !important;
-  min-width: 100px;
+  min-width: 130px;
 
   button {
     margin-right: 0 !important;
@@ -389,17 +391,17 @@ canvas:focus {
 .fullscreen {
   position: fixed !important;
   z-index: 10000 !important;
-  width: calc(100% - 15px) !important;
-  height: calc(100% - 80px) !important;
-  min-width: calc(100% - 15px) !important;
-  min-height: calc(100% - 80px) !important;
-  margin: 69px 0px 0px 0px;
-  left: 15px !important;
-  top: 11px !important;
-  background-color: var(--color-0) !important;
-  box-shadow: 0 1px 5px 0px rgba(0, 0, 0, 0.2);
-  border-radius: var(--border-radius);
-  padding: 20px !important;
+  // width: calc(100% - 15px) !important;
+  // height: calc(100% - 80px) !important;
+  // min-width: calc(100% - 15px) !important;
+  // min-height: calc(100% - 80px) !important;
+  // margin: 69px 0px 0px 0px;
+  // left: 15px !important;
+  // top: 11px !important;
+  // background-color: var(--color-0) !important;
+  // box-shadow: 0 1px 5px 0px rgba(0, 0, 0, 0.2);
+  // border-radius: var(--border-radius);
+  // padding: 20px !important;
 }
 
 /* Animation appliquée seulement à la première ouverture fullscreen */
@@ -410,11 +412,11 @@ canvas:focus {
 /* Override fullscreen styles when inside a modal dialog */
 kl-dialog-wrapper {
   .fullscreen {
-    width: calc(100% - 30px) !important;
-    height: calc(100% - 136px) !important;
-    min-width: calc(100% - 30px) !important;
-    min-height: calc(100% - 136px) !important;
-    top: 52px !important;
+    // width: calc(100% - 30px) !important;
+    // height: calc(100% - 136px) !important;
+    // min-width: calc(100% - 30px) !important;
+    // min-height: calc(100% - 136px) !important;
+    // top: 52px !important;
   }
 }
 
@@ -479,11 +481,13 @@ app-home-layout {
   background: var(--color-50);
 }
 #home-layout-comp {
-  height: calc(100% - 25px);
-  width: calc(100% - 30px);
+  // height: calc(100% - 25px);
+  // width: calc(100% - 30px);
+  height: 100%;
+  width: 100%;
   contain: layout;
-  padding-top: 10px;
-  padding-left: 15px;
+  // padding-top: 10px;
+  // padding-left: 15px;
 }
 
 mat-checkbox.kl-checkbox {
@@ -525,4 +529,10 @@ mat-checkbox.kl-checkbox {
 
 app-change-scale-button {
   margin-top: 10px;
+}
+
+.header-panel-contrast {
+  background: var(--color-50);
+  border-radius: var(--border-radius);
+  border: 1px solid var(--color-100);
 }

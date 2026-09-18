@@ -109,8 +109,8 @@ function render(self: TreeView) {
 
     if (item.isLeaf) {
       icon.classList.add('is-leaf');
-      icon.textContent = 'web_asset';
-      icon.className += ' web_asset';
+      // icon.textContent = 'web_asset';
+      // icon.className += ' web_asset';
     } else {
       icon.textContent = item.isCollapsed ? 'folder' : 'folder_open';
     }

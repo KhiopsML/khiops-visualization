@@ -84,6 +84,17 @@
   margin-left: 0px !important;
   border-radius: 0px;
   border: 3px solid var(--color-0);
+
+  height: 10px !important;
+  width: 10px !important;
+  font-size: 0 !important;
+  border-radius: 10px !important;
+  min-height: 10px !important;
+  min-width: 10px !important;
+  max-height: 10px !important;
+  max-width: 10px !important;
+  margin: 2px;
+  background-color: var(--color-800);
 }
 
 .tree-leaf .hidden {
@@ -181,9 +192,11 @@
 
 .tree-leaf .tree-leaf-content.tree-selected {
   background: var(--color-selected-row);
-  border-left: var(--color-border-row-size) solid
-    var(--color-border-selected-row);
+  // border-left: var(--color-border-row-size) solid
+  //   var(--color-border-selected-row);
   transition: background-color 0s !important;
+  box-shadow: inset var(--color-border-row-size) 0px 0px 0px
+    var(--color-border-selected-row);
 
   > div {
     box-shadow: none !important;

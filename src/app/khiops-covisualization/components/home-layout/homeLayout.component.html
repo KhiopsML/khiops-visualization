@@ -40,6 +40,7 @@
           >
             <mat-tab label="{{ 'TITLE.AXIS' | translate }}">
               <ng-template matTabLabel>
+                <svg lucideIcon="grid-2x2" size="18"></svg>
                 <label title="{{ 'TOOLTIPS.TABS.AXIS' | translate }}">{{
                   'TITLE.AXIS' | translate
                 }}</label>
@@ -48,6 +49,7 @@
             @if (isContextDimensions) {
               <mat-tab label="{{ 'TITLE.CONTEXT' | translate }}">
                 <ng-template matTabLabel>
+                  <svg lucideIcon="layers" size="18"></svg>
                   <label title="{{ 'TOOLTIPS.TABS.CONTEXT' | translate }}">{{
                     'TITLE.CONTEXT' | translate
                   }}</label>
@@ -57,6 +59,7 @@
             @if (showProjectTab) {
               <mat-tab label="{{ 'TITLE.PROJECT' | translate }}">
                 <ng-template matTabLabel>
+                  <svg lucideIcon="folder-check" size="18"></svg>
                   <label title="{{ 'TOOLTIPS.TABS.PROJECT' | translate }}">{{
                     'TITLE.PROJECT' | translate
                   }}</label>
