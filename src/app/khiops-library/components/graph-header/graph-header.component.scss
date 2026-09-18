@@ -9,8 +9,7 @@
   margin-bottom: 1em !important;
   overflow-y: hidden;
   overflow-x: auto;
-  padding-right: 0.3rem;
-
+  padding-right: 0.4rem;
   h1 {
     margin-top: auto !important;
     margin-bottom: auto !important;
@@ -23,6 +22,8 @@
     span {
       line-height: 0.95em;
       min-width: 100px;
+      font-family: 'jetbrains mono', 'Courier New', monospace !important;
+      text-transform: none !important;
     }
 
     em {
@@ -55,24 +56,19 @@
 
   #graph-header-tools {
     height: 100%;
-    padding: 3px 8px;
-    border-radius: 5px;
+    padding: 0px 8px;
     position: relative;
 
     .kl-slider-container {
-      width: 110px !important;
-    }
-    h2 {
-      white-space: nowrap;
-      font-size: 0.8em;
-      margin: 0;
-      margin-top: -18px;
-    }
-
-    mat-slider {
-      position: absolute;
-      margin-right: 1.4rem;
-      top: 10px;
+      max-height: 32px;
+      color: var(--color-800);
+      border: 1px solid #dfe4e9 !important;
+      border-radius: var(--border-radius);
+      padding-left: 10px;
+      background: var(--color-50);
+      span {
+        font-size: 0.8em;
+      }
     }
   }
 }

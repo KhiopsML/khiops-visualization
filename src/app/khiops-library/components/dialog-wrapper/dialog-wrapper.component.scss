@@ -35,7 +35,7 @@
   position: relative;
   background-color: var(--color-50) !important;
   border-radius: var(--border-radius) !important;
-  padding: 1rem;
+  padding: 0.5rem;
   max-width: 90%;
   max-height: 90%;
   z-index: 1000;
@@ -51,5 +51,5 @@
 .dialog-body {
   flex-basis: auto !important;
   overflow: auto;
-  padding: 1rem;
+  padding: 0.5rem;
 }

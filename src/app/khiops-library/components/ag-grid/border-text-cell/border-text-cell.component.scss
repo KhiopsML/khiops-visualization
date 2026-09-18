@@ -5,11 +5,12 @@
  */
 
 .kl-border-text-cell {
-  padding: 2px 8px;
+  padding: 3px 8px;
   border-radius: var(--border-radius);
   color: var(--color-1000) !important;
-  font-size: 0.9em !important;
-  font-weight: 500;
+  font-size: 0.85em !important;
+  font-family: var(--font-code) !important;
+  border: 1px solid color-mix(in srgb, var(--color-1000) 20%, transparent);
 }
 
 .kl-border-text-cell.Numerical {
@@ -17,4 +18,7 @@
 }
 .kl-border-text-cell.Categorical {
   background-color: var(--color-data-cat);
+  color: #ca5b33 !important;
+  border: 1px solid
+    color-mix(in srgb, var(--color-brand-orange) 80%, transparent);
 }

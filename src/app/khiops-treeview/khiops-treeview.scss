@@ -80,9 +80,10 @@
 
 .tree-leaf .tree-icon.is-leaf {
   color: var(--color-800);
-  padding-left: 0.1em;
   padding-right: 0.1em;
+  margin-left: 0px !important;
   border-radius: 0px;
+  border: 3px solid var(--color-0);
 }
 
 .tree-leaf .hidden {
@@ -90,6 +91,7 @@
 }
 
 .tree-leaf .tree-leaf-text {
+  font-size: 0.9em;
   cursor: pointer;
   padding-left: 5px;
   padding-right: 28px;
@@ -102,6 +104,7 @@
   display: flex;
   position: relative;
   word-wrap: break-word;
+  font-family: var(--font-code) !important;
 }
 
 .tree-leaf .tree-leaf-text .edit-button {
@@ -177,8 +180,9 @@
 }
 
 .tree-leaf .tree-leaf-content.tree-selected {
-  background: var(--color-1000);
-  border-radius: 0px;
+  background: var(--color-selected-row);
+  border-left: var(--color-border-row-size) solid
+    var(--color-border-selected-row);
   transition: background-color 0s !important;
 
   > div {
@@ -186,11 +190,11 @@
   }
 
   .tree-leaf-text {
-    color: var(--color-0) !important;
+    font-weight: 600;
   }
 
   .tree-icon.web_asset {
-    color: var(--color-0) !important;
+    // color: var(--color-brand-orange) !important;
   }
 }
 
@@ -219,7 +223,6 @@
 
     input {
       width: 174px;
-      border: 3px solid var(--color-800);
       padding: 1px 8px 0 8px !important;
       font-size: 0.9em;
       height: 24px;

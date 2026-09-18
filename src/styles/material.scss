@@ -50,7 +50,7 @@
 .mat-mdc-stroked-button,
 .mat-mdc-outlined-button,
 mat-button-toggle-group {
-  box-shadow: 0 2px 4px -2px rgba(0, 0, 0, 0.2) !important;
+  box-shadow: var(--box-shadow-button) !important;
   border-color: var(--color-border-button) !important;
   min-width: 34px !important;
 }
@@ -70,7 +70,7 @@ mat-spinner {
 .mat-mdc-outlined-button:hover,
 .mat-mdc-stroked-button:hover,
 mat-button-toggle-group:hover {
-  box-shadow: 0 2px 4px -2px rgba(0, 0, 0, 0.4) !important;
+  box-shadow: var(--box-shadow-button) !important;
 }
 
 .mat-tab-label-active {
@@ -86,7 +86,7 @@ mat-button-toggle-group:hover {
   flex-grow: 0 !important;
   min-width: 100px;
   width: auto;
-  padding: 0 5px !important;
+  padding: 0 15px !important;
   align-items: center;
 
   height: var(--header-height) !important;
@@ -107,8 +107,9 @@ button {
 
   em {
     .mat-icon {
-      font-size: 24px !important;
-      margin: 8px -4px 0 5px !important;
+      font-size: 20px !important;
+      margin: 10px -4px 0 5px !important;
+      color: var(--color-800) !important;
     }
   }
 }
@@ -277,8 +278,8 @@ button.mdc-icon-button {
 }
 .mat-mdc-menu-item-text {
   line-height: 1rem !important;
-  font-family: 'poppins', sans-serif !important;
-  font-size: 0.9em !important;
+  font-family: 'Poppins', Verdana, Arial, sans-serif !important;
+  font-size: 0.9rem !important;
 }
 
 .cdk-overlay-connected-position-bounding-box {
@@ -321,6 +322,9 @@ button.mdc-icon-button {
 
 .mdc-tab__content {
   cursor: pointer !important;
+  svg {
+    margin-right: 6px;
+  }
   label {
     cursor: pointer !important;
   }
@@ -345,7 +349,7 @@ mat-sidenav {
 }
 
 .mat-mdc-menu-item.selected-item {
-  background-color: var(--color-tooltip-bg) !important;
+  background-color: var(--color-150) !important;
   color: var(--color-0) !important;
 }
 
@@ -391,7 +395,6 @@ button {
 .mdc-button__label {
   align-items: center;
   display: flex;
-  font-size: 1em;
 }
 
 .mdc-checkbox .mdc-checkbox__background {
@@ -430,8 +433,12 @@ button.mat-accent {
 
 .mdc-tab__text-label {
   font-weight: 500;
-  font-size: 0.94em !important;
+  font-size: 1em !important;
   color: var(--color-800) !important;
+}
+
+.mdc-tab--active .mdc-tab__text-label {
+  color: var(--color-brand-orange) !important;
 }
 
 .mat-mdc-select-panel {
@@ -441,4 +448,21 @@ button.mat-accent {
 .mat-mdc-menu-panel {
   max-height: 90vh;
   margin-bottom: 1rem;
+}
+
+mat-slider {
+  scale: 0.8 !important;
+}
+.mat-mdc-slider .mdc-slider__thumb-knob {
+  background-color: var(--color-brand-orange) !important;
+  border-color: var(--color-brand-orange) !important;
+}
+.mat-mdc-slider .mdc-slider__track--active_fill {
+  background-color: var(--color-brand-orange) !important;
+  border-color: var(--color-brand-orange) !important;
+}
+
+/* Trait inactif (partie restante) */
+.mat-mdc-slider .mdc-slider__track-background {
+  background-color: var(--color-100) !important;
 }

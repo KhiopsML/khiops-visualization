@@ -11,17 +11,12 @@
 @use 'ag-grid.scss';
 @use 'as-split.scss';
 
-:host {
-  font-size: 12px !important;
-}
-
 html,
 body {
   margin: 0;
   padding: 0;
   height: 100%;
   overflow: hidden;
-  font-size: 12px !important;
   color: var(--color-800);
 }
 
@@ -90,6 +85,11 @@ body {
   }
 }
 
+// Monospace font, use to display code-like content. Overrides any other font-family.
+.font-code {
+  font-family: 'JetBrains Mono', 'Courier New', monospace !important;
+}
+
 em {
   font-style: normal;
 }
@@ -99,15 +99,26 @@ p {
 }
 
 h1 {
-  color: var(--color-accent);
   margin: 0.6em 0em 1em 1em;
   font-size: 1em;
-  font-weight: 500;
-
+  font-weight: 600;
+  text-transform: uppercase;
+  min-height: 29px;
   em {
     font-weight: 300;
-    font-size: 0.9em;
+    font-size: 1em;
     font-style: normal;
+  }
+
+  mat-icon,
+  svg {
+    color: var(--color-accent);
+    min-width: 16px;
+  }
+
+  svg {
+    margin-right: 0.4em !important;
+    margin-bottom: 1px;
   }
 }
 
@@ -122,7 +133,7 @@ h2 {
   margin: 0em 1em 0 1.1em;
   white-space: nowrap;
   font-size: 1em;
-  font-weight: 400;
+  font-weight: 500;
   color: var(--color-800);
 }
 
@@ -202,6 +213,7 @@ h2 {
   border: 1px var(--color-active);
   border-style: var(--style-selected-border);
   pointer-events: none;
+  border-radius: var(--border-radius);
 }
 
 .parent-selected {
@@ -214,6 +226,7 @@ h2 {
 }
 
 #header-title-comp {
+  scale: 0.9;
   background: transparent !important;
 }
 
@@ -356,12 +369,15 @@ button {
     font-weight: 400 !important;
     border-radius: 0 !important;
     white-space: nowrap;
-    font-size: 13px !important;
+    color: var(--color-800) !important;
   }
 }
 
 .rotate-90 {
   transform: rotate(90deg);
+}
+.rotate-180 {
+  transform: rotate(180deg);
 }
 
 canvas:focus {
@@ -426,7 +442,7 @@ kl-dialog-wrapper {
 }
 
 .cc-floating .cc-message {
-  font-size: 14px;
+  font-size: 13px;
 }
 
 .cc-floating .cc-compliance > .cc-btn {
@@ -453,7 +469,7 @@ kl-dialog-wrapper {
   border: 1px solid var(--color-border-subtle);
   background-color: var(--color-0) !important;
   color: var(--color-800);
-  border-radius: var(--border-radius);
+  border-radius: var(--border-radius-card);
   padding: 12px;
   // Animation controlled by a CSS custom property set at the shadow root level
   animation: var(--kl-card-animation, none) 0.4s ease-out;
@@ -494,4 +510,19 @@ mat-checkbox.kl-checkbox {
 
 .dialog-container {
   animation: dialogFadeIn 0.25s ease-out;
+}
+
+.lucid-icon-button {
+  max-height: 32px !important;
+  width: 34px !important;
+  min-width: 34px !important;
+  padding: 6px 6px !important;
+  svg {
+    height: 14px;
+    color: var(--color-800);
+  }
+}
+
+app-change-scale-button {
+  margin-top: 10px;
 }

@@ -27,14 +27,17 @@
   --ag-header-background-color: var(--color-50, #f9fafb);
   --ag-odd-row-background-color: var(--color-100, #eee);
   --ag-row-hover-color: var(--color-gutter-hover, #f1f1f1);
-  --ag-selected-row-background-color: var(--color-1000);
+  --ag-selected-row-background-color: var(--color-selected-row);
+  --ag-header-column-separator-color: rgba(189, 195, 199, 0.3);
 
   // Header styling
   --ag-header-foreground-color: var(--color-800, #000);
   --ag-header-font-weight: 500;
 
   // Cell styling
-  --ag-cell-horizontal-border: 1px solid var(--color-border-subtle, rgba(0, 0, 0, 0));
+  --ag-cell-horizontal-border: 1px solid
+    var(--color-border-subtle, rgba(0, 0, 0, 0));
+  --ag-cell-horizontal-padding: calc(var(--ag-grid-size) * 4);
   --ag-row-border-color: var(--color-border-subtle, rgba(0, 0, 0, 0));
 
   // Input styling
@@ -74,11 +77,11 @@
 
   // Custom cell types for Khiops data visualization
   .cell-type-num {
-    background-color: var(--color-data-num, #d1dcee);
+    background-color: var(--color-data-num, #e4e8f0);
   }
 
   .cell-type-cat {
-    background-color: var(--color-data-cat, #f5ddaf);
+    background-color: var(--color-data-cat, #f5e7cd);
   }
 
   // Enhanced hover effects
@@ -146,10 +149,6 @@
   .ag-theme-balham {
     --ag-font-size: 0.85em;
   }
-}
-.ag-header-group-cell-label,
-.ag-cell-label-container {
-  padding: 0px 0px 5px 0;
 }
 
 // Ensure sort indicator stays on the right of the label text (not the cell)

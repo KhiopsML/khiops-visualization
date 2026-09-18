@@ -11,6 +11,9 @@
   kl-graph-header {
     z-index: 1;
     position: relative;
+    background: #f8fafc;
+    border-radius: 5px;
+    border: 1px solid #eeeeee;
   }
   .distribution-graph,
   .app-histogram,

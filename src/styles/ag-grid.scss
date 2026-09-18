@@ -10,8 +10,12 @@
 .ag-root,
 .ag-header,
 .ag-cell {
-  font-size: 0.97em !important;
-  font-weight: 500 !important;
+  font-size: 1em !important;
+  font-family: var(--font-code) !important;
+}
+.ag-cell span {
+  font-size: 1em !important;
+  font-family: var(--font-code) !important;
 }
 .ag-grid-comp {
   background: var(--color-0) !important;
@@ -29,11 +33,12 @@ ag-grid-angular {
 }
 
 .ag-theme-balham .ag-row-odd:not(.ag-row-selected) {
-  background: var(--color-50) !important;
+  background: var(--color-0) !important;
 }
 
 .ag-row {
   color: var(--color-800) !important;
+  border-bottom: 1px solid var(--color-100) !important;
 }
 
 // Override grid style
@@ -45,18 +50,21 @@ ag-grid-angular {
   width: 14px !important;
 }
 .ag-theme-balham .ag-row-selected {
-  color: white !important;
+  color: var(--color-selected-row-font) !important;
   transition: none !important;
+  font-weight: bold !important;
 
   mat-icon {
-    color: white !important;
+    color: var(--color-selected-row-font) !important;
   }
   mat-icon:hover {
     background-color: var(--color-600) !important;
   }
 }
-.ag-theme-balham .ag-row-selected:hover {
-  background: var(--color-800) !important;
+.ag-row-selected::before {
+  background: var(--color-selected-row);
+  border-left: var(--color-border-row-size) solid
+    var(--color-border-selected-row);
 }
 
 .ag-theme-balham .ag-cell {
@@ -68,12 +76,8 @@ ag-grid-angular {
 }
 
 .ag-theme-balham .ag-row {
-  min-height: 34px !important;
+  min-height: var(--ag-row-height) !important;
   border: none;
-}
-
-.ag-theme-balham .ag-row:hover:not(.ag-row-selected) {
-  background-color: var(--color-100) !important;
 }
 
 .ag-paging-panel {
@@ -87,10 +91,13 @@ ag-grid-angular {
 
 .ag-theme-balham .ag-header {
   background-color: var(--color-50) !important;
+  border-top: 1px solid var(--color-100) !important;
+  border-bottom: 1px solid var(--color-100) !important;
   font-weight: 600;
   font-size: 1.2em;
-  border: none !important;
-  padding-top: 4px;
+  // border: none !important;
+  margin-top: 4px;
+  text-transform: uppercase;
 }
 
 .ag-header-cell-label .ag-header-cell-text {
@@ -102,11 +109,6 @@ ag-grid-angular {
 .aggrid-warn-header {
   font-style: italic;
   color: var(--color-brand-orange-dark) !important;
-}
-
-.aggrid-warn-cell {
-  // font-style: italic;
-  // padding-right: 5px;
 }
 
 .aggrid-warn-header .ag-header-cell-text::after {
