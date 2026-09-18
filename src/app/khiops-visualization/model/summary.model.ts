@@ -5,6 +5,7 @@
  */
 
 import { InfosDatasI } from '@khiops-library/interfaces/infos-datas.interface';
+import { INFO_DATA_TYPES } from '@khiops-library/enum/info-data-types';
 import { BivariatePreparationSummary } from '@khiops-visualization/interfaces/bivariate-preparation-report.interface';
 import { EvaluationSummary } from '@khiops-visualization/interfaces/evaluation-report.interface';
 import { ModelingSummary } from '@khiops-visualization/interfaces/modeling-report.interface';
@@ -51,12 +52,24 @@ export class SummaryModel {
    */
   formatDatas() {
     // Define mapping between property keys and display titles
-    const fields: { key: keyof SummaryModel; title: string }[] = [
+    const fields: {
+      key: keyof SummaryModel;
+      title: string;
+      type?: INFO_DATA_TYPES;
+    }[] = [
       { key: 'dictionary', title: 'GLOBAL.DICTIONARY' },
       { key: 'database', title: 'GLOBAL.DATABASE' },
-      { key: 'targetVariable', title: 'GLOBAL.TARGET_VARIABLE' },
+      {
+        key: 'targetVariable',
+        title: 'GLOBAL.TARGET_VARIABLE',
+        type: INFO_DATA_TYPES.TARGET_VARIABLE,
+      },
       { key: 'instances', title: 'GLOBAL.INSTANCES' },
-      { key: 'learningTask', title: 'GLOBAL.LEARNING_TASK' },
+      {
+        key: 'learningTask',
+        title: 'GLOBAL.LEARNING_TASK',
+        type: INFO_DATA_TYPES.LEARNING_TASK,
+      },
       { key: 'samplePercentage', title: 'GLOBAL.SAMPLE_PERCENTAGE' },
       { key: 'samplingMode', title: 'GLOBAL.SAMPLING_MODE' },
       { key: 'selectionVariable', title: 'GLOBAL.SELECTION_VARIABLE' },
@@ -72,6 +85,7 @@ export class SummaryModel {
       .map((field) => ({
         title: field.title,
         value: this[field.key],
+        type: field.type,
       }));
   }
 }

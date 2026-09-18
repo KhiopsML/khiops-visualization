@@ -13,6 +13,4 @@ import { DISPLAY_TYPE } from '../enum/info-data-types';
 export interface ProcessedInfoDataI extends InfosDatasI {
   /** The display type for this data item */
   displayType: DISPLAY_TYPE;
-  /** Whether this data should be highlighted as important */
-  isImportant?: boolean;
 }

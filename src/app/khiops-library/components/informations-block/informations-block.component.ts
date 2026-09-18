@@ -34,6 +34,7 @@ import { GaugeComponent } from '../gauge/gauge.component';
 import { WarningInformationComponent } from '../warning-information/warning-information.component';
 import { NoDataComponent } from '../no-data/no-data.component';
 import { ToPrecisionPipe } from '../../pipes/to-precision.pipe';
+import { LucideDynamicIcon } from '@lucide/angular';
 
 @Component({
   selector: 'kl-informations-block',
@@ -48,6 +49,7 @@ import { ToPrecisionPipe } from '../../pipes/to-precision.pipe';
     WarningInformationComponent,
     NoDataComponent,
     ToPrecisionPipe,
+    LucideDynamicIcon,
   ],
 })
 export class InformationsBlockComponent
@@ -56,8 +58,9 @@ export class InformationsBlockComponent
 {
   readonly inputDatas = input<InfosDatasI[] | undefined>(undefined);
   readonly title = input<string>('');
-  readonly icon = input<string>('tune');
+  readonly icon = input<string>('list-check');
   readonly showFilteredVariablesWarning = input<boolean>(false);
+  readonly INFO_DATA_TYPES = INFO_DATA_TYPES;
   public componentType = COMPONENT_TYPES.INFORMATIONS; // needed to copy datas
   readonly gaugeSize = signal<number>(0);
 
@@ -153,7 +156,6 @@ export class InformationsBlockComponent
         .map((data) => ({
           ...data,
           displayType: DISPLAY_TYPE.TABLE,
-          isImportant: data.title === INFO_DATA_TYPES.LEARNING_TASK,
         })) || [];
 
     // Put LEARNING_TASK at the first position if present

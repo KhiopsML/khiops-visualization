@@ -5,6 +5,7 @@
  */
 
 import { TYPES } from '@khiops-library/enum/types';
+import { INFO_DATA_TYPES } from '@khiops-library/enum/info-data-types';
 import { InfosDatasI } from '@khiops-library/interfaces/infos-datas.interface';
 
 export class ProjectSummaryModel {
@@ -38,7 +39,8 @@ export class ProjectSummaryModel {
     this.shortDescription = appDatas.shortDescription || '';
     this.learningTask = appDatas[source]?.summary?.learningTask || '';
     this.targetVariable = appDatas[source]?.summary?.targetVariable || '';
-    this.samplePercentage = appDatas[source]?.summary?.samplePercentage || undefined;
+    this.samplePercentage =
+      appDatas[source]?.summary?.samplePercentage || undefined;
     this.samplingMode = appDatas[source]?.summary?.samplingMode || '';
     this.instances = appDatas[source]?.summary?.instances || '';
 
@@ -82,13 +84,25 @@ export class ProjectSummaryModel {
    */
   formatDatas() {
     // Define the mapping between property keys and their display titles
-    const fields: { key: keyof ProjectSummaryModel; title: string }[] = [
+    const fields: {
+      key: keyof ProjectSummaryModel;
+      title: string;
+      type?: INFO_DATA_TYPES;
+    }[] = [
       { key: 'filename', title: 'GLOBAL.PROJECT_FILE' },
       { key: 'dictionary', title: 'GLOBAL.DICTIONARY' },
       { key: 'database', title: 'GLOBAL.DATABASE' },
       { key: 'shortDescription', title: 'GLOBAL.SHORT_DESCRIPTION' },
-      { key: 'learningTask', title: 'GLOBAL.LEARNING_TASK' },
-      { key: 'targetVariable', title: 'GLOBAL.TARGET_VARIABLE' },
+      {
+        key: 'learningTask',
+        title: 'GLOBAL.LEARNING_TASK',
+        type: INFO_DATA_TYPES.LEARNING_TASK,
+      },
+      {
+        key: 'targetVariable',
+        title: 'GLOBAL.TARGET_VARIABLE',
+        type: INFO_DATA_TYPES.TARGET_VARIABLE,
+      },
       { key: 'samplePercentage', title: 'GLOBAL.SAMPLE_PERCENTAGE' },
       { key: 'samplingMode', title: 'GLOBAL.SAMPLING_MODE' },
       { key: 'instances', title: 'GLOBAL.INSTANCES' },
@@ -101,6 +115,7 @@ export class ProjectSummaryModel {
       .map((field) => ({
         title: field.title,
         value: this[field.key] as string | number,
+        type: field.type,
       }));
   }
 }

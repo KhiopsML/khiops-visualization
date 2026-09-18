@@ -24,6 +24,12 @@
     padding: 0;
     width: 100%;
     margin-bottom: 10px;
+
+    .important-badge-green {
+      background: #ecfdf5;
+      border: 1px #a1dec2 solid;
+      color: #006433;
+    }
   }
 
   .informations-main-values {
@@ -38,15 +44,17 @@
       text-align: center;
       font-weight: 500;
       display: block;
-      font-size: 0.9em;
+      font-size: 0.85em;
+      text-transform: uppercase;
     }
 
     .metric-value {
-      font-size: 22px;
+      font-size: 24px;
       font-weight: 500;
       line-height: 1;
       text-align: center;
       white-space: nowrap;
+      padding: 0 5px;
       em {
         font-size: 16px;
       }
@@ -84,22 +92,29 @@
       strong {
         font-size: 0.95em;
         font-weight: 500;
-        color: var(--color-800);
+        color: var(--color-600);
       }
 
       em {
         font-size: 0.95em;
         font-weight: 500;
         color: var(--color-800);
-        background: var(--color-100);
+        background: var(--color-50);
+        border: var(--color-200) 1px solid;
         padding: 1px 5px;
         border-radius: 4px;
         margin: 4px 0;
         word-break: break-word;
       }
       .important-badge {
+        border: none;
         background: var(--color-800);
         color: var(--color-100);
+      }
+      .important-badge-orange {
+        border: none;
+        background: var(--color-brand-orange);
+        color: var(--color-0);
       }
     }
   }

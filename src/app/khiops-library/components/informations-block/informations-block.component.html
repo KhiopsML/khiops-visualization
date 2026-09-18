@@ -14,7 +14,7 @@
   >
     <!-- Header -->
     <h1 fxLayout="row" fxLayoutAlign="start center">
-      <mat-icon>{{ icon() }}</mat-icon>
+      <svg [lucideIcon]="icon()" size="16"></svg>
       {{ title() }}
     </h1>
     <!-- Main metrics display -->
@@ -24,10 +24,14 @@
         <div
           fxFlex
           fxLayoutAlign="center center"
+          [ngClass]="{
+            'important-badge-green':
+              data.title === 'GLOBAL.INFORMATIVE_VARIABLES',
+          }"
           class="informations-main-values"
         >
           <div fxFlex fxLayout="column">
-            <span fxLayoutAlign="center center" fxFlex class="metric-value">{{
+            <span fxFlex class="metric-value font-code">{{
               data.value | toPrecision
             }}</span>
             <strong>{{ data.title | translate }}</strong>
@@ -68,7 +72,15 @@
               <strong>{{ data.title | translate }}</strong>
             </th>
             <td scope="col">
-              <em [ngClass]="{ 'important-badge': data.isImportant }">
+              <em
+                [ngClass]="{
+                  'important-badge':
+                    data.type === INFO_DATA_TYPES.LEARNING_TASK,
+                  'important-badge-orange':
+                    data.type === INFO_DATA_TYPES.TARGET_VARIABLE,
+                }"
+                class="font-code"
+              >
                 {{ data.value | toPrecision }}
               </em>
             </td>
