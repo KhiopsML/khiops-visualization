@@ -5,7 +5,6 @@
  */
 
 import { Component, computed, inject, input, output } from '@angular/core';
-import { NgClass } from '@angular/common';
 import { FlexModule } from '@angular/flex-layout';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
@@ -13,18 +12,19 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { TranslateModule, TranslateService } from '@ngstack/translate';
 import { TYPES } from '@khiops-library/enum/types';
 import { DistributionType } from '@khiops-visualization/types/distribution-type';
+import { LucideDynamicIcon } from '@lucide/angular';
 
 @Component({
   selector: 'app-level-distribution-button',
   templateUrl: './level-distribution-button.component.html',
   styleUrls: ['./level-distribution-button.component.scss'],
   imports: [
-    NgClass,
     FlexModule,
     TranslateModule,
     MatIconModule,
     MatButtonModule,
     MatTooltipModule,
+    LucideDynamicIcon,
   ],
 })
 export class LevelDistributionButtonComponent {
