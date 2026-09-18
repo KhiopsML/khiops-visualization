@@ -31,7 +31,7 @@ import { ConfigService } from '@khiops-library/providers/config.service';
     }),
   ],
   providers: [
-    provideAngularSplitOptions({}),
+    provideAngularSplitOptions({gutterSize: 15}),
     provideAnimationsAsync(),
     ConfigService,
   ],
