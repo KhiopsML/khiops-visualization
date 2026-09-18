@@ -35,19 +35,19 @@ export function createDefaultChartOptions(
       tooltip: {
         boxPadding: UtilsService.isSmallScreen() ? 0 : 10,
         titleFont: {
-          family: 'Poppins, Verdana, Arial, sans-serif',
+          family: 'JetBrains Mono, Courier New, monospace',
           size: 12,
           weight: 'bold',
           lineHeight: 1.2,
         },
         bodyFont: {
-          family: 'Poppins, Verdana, Arial, sans-serif',
+          family: 'JetBrains Mono, Courier New, monospace',
           size: 12,
           weight: 'normal',
           lineHeight: 1.2,
         },
         footerFont: {
-          family: 'Poppins, Verdana, Arial, sans-serif',
+          family: 'JetBrains Mono, Courier New, monospace',
           size: 12,
           weight: 'normal',
           lineHeight: 1.2,
@@ -109,6 +109,10 @@ export function createDefaultChartOptions(
         beginAtZero: true,
         min: 0,
         ticks: {
+          font: {
+            family: 'JetBrains Mono, Courier New, monospace',
+            size: 11,
+          },
           color: params.fontColor,
           maxTicksLimit: 7,
           callback: function (value: string | number): string | number {
@@ -130,6 +134,10 @@ export function createDefaultChartOptions(
         },
         min: 0,
         ticks: {
+          font: {
+            family: 'JetBrains Mono, Courier New, monospace',
+            size: 11,
+          },
           color: params.fontColor,
           autoSkip: true,
           autoSkipPadding: 5,

@@ -7,6 +7,7 @@
 import { Injectable } from '@angular/core';
 import * as ChartJs from 'chart.js';
 import type { ChartEvent, ActiveElement, Chart } from 'chart.js';
+import type { ActiveDataPoint } from 'chart.js';
 
 import { UtilsService } from '../../providers/utils.service';
 import { ChartColorsSetI } from '../../interfaces/chart-colors-set.interface';
@@ -21,6 +22,55 @@ interface ChartDatasetExtra {
   defaultGroupIndex?: boolean;
   [key: string]: unknown;
 }
+
+/**
+ * Enables an orange dashed selection frame for selected bar columns.
+ * When enabled, selected bars are highlighted with a 1px dashed outline
+ * from chart top to bar base (with 2px padding) instead of a black border.
+ */
+const DASHED_SELECTION = true;
+
+/**
+ * Controls dashed selection frame height behavior.
+ * - true: full chart height (+ top/bottom padding)
+ * - false: max selected bar height (+ top/bottom padding)
+ */
+const DASHED_SELECTION_FULL = false;
+
+/**
+ * Color used for dashed selection outlines.
+ */
+const DASHED_SELECTION_COLOR = '#f84700';
+
+/**
+ * Dashed selection outline width in pixels.
+ */
+const DASHED_SELECTION_LINE_WIDTH = 1;
+
+/**
+ * Padding around selected bar columns for dashed selection outlines.
+ */
+const DASHED_SELECTION_PADDING = 5;
+
+/**
+ * Enables full-height click selection on bar charts.
+ * - false: keep default behavior (must click on chart element)
+ * - true: clicking anywhere vertically at a bar X position selects that bar
+ */
+const FULL_CLICK = true;
+
+/**
+ * Enables padded hover hitboxes for bars.
+ * - false: keep default hover behavior
+ * - true: hover can be detected within an expanded rectangle around bars
+ */
+const FULL_HOVER = false;
+
+/**
+ * Extra hover hitbox padding in pixels.
+ * Uses dashed selection padding so hover area matches selection frame size.
+ */
+const HOVER_HITBOX_PADDING = DASHED_SELECTION_PADDING;
 
 /**
  * Service to manage Chart.js operations and configurations.
@@ -113,7 +163,8 @@ export class ChartManagerService {
           if (this.selectedBarIndex === undefined) return;
           const ctx = chart.ctx;
           ctx.save();
-          ctx.shadowColor = 'rgba(0, 0, 0, 0.3)';
+          // ctx.shadowColor = 'rgba(0, 0, 0, 0.3)';
+          ctx.shadowColor = 'rgba(0, 0, 0, 0)';
           ctx.shadowBlur = 2;
           ctx.shadowOffsetX = 0;
           ctx.shadowOffsetY = 2;
@@ -156,6 +207,196 @@ export class ChartManagerService {
         },
       };
 
+      const dashedSelectionPlugin = {
+        id: 'dashedSelection',
+        afterDatasetsDraw: (chart: ChartJs.Chart) => {
+          if (!DASHED_SELECTION || this.selectedBarIndex === undefined) {
+            return;
+          }
+
+          const ctx = chart.ctx;
+          const chartArea = chart.chartArea;
+          if (!chartArea) {
+            return;
+          }
+
+          ctx.save();
+          ctx.strokeStyle = DASHED_SELECTION_COLOR;
+          ctx.lineWidth = DASHED_SELECTION_LINE_WIDTH;
+          ctx.setLineDash([4, 3]);
+
+          const selectedBars: any[] = [];
+
+          for (let i = 0; i < chart.data.datasets.length; i++) {
+            const meta = chart.getDatasetMeta(i);
+            if (meta.type !== CHART_TYPES.BAR) {
+              continue;
+            }
+            if (meta.hidden) {
+              continue;
+            }
+
+            // @ts-ignore
+            const el = meta.data[this.selectedBarIndex] as any;
+            if (!el) {
+              continue;
+            }
+
+            selectedBars.push(el);
+          }
+
+          if (selectedBars.length > 0) {
+            const left = Math.min(
+              ...selectedBars.map((bar) => bar.x - bar.width / 2),
+            );
+            const right = Math.max(
+              ...selectedBars.map((bar) => bar.x + bar.width / 2),
+            );
+
+            const x = left - DASHED_SELECTION_PADDING;
+            const width = right - left + DASHED_SELECTION_PADDING * 2;
+            const y = DASHED_SELECTION_FULL
+              ? chartArea.top - DASHED_SELECTION_PADDING
+              : Math.min(...selectedBars.map((bar) => bar.y)) -
+                DASHED_SELECTION_PADDING;
+            const bottom = DASHED_SELECTION_FULL
+              ? chartArea.bottom + DASHED_SELECTION_PADDING
+              : Math.max(...selectedBars.map((bar) => bar.base)) +
+                DASHED_SELECTION_PADDING;
+            const height = Math.max(1, bottom - y);
+
+            ctx.strokeRect(x, y, width, height);
+          }
+
+          ctx.restore();
+        },
+      };
+
+      const hoverPaddingPlugin = {
+        id: 'hoverPadding',
+        afterEvent: (
+          chart: ChartJs.Chart,
+          args: {
+            event: ChartEvent;
+            replay: boolean;
+            changed?: boolean;
+            cancelable: false;
+            inChartArea: boolean;
+          },
+        ) => {
+          if (!FULL_HOVER) {
+            return;
+          }
+
+          const event = args.event;
+          if (!event) {
+            return;
+          }
+
+          if (event.type !== 'mousemove' && event.type !== 'mouseout') {
+            return;
+          }
+
+          const clearHover = () => {
+            chart.setActiveElements([]);
+            chart.tooltip?.setActiveElements([], { x: 0, y: 0 });
+            args.changed = true;
+          };
+
+          if (event.type === 'mouseout') {
+            clearHover();
+            return;
+          }
+
+          if (typeof event.x !== 'number' || typeof event.y !== 'number') {
+            return;
+          }
+
+          const chartArea = chart.chartArea;
+          if (!chartArea) {
+            return;
+          }
+
+          const visibleBarMetas: Array<{ datasetIndex: number; meta: any }> =
+            [];
+          for (let i = 0; i < chart.data.datasets.length; i++) {
+            const meta = chart.getDatasetMeta(i);
+            if (meta.type !== CHART_TYPES.BAR || meta.hidden) {
+              continue;
+            }
+            visibleBarMetas.push({ datasetIndex: i, meta });
+          }
+
+          if (visibleBarMetas.length === 0) {
+            return;
+          }
+
+          const labelCount = chart.data.labels?.length ?? 0;
+          let hoveredIndex: number | undefined;
+
+          for (let index = 0; index < labelCount; index++) {
+            const bars: any[] = [];
+            for (const { meta } of visibleBarMetas) {
+              const bar = meta.data[index];
+              if (bar) {
+                bars.push(bar);
+              }
+            }
+
+            if (bars.length === 0) {
+              continue;
+            }
+
+            const left =
+              Math.min(...bars.map((bar) => bar.x - bar.width / 2)) -
+              HOVER_HITBOX_PADDING;
+            const right =
+              Math.max(...bars.map((bar) => bar.x + bar.width / 2)) +
+              HOVER_HITBOX_PADDING;
+            const top = DASHED_SELECTION_FULL
+              ? chartArea.top - HOVER_HITBOX_PADDING
+              : Math.min(...bars.map((bar) => bar.y)) - HOVER_HITBOX_PADDING;
+            const bottom = DASHED_SELECTION_FULL
+              ? chartArea.bottom + HOVER_HITBOX_PADDING
+              : Math.max(...bars.map((bar) => bar.base)) + HOVER_HITBOX_PADDING;
+
+            if (
+              event.x >= left &&
+              event.x <= right &&
+              event.y >= top &&
+              event.y <= bottom
+            ) {
+              hoveredIndex = index;
+              break;
+            }
+          }
+
+          if (hoveredIndex === undefined) {
+            clearHover();
+            return;
+          }
+
+          const activeElements: ActiveDataPoint[] = visibleBarMetas
+            .filter(({ meta }) => !!meta.data[hoveredIndex!])
+            .map(({ datasetIndex }) => ({
+              datasetIndex,
+              index: hoveredIndex!,
+            }));
+
+          if (activeElements.length === 0) {
+            clearHover();
+            return;
+          }
+
+          chart.setActiveElements(activeElements);
+          chart.tooltip?.setActiveElements(activeElements, {
+            x: event.x,
+            y: event.y,
+          });
+          args.changed = true;
+        },
+      };
+
       let options: ChartOptions = createDefaultChartOptions({
         color: this.color,
         fontColor: this.fontColor,
@@ -164,6 +405,32 @@ export class ChartManagerService {
 
       // Merge chart options
       options = UtilsService.mergeDeep(options, chartOptions);
+
+      // When FULL_CLICK is enabled, keep default click behavior first;
+      // if no element is hit, fallback to X-axis index detection.
+      options.onClick = (
+        event: ChartEvent,
+        items: ActiveElement[],
+        chart: ChartJs.Chart,
+      ) => {
+        if (!FULL_CLICK || items.length > 0) {
+          graphClickEvent(event, items);
+          return;
+        }
+
+        const fullHeightItems = chart.getElementsAtEventForMode(
+          event as unknown as Event,
+          'index',
+          {
+            axis: 'x',
+            intersect: false,
+          },
+          false,
+        ) as ActiveElement[];
+
+        graphClickEvent(event, fullHeightItems);
+      };
+
       ChartJs.Chart.register.apply(
         null,
         // @ts-ignore
@@ -175,7 +442,12 @@ export class ChartManagerService {
         type: type,
         data: data,
         options: options,
-        plugins: [shadowPlugin, chartAreaBorder],
+        plugins: [
+          shadowPlugin,
+          chartAreaBorder,
+          dashedSelectionPlugin,
+          hoverPaddingPlugin,
+        ],
       };
       this.chart = new ChartJs.Chart(ctx, config);
       return true;
@@ -309,17 +581,24 @@ export class ChartManagerService {
     selectedLineChartItem?: string,
   ): void {
     if (this.chart && enableSelection) {
+      this.selectedBarIndex = index;
       if (inputDatas) {
         this.colorize(inputDatas, colorSet, selectedLineChartItem);
       }
-      this.selectedBarIndex = index;
       for (let i = 0; i < this.chart.data.datasets.length; i++) {
         const dataset = <ChartDatasetModel>this.chart.data.datasets[i];
         if (index !== undefined) {
-          dataset.borderColor![index] = this.barColor;
+          if (!DASHED_SELECTION) {
+            dataset.borderColor![index] = this.barColor;
+            if (
+              dataset.type !== CHART_TYPES.LINE &&
+              Array.isArray(dataset.borderWidth)
+            ) {
+              dataset.borderWidth[index] = 2;
+            }
+          }
         }
         dataset.borderSkipped = false;
-        dataset.borderWidth = 2;
       }
     }
   }
@@ -381,18 +660,25 @@ export class ChartManagerService {
           dataset.borderWidth = 2;
         }
 
-        dataset.backgroundColor = new Array(inputDatas.labels.length).fill(
-          UtilsService.hexToRGBa(colorSet?.domain[i]!, 0.7),
-        );
+        const baseColor = colorSet?.domain[i]!;
+        if (dataset.type === CHART_TYPES.LINE) {
+          dataset.backgroundColor = new Array(inputDatas.labels.length).fill(
+            UtilsService.hexToRGBa(baseColor, 0.7),
+          );
+        } else {
+          dataset.backgroundColor = new Array(inputDatas.labels.length).fill(
+            UtilsService.hexToRGBa(baseColor, 0.7),
+          );
+        }
         const defaultGroupIndex = dataset.extra?.findIndex(
           (e: ChartDatasetExtra) => e.defaultGroupIndex,
         );
         // Apply hatching for default group index bar, keeping the same base color
         if (defaultGroupIndex !== -1 && defaultGroupIndex !== undefined) {
-          const baseColor = UtilsService.hexToRGBa(colorSet?.domain[i]!, 0.7);
+          const hatchColor = UtilsService.hexToRGBa(baseColor, 0.7);
           // @ts-ignore
           dataset.backgroundColor[defaultGroupIndex] = this.createHatchPattern(
-            baseColor ?? '',
+            hatchColor ?? '',
           );
         }
         // Selected bar gets full opacity
@@ -400,13 +686,16 @@ export class ChartManagerService {
           const index = this.selectedBarIndex;
           if (index === defaultGroupIndex) {
             // Selected default group bar: full opacity with hatching
-            const fullColor = UtilsService.hexToRGBa(colorSet?.domain[i]!, 1);
+            const fullColor = UtilsService.hexToRGBa(baseColor, 1);
             // @ts-ignore
             (dataset.backgroundColor as (string | CanvasPattern)[])[index] =
               this.createHatchPattern(fullColor ?? '');
+          } else if (dataset.type === CHART_TYPES.LINE) {
+            (dataset.backgroundColor as string[])[index] =
+              UtilsService.hexToRGBa(baseColor, 1) ?? '';
           } else {
             (dataset.backgroundColor as string[])[index] =
-              UtilsService.hexToRGBa(colorSet?.domain[i]!, 1) ?? '';
+              UtilsService.hexToRGBa(baseColor, 1) ?? '';
           }
         }
 
@@ -426,8 +715,40 @@ export class ChartManagerService {
         }
 
         dataset.borderColor = new Array(inputDatas.labels.length).fill(
-          UtilsService.hexToRGBa(colorSet?.domain[i]!, borderOpacity),
+          UtilsService.hexToRGBa(baseColor, borderOpacity),
         );
+
+        if (dataset.type !== CHART_TYPES.LINE) {
+          // Only draw a border on the selected bar and the default group bar
+          const barBorderWidth = new Array(inputDatas.labels.length).fill(0);
+          if (defaultGroupIndex !== -1 && defaultGroupIndex !== undefined) {
+            barBorderWidth[defaultGroupIndex] = 2;
+          }
+          if (!DASHED_SELECTION && this.selectedBarIndex !== undefined) {
+            barBorderWidth[this.selectedBarIndex] = 2;
+          }
+          dataset.borderWidth = barBorderWidth;
+
+          // Chart.js expects a corner object; only convert once, the array/number form is the source of truth
+          if (Array.isArray(dataset.borderRadius)) {
+            const [topLeft, topRight, bottomLeft, bottomRight] =
+              dataset.borderRadius;
+            dataset.borderRadius = {
+              topLeft: topLeft ?? 0,
+              topRight: topRight ?? 0,
+              bottomLeft: bottomLeft ?? 0,
+              bottomRight: bottomRight ?? 0,
+            };
+          } else if (typeof dataset.borderRadius === 'number') {
+            const radius = dataset.borderRadius;
+            dataset.borderRadius = {
+              topLeft: radius,
+              topRight: radius,
+              bottomLeft: 0,
+              bottomRight: 0,
+            };
+          }
+        }
       }
     }
   }

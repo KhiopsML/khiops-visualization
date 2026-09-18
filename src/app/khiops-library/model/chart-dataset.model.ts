@@ -6,6 +6,14 @@
 
 import { CHART_TYPES } from '@khiops-library/enum/chart-types';
 
+// Chart.js corner-radius object consumed by the bar controller
+export interface ChartCornerRadius {
+  topLeft: number;
+  topRight: number;
+  bottomLeft: number;
+  bottomRight: number;
+}
+
 export class ChartDatasetModel {
   label: string | undefined;
   data: any = [];
@@ -14,8 +22,8 @@ export class ChartDatasetModel {
   fill: boolean = false;
   borderSkipped: boolean = false;
   type: string; // By default
-  borderWidth!: number;
-  // maxBarThickness: number = 50;
+  borderWidth!: number | number[];
+  borderRadius: number | number[] | ChartCornerRadius = [0, 0, 0, 0];
   maxBarThickness!: number;
   barThickness!: number;
   barPercentage!: number;
