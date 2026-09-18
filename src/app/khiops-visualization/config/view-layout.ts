@@ -10,7 +10,7 @@ export const VIEW_LAYOUT = {
   },
   preparationView: {
     row: [25, 75],
-    row0Col: [35, 35, 30],
+    row0Col: [40, 30, 30],
     row1Col: [60, 40],
     row1Col0Row: [80, 20],
     row1Col1Row: [80, 20],
@@ -19,7 +19,7 @@ export const VIEW_LAYOUT = {
   treePreparationView: {
     col: [70, 30],
     col0Row: [20, 40, 40],
-    col0Row0Col: [33, 34, 33],
+    col0Row0Col: [40, 30, 30],
     col0Row1Col: [60, 40],
     col0Row2Col: [30, 70],
     col0Row2Col1Row: [50, 50],
@@ -28,7 +28,7 @@ export const VIEW_LAYOUT = {
   },
   preparation2dView: {
     row: [25, 75],
-    row0Col: [100],
+    row0Col: [40, 30, 30],
     row1Col: [60, 40],
     row1Col0Row: [100],
     row1Col1Row: [80, 20],
@@ -36,7 +36,7 @@ export const VIEW_LAYOUT = {
   },
   modelingView: {
     row: [25, 75],
-    row0Col: [35, 35, 30],
+    row0Col: [40, 30, 30],
     row1Col: [60, 40],
     row1Col0Row: [80, 20],
     row1Col1Row: [60, 40],
