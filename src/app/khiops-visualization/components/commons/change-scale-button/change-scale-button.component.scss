@@ -5,17 +5,9 @@
  */
 
 .app-change-scale-button {
-  h2 {
-    font-size: 0.95em;
-  }
-  button {
-    height: 33px !important;
-    min-width: 34px !important;
-    width: 34px !important;
-    padding: 0 !important;
-    margin-right: 10px !important;
-    mat-icon {
-      font-size: 20px !important;
-    }
+  width: 100% !important;
+  background: var(--color-50);
+  svg {
+    margin-right: 5px;
   }
 }

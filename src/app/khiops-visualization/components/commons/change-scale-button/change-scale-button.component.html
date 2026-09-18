@@ -4,21 +4,14 @@
  * at https://spdx.org/licenses/BSD-3-Clause-Clear.html or see the "LICENSE" file for more details.
  -->
 
-<div
-  fxLayout="row"
+<button
+  class="app-change-scale-button lucid-icon-button"
+  id="change-scale-button"
   fxFlexFill
-  fxLayoutAlign="start center"
-  class="app-change-scale-button"
+  mat-stroked-button
+  (click)="openChangeScaleDialog()"
+  matTooltip="{{ 'GLOBAL.CHANGE_ALL_SCALES_TOOLTIP' | translate }}"
 >
-  <h2 fxFlex>{{ 'GLOBAL.CHANGE_ALL_SCALES' | translate }}</h2>
-  <button
-    id="change-scale-button"
-    mat-stroked-button
-    (click)="openChangeScaleDialog()"
-    matTooltip="{{ 'GLOBAL.CHANGE_ALL_SCALES_TOOLTIP' | translate }}"
-  >
-    <mat-icon fxLayoutAlign="center center" matTooltipPosition="above"
-      >tune</mat-icon
-    >
-  </button>
-</div>
+  <svg lucideIcon="sliders-vertical" size="16"></svg>
+  <span fxFlex>{{ 'GLOBAL.CHANGE_ALL_SCALES' | translate }}</span>
+</button>

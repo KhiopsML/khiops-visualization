@@ -19,8 +19,8 @@ import { VariableScaleSettingsService } from '@khiops-visualization/providers/va
 import { FlexModule } from '@angular/flex-layout';
 import { TranslateModule } from '@ngstack/translate';
 import { MatTooltipModule } from '@angular/material/tooltip';
-import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
+import { LucideDynamicIcon } from '@lucide/angular';
 
 @Component({
   selector: 'app-change-scale-button',
@@ -30,7 +30,7 @@ import { MatButtonModule } from '@angular/material/button';
     FlexModule,
     TranslateModule,
     MatTooltipModule,
-    MatIconModule,
+    LucideDynamicIcon,
     MatButtonModule,
   ],
 })
