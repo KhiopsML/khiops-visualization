@@ -1,0 +1,55 @@
+<!--
+ * Copyright (c) 2023-2026 Orange. All rights reserved.
+ * This software is distributed under the BSD 3-Clause-clear License, the text of which is available
+ * at https://spdx.org/licenses/BSD-3-Clause-Clear.html or see the "LICENSE" file for more details.
+ -->
+
+<form
+  matRipple
+  fxLayoutAlign="start center"
+  class="search-input-btn"
+  [class.full-search]="fullSearch"
+  (submit)="$event.preventDefault()"
+>
+  @if (!visible) {
+    <button
+      type="button"
+      class="lucid-icon-button"
+      mat-stroked-button
+      attr.aria-label="{{ 'ARIA.AG_GRID.OPEN_SEARCH_INPUT' | translate }}"
+      matTooltip="{{ 'ARIA.AG_GRID.OPEN_SEARCH_INPUT' | translate }}"
+      matTooltipPosition="above"
+      (click)="open()"
+    >
+      <svg lucideIcon="search" [size]="16"></svg>
+    </button>
+  } @else {
+    <button
+      type="button"
+      class="lucid-icon-button"
+      mat-icon-button
+      disabled
+      attr.aria-label="{{ 'ARIA.AG_GRID.OPEN_SEARCH_INPUT' | translate }}"
+    >
+      <svg lucideIcon="search" [size]="16"></svg>
+    </button>
+    <input
+      #searchInputEl
+      name="searchInput"
+      placeholder="{{ 'GLOBAL.SEARCH' | translate }}"
+      [ngModel]="search"
+      (ngModelChange)="updateSearch($event)"
+      autocomplete="off"
+    />
+    <button
+      type="button"
+      attr.aria-label="{{ 'ARIA.AG_GRID.CLOSE_SEARCH_INPUT' | translate }}"
+      mat-icon-button
+      class="lucid-icon-button"
+      color="primary"
+      (click)="close()"
+    >
+      <mat-icon fxFlexFill fxLayoutAlign="center center">close</mat-icon>
+    </button>
+  }
+</form>

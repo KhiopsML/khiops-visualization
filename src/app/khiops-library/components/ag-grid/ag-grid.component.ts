@@ -13,7 +13,6 @@ import {
   ViewChild,
   SimpleChanges,
   OnChanges,
-  ElementRef,
   NgZone,
   ChangeDetectionStrategy,
 } from '@angular/core';
@@ -66,11 +65,6 @@ export class AgGridComponent
     static: false,
   })
   private agGrid: AgGridAngular | undefined;
-
-  @ViewChild('searchInputEl', {
-    static: false,
-  })
-  private searchInputEl: ElementRef | undefined;
 
   @Input() public inputDatas: any | any[] | undefined; // Can be any types of datas
   @Input() public displayedColumns: GridColumnsI[] | undefined;
@@ -202,13 +196,6 @@ export class AgGridComponent
         this.agGrid!.api.sizeColumnsToFit();
       }
       this.updateColumnFilterBadge();
-
-      if (this.showFullSearch) {
-        // set min size of .search-input-btn
-        if (this.searchInputEl) {
-          this.searchInputEl.nativeElement.style.minWidth = '160px';
-        }
-      }
     });
   }
 
@@ -578,7 +565,6 @@ export class AgGridComponent
   /**
    * Toggles the visibility of the search form.
    * Adjusts the div width and checks if it is small.
-   * Sets the focus on the search input element after a short delay.
    */
   showSearchForm() {
     this.searchFormVisible = true;
@@ -590,13 +576,6 @@ export class AgGridComponent
     }
 
     this.checkIsSmallDiv();
-
-    setTimeout(() => {
-      if (this.searchInputEl) {
-        this.searchInputEl.nativeElement.style.width = '100px'; // For animation
-        this.searchInputEl.nativeElement.focus();
-      }
-    });
   }
 
   /**

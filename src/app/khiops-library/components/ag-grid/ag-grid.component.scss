@@ -18,55 +18,19 @@
     .comp-header-tools {
       .mdc-button--unelevated {
         height: 33px !important;
-        min-width: 34px !important;
-        width: 34px !important;
+        min-width: var(--ag-row-height) !important;
+        width: var(--ag-row-height) !important;
         padding: 0 !important;
         margin-right: 5px !important;
         mat-icon {
           font-size: 18px !important;
         }
       }
-
-      ::ng-deep .search-input-btn {
-        border-radius: 4px;
-        margin-right: 5px;
-        transition: width 2s;
-        margin-left: 10px;
-        border: 1px solid var(--color-800);
-        max-height: 32px;
-        min-width: 34px;
-
-        button {
-          height: 32px;
-          width: 34px;
-          margin: 0;
-          display: flex;
-          padding: 8px 6px !important;
-        }
-
-        ::-webkit-input-placeholder {
-          font-style: italic;
-        }
-
-        input {
-          padding-right: 10px;
-          border: none;
-          border-width: 0;
-          box-shadow: none;
-          outline: none;
-          background: transparent;
-          transition: width 0.2s ease-in-out;
-          width: 0px;
-          height: 25px;
-          margin-top: 2px;
-          padding-top: 2px;
-        }
-      }
     }
 
     button {
-      min-width: 34px !important;
-      max-width: 34px !important;
+      // min-width: 34px !important;
+      // max-width: 34px !important;
       padding: 0 1rem;
     }
   }
@@ -80,6 +44,7 @@
   ::ng-deep .ag-right-aligned-cell {
     text-align: right !important;
     justify-content: flex-end !important;
+    color: #006433 !important;
   }
   // Header alignment styles
   ::ng-deep .ag-left-aligned-header .ag-header-cell-text {
