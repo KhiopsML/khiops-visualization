@@ -103,7 +103,7 @@ export class InformationsBlockComponent
    */
   private updateGaugeSize() {
     if (typeof window !== 'undefined') {
-      const newSize = UtilsService.isSmallScreen() ? 60 : 70;
+      const newSize = UtilsService.isSmallScreen() ? 60 : 60;
       if (this.gaugeSize() !== newSize) {
         this.gaugeSize.set(newSize);
       }

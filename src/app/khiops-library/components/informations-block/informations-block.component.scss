@@ -34,11 +34,13 @@
 
   .informations-main-values {
     background: var(--color-50);
-    margin: 0 10px;
     border-radius: var(--border-radius);
     border: 1px solid var(--color-border-subtle);
     padding: 7px;
     flex: 1;
+      padding: 2px !important;
+      margin: 0 5px !important;
+      min-height: 60px !important;
     strong {
       padding: 0 5px;
       text-align: center;

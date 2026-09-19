@@ -76,11 +76,11 @@
                 [ngClass]="{
                   'important-badge':
                     data.type === INFO_DATA_TYPES.LEARNING_TASK,
-                  'important-badge-orange':
-                    data.type === INFO_DATA_TYPES.TARGET_VARIABLE,
                 }"
                 class="font-code"
               >
+                <!-- 'important-badge-orange':
+                    data.type === INFO_DATA_TYPES.TARGET_VARIABLE, -->
                 {{ data.value | toPrecision }}
               </em>
             </td>
