@@ -500,6 +500,21 @@ export class ChartManagerService {
         this.chart.data.datasets = inputDatas.datasets;
         this.chart.data.labels = inputDatas.labels;
 
+        const hasVisibleXLabels = inputDatas.labels.some(
+          (label) => String(label ?? '').trim().length > 0,
+        );
+
+        // Hide X ticks when labels are empty to reclaim bottom area for plot.
+        const xScale = this.chart.options.scales?.['x'] as
+          { ticks?: Record<string, unknown> } | undefined;
+        if (xScale?.ticks) {
+          const xTicks = xScale.ticks as Record<string, unknown>;
+          xTicks.display = hasVisibleXLabels;
+          xTicks.autoSkipPadding = hasVisibleXLabels ? 5 : 0;
+          xTicks.maxRotation = 0;
+          xTicks.minRotation = 0;
+        }
+
         if (activeEntries !== undefined) {
           this.selectedBarIndex = activeEntries;
         }
