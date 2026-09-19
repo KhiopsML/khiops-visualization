@@ -72,17 +72,39 @@
               <strong>{{ data.title | translate }}</strong>
             </th>
             <td scope="col">
-              <em
-                [ngClass]="{
-                  'important-badge':
-                    data.type === INFO_DATA_TYPES.LEARNING_TASK,
-                }"
-                class="font-code"
-              >
-                <!-- 'important-badge-orange':
-                    data.type === INFO_DATA_TYPES.TARGET_VARIABLE, -->
-                {{ data.value | toPrecision }}
-              </em>
+              @if (data.title === INFO_DATA_TYPES.DATABASE) {
+                <div class="database-value">
+                  <em [title]="data.value">
+                    <span class="path-prefix font-code">{{
+                      getPathPrefix(data.value)
+                    }}</span>
+                    <span class="path-name font-code">{{
+                      getPathName(data.value)
+                    }}</span>
+                  </em>
+                  <button
+                    type="button"
+                    class="database-copy-button lucid-icon-button"
+                    (click)="copyDatabasePath(data.value)"
+                    aria-label="Copy database path"
+                    title="Copy database path"
+                  >
+                    <svg lucideIcon="copy" size="12"></svg>
+                  </button>
+                </div>
+              } @else {
+                <em
+                  [ngClass]="{
+                    'important-badge':
+                      data.type === INFO_DATA_TYPES.LEARNING_TASK,
+                  }"
+                  class="font-code"
+                >
+                  <!-- 'important-badge-orange':
+                      data.type === INFO_DATA_TYPES.TARGET_VARIABLE, -->
+                  {{ data.value | toPrecision }}
+                </em>
+              }
             </td>
           </tr>
         }

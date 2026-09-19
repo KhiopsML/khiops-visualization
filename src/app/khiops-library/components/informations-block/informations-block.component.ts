@@ -182,4 +182,26 @@ export class InformationsBlockComponent
     const numValue = parseFloat(value);
     return isNaN(numValue) ? 0 : Math.max(0, Math.min(100, numValue));
   }
+
+  getPathPrefix(value: unknown): string {
+    const path = String(value ?? '');
+    const separatorIndex = Math.max(
+      path.lastIndexOf('\\'),
+      path.lastIndexOf('/'),
+    );
+    return separatorIndex < 0 ? '' : path.slice(0, separatorIndex);
+  }
+
+  getPathName(value: unknown): string {
+    const path = String(value ?? '');
+    const separatorIndex = Math.max(
+      path.lastIndexOf('\\'),
+      path.lastIndexOf('/'),
+    );
+    return separatorIndex < 0 ? path : path.slice(separatorIndex);
+  }
+
+  copyDatabasePath(value: unknown): void {
+    navigator.clipboard.writeText(String(value ?? ''));
+  }
 }
