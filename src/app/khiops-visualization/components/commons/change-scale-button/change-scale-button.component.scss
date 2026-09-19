@@ -5,8 +5,8 @@
  */
 
 .app-change-scale-button {
-  width: 100% !important;
-  background: var(--color-50);
+  width: auto !important;
+  float: right;
   svg {
     margin-right: 5px;
   }

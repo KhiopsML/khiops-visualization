@@ -154,6 +154,7 @@
         <div id="header-right" fxLayoutAlign="start center" layout="row">
           <div fxLayoutAlign="center center" fxLayout="row">
             @if (appDatas && isCompatibleJson) {
+              <app-change-scale-button></app-change-scale-button>
               <kl-header-tools
                 (toggleNavDrawerChanged)="onToggleNavDrawerChanged($event)"
               >

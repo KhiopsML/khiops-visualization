@@ -71,6 +71,7 @@ import {
   LucideLayers2,
   LucideLayers,
   LucideGrid3x3,
+  LucideScale3d,
 } from '@lucide/angular';
 
 // Component imports
@@ -225,6 +226,7 @@ import EnTransaltion from '../../assets/i18n/en.json';
       LucideChartColumnBig,
       LucideSquareKanban,
       LucideSlidersVertical,
+      LucideScale3d,
       LucideExpand,
       LucideShrink,
       LucideUnfoldHorizontal,
