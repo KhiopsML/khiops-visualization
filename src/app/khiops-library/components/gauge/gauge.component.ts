@@ -12,7 +12,7 @@ import { Component, computed, input, numberAttribute } from '@angular/core';
   styleUrls: ['./gauge.component.scss'],
 })
 export class GaugeComponent {
-  private static readonly defaultSize = 60;
+  private static readonly defaultSize = 56;
   private static readonly minStrokeWidth = 2;
   readonly fontSize = 16;
 
