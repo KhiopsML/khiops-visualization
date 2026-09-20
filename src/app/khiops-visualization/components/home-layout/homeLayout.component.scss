@@ -8,8 +8,8 @@
 #home-layout-comp {
   #header-right {
     position: absolute;
-    top: 0;
-    right: 5px;
+    top: 15px;
+    right: 15px;
     height: var(--header-height);
     z-index: 1000;
 
@@ -23,9 +23,8 @@
   }
 
   #main-tab-group {
-    background-color: var(--color-0);
     > ::ng-deep .mat-mdc-tab-header {
-      margin: 0 auto 0px auto;
+      margin: 15px auto 0px auto;
       max-width: calc(100% - 400px);
     }
     > .mat-mdc-tab-body-wrapper {

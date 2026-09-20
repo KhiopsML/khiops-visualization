@@ -10,7 +10,7 @@
     > ::ng-deep .mat-mdc-tab-header {
       max-width: calc(100% - 600px);
       min-width: 200px !important;
-      margin: 0 auto 0px auto;
+      margin: 15px auto 0px auto;
     }
     > ::ng-deep .mat-mdc-tab-body-wrapper {
       padding: 0 !important;
@@ -21,8 +21,8 @@
   }
   #header-right {
     position: absolute;
-    top: 0;
-    right: 5px;
+    top: 15px;
+    right: 15px;
     height: var(--header-height);
     z-index: 1000;
   }
@@ -37,14 +37,14 @@
     width: 100%;
     top: 0;
     position: absolute;
-    background-color: var(--color-0);
+    // background-color: var(--color-0);
   }
 
   app-project-view,
   app-axis-view {
     background: var(--color-50) !important;
     padding: var(--layout-padding);
-    margin-top: calc(var(--header-height));
+    margin-top: calc(var(--header-height) + var(--layout-padding));
     top: 0;
     position: absolute;
     width: calc(100% - var(--layout-padding) - var(--layout-padding));

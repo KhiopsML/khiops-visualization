@@ -371,6 +371,7 @@ button {
     font-weight: 400 !important;
     border-radius: 0 !important;
     white-space: nowrap;
+    font-size: 12px !important;
     color: var(--color-800) !important;
   }
 }
@@ -528,7 +529,7 @@ mat-checkbox.kl-checkbox {
 }
 
 app-change-scale-button {
-  margin-top: 10px;
+  // margin-top: 10px;
 }
 
 .header-panel-contrast {
