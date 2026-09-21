@@ -42,6 +42,7 @@ import { TranslateModule, TranslateService } from '@ngstack/translate';
 import { AgGridModule } from '@ag-grid-community/angular';
 import { AngularSplitModule } from 'angular-split';
 import {
+  LucideFolderTree,
   LucideDynamicIcon,
   LucideSearch,
   LucideChartColumn,
@@ -221,6 +222,7 @@ import EnTransaltion from '../../assets/i18n/en.json';
     TranslateService,
     DialogService,
     provideLucideIcons(
+      LucideFolderTree,
       LucideSearch,
       LucideChartColumn,
       LucideChartColumnBig,
