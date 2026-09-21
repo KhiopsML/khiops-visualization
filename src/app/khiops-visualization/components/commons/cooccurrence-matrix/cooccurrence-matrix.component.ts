@@ -64,8 +64,10 @@ export class CooccurrenceMatrixComponent implements OnChanges, AfterViewInit {
   public matrixCells?: CooccurrenceCellsModel;
   public minMaxValues?: MatrixRangeValuesI;
   public isFullscreen = false;
+  public selectedMatrixTabIndex = 0;
 
   private readonly DEFAULT_CELL_INDEX = 0;
+  private readonly MATRIX_TAB_INDEX = 0;
   private readonly CELLS_TAB_INDEX = 1;
 
   constructor(
@@ -137,7 +139,9 @@ export class CooccurrenceMatrixComponent implements OnChanges, AfterViewInit {
         const restoreIndex = sessionCellIndex ?? this.DEFAULT_CELL_INDEX;
         this.preparation2dDatasService.setSelectedCellIndex(restoreIndex);
       } else {
-        this.preparation2dDatasService.setSelectedCellIndex(this.DEFAULT_CELL_INDEX);
+        this.preparation2dDatasService.setSelectedCellIndex(
+          this.DEFAULT_CELL_INDEX,
+        );
         this.graphSelectionSessionService.setSelectedMatrixCellIndex(
           this.selectionScope,
           this.DEFAULT_CELL_INDEX,
@@ -152,7 +156,9 @@ export class CooccurrenceMatrixComponent implements OnChanges, AfterViewInit {
       // initialize with restored or default cell index
       this.onCellSelected({
         datas: {
-          index: this.preparation2dDatas?.selectedCellIndex ?? this.DEFAULT_CELL_INDEX,
+          index:
+            this.preparation2dDatas?.selectedCellIndex ??
+            this.DEFAULT_CELL_INDEX,
         },
       });
     }
@@ -174,18 +180,41 @@ export class CooccurrenceMatrixComponent implements OnChanges, AfterViewInit {
    * @param e The event containing the selected tab index
    */
   onSelectedMatrixTabChanged(e: { index: number }) {
+    this.selectedMatrixTabIndex = e.index;
     const rootElement = this.configService.getRootElementDom();
     const matrixOptionsToggle = rootElement?.querySelector<HTMLElement>(
       '#matrix-option-toggle',
     );
 
+    if (!matrixOptionsToggle) {
+      return;
+    }
+
     if (e.index === this.CELLS_TAB_INDEX) {
-      matrixOptionsToggle!.style.display = 'none';
+      matrixOptionsToggle.style.display = 'none';
     } else {
-      matrixOptionsToggle!.style.display = 'flex';
+      matrixOptionsToggle.style.display = 'flex';
 
       // Redraw matrix otherwise it is empty
       this.matrix?.drawMatrix();
+    }
+  }
+
+  /**
+   * Select matrix tab from custom toolbar controls.
+   * @param index The tab index to open
+   */
+  selectMatrixTab(index: number): void {
+    if (this.selectedMatrixTabIndex === index) {
+      return;
+    }
+
+    this.selectedMatrixTabIndex = index;
+
+    if (index === this.MATRIX_TAB_INDEX) {
+      setTimeout(() => {
+        this.matrix?.drawMatrix();
+      });
     }
   }
 

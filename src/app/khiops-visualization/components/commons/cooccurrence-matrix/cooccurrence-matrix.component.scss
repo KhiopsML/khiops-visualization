@@ -7,15 +7,45 @@
 #cooccurrence-matrix-comp {
   position: relative;
   .cooccurrence-matrix-tools {
-    position: absolute;
-    right: 1px !important;
     padding-right: 0 !important;
     z-index: 1000;
-    margin-top: 5px;
     padding: 5px;
     background: var(--color-0);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    > div {
+      overflow-y: hidden;
+      overflow-x: auto;
+    }
+    .matrix-tabs-tools {
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      gap: 2px;
+      margin-right: 10px;
+
+      .matrix-tab-btn {
+        min-width: auto;
+        border-radius: 0 !important;
+        color: var(--color-600);
+        border-bottom: var(--mat-tab-active-indicator-height) solid transparent !important;
+      }
+
+      .active-tab {
+        color: var(--color-brand-orange) !important;
+        border-bottom: var(--mat-tab-active-indicator-height) solid
+          var(--color-brand-orange) !important;
+      }
+    }
+
+    kl-matrix-toggle {
+      margin-left: auto;
+    }
+
     kl-btn-fullscreen {
-      margin-right: 4px;
+      margin-right: 0.4rem;
     }
   }
   .mat-tab-group {
@@ -37,7 +67,7 @@
   }
 
   ::ng-deep .mat-mdc-tab-header {
-    height: 40px !important;
+    display: none !important;
   }
 
   ::ng-deep .mat-mdc-tab-labels {
@@ -54,6 +84,7 @@
 
 #cooccurrence-matrix-comp.fullscreen {
   .cooccurrence-matrix-tools {
+    left: 15px !important;
     right: 15px !important;
   }
 }
