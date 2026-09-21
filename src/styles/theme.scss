@@ -6,7 +6,8 @@
 
 .mat-app-background {
   // Set the base font size to 13px
-  font-size: clamp(0.6875rem, 0.75vw, 0.8125rem);
+  font-size: 13px;
+  //  font-size: clamp(0.75rem, 0.7rem + 0.2vw, 0.9rem);
 }
 :root {
   --mat-tab-active-indicator-height: 2px;
@@ -31,6 +32,17 @@
   --color-600: #6d778f;
   --color-800: #393f4d;
   --color-1000: #0f172a;
+  // --color-0: #ffffff;
+  // --color-50: #f8fafc;
+  // --color-100: #e2e8f0;
+  // --color-150: #cbd5e1;
+  // --color-200: #b4c0d2;
+  // --color-300: #9aa8c0;
+  // --color-400: #8390aa;
+  // --color-500: #77839b;
+  // --color-600: #6d778f;
+  // --color-800: #393f4d;
+  // --color-1000: #0f172a;
 
   --color-brand-orange: #ff6600;
   --color-brand-orange-dark: #531212;
@@ -50,6 +62,8 @@
   --color-selected-row: #ecf1f7;
   --color-border-row-size: 3px;
   --color-selected-row-font: #0f172a;
+
+  --mat-button-toggle-divider-color: #dcdcdc;
 }
 
 :host ::ng-deep .ag-theme-balham {

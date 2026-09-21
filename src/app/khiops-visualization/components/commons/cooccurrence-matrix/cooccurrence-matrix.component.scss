@@ -11,7 +11,8 @@
     right: 1px !important;
     padding-right: 0 !important;
     z-index: 1000;
-    margin-top: 0.5rem;
+    margin-top: 5px;
+    padding: 5px;
     background: var(--color-0);
     kl-btn-fullscreen {
       margin-right: 4px;
@@ -22,7 +23,7 @@
   }
 
   .comp-header {
-    min-height: 48px !important;
+    min-height: 40px !important;
     overflow-x: auto;
 
     button {
@@ -31,8 +32,12 @@
     }
   }
 
+  ::ng-deep .mat-mdc-tab-body-wrapper {
+    padding-top: 10px;
+  }
+
   ::ng-deep .mat-mdc-tab-header {
-    height: 48px !important;
+    height: 40px !important;
   }
 
   ::ng-deep .mat-mdc-tab-labels {
@@ -40,7 +45,7 @@
   }
 
   ::ng-deep .mat-mdc-tab.mdc-tab {
-    max-height: 48px !important;
+    max-height: 40px !important;
   }
   ::ng-deep .mat-mdc-tab-label.mat-mdc-tab-disabled:hover {
     background-color: transparent !important;

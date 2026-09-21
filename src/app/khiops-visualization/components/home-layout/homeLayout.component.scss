@@ -25,13 +25,13 @@
   #main-tab-group {
     > ::ng-deep .mat-mdc-tab-header {
       margin: 15px auto 0px auto;
-      max-width: calc(100% - 400px);
+      max-width: calc(100% - 450px);
+      padding-right: 100px;
     }
-    > .mat-mdc-tab-body-wrapper {
+    > ::ng-deep .mat-mdc-tab-body-wrapper {
       flex: 1;
       padding: var(--layout-padding);
       height: 100%;
-      padding: 5px 6px 6px 6px;
     }
   }
 }

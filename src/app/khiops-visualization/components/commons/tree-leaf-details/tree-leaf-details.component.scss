@@ -8,6 +8,10 @@
   height: 100%;
   position: relative;
 
+  ::ng-deep .mat-mdc-tab-body-wrapper {
+    padding: 0 !important;
+  }
+
   .distribution-graph,
   .target-distribution-graph {
     position: relative;
@@ -21,7 +25,7 @@
   }
 
   ::ng-deep .mat-mdc-tab-header {
-    height: 48px !important;
+    height: 40px !important;
   }
 
   ::ng-deep .mat-mdc-tab-labels {
@@ -29,7 +33,7 @@
   }
 
   ::ng-deep .mat-mdc-tab.mdc-tab {
-    max-height: 48px !important;
+    max-height: 40px !important;
   }
   ::ng-deep .mat-mdc-tab-label.mat-mdc-tab-disabled:hover {
     background-color: transparent !important;
