@@ -18,6 +18,7 @@ import { COMPONENT_TYPES } from '@khiops-library/enum/component-types';
 })
 export class DescriptionBlockComponent extends SelectableComponent {
   readonly title = input<string>();
+  readonly tooltip = input<string>();
   readonly value = input<string>();
   readonly color = input<'green' | 'orange' | undefined>(undefined);
   componentType = COMPONENT_TYPES.DESCRIPTIONS; // needed to copy datas

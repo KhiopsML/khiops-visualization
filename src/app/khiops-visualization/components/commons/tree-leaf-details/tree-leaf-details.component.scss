@@ -8,6 +8,47 @@
   height: 100%;
   position: relative;
 
+  .tree-leaf-details-tools {
+    padding-right: 0 !important;
+    padding: 5px;
+    background: var(--color-0);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    > div {
+      overflow-y: hidden;
+      overflow-x: auto;
+    }
+
+    .leaf-tabs-tools {
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      gap: 2px;
+      margin-right: 10px;
+
+      .leaf-tab-btn {
+        min-width: auto;
+        border-radius: 0 !important;
+        color: var(--color-600);
+        border-bottom: var(--mat-tab-active-indicator-height) solid transparent !important;
+      }
+
+      .active-tab {
+        color: var(--color-brand-orange) !important;
+        border-bottom: var(--mat-tab-active-indicator-height) solid
+          var(--color-brand-orange) !important;
+      }
+    }
+  }
+
+  ::ng-deep #tree-leaf-rules-comp {
+    .ag-grid-comp {
+      padding-top: 15px;
+    }
+  }
+
   ::ng-deep .mat-mdc-tab-body-wrapper {
     padding: 0 !important;
   }
@@ -25,7 +66,7 @@
   }
 
   ::ng-deep .mat-mdc-tab-header {
-    height: 40px !important;
+    display: none !important;
   }
 
   ::ng-deep .mat-mdc-tab-labels {
@@ -51,6 +92,13 @@
   }
 
   #tree-node-infos {
-    padding: 1rem 0 2rem 0;
+    padding: 1rem 0 0rem 0;
+    width: 100%;
+    app-description-block {
+      flex: 1;
+    }
+    :first-child {
+      margin-right: 12px;
+    }
   }
 }

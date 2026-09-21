@@ -8,80 +8,106 @@
   @if (!selectedNode?.isLeaf) {
     <kl-no-data fxFlexFill fxLayoutAlign="center center"> </kl-no-data>
   }
+  <div
+    class="tree-leaf-details-tools header-panel-contrast"
+    fxLayout="row"
+    fxLayoutAlign="start center"
+  >
+    <div
+      fxFlex
+      fxLayout="row"
+      fxLayoutAlign="start center"
+      class="scrollbar-thin"
+    >
+      <div fxFlex class="leaf-tabs-tools" fxLayout="row" fxLayoutGap="6px">
+        <button
+          mat-button
+          class="leaf-tab-btn"
+          [class.active-tab]="selectedLeafTabIndex === 0"
+          (click)="selectLeafTab(0)"
+        >
+          {{ 'GLOBAL.LEAF_INFOS' | translate }}
+        </button>
+        <button
+          mat-button
+          class="leaf-tab-btn"
+          [class.active-tab]="selectedLeafTabIndex === 1"
+          (click)="selectLeafTab(1)"
+        >
+          {{ 'GLOBAL.LEAF_RULES' | translate }}
+        </button>
+      </div>
+    </div>
+  </div>
   <mat-tab-group
     [animationDuration]="0"
-    fxFlexFill
+    fxFlex
     [@.disabled]="true"
-    [selectedIndex]="0"
+    [selectedIndex]="selectedLeafTabIndex"
     fxLayout="column"
     color="primary"
+    (selectedTabChange)="onSelectedLeafTabChanged($event)"
   >
     <mat-tab label="{{ 'GLOBAL.LEAF_INFOS' | translate }}">
       <ng-template matTabContent>
         <div fxFlexFill fxLayout="column">
-          <div fxLayout="column" fxFlexFill>
-            <app-target-distribution-graph
-              [enableSelection]="false"
-              #targetDistributionGraph
-              fxFlex="1 1 100%"
-              class="target-distribution-graph"
-              [showFullscreenBtn]="true"
-              titleTooltip="{{
-                'TOOLTIPS.PREPARATION.TARGET_DISTRIBUTION.TITLE' | translate
-              }}"
-              [position]="position"
-              id="{{ 'target-distribution-graph' + position }}"
-              [attr.id]="'target-distribution-graph' + position"
-              class="target-distribution-graph"
-              [displayedValues]="displayedValues"
-              [inputDatas]="
-                $safeNavigationMigration(
-                  distributionDatas?.treeNodeTargetDistributionGraphDatas
-                )
-              "
-              [variableType]="
-                $safeNavigationMigration(
-                  treePreparationDatas?.selectedVariable?.type
-                )
-              "
-              (graphTypeChanged)="
-                onTreeNodeTargetDistributionGraphTypeChanged($event)
-              "
-              (targetDistributionGraphDisplayedValuesChanged)="
-                onTreeNodeTargetDistributionGraphDisplayedValuesChanged($event)
-              "
-            >
-            </app-target-distribution-graph>
+          <app-target-distribution-graph
+            fxFlex
+            [enableSelection]="false"
+            #targetDistributionGraph
+            class="target-distribution-graph"
+            [showFullscreenBtn]="true"
+            titleTooltip="{{
+              'TOOLTIPS.PREPARATION.TARGET_DISTRIBUTION.TITLE' | translate
+            }}"
+            [position]="position"
+            id="{{ 'target-distribution-graph' + position }}"
+            [attr.id]="'target-distribution-graph' + position"
+            class="target-distribution-graph"
+            [displayedValues]="displayedValues"
+            [inputDatas]="
+              $safeNavigationMigration(
+                distributionDatas?.treeNodeTargetDistributionGraphDatas
+              )
+            "
+            [variableType]="
+              $safeNavigationMigration(
+                treePreparationDatas?.selectedVariable?.type
+              )
+            "
+            (graphTypeChanged)="
+              onTreeNodeTargetDistributionGraphTypeChanged($event)
+            "
+            (targetDistributionGraphDisplayedValuesChanged)="
+              onTreeNodeTargetDistributionGraphDisplayedValuesChanged($event)
+            "
+          >
+          </app-target-distribution-graph>
 
-            @if (selectedNode?.isLeaf) {
-              <div
-                id="tree-node-infos"
-                fxLayout="row"
-                fxLayoutAlign="start center"
-                class="comp-header"
+          @if (selectedNode?.isLeaf) {
+            <div
+              id="tree-node-infos"
+              fxLayout="row"
+              fxLayoutAlign="start center"
+            >
+              <app-description-block
+                title="{{ 'GLOBAL.POPULATION' | translate }}"
+                [value]="populationCount"
               >
-                <div fxLayout="row" fxLayoutAlign="start center">
-                  <h2>
-                    {{ 'GLOBAL.POPULATION' | translate }} :
-                    {{ populationCount }}
-                  </h2>
-                </div>
-                <div fxLayout="row" fxLayoutAlign="start center">
-                  <h2
-                    title="{{
-                      'TOOLTIPS.TREE_PREPARATION.PURITY.TITLE' | translate
-                    }}"
-                  >
-                    {{ 'GLOBAL.PURITY' | translate }} :
-                    {{
-                      $safeNavigationMigration(selectedNode?.purity)
-                        | toPrecision
-                    }}
-                  </h2>
-                </div>
-              </div>
-            }
-          </div>
+              </app-description-block>
+              <app-description-block
+                title="{{ 'GLOBAL.PURITY' | translate }}"
+                color="green"
+                [value]="
+                  $safeNavigationMigration(selectedNode?.purity) | toPrecision
+                "
+                tooltip="{{
+                  'TOOLTIPS.TREE_PREPARATION.PURITY.TITLE' | translate
+                }}"
+              >
+              </app-description-block>
+            </div>
+          }
         </div>
       </ng-template>
     </mat-tab>
