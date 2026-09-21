@@ -42,6 +42,7 @@ export class ChartComponent implements AfterViewInit, OnDestroy {
   protected chartOptions = input<ChartOptions | undefined>(undefined);
   protected colorSet = input<ChartColorsSetI | undefined>(undefined);
   protected enableSelection = input(true);
+  protected disableSelection = input(false);
   protected selectedLineChartItem = input<string | undefined>(undefined);
 
   protected selectBarIndex = output<number>();
@@ -214,6 +215,10 @@ export class ChartComponent implements AfterViewInit, OnDestroy {
    * @param items - The active elements clicked on the chart.
    */
   private graphClickEvent(_e: ChartEvent, items: ActiveElement[]) {
+    if (this.disableSelection()) {
+      return;
+    }
+
     if (this.enableSelection()) {
       const l = items.length;
       if (l > 0) {
