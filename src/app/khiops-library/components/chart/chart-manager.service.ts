@@ -64,7 +64,7 @@ const FULL_CLICK = true;
  * - false: keep default hover behavior
  * - true: hover can be detected within an expanded rectangle around bars
  */
-const FULL_HOVER = false;
+const FULL_HOVER = true;
 
 /**
  * Extra hover hitbox padding in pixels.
@@ -332,56 +332,47 @@ export class ChartManagerService {
           }
 
           const labelCount = chart.data.labels?.length ?? 0;
-          let hoveredIndex: number | undefined;
+          let hoveredElement: ActiveDataPoint | undefined;
+          let bestDistance = Number.POSITIVE_INFINITY;
 
           for (let index = 0; index < labelCount; index++) {
-            const bars: any[] = [];
-            for (const { meta } of visibleBarMetas) {
-              const bar = meta.data[index];
-              if (bar) {
-                bars.push(bar);
+            for (const { datasetIndex, meta } of visibleBarMetas) {
+              const bar = meta.data[index] as any;
+              if (!bar) {
+                continue;
               }
-            }
 
-            if (bars.length === 0) {
-              continue;
-            }
+              const left = bar.x - bar.width / 2 - HOVER_HITBOX_PADDING;
+              const right = bar.x + bar.width / 2 + HOVER_HITBOX_PADDING;
+              const top = DASHED_SELECTION_FULL
+                ? chartArea.top - HOVER_HITBOX_PADDING
+                : Math.min(bar.y, bar.base) - HOVER_HITBOX_PADDING;
+              const bottom = DASHED_SELECTION_FULL
+                ? chartArea.bottom + HOVER_HITBOX_PADDING
+                : Math.max(bar.y, bar.base) + HOVER_HITBOX_PADDING;
 
-            const left =
-              Math.min(...bars.map((bar) => bar.x - bar.width / 2)) -
-              HOVER_HITBOX_PADDING;
-            const right =
-              Math.max(...bars.map((bar) => bar.x + bar.width / 2)) +
-              HOVER_HITBOX_PADDING;
-            const top = DASHED_SELECTION_FULL
-              ? chartArea.top - HOVER_HITBOX_PADDING
-              : Math.min(...bars.map((bar) => bar.y)) - HOVER_HITBOX_PADDING;
-            const bottom = DASHED_SELECTION_FULL
-              ? chartArea.bottom + HOVER_HITBOX_PADDING
-              : Math.max(...bars.map((bar) => bar.base)) + HOVER_HITBOX_PADDING;
-
-            if (
-              event.x >= left &&
-              event.x <= right &&
-              event.y >= top &&
-              event.y <= bottom
-            ) {
-              hoveredIndex = index;
-              break;
+              if (
+                event.x >= left &&
+                event.x <= right &&
+                event.y >= top &&
+                event.y <= bottom
+              ) {
+                // Keep closest bar when padded hitboxes overlap.
+                const distance = Math.abs(event.x - bar.x);
+                if (distance < bestDistance) {
+                  bestDistance = distance;
+                  hoveredElement = { datasetIndex, index };
+                }
+              }
             }
           }
 
-          if (hoveredIndex === undefined) {
+          if (!hoveredElement) {
             clearHover();
             return;
           }
 
-          const activeElements: ActiveDataPoint[] = visibleBarMetas
-            .filter(({ meta }) => !!meta.data[hoveredIndex!])
-            .map(({ datasetIndex }) => ({
-              datasetIndex,
-              index: hoveredIndex!,
-            }));
+          const activeElements: ActiveDataPoint[] = [hoveredElement];
 
           if (activeElements.length === 0) {
             clearHover();
