@@ -12,7 +12,6 @@ import {
   NgZone,
   Output,
   ChangeDetectionStrategy,
-  input,
 } from '@angular/core';
 import { SelectableService } from '@khiops-library/components/selectable/selectable.service';
 import { KhiopsLibraryService } from '@khiops-library/providers/khiops-library.service';
@@ -58,7 +57,6 @@ export class TargetDistributionGraphComponent
   @Input() public displayedValues?: ChartToggleValuesI[];
   @Input() public showFullscreenBtn = false;
   @Input() public variableType?: string;
-  protected disableSelection = input(false);
 
   public override view: any = undefined; // managed into ScrollableGraphComponent
   public override graphIdContainer: string | undefined = undefined;
