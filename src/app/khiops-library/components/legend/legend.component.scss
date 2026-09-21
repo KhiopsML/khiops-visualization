@@ -20,10 +20,12 @@
       margin-right: 1em;
       float: left;
       cursor: default;
+      flex-wrap: nowrap;
 
       span {
         color: var(--color-800) !important;
         font-size: 0.8em;
+        white-space: nowrap;
       }
       .square {
         border: 3px solid transparent;

@@ -13,6 +13,10 @@
       display: none !important;
     }
   }
+  ::ng-deep kl-legend {
+    height: 32px;
+    padding: 0 5px 0 10px;
+  }
   ::ng-deep .comp-header {
     kl-btn-fullscreen {
       // margin-bottom: 4px;
