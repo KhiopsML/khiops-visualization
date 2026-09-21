@@ -11,17 +11,23 @@
   background-color: var(--color-0) !important;
 
   #graph-header-comp {
-    flex-wrap: wrap;
+    .header-panel-contrast {
+      width: 100%;
+    }
     div {
       h1 {
+        margin: 1em 0.4em 0em 1em;
         kl-icon {
           padding-right: 0.4em;
           padding-top: 2px;
         }
       }
+      app-select-toggle-button {
+        margin-bottom: 0.4em;
+        margin-top: 0.4em;
+      }
       kl-btn-fullscreen {
-        margin-left: 0.3rem;
-        margin-right: 0.3rem;
+        margin: 0.4em;
       }
       .graph-header-tools {
         flex-wrap: wrap;
@@ -37,10 +43,6 @@
           padding: 0 10px 0 0 !important;
         }
       }
-    }
-
-    .graph-header-tools {
-      margin-top: 10px;
     }
   }
 

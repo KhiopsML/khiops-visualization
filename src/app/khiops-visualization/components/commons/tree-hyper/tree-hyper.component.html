@@ -16,14 +16,41 @@
     <div
       id="graph-header-comp"
       fxLayoutAlign="start center"
+      fxFlex
       class="scrollbar-thin screenshot-hide"
-      fxLayout="row"
+      fxLayout="column"
     >
-      <div fxLayout="column" fxFlex fxLayoutAlign="start start">
+      <div
+        class="header-panel-contrast"
+        fxLayout="row"
+        fxFlex
+        fxLayoutAlign="start start"
+      >
         <h1 fxFlex fxLayoutAlign="start center">
-          <kl-icon name="hypertree" />
+          <svg lucideIcon="git-fork" size="18"></svg>
           {{ 'GLOBAL.HYPER_TREE' | translate }}
         </h1>
+        @if (
+          distributionDatas &&
+          distributionDatas.targetDistributionDisplayedValues
+        ) {
+          <app-select-toggle-button
+            [displayedValues]="
+              distributionDatas.targetDistributionDisplayedValues
+            "
+            (selectToggleButtonChanged)="onSelectToggleButtonChanged($event)"
+            [buttonTitle]="buttonTitle"
+          >
+          </app-select-toggle-button>
+        }
+        <kl-btn-fullscreen (toggleFullscreen)="onToggleFullscreen($event)">
+        </kl-btn-fullscreen>
+      </div>
+      <div
+        fxLayoutAlign="start start"
+        fxLayout="row"
+        class="graph-header-tools"
+      >
         <div
           fxLayout="row"
           fxLayoutAlign="start center"
@@ -43,27 +70,6 @@
             {{ 'GLOBAL.DISPLAY_LEAF_SIZES_BY_POPULATION' | translate }}
           </mat-checkbox>
         </div>
-      </div>
-      <div
-        fxLayoutAlign="start start"
-        fxLayout="row"
-        class="graph-header-tools"
-      >
-        @if (
-          distributionDatas &&
-          distributionDatas.targetDistributionDisplayedValues
-        ) {
-          <app-select-toggle-button
-            [displayedValues]="
-              distributionDatas.targetDistributionDisplayedValues
-            "
-            (selectToggleButtonChanged)="onSelectToggleButtonChanged($event)"
-            [buttonTitle]="buttonTitle"
-          >
-          </app-select-toggle-button>
-        }
-        <kl-btn-fullscreen (toggleFullscreen)="onToggleFullscreen($event)">
-        </kl-btn-fullscreen>
       </div>
     </div>
     <div id="hyperTree"></div>
