@@ -218,7 +218,7 @@ mat-button-toggle-group {
   }
 
   .mat-button-toggle-checked {
-    background-color: var(--color-100) !important;
+    background-color: var(--color-border-subtle) !important;
     color: var(--color-0) !important;
   }
 }
@@ -232,7 +232,7 @@ mat-pseudo-checkbox {
 
 .mat-button-toggle-standalone,
 .mat-button-toggle-group {
-  font-size: 0.8em !important;
+  font-size: 0.4rem !important;
   height: 32px !important;
 }
 
