@@ -150,6 +150,7 @@
           cursor: pointer;
           opacity: 0;
           pointer-events: none;
+          min-width: auto !important;
         }
 
         &:hover .database-copy-button,
