@@ -18,6 +18,7 @@ body {
   height: 100%;
   overflow: hidden;
   color: var(--color-800);
+  font-size: 100%;
 }
 
 ::-webkit-input-placeholder {
@@ -451,7 +452,7 @@ kl-dialog-wrapper {
 }
 
 .cc-floating .cc-message {
-  font-size: 13px;
+  // font-size: 13px;
 }
 
 .cc-floating .cc-compliance > .cc-btn {

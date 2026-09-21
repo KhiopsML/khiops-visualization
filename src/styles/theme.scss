@@ -5,7 +5,8 @@
  */
 
 .mat-app-background {
-  font-size: 13px;
+  // Set the base font size to 13px
+  font-size: clamp(0.6875rem, 0.75vw, 0.8125rem);
 }
 :root {
   --mat-tab-active-indicator-height: 2px;
