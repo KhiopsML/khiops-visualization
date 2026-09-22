@@ -7,9 +7,11 @@
 .mat-app-background {
   // Set the base font size to 13px
   font-size: 13px;
-  //  font-size: clamp(0.75rem, 0.7rem + 0.2vw, 0.9rem);
 }
 :root {
+  --mat-snack-bar-supporting-text-font:
+    'Poppins', Verdana, Arial, sans-serif !important;
+  --mat-snack-bar-supporting-text-size: 12px;
   --mat-tab-active-indicator-height: 2px;
   --mat-checkbox-label-text-size: 12px;
   --header-height: 50px;
