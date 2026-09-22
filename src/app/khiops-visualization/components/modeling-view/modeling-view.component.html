@@ -183,7 +183,11 @@
                 modelingDatas?.selectedVariable?.variableType ===
                 'tree-preparation'
               ) {
-                <app-var-details-tree-preparation [selectionScope]="'modeling'">
+                <app-var-details-tree-preparation
+                  class="kl-card"
+                  fxFlex
+                  [selectionScope]="'modeling'"
+                >
                 </app-var-details-tree-preparation>
               }
               @if (!modelingDatas?.selectedVariable) {
