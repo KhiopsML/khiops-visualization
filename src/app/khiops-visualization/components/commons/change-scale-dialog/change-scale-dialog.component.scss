@@ -117,7 +117,8 @@
 
   .dialog-actions {
     margin-top: 2rem;
-
+    display: flex;
+    justify-content: end;
     button {
       margin-left: 0.5rem;
     }

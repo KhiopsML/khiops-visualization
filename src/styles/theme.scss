@@ -65,7 +65,8 @@
   --color-border-row-size: 3px;
   --color-selected-row-font: #0f172a;
 
-  --mat-button-toggle-divider-color: #dcdcdc;
+  // --mat-button-toggle-divider-color: #dcdcdc;
+  --mat-button-toggle-divider-color: transparent;
 }
 
 :host ::ng-deep .ag-theme-balham {

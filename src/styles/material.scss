@@ -53,6 +53,7 @@ mat-button-toggle-group {
   box-shadow: var(--box-shadow-button) !important;
   border-color: var(--color-border-button) !important;
   min-width: 34px !important;
+  border-radius: var(--border-radius) !important;
 }
 
 .stroked-icon-button {
@@ -99,9 +100,9 @@ mat-button-toggle-group:hover {
 }
 
 button {
-  max-height: 2rem !important;
+  max-height: 32px !important;
   .mat-mdc-button-touch-target {
-    max-height: 2rem !important;
+    max-height: 32px !important;
   }
 
   em {
@@ -117,6 +118,7 @@ button {
   width: unset !important;
   margin: unset !important;
   font-size: 18px !important;
+  color: var(--color-800) !important;
   min-width: 21px;
 }
 
@@ -212,7 +214,7 @@ mat-button-toggle-group {
   height: 36px;
   line-height: 34px !important;
   max-height: 36px;
-
+  border-color: var(--color-border-subtle) !important;
   .mat-button-toggle-label-content {
     line-height: 30px !important;
     span {
@@ -220,9 +222,22 @@ mat-button-toggle-group {
     }
   }
 
+  button {
+    height: 100%;
+  }
+
+  // .mat-button-toggle-checked {
+  //   // background-color: var(--color-border-subtle) !important;
+  //   background-color: transparent !important;
+  //   color: var(--color-0) !important;
+  // }
+
   .mat-button-toggle-checked {
-    background-color: var(--color-border-subtle) !important;
-    color: var(--color-0) !important;
+    button {
+      color: var(--color-0) !important;
+      box-shadow: inset var(--color-200) 0px 0px 0px 1px;
+      background: white;
+    }
   }
 }
 mat-pseudo-checkbox {
@@ -235,12 +250,14 @@ mat-pseudo-checkbox {
 
 .mat-button-toggle-standalone,
 .mat-button-toggle-group {
+  background-color: var(--color-border-subtle);
   font-size: 0.4rem !important;
   height: 32px !important;
 }
 
 .mat-button-toggle {
   color: var(--color-800) !important;
+  background: transparent !important;
 }
 
 .mat-tab-label-content {
@@ -405,7 +422,6 @@ button {
   border-width: 1px;
 }
 
-mat-button-toggle-group,
 button,
 .search-input-btn {
   border-width: 1px !important;
@@ -460,6 +476,7 @@ mat-slider {
 .mat-mdc-slider .mdc-slider__thumb-knob {
   background-color: var(--color-brand-orange) !important;
   border-color: var(--color-brand-orange) !important;
+  box-shadow: none;
 }
 .mat-mdc-slider .mdc-slider__track--active_fill {
   background-color: var(--color-brand-orange) !important;
