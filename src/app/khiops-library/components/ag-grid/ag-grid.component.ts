@@ -74,6 +74,7 @@ export class AgGridComponent
   @Input() public showColumnsSelection = true;
   @Input() public showFullscreenBtn = true;
   @Input() public showSearch = true;
+  @Input() public smallHeader = false;
   @Input() public displayCount = false;
   @Input() public noDataMessage: string | undefined;
   @Input() public rowSelection:
@@ -200,6 +201,10 @@ export class AgGridComponent
   }
 
   ngOnChanges(changes: SimpleChanges) {
+    if (changes.smallHeader) {
+      this.updateHeaderHeight();
+    }
+
     if (changes.displayedColumns?.currentValue) {
       if (
         this.showLineSelection !== false &&
@@ -272,6 +277,7 @@ export class AgGridComponent
    */
   onGridReady(_params: GridReadyEvent) {
     this.updateTable();
+    this.updateHeaderHeight();
 
     // Check if this is the first display of this grid (no saved grid mode)
     const isFirstDisplay = !this.gridModes[this.id!];
@@ -470,6 +476,19 @@ export class AgGridComponent
     if (this.isGridApiAvailable()) {
       const rowSelectionConfig = this.getRowSelectionConfig();
       this.agGrid!.api.setGridOption('rowSelection', rowSelectionConfig);
+    }
+  }
+
+  /**
+   * Applies compact or default header size depending on input configuration.
+   */
+  private updateHeaderHeight() {
+    const headerHeight = this.smallHeader ? 30 : 40;
+    this.gridOptions.headerHeight = headerHeight;
+
+    if (this.isGridApiAvailable()) {
+      this.agGrid!.api.setGridOption('headerHeight', headerHeight);
+      this.agGrid!.api.refreshHeader();
     }
   }
 
