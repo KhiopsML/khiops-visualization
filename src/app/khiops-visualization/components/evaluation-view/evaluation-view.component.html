@@ -106,7 +106,9 @@
                 }}"
                 [showLineSelection]="false"
                 [showColumnsSelection]="false"
-                [inputDatas]="evaluationDatas.detailedPredictorsAucValues.values"
+                [inputDatas]="
+                  evaluationDatas.detailedPredictorsAucValues.values
+                "
                 [title]="evaluationDatas.detailedPredictorsAucValues.title"
                 [displayedColumns]="
                   evaluationDatas.detailedPredictorsAucValues.displayedColumns
@@ -138,6 +140,7 @@
             >
               <kl-ag-grid
                 id="evaluation-confusion-matrix"
+                [enableClickSelection]="false"
                 class="variables-list"
                 [showSearch]="false"
                 [displayCount]="false"

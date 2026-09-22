@@ -80,7 +80,6 @@ export class AgGridComponent
   @Input() public rowSelection:
     'single' | 'multiple' | RowSelectionOptions<any> = {
     mode: 'singleRow',
-    enableClickSelection: true,
     checkboxes: false,
   };
   @Input() public enableClickSelection = true;
@@ -362,6 +361,10 @@ export class AgGridComponent
    * @param e - The event object containing information about the clicked cell.
    */
   onCellClicked(e: any) {
+    if (!this.isClickSelectionEnabled()) {
+      return;
+    }
+
     this.selectListItem.emit(e.data);
   }
 
@@ -499,7 +502,13 @@ export class AgGridComponent
     'single' | 'multiple' | RowSelectionOptions<any> {
     // Handle legacy object format or new object format
     if (typeof this.rowSelection === 'object' && this.rowSelection !== null) {
-      return this.rowSelection as RowSelectionOptions<any>;
+      const rowSelectionConfig = this.rowSelection as RowSelectionOptions<any>;
+
+      return {
+        ...rowSelectionConfig,
+        enableClickSelection:
+          rowSelectionConfig.enableClickSelection ?? this.enableClickSelection,
+      } as RowSelectionOptions<any>;
     }
 
     // Convert legacy string format to new object format
@@ -511,6 +520,23 @@ export class AgGridComponent
       checkboxes: false, // Disable checkboxes to maintain previous behavior
       headerCheckbox: false, // Disable header checkbox
     } as RowSelectionOptions<any>;
+  }
+
+  /**
+   * Returns whether click selection interactions are enabled.
+   */
+  private isClickSelectionEnabled(): boolean {
+    const rowSelectionConfig = this.getRowSelectionConfig();
+
+    if (
+      typeof rowSelectionConfig === 'object' &&
+      rowSelectionConfig !== null &&
+      rowSelectionConfig.enableClickSelection !== undefined
+    ) {
+      return rowSelectionConfig.enableClickSelection !== false;
+    }
+
+    return this.enableClickSelection !== false;
   }
 
   /**

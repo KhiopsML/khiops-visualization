@@ -71,6 +71,7 @@
       <kl-ag-grid
         id="preparation-current-interval"
         [smallHeader]="true"
+        [enableClickSelection]="false"
         class="variables-list"
         fxFlexFill
         [showSearch]="true"
@@ -112,6 +113,7 @@
         <as-split-area class="variables-list-container">
           <kl-ag-grid
             id="preparation-2d-current-cell-x"
+            [enableClickSelection]="false"
             class="variables-list"
             [smallHeader]="true"
             [title]="''"
@@ -137,6 +139,7 @@
           <kl-ag-grid
             [smallHeader]="true"
             id="preparation-2d-current-cell-y"
+            [enableClickSelection]="false"
             class="variables-list"
             [title]="''"
             [showSearch]="true"

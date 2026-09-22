@@ -45,7 +45,6 @@
     [@.disabled]="true"
     [selectedIndex]="selectedLeafTabIndex"
     fxLayout="column"
-    
     (selectedTabChange)="onSelectedLeafTabChanged($event)"
   >
     <mat-tab label="{{ 'GLOBAL.LEAF_INFOS' | translate }}">
@@ -116,6 +115,7 @@
         @if (treeLeafRules && treeLeafRules.values) {
           <kl-ag-grid
             id="tree-leaf-rules-comp"
+            [enableClickSelection]="false"
             class="variables-list"
             fxFlexFill
             [showSearch]="false"
