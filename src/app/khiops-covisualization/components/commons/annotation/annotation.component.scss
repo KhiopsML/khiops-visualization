@@ -9,8 +9,11 @@
     margin: 5px;
     padding: 5px;
     height: 100%;
-    border-color: var(--color-300) !important;
+    border-color: var(--color-200) !important;
     background-color: var(--color-0) !important;
+    border-width: 1px !important;
+    border-style: solid !important;
+    font-size: 12px !important;
     resize: none;
   }
 }
