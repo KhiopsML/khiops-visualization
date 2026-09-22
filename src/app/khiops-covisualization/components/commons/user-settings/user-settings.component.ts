@@ -105,8 +105,8 @@ export class UserSettingsComponent implements OnChanges {
     this.toggleNavDrawerChanged.emit();
   }
 
-  onClickOnResetDefaults() {
-    this.numberPrecision = DEFAULT_NUMBER_PRECISION;
-    this.contrastValue = DEFAULT_MATRIX_CONTRAST;
-  }
+  // onClickOnResetDefaults() {
+  //   this.numberPrecision = DEFAULT_NUMBER_PRECISION;
+  //   this.contrastValue = DEFAULT_MATRIX_CONTRAST;
+  // }
 }
