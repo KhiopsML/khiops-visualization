@@ -44,7 +44,7 @@
   justify-content: center;
 
   &:hover {
-    background-color: var(--color-200) !important;
+    background-color: var(--color-gutter-hover) !important;
   }
 
   svg {
@@ -59,10 +59,10 @@
   }
 }
 .tree-leaf .tree-leaf-content.tree-selected .tree-expando {
-  color: var(--color-0);
+  // color: var(--color-0);
 
   &:hover {
-    background-color: var(--color-800) !important;
+    background-color: var(--color-gutter-hover) !important;
   }
 }
 .tree-leaf .tree-icon {
@@ -153,7 +153,7 @@
 }
 
 .tree-leaf .tree-leaf-text .edit-button:hover {
-  background: color-mix(in srgb, var(--color-1000) 20%, transparent);
+  // background: color-mix(in srgb, var(--color-1000) 20%, transparent);
   color: var(--color-0) !important;
 }
 
@@ -162,22 +162,24 @@
 }
 
 .tree-leaf .tree-leaf-content.tree-selected .tree-leaf-text .edit-button {
-  background: color-mix(in srgb, var(--color-1000) 70%, transparent);
+  // background: color-mix(in srgb, var(--color-1000) 70%, transparent);
   color: var(--color-0) !important;
   pointer-events: auto; /* Enable clicks only on selected line */
 }
 
 .tree-leaf .tree-leaf-content.tree-selected .tree-leaf-text .edit-button:hover {
-  background: color-mix(in srgb, var(--color-1000) 20%, transparent);
+  // background: color-mix(in srgb, var(--color-1000) 20%, transparent);
   color: var(--color-0) !important;
 }
 
 .tree-leaf .tree-leaf-content:not(.tree-selected):hover {
-  background: var(--color-100);
+  background: var(--color-gutter-hover);
+  // background: var(--color-100);
 }
 
 .tree-leaf .tree-leaf-content.tree-selected:hover {
-  background: var(--color-1000);
+  // background: var(--color-1000);
+  background: var(--color-gutter-hover);
 }
 
 .tree-leaf .tree-leaf-content:before,
@@ -225,6 +227,7 @@
   line-height: 24px;
   display: flex;
   margin-top: 2px;
+  padding-left: 10px;
 
   .tree-leaf-text-input {
     display: flex;
@@ -266,7 +269,7 @@
     }
 
     .edit-icons:hover {
-      background: color-mix(in srgb, var(--color-1000) 20%, transparent);
+      // background: color-mix(in srgb, var(--color-1000) 20%, transparent);
       color: var(--color-0) !important;
     }
   }

@@ -45,7 +45,7 @@
   --ag-input-border-color-invalid: var(--color-danger, #fb473a);
 
   // Button styling
-  --ag-button-background-color: var(--color-0, #fff);
+  --ag-button-background-color: var(--color-0);
   --ag-button-border-color: var(--color-border-subtle, rgba(4, 32, 69, 0));
 
   // Scrollbar styling to match global theme
@@ -55,13 +55,13 @@
   }
 
   ::-webkit-scrollbar-thumb {
-    background: var(--color-100, #eee);
+    background: var(--color-100);
     border: none;
     border-radius: 0; // Removed border radius as requested
     min-height: 80px; // Minimum height for vertical scrollbar thumb
 
     &:hover {
-      background: var(--color-300, #bbb);
+      background: var(--color-300);
     }
   }
 
@@ -77,16 +77,16 @@
 
   // Custom cell types for Khiops data visualization
   .cell-type-num {
-    background-color: var(--color-data-num, #e4e8f0);
+    background-color: var(--color-data-num);
   }
 
   .cell-type-cat {
-    background-color: var(--color-data-cat, #f5e7cd);
+    background-color: var(--color-data-cat);
   }
 
   // Enhanced hover effects
   .ag-row:hover {
-    background-color: var(--color-gutter-hover, #f1f1f1);
+    background-color: var(--color-gutter-hover) !important;
   }
 
   // Filter panel improvements
@@ -98,7 +98,7 @@
   // Pagination improvements
   .ag-paging-panel {
     border-top: 0px solid var(--color-border-subtle, rgba(4, 32, 69, 0.1));
-    background: var(--color-50, #f9fafb);
+    background: var(--color-50);
   }
 
   // Menu improvements
@@ -126,7 +126,7 @@
       cursor: pointer;
 
       &:hover {
-        background-color: var(--color-gutter-hover, #f1f1f1);
+        // background-color: var(--color-gutter-hover, #f1f1f1);
       }
     }
   }

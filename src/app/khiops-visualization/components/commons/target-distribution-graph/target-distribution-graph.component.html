@@ -17,6 +17,13 @@
       <div fxLayout="row" fxLayoutAlign="start center" class="comp-header">
         <div fxFlex fxLayout="row" fxLayoutAlign="start center">
           <h2 title="{{ titleTooltip }}">{{ title }}</h2>
+          @if (!isSmallDiv) {
+            <kl-legend
+              [inputDatas]="displayedValues"
+              [type]="'chart-nd-dynamic'"
+              [colorSet]="colorSet"
+            ></kl-legend>
+          }
         </div>
         <!-- <kl-legend
           [inputDatas]="displayedValues"
@@ -49,11 +56,13 @@
           }
         </div>
       </div>
-       <kl-legend
+      @if (isSmallDiv) {
+        <kl-legend
           [inputDatas]="displayedValues"
           [type]="'chart-nd-dynamic'"
           [colorSet]="colorSet"
         ></kl-legend>
+      }
       <kl-chart
         id="{{ 'target-distribution-graph-comp-' + position }}"
         [chartOptions]="chartOptions"
@@ -63,7 +72,7 @@
         [inputDatas]="inputDatas"
         [activeEntries]="activeEntries"
         [enableSelection]="enableSelection()"
-  ></kl-chart>
+      ></kl-chart>
     </div>
   }
   @if (!inputDatas) {

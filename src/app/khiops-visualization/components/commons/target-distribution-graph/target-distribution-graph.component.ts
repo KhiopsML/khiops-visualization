@@ -170,7 +170,7 @@ export class TargetDistributionGraphComponent
    * @param event The resized event containing new dimensions
    */
   onResized(event: ResizedEvent) {
-    this.isSmallDiv = (event?.newRect?.width || 0) < this.SMALL_DIV_THRESHOLD;
+    this.isSmallDiv = (event?.newRect?.width || 0) <= this.SMALL_DIV_THRESHOLD;
   }
 
   /**

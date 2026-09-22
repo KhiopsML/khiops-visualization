@@ -14,7 +14,7 @@ import { Component, computed, input, numberAttribute } from '@angular/core';
 export class GaugeComponent {
   private static readonly defaultSize = 56;
   private static readonly minStrokeWidth = 2;
-  readonly fontSize = 16;
+  readonly fontSize = 15;
 
   readonly value = input(0, {
     transform: (value: unknown) => GaugeComponent.toFiniteNumber(value, 0),
