@@ -494,8 +494,16 @@ mat-slider {
 }
 
 .mat-mdc-unelevated-button {
-  background-color: var(--color-border-subtle) !important;
+  background-color: color-mix(
+    in srgb,
+    var(--color-brand-orange) 10%,
+    transparent
+  ) !important;
   border-style: solid !important;
+  border-color: var(--color-accent) !important;
+  span {
+    color: var(--color-accent) !important;
+  }
 }
 .mat-mdc-checkbox {
   display: flow-root !important;

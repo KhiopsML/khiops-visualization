@@ -60,7 +60,6 @@
       [@.disabled]="true"
       [selectedIndex]="selectedMatrixTabIndex"
       fxLayout="column"
-      
       [hidden]="!preparation2dDatas?.matrixDatas"
       (selectedTabChange)="onSelectedMatrixTabChanged($event)"
     >
@@ -154,6 +153,7 @@
           <div class="variables-list-container" fxFlexFill>
             <kl-ag-grid
               id="cooccurrence-matrix-cells-container"
+              [smallHeader]="true"
               class="variables-list"
               [showFullscreenBtn]="false"
               [showSearch]="false"
