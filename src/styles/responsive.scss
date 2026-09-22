@@ -131,10 +131,15 @@
   }
   button {
     span {
-      font-size: 1em !important;
+      font-size: 11px !important;
     }
   }
   :root {
     --mat-checkbox-label-text-size: 11px;
   }
+  // ::ng-deep .mat-button-toggle-label-content {
+  //   span {
+  //     font-size: 11px !important;
+  //   }
+  // }
 }

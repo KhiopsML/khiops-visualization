@@ -215,6 +215,9 @@ mat-button-toggle-group {
 
   .mat-button-toggle-label-content {
     line-height: 30px !important;
+    span {
+      font-size: 13px;
+    }
   }
 
   .mat-button-toggle-checked {
