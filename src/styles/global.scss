@@ -248,7 +248,7 @@ app-home-layout {
 
 .comp-header {
   background: transparent !important;
-  min-height: 42px !important; // for scrollbar
+  min-height: 36px !important; // for scrollbar
   background: var(--color-0) !important;
   margin: 1px; // for selection border
   overflow-x: auto;

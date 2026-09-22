@@ -17,7 +17,7 @@ import {
 import { CommonModule } from '@angular/common';
 import { FlexModule } from '@angular/flex-layout';
 import { MatIconModule } from '@angular/material/icon';
-import { TranslateModule } from '@ngstack/translate';
+import { TranslateModule, TranslateService } from '@ngstack/translate';
 
 import { SelectableComponent } from '../../components/selectable/selectable.component';
 import { SelectableService } from '../../components/selectable/selectable.service';
@@ -35,6 +35,7 @@ import { WarningInformationComponent } from '../warning-information/warning-info
 import { NoDataComponent } from '../no-data/no-data.component';
 import { ToPrecisionPipe } from '../../pipes/to-precision.pipe';
 import { LucideDynamicIcon } from '@lucide/angular';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'kl-informations-block',
@@ -81,6 +82,8 @@ export class InformationsBlockComponent
     public override selectableService: SelectableService,
     public override ngzone: NgZone,
     public override configService: ConfigService,
+    private snackBar: MatSnackBar,
+    private translate: TranslateService,
   ) {
     super(selectableService, ngzone, configService);
   }
@@ -203,5 +206,9 @@ export class InformationsBlockComponent
 
   copyDatabasePath(value: unknown): void {
     navigator.clipboard.writeText(String(value ?? ''));
+    this.snackBar.open(this.translate.get('SNACKS.PATH_COPIED'), undefined, {
+      duration: 2000,
+      panelClass: 'success',
+    });
   }
 }

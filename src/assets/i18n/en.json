@@ -40,6 +40,7 @@
     "SCREENSHOT_COPIED": "Screenshot copied to clipboard",
     "COPY_ERROR": "Copy error",
     "DATAS_COPIED": "Datas copied to clipboard",
+    "PATH_COPIED": "Path copied",
     "NO_AREA_SELECTED": "No area selected",
     "EXIT": "Exit",
     "TOOLS": "Tools",
