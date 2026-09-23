@@ -871,19 +871,18 @@ export class MatrixComponent extends SelectableComponent implements OnChanges {
         y = canvasPosition.height - y;
       }
 
+      // Tolerance avoids 1px hover gaps caused by sub-pixel rounding on borders.
+      const borderTolerance = 0.5;
       const cellsLength = this.inputDatas?.matrixCellDatas?.length || 0;
       for (let i = 0; i < cellsLength; i++) {
+        const cell = this.inputDatas.matrixCellDatas[i];
         if (
-          y > this.inputDatas.matrixCellDatas[i].yCanvas &&
-          y <
-            this.inputDatas.matrixCellDatas[i].yCanvas +
-              this.inputDatas.matrixCellDatas[i].hCanvas &&
-          x > this.inputDatas.matrixCellDatas[i].xCanvas &&
-          x <
-            this.inputDatas.matrixCellDatas[i].xCanvas +
-              this.inputDatas.matrixCellDatas[i].wCanvas
+          y >= cell.yCanvas - borderTolerance &&
+          y <= cell.yCanvas + cell.hCanvas + borderTolerance &&
+          x >= cell.xCanvas - borderTolerance &&
+          x <= cell.xCanvas + cell.wCanvas + borderTolerance
         ) {
-          return this.inputDatas.matrixCellDatas[i];
+          return cell;
         }
       }
     }
