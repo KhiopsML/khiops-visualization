@@ -55,7 +55,7 @@ export class TreeHyperComponent
 
   @Input() public dimensionTree?: [TreeNodeModel];
   @Input() private displayedValues?: ChartToggleValuesI[];
-  @Input('label_size') public labelSize: number | string = 1.6;
+  @Input('label_size') public labelSize: number | string = 1.5;
 
   public buttonTitle: string;
   public componentType = COMPONENT_TYPES.HYPER_TREE; // needed to copy datas
