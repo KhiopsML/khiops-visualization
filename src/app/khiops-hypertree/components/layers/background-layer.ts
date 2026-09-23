@@ -46,7 +46,7 @@ export class BackgroundLayer implements ILayer {
           .attr('r', 1)
           .attr('fill', 'rgba(248, 250, 252, 1)')
           .attr('stroke', '#dfe6ef')
-          .attr('stroke-width', 2)
+          .attr('stroke-width', 4)
           .attr('vector-effect', 'non-scaling-stroke'),
       updateColor: (s) => {},
       updateTransform: (s) => {},
