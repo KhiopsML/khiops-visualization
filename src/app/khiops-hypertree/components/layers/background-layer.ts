@@ -46,8 +46,33 @@ export class BackgroundLayer implements ILayer {
           .attr('r', 1)
           .attr('fill', 'rgba(248, 250, 252, 1)')
           .attr('stroke', '#dfe6ef')
-          .attr('stroke-width', 4)
-          .attr('vector-effect', 'non-scaling-stroke'),
+          .attr('stroke-width', 3)
+          .attr('vector-effect', 'non-scaling-stroke')
+          .each(function () {
+            const parent = this.parentNode;
+            if (!parent) {
+              return;
+            }
+
+            const previousInnerCircle = parent.querySelector(
+              '.background-circle-inner',
+            );
+            if (previousInnerCircle) {
+              previousInnerCircle.remove();
+            }
+
+            const innerCircle = document.createElementNS(
+              'http://www.w3.org/2000/svg',
+              'circle',
+            );
+            innerCircle.setAttribute('class', 'background-circle-inner');
+            innerCircle.setAttribute('r', '0.985');
+            innerCircle.setAttribute('fill', 'none');
+            innerCircle.setAttribute('stroke', '#cfd8e3');
+            innerCircle.setAttribute('stroke-width', '1');
+            innerCircle.setAttribute('vector-effect', 'non-scaling-stroke');
+            parent.appendChild(innerCircle);
+          }),
       updateColor: (s) => {},
       updateTransform: (s) => {},
     });
