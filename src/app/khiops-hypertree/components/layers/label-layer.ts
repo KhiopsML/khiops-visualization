@@ -13,6 +13,7 @@ import { ILayer } from '../layerstack/layer';
 import { ILayerView } from '../layerstack/layer';
 import { ILayerArgs } from '../layerstack/layer';
 import { D3UpdatePattern } from '../layerstack/d3updatePattern';
+import { select } from 'd3';
 
 export interface LabelLayerArgs extends ILayerArgs {
   name: string;
@@ -63,6 +64,142 @@ export class LabelLayer implements ILayer {
     this.isVisible = args.isVisible;
   }
 
+  private readonly selectionPaddingX = 0.01;
+  private readonly selectionPaddingY = 0.004;
+  private readonly selectionRadius = 0.008;
+
+  private getRgbFromColor(colorValue: string) {
+    if (!colorValue) {
+      return undefined;
+    }
+
+    const color = colorValue.trim().toLowerCase();
+
+    const hexMatch = color.match(/^#([0-9a-f]{3}|[0-9a-f]{6})$/i);
+    if (hexMatch) {
+      const hex = hexMatch[1];
+      if (hex.length === 3) {
+        return {
+          r: parseInt(hex[0] + hex[0], 16),
+          g: parseInt(hex[1] + hex[1], 16),
+          b: parseInt(hex[2] + hex[2], 16),
+        };
+      }
+
+      return {
+        r: parseInt(hex.slice(0, 2), 16),
+        g: parseInt(hex.slice(2, 4), 16),
+        b: parseInt(hex.slice(4, 6), 16),
+      };
+    }
+
+    const rgbMatch = color.match(
+      /^rgba?\(\s*(\d{1,3})\s*,\s*(\d{1,3})\s*,\s*(\d{1,3})(?:\s*,\s*[\d.]+\s*)?\)$/,
+    );
+    if (rgbMatch) {
+      return {
+        r: Math.max(0, Math.min(255, parseInt(rgbMatch[1], 10))),
+        g: Math.max(0, Math.min(255, parseInt(rgbMatch[2], 10))),
+        b: Math.max(0, Math.min(255, parseInt(rgbMatch[3], 10))),
+      };
+    }
+
+    return undefined;
+  }
+
+  private resolveColorValue(colorValue: string, contextElement?: Element) {
+    if (!colorValue || !contextElement) {
+      return colorValue;
+    }
+
+    const documentRef = contextElement.ownerDocument;
+    if (!documentRef || !documentRef.body || !documentRef.defaultView) {
+      return colorValue;
+    }
+
+    const probe = documentRef.createElement('span');
+    probe.style.color = colorValue;
+    probe.style.display = 'none';
+    documentRef.body.appendChild(probe);
+
+    const resolved = documentRef.defaultView.getComputedStyle(probe).color;
+    documentRef.body.removeChild(probe);
+
+    return resolved || colorValue;
+  }
+
+  private isDarkColor(colorValue: string, contextElement?: Element) {
+    const resolvedColor = this.resolveColorValue(colorValue, contextElement);
+    const rgb = this.getRgbFromColor(resolvedColor);
+    if (!rgb) {
+      return false;
+    }
+
+    // Relative luminance approximation (0..255). Lower means darker.
+    const luminance = 0.2126 * rgb.r + 0.7152 * rgb.g + 0.0722 * rgb.b;
+    return luminance < 140;
+  }
+
+  private updateSelectionBackground(s) {
+    s.each((d, index, elements) => {
+      const group = elements[index];
+      const text = group.querySelector('.caption-text');
+      const rect = group.querySelector('.caption-selection-bg');
+
+      if (!text || !rect) {
+        return;
+      }
+
+      const selectionPath =
+        d.pathes && d.pathes.partof
+          ? d.pathes.partof.find((p) => p && p.type === 'SelectionPath')
+          : undefined;
+      const isSelectionHead =
+        !!selectionPath &&
+        !!selectionPath.head &&
+        (selectionPath.head === d ||
+          (selectionPath.head.id && d.id && selectionPath.head.id === d.id) ||
+          (selectionPath.head.mergeId !== undefined &&
+            d.mergeId !== undefined &&
+            selectionPath.head.mergeId === d.mergeId));
+      const isSelected = !!(
+        (d.pathes &&
+          d.pathes.headof &&
+          d.pathes.headof.type === 'SelectionPath') ||
+        isSelectionHead
+      );
+      if (!isSelected) {
+        rect.style.display = 'none';
+        text.style.fill = this.args.color(d);
+        return;
+      }
+
+      const bbox = text.getBBox();
+      rect.setAttribute('x', `${bbox.x - this.selectionPaddingX}`);
+      rect.setAttribute('y', `${bbox.y - this.selectionPaddingY}`);
+      rect.setAttribute('width', `${bbox.width + this.selectionPaddingX * 2}`);
+      rect.setAttribute(
+        'height',
+        `${bbox.height + this.selectionPaddingY * 2}`,
+      );
+      rect.setAttribute('rx', `${this.selectionRadius}`);
+      rect.setAttribute('ry', `${this.selectionRadius}`);
+      rect.style.display = null;
+      const selectionFill =
+        selectionPath && selectionPath.color
+          ? selectionPath.color
+          : d.pathes && d.pathes.headof && d.pathes.headof.color
+            ? d.pathes.headof.color
+            : d.pathes && d.pathes.labelcolor
+              ? d.pathes.labelcolor
+              : '';
+      rect.style.fill = selectionFill;
+      text.style.fill = this.isDarkColor(selectionFill, text)
+        ? '#ffffff'
+        : this.args.color(d);
+    });
+  }
+
   private attach() {
     if (!this.args.invisible) {
       const $this = this;
@@ -78,19 +215,57 @@ export class LabelLayer implements ILayer {
         data: this.args.data,
         name: this.name,
         className: this.args.className,
-        elementType: 'text',
+        elementType: 'g',
         create: (s) =>
-          s
-            .classed('P', (d) => d.name == 'P')
-            .style('stroke', (d) => d.pathes && d.pathes.labelcolor)
+          s.each((d, index, elements) => {
+            const group = elements[index];
+            const selection = select(group);
+
+            selection
+              .append('rect')
+              .attr('class', 'caption-selection-bg')
+              .style('display', 'none')
+              .style('pointer-events', 'none')
+              .attr('rx', this.selectionRadius)
+              .attr('ry', this.selectionRadius);
+
+            selection
+              .append('text')
+              .attr('class', `${this.args.className} caption-text`)
+              .classed('P', (n) => n.name == 'P')
+              .style('stroke', (n) =>
+                n.pathes &&
+                n.pathes.headof &&
+                n.pathes.headof.type === 'SelectionPath'
+                  ? undefined
+                  : n.pathes && n.pathes.labelcolor,
+              )
+              .style('fill', (n) => this.args.color(n))
+              .style('display', (n) => this.args.isVisible(n))
+              .text(this.args.text);
+          }),
+        updateColor: (s) => {
+          s.select('.caption-text')
+            .style('stroke', (d) =>
+              d.pathes &&
+              d.pathes.headof &&
+              d.pathes.headof.type === 'SelectionPath'
+                ? undefined
+                : d.pathes && d.pathes.labelcolor,
+            )
             .style('fill', (d) => this.args.color(d))
+            .style('display', (d) => this.args.isVisible(d));
+
+          // Must run after updateColor because update cycle is transform -> color.
+          this.updateSelectionBackground(s);
+        },
+        updateTransform: (s) => {
+          s.attr('transform', offset);
+          s.select('.caption-text')
             .style('display', (d) => this.args.isVisible(d))
-            .text(this.args.text),
-        updateColor: (s) =>
-          s
-            .style('stroke', (d) => d.pathes && d.pathes.labelcolor)
-            .style('fill', (d) => this.args.color(d)),
-        updateTransform: (s) => s.attr('transform', offset),
+            .text(this.args.text);
+          this.updateSelectionBackground(s);
+        },
       });
     }
   }
