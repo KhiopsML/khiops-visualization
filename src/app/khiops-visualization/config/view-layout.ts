@@ -18,7 +18,7 @@ export const VIEW_LAYOUT = {
   },
   treePreparationView: {
     col: [70, 30],
-    col0Row: [20, 40, 40],
+    col0Row: [20, 50, 30],
     col0Row0Col: [40, 30, 30],
     col0Row1Col: [60, 40],
     col0Row2Col: [30, 70],
