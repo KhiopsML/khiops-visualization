@@ -44,7 +44,7 @@ export class BackgroundLayer implements ILayer {
       create: (s) =>
         s
           .attr('r', 1)
-          .attr('fill', 'rgba(248, 250, 252, 1)')
+          .attr('fill', 'url(#background-circle-gradient)')
           .attr('stroke', '#dfe6ef')
           .attr('stroke-width', 3)
           .attr('vector-effect', 'non-scaling-stroke')
@@ -52,6 +52,68 @@ export class BackgroundLayer implements ILayer {
             const parent = this.parentNode;
             if (!parent) {
               return;
+            }
+
+            const svgRoot = this.ownerSVGElement;
+            if (svgRoot) {
+              const previousGradient = svgRoot.querySelector(
+                '#background-circle-gradient',
+              );
+              if (previousGradient) {
+                previousGradient.remove();
+              }
+
+              let defs = svgRoot.querySelector('defs');
+              if (!defs) {
+                defs = document.createElementNS(
+                  'http://www.w3.org/2000/svg',
+                  'defs',
+                );
+                svgRoot.insertBefore(defs, svgRoot.firstChild);
+              }
+
+              const radialGradient = document.createElementNS(
+                'http://www.w3.org/2000/svg',
+                'radialGradient',
+              );
+              radialGradient.setAttribute('id', 'background-circle-gradient');
+              radialGradient.setAttribute('cx', '50%');
+              radialGradient.setAttribute('cy', '50%');
+              radialGradient.setAttribute('r', '52%');
+
+              const innerStop = document.createElementNS(
+                'http://www.w3.org/2000/svg',
+                'stop',
+              );
+              innerStop.setAttribute('offset', '0%');
+              innerStop.setAttribute('stop-color', '#ffffff');
+
+              const middleStop = document.createElementNS(
+                'http://www.w3.org/2000/svg',
+                'stop',
+              );
+              middleStop.setAttribute('offset', '78%');
+              middleStop.setAttribute('stop-color', '#fdfefe');
+
+              const edgeStartStop = document.createElementNS(
+                'http://www.w3.org/2000/svg',
+                'stop',
+              );
+              edgeStartStop.setAttribute('offset', '92%');
+              edgeStartStop.setAttribute('stop-color', '#F6F7FA');
+
+              const outerStop = document.createElementNS(
+                'http://www.w3.org/2000/svg',
+                'stop',
+              );
+              outerStop.setAttribute('offset', '100%');
+              outerStop.setAttribute('stop-color', '#EBEEF3');
+
+              radialGradient.appendChild(innerStop);
+              radialGradient.appendChild(middleStop);
+              radialGradient.appendChild(edgeStartStop);
+              radialGradient.appendChild(outerStop);
+              defs.appendChild(radialGradient);
             }
 
             const previousInnerCircle = parent.querySelector(
