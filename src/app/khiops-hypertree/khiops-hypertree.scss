@@ -87,6 +87,20 @@
       stroke-width: 0.025;
     }
 
+    .node-selection-ring {
+      display: none;
+      fill: none;
+      pointer-events: none;
+      stroke: var(--color-active);
+      stroke-dasharray: 4px 2px;
+      stroke-width: 0.15em;
+      vector-effect: non-scaling-stroke;
+
+      &.selected {
+        display: block;
+      }
+    }
+
     .center-node {
       fill: rgba(#000, 0.25);
       opacity: 0.5;

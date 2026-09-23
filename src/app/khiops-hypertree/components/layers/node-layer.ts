@@ -46,6 +46,25 @@ export class NodeLayer implements ILayer {
     this.name = args.name;
   }
 
+  private updateSelectionRing(s) {
+    s.each((d, index, elements) => {
+      const group = elements[index];
+      const node = group.querySelector('.node-shape');
+      const ring = group.querySelector('.node-selection-ring');
+      const matrix = group.getScreenCTM();
+      const scale = matrix ? Math.hypot(matrix.a, matrix.b) : 1;
+      const nodeStrokeWidth = parseFloat(getComputedStyle(node).strokeWidth) || 0;
+      const ringStrokeWidth = parseFloat(getComputedStyle(ring).strokeWidth) || 0;
+
+      ring.setAttribute(
+        'r',
+        this.args.r(d) +
+          nodeStrokeWidth / 2 +
+          (3 + ringStrokeWidth / 2) / scale,
+      );
+    });
+  }
+
   private attach() {
     this.d3updatePattern = new D3UpdatePattern({
       parent: this.view.parent,
@@ -53,10 +72,13 @@ export class NodeLayer implements ILayer {
       clip: this.args.clip,
       data: this.args.data,
       name: this.args.name,
-      className: this.args.className,
-      elementType: 'circle',
-      create: (s) =>
-        s
+      className: `${this.args.className}-wrapper`,
+      elementType: 'g',
+      create: (s) => {
+        s.append('circle').attr('class', 'node-selection-ring');
+
+        s.append('circle')
+          .attr('class', `node-shape ${this.args.className}`)
           .attr('r', (d) => this.args.r(d))
           .classed('root', (d) => !d.parent)
           .classed('lazy', (d) => d.hasOutChildren)
@@ -75,9 +97,15 @@ export class NodeLayer implements ILayer {
             'stroke-width',
             (d) =>
               (d.pathes && d.pathes.labelcolor) || this.args.strokeWidth(d),
-          ),
-      updateColor: (s) =>
-        s
+          );
+      },
+      updateColor: (s) => {
+        s.select('.node-selection-ring').classed(
+          'selected',
+          (d) => d.pathes && d.pathes.isPartOfAnySelectionPath,
+        );
+
+        s.select('.node-shape')
           .classed('hovered', (d) => d.pathes && d.pathes.isPartOfAnyHoverPath)
           .classed(
             'selected',
@@ -87,17 +115,24 @@ export class NodeLayer implements ILayer {
             'fill',
             (d) => (d.pathes && d.pathes.labelcolor) || this.args.fill(d),
           )
-          .style('fill-opacity', (d) => this.args.opacity(d) || 1),
+          .style('fill-opacity', (d) => this.args.opacity(d) || 1);
+
+        this.updateSelectionRing(s);
+      },
       //updateColor:       s=> s.classed("hovered",   d=> d.isPartOfAnyHoverPath && d.parent)
       //                        .classed("selected",  d=> d.isPartOfAnySelectionPath && d.parent),
       updateTransform: (s) => {
-        s.attr('transform', (d) => this.args.transform(d))
+        s.attr('transform', (d) => this.args.transform(d));
+
+        s.select('.node-shape')
           .style('stroke', (d) => d.pathes && d.pathes.labelcolor)
           .attr('r', (d) => {
             if (this.args.r(d) > 0) {
               return this.args.r(d);
             }
           });
+
+        this.updateSelectionRing(s);
       },
     });
   }
