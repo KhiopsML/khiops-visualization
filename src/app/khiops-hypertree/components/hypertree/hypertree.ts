@@ -29,6 +29,10 @@ import { IUnitDisk } from '../unitdisk/unitdisk';
 import { presets } from '../../models/hypertree/preset-base';
 import { mergeDeep } from '../../ducd';
 let globelhtid = 0;
+const HYPERTREE_VIEWBOX_SIZE = 1000;
+const HYPERTREE_CENTER = HYPERTREE_VIEWBOX_SIZE / 2;
+const HYPERTREE_PADDING = 80;
+const HYPERTREE_SCALE = HYPERTREE_CENTER - HYPERTREE_PADDING;
 const hypertreehtml = `<div class="unitdisk-nav">
         <svg width="100%" height="100%" preserveAspectRatio="xMidYMid meet" viewBox="-0 0 1000 1000">
         </svg>
@@ -281,7 +285,7 @@ export class Hypertree {
       {
         parent: udparent,
         className: 'unitDisc',
-        position: 'translate(500,500) scale(480)',
+        position: `translate(${HYPERTREE_CENTER},${HYPERTREE_CENTER}) scale(${HYPERTREE_SCALE})`,
         hypertree: this,
       },
       {
