@@ -4,9 +4,23 @@
  * at https://spdx.org/licenses/BSD-3-Clause-Clear.html or see the "LICENSE" file for more details.
  */
 
+:host {
+  display: block;
+  height: 100%;
+  min-height: 0;
+}
+
 #project-view-comp {
-  display: inline-table !important;
+  display: flex !important;
+  flex-direction: column;
+  height: 100%;
+  min-height: 0;
   position: relative;
+
+  > as-split {
+    flex: 1 1 auto;
+    min-height: 0;
+  }
 
   #project-view-comp-file-loader {
     padding: 1rem 0.5rem !important;
