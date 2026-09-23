@@ -9,54 +9,55 @@
   padding: 0;
 
   background-color: var(--color-0) !important;
-
   #graph-header-comp {
-    .header-panel-contrast {
-      width: 100%;
-    }
-    div {
-      h1 {
-        margin: 1em 0.4em 0em 1em;
-        kl-icon {
-          padding-right: 0.4em;
-          padding-top: 2px;
-        }
-      }
-      app-select-toggle-button {
-        margin-bottom: 0.4em;
-        margin-top: 0.4em;
-      }
-      kl-btn-fullscreen {
-        margin: 0.4em;
-      }
-      .graph-header-tools {
-        flex-wrap: wrap;
-        mat-checkbox {
-          margin: 0rem 0 0rem 1rem;
-        }
+    margin-bottom: 5px;
 
-        ::ng-deep mat-checkbox .mdc-form-field label {
-          width: 130px !important;
-          white-space: normal !important;
-          line-height: inherit !important;
-          font-size: 0.75rem !important;
-          padding: 0 10px 0 0 !important;
-        }
+    h1 {
+      margin: 1em 0.4em 0em 1em;
+      kl-icon {
+        padding-right: 0.4em;
+        padding-top: 2px;
       }
+    }
+    app-select-toggle-button {
+      margin-bottom: 0.4em;
+      margin-top: 0.4em;
+    }
+    kl-btn-fullscreen {
+      margin: 0.4em;
     }
   }
+  .graph-header-tools {
+    margin-bottom: 10px;
+    padding: 5px 0;
+    flex-wrap: wrap;
+    mat-checkbox {
+      margin: 0rem 0 0rem 1rem;
+    }
 
-  #hyperTree {
-    position: relative;
-    height: 100%;
+    ::ng-deep mat-checkbox .mdc-form-field label {
+      width: 130px !important;
+      white-space: normal !important;
+      line-height: inherit !important;
+      font-size: 0.75rem !important;
+      padding: 0 10px 0 0 !important;
+    }
+  }
+  .tree-hyper-comp-container {
+    padding: 10px;
 
-    ::ng-deep .unitdisk-nav {
-      svg {
-        position: absolute !important;
+    #hyperTree {
+      position: relative;
+      height: 100%;
+      width: 100%;
+      ::ng-deep .unitdisk-nav {
+        svg {
+          position: absolute !important;
 
-        .caption {
-          stroke: transparent;
-          fill: var(--color-1000);
+          .caption {
+            stroke: transparent;
+            fill: var(--color-1000);
+          }
         }
       }
     }

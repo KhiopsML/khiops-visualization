@@ -16,16 +16,10 @@
     <div
       id="graph-header-comp"
       fxLayoutAlign="start center"
-      fxFlex
       class="scrollbar-thin screenshot-hide"
       fxLayout="column"
     >
-      <div
-        class="header-panel-contrast"
-        fxLayout="row"
-        fxFlex
-        fxLayoutAlign="start start"
-      >
+      <div fxLayout="row" fxFlexFill fxLayoutAlign="start start">
         <h1 fxFlex fxLayoutAlign="start center">
           <svg lucideIcon="git-fork" size="18"></svg>
           {{ 'GLOBAL.HYPER_TREE' | translate }}
@@ -46,33 +40,35 @@
         <kl-btn-fullscreen (toggleFullscreen)="onToggleFullscreen($event)">
         </kl-btn-fullscreen>
       </div>
-      <div
-        fxLayoutAlign="start start"
-        fxLayout="row"
-        class="graph-header-tools"
-      >
-        <div
-          fxLayout="row"
-          fxLayoutAlign="start center"
-          fxFlex
-          class="graph-header-tools"
-        >
-          <mat-checkbox
-            [checked]="visualization.purity"
-            (change)="togglePurityVisualization($event.checked)"
-          >
-            {{ 'GLOBAL.DISPLAY_PURITY_BY_OPACITY' | translate }}
-          </mat-checkbox>
-          <mat-checkbox
-            [checked]="visualization.population"
-            (change)="togglePopulationVisualization($event.checked)"
-          >
-            {{ 'GLOBAL.DISPLAY_LEAF_SIZES_BY_POPULATION' | translate }}
-          </mat-checkbox>
-        </div>
-      </div>
     </div>
-    <div id="hyperTree"></div>
+    <div
+      fxLayout="row"
+      fxLayoutAlign="start stretch"
+      class="graph-header-tools header-panel-contrast"
+    >
+      <mat-checkbox
+        fxFlex
+        [checked]="visualization.purity"
+        (change)="togglePurityVisualization($event.checked)"
+      >
+        {{ 'GLOBAL.DISPLAY_PURITY_BY_OPACITY' | translate }}
+      </mat-checkbox>
+      <mat-checkbox
+        fxFlex
+        [checked]="visualization.population"
+        (change)="togglePopulationVisualization($event.checked)"
+      >
+        {{ 'GLOBAL.DISPLAY_LEAF_SIZES_BY_POPULATION' | translate }}
+      </mat-checkbox>
+    </div>
+    <div
+      fxLayoutAlign="start start"
+      fxFlex
+      fxLayout="column"
+      class="tree-hyper-comp-container bg-dotted"
+    >
+      <div id="hyperTree"></div>
+    </div>
   </div>
 }
 @if (!dimensionTree) {
