@@ -13,12 +13,18 @@ import { FlexModule } from '@angular/flex-layout';
 import { TranslateService } from '@ngstack/translate';
 import { TranslateModule } from '@ngstack/translate';
 import { ToPrecisionPipe } from '@khiops-library/pipes/to-precision.pipe';
+import { ImportantBadgeComponent } from '../important-badge/important-badge.component';
 
 @Component({
   selector: 'kl-cell-stats',
   templateUrl: './cell-stats.component.html',
   styleUrls: ['./cell-stats.component.scss'],
-  imports: [FlexModule, TranslateModule, ToPrecisionPipe],
+  imports: [
+    FlexModule,
+    TranslateModule,
+    ToPrecisionPipe,
+    ImportantBadgeComponent,
+  ],
 })
 export class CellStatsComponent {
   readonly selectedCells = input<CellModel[]>([]);

@@ -7,16 +7,18 @@
 <div
   id="cell-stats-comp"
   fxLayout="row"
-  class="header-panel-contrast"
   fxFlexFill
   fxLayoutAlign="center center"
 >
   @if (cellStats(); as stats) {
     <div class="cell-stats-content">
       <b>{{ 'GLOBAL.CELL_STATS' | translate }}</b>
-      <span title="{{ 'TOOLTIPS.MATRIX.CELL_STATS_FREQUENCY' | translate }}"
-        >F= {{ stats.F | toPrecision }}</span
-      >
+
+      <kl-important-badge
+        title="{{ 'TOOLTIPS.MATRIX.CELL_STATS_FREQUENCY' | translate }}"
+        [text]="'F= ' + (stats.F | toPrecision)"
+        [color]="'green'"
+      ></kl-important-badge>
       <span
         title="{{
           'TOOLTIPS.MATRIX.CELL_STATS_EXPECTED_FREQUENCY' | translate
@@ -24,7 +26,11 @@
         >EF= {{ stats.EF | toPrecision }}</span
       >
       @if (stats.I !== undefined) {
-        <span>I= {{ stats.I | toPrecision }}</span>
+        <kl-important-badge
+          title="{{ 'TOOLTIPS.MATRIX.CELL_STATS_INFORMATION' | translate }}"
+          [text]="'I= ' + (stats.I | toPrecision)"
+          [color]="'orange'"
+        ></kl-important-badge>
       }
       @if (stats.Total !== undefined) {
         <span>Total= {{ stats.Total | toPrecision }} </span>
