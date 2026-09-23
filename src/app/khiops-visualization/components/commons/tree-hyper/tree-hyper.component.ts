@@ -65,6 +65,7 @@ export class TreeHyperComponent
   };
   private options: any;
   private ht?: Hypertree;
+  private initialLambda?: number;
   public treePreparationDatas?: TreePreparationDatasModel;
   public distributionDatas?: DistributionDatasModel;
 
@@ -331,6 +332,9 @@ export class TreeHyperComponent
       if (initView) {
         // zoom out
         this.ht?.initPromise.then(() => {
+          this.initialLambda =
+            this.ht?.args?.geometry?.transformation?.state?.λ ??
+            this.initialLambda;
           // this.ht?.api.gotoλ(0.15)
           // At init select the first node
           this.selectNodes(this.selectedNodes || []);
@@ -381,6 +385,10 @@ export class TreeHyperComponent
       return;
     }
 
-    this.ht.api.gotoλ(0.1);
+    const resetLambda =
+      this.initialLambda ??
+      this.ht.args?.geometry?.transformation?.state?.λ ??
+      0.1;
+    this.ht.api.gotoλ(resetLambda);
   }
 }
