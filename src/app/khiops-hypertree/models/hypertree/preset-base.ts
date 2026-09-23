@@ -54,6 +54,7 @@ const modelBase: () => HypertreeArgs = () => ({
   filter: {
     type: 'magic',
     cullingRadius: 0.99,
+    showSelectedLeafLabels: true,
     weightFilter: {
       magic: 160,
       alpha: 1.05,

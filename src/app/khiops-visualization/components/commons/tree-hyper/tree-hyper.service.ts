@@ -14,6 +14,10 @@ import { TreePreparationDatasModel } from '@khiops-visualization/model/tree-prep
   providedIn: 'root',
 })
 export class TreeHyperService {
+  static isSelectedLeaf(n: N): boolean {
+    return !!n && !!n.data?.isLeaf && !!n.pathes?.isPartOfAnySelectionPath;
+  }
+
   /**
    * Calculates a fixed scale factor to keep node sizes constant regardless of container size.
    * @param containerElement - The container element to measure.
@@ -230,7 +234,15 @@ export class TreeHyperService {
    * @param n - The node to check.
    * @returns 'block' if the node layer is visible, otherwise 'none'.
    */
-  static isNodeLayerVisible(displayedValues: ChartToggleValuesI[], n: N) {
+  static isNodeLayerVisible(
+    displayedValues: ChartToggleValuesI[],
+    n: N,
+    keepSelectedLeafLabels = false,
+  ) {
+    if (keepSelectedLeafLabels && TreeHyperService.isSelectedLeaf(n)) {
+      return 'block';
+    }
+
     if (!displayedValues || displayedValues.length === 0) {
       // Set layers visible at init or when no display values configured yet
       return 'block';

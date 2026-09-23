@@ -53,5 +53,25 @@ export function doLabelStuff(ud: IUnitDisk, cache: TransformationCache) {
     );
     damping /= 0.8;
   }
+
+  if (ud.view.hypertree.args.filter.showSelectedLeafLabels) {
+    const selectedLeaves = ud.view.hypertree.args.objects.pathes
+      .filter((p) => p && p.type === 'SelectionPath' && p.head)
+      .map((p) => p.head)
+      .filter(
+        (n: N) =>
+          !!n &&
+          !!n.precalc &&
+          !!n.precalc.label &&
+          (!n.children || !n.children.length),
+      );
+
+    selectedLeaves.forEach((leaf: N) => {
+      if (!stdlabels.includes(leaf)) {
+        stdlabels.push(leaf);
+      }
+    });
+  }
+
   cache.labels = stdlabels;
 }

@@ -38,6 +38,7 @@ export interface HypertreeArgs {
   filter: {
     type: string;
     cullingRadius: number;
+    showSelectedLeafLabels?: boolean;
     weightFilter: {
       magic: number; // auto by init up
       weight: (n) => number;

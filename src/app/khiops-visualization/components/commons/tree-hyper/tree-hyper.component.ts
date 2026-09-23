@@ -62,6 +62,7 @@ export class TreeHyperComponent
   public visualization: any = {
     population: false,
     purity: false,
+    keepSelectedLeafLabels: true,
   };
   private options: any;
   private ht?: Hypertree;
@@ -250,6 +251,7 @@ export class TreeHyperComponent
         langInitBFS: (_ht: any, n: N) => (n.precalc.label = n.data.id),
         filter: {
           cullingRadius: 1,
+          showSelectedLeafLabels: true,
           rangeCullingWeight: {
             min: 0,
             max: 0,
@@ -296,6 +298,7 @@ export class TreeHyperComponent
                 TreeHyperService.isNodeLayerVisible(
                   this.displayedValues || [],
                   n,
+                  true,
                 ),
             },
             'labels-force': {
