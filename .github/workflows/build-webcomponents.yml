@@ -5,7 +5,8 @@ on:
     branches:
       - main
       # Add more branches below to automatically trigger builds when pushing to them:
-      - feat-multi-tabs
+      # - feat-multi-tabs
+      - 1146-redesign
   workflow_dispatch:
     inputs:
       branch:
