@@ -44,7 +44,20 @@
     }
   }
   .tree-hyper-comp-container {
+    position: relative;
     padding: 10px;
+
+    .tree-hyper-zoom-tools {
+      position: absolute;
+      right: 16px;
+      bottom: 16px;
+      z-index: 3;
+      border: 1px solid var(--color-border-highlight);
+      box-shadow: 0px 2px 5px 1px rgba(0, 0, 0, 0.13);
+      border-radius: 5px;
+      background: var(--color-0);
+      padding: 5px 0;
+    }
 
     #hyperTree {
       position: relative;

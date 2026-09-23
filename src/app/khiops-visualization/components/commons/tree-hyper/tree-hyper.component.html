@@ -68,6 +68,14 @@
       class="tree-hyper-comp-container bg-dotted"
     >
       <div id="hyperTree"></div>
+      <div class="tree-hyper-zoom-tools screenshot-hide">
+        <kl-zoom-tools
+          [emitGlobalEvents]="false"
+          (zoomIn)="onClickOnZoomIn()"
+          (zoomOut)="onClickOnZoomOut()"
+          (zoomReset)="onClickOnResetZoom()"
+        ></kl-zoom-tools>
+      </div>
     </div>
   </div>
 }

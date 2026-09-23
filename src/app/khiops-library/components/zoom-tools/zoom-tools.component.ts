@@ -4,7 +4,7 @@
  * at https://spdx.org/licenses/BSD-3-Clause-Clear.html or see the "LICENSE" file for more details.
  */
 
-import { Component, inject, input } from '@angular/core';
+import { Component, inject, input, output } from '@angular/core';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
@@ -28,18 +28,32 @@ import { LucideDynamicIcon } from '@lucide/angular';
 })
 export class ZoomToolsComponent {
   public readonly alignment = input<string>('column');
+  public readonly emitGlobalEvents = input<boolean>(true);
+
+  public readonly zoomIn = output<void>();
+  public readonly zoomReset = output<void>();
+  public readonly zoomOut = output<void>();
 
   private readonly zoomToolsEventsService = inject(ZoomToolsEventsService);
 
   public onClickOnZoomIn(): void {
-    this.zoomToolsEventsService.emitZoomIn();
+    this.zoomIn.emit();
+    if (this.emitGlobalEvents()) {
+      this.zoomToolsEventsService.emitZoomIn();
+    }
   }
 
   public onClickOnResetZoom(): void {
-    this.zoomToolsEventsService.emitZoomReset();
+    this.zoomReset.emit();
+    if (this.emitGlobalEvents()) {
+      this.zoomToolsEventsService.emitZoomReset();
+    }
   }
 
   public onClickOnZoomOut(): void {
-    this.zoomToolsEventsService.emitZoomOut();
+    this.zoomOut.emit();
+    if (this.emitGlobalEvents()) {
+      this.zoomToolsEventsService.emitZoomOut();
+    }
   }
 }

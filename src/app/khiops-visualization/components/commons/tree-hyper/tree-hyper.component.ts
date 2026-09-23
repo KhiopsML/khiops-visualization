@@ -49,6 +49,8 @@ export class TreeHyperComponent
   extends SelectableComponent
   implements OnInit, AfterViewInit, OnChanges, OnDestroy
 {
+  private static readonly HYPERTREE_ZOOM_FACTOR = 1.175;
+
   @ViewChild('hyperTree') private hyperTree?: ElementRef<HTMLElement>;
 
   @Input() public dimensionTree?: [TreeNodeModel];
@@ -344,5 +346,41 @@ export class TreeHyperComponent
         id: n.data.id,
       });
     });
+  }
+
+  public onClickOnZoomIn(): void {
+    const currentLambda =
+      this.ht?.args?.geometry?.transformation?.state?.λ ?? undefined;
+    if (!currentLambda || !this.ht) {
+      return;
+    }
+
+    const nextLambda = Math.min(
+      currentLambda * TreeHyperComponent.HYPERTREE_ZOOM_FACTOR,
+      0.45,
+    );
+    this.ht.api.gotoλ(nextLambda);
+  }
+
+  public onClickOnZoomOut(): void {
+    const currentLambda =
+      this.ht?.args?.geometry?.transformation?.state?.λ ?? undefined;
+    if (!currentLambda || !this.ht) {
+      return;
+    }
+
+    const nextLambda = Math.max(
+      currentLambda / TreeHyperComponent.HYPERTREE_ZOOM_FACTOR,
+      1 / 40,
+    );
+    this.ht.api.gotoλ(nextLambda);
+  }
+
+  public onClickOnResetZoom(): void {
+    if (!this.ht) {
+      return;
+    }
+
+    this.ht.api.gotoλ(0.1);
   }
 }
