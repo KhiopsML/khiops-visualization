@@ -5,13 +5,18 @@
  */
 
 import {
+  AfterViewInit,
+  ElementRef,
   Component,
   Input,
   OnInit,
+  OnChanges,
   EventEmitter,
   NgZone,
   Output,
+  SimpleChanges,
   ChangeDetectionStrategy,
+  ViewChild,
   input,
 } from '@angular/core';
 import { SelectableService } from '@khiops-library/components/selectable/selectable.service';
@@ -41,7 +46,7 @@ import { ChartLabelTruncationUtils } from '@khiops-library/components/chart/char
 })
 export class TargetDistributionGraphComponent
   extends ScrollableGraphComponent
-  implements OnInit
+  implements OnInit, AfterViewInit, OnChanges
 {
   @Output() graphTypeChanged: EventEmitter<string> = new EventEmitter();
   @Output()
@@ -76,7 +81,16 @@ export class TargetDistributionGraphComponent
   public isSmallDiv = false;
   private selectedBarIndex?: number;
 
-  private readonly SMALL_DIV_THRESHOLD = 600;
+  @ViewChild('headerContainer', { read: ElementRef })
+  private headerContainerRef?: ElementRef<HTMLElement>;
+  @ViewChild('headerTools', { read: ElementRef })
+  private headerToolsRef?: ElementRef<HTMLElement>;
+  @ViewChild('headerTitle', { read: ElementRef })
+  private headerTitleRef?: ElementRef<HTMLElement>;
+  @ViewChild('legendMeasurer', { read: ElementRef })
+  private legendMeasurerRef?: ElementRef<HTMLElement>;
+
+  private readonly HEADER_SAFETY_MARGIN = 24;
   private readonly PERCENTAGE_SUFFIX = '%';
 
   constructor(
@@ -165,12 +179,24 @@ export class TargetDistributionGraphComponent
     this.title = this.title || this.translate.get('GLOBAL.TARGET_DISTRIBUTION');
   }
 
+  override ngAfterViewInit() {
+    this.scheduleLegendLayoutUpdate();
+  }
+
+  override ngOnChanges(changes: SimpleChanges) {
+    if (changes['displayedValues'] || changes['title'] || changes['inputDatas']) {
+      this.scheduleLegendLayoutUpdate();
+    }
+  }
+
   /**
    * Handle resize event to check if the graph is in small div
    * @param event The resized event containing new dimensions
    */
   onResized(event: ResizedEvent) {
-    this.isSmallDiv = (event?.newRect?.width || 0) <= this.SMALL_DIV_THRESHOLD;
+    if (event?.newRect?.width) {
+      this.scheduleLegendLayoutUpdate();
+    }
   }
 
   /**
@@ -181,6 +207,40 @@ export class TargetDistributionGraphComponent
     this.isFullscreen = isFullscreen;
     setTimeout(() => {
       this.resizeGraph();
+      this.scheduleLegendLayoutUpdate();
+    });
+  }
+
+  /**
+   * Update legend layout based on real measured widths in header.
+   * Keep legend on first line when title + legend fit available space,
+   * otherwise move legend to second line.
+   */
+  private updateLegendLayout() {
+    const headerContainerWidth = this.headerContainerRef?.nativeElement.clientWidth;
+    const headerToolsWidth = this.headerToolsRef?.nativeElement.offsetWidth;
+    const headerTitleWidth = this.headerTitleRef?.nativeElement.offsetWidth;
+    const legendWidth = this.legendMeasurerRef?.nativeElement.scrollWidth;
+
+    if (
+      !headerContainerWidth ||
+      headerToolsWidth === undefined ||
+      !headerTitleWidth ||
+      legendWidth === undefined
+    ) {
+      return;
+    }
+
+    const availableHeaderMainWidth =
+      headerContainerWidth - headerToolsWidth - this.HEADER_SAFETY_MARGIN;
+    const requiredHeaderMainWidth = headerTitleWidth + legendWidth;
+
+    this.isSmallDiv = requiredHeaderMainWidth > availableHeaderMainWidth;
+  }
+
+  private scheduleLegendLayoutUpdate() {
+    setTimeout(() => {
+      this.updateLegendLayout();
     });
   }
 

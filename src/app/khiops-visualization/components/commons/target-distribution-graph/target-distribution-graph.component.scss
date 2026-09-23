@@ -8,6 +8,14 @@
   padding: 10px 1px 1px 1px;
   background-color: var(--color-0) !important; // for copy image
 
+  .legend-measurer {
+    position: absolute;
+    visibility: hidden;
+    pointer-events: none;
+    left: -10000px;
+    top: -10000px;
+  }
+
   ::ng-deep .bar-chart {
     g[ng-reflect-height='0'] {
       display: none !important;
@@ -18,14 +26,8 @@
     padding: 0 5px 0 10px;
   }
   ::ng-deep .comp-header {
-    kl-btn-fullscreen {
-      // margin-bottom: 4px;
-    }
     .comp-header-tools {
       align-items: flex-end;
-      button {
-        // margin-bottom: 4px;
-      }
     }
   }
 }

@@ -14,9 +14,14 @@
 >
   @if (inputDatas) {
     <div fxFlexFill fxLayout="column">
-      <div fxLayout="row" fxLayoutAlign="start center" class="comp-header">
+      <div
+        #headerContainer
+        fxLayout="row"
+        fxLayoutAlign="start center"
+        class="comp-header"
+      >
         <div fxFlex fxLayout="row" fxLayoutAlign="start center">
-          <h2 title="{{ titleTooltip }}">{{ title }}</h2>
+          <h2 #headerTitle title="{{ titleTooltip }}">{{ title }}</h2>
           @if (!isSmallDiv) {
             <kl-legend
               [inputDatas]="displayedValues"
@@ -31,6 +36,7 @@
           [colorSet]="colorSet"
         ></kl-legend> -->
         <div
+          #headerTools
           fxLayoutAlign="start center"
           fxLayout="row"
           class="comp-header-tools screenshot-hide"
@@ -63,6 +69,14 @@
           [colorSet]="colorSet"
         ></kl-legend>
       }
+      <div class="legend-measurer" aria-hidden="true">
+        <kl-legend
+          #legendMeasurer
+          [inputDatas]="displayedValues"
+          [type]="'chart-nd-dynamic'"
+          [colorSet]="colorSet"
+        ></kl-legend>
+      </div>
       <kl-chart
         id="{{ 'target-distribution-graph-comp-' + position }}"
         [chartOptions]="chartOptions"
