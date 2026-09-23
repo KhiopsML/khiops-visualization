@@ -6,32 +6,34 @@
 
 <div class="header-manage-view-comp">
   <button
+    class="lucid-icon-button"
     mat-flat-button
     color="warn"
     matTooltip="{{ 'MENU.IMPORT_EXTERNAL_DATA' | translate }}"
     (click)="clickImportExternalData()"
     attr.aria-label="{{ 'MENU.IMPORT_EXTERNAL_DATA' | translate }}"
   >
-    <mat-icon>file_upload</mat-icon>
+    <svg lucideIcon="file-up"></svg>
   </button>
   <button
-    class="button-unfold-hierarchy"
+    class="button-unfold-hierarchy lucid-icon-button"
     mat-flat-button
     color="warn"
     matTooltip="{{ 'GLOBAL.UNFOLD_HIERARCHY_DESC' | translate }}"
     (click)="clickUnfodHierarchy()"
     attr.aria-label="{{ 'GLOBAL.UNFOLD_HIERARCHY_DESC' | translate }}"
   >
-    <mat-icon>timeline</mat-icon>
+    <svg lucideIcon="chart-no-axes-combined"></svg>
+    <!-- <span>{{ 'GLOBAL.UNFOLD_HIERARCHY' | translate }}</span> -->
   </button>
   <button
-    class="button-manage-views"
+    class="button-manage-views lucid-icon-button"
     mat-flat-button
     color="warn"
     attr.aria-label="{{ 'GLOBAL.MANAGE_VIEWS_DESC' | translate }}"
     matTooltip="{{ 'GLOBAL.MANAGE_VIEWS_DESC' | translate }}"
     (click)="clickManageLayout()"
   >
-    <mat-icon>view_compact</mat-icon>
+    <svg lucideIcon="layout-dashboard"></svg>
   </button>
 </div>

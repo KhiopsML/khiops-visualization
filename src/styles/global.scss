@@ -545,6 +545,11 @@ mat-checkbox.kl-checkbox {
     color: var(--color-800);
   }
 }
+.mat-mdc-unelevated-button.lucid-icon-button {
+  svg {
+    color: var(--color-accent) !important;
+  }
+}
 
 app-change-scale-button {
   // margin-top: 10px;

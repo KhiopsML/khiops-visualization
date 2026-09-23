@@ -42,6 +42,7 @@ import { TranslateModule, TranslateService } from '@ngstack/translate';
 import { AgGridModule } from '@ag-grid-community/angular';
 import { AngularSplitModule } from 'angular-split';
 import {
+  LucideFileUp,
   LucideFolderTree,
   LucideDynamicIcon,
   LucideSearch,
@@ -78,6 +79,8 @@ import {
   LucideFullscreen,
   LucideRotateCwSquare,
   LucideRotateCcwSquare,
+  LucideLayoutDashboard,
+  LucideChartNoAxesCombined,
 } from '@lucide/angular';
 
 // Component imports
@@ -227,6 +230,9 @@ import EnTransaltion from '../../assets/i18n/en.json';
     TranslateService,
     DialogService,
     provideLucideIcons(
+      LucideLayoutDashboard,
+      LucideFileUp,
+      LucideChartNoAxesCombined,
       LucideFolderTree,
       LucideSearch,
       LucideChartColumn,
