@@ -73,6 +73,11 @@ import {
   LucideLayers,
   LucideGrid3x3,
   LucideScale3d,
+  LucideZoomIn,
+  LucideZoomOut,
+  LucideFullscreen,
+  LucideRotateCwSquare,
+  LucideRotateCcwSquare,
 } from '@lucide/angular';
 
 // Component imports
@@ -251,6 +256,11 @@ import EnTransaltion from '../../assets/i18n/en.json';
       LucideCopy,
       LucideImages,
       LucideSettings,
+      LucideZoomIn,
+      LucideZoomOut,
+      LucideFullscreen,
+      LucideRotateCwSquare,
+      LucideRotateCcwSquare,
     ),
     // Add Angular Material providers
     // These will be automatically provided but we ensure they're available

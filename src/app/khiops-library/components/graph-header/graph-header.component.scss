@@ -61,10 +61,10 @@
     .kl-slider-container {
       max-height: 32px;
       color: var(--color-800);
-      border: 1px solid #dfe4e9 !important;
+      border: 1px solid var(--color-border-highlight) !important;
       border-radius: var(--border-radius);
-      padding-left: 10px;
       background: var(--color-50);
+      padding-left: 10px;
       span {
         font-size: 0.8em;
       }

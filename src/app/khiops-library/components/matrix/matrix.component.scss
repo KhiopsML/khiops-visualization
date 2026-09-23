@@ -9,10 +9,29 @@
   position: relative;
   overflow: hidden;
   background: transparent;
-  margin: 1px;
+  background-color: transparent;
 
+  .kl-slider-container {
+    max-height: 32px;
+    color: var(--color-800);
+    transform: rotate(-90deg);
+
+    padding-left: 10px;
+    min-height: 200px;
+    span {
+      font-size: 0.8em;
+    }
+  }
+
+  .matrix-comp-container {
+    background-image: radial-gradient(var(--color-150) 1px, transparent 1px);
+    background-size: 20px 20px;
+    border-radius: var(--border-radius);
+    border: 1px solid var(--color-100);
+    background-color: var(--color-50);
+  }
   kl-cell-stats {
-    width: calc(100% - 2px) !important; // for selectable border
+    margin-top: 10px;
   }
 
   #matrix-loading {
@@ -33,18 +52,11 @@
   }
 
   button.invert-axis.toggled-false {
-    mat-icon {
-      color: var(--color-800) !important;
-    }
+    transform: rotate(-180deg);
   }
 
   button.invert-axis.toggled-true {
-    background: var(--color-800) !important;
-    transform: rotate(180deg);
-
-    mat-icon {
-      color: var(--color-0);
-    }
+    transform: rotate(-90deg);
   }
 
   button.toggle-zero.toggled-true {
@@ -52,11 +64,15 @@
   }
 
   #matrix-area {
+    z-index: 2;
     width: 50px; // important everything but 100% (min width)
-    height: 100%;
     overflow: auto;
-    border: 1px solid var(--color-100);
-
+    border: 1px solid var(--color-border-highlight);
+    margin: 30px 10px 5px 5px;
+    box-shadow: 0px 2px 5px 1px rgba(0, 0, 0, 0.13);
+    border-radius: var(--border-radius);
+    padding: 10px;
+    background: var(--color-0);
     #matrix-container {
       height: 100%;
       width: 100%;
@@ -79,12 +95,14 @@
         position: absolute;
         top: 0;
         left: 0;
+        border-radius: var(--border-radius);
       }
 
       #matrix-selected {
         position: absolute;
         top: 0;
         left: 0;
+        border-radius: var(--border-radius);
       }
     }
   }
@@ -92,11 +110,12 @@
   .axis-matrix {
     font-size: 0.95em;
     font-weight: 500;
-    color: var(--color-800);
-    background: var(--color-100);
     padding: 1px 5px;
-    border-radius: 4px;
     margin: 4px 0;
+    color: var(--color-800);
+    border-radius: var(--border-radius);
+    background: var(--color-50);
+    border: var(--color-200) 1px solid;
   }
 
   #y-axis {
@@ -116,40 +135,57 @@
   }
 
   #x-axis {
-    max-height: 32px;
-    min-height: 32px;
-
-    span {
-      margin-top: 6px !important;
-    }
+    max-height: 40px;
+    min-height: 40px;
   }
   #matrix-comp-left {
+    z-index: 1;
     min-width: 42px;
+    #matrix-comp-left-top {
+      border: 1px solid var(--color-border-highlight);
+      margin: 30px 20px 5px 20px;
+      box-shadow: 0px 2px 5px 1px rgba(0, 0, 0, 0.13);
+      border-radius: 5px;
+      background: var(--color-0);
+      padding: 5px 0;
+    }
   }
   #matrix-comp-right {
+    z-index: 1;
     max-width: 60px;
     width: 60px;
-
+    margin-left: 10px;
+    margin-right: 2px;
     #contrast {
       margin-bottom: 1em;
-
+      border: 1px solid var(--color-border-highlight) !important;
+      border-radius: var(--border-radius);
+      background: var(--color-50);
+      width: 30px;
+      height: 150px;
+      margin-top: 30px;
+      margin-left: 15px;
       span {
         font-size: 10px;
       }
     }
 
-    mat-slider {
-      transform: rotate(-90deg);
-      margin-top: 20px;
-      margin-bottom: 20px;
-    }
-
     #legend {
       font-size: 0.9em;
+      max-height: 60%;
+      margin: auto;
+      #legend-bar-container {
+        flex: 1;
+        position: relative;
+        padding: 3px;
+        box-shadow: 0px 2px 5px 1px rgba(0, 0, 0, 0.13);
+        border-radius: var(--border-radius);
+        background: var(--color-0);
 
-      #legend-bar {
-        border: 1px solid var(--color-500);
-        width: 14px;
+        #legend-bar {
+          width: 14px;
+          border-radius: 5px;
+        }
       }
 
       #legend-max,

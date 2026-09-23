@@ -226,17 +226,13 @@ mat-button-toggle-group {
     height: 100%;
   }
 
-  // .mat-button-toggle-checked {
-  //   // background-color: var(--color-border-subtle) !important;
-  //   background-color: transparent !important;
-  //   color: var(--color-0) !important;
-  // }
-
   .mat-button-toggle-checked {
     button {
-      color: var(--color-0) !important;
       box-shadow: inset var(--color-200) 0px 0px 0px 1px;
       background: white;
+      span {
+        color: var(--color-accent) !important;
+      }
     }
   }
 }
@@ -250,7 +246,7 @@ mat-pseudo-checkbox {
 
 .mat-button-toggle-standalone,
 .mat-button-toggle-group {
-  background-color: var(--color-border-subtle);
+  background-color: var(--color-selected-row);
   font-size: 0.4rem !important;
   height: 32px !important;
 }
@@ -285,12 +281,6 @@ mat-checkbox .mdc-form-field label {
 }
 .mat-mdc-slider .mdc-slider__thumb-knob {
   transform: scale(0.7) translate(-70%, -80%) !important;
-}
-
-button.mdc-icon-button {
-  padding: 0 !important;
-  max-height: 2rem !important;
-  max-width: 2rem !important;
 }
 
 .mat-mdc-slider-visual-thumb .mat-ripple {
@@ -509,5 +499,20 @@ mat-slider {
   display: flow-root !important;
   label {
     width: 100%;
+  }
+}
+
+button.mdc-icon-button {
+  padding: 0 !important;
+  max-height: 2rem !important;
+  max-width: 2rem !important;
+  display: flex !important;
+  align-content: center;
+  align-items: center;
+  justify-content: center;
+  margin: 5px;
+  svg {
+    width: 20px !important;
+    color: var(--color-800) !important;
   }
 }

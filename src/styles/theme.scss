@@ -20,7 +20,7 @@
   --gripOpacity: 0.5;
   --layout-padding: 15px;
   --style-selected-border: dashed;
-  --font-code: 'JetBrains Mono', monospace;
+  --font-code: 'JetBrains Mono', 'Courier New', monospace;
   --box-shadow-button: 0 2px 4px -2px rgba(0, 0, 0, 0);
 
   --color-0: #ffffff;
@@ -64,6 +64,7 @@
   --color-selected-row: #ecf1f7;
   --color-border-row-size: 3px;
   --color-selected-row-font: #0f172a;
+  --color-border-highlight: #dfe4e9;
 
   // --mat-button-toggle-divider-color: #dcdcdc;
   --mat-button-toggle-divider-color: transparent;

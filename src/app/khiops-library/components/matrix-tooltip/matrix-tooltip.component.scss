@@ -12,8 +12,7 @@
   max-width: 300px;
   min-width: 300px;
   color: var(--color-0);
-  // font-size: 13px;
-  background: color-mix(in srgb, var(--color-1000) 80%, transparent);
+  background: color-mix(in srgb, var(--color-1000) 90%, transparent);
   pointer-events: none;
   border-radius: 0px;
   transition: opacity 250ms cubic-bezier(0.25, 0.46, 0.45, 0.94) 500ms;
@@ -33,6 +32,7 @@
       margin: 0;
       padding: 0;
       font-weight: 500;
+      font-family: 'JetBrains Mono', 'Courier New', monospace !important;
     }
   }
 
@@ -42,6 +42,7 @@
     font-weight: 300;
 
     div {
+      font-family: 'JetBrains Mono', 'Courier New', monospace !important;
       margin: 2px 0;
     }
   }

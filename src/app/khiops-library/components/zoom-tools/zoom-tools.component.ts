@@ -11,6 +11,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { TranslateModule } from '@ngstack/translate';
 import { ZoomToolsEventsService } from '@khiops-library/components/zoom-tools/zoom-tools.service';
+import { LucideDynamicIcon } from '@lucide/angular';
 
 @Component({
   selector: 'kl-zoom-tools',
@@ -22,6 +23,7 @@ import { ZoomToolsEventsService } from '@khiops-library/components/zoom-tools/zo
     MatIconModule,
     MatTooltipModule,
     TranslateModule,
+    LucideDynamicIcon,
   ],
 })
 export class ZoomToolsComponent {

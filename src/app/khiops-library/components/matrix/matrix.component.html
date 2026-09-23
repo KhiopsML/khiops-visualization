@@ -25,90 +25,113 @@
       mode="indeterminate"
     ></mat-spinner>
   </div>
+  <div fxLayout="column" fxFlex class="matrix-comp-container">
+    <div fxLayout="row" fxFlex>
+      <div fxLayout="column" id="matrix-comp-left">
+        <div id="matrix-comp-left-top">
+          <kl-zoom-tools></kl-zoom-tools>
+          @if (isKhiopsCovisu) {
+            <hr class="screenshot-hide" />
+          }
+          @if (isKhiopsCovisu) {
+            <kl-keyboard-tooltip
+              key="CTRL"
+              tooltip="GLOBAL.MULTI_SELECTION_TIPS"
+            >
+            </kl-keyboard-tooltip>
+          }
+          @if (graphMode?.mode === 'MUTUAL_INFO' && !isKhiopsCovisu) {
+            <button
+              class="screenshot-hide"
+              mat-icon-button
+              matTooltip="{{ 'GLOBAL.TOGGLE_ZERO' | translate }}"
+              (click)="onClickOnToggleZeros()"
+              [ngClass]="['toggle-zero', 'toggled-' + isZerosToggled]"
+              attr.aria-label="{{ 'GLOBAL.TOGGLE_ZERO' | translate }}"
+            >
+              <mat-icon fxFlexFill fxLayoutAlign="center center">{{
+                isZerosToggled ? 'visibility' : 'visibility_off'
+              }}</mat-icon>
+            </button>
+          }
+
+          <button
+            class="screenshot-hide lucid-icon-button"
+            mat-icon-button
+            matTooltip="{{ 'GLOBAL.INVERT_AXIS' | translate }}"
+            (click)="onClickOnInvertAxis()"
+            attr.aria-label="{{ 'GLOBAL.INVERT_AXIS' | translate }}"
+            [ngClass]="['invert-axis', 'toggled-' + !isAxisInverted]"
+          >
+            <svg
+              [lucideIcon]="
+                isAxisInverted ? 'rotate-ccw-square' : 'rotate-cw-square'
+              "
+              size="18"
+            ></svg>
+          </button>
+        </div>
+        <div fxFlex id="y-axis" fxLayoutAlign="center center">
+          <span class="axis-matrix font-code" title="{{ yAxisLabel }}">{{
+            yAxisLabel
+          }}</span>
+        </div>
+      </div>
+      <div fxFlex id="matrix-area" #matrixArea fxLayoutAlign="center center">
+        <div fxFlex id="matrix-container" #matrixContainerDiv>
+          <canvas id="matrix" #matrixDiv></canvas>
+          <canvas id="matrix-selected" #matrixSelectedDiv></canvas>
+        </div>
+      </div>
+      <div fxLayout="column" id="matrix-comp-right">
+        <div
+          id="contrast"
+          fxLayout="row"
+          fxLayoutAlign="center center"
+          class="screenshot-hide"
+        >
+          <div
+            fxLayout="row"
+            fxLayoutAlign="center center"
+            class="kl-slider-container"
+          >
+            <span>Contrast</span>
+            <mat-slider
+              attr.aria-label="{{
+                'ARIA.MATRIX.UPDATE_MATRIX_CONTRAST' | translate
+              }}"
+              [max]="90"
+              title="{{ 'TOOLTIPS.COMMONS.MATRIX_CONTRAST' | translate }}"
+              (input)="onContrastChanged($event)"
+              [min]="10"
+              [step]="10"
+            >
+              <input [(ngModel)]="contrast" matSliderThumb />
+            </mat-slider>
+          </div>
+        </div>
+        <div id="legend" fxFlex fxLayout="column" fxLayoutAlign="center center">
+          <span id="legend-max" matTooltip="{{ legend.max | toPrecision }}">{{
+            legend.max | toPrecision
+          }}</span>
+          <div id="legend-bar-container">
+            <div id="legend-bar" fxFlex #legendBar></div>
+          </div>
+          <span id="legend-min" matTooltip="{{ legend.min | toPrecision }}">{{
+            legend.min | toPrecision
+          }}</span>
+        </div>
+      </div>
+    </div>
+    <div fxLayout="row" id="x-axis" fxLayoutAlign="center center">
+      <div fxFlex fxLayoutAlign="center center">
+        <span class="axis-matrix font-code" title="{{ xAxisLabel }}">{{
+          xAxisLabel
+        }}</span>
+      </div>
+    </div>
+  </div>
   @if (isKhiopsCovisu) {
     <kl-cell-stats [selectedCells]="selectedCells"></kl-cell-stats>
   }
-  <div fxLayout="row" fxFlex>
-    <div fxLayout="column" id="matrix-comp-left">
-      <kl-zoom-tools></kl-zoom-tools>
-      @if (isKhiopsCovisu) {
-        <hr class="screenshot-hide" />
-      }
-      @if (isKhiopsCovisu) {
-        <kl-keyboard-tooltip key="CTRL" tooltip="GLOBAL.MULTI_SELECTION_TIPS">
-        </kl-keyboard-tooltip>
-      }
-      <div fxFlex id="y-axis" fxLayoutAlign="center center">
-        <span class="axis-matrix font-code" title="{{ yAxisLabel }}">{{
-          yAxisLabel
-        }}</span>
-      </div>
-      @if (graphMode?.mode === 'MUTUAL_INFO' && !isKhiopsCovisu) {
-        <button
-          class="screenshot-hide"
-          mat-icon-button
-          matTooltip="{{ 'GLOBAL.TOGGLE_ZERO' | translate }}"
-          (click)="onClickOnToggleZeros()"
-          [ngClass]="['toggle-zero', 'toggled-' + isZerosToggled]"
-          attr.aria-label="{{ 'GLOBAL.TOGGLE_ZERO' | translate }}"
-        >
-          <mat-icon fxFlexFill fxLayoutAlign="center center">{{
-            isZerosToggled ? 'visibility' : 'visibility_off'
-          }}</mat-icon>
-        </button>
-      }
-      <button
-        class="screenshot-hide"
-        mat-icon-button
-        matTooltip="{{ 'GLOBAL.INVERT_AXIS' | translate }}"
-        (click)="onClickOnInvertAxis()"
-        attr.aria-label="{{ 'GLOBAL.INVERT_AXIS' | translate }}"
-        [ngClass]="['invert-axis', 'toggled-' + !isAxisInverted]"
-      >
-        <mat-icon fxFlexFill fxLayoutAlign="center center">transform</mat-icon>
-      </button>
-    </div>
-    <div fxFlex id="matrix-area" #matrixArea>
-      <div fxFlex id="matrix-container" #matrixContainerDiv>
-        <canvas id="matrix" #matrixDiv></canvas>
-        <canvas id="matrix-selected" #matrixSelectedDiv></canvas>
-      </div>
-    </div>
-    <div fxFlex fxLayout="column" id="matrix-comp-right">
-      <div
-        id="contrast"
-        fxLayout="column"
-        fxLayoutAlign="start center"
-        class="screenshot-hide"
-      >
-        <span>Contrast</span>
-        <mat-slider
-          attr.aria-label="{{
-            'ARIA.MATRIX.UPDATE_MATRIX_CONTRAST' | translate
-          }}"
-          [max]="90"
-          title="{{ 'TOOLTIPS.COMMONS.MATRIX_CONTRAST' | translate }}"
-          (input)="onContrastChanged($event)"
-          [min]="10"
-          [step]="10"
-        >
-          <input [(ngModel)]="contrast" matSliderThumb />
-        </mat-slider>
-      </div>
-      <div id="legend" fxFlex fxLayout="column" fxLayoutAlign="center center">
-        <span id="legend-max" matTooltip="{{ legend.max | toPrecision }}">{{
-          legend.max | toPrecision
-        }}</span>
-        <div id="legend-bar" fxFlex #legendBar></div>
-        <span id="legend-min" matTooltip="{{ legend.min | toPrecision }}">{{
-          legend.min | toPrecision
-        }}</span>
-      </div>
-    </div>
-  </div>
-  <div fxLayout="row" id="x-axis" fxLayoutAlign="center center">
-    <span class="axis-matrix font-code" title="{{ xAxisLabel }}">{{
-      xAxisLabel
-    }}</span>
-  </div>
 </div>
