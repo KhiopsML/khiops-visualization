@@ -55,6 +55,7 @@ export class TreeHyperComponent
 
   @Input() public dimensionTree?: [TreeNodeModel];
   @Input() private displayedValues?: ChartToggleValuesI[];
+  @Input('label_size') public labelSize: number | string = 1.6;
 
   public buttonTitle: string;
   public componentType = COMPONENT_TYPES.HYPER_TREE; // needed to copy datas
@@ -205,9 +206,17 @@ export class TreeHyperComponent
       this.initHyperTree();
     }
     if (!this.ht) return;
+    if (changes.labelSize && this.ht) {
+      this.ht?.api.updateNodesVisualization();
+    }
     if (changes.displayedValues?.currentValue && this.ht) {
       this.ht?.api.updateNodesVisualization();
     }
+  }
+
+  private getLabelSizeFactor(): number {
+    const factor = Number(this.labelSize);
+    return Number.isFinite(factor) && factor > 0 ? factor : 1;
   }
 
   public async hideActiveEntries() {
@@ -294,6 +303,10 @@ export class TreeHyperComponent
               background: (_n: N) => {
                 return false;
               },
+              transform: (d: N, delta: { re: number; im: number }) =>
+                ` translate(${(d.cache?.re || 0) + delta.re} ${(d.cache?.im || 0) + delta.im})` +
+                d.scaleStrText +
+                ` scale(${TreeHyperService.getFixedNodeScale(this.hyperTree?.nativeElement) * this.getLabelSizeFactor()})`,
               isVisible: (n: N) =>
                 TreeHyperService.isNodeLayerVisible(
                   this.displayedValues || [],
