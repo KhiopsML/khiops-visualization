@@ -1,0 +1,71 @@
+/*
+ * Copyright (c) 2023-2026 Orange. All rights reserved.
+ * This software is distributed under the BSD 3-Clause-clear License, the text of which is available
+ * at https://spdx.org/licenses/BSD-3-Clause-Clear.html or see the "LICENSE" file for more details.
+ */
+
+#tree-hyper-selection-comp {
+  min-width: 220px;
+  max-width: 320px;
+  padding: 10px 12px;
+  border-radius: var(--border-radius);
+  border: 1px solid color-mix(in srgb, #9ca3af 30%, transparent);
+  background-color: var(--color-0);
+  color: #e5e7eb;
+  backdrop-filter: blur(2px);
+
+  .selection-title {
+    font-size: 0.72rem;
+    font-weight: 700;
+    margin-bottom: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--color-800);
+  }
+
+  .selection-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 8px;
+    margin-bottom: 6px;
+  }
+
+  .selection-label {
+    color: var(--color-800);
+    text-transform: uppercase;
+    font-weight: 500;
+  }
+
+  .selection-value {
+    font-weight: 600;
+    text-align: right;
+    word-break: break-word;
+    color: var(--color-800);
+  }
+
+  .node-id-value {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .node-color-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    border: 1px solid rgba(255, 255, 255, 0.35);
+    flex: 0 0 10px;
+  }
+
+  .selection-empty {
+    font-size: 0.75rem;
+    opacity: 0.85;
+    color: #cbd5e1;
+  }
+
+  kl-important-badge {
+    transform: translateY(-1px);
+    font-weight: 600;
+  }
+}

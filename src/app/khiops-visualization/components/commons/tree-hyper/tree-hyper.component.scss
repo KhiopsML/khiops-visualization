@@ -30,6 +30,7 @@
   .graph-header-tools {
     margin-bottom: 10px;
     padding: 5px 0;
+    padding-right: 8px;
     flex-wrap: wrap;
     mat-checkbox {
       margin: 0rem 0 0rem 1rem;
@@ -45,7 +46,15 @@
   }
   .tree-hyper-comp-container {
     position: relative;
-    padding: 10px;
+    padding: 20px;
+
+    .tree-hyper-selection {
+      position: absolute;
+      left: 16px;
+      bottom: 16px;
+      z-index: 3;
+      max-width: min(40%, 340px);
+    }
 
     .tree-hyper-zoom-tools {
       position: absolute;
@@ -53,7 +62,7 @@
       bottom: 16px;
       z-index: 3;
       border: 1px solid var(--color-border-highlight);
-      box-shadow: 0px 2px 5px 1px rgba(0, 0, 0, 0.13);
+      box-shadow: var(--elevate-box-shadow);
       border-radius: 5px;
       background: var(--color-0);
       padding: 5px 0;

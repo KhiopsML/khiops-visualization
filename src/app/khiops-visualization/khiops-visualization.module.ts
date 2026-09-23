@@ -24,6 +24,7 @@ import { SelectTrainedPredictorComponent } from './components/commons/select-tra
 import { VariableGraphDetailsComponent } from './components/commons/variable-graph-details/variable-graph-details.component';
 import { TargetLiftGraphComponent } from './components/commons/target-lift-graph/target-lift-graph.component';
 import { SelectToggleButtonComponent } from './components/commons/select-toggle-button/select-toggle-button.component';
+import { ImportantBadgeComponent } from '@khiops-library/components/important-badge/important-badge.component';
 import { UserSettingsComponent } from './components/commons/user-settings/user-settings.component';
 import { CooccurrenceMatrixComponent } from './components/commons/cooccurrence-matrix/cooccurrence-matrix.component';
 import { RegressionMatrixComponent } from './components/commons/regression-matrix/regression-matrix.component';
@@ -33,6 +34,7 @@ import { TreePreparationViewComponent } from './components/tree-preparation-view
 import { TreeDetailsComponent } from './components/commons/tree-details/tree-details.component';
 import { TreeLeafDetailsComponent } from './components/commons/tree-leaf-details/tree-leaf-details.component';
 import { TreeHyperComponent } from './components/commons/tree-hyper/tree-hyper.component';
+import { TreeHyperSelectionComponent } from './components/commons/tree-hyper-selection/tree-hyper-selection.component';
 import { TreeSelectComponent } from './components/commons/tree-select/tree-select.component';
 import { VarDetailsPreparationComponent } from './components/commons/var-details-preparation/var-details-preparation.component';
 import { VarDetailsTreePreparationComponent } from './components/commons/var-details-tree-preparation/var-details-tree-preparation.component';
@@ -62,6 +64,7 @@ import { VisualizationRoutingModule } from './khiops-visualization-routing.modul
     VarDetailsTreePreparationComponent,
     VarDetailsPreparation2dComponent,
     TreeHyperComponent,
+    TreeHyperSelectionComponent,
     Preparation2dViewComponent,
     ModelingViewComponent,
     EvaluationViewComponent,
@@ -89,6 +92,7 @@ import { VisualizationRoutingModule } from './khiops-visualization-routing.modul
     ChangeScaleDialogComponent,
     LevelDistributionButtonComponent,
     SelectToggleButtonComponent,
+    ImportantBadgeComponent,
     SelectTrainedPredictorComponent,
     TargetLiftGraphComponent,
   ],

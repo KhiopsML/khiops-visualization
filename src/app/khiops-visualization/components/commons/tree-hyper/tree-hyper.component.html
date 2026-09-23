@@ -24,19 +24,7 @@
           <svg lucideIcon="git-fork" size="18"></svg>
           {{ 'GLOBAL.HYPER_TREE' | translate }}
         </h1>
-        @if (
-          distributionDatas &&
-          distributionDatas.targetDistributionDisplayedValues
-        ) {
-          <app-select-toggle-button
-            [displayedValues]="
-              distributionDatas.targetDistributionDisplayedValues
-            "
-            (selectToggleButtonChanged)="onSelectToggleButtonChanged($event)"
-            [buttonTitle]="buttonTitle"
-          >
-          </app-select-toggle-button>
-        }
+
         <kl-btn-fullscreen (toggleFullscreen)="onToggleFullscreen($event)">
         </kl-btn-fullscreen>
       </div>
@@ -60,6 +48,19 @@
       >
         {{ 'GLOBAL.DISPLAY_LEAF_SIZES_BY_POPULATION' | translate }}
       </mat-checkbox>
+      @if (
+        distributionDatas && distributionDatas.targetDistributionDisplayedValues
+      ) {
+        <app-select-toggle-button
+          fxLayoutAlign="start center"
+          [displayedValues]="
+            distributionDatas.targetDistributionDisplayedValues
+          "
+          (selectToggleButtonChanged)="onSelectToggleButtonChanged($event)"
+          [buttonTitle]="buttonTitle"
+        >
+        </app-select-toggle-button>
+      }
     </div>
     <div
       fxLayoutAlign="start start"
@@ -68,6 +69,11 @@
       class="tree-hyper-comp-container bg-dotted"
     >
       <div id="hyperTree"></div>
+      <div class="tree-hyper-selection screenshot-hide">
+        <app-tree-hyper-selection
+          [selectedNode]="selectedNode$ | async"
+        ></app-tree-hyper-selection>
+      </div>
       <div class="tree-hyper-zoom-tools screenshot-hide">
         <kl-zoom-tools
           [emitGlobalEvents]="false"

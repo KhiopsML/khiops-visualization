@@ -1,0 +1,51 @@
+<!--
+ * Copyright (c) 2023-2026 Orange. All rights reserved.
+ * This software is distributed under the BSD 3-Clause-clear License, the text of which is available
+ * at https://spdx.org/licenses/BSD-3-Clause-Clear.html or see the "LICENSE" file for more details.
+ -->
+
+<div id="tree-hyper-selection-comp">
+  @if (selectedNode) {
+    <div class="selection-title font-code">
+      {{ 'GLOBAL.HYPER_TREE_SELECTION' | translate }}
+    </div>
+    <div class="selection-row">
+      <span class="selection-label">{{ 'GLOBAL.NODE_ID' | translate }}</span>
+      <span class="selection-value node-id-value">
+        <span
+          class="node-color-dot"
+          [style.background-color]="selectedNode.color || '#999'"
+        ></span>
+        <span class="font-code">{{
+          selectedNode.nodeId || selectedNode.id || '-'
+        }}</span>
+      </span>
+    </div>
+    <div class="selection-row">
+      <span class="selection-label">{{ 'GLOBAL.POPULATION' | translate }}</span>
+      <span class="selection-value font-code">{{
+        selectedNode.totalFreqs ?? '-'
+      }}</span>
+    </div>
+    <div class="selection-row">
+      <span class="selection-label">{{ 'GLOBAL.PURITY' | translate }}</span>
+      @if (selectedNode.purity !== undefined) {
+        <kl-important-badge
+          [text]="(selectedNode.purity | toPrecision).toString()"
+          [color]="'green'"
+        ></kl-important-badge>
+      }
+      @if (selectedNode.purity === undefined) {
+        <span class="selection-value">-</span>
+      }
+    </div>
+  }
+  @if (!selectedNode) {
+    <div class="selection-title">
+      {{ 'GLOBAL.HYPER_TREE_SELECTION' | translate }}
+    </div>
+    <div class="selection-empty">
+      {{ 'GLOBAL.NO_SELECTED_NODE' | translate }}
+    </div>
+  }
+</div>
