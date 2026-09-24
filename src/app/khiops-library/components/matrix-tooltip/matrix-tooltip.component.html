@@ -7,36 +7,73 @@
 <div class="matrix-tooltip-comp" #matrixTooltipDiv>
   @if (cell) {
     <div class="matrix-tooltip-title">
-      <div>{{ cell.xnamePart }}: {{ truncateText(cell.xDisplayaxisPart) }}</div>
-      <div>{{ cell.ynamePart }}: {{ truncateText(cell.yDisplayaxisPart) }}</div>
+      <div>
+        <span class="metric-label"> {{ cell.xnamePart }}:</span>
+        <span class="axis-value">{{
+          truncateText(cell.xDisplayaxisPart)
+        }}</span>
+      </div>
+      <div>
+        <span class="metric-label"> {{ cell.ynamePart }}:</span>
+        <span class="axis-value">{{
+          truncateText(cell.yDisplayaxisPart)
+        }}</span>
+      </div>
     </div>
     <div class="matrix-tooltip-content">
       <!-- Main value (not for Hellinger type) -->
       @if (shouldShowMainValue) {
         <div>
-          {{ getMainValueLabel() | translate }}:
-          {{ cell.displayedValue.value | toPrecision }}
+          <span class="metric-label"
+            >{{ getMainValueLabel() | translate }}:</span
+          >
+          <kl-important-badge
+            [text]="cell.displayedValue.value | toPrecision"
+            [color]="'orange'"
+            [theme]="'dark'"
+          ></kl-important-badge>
         </div>
       }
       <!-- Frequency (not for Frequency type) -->
       @if (shouldShowFrequency) {
         <div>
-          {{ 'GLOBAL.FREQUENCY' | translate }}:
-          {{ cell.displayedFreqValue | toPrecision }}
+          <span class="metric-label"
+            >{{ 'GLOBAL.FREQUENCY' | translate }}:</span
+          >
+          <!-- {{ cell.displayedFreqValue | toPrecision }} -->
+          <kl-important-badge
+            [text]="cell.displayedFreqValue | toPrecision"
+            [color]="'orange'"
+            [theme]="'dark'"
+          ></kl-important-badge>
         </div>
       }
       <!-- Expected frequency (conditionally shown) -->
       @if (shouldShowExpectedFrequency) {
         <div>
-          {{ 'GLOBAL.EXPECTED_FREQUENCY' | translate }}:
-          {{ cell.displayedValue.ef | toPrecision }}
+          <span class="metric-label"
+            >{{ 'GLOBAL.EXPECTED_FREQUENCY' | translate }}:</span
+          >
+          <!-- {{ cell.displayedValue.ef | toPrecision }} -->
+          <kl-important-badge
+            [text]="cell.displayedValue.ef | toPrecision"
+            [color]="'orange'"
+            [theme]="'dark'"
+          ></kl-important-badge>
         </div>
       }
       <!-- Hellinger value (only for Hellinger type) -->
       @if (shouldShowHellingerValue) {
         <div>
-          {{ getHellingerValueLabel() | translate }}:
-          {{ cell.displayedValue.extra | toPrecision }}
+          <span class="metric-label"
+            >{{ getHellingerValueLabel() | translate }}:</span
+          >
+          <!-- {{ cell.displayedValue.extra | toPrecision }} -->
+          <kl-important-badge
+            [text]="cell.displayedValue.extra | toPrecision"
+            [color]="'orange'"
+            [theme]="'dark'"
+          ></kl-important-badge>
         </div>
       }
     </div>

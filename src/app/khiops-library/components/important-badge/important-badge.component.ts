@@ -16,5 +16,6 @@ export type ImportantBadgeColor = 'green' | 'orange' | 'blue';
 })
 export class ImportantBadgeComponent {
   readonly text = input<string>('');
+  readonly theme = input<string>('');
   readonly color = input<ImportantBadgeColor | undefined>(undefined);
 }

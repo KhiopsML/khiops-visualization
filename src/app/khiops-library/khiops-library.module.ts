@@ -136,6 +136,7 @@ import { SearchInputComponent } from './components/search-input/search-input.com
 
 // Translation data
 import EnTransaltion from '../../assets/i18n/en.json';
+import { ImportantBadgeComponent } from './components/important-badge/important-badge.component';
 @NgModule({
   imports: [
     // Core Angular modules first
@@ -201,6 +202,7 @@ import EnTransaltion from '../../assets/i18n/en.json';
     SearchInputComponent,
     CheckboxCellComponent,
     IconCellComponent,
+    ImportantBadgeComponent,
   ],
   declarations: [
     NumberPrecisionComponent,
