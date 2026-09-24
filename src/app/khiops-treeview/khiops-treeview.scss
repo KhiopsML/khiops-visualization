@@ -24,7 +24,7 @@
 }
 
 .tree-leaf .tree-expando {
-  color: var(--color-1000);
+  color: var(--color-700);
   border-radius: 2px;
   cursor: pointer;
   float: left;
@@ -60,7 +60,6 @@
 }
 .tree-leaf .tree-leaf-content.tree-selected .tree-expando {
   // color: var(--color-0);
-
   &:hover {
     background-color: var(--color-gutter-hover) !important;
   }
@@ -76,6 +75,10 @@
   font-size: 20px !important;
   display: flex;
   align-items: center;
+  transform: scale(0.8);
+}
+.lucide-folder {
+  // color: var(--color-800);
 }
 
 .tree-leaf .tree-icon.is-leaf {
@@ -95,6 +98,7 @@
   max-width: 10px !important;
   margin: 2px;
   background-color: var(--color-800);
+  // background-color: var(--color-brand-orange);
 }
 
 .tree-leaf .hidden {

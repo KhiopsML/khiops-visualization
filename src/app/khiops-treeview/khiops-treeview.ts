@@ -71,6 +71,28 @@ function parseDataItem(node: HTMLElement): any | null {
 }
 
 /**
+ * Returns Lucide SVG markup for folder icons
+ */
+function getFolderIconSvg(iconName: 'folder-open' | 'folder-close'): string {
+  if (iconName === 'folder-open') {
+    return `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-folder-open preview-icon"><path d="m6 14 1.5-2.9A2 2 0 0 1 9.24 10H20a2 2 0 0 1 1.94 2.5l-1.54 6a2 2 0 0 1-1.95 1.5H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h3.9a2 2 0 0 1 1.69.9l.81 1.2a2 2 0 0 0 1.67.9H18a2 2 0 0 1 2 2v2"/></svg>`;
+  }
+
+  return `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-folder preview-icon"><path d="M20 20a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.9a2 2 0 0 1-1.69-.9L9.6 3.9A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2Z"/></svg>`;
+}
+
+/**
+ * Applies Lucide folder icon to a tree icon container
+ */
+function setFolderIcon(
+  iconContainer: HTMLElement,
+  iconName: 'folder-open' | 'folder-close',
+) {
+  iconContainer.setAttribute('data-lucide-icon', iconName);
+  iconContainer.innerHTML = getFolderIconSvg(iconName);
+}
+
+/**
  * Renders the tree view in the DOM
  */
 function render(self: TreeView) {
@@ -88,14 +110,14 @@ function render(self: TreeView) {
   const renderLeaf = function (item: any): HTMLElement {
     const leaf = document.createElement('div');
     const content = document.createElement('div');
-    const icon = document.createElement('mat-icon');
+    const icon = document.createElement('span');
     const text = document.createElement('div');
     const expando = document.createElement('div');
 
     leaf.setAttribute('class', 'tree-leaf');
     leaf.setAttribute('id', 'tree-leaf-' + item.id);
     content.setAttribute('class', 'tree-leaf-content');
-    icon.setAttribute('class', 'tree-icon mat-icon material-icons');
+    icon.setAttribute('class', 'tree-icon');
 
     const leafDatas = {
       name: item.name,
@@ -112,7 +134,7 @@ function render(self: TreeView) {
       // icon.textContent = 'web_asset';
       // icon.className += ' web_asset';
     } else {
-      icon.textContent = item.isCollapsed ? 'folder' : 'folder_open';
+      setFolderIcon(icon, item.isCollapsed ? 'folder-close' : 'folder-open');
     }
 
     if (item.color) {
@@ -421,7 +443,9 @@ export default class TreeView {
     if (expando) expando.classList.add('expanded');
 
     const icon = node.querySelector('.tree-icon') as HTMLElement | null;
-    if (icon) icon.textContent = 'folder_open';
+    if (icon && !icon.classList.contains('is-leaf')) {
+      setFolderIcon(icon, 'folder-open');
+    }
     leaves.classList.remove('hidden');
 
     if (skipEmit) return;
@@ -577,6 +601,7 @@ export default class TreeView {
           (currentNode.parentNode as HTMLElement).classList.add(
             'tree-selected',
           );
+          // Scroll only for programmatic selections (matrix callbacks, etc.)
           if (currentNodeToSelect.isTrusted) {
             scrollIntoView(currentNode.parentNode as HTMLElement);
           }
@@ -649,7 +674,9 @@ export default class TreeView {
     if (expando) expando.classList.remove('expanded');
 
     const icon = node.querySelector('.tree-icon') as HTMLElement | null;
-    if (icon) icon.textContent = 'folder';
+    if (icon && !icon.classList.contains('is-leaf')) {
+      setFolderIcon(icon, 'folder-close');
+    }
     leaves.classList.add('hidden');
 
     if (skipEmit) return;
