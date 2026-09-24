@@ -190,8 +190,6 @@ h2 {
 .selected {
   position: relative;
   .mat-mdc-tab-group {
-    padding: 1px;
-
     ::ng-deep .ag-grid-comp {
       box-shadow: none !important;
     }
@@ -352,7 +350,7 @@ kl-chart {
 }
 
 kl-matrix {
-  width: calc(100% - 2px); // for selectable service
+  // width: calc(100% - 2px); // for selectable service
   padding-bottom: 1px; // important to avoid useless scrollbar
 }
 
