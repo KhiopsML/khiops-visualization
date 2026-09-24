@@ -486,6 +486,7 @@ mat-slider {
 }
 
 .mat-mdc-unelevated-button {
+  padding: 6px !important;
   background-color: color-mix(
     in srgb,
     var(--color-brand-orange) 10%,
