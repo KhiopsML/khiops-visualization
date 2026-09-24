@@ -205,6 +205,7 @@ export class TreenodesService {
     nodeName: string | number,
     stopPropagation = false,
     selectedValue?: string,
+    forceEmission = false,
   ): TreeNodeModel | undefined {
     let nodeVO: TreeNodeModel | undefined;
     if (this.dimensionsDatasService.dimensionsDatas.selectedDimensions) {
@@ -281,7 +282,7 @@ export class TreenodesService {
         this.dimensionsDatasService.dimensionsDatas.selectedNodes,
       );
 
-      if (nodesChanged || selectedValue) {
+      if (nodesChanged || selectedValue || forceEmission) {
         // search in the complete datas the corresponding node
         const realNodeVO =
           this.dimensionsDatasService.dimensionsDatas.dimensionsClusters[
@@ -837,7 +838,7 @@ export class TreenodesService {
    */
   expandNode(dimensionName: string, nodeName: string) {
     this.updateCollapsedNodesToSave(dimensionName, nodeName, -1);
-    this.setSelectedNode(dimensionName, nodeName, true);
+    this.setSelectedNode(dimensionName, nodeName, false, undefined, true);
   }
 
   /**

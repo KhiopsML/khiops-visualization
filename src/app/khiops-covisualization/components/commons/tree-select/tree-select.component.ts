@@ -174,14 +174,25 @@ export class TreeSelectComponent
       this.ngzone.run(() => {
         setTimeout(() => {
           if (this.selectedDimension) {
-            this.treenodesService.expandNode(
-              this.selectedDimension.name,
+            const dimensionName = this.selectedDimension.name;
+            this.treenodesService.updateCollapsedNodesToSave(
+              dimensionName,
               e.data.name,
+              -1,
             );
             this.saveService.updateJSon(
-              this.selectedDimension.name,
+              dimensionName,
               this.treenodesService.getSavedCollapsedNodes(),
             );
+            setTimeout(() => {
+              this.treenodesService.setSelectedNode(
+                dimensionName,
+                e.data.name,
+                false,
+                undefined,
+                true,
+              );
+            });
           }
         });
       });
