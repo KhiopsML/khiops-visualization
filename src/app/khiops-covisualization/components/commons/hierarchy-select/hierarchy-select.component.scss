@@ -41,8 +41,7 @@
   .hierarchy-select-content {
     position: relative;
     width: 100%;
-    margin-top: 1em;
-    padding: 0.55em;
+    padding: 10px;
 
     td {
       font-weight: 400;
@@ -55,11 +54,12 @@
     strong {
       font-size: 0.95em;
       font-weight: 500;
-      color: var(--color-800);
-      background: var(--color-100);
       padding: 1px 5px;
       border-radius: 4px;
-      margin: 1px 4px 0px 4px;
+      margin: 1px 0px 0px 0px;
+      color: var(--color-800);
+      background: var(--color-50);
+      border: var(--color-200) 1px solid;
     }
 
     br {

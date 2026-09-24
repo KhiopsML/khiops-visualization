@@ -6,7 +6,7 @@
 
 import { ChangeDetectionStrategy, Component, input } from '@angular/core';
 
-export type ImportantBadgeColor = 'green' | 'orange';
+export type ImportantBadgeColor = 'green' | 'orange' | 'blue';
 
 @Component({
   selector: 'kl-important-badge',

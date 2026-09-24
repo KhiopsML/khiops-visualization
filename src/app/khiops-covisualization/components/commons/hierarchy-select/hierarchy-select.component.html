@@ -66,7 +66,7 @@
       (click)="onClickOnShowStats()"
       [ngClass]="{ enabled: showStats }"
     >
-      <mat-icon>info</mat-icon>
+      <svg lucideIcon="info"></svg>
     </button>
     <!-- Slot for custom header tools -->
     <ng-content select="[slot=header-tools]"></ng-content>
@@ -82,7 +82,14 @@
         <tr>
           <td>{{ 'GLOBAL.TYPE' | translate }}</td>
           <td>
-            <strong>{{ selectedTreeCluster?.dimensionType }}</strong>
+            <kl-important-badge
+              [text]="selectedTreeCluster?.dimensionType"
+              [color]="
+                selectedTreeCluster?.dimensionType === 'Numerical'
+                  ? 'blue'
+                  : 'orange'
+              "
+            ></kl-important-badge>
           </td>
         </tr>
         @if (selectedTreeCluster?.isNumerical) {
@@ -128,7 +135,10 @@
         <tr>
           <td>{{ 'GLOBAL.FREQUENCY' | translate }}</td>
           <td>
-            <strong>{{ selectedTreeCluster?.frequency }}</strong>
+            <kl-important-badge
+              [text]="selectedTreeCluster?.frequency"
+              color="green"
+            ></kl-important-badge>
           </td>
         </tr>
       </table>
