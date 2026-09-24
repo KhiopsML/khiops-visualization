@@ -12,6 +12,7 @@ import { DistributionDatasService } from '@khiops-visualization/providers/distri
 import { ScaleChangeEventsService } from '@khiops-visualization/providers/scale-change-events.service';
 import { VariableScaleSettingsService } from '@khiops-visualization/providers/variable-scale-settings.service';
 import { AppService } from '@khiops-visualization/providers/app.service';
+import { provideLucideIcons, LucideSettings2 } from '@lucide/angular';
 
 describe('ChangeScaleButtonComponent', () => {
   let component: ChangeScaleButtonComponent;
@@ -41,6 +42,7 @@ describe('ChangeScaleButtonComponent', () => {
         { provide: DistributionDatasService, useValue: distributionDatasService },
         { provide: ScaleChangeEventsService, useValue: scaleChangeEventsService },
         { provide: VariableScaleSettingsService, useValue: variableScaleSettingsService },
+        provideLucideIcons(LucideSettings2),
       ],
     }).compileComponents();
 
