@@ -30,6 +30,43 @@ const events = [
  * @param center Whether to center the element in the viewport
  */
 function scrollIntoView(node: HTMLElement, center = true) {
+  const rect = node.getBoundingClientRect();
+  let visibleTop = Math.max(rect.top, 0);
+  let visibleLeft = Math.max(rect.left, 0);
+  let visibleBottom = Math.min(rect.bottom, window.innerHeight);
+  let visibleRight = Math.min(rect.right, window.innerWidth);
+
+  let parent = node.parentElement;
+  while (parent) {
+    const style = window.getComputedStyle(parent);
+    const clipsHorizontally = /(auto|scroll|hidden|clip)/.test(style.overflowX);
+    const clipsVertically = /(auto|scroll|hidden|clip)/.test(style.overflowY);
+
+    if (clipsHorizontally || clipsVertically) {
+      const parentRect = parent.getBoundingClientRect();
+      if (clipsHorizontally) {
+        visibleLeft = Math.max(visibleLeft, parentRect.left);
+        visibleRight = Math.min(visibleRight, parentRect.right);
+      }
+      if (clipsVertically) {
+        visibleTop = Math.max(visibleTop, parentRect.top);
+        visibleBottom = Math.min(visibleBottom, parentRect.bottom);
+      }
+    }
+
+    parent = parent.parentElement;
+  }
+
+  const isVisible =
+    rect.width > 0 &&
+    rect.height > 0 &&
+    visibleTop < visibleBottom &&
+    visibleLeft < visibleRight;
+
+  if (isVisible) {
+    return;
+  }
+
   if (!(node as any).scrollIntoViewIfNeeded) {
     const options: ScrollIntoViewOptions = {
       behavior: 'smooth',
@@ -325,10 +362,6 @@ function render(self: TreeView) {
         (node.parentNode as HTMLElement).classList.remove('tree-selected');
       });
     parent.classList.add('tree-selected');
-
-    if (!(e as any).isTrusted) {
-      scrollIntoView(parent);
-    }
   };
 
   const clickExpandIcon = function (e: Event) {
