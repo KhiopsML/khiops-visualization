@@ -6,8 +6,6 @@
 
 .keyboard-tooltip-wrapper {
   cursor: pointer;
-  margin-top: 5px;
-  margin-left: 5px;
   margin-bottom: 5px;
 }
 
@@ -16,7 +14,7 @@
   border: 1px solid var(--color-800);
   border-radius: 3px;
   border-bottom: 4px solid var(--color-800);
-  padding: 2px 5px 2px 5px;
+  padding: 2px 4px 2px 4px;
   font-size: 9px;
   font-family: monospace;
   pointer-events: none;
