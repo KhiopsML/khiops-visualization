@@ -59,7 +59,7 @@
     border: 1px solid var(--color-border-highlight);
     margin: 30px 10px 5px 5px;
     box-shadow: var(--elevate-box-shadow);
-    border-radius: var(--border-radius);
+    border-radius: var(--border-radius-card);
     padding: 10px;
     background: var(--color-0);
     #matrix-container {
@@ -134,7 +134,7 @@
       border: 1px solid var(--color-border-highlight);
       margin: 30px 20px 5px 20px;
       box-shadow: var(--elevate-box-shadow);
-      border-radius: 5px;
+      border-radius: var(--border-radius);
       background: var(--color-0);
       padding: 5px 0;
     }
@@ -173,7 +173,7 @@
 
         #legend-bar {
           width: 14px;
-          border-radius: 5px;
+          border-radius: var(--border-radius);
         }
       }
 

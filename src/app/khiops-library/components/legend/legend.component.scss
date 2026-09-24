@@ -8,7 +8,7 @@
   display: flex;
 
   .legend {
-    border-radius: 5px;
+    border-radius: var(--border-radius);
     // padding: 0.4em 0 0.4em 0.8em;
     display: initial;
     overflow: auto;

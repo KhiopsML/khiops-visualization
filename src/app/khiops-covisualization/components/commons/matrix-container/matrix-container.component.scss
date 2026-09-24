@@ -30,7 +30,9 @@
 
     ::ng-deep .conditionnal-checkbox {
       label {
-        font-size: 12px;
+        font-size: 11px;
+        line-height: 11px;
+        max-width: 120px;
         .mdc-label {
           padding: 0 10px 0 0;
         }

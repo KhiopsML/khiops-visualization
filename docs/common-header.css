@@ -94,6 +94,6 @@ body {
   font-weight: 600;
   padding: 5px 10px;
   border: 1px solid red;
-  border-radius: 5px;
+  border-radius: var(--border-radius);
   background: #ff00004f;
 }

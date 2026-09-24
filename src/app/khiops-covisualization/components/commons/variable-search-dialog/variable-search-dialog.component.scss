@@ -64,7 +64,7 @@
 }
 
 #variable-search-results-table {
-  border-radius: 4px;
+  border-radius: var(--border-radius);
   overflow: hidden;
   height: calc(100% - 32px);
 
