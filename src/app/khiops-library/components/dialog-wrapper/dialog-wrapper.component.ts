@@ -104,7 +104,7 @@ export class DialogWrapperComponent
     const hostEl = this.componentRef.location.nativeElement as HTMLElement;
     setTimeout(() => {
       const primaryBtn = hostEl.querySelector<HTMLElement>(
-        'button[mat-flat-button], button[color="warn"]',
+        'button[mat-flat-button], button[]',
       );
       primaryBtn?.focus();
     });

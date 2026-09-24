@@ -10,7 +10,7 @@
     <button mat-stroked-button (click)="onClickOnCancel()">
       {{ 'GLOBAL.CANCEL' | translate }}
     </button>
-    <button mat-flat-button (click)="onClickOnSave()" >
+    <button mat-flat-button (click)="onClickOnSave()">
       {{ 'GLOBAL.SAVE' | translate }}
     </button>
   </div>
@@ -40,8 +40,7 @@
                   fxLayoutAlign="space-between center"
                   fxLayoutGap="8px"
                 >
-                  <mat-checkbox
-                    [checked]="dimensionLayout.isChecked"
+                  <mat-checkbox [checked]="dimensionLayout.isChecked"
                     >{{ dimensionLayout.name }}
                   </mat-checkbox>
                   <span

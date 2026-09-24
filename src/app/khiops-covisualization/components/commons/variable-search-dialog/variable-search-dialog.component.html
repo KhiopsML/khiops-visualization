@@ -12,7 +12,7 @@
     fxLayoutAlign="start stretch"
   >
     <div fxLayout="column" fxLayoutGap="10px" class="search-controls">
-      <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="10px">
+      <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="5px">
         <span class="label">{{ 'GLOBAL.INNER_VARIABLE' | translate }}:</span>
         <div fxFlex>
           <button
@@ -87,12 +87,12 @@
           <kl-header-tools [showMenu]="false"></kl-header-tools>
         </div>
         <button
-          class="close-btn stroked-icon-button"
-          mat-stroked-button
+          class="close-btn lucid-icon-button"
+          mat-flat-button
           matTooltip="{{ 'GLOBAL.CLOSE' | translate }}"
           (click)="onClickOnClose()"
         >
-          <mat-icon fxFlexFill fxLayoutAlign="center center">close</mat-icon>
+          <svg lucideIcon="x"></svg>
         </button>
       </div>
     </div>

@@ -89,12 +89,12 @@ export function getVisualizationMockFile(): string {
  * To change the default file, uncomment the desired line and comment the current active one.
  */
 export function getCovisualizationMockFile(): string {
-  let urlKC = 'Coclustering-100x100.json';
+  // let urlKC = 'Coclustering-100x100.json';
   // let urlKC = 'IV-Poissons.json';
   // let urlKC = 'cc.json';
   // let urlKC = 'Coclustering.json';
   // let urlKC = 'Co-simple-2vars.json';
-  // let urlKC = 'Coclustering-6.json';
+  let urlKC = 'Coclustering-6.json';
   // let urlKC = 'Coclustering-4.json';
   // let urlKC = '1-Adult2varsEducationOccupation.khcj';
   // let urlKC = '2-Iris3vars-Coclustering.khcj';
