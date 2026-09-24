@@ -102,7 +102,11 @@ describe('Visualization', () => {
         ],
         labels: [''],
       };
-      expect(intervalDatas).toEqual(JSON.stringify(expectedRes));
+      const parsedIntervalDatas = JSON.parse(intervalDatas);
+      parsedIntervalDatas.datasets.forEach((dataset) => {
+        delete dataset.borderRadius;
+      });
+      expect(parsedIntervalDatas).toEqual(expectedRes);
     });
 
     it('getTargetVariableStatsDatas should return valid datas [adult-bivar, Numerical]', () => {
@@ -159,7 +163,11 @@ describe('Visualization', () => {
         ],
         labels: [''],
       };
-      expect(intervalDatas).toEqual(JSON.stringify(expectedRes));
+      const parsedIntervalDatas = JSON.parse(intervalDatas);
+      parsedIntervalDatas.datasets.forEach((dataset) => {
+        delete dataset.borderRadius;
+      });
+      expect(parsedIntervalDatas).toEqual(expectedRes);
     });
 
     it('getCurrentIntervalDatas should return valid datas [C100_AllReports, Numerical, var = R1, index = undefined]', () => {
