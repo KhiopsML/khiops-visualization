@@ -8,11 +8,11 @@
   min-width: 220px;
   max-width: 320px;
   padding: 10px 12px;
-  border-radius: var(--border-radius);
-  background-color: var(--color-0);
   color: var(--color-50);
-  backdrop-filter: blur(2px);
-  border: 1px solid var(--color-100);
+  border: 1px solid var(--color-border-highlight);
+  box-shadow: var(--elevate-box-shadow);
+  border-radius: var(--border-radius);
+  background: var(--color-0);
 
   .selection-title {
     font-size: 0.72rem;
