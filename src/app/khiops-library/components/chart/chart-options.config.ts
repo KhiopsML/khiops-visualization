@@ -52,7 +52,7 @@ export function createDefaultChartOptions(
           weight: 'normal',
           lineHeight: 1.2,
         },
-        cornerRadius: 0,
+        cornerRadius: 5,
         titleMarginBottom: 10,
         titleSpacing: 3,
         bodySpacing: 3,
