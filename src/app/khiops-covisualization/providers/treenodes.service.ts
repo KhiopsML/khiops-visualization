@@ -827,7 +827,7 @@ export class TreenodesService {
    */
   collapseNode(dimensionName: string, nodeName: string) {
     this.updateCollapsedNodesToSave(dimensionName, nodeName, 1);
-    this.setSelectedNode(dimensionName, nodeName, true);
+    this.setSelectedNode(dimensionName, nodeName, false);
   }
 
   /**
@@ -838,7 +838,7 @@ export class TreenodesService {
    */
   expandNode(dimensionName: string, nodeName: string) {
     this.updateCollapsedNodesToSave(dimensionName, nodeName, -1);
-    this.setSelectedNode(dimensionName, nodeName, false, undefined, true);
+    this.setSelectedNode(dimensionName, nodeName, false);
   }
 
   /**

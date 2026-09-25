@@ -110,7 +110,12 @@ export class TreeSelectComponent
       // Guard against ngOnChanges firing before ngAfterViewInit has created the tree
       // Use false to only update tree visually without re-propagating (state is already updated by caller)
       if (this.tree && nodeTreeId !== undefined && nodeTreeId >= 0) {
-        this.tree.selectNode(nodeTreeId, false);
+        // propagate event if this.selectedDimension is isContextDimensions
+        const isContextDimension =
+          this.dimensionsDatasService.isContextDimension(
+            this.selectedDimension?.name ?? '',
+          );
+        this.tree.selectNode(nodeTreeId, isContextDimension);
       }
     }
   }
