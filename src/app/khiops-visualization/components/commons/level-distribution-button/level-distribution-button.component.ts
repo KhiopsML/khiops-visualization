@@ -13,14 +13,12 @@ import { TranslateModule, TranslateService } from '@ngstack/translate';
 import { TYPES } from '@khiops-library/enum/types';
 import { DistributionType } from '@khiops-visualization/types/distribution-type';
 import { LucideDynamicIcon } from '@lucide/angular';
-import { NgClass } from '@angular/common';
 
 @Component({
   selector: 'app-level-distribution-button',
   templateUrl: './level-distribution-button.component.html',
   styleUrls: ['./level-distribution-button.component.scss'],
   imports: [
-    NgClass,
     FlexModule,
     TranslateModule,
     MatIconModule,
