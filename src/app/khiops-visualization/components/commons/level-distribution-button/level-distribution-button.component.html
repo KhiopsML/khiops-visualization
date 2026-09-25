@@ -8,15 +8,14 @@
   class="level-distribution-btn lucid-icon-button"
   [class.small-div]="isSmallDiv() || searchFormVisible()"
   attr.aria-label="{{ ariaLabel() | translate }}"
-  [title]="displayTitle()"
   mat-stroked-button
   (click)="onOpenLevelDistribution()"
+  matTooltipPosition="above"
+  matTooltip="{{ tooltipKey() | translate }}"
 >
-  <svg
-    matTooltipPosition="above"
-    matTooltip="{{ tooltipKey() | translate }}"
-    lucideIcon="chart-column-big"
-  ></svg>
+  <span class="icon-wrapper" [class.rotate-270]="importance()">
+    <svg [lucideIcon]="iconName()"></svg>
+  </span>
 
   @if (!isSmallDiv() && !searchFormVisible()) {
     <span>{{ displayTitle() }}</span>

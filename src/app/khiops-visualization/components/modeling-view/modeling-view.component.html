@@ -145,6 +145,7 @@
                     @if (hasImportanceData()) {
                       <app-level-distribution-button
                         slot="header-tools"
+                        [importance]="true"
                         distributionType="importance"
                         [isSmallDiv]="agGridRef.isSmallDiv"
                         [searchFormVisible]="agGridRef.searchFormVisible"

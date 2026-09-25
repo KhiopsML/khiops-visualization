@@ -16,3 +16,12 @@
 .level-distribution-btn.small-div {
   min-width: auto;
 }
+
+.icon-wrapper {
+  display: inline-flex;
+  transition: transform 0.2s ease-in-out;
+}
+
+.icon-wrapper.rotate-90 {
+  transform: rotate(90deg);
+}

@@ -13,12 +13,14 @@ import { TranslateModule, TranslateService } from '@ngstack/translate';
 import { TYPES } from '@khiops-library/enum/types';
 import { DistributionType } from '@khiops-visualization/types/distribution-type';
 import { LucideDynamicIcon } from '@lucide/angular';
+import { NgClass } from '@angular/common';
 
 @Component({
   selector: 'app-level-distribution-button',
   templateUrl: './level-distribution-button.component.html',
   styleUrls: ['./level-distribution-button.component.scss'],
   imports: [
+    NgClass,
     FlexModule,
     TranslateModule,
     MatIconModule,
@@ -31,10 +33,15 @@ export class LevelDistributionButtonComponent {
   private readonly translate = inject(TranslateService);
 
   readonly title = input<string>('');
+  readonly importance = input<boolean>(false);
   readonly isSmallDiv = input<boolean>(false);
   readonly searchFormVisible = input<boolean>(false);
   readonly distributionType = input<DistributionType>('level');
   readonly openLevelDistribution = output<void>();
+
+  readonly iconName = computed(() =>
+    this.importance() ? 'arrow-down-narrow-wide' : 'chart-column-big',
+  );
 
   readonly displayTitle = computed(() => {
     const title = this.title();
