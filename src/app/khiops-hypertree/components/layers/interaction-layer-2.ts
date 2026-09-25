@@ -456,7 +456,17 @@ export class InteractionLayer2 implements ILayer {
   private currMousePosAsArr = (event) =>
     pointer(event, this.view.parent.node());
   private currMousePosAsC = (event) => ArrtoC(this.currMousePosAsArr(event));
+
+  private isPointerInsideBackgroundCircle = (event) => {
+    const m = this.currMousePosAsC(event);
+    return CktoCp(m).r <= 1;
+  };
+
   private findNodeByCell = (event) => {
+    if (!this.isPointerInsideBackgroundCircle(event)) {
+      return undefined;
+    }
+
     var m = this.currMousePosAsArr(event);
     const clickableNodes = this.view.unitdisk.cache.unculledNodes.filter(
       (n: any) => n.precalc && n.precalc.clickable,
