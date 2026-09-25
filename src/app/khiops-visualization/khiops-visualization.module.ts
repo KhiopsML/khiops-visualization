@@ -41,7 +41,7 @@ import { VarDetailsTreePreparationComponent } from './components/commons/var-det
 import { VarDetailsPreparation2dComponent } from './components/commons/var-details-preparation-2d/var-details-preparation-2d.component';
 import { HistogramComponent } from './components/commons/histogram/histogram.component';
 import { AngularResizeEventModule } from 'angular-resize-event-package';
-import { HistogramTooltipComponent } from './components/commons/histogram/histogram.tooltip.component';
+import { HistogramTooltipComponent } from './components/commons/histogram/histogram-tooltip/histogram.tooltip.component';
 import { OverlayContainer } from '@angular/cdk/overlay';
 import { InAppOverlayContainer } from '../khiops-library/overlay/in-app-overlay-provider';
 import { DataTypeSelectorComponent } from './components/commons/data-type-selector/data-type-selector.component';

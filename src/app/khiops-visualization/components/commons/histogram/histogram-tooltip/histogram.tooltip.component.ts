@@ -14,53 +14,8 @@ import {
 
 @Component({
   selector: 'app-histogram-tooltip',
-  template: `
-    @if (shouldShow) {
-      <div
-        [ngStyle]="{
-          'left.px': this.computeXPos(),
-          'top.px': this.computeYPos(),
-        }"
-        class="tooltip"
-        [class.visible]="display"
-      >
-        @if (title) {
-          <p class="title" [innerHTML]="title"></p>
-        }
-        @if (body) {
-          <p [innerHTML]="body"></p>
-        }
-      </div>
-    }
-  `,
-  styles: [
-    `
-      .tooltip {
-        position: absolute;
-        background-color: rgba(0, 0, 0, 0.8);
-        font-weight: 200;
-        z-index: 2;
-        padding: 0 10px;
-        border-radius: 0px;
-        font-size: 12px;
-        min-width: 140px;
-        pointer-events: none;
-        opacity: 0;
-        transition: opacity 250ms cubic-bezier(0.25, 0.46, 0.45, 0.94) 100ms;
-        p {
-          color: #fff;
-        }
-      }
-      .tooltip.visible {
-        opacity: 1;
-        transition: opacity 250ms cubic-bezier(0.25, 0.46, 0.45, 0.94) 0ms;
-      }
-      .title {
-        font-weight: bold;
-        margin-bottom: -5px;
-      }
-    `,
-  ],
+  templateUrl: './histogram.tooltip.component.html',
+  styleUrls: ['./histogram.tooltip.component.scss'],
   changeDetection: ChangeDetectionStrategy.Eager,
   standalone: false,
 })
@@ -103,7 +58,7 @@ export class HistogramTooltipComponent implements OnChanges, OnDestroy {
     }
 
     if (!this.display) {
-      // Délai pour laisser l'animation de fade out se terminer
+      // Delay to let the fade-out animation finish.
       this.hideTimeout = setTimeout(() => {
         this.hideTimeout = null;
       }, 250);
