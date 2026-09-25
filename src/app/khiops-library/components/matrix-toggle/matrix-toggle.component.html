@@ -14,6 +14,7 @@
 >
   @for (opt of matrixOptions.types; track opt) {
     <mat-button-toggle
+      [ngClass]="opt | translate"
       [value]="opt"
       title="{{
         (opt === types.BALANCED

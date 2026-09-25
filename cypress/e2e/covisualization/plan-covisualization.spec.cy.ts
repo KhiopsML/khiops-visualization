@@ -50,6 +50,9 @@ describe('Test Plan for Khiops Covisualization', () => {
           datas = JSON.parse(datas);
         }
 
+        // click on mat-button-toggle with .balanced class
+        cy.get('.matrix-toggle-comp .Balanced').click();
+
         // Move to the first matrix cell
         cy.get('#matrix-selected')
           .should('be.visible')
