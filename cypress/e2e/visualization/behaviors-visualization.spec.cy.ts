@@ -11,15 +11,16 @@ describe('Behaviors Test Plan for Khiops Visualization', () => {
 
   files.forEach((fileName) => {
     it(`Check values for ${fileName}`, () => {
-
       cy.loadFile('visualization', fileName);
 
       cy.readFile('./src/assets/mocks/kv/' + fileName).then(() => {
-
         // Move to the first matrix cell
-        cy.get('#matrix-selected').should('be.visible').trigger('mousemove', {
-          position: 'topRight',
-        });
+        cy.get('#matrix-selected')
+          .should('be.visible')
+          .then(($canvas) => {
+            // topRight
+            cy.wrap($canvas).trigger('mousemove', $canvas.width() - 5, 5);
+          });
 
         // Check Matrix tooltip
         cy.get('.matrix-tooltip-comp').contains(122);
@@ -48,9 +49,12 @@ describe('Behaviors Test Plan for Khiops Visualization', () => {
           .should('have.class', 'ag-row-selected');
 
         // Move to the first matrix cell
-        cy.get('#matrix-selected').should('be.visible').trigger('mousemove', {
-          position: 'topRight',
-        });
+        cy.get('#matrix-selected')
+          .should('be.visible')
+          .then(($canvas) => {
+            // topRight
+            cy.wrap($canvas).trigger('mousemove', $canvas.width() - 5, 5);
+          });
 
         // Check Matrix tooltip
         cy.get('.matrix-tooltip-comp').contains(254);
@@ -63,9 +67,12 @@ describe('Behaviors Test Plan for Khiops Visualization', () => {
           .should('have.class', 'ag-row-selected');
 
         // Move to the first matrix cell
-        cy.get('#matrix-selected').should('be.visible').trigger('mousemove', {
-          position: 'topRight',
-        });
+        cy.get('#matrix-selected')
+          .should('be.visible')
+          .then(($canvas) => {
+            // topRight
+            cy.wrap($canvas).trigger('mousemove', $canvas.width() - 5, 5);
+          });
 
         // Check Matrix tooltip
         cy.get('.matrix-tooltip-comp').contains(254);
@@ -100,9 +107,12 @@ describe('Behaviors Test Plan for Khiops Visualization', () => {
           .should('contain', '0');
 
         // Move to the first matrix cell
-        cy.get('#matrix-selected').should('be.visible').trigger('mousemove', {
-          position: 'topRight',
-        });
+        cy.get('#matrix-selected')
+          .should('be.visible')
+          .then(($canvas) => {
+            // topRight
+            cy.wrap($canvas).trigger('mousemove', $canvas.width() - 5, 5);
+          });
 
         // Check Matrix tooltip
         cy.get('.matrix-tooltip-comp').contains(105);
@@ -146,12 +156,9 @@ describe('Behaviors Test Plan for Khiops Visualization', () => {
 
   files.forEach((fileName) => {
     it(`Check Matrix tooltip values if unsupervised for ${fileName}`, () => {
-      
-
       cy.loadFile('visualization', fileName);
 
       cy.readFile('./src/assets/mocks/kv/' + fileName).then(() => {
-
         cy.get('.mat-mdc-tab:contains("Preparation 2D")').first().click();
 
         cy.get('.matrix-mode-comp-option').first().click();
@@ -159,9 +166,12 @@ describe('Behaviors Test Plan for Khiops Visualization', () => {
         // select 2nd option of menu
         cy.get('.mat-mdc-menu-item').eq(1).click();
 
-        cy.get('#matrix-selected').should('be.visible').trigger('mousemove', {
-          position: 'topLeft',
-        });
+        cy.get('#matrix-selected')
+          .should('be.visible')
+          .then(($canvas) => {
+            // topLeft
+            cy.wrap($canvas).trigger('mousemove', 5, 5);
+          });
         cy.get('.matrix-tooltip-comp').contains('Expected frequency');
       });
     });
@@ -171,12 +181,9 @@ describe('Behaviors Test Plan for Khiops Visualization', () => {
 
   files.forEach((fileName) => {
     it(`Check Matrix tooltip values if supervised for ${fileName}`, () => {
-      
-
       cy.loadFile('visualization', fileName);
 
       cy.readFile('./src/assets/mocks/kv/' + fileName).then(() => {
-
         cy.get('.mat-mdc-tab:contains("Preparation 2D")').first().click();
 
         cy.get('#preparation-2d-variables-list [row-id="19"] .ag-cell-value')
@@ -188,9 +195,12 @@ describe('Behaviors Test Plan for Khiops Visualization', () => {
         // select 2nd option of menu
         cy.get('.mat-mdc-menu-item').eq(1).click();
 
-        cy.get('#matrix-selected').should('be.visible').trigger('mousemove', {
-          position: 'topLeft',
-        });
+        cy.get('#matrix-selected')
+          .should('be.visible')
+          .then(($canvas) => {
+            // topLeft
+            cy.wrap($canvas).trigger('mousemove', 5, 5);
+          });
         cy.get('.matrix-tooltip-comp').should(
           'not.contain',
           'Expected frequency',
@@ -202,15 +212,15 @@ describe('Behaviors Test Plan for Khiops Visualization', () => {
 
   files.forEach((fileName) => {
     it(`Check Matrix tooltip values if supervised for ${fileName}`, () => {
-      
-
       cy.loadFile('visualization', fileName);
 
       cy.readFile('./src/assets/mocks/kv/' + fileName).then(() => {
-
-        cy.get('#matrix-selected').should('be.visible').trigger('mousemove', {
-          position: 'topLeft',
-        });
+        cy.get('#matrix-selected')
+          .should('be.visible')
+          .then(($canvas) => {
+            // topLeft
+            cy.wrap($canvas).trigger('mousemove', 5, 5);
+          });
         cy.get('.matrix-tooltip-comp').should(
           'not.contain',
           'Expected frequency',

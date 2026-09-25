@@ -14,9 +14,12 @@ describe('Matrix visualization Test Plan for Khiops Visualization', () => {
       cy.get('app-cooccurrence-matrix').contains('Co-occurrence');
 
       // Move to the first matrix cell
-      cy.get('#matrix-selected').should('be.visible').trigger('mousemove', {
-        position: 'topLeft',
-      });
+      cy.get('#matrix-selected')
+        .should('be.visible')
+        .then(($canvas) => {
+          // topLeft
+          cy.wrap($canvas).trigger('mousemove', 5, 5);
+        });
       // Check Matrix tooltip
       cy.get('.matrix-tooltip-comp').contains('config/batch_size: [128,1088]');
       cy.get('.matrix-tooltip-comp').contains('config/lr: ]0');
@@ -35,9 +38,12 @@ describe('Matrix visualization Test Plan for Khiops Visualization', () => {
       cy.get('app-regression-matrix').contains('Target values');
 
       // Move to the first matrix cell
-      cy.get('#matrix-selected').should('be.visible').trigger('mousemove', {
-        position: 'topLeft',
-      });
+      cy.get('#matrix-selected')
+        .should('be.visible')
+        .then(($canvas) => {
+          // topLeft
+          cy.wrap($canvas).trigger('mousemove', 5, 5);
+        });
       // Check Matrix tooltip
       cy.get('.matrix-tooltip-comp').contains(973);
       cy.get('.matrix-mode-comp').contains('I (marital_status , age)');
