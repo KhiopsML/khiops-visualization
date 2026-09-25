@@ -4,7 +4,14 @@
  * at https://spdx.org/licenses/BSD-3-Clause-Clear.html or see the "LICENSE" file for more details.
  */
 
-import { Injectable } from '@angular/core';
+import {
+  ApplicationRef,
+  ComponentRef,
+  EnvironmentInjector,
+  Injectable,
+  NgZone,
+  createComponent,
+} from '@angular/core';
 import * as ChartJs from 'chart.js';
 import type { ChartEvent, ActiveElement, Chart } from 'chart.js';
 import type { ActiveDataPoint } from 'chart.js';
@@ -17,6 +24,8 @@ import { ChartDatasModel } from '@khiops-library/model/chart-datas.model';
 import { ChartDatasetModel } from '@khiops-library/model/chart-dataset.model';
 import { CHART_TYPES } from '@khiops-library/enum/chart-types';
 import { createDefaultChartOptions } from './chart-options.config';
+import { ChartExternalTooltipComponent } from './chart-external-tooltip/chart-external-tooltip.component';
+import type { ExternalTooltipContextLike } from './chart-external-tooltip/chart-external-tooltip.component';
 
 interface ChartDatasetExtra {
   defaultGroupIndex?: boolean;
@@ -84,8 +93,50 @@ export class ChartManagerService {
   private fontColor: string = '#999';
   private lastDataHash: string | null = null;
   private selectedBarIndex: number | undefined;
+  private externalTooltipRef: ComponentRef<ChartExternalTooltipComponent> | undefined;
 
-  constructor(private configService: ConfigService) {}
+  constructor(
+    private configService: ConfigService,
+    private appRef: ApplicationRef,
+    private environmentInjector: EnvironmentInjector,
+    private ngZone: NgZone,
+  ) {}
+
+  private initExternalTooltipComponent(tooltipId: string): void {
+    this.destroyExternalTooltipComponent();
+
+    const componentRef = createComponent(ChartExternalTooltipComponent, {
+      environmentInjector: this.environmentInjector,
+    });
+
+    componentRef.location.nativeElement.id = tooltipId;
+    this.appRef.attachView(componentRef.hostView);
+    document.body.appendChild(componentRef.location.nativeElement);
+    this.externalTooltipRef = componentRef;
+  }
+
+  private destroyExternalTooltipComponent(): void {
+    if (!this.externalTooltipRef) {
+      return;
+    }
+
+    this.appRef.detachView(this.externalTooltipRef.hostView);
+    this.externalTooltipRef.destroy();
+    this.externalTooltipRef = undefined;
+  }
+
+  private externalTooltipHandler(context: {
+    chart: ChartJs.Chart;
+    tooltip: ExternalTooltipContextLike['tooltip'];
+  }): void {
+    if (!this.externalTooltipRef) {
+      return;
+    }
+
+    this.ngZone.run(() => {
+      this.externalTooltipRef?.instance.update(context);
+    });
+  }
 
   /**
    * Creates a hash from the input data to detect changes.
@@ -397,6 +448,17 @@ export class ChartManagerService {
       // Merge chart options
       options = UtilsService.mergeDeep(options, chartOptions);
 
+      // Render tooltip outside the canvas so it is never cropped by canvas bounds.
+      if (!options.plugins) {
+        options.plugins = {};
+      }
+      const plugins = options.plugins as Record<string, unknown>;
+      const tooltipPlugin =
+        (plugins.tooltip as Record<string, unknown> | undefined) || {};
+      tooltipPlugin.enabled = false;
+      tooltipPlugin.external = this.externalTooltipHandler.bind(this);
+      plugins.tooltip = tooltipPlugin;
+
       // When FULL_CLICK is enabled, keep default click behavior first;
       // if no element is hit, fallback to X-axis index detection.
       options.onClick = (
@@ -429,6 +491,9 @@ export class ChartManagerService {
       );
 
       const data: ChartJs.ChartData = { datasets: [], labels: [] };
+      this.initExternalTooltipComponent(
+        `kl-chart-tooltip-${canvasIdContainer}`,
+      );
       const config: ChartJs.ChartConfiguration = {
         type: type,
         data: data,
@@ -781,6 +846,9 @@ export class ChartManagerService {
     try {
       this.chart?.destroy();
     } catch (e) {}
+
+    this.destroyExternalTooltipComponent();
+
     this.chart = undefined;
     this.lastDataHash = null; // Reset hash when chart is destroyed
     this.selectedBarIndex = undefined;

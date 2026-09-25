@@ -1,0 +1,39 @@
+:host {
+  position: fixed;
+  pointer-events: none;
+  transition: opacity 120ms ease-out;
+  opacity: 0;
+  z-index: 10000;
+  max-width: min(360px, calc(100vw - 16px));
+  white-space: normal;
+  display: block;
+}
+
+.tooltip-shell {
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.line-block {
+  white-space: normal;
+}
+
+.body-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 6px;
+}
+
+.body-item-marker {
+  display: inline-block;
+  flex: 0 0 auto;
+  width: 8px;
+  height: 8px;
+  margin-top: 4px;
+  border: 1px solid var(--color-0);
+}
+
+.body-item-content {
+  display: flex;
+  flex-direction: column;
+}

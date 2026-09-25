@@ -1,0 +1,64 @@
+<div class="tooltip-shell" [ngStyle]="hostStyles">
+  <div
+    *ngIf="title"
+    class="line-block"
+    [ngStyle]="title.styles"
+  >
+    <div *ngFor="let line of title.lines">{{ line }}</div>
+  </div>
+
+  <div
+    *ngIf="beforeBody"
+    class="line-block"
+    [ngStyle]="beforeBody.styles"
+  >
+    <div *ngFor="let line of beforeBody.lines">{{ line }}</div>
+  </div>
+
+  <div *ngFor="let bodyItem of bodyItems" class="body-item">
+    <span
+      class="body-item-marker"
+      [style.background]="bodyItem.markerColor"
+      [style.margin-right]="bodyItem.markerMarginRight"
+    ></span>
+    <div class="body-item-content">
+      <div
+        *ngIf="bodyItem.before"
+        class="line-block"
+        [ngStyle]="bodyItem.before.styles"
+      >
+        <div *ngFor="let line of bodyItem.before.lines">{{ line }}</div>
+      </div>
+      <div
+        *ngIf="bodyItem.lines"
+        class="line-block"
+        [ngStyle]="bodyItem.lines.styles"
+      >
+        <div *ngFor="let line of bodyItem.lines.lines">{{ line }}</div>
+      </div>
+      <div
+        *ngIf="bodyItem.after"
+        class="line-block"
+        [ngStyle]="bodyItem.after.styles"
+      >
+        <div *ngFor="let line of bodyItem.after.lines">{{ line }}</div>
+      </div>
+    </div>
+  </div>
+
+  <div
+    *ngIf="afterBody"
+    class="line-block"
+    [ngStyle]="afterBody.styles"
+  >
+    <div *ngFor="let line of afterBody.lines">{{ line }}</div>
+  </div>
+
+  <div
+    *ngIf="footer"
+    class="line-block"
+    [ngStyle]="footer.styles"
+  >
+    <div *ngFor="let line of footer.lines">{{ line }}</div>
+  </div>
+</div>
