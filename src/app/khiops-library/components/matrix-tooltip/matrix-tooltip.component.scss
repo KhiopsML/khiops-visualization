@@ -8,9 +8,11 @@
   opacity: 0;
   position: fixed;
   text-align: left;
-  word-break: break-all;
-  max-width: var(--matrix-width);
-  min-width: var(--matrix-width);
+  width: fit-content;
+  max-width: var(--matrix-max-width);
+  min-width: var(--matrix-min-width);
+  word-break: break-word;
+  overflow-wrap: anywhere;
   color: var(--color-0);
   background: color-mix(in srgb, var(--color-1000) 90%, transparent);
   pointer-events: none;

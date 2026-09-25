@@ -15,7 +15,8 @@ import {
 } from '@angular/core';
 import { CellModel } from '@khiops-library/model/cell.model';
 
-const MATRIX_WIDTH = 400;
+const MATRIX_MAX_WIDTH = 400;
+const DEFAULT_MATRIX_MIN_WIDTH = 200;
 const TOOLTIP_CURSOR_OFFSET = 40;
 
 @Component({
@@ -26,9 +27,10 @@ const TOOLTIP_CURSOR_OFFSET = 40;
   standalone: false,
 })
 export class MatrixTooltipComponent implements OnChanges {
-  public readonly matrixWidth: number = MATRIX_WIDTH;
+  public readonly matrixMaxWidth: number = MATRIX_MAX_WIDTH;
   @Input() public cell?: CellModel;
   @Input() public showExpectedFrequency: boolean = false;
+  @Input() public minWidth: number = DEFAULT_MATRIX_MIN_WIDTH;
   @Input() private position?: {
     x: number;
     y: number;
@@ -36,24 +38,21 @@ export class MatrixTooltipComponent implements OnChanges {
   @ViewChild('matrixTooltipDiv')
   private matrixTooltipDiv?: ElementRef<HTMLElement>;
   ngOnChanges(changes: SimpleChanges) {
-    if (
-      this.matrixTooltipDiv?.nativeElement &&
-      changes.position?.currentValue
-    ) {
+    if (this.matrixTooltipDiv?.nativeElement) {
+      const minWidth = this.getNormalizedMinWidth();
+
       this.matrixTooltipDiv.nativeElement.style.setProperty(
-        '--matrix-width',
-        `${MATRIX_WIDTH}px`,
+        '--matrix-min-width',
+        `${minWidth}px`,
+      );
+      this.matrixTooltipDiv.nativeElement.style.setProperty(
+        '--matrix-max-width',
+        `${MATRIX_MAX_WIDTH}px`,
       );
 
-      if (this.position!.x < MATRIX_WIDTH) {
-        this.matrixTooltipDiv.nativeElement.style.left =
-          this.position!.x + TOOLTIP_CURSOR_OFFSET + 'px';
-      } else {
-        this.matrixTooltipDiv.nativeElement.style.left =
-          this.position!.x - (MATRIX_WIDTH + TOOLTIP_CURSOR_OFFSET) + 'px';
+      if (changes.position?.currentValue) {
+        this.updateTooltipPosition();
       }
-      this.matrixTooltipDiv.nativeElement.style.top =
-        this.position!.y - 100 + 'px';
     }
 
     // Simple visibility toggle with CSS fade animation
@@ -64,6 +63,39 @@ export class MatrixTooltipComponent implements OnChanges {
         this.matrixTooltipDiv.nativeElement.classList.remove('visible');
       }
     }
+  }
+
+  private getNormalizedMinWidth(): number {
+    if (!Number.isFinite(this.minWidth) || this.minWidth <= 0) {
+      return DEFAULT_MATRIX_MIN_WIDTH;
+    }
+    return Math.min(this.minWidth, MATRIX_MAX_WIDTH);
+  }
+
+  private updateTooltipPosition(): void {
+    const tooltipElement = this.matrixTooltipDiv?.nativeElement;
+    if (!tooltipElement || !this.position) {
+      return;
+    }
+
+    const viewportWidth = window.innerWidth;
+    const projectedRightBoundary =
+      this.position.x + TOOLTIP_CURSOR_OFFSET + MATRIX_MAX_WIDTH;
+    const canFitOnRight = projectedRightBoundary <= viewportWidth;
+
+    tooltipElement.classList.toggle('align-left', !canFitOnRight);
+    tooltipElement.classList.toggle('align-right', canFitOnRight);
+
+    if (canFitOnRight) {
+      tooltipElement.style.left =
+        this.position.x + TOOLTIP_CURSOR_OFFSET + 'px';
+      tooltipElement.style.right = 'auto';
+    } else {
+      tooltipElement.style.left = 'auto';
+      tooltipElement.style.right =
+        viewportWidth - this.position.x + TOOLTIP_CURSOR_OFFSET + 'px';
+    }
+    tooltipElement.style.top = this.position.y - 100 + 'px';
   }
 
   /**
