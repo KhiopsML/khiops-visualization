@@ -181,15 +181,21 @@ export class TargetDistributionGraphComponent
   }
 
   override ngAfterViewInit() {
+    super.ngAfterViewInit();
     this.scheduleLegendLayoutUpdate();
   }
 
   override ngOnChanges(changes: SimpleChanges) {
+    super.ngOnChanges(changes);
     if (changes['inputDatas'] || changes['maxBarThickness']) {
       this.applyMaxBarThickness();
     }
 
-    if (changes['displayedValues'] || changes['title'] || changes['inputDatas']) {
+    if (
+      changes['displayedValues'] ||
+      changes['title'] ||
+      changes['inputDatas']
+    ) {
       this.scheduleLegendLayoutUpdate();
     }
   }
@@ -277,7 +283,8 @@ export class TargetDistributionGraphComponent
    * otherwise move legend to second line.
    */
   private updateLegendLayout() {
-    const headerContainerWidth = this.headerContainerRef?.nativeElement.clientWidth;
+    const headerContainerWidth =
+      this.headerContainerRef?.nativeElement.clientWidth;
     const headerToolsWidth = this.headerToolsRef?.nativeElement.offsetWidth;
     const headerTitleWidth = this.headerTitleRef?.nativeElement.offsetWidth;
     const legendWidth = this.legendMeasurerRef?.nativeElement.scrollWidth;
