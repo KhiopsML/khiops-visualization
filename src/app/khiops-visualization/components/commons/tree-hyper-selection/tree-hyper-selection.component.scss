@@ -32,7 +32,7 @@
   }
 
   .selection-label {
-    font-family: 'JetBrains Mono', 'Courier New', monospace !important;
+    font-family: var(--font-code) !important;
     color: var(--color-800);
     font-weight: 500;
   }

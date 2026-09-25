@@ -27,12 +27,12 @@
     b {
       font-weight: 600;
       text-transform: uppercase;
-      font-family: 'JetBrains Mono', 'Courier New', monospace !important;
+      font-family: var(--font-code) !important;
     }
 
     span {
       margin-left: 1rem;
-      font-family: 'JetBrains Mono', 'Courier New', monospace !important;
+      font-family: var(--font-code) !important;
     }
 
     ::ng-deep kl-important-badge {

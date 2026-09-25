@@ -249,7 +249,7 @@
       font-size: 0.9em;
       height: 23px;
       flex-shrink: 0;
-      font-family: 'JetBrains Mono', 'Courier New', monospace !important;
+      font-family: var(--font-code) !important;
       border-color: var(--color-300);
       border-style: solid;
       border-width: 1px;

@@ -10,7 +10,8 @@
  */
 export function getVisualizationMockFile(): string {
   // let urlKV = 'ALLREPORTS_Std_Iris_AnalysisResults.khj';
-  let urlKV = 'demo-visualization.json';
+  // let urlKV = 'demo-visualization.json';
+  let urlKV = '2d-cells-AllReports.json ';
   // let urlKV = '312-AnalysisResults.khj';
   // let urlKV = 'AnalysisResults-IrisRegressionWithTree.khj';
   // let urlKV = 'new-hyper-tree.json';
