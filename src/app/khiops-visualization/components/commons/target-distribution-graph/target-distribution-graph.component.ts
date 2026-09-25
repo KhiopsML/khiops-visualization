@@ -63,6 +63,7 @@ export class TargetDistributionGraphComponent
   @Input() public displayedValues?: ChartToggleValuesI[];
   @Input() public showFullscreenBtn = false;
   @Input() public variableType?: string;
+  @Input() public maxBarThickness?: number;
   protected enableSelection = input(true);
 
   public override view: any = undefined; // managed into ScrollableGraphComponent
@@ -184,9 +185,68 @@ export class TargetDistributionGraphComponent
   }
 
   override ngOnChanges(changes: SimpleChanges) {
+    if (changes['inputDatas'] || changes['maxBarThickness']) {
+      this.applyMaxBarThickness();
+    }
+
     if (changes['displayedValues'] || changes['title'] || changes['inputDatas']) {
       this.scheduleLegendLayoutUpdate();
     }
+  }
+
+  /**
+   * Apply optional max bar thickness to all datasets when provided.
+   */
+  private applyMaxBarThickness() {
+    if (!this.inputDatas?.datasets?.length) {
+      return;
+    }
+
+    const spacing = this.calculateBarSpacing(this.inputDatas.datasets.length);
+
+    for (const dataset of this.inputDatas.datasets) {
+      if (!dataset) {
+        continue;
+      }
+
+      if (this.maxBarThickness !== undefined) {
+        dataset.maxBarThickness = this.maxBarThickness;
+        dataset.barPercentage = spacing.barPercentage;
+        dataset.categoryPercentage = spacing.categoryPercentage;
+      } else if (dataset.maxBarThickness !== undefined) {
+        (dataset as any).maxBarThickness = undefined;
+        (dataset as any).barPercentage = undefined;
+        (dataset as any).categoryPercentage = undefined;
+      }
+    }
+  }
+
+  /**
+   * Keep few bars visually close while preserving readability on larger sets.
+   */
+  private calculateBarSpacing(barCount: number): {
+    barPercentage: number;
+    categoryPercentage: number;
+  } {
+    const minBarPercentage = 0.9;
+    const minCategoryPercentage = 0.3;
+    const maxCategoryPercentage = 0.8;
+
+    const barPercentage = minBarPercentage;
+    let categoryPercentage = minCategoryPercentage;
+
+    if (barCount > 2) {
+      const increment = Math.min(
+        (barCount - 2) * 0.1,
+        maxCategoryPercentage - minCategoryPercentage,
+      );
+      categoryPercentage = Math.min(
+        minCategoryPercentage + increment,
+        maxCategoryPercentage,
+      );
+    }
+
+    return { barPercentage, categoryPercentage };
   }
 
   /**
