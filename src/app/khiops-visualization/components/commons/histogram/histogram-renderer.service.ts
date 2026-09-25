@@ -219,9 +219,28 @@ export class HistogramRendererService {
     ctx.fillStyle = UtilsService.hexToRgba(bar.color, 0.7);
     ctx.lineWidth = 0;
     ctx.fillRect(x, y, barW, barH);
-    ctx.strokeStyle = selectedItem === i ? defaultBarColor : bar.color;
-    ctx.lineWidth = selectedItem === i ? 2 : 1;
-    ctx.strokeRect(x, y, barW, barH);
+
+    const isSelected = selectedItem === i;
+    if (isSelected) {
+      const outerPadding = 2;
+      const selectedStrokeWidth = 1;
+      const strokeOffset = outerPadding + selectedStrokeWidth / 2;
+      ctx.save();
+      ctx.strokeStyle = defaultBarColor;
+      ctx.lineWidth = selectedStrokeWidth;
+      ctx.setLineDash([4, 3]);
+      ctx.strokeRect(
+        x - strokeOffset,
+        y - strokeOffset,
+        barW + strokeOffset * 2,
+        barH + strokeOffset * 2,
+      );
+      ctx.restore();
+    } else {
+      ctx.strokeStyle = bar.color;
+      ctx.lineWidth = 1;
+      ctx.strokeRect(x, y, barW, barH);
+    }
 
     return d;
   }

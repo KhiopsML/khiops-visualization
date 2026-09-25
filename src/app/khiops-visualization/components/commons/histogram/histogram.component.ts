@@ -128,7 +128,7 @@ export class HistogramComponent extends SelectableComponent implements OnInit {
   ) {
     super(selectableService, ngzone, configService);
 
-    this.defaultBarColor = 'black';
+    this.defaultBarColor = '#f84700';
 
     this.colorSet = HistogramUIService.getColors();
 
@@ -520,7 +520,7 @@ export class HistogramComponent extends SelectableComponent implements OnInit {
         this.histogramHoverCanvas || null,
         this.histogramSelectedCanvas || null,
         this.w,
-        this.h,
+        this.h + this.yPadding,
       );
 
       this.ctx = contexts.ctx;
