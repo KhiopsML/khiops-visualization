@@ -42,117 +42,90 @@ export class CopyImageService {
         setTimeout(async () => {
           const componentInstance =
             this.getComponentInstance(currentSelectedArea);
+          let currentDiv: HTMLElement | null = null;
 
-          if ('hideActiveEntries' in componentInstance) {
-            await componentInstance.hideActiveEntries();
-          }
+          try {
+            if (componentInstance && 'hideActiveEntries' in componentInstance) {
+              await componentInstance.hideActiveEntries();
+            }
 
-          const rootElement = this.configService.getRootElementDom();
-          if (!rootElement) {
-            this.snackBar.open(
-              this.translate.get('SNACKS.COPY_ERROR') +
-                ' (Root element not found)',
-              undefined,
-              {
-                duration: 4000,
-                panelClass: 'error',
-              },
-            );
-            this.isCopyingImage$.next(false);
-            return;
-          }
-
-          const currentDiv: any = rootElement?.querySelector(
-            '#' + currentSelectedArea.id,
-          )?.firstChild;
-
-          if (!currentDiv) {
-            this.snackBar.open(
-              this.translate.get('SNACKS.COPY_ERROR') + ' (Element not found)',
-              undefined,
-              {
-                duration: 4000,
-                panelClass: 'error',
-              },
-            );
-            this.isCopyingImage$.next(false);
-            return;
-          }
-
-          this.rePaintGraph(currentDiv);
-
-          // convert div screenshot to png
-          const isHyperTree =
-            currentSelectedArea.componentType === COMPONENT_TYPES.HYPER_TREE;
-
-          const capturePromise = isHyperTree
-            ? import('html2canvas').then(({ default: html2canvas }) =>
-                html2canvas(currentDiv, {
-                  scale: 1.0,
-                  backgroundColor: '#ffffff',
-                  useCORS: true,
-                  allowTaint: true,
-                }).then((canvas) => canvas.toDataURL('image/png')),
-              )
-            : htmlToImage.toPng(currentDiv, {
-                quality: 0.95,
-                backgroundColor: '#ffffff',
-                style: {
-                  overflow: 'hidden',
-                },
-              });
-
-          capturePromise
-            .then(async (dataUrl) => {
-              if (!this.configService.getConfig().onCopyImage) {
-                // Convert dataUrl to blob for file download
-                fetch(dataUrl)
-                  .then((res) => res.blob())
-                  .then((blob) => {
-                    saveAs(blob, currentSelectedArea.id + '.png');
-                  });
-              } else {
-                this.configService.getConfig().onCopyImage(dataUrl);
-              }
-
-              if (this.eltsToHide?.[0]) {
-                for (let i = 0; i < this.eltsToHide.length; i++) {
-                  this.eltsToHide[i].style.display = 'inline-flex';
-                }
-              }
-
-              // reset selected class
-              this.addSelectedClass(currentDiv);
-
-              // Show snack
+            const rootElement = this.configService.getRootElementDom();
+            if (!rootElement) {
               this.snackBar.open(
-                this.translate.get('SNACKS.SCREENSHOT_COPIED'),
-                undefined,
-                {
-                  duration: 2000,
-                  panelClass: 'success',
-                },
-              );
-
-              this.isCopyingImage$.next(false);
-              if ('showActiveEntries' in componentInstance) {
-                await componentInstance.showActiveEntries();
-              }
-            })
-            .catch((e) => {
-              console.error('​HeaderToolsComponent -> copyImage -> e', e);
-              this.snackBar.open(
-                this.translate.get('SNACKS.COPY_ERROR') + e,
+                this.translate.get('SNACKS.COPY_ERROR') +
+                  ' (Root element not found)',
                 undefined,
                 {
                   duration: 4000,
                   panelClass: 'error',
                 },
               );
-            })
-            .finally(() => {
-              this.isCopyingImage$.next(false);
-            });
+              return;
+            }
+
+            currentDiv = rootElement?.querySelector(
+              '#' + currentSelectedArea.id,
+            )?.firstChild as HTMLElement;
+
+            if (!currentDiv) {
+              this.snackBar.open(
+                this.translate.get('SNACKS.COPY_ERROR') +
+                  ' (Element not found)',
+                undefined,
+                {
+                  duration: 4000,
+                  panelClass: 'error',
+                },
+              );
+              return;
+            }
+
+            this.rePaintGraph(currentDiv);
+
+            // convert div screenshot to png
+            const isHyperTree =
+              currentSelectedArea.componentType === COMPONENT_TYPES.HYPER_TREE;
+            const dataUrl = await this.captureAsPng(currentDiv, isHyperTree);
+
+            if (!this.configService.getConfig().onCopyImage) {
+              // Convert dataUrl to blob for file download
+              fetch(dataUrl)
+                .then((res) => res.blob())
+                .then((blob) => {
+                  saveAs(blob, currentSelectedArea.id + '.png');
+                });
+            } else {
+              this.configService.getConfig().onCopyImage(dataUrl);
+            }
+
+            // Show snack
+            this.snackBar.open(
+              this.translate.get('SNACKS.SCREENSHOT_COPIED'),
+              undefined,
+              {
+                duration: 2000,
+                panelClass: 'success',
+              },
+            );
+          } catch (e) {
+            console.error('​HeaderToolsComponent -> copyImage -> e', e);
+            this.snackBar.open(
+              this.translate.get('SNACKS.COPY_ERROR') + e,
+              undefined,
+              {
+                duration: 4000,
+                panelClass: 'error',
+              },
+            );
+          } finally {
+            if (currentDiv) {
+              this.restoreGraphAfterCopy(currentDiv);
+            }
+            if (componentInstance && 'showActiveEntries' in componentInstance) {
+              await componentInstance.showActiveEntries();
+            }
+            this.isCopyingImage$.next(false);
+          }
         }, 500);
       } catch (e) {
         this.snackBar.open(this.translate.get('SNACKS.COPY_ERROR'), undefined, {
@@ -171,6 +144,57 @@ export class CopyImageService {
         },
       );
     }
+  }
+
+  private async captureAsPng(
+    currentDiv: HTMLElement,
+    isHyperTree: boolean,
+  ): Promise<string> {
+    if (isHyperTree) {
+      return this.captureWithHtml2Canvas(currentDiv);
+    }
+
+    try {
+      return await htmlToImage.toPng(currentDiv, {
+        quality: 0.95,
+        backgroundColor: '#ffffff',
+        style: {
+          overflow: 'hidden',
+        },
+      });
+    } catch (e: any) {
+      // html-to-image can fail on some font rules (font is undefined); fallback to html2canvas.
+      const message = e?.message || '';
+      if (message.includes('trim') && message.includes('font')) {
+        return this.captureWithHtml2Canvas(currentDiv);
+      }
+      throw e;
+    }
+  }
+
+  private async captureWithHtml2Canvas(
+    currentDiv: HTMLElement,
+  ): Promise<string> {
+    const { default: html2canvas } = await import('html2canvas');
+    const canvas = await html2canvas(currentDiv, {
+      scale: 1.0,
+      backgroundColor: '#ffffff',
+      useCORS: true,
+      allowTaint: true,
+    });
+
+    return canvas.toDataURL('image/png');
+  }
+
+  private restoreGraphAfterCopy(currentDiv: HTMLElement) {
+    if (this.eltsToHide?.[0]) {
+      for (let i = 0; i < this.eltsToHide.length; i++) {
+        this.eltsToHide[i].style.display = 'inline-flex';
+      }
+    }
+
+    // reset selected class
+    this.addSelectedClass(currentDiv);
   }
 
   /**
