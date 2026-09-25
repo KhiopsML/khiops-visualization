@@ -9,10 +9,10 @@
   max-width: 320px;
   padding: 10px 12px;
   border-radius: var(--border-radius);
-  border: 1px solid color-mix(in srgb, #9ca3af 30%, transparent);
   background-color: var(--color-0);
-  color: #e5e7eb;
+  color: var(--color-50);
   backdrop-filter: blur(2px);
+  border: 1px solid var(--color-100);
 
   .selection-title {
     font-size: 0.72rem;
@@ -72,7 +72,7 @@
     border: none !important;
     background: color-mix(in srgb, var(--color-1000) 90%, transparent);
     color: var(--color-0);
-    backdrop-filter: blur(6px);
+    // backdrop-filter: blur(6px);
     border-radius: var(--border-radius);
 
     .selection-title,
