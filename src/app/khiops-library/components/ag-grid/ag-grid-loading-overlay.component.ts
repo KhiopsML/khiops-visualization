@@ -11,7 +11,7 @@ import { ILoadingOverlayAngularComp } from '@ag-grid-community/angular';
 @Component({
   selector: 'app-ag-grid-loading-overlay',
   template: `<mat-spinner
-    diameter="40"
+    diameter="30"
     color="accent"
     mode="indeterminate"
   ></mat-spinner>`,
