@@ -24,6 +24,7 @@
   }
 
   .matrix-tooltip-title {
+    font-family: 'JetBrains Mono', 'Courier New', monospace !important;
     display: grid;
     grid-template-columns: max-content minmax(0, 1fr);
     column-gap: 8px;
@@ -68,6 +69,7 @@
   }
 
   .metric-label {
+    font-family: 'JetBrains Mono', 'Courier New', monospace !important;
     color: var(--color-200);
   }
 }
