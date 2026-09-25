@@ -9,8 +9,8 @@
   position: fixed;
   text-align: left;
   word-break: break-all;
-  max-width: 300px;
-  min-width: 300px;
+  max-width: var(--matrix-width);
+  min-width: var(--matrix-width);
   color: var(--color-0);
   background: color-mix(in srgb, var(--color-1000) 90%, transparent);
   pointer-events: none;

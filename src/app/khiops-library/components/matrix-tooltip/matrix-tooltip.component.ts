@@ -15,6 +15,9 @@ import {
 } from '@angular/core';
 import { CellModel } from '@khiops-library/model/cell.model';
 
+const MATRIX_WIDTH = 400;
+const TOOLTIP_CURSOR_OFFSET = 40;
+
 @Component({
   selector: 'kl-matrix-tooltip',
   templateUrl: './matrix-tooltip.component.html',
@@ -23,6 +26,7 @@ import { CellModel } from '@khiops-library/model/cell.model';
   standalone: false,
 })
 export class MatrixTooltipComponent implements OnChanges {
+  public readonly matrixWidth: number = MATRIX_WIDTH;
   @Input() public cell?: CellModel;
   @Input() public showExpectedFrequency: boolean = false;
   @Input() private position?: {
@@ -36,12 +40,17 @@ export class MatrixTooltipComponent implements OnChanges {
       this.matrixTooltipDiv?.nativeElement &&
       changes.position?.currentValue
     ) {
-      if (this.position!.x < 400) {
+      this.matrixTooltipDiv.nativeElement.style.setProperty(
+        '--matrix-width',
+        `${MATRIX_WIDTH}px`,
+      );
+
+      if (this.position!.x < MATRIX_WIDTH) {
         this.matrixTooltipDiv.nativeElement.style.left =
-          this.position!.x + 40 + 'px';
+          this.position!.x + TOOLTIP_CURSOR_OFFSET + 'px';
       } else {
         this.matrixTooltipDiv.nativeElement.style.left =
-          this.position!.x - 340 + 'px';
+          this.position!.x - (MATRIX_WIDTH + TOOLTIP_CURSOR_OFFSET) + 'px';
       }
       this.matrixTooltipDiv.nativeElement.style.top =
         this.position!.y - 100 + 'px';
