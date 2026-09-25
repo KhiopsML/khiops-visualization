@@ -25,6 +25,7 @@ export interface HypertreeArgs {
     pathes: Path[];
     selections: N[];
     traces: Trace[];
+    primarySelectionNodeId?: string;
   };
   layout: {
     type: LayoutFunction;

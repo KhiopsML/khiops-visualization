@@ -145,6 +145,10 @@ export class TreeHyperComponent
         // Handle centering on leaf with proper timing
         setTimeout(() => {
           this.selectedNode$.pipe(take(1)).subscribe((selectedNode) => {
+            if (this.ht?.args?.objects && selectedNode?.id) {
+              this.ht.args.objects.primarySelectionNodeId = selectedNode?.id;
+            }
+
             if (selectedNode) {
               const treeNode = UtilsService.deepFind(
                 this.ht?.data,

@@ -87,6 +87,20 @@
       stroke-width: 0.025;
     }
 
+    .node-selection-pulse {
+      display: none;
+      pointer-events: none;
+      fill: var(--color-800);
+      opacity: 0;
+      transform-box: fill-box;
+      transform-origin: center;
+
+      &.selected-main {
+        display: block;
+        animation: node-selection-pulse 1.8s ease-out infinite;
+      }
+    }
+
     .node-selection-ring {
       display: none;
       fill: none;
@@ -149,5 +163,17 @@
         stroke: #aaa;
       }
     }
+  }
+}
+
+@keyframes node-selection-pulse {
+  0% {
+    opacity: 0.45;
+    transform: scale(1);
+  }
+
+  100% {
+    opacity: 0;
+    transform: scale(1.8);
   }
 }

@@ -46,23 +46,51 @@ export class NodeLayer implements ILayer {
     this.name = args.name;
   }
 
+  private isPrimarySelectedNode(d) {
+    const primarySelectionNodeId =
+      this.view.hypertree.args.objects.primarySelectionNodeId;
+    if (!primarySelectionNodeId) {
+      return false;
+    }
+
+    return (
+      d.id === primarySelectionNodeId ||
+      (d.data && d.data.id === primarySelectionNodeId)
+    );
+  }
+
   private updateSelectionRing(s) {
     s.each((d, index, elements) => {
       const group = elements[index];
       const node = group.querySelector('.node-shape');
       const ring = group.querySelector('.node-selection-ring');
+      const pulse = group.querySelector('.node-selection-pulse');
       const matrix = group.getScreenCTM();
       const scale = matrix ? Math.hypot(matrix.a, matrix.b) : 1;
       const nodeStrokeWidth = parseFloat(getComputedStyle(node).strokeWidth) || 0;
       const ringStrokeWidth = parseFloat(getComputedStyle(ring).strokeWidth) || 0;
+      const baseRadius =
+        this.args.r(d) + nodeStrokeWidth / 2 + (3 + ringStrokeWidth / 2) / scale;
 
-      ring.setAttribute(
-        'r',
-        this.args.r(d) +
-          nodeStrokeWidth / 2 +
-          (3 + ringStrokeWidth / 2) / scale,
-      );
+      ring.setAttribute('r', baseRadius);
+
+      if (pulse) {
+        pulse.setAttribute('r', baseRadius);
+      }
     });
+  }
+
+  private updateSelectionPulse(s) {
+    s.select('.node-selection-pulse')
+      .classed('selected-main', (d) => this.isPrimarySelectedNode(d))
+      .style(
+        'fill',
+        (d) =>
+          (d.pathes && d.pathes.headof && d.pathes.headof.color) ||
+          (d.pathes && d.pathes.finalcolor) ||
+          (d.pathes && d.pathes.labelcolor) ||
+          this.args.fill(d),
+      );
   }
 
   private attach() {
@@ -75,6 +103,7 @@ export class NodeLayer implements ILayer {
       className: `${this.args.className}-wrapper`,
       elementType: 'g',
       create: (s) => {
+        s.append('circle').attr('class', 'node-selection-pulse');
         s.append('circle').attr('class', 'node-selection-ring');
 
         s.append('circle')
@@ -100,6 +129,8 @@ export class NodeLayer implements ILayer {
           );
       },
       updateColor: (s) => {
+        this.updateSelectionPulse(s);
+
         s.select('.node-selection-ring').classed(
           'selected',
           (d) => d.pathes && d.pathes.isPartOfAnySelectionPath,
@@ -123,6 +154,8 @@ export class NodeLayer implements ILayer {
       //                        .classed("selected",  d=> d.isPartOfAnySelectionPath && d.parent),
       updateTransform: (s) => {
         s.attr('transform', (d) => this.args.transform(d));
+
+        this.updateSelectionPulse(s);
 
         s.select('.node-shape')
           .style('stroke', (d) => d.pathes && d.pathes.labelcolor)
