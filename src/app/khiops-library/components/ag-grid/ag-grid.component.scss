@@ -44,7 +44,7 @@
   ::ng-deep .ag-right-aligned-cell {
     text-align: right !important;
     justify-content: flex-end !important;
-    color: #006433 !important;
+    color: var(--color-brand-green-dark) !important;
   }
   // Header alignment styles
   ::ng-deep .ag-left-aligned-header .ag-header-cell-text {

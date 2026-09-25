@@ -144,7 +144,7 @@ export class InteractionLayer2 implements ILayer {
     )
       return;
 
-    if (n && n.distScale > 0.5) {
+    if (n) {
       setHoverNodeCache(n, this.view.unitdisk.cache);
       if (this.view.hypertree.args.interaction.onHoverNodeChange) {
         this.view.hypertree.args.interaction.onHoverNodeChange(n);

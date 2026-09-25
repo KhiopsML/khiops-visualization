@@ -50,8 +50,13 @@ export class TreeHyperComponent
   implements OnInit, AfterViewInit, OnChanges, OnDestroy
 {
   private static readonly HYPERTREE_ZOOM_FACTOR = 1.175;
+  private static readonly HOVER_TOOLTIP_OFFSET = 14;
+  private static readonly HOVER_TOOLTIP_EDGE_PADDING = 8;
+  private static readonly HOVER_TOOLTIP_FALLBACK_WIDTH = 280;
+  private static readonly HOVER_TOOLTIP_FALLBACK_HEIGHT = 130;
 
   @ViewChild('hyperTree') private hyperTree?: ElementRef<HTMLElement>;
+  @ViewChild('hoverTooltip') private hoverTooltip?: ElementRef<HTMLElement>;
 
   @Input() public dimensionTree?: [TreeNodeModel];
   @Input() private displayedValues?: ChartToggleValuesI[];
@@ -70,6 +75,12 @@ export class TreeHyperComponent
   private initialLambda?: number;
   public treePreparationDatas?: TreePreparationDatasModel;
   public distributionDatas?: DistributionDatasModel;
+  public hoveredLeafNode?: TreeNodeModel;
+  public hoveredLeafTooltipStyle: { left: string; top: string } = {
+    left: '0px',
+    top: '0px',
+  };
+  private lastMousePosition?: { x: number; y: number };
 
   selectedNodes$: Observable<TreeNodeModel[]>;
   previousSelectedNodes$: Observable<TreeNodeModel[]>;
@@ -335,6 +346,7 @@ export class TreeHyperComponent
         interaction: {
           mouseRadius: 5,
           onNodeClick: (n: any, _m: any, _l: any) => this.nodeClick(n),
+          onHoverNodeChange: (n: N | undefined) => this.onHoverNodeChange(n),
         },
       };
 
@@ -358,6 +370,115 @@ export class TreeHyperComponent
       }
       this.ht?.api.updateNodesVisualization();
     }
+  }
+
+  private onHoverNodeChange(n: N | undefined) {
+    this.ngzone.run(() => {
+      if (!n?.data?.isLeaf) {
+        this.hoveredLeafNode = undefined;
+        return;
+      }
+
+      this.hoveredLeafNode = n.data as TreeNodeModel;
+      this.updateHoveredLeafTooltipPosition();
+      setTimeout(() => this.updateHoveredLeafTooltipPosition());
+    });
+  }
+
+  public onTreeMouseMove(event: MouseEvent) {
+    const rootElement = this.hyperTree?.nativeElement.querySelector(
+      '#hyperTree',
+    ) as HTMLElement | null;
+    if (!rootElement) {
+      return;
+    }
+
+    const rect = rootElement.getBoundingClientRect();
+    this.lastMousePosition = {
+      x: event.clientX - rect.left,
+      y: event.clientY - rect.top,
+    };
+
+    if (this.hoveredLeafNode) {
+      this.updateHoveredLeafTooltipPosition();
+    }
+  }
+
+  public onTreeMouseLeave() {
+    this.lastMousePosition = undefined;
+  }
+
+  private updateHoveredLeafTooltipPosition() {
+    this.hoveredLeafTooltipStyle = this.computeHoveredLeafTooltipStyle();
+  }
+
+  private computeHoveredLeafTooltipStyle(): { left: string; top: string } {
+    const rootElement = this.hyperTree?.nativeElement.querySelector(
+      '#hyperTree',
+    ) as HTMLElement | null;
+
+    if (!rootElement || !this.lastMousePosition) {
+      return this.hoveredLeafTooltipStyle;
+    }
+
+    const containerWidth = rootElement?.clientWidth || 0;
+    const containerHeight = rootElement?.clientHeight || 0;
+    const tooltipElement = this.hoverTooltip?.nativeElement;
+    const tooltipWidth =
+      tooltipElement?.offsetWidth || TreeHyperComponent.HOVER_TOOLTIP_FALLBACK_WIDTH;
+    const tooltipHeight =
+      tooltipElement?.offsetHeight ||
+      TreeHyperComponent.HOVER_TOOLTIP_FALLBACK_HEIGHT;
+
+    let x = this.lastMousePosition.x + TreeHyperComponent.HOVER_TOOLTIP_OFFSET;
+    let y = this.lastMousePosition.y + TreeHyperComponent.HOVER_TOOLTIP_OFFSET;
+
+    if (
+      x + tooltipWidth + TreeHyperComponent.HOVER_TOOLTIP_EDGE_PADDING >
+      containerWidth
+    ) {
+      x =
+        this.lastMousePosition.x -
+        tooltipWidth -
+        TreeHyperComponent.HOVER_TOOLTIP_OFFSET;
+    }
+
+    if (
+      y + tooltipHeight + TreeHyperComponent.HOVER_TOOLTIP_EDGE_PADDING >
+      containerHeight
+    ) {
+      y =
+        this.lastMousePosition.y -
+        tooltipHeight -
+        TreeHyperComponent.HOVER_TOOLTIP_OFFSET;
+    }
+
+    x = Math.max(TreeHyperComponent.HOVER_TOOLTIP_EDGE_PADDING, x);
+    y = Math.max(TreeHyperComponent.HOVER_TOOLTIP_EDGE_PADDING, y);
+
+    x = Math.min(
+      x,
+      Math.max(
+        TreeHyperComponent.HOVER_TOOLTIP_EDGE_PADDING,
+        containerWidth -
+          tooltipWidth -
+          TreeHyperComponent.HOVER_TOOLTIP_EDGE_PADDING,
+      ),
+    );
+    y = Math.min(
+      y,
+      Math.max(
+        TreeHyperComponent.HOVER_TOOLTIP_EDGE_PADDING,
+        containerHeight -
+          tooltipHeight -
+          TreeHyperComponent.HOVER_TOOLTIP_EDGE_PADDING,
+      ),
+    );
+
+    return {
+      left: `${x}px`,
+      top: `${y}px`,
+    };
   }
 
   private nodeClick(n: N) {

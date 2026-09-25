@@ -152,16 +152,11 @@ describe('Behaviors tests for Khiops Covisualization', () => {
       cy.loadFile('covisualization', fileName);
 
       // Now we check matrix values
-      cy.get('#matrix-selected')
-        .should('be.visible')
-        .then(($canvas) => {
-          //   position: 'center',
-          cy.wrap($canvas).trigger(
-            'mousemove',
-            $canvas.width() / 2,
-            $canvas.height() / 2,
-          );
-        });
+      cy.get('#matrix-selected').trigger('mousemove', {
+        position: 'center',
+        ctrlKey: true,
+        force: true,
+      });
       cy.get('.matrix-tooltip-comp').contains('2 496');
 
       // Open unfold Hierarchy view

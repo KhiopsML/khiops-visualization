@@ -47,6 +47,15 @@
   .tree-hyper-comp-container {
     position: relative;
 
+    .tree-hyper-hover-tooltip {
+      position: absolute;
+      z-index: 4;
+      pointer-events: none;
+      max-width: min(38%, 320px);
+      box-shadow: var(--elevate-box-shadow);
+      border-radius: var(--border-radius);
+    }
+
     .tree-hyper-selection {
       position: absolute;
       left: 16px;

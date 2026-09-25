@@ -54,18 +54,40 @@
     width: 10px;
     height: 10px;
     border-radius: 50%;
-    border: 1px solid rgba(255, 255, 255, 0.35);
+    border: 2px solid var(--color-0);
     flex: 0 0 10px;
   }
 
   .selection-empty {
     font-size: 0.75rem;
     opacity: 0.85;
-    color: #cbd5e1;
+    color: var(--color-150);
   }
 
   kl-important-badge {
     transform: translateY(-1px);
     font-weight: 600;
+  }
+
+  &.theme-dark {
+    border: none !important;
+    background: color-mix(in srgb, var(--color-1000) 90%, transparent);
+    color: var(--color-0);
+    backdrop-filter: blur(6px);
+    border-radius: var(--border-radius);
+
+    .selection-title,
+    .selection-label,
+    .selection-value {
+      color: var(--color-200);
+    }
+
+    .selection-empty {
+      color: var(--color-200);
+    }
+
+    .node-color-dot {
+      color: var(--color-0);
+    }
   }
 }

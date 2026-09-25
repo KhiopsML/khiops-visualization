@@ -4,11 +4,13 @@
  * at https://spdx.org/licenses/BSD-3-Clause-Clear.html or see the "LICENSE" file for more details.
  -->
 
-<div id="tree-hyper-selection-comp">
+<div id="tree-hyper-selection-comp" [class.theme-dark]="isDarkTheme">
   @if (selectedNode) {
-    <div class="selection-title font-code">
-      {{ 'GLOBAL.HYPER_TREE_SELECTION' | translate }}
-    </div>
+    @if (!isDarkTheme) {
+      <div class="selection-title font-code">
+        {{ 'GLOBAL.HYPER_TREE_SELECTION' | translate }}
+      </div>
+    }
     <div class="selection-row">
       <span class="selection-label">{{ 'GLOBAL.NODE_ID' | translate }}</span>
       <span class="selection-value node-id-value">
@@ -33,6 +35,7 @@
         <kl-important-badge
           [text]="(selectedNode.purity | toPrecision).toString()"
           [color]="'green'"
+          [theme]="isDarkTheme ? 'dark' : 'light'"
         ></kl-important-badge>
       }
       @if (selectedNode.purity === undefined) {
@@ -41,9 +44,11 @@
     </div>
   }
   @if (!selectedNode) {
-    <div class="selection-title">
-      {{ 'GLOBAL.HYPER_TREE_SELECTION' | translate }}
-    </div>
+    @if (!isDarkTheme) {
+      <div class="selection-title">
+        {{ 'GLOBAL.HYPER_TREE_SELECTION' | translate }}
+      </div>
+    }
     <div class="selection-empty">
       {{ 'GLOBAL.NO_SELECTED_NODE' | translate }}
     </div>

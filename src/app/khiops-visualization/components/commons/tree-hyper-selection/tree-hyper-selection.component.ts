@@ -16,4 +16,9 @@ import { TreeNodeModel } from '@khiops-visualization/model/tree-node.model';
 })
 export class TreeHyperSelectionComponent {
   @Input() public selectedNode?: TreeNodeModel;
+  @Input() public theme: 'default' | 'dark' = 'default';
+
+  public get isDarkTheme(): boolean {
+    return this.theme === 'dark';
+  }
 }

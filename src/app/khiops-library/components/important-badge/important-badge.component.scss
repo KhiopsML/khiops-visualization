@@ -20,8 +20,8 @@
 
 .important-badge-green {
   background: #ecfdf5;
-  border: 1px #a1dec2 solid;
-  color: #006433;
+  border: 1px var(--color-brand-green-light) solid;
+  color: var(--color-brand-green-dark);
 }
 
 .important-badge-orange {
@@ -38,7 +38,7 @@
 }
 
 .important-badge-dark {
-  background-color: transparent !important;
-  color: var(--color-brand-orange-light) !important;
-  border-color: var(--color-brand-orange-light) !important;
+  background-color: var(--color-1000) !important;
+  color: var(--color-brand-green-light) !important;
+  border-color: var(--color-brand-green-light) !important;
 }

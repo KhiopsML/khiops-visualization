@@ -67,8 +67,22 @@
       fxFlex
       fxLayout="column"
       class="tree-hyper-comp-container bg-dotted"
+      (mousemove)="onTreeMouseMove($event)"
+      (mouseleave)="onTreeMouseLeave()"
     >
       <div id="hyperTree"></div>
+      @if (hoveredLeafNode) {
+        <div
+          #hoverTooltip
+          class="tree-hyper-hover-tooltip"
+          [ngStyle]="hoveredLeafTooltipStyle"
+        >
+          <app-tree-hyper-selection
+            [selectedNode]="hoveredLeafNode"
+            [theme]="'dark'"
+          ></app-tree-hyper-selection>
+        </div>
+      }
       <div class="tree-hyper-selection screenshot-hide">
         <app-tree-hyper-selection
           [selectedNode]="selectedNode$ | async"
