@@ -23,6 +23,8 @@
         >
           <as-split-area [size]="sizes.row0Col[0]" class="kl-card">
             <kl-informations-block
+              fxFlex
+              fxFlexFill
               id="preparation-2d-informations-block-summary"
               title="{{ 'GLOBAL.SUMMARY' | translate }}"
               [inputDatas]="summaryDatas"
@@ -32,6 +34,7 @@
             @if (targetVariableStatsDatas) {
               <app-target-variable-stats
                 id="preparation-2d-target-variable-stats"
+                fxFlex
                 fxFlexFill
                 [inputDatas]="targetVariableStatsDatas"
               >
@@ -45,6 +48,8 @@
           <as-split-area [size]="sizes.row0Col[2]" class="kl-card">
             @if (informationsDatas?.length !== 0) {
               <kl-informations-block
+                fxFlex
+                fxFlexFill
                 id="preparation-2d-informations-block-informations"
                 icon="sliders-horizontal"
                 title="{{ 'GLOBAL.INFORMATIONS' | translate }}"

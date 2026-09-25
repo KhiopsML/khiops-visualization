@@ -28,6 +28,8 @@
             >
               <as-split-area [size]="sizes.col0Row0Col[0]" class="kl-card">
                 <kl-informations-block
+                  fxFlex
+                  fxFlexFill
                   id="tree-preparation-informations-block-summary"
                   title="{{ 'GLOBAL.SUMMARY' | translate }}"
                   [inputDatas]="summaryDatas"
@@ -37,6 +39,7 @@
               <as-split-area [size]="sizes.col0Row0Col[1]" class="kl-card">
                 @if (targetVariableStatsDatas) {
                   <app-target-variable-stats
+                    fxFlex
                     id="tree-preparation-target-variable-stats"
                     fxFlexFill
                     [inputDatas]="targetVariableStatsDatas"

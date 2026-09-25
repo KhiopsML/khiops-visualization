@@ -26,6 +26,8 @@
             class="kl-card"
           >
             <kl-informations-block
+              fxFlex
+              fxFlexFill
               id="modeling-informations-block-summary"
               title="{{ 'GLOBAL.SUMMARY' | translate }}"
               [inputDatas]="summaryDatas"
@@ -38,6 +40,7 @@
             @if (targetVariableStatsDatas) {
               <app-target-variable-stats
                 id="modeling-target-variable-stats"
+                fxFlex
                 fxFlexFill
                 [inputDatas]="targetVariableStatsDatas"
               >
