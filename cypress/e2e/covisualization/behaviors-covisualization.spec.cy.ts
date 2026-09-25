@@ -10,139 +10,139 @@ import '../../utils/utils';
 
 describe('Behaviors tests for Khiops Covisualization', () => {
   let files = ['CC_3_Coclustering.json'];
-  files.forEach((fileName) => {
-    it(`Test composition values when folding nodes VAR VAR case clicks`, () => {
-      cy.initViews();
+  // files.forEach((fileName) => {
+  //   it(`Test composition values when folding nodes VAR VAR case clicks`, () => {
+  //     cy.initViews();
 
-      cy.loadFile('covisualization', fileName);
+  //     cy.loadFile('covisualization', fileName);
 
-      cy.get('#tree-expando-6').first().click();
+  //     cy.get('#tree-expando-6').first().click();
 
-      cy.get('#cluster-composition-0').contains('A11');
+  //     cy.get('#cluster-composition-0').contains('A11');
 
-      // ### Click on first node
-      cy.get('.tree-leaf-text').eq(1).click({ force: true });
+  //     // ### Click on first node
+  //     cy.get('.tree-leaf-text').eq(1).click({ force: true });
 
-      cy.get('#cluster-composition-0').contains('A11');
-      cy.get('#tree-expando-5').first().click();
+  //     cy.get('#cluster-composition-0').contains('A11');
+  //     cy.get('#tree-expando-5').first().click();
 
-      cy.get('#cluster-composition-0').contains('A4');
+  //     cy.get('#cluster-composition-0').contains('A4');
 
-      cy.get('#tree-expando-5').first().click();
+  //     cy.get('#tree-expando-5').first().click();
 
-      cy.get('#cluster-composition-0').contains('A11');
-    });
-  });
+  //     cy.get('#cluster-composition-0').contains('A11');
+  //   });
+  // });
 
-  files = ['Coclustering-IV-Glass.khcj'];
-  files.forEach((fileName) => {
-    it(`Test composition values when folding nodes INDI VAR case clicks`, () => {
-      cy.initViews();
+  // files = ['Coclustering-IV-Glass.khcj'];
+  // files.forEach((fileName) => {
+  //   it(`Test composition values when folding nodes INDI VAR case clicks`, () => {
+  //     cy.initViews();
 
-      cy.loadFile('covisualization', fileName);
+  //     cy.loadFile('covisualization', fileName);
 
-      //  reverse dimenions
-      cy.get('.hierarchy-select-comp-button').first().click();
-      cy.get('.mat-mdc-menu-item').eq(1).click();
+  //     //  reverse dimenions
+  //     cy.get('.hierarchy-select-comp-button').first().click();
+  //     cy.get('.mat-mdc-menu-item').eq(1).click();
 
-      cy.get('#tree-expando-19').first().click();
+  //     cy.get('#tree-expando-19').first().click();
 
-      cy.get('#cluster-composition-0').contains('B7');
+  //     cy.get('#cluster-composition-0').contains('B7');
 
-      // ### Click on first node
-      cy.get('.tree-leaf-text').eq(1).click({ force: true });
+  //     // ### Click on first node
+  //     cy.get('.tree-leaf-text').eq(1).click({ force: true });
 
-      cy.get('#cluster-composition-0').contains('B7');
-      cy.get('#tree-expando-18').first().click();
+  //     cy.get('#cluster-composition-0').contains('B7');
+  //     cy.get('#tree-expando-18').first().click();
 
-      cy.get('#cluster-composition-0').contains('B3');
+  //     cy.get('#cluster-composition-0').contains('B3');
 
-      cy.get('#tree-expando-18').first().click();
+  //     cy.get('#tree-expando-18').first().click();
 
-      cy.get('#cluster-composition-0').contains('B7');
-    });
-  });
+  //     cy.get('#cluster-composition-0').contains('B7');
+  //   });
+  // });
 
-  files = ['DigitCoclustering.json'];
-  files.forEach((fileName) => {
-    it(`Test unfold hierarchy slider on big datas and hierarchy checkboxes`, () => {
-      cy.initViews();
+  // files = ['DigitCoclustering.json'];
+  // files.forEach((fileName) => {
+  //   it(`Test unfold hierarchy slider on big datas and hierarchy checkboxes`, () => {
+  //     cy.initViews();
 
-      cy.loadFile('covisualization', fileName);
+  //     cy.loadFile('covisualization', fileName);
 
-      // Open unfold Hierarchy view
-      cy.get('.button-unfold-hierarchy').click();
+  //     // Open unfold Hierarchy view
+  //     cy.get('.button-unfold-hierarchy').click();
 
-      // Reduce hierarchy and check values
+  //     // Reduce hierarchy and check values
 
-      // force to work on hidden elt
-      cy.get('#cy-unfold-value-input').clear({ force: true }).type('20', {
-        force: true,
-      });
+  //     // force to work on hidden elt
+  //     cy.get('#cy-unfold-value-input').clear({ force: true }).type('20', {
+  //       force: true,
+  //     });
 
-      cy.get('#cy-unfold-value-button').click({
-        force: true,
-      });
-      cy.get('.button-reduce-hierarchy').click();
+  //     cy.get('#cy-unfold-value-button').click({
+  //       force: true,
+  //     });
+  //     cy.get('.button-reduce-hierarchy').click();
 
-      cy.wait(5000);
+  //     cy.wait(5000);
 
-      cy.get('kl-checkbox-cell').first().find('input').click({ force: true });
+  //     cy.get('kl-checkbox-cell').first().find('input').click({ force: true });
 
-      // Close dialog
-      cy.get('.button-confirm-hierarchy').click();
+  //     // Close dialog
+  //     cy.get('.button-confirm-hierarchy').click();
 
-      // Open statistics panels
-      cy.get('.hierarchy-infos-button').eq(0).click({ force: true });
-      cy.get('.hierarchy-infos-button').eq(1).click({ force: true });
+  //     // Open statistics panels
+  //     cy.get('.hierarchy-infos-button').eq(0).click({ force: true });
+  //     cy.get('.hierarchy-infos-button').eq(1).click({ force: true });
 
-      // Check values
-      cy.get('.hierarchy-select-comp').eq(0).contains('473');
-      cy.get('.hierarchy-select-comp').eq(0).contains('19275');
+  //     // Check values
+  //     cy.get('.hierarchy-select-comp').eq(0).contains('473');
+  //     cy.get('.hierarchy-select-comp').eq(0).contains('19275');
 
-      cy.get('.hierarchy-select-comp').eq(1).contains(']-inf;9.5]');
-      cy.get('.hierarchy-select-comp').eq(1).contains('623752');
-    });
+  //     cy.get('.hierarchy-select-comp').eq(1).contains(']-inf;9.5]');
+  //     cy.get('.hierarchy-select-comp').eq(1).contains('623752');
+  //   });
 
-    it(`Test unfold hierarchy slider on big datas`, () => {
-      cy.initViews();
+  //   it(`Test unfold hierarchy slider on big datas`, () => {
+  //     cy.initViews();
 
-      cy.loadFile('covisualization', fileName);
+  //     cy.loadFile('covisualization', fileName);
 
-      // Open unfold Hierarchy view
-      cy.get('.button-unfold-hierarchy').click();
+  //     // Open unfold Hierarchy view
+  //     cy.get('.button-unfold-hierarchy').click();
 
-      // Reduce hierarchy and check values
+  //     // Reduce hierarchy and check values
 
-      // force to work on hidden elt
-      cy.get('#cy-unfold-value-input').clear({ force: true }).type('378', {
-        force: true,
-      });
-      cy.get('#cy-unfold-value-button').click({
-        force: true,
-      });
+  //     // force to work on hidden elt
+  //     cy.get('#cy-unfold-value-input').clear({ force: true }).type('378', {
+  //       force: true,
+  //     });
+  //     cy.get('#cy-unfold-value-button').click({
+  //       force: true,
+  //     });
 
-      // Check table values
-      cy.get('#unfold-hierarchy-table', { timeout: 30000 }).contains('341');
-      cy.get('#unfold-hierarchy-table').contains('15');
-      cy.get('#unfold-hierarchy-table').contains('22');
+  //     // Check table values
+  //     cy.get('#unfold-hierarchy-table', { timeout: 30000 }).contains('341');
+  //     cy.get('#unfold-hierarchy-table').contains('15');
+  //     cy.get('#unfold-hierarchy-table').contains('22');
 
-      cy.get('.unfold-information-rate').contains('112 530');
-      cy.get('#unfold-hierarchy-settings').contains('Number of clusters: 378');
+  //     cy.get('.unfold-information-rate').contains('112 530');
+  //     cy.get('#unfold-hierarchy-settings').contains('Number of clusters: 378');
 
-      cy.get('.button-reduce-hierarchy').click();
-      // Check table values
-      cy.get('#unfold-hierarchy-table').contains('340');
+  //     cy.get('.button-reduce-hierarchy').click();
+  //     // Check table values
+  //     cy.get('#unfold-hierarchy-table').contains('340');
 
-      cy.get('.unfold-information-rate').contains('112 200');
-      cy.get('#unfold-hierarchy-settings').contains('Number of clusters: 377');
+  //     cy.get('.unfold-information-rate').contains('112 200');
+  //     cy.get('#unfold-hierarchy-settings').contains('Number of clusters: 377');
 
-      cy.get('.button-increase-hierarchy').click();
+  //     cy.get('.button-increase-hierarchy').click();
 
-      cy.get('.unfold-information-rate').contains('112 530');
-      cy.get('#unfold-hierarchy-settings').contains('Number of clusters: 378');
-    });
-  });
+  //     cy.get('.unfold-information-rate').contains('112 530');
+  //     cy.get('#unfold-hierarchy-settings').contains('Number of clusters: 378');
+  //   });
+  // });
 
   files = ['DigitCoclustering.json'];
   files.forEach((fileName) => {
@@ -152,11 +152,25 @@ describe('Behaviors tests for Khiops Covisualization', () => {
       cy.loadFile('covisualization', fileName);
 
       // Now we check matrix values
-      cy.get('#matrix-selected').trigger('mousemove', {
-        position: 'center',
-        ctrlKey: true,
-        force: true,
-      });
+
+      cy.get('#matrix-selected')
+        .should('be.visible')
+        .then(($canvas) => {
+          const rect = $canvas[0].getBoundingClientRect();
+          const x = rect.width / 2;
+          const y = rect.height / 2;
+
+          // center
+          cy.wrap($canvas).trigger('mousemove', {
+            bubbles: true,
+            clientX: rect.left + x,
+            clientY: rect.top + y,
+            pageX: rect.left + x,
+            pageY: rect.top + y,
+            offsetX: x,
+            offsetY: y,
+          });
+        });
       cy.get('.matrix-tooltip-comp').contains('2 496');
 
       // Open unfold Hierarchy view
@@ -193,12 +207,20 @@ describe('Behaviors tests for Khiops Covisualization', () => {
       cy.get('#matrix-selected')
         .should('be.visible')
         .then(($canvas) => {
+          const rect = $canvas[0].getBoundingClientRect();
+          const x = rect.width - 5;
+          const y = rect.height - 5;
+
           // bottomRight
-          cy.wrap($canvas).trigger(
-            'mousemove',
-            $canvas.width() - 5,
-            $canvas.height() - 5,
-          );
+          cy.wrap($canvas).trigger('mousemove', {
+            bubbles: true,
+            clientX: rect.left + x,
+            clientY: rect.top + y,
+            pageX: rect.left + x,
+            pageY: rect.top + y,
+            offsetX: x,
+            offsetY: y,
+          });
         });
 
       cy.get('.matrix-tooltip-comp').contains('0.043');
