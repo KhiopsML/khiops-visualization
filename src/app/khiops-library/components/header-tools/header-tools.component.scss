@@ -12,7 +12,20 @@
     margin-left: 5px;
   }
 
-  ::ng-deep .mat-mdc-progress-spinner circle {
-    stroke: var(--color-0) !important;
+  .loader-circle-icon {
+    width: 14px;
+    height: 14px;
+    color: var(--color-800);
+    animation: loader-circle-rotation 0.8s linear infinite;
+  }
+}
+
+@keyframes loader-circle-rotation {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
   }
 }

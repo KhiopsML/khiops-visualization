@@ -52,13 +52,11 @@
       <svg lucideIcon="images"></svg>
     }
     @if (copyImageService.isCopyingImage$ | async) {
-      <mat-spinner
-        fxFlexFill
-        fxLayoutAlign="center center"
-        diameter="20"
-        color="accent"
-        mode="indeterminate"
-      ></mat-spinner>
+      <svg
+        class="loader-circle-icon"
+        lucideIcon="loader-circle"
+        aria-hidden="true"
+      ></svg>
     }
   </button>
 </div>
