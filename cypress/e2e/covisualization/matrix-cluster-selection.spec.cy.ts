@@ -17,6 +17,8 @@ describe('Matrix cluster selection in trees #36', () => {
     // Wait for the matrix to be rendered
     cy.get('#matrix-selected', { timeout: 10000 }).should('be.visible');
 
+    cy.wait(1000);
+
     // Note the initially selected tree node text
     cy.get('#tree_0 .tree-leaf-content.tree-selected .tree-leaf-text')
       .first()
