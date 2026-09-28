@@ -25,6 +25,22 @@
     transition-delay: 0ms;
   }
 
+  .matrix-tooltip-comp-header {
+    margin: 10px 10px 0 10px;
+    svg {
+      color: var(--color-brand-orange-light);
+    }
+    h1 {
+      margin: 0px 5px;
+      color: var(--color-brand-orange-light);
+    }
+  }
+
+  h2 {
+    margin: 0px 10px 10px 10px;
+    color: var(--color-0);
+    font-size: 12px;
+  }
   .matrix-tooltip-title {
     font-family: var(--font-code) !important;
     display: grid;
@@ -43,6 +59,9 @@
       display: contents;
       margin: 0;
       padding: 0;
+    }
+    > div:first-child {
+      margin-bottom: 10px;
     }
   }
 
@@ -72,6 +91,6 @@
 
   .metric-label {
     font-family: var(--font-code) !important;
-    color: var(--color-200);
+    color: var(--color-300);
   }
 }

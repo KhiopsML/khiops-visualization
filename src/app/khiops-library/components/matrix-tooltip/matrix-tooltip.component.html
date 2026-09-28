@@ -6,14 +6,25 @@
 
 <div class="matrix-tooltip-comp" #matrixTooltipDiv>
   @if (cell) {
-    <div class="matrix-tooltip-title">
-      <div>
+    <div
+      class="matrix-tooltip-comp-header"
+      fxLayoutAlign="start center"
+      fxLayout="row"
+    >
+      <svg lucideIcon="layers" size="12"></svg>
+      <h1 fxLayoutAlign="start center" fxLayout="row">
+        {{ 'GLOBAL.CELL_DETAILS' | translate }}
+      </h1>
+    </div>
+    <h2>{{ cell.xnamePart }} x {{ cell.ynamePart }}</h2>
+    <div class="matrix-tooltip-title" fxLayout="column">
+      <div fxLayout="column">
         <span class="metric-label"> {{ cell.xnamePart }}:</span>
         <span class="axis-value">{{
           truncateText(cell.xDisplayaxisPart)
         }}</span>
       </div>
-      <div>
+      <div fxLayout="column">
         <span class="metric-label"> {{ cell.ynamePart }}:</span>
         <span class="axis-value">{{
           truncateText(cell.yDisplayaxisPart)
