@@ -95,7 +95,7 @@
   }
 
   .axis-matrix {
-    font-size: 0.95em;
+    font-size: 11px;
     font-weight: 500;
     padding: 1px 5px;
     margin: 4px 0;
@@ -153,12 +153,12 @@
       margin-top: 30px;
       margin-left: 15px;
       span {
-        font-size: 10px;
+        font-size: 11px;
       }
     }
 
     #legend {
-      font-size: 0.9em;
+      font-size: 11px;
       max-height: 60%;
       margin: auto;
       #legend-bar-container {
@@ -179,7 +179,7 @@
       #legend-min {
         text-overflow: ellipsis;
         overflow: hidden;
-        width: 50px;
+        width: 60px;
         height: 1.5em;
         white-space: nowrap;
         text-align: center;

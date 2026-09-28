@@ -113,15 +113,21 @@
           </div>
         </div>
         <div id="legend" fxFlex fxLayout="column" fxLayoutAlign="center center">
-          <span id="legend-max" matTooltip="{{ legend.max | toPrecision }}">{{
-            legend.max | toPrecision
-          }}</span>
+          <span
+            id="legend-max"
+            class="font-code"
+            matTooltip="{{ legend.max | toPrecision }}"
+            >{{ legend.max | toPrecision }}</span
+          >
           <div id="legend-bar-container">
             <div id="legend-bar" fxFlex #legendBar></div>
           </div>
-          <span id="legend-min" matTooltip="{{ legend.min | toPrecision }}">{{
-            legend.min | toPrecision
-          }}</span>
+          <span
+            id="legend-min"
+            class="font-code"
+            matTooltip="{{ legend.min | toPrecision }}"
+            >{{ legend.min | toPrecision }}</span
+          >
         </div>
       </div>
     </div>
