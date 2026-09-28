@@ -43,6 +43,7 @@ import { AgGridModule } from '@ag-grid-community/angular';
 import { AngularSplitModule } from 'angular-split';
 import {
   LucideSquareExclamationPoint,
+  LucideChevronRight,
   LucideEye,
   LucideEyeOff,
   LucideLoaderCircle,
@@ -243,6 +244,7 @@ import { ImportantBadgeComponent } from './components/important-badge/important-
     TranslateService,
     DialogService,
     provideLucideIcons(
+      LucideChevronRight,
       LucideSquareExclamationPoint,
       LucidePlus,
       LucideMinus,

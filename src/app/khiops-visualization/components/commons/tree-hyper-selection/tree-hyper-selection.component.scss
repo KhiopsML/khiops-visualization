@@ -90,6 +90,7 @@
     flex-wrap: wrap;
     padding: 5px;
     align-items: center;
+    width: auto !important;
   }
 
   .lineage-chip {
@@ -175,7 +176,7 @@
     .lineage-chip {
       background: color-mix(in srgb, var(--color-900) 75%, transparent);
       border-color: var(--color-700);
-      color: var(--color-100);
+      color: var(--color-300);
     }
 
     .lineage-chip.current {

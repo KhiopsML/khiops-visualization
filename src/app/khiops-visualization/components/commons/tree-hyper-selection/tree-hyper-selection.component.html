@@ -28,11 +28,7 @@
     @if (lineagePath.length > 0) {
       <div class="selection-row lineage-path" fxLayout="column">
         <!-- <span class="selection-title font-code">LINEAGE PATH</span> -->
-        <div
-          class="lineage-path-content header-panel-contrast"
-          fxLayout="row"
-          fxLayoutGap="2px"
-        >
+        <div class="lineage-path-content header-panel-contrast" fxLayout="row">
           @for (pathNode of lineagePath; track $index) {
             <span
               class="lineage-chip font-code"
@@ -51,7 +47,11 @@
               {{ pathNode }}
             </span>
             @if ($index < lineagePath.length - 1) {
-              <span class="lineage-separator font-code">&gt;</span>
+              <svg
+                class="lineage-separator"
+                lucideIcon="chevron-right"
+                size="12"
+              ></svg>
             }
           }
         </div>

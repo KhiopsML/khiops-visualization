@@ -76,6 +76,7 @@ export class TreeHyperComponent
   public treePreparationDatas?: TreePreparationDatasModel;
   public distributionDatas?: DistributionDatasModel;
   public hoveredLeafNode?: TreeNodeModel;
+  public hoveredNodeIsLeaf = false;
   public hoveredLeafTooltipStyle: { left: string; top: string } = {
     left: '0px',
     top: '0px',
@@ -378,12 +379,12 @@ export class TreeHyperComponent
 
   private onHoverNodeChange(n: N | undefined) {
     this.ngzone.run(() => {
-      if (!n?.data?.isLeaf) {
-        this.hoveredLeafNode = undefined;
+      if (!n?.data) {
         return;
       }
 
       this.hoveredLeafNode = n.data as TreeNodeModel;
+      this.hoveredNodeIsLeaf = !!n.data.isLeaf;
       this.updateHoveredLeafTooltipPosition();
       setTimeout(() => this.updateHoveredLeafTooltipPosition());
     });
@@ -409,6 +410,8 @@ export class TreeHyperComponent
   }
 
   public onTreeMouseLeave() {
+    this.hoveredLeafNode = undefined;
+    this.hoveredNodeIsLeaf = false;
     this.lastMousePosition = undefined;
   }
 
