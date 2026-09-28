@@ -83,6 +83,12 @@
   font-size: inherit;
 }
 
+@media (max-device-width: 1920px) and (max-device-height: 1200px) {
+  :root {
+    --mat-checkbox-label-text-size: 11px !important;
+  }
+}
+
 // @media screen and (max-width: 1440px) {
 //   :root {
 //     --header-height: 50px;

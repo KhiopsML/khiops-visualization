@@ -233,6 +233,7 @@
     "CURRENT_CLUSTERS": "Current clusters",
     "HIERARCHY": "Hierarchy",
     "MATRIX_DEFAULT_CONTRAST": "Matrix default contrast",
+    "CONTRAST": "Contrast",
     "TARGET_VALUES": "Target values",
     "TARGET_VALUE": "Target value",
     "TARGET": "Target",
