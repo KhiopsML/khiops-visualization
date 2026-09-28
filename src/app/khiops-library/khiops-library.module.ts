@@ -42,6 +42,8 @@ import { TranslateModule, TranslateService } from '@ngstack/translate';
 import { AgGridModule } from '@ag-grid-community/angular';
 import { AngularSplitModule } from 'angular-split';
 import {
+  LucideEye,
+  LucideEyeOff,
   LucideLoaderCircle,
   LucideArrowDownNarrowWide,
   LucideX,
@@ -85,6 +87,7 @@ import {
   LucideRotateCcwSquare,
   LucideLayoutDashboard,
   LucideChartNoAxesCombined,
+  LucideGripVertical,
 } from '@lucide/angular';
 
 // Component imports
@@ -236,6 +239,9 @@ import { ImportantBadgeComponent } from './components/important-badge/important-
     TranslateService,
     DialogService,
     provideLucideIcons(
+      LucideGripVertical,
+      LucideEye,
+      LucideEyeOff,
       LucideLoaderCircle,
       LucideArrowDownNarrowWide,
       LucideX,

@@ -50,9 +50,10 @@
               [ngClass]="['toggle-zero', 'toggled-' + isZerosToggled]"
               attr.aria-label="{{ 'GLOBAL.TOGGLE_ZERO' | translate }}"
             >
-              <mat-icon fxFlexFill fxLayoutAlign="center center">{{
-                isZerosToggled ? 'visibility' : 'visibility_off'
-              }}</mat-icon>
+              <svg
+                [lucideIcon]="isZerosToggled ? 'eye-off' : 'eye'"
+                size="18"
+              ></svg>
             </button>
           }
 
