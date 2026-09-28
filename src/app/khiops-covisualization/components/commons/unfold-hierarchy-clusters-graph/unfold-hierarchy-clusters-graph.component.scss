@@ -4,19 +4,12 @@
  * at https://spdx.org/licenses/BSD-3-Clause-Clear.html or see the "LICENSE" file for more details.
  */
 
-#unfold-hierarchy-header {
-  padding: 0 0 1em 0;
-  height: 68px;
-
-  h1 {
-    margin-bottom: 0 !important;
+.kl-unfold-hierarchy-clusters-graph {
+  kl-legend {
+    height: 30px;
+    margin-left: 6px;
   }
-  h2 {
-    margin-left: 1em;
-    color: var(--color-600);
-  }
-
-  button {
-    margin-right: 1em;
+  kl-chart {
+    width: 100%;
   }
 }

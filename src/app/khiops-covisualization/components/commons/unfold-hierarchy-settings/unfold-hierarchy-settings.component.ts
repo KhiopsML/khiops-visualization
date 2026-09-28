@@ -34,6 +34,20 @@ export class UnfoldHierarchySettingsComponent {
   @Output() decrease = new EventEmitter<void>();
   @Output() cyInputSet = new EventEmitter<string>();
 
+  // Computes 4 evenly spaced reference marks (min, 2 intermediate, max)
+  // displayed below the slider, based on minClusters and totalClusters
+  get sliderMarks(): number[] {
+    const min = this.hierarchyDatas?.minClusters ?? 0;
+    const max = this.hierarchyDatas?.totalClusters ?? 0;
+
+    if (max <= min) {
+      return [min, min, min, max];
+    }
+
+    const step = (max - min) / 3;
+    return [min, Math.round(min + step), Math.round(min + step * 2), max];
+  }
+
   onHierarchyChanged(event: Event) {
     const value = (event.target as HTMLInputElement).valueAsNumber;
     this.hierarchyChanged.emit(value);

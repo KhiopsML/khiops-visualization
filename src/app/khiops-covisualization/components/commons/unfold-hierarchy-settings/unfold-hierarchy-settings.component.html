@@ -20,12 +20,23 @@
         {{ 'GLOBAL.MAX' | translate }}</span
       >
     </h1>
-    @if (currentInformationPerCluster === 0) {
-      <kl-warning-information
-        [text]="'GLOBAL.NON_INFORMATIVE_COCLUSTERING' | translate"
-        variant="inline"
-      ></kl-warning-information>
-    }
+
+    <div fxLayout="row" class="increment">
+      <button
+        class="button-reduce-hierarchy"
+        mat-stroked-button
+        (click)="decreaseUnfoldHierarchy()"
+      >
+        <svg lucideIcon="minus" size="16"></svg>
+      </button>
+      <button
+        class="button-increase-hierarchy"
+        mat-stroked-button
+        (click)="increaseUnfoldHierarchy()"
+      >
+        <svg lucideIcon="plus" size="16"></svg>
+      </button>
+    </div>
   </div>
   <div fxLayout="column" class="unfold-hierarchy-settings-container">
     <div fxLayout="row" fxLayoutAlign="start center">
@@ -39,22 +50,7 @@
           <input [(ngModel)]="currentUnfoldHierarchy" matSliderThumb />
         </mat-slider>
       </div>
-      <div fxLayout="row" class="increment">
-        <button
-          class="button-reduce-hierarchy"
-          mat-stroked-button
-          (click)="decreaseUnfoldHierarchy()"
-        >
-          <svg lucideIcon="minus" size="16"></svg>
-        </button>
-        <button
-          class="button-increase-hierarchy"
-          mat-stroked-button
-          (click)="increaseUnfoldHierarchy()"
-        >
-          <svg lucideIcon="plus" size="16"></svg>
-        </button>
-      </div>
+
       <!-- DO NOT REMOVE - used by cypress to load files -->
       <div id="cy-unfold-form" style="visibility: hidden; width: 0">
         <input [(ngModel)]="cyInput" type="text" id="cy-unfold-value-input" />
@@ -63,6 +59,25 @@
         </button>
       </div>
       <!-- END DO NOT REMOVE -->
+    </div>
+
+    <div class="unfold-hierarchy-marks">
+      @for (mark of sliderMarks; track $index) {
+        <span
+          class="unfold-hierarchy-mark"
+          [style.left.%]="($index * 100) / (sliderMarks.length - 1)"
+          [class.is-first]="$first"
+          [class.is-last]="$last"
+        >
+          @if ($first) {
+            {{ 'GLOBAL.MIN' | translate }}:
+          }
+          @if ($last) {
+            {{ 'GLOBAL.MAX' | translate }}:
+          }
+          {{ mark }}
+        </span>
+      }
     </div>
 
     <div class="unfold-information-rate" fxLayout="row">
@@ -91,9 +106,15 @@
             [size]="80"
           >
           </kl-gauge>
-          <strong>{{
-            'GLOBAL.NON_INFORMATIVE_COCLUSTERING' | translate
-          }}</strong>
+          <div fxLayout="column" fxLayoutAlign="start center">
+            <strong>{{ 'GLOBAL.INFORMATION_RATE' | translate }}</strong>
+            @if (currentInformationPerCluster === 0) {
+              <kl-warning-information
+                [text]="'GLOBAL.NON_INFORMATIVE_COCLUSTERING' | translate"
+                variant="inline"
+              ></kl-warning-information>
+            }
+          </div>
         </div>
       </div>
     </div>

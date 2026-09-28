@@ -9,6 +9,8 @@
 
   .comp-header {
     width: 100%;
+    margin-top: 10px;
+    padding-right: 10px;
     h1 {
       ::ng-deep kl-important-badge {
         margin: 0 5px;
@@ -18,60 +20,6 @@
       }
       span {
         color: var(--color-600);
-      }
-    }
-  }
-  .unfold-hierarchy-settings-container {
-    width: 100%;
-    margin-top: -15px;
-    padding: 0 10px 10px 10px;
-
-    .informations-main-values {
-      background: var(--color-50);
-      border-radius: var(--border-radius);
-      border: 1px solid var(--color-border-subtle);
-      flex: 1;
-      padding: 2px !important;
-      margin: 0 5px !important;
-      min-height: 60px !important;
-      strong {
-        padding: 0 5px;
-        text-align: center;
-        font-weight: 500;
-        display: block;
-        font-size: 0.85em;
-        text-transform: uppercase;
-      }
-
-      .metric-value {
-        font-size: 24px;
-        font-weight: 500;
-        line-height: 1;
-        text-align: center;
-        white-space: nowrap;
-        padding: 0 5px;
-        em {
-          font-size: 16px;
-        }
-      }
-    }
-
-    .unfold-hierarchy-settings-slider {
-      width: 100%;
-      mat-slider {
-        // margin: 0;
-        scale: 1 !important;
-      }
-    }
-    span {
-      em {
-        color: var(--color-800);
-        background: var(--color-100);
-        padding: 1px 5px;
-        border-radius: var(--border-radius-text);
-        margin: 4px 0;
-        word-break: break-word;
-        font-weight: 500;
       }
     }
 
@@ -95,9 +43,90 @@
       margin-left: -1px;
       border-left: 0;
     }
+  }
+  .unfold-hierarchy-settings-container {
+    width: 100%;
+    margin-top: -15px;
+    padding: 0 10px 10px 10px;
+
+    .informations-main-values {
+      background: var(--color-50);
+      border-radius: var(--border-radius);
+      border: 1px solid var(--color-border-subtle);
+      flex: 1;
+      padding: 2px !important;
+      margin: 0 5px !important;
+      min-height: 60px !important;
+      strong {
+        padding: 0 5px;
+        text-align: center;
+        font-weight: 500;
+        display: block;
+        font-size: 12px;
+        text-transform: uppercase;
+      }
+
+      .metric-value {
+        font-size: 24px;
+        font-weight: 500;
+        line-height: 1;
+        text-align: center;
+        white-space: nowrap;
+        padding: 0 5px;
+        em {
+          font-size: 16px;
+        }
+      }
+    }
+
+    .unfold-hierarchy-settings-slider {
+      width: 100%;
+      mat-slider {
+        // margin: 0;
+        scale: 1 !important;
+      }
+    }
+
+    .unfold-hierarchy-marks {
+      position: relative;
+      margin-top: -24px;
+      margin-bottom: 15px;
+      height: 20px;
+      padding: 0 4px;
+      color: var(--color-400);
+      font-size: 11px;
+      font-weight: 500;
+      margin-left: 10px;
+      margin-right: 10px;
+      .unfold-hierarchy-mark {
+        position: absolute;
+        top: 0;
+        transform: translateX(-50%);
+        white-space: nowrap;
+
+        &.is-first {
+          left: 0 !important;
+          transform: translateX(0);
+        }
+
+        &.is-last {
+          transform: translateX(-100%);
+        }
+      }
+    }
+    span {
+      em {
+        color: var(--color-800);
+        background: var(--color-100);
+        padding: 1px 5px;
+        border-radius: var(--border-radius-text);
+        margin: 4px 0;
+        word-break: break-word;
+        font-weight: 500;
+      }
+    }
 
     .unfold-information-rate {
-      margin-top: -10px;
       .non-info-warning {
         color: var(--color-danger);
         margin-top: 5px;

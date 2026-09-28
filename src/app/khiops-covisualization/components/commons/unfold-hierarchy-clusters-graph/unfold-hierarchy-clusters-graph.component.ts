@@ -20,6 +20,7 @@ import { ChartOptions } from 'chart.js';
 @Component({
   selector: 'kl-unfold-hierarchy-clusters-graph',
   templateUrl: './unfold-hierarchy-clusters-graph.component.html',
+  styleUrls: ['./unfold-hierarchy-clusters-graph.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: false,
 })
