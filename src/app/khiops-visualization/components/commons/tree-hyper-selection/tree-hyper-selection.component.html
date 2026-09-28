@@ -25,9 +25,11 @@
     </div>
     <div class="selection-row">
       <span class="selection-label">{{ 'GLOBAL.POPULATION' | translate }}</span>
-      <span class="selection-value font-code">{{
-        selectedNode.totalFreqs ?? '-'
-      }}</span>
+      <kl-important-badge
+        [text]="selectedNode.totalFreqs ?? '-'"
+        [color]="'green'"
+        [theme]="isDarkTheme ? 'dark' : 'light'"
+      ></kl-important-badge>
     </div>
     <div class="selection-row">
       <span class="selection-label">{{ 'GLOBAL.PURITY' | translate }}</span>

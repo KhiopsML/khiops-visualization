@@ -83,31 +83,6 @@
             "
           >
           </app-target-distribution-graph>
-
-          <!-- @if (selectedNode?.isLeaf) {
-            <div
-              id="tree-node-infos"
-              fxLayout="row"
-              fxLayoutAlign="start center"
-            >
-              <app-description-block
-                title="{{ 'GLOBAL.POPULATION' | translate }}"
-                [value]="populationCount"
-              >
-              </app-description-block>
-              <app-description-block
-                title="{{ 'GLOBAL.PURITY' | translate }}"
-                color="green"
-                [value]="
-                  $safeNavigationMigration(selectedNode?.purity) | toPrecision
-                "
-                tooltip="{{
-                  'TOOLTIPS.TREE_PREPARATION.PURITY.TITLE' | translate
-                }}"
-              >
-              </app-description-block>
-            </div>
-          } -->
         </div>
       </ng-template>
     </mat-tab>
