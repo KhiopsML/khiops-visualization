@@ -31,23 +31,23 @@
     </div>
     <div
       fxLayout="row"
-      fxLayoutAlign="start stretch"
+      fxLayoutAlign="start center"
       class="graph-header-tools header-panel-contrast"
     >
-      <mat-checkbox
+      <mat-slide-toggle
         fxFlex
         [checked]="visualization.purity"
         (change)="togglePurityVisualization($event.checked)"
       >
         {{ 'GLOBAL.DISPLAY_PURITY_BY_OPACITY' | translate }}
-      </mat-checkbox>
-      <mat-checkbox
+      </mat-slide-toggle>
+      <mat-slide-toggle
         fxFlex
         [checked]="visualization.population"
         (change)="togglePopulationVisualization($event.checked)"
       >
         {{ 'GLOBAL.DISPLAY_LEAF_SIZES_BY_POPULATION' | translate }}
-      </mat-checkbox>
+      </mat-slide-toggle>
       @if (
         distributionDatas && distributionDatas.targetDistributionDisplayedValues
       ) {

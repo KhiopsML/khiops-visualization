@@ -370,21 +370,69 @@ mat-sidenav {
   max-height: unset !important;
 }
 
-.mdc-switch__handle,
-.mdc-switch__track {
-  border-radius: 0 !important;
+.mat-mdc-slide-toggle {
+  .mdc-switch {
+    border-radius: 20px !important;
+    transform: scale(0.6);
+  }
+
+  .mdc-switch__track,
+  .mdc-switch__handle-track,
+  .mdc-switch__track::before,
+  .mdc-switch__track::after,
+  .mdc-switch__handle::before,
+  .mdc-switch__handle::after {
+    border-radius: 20px !important;
+  }
+
+  .mdc-switch__handle::before {
+    box-shadow: var(--elevate-box-shadow) !important;
+  }
+
+  // Hard override for MDC internals when CSS vars are ignored by runtime theme.
+  .mdc-switch.mdc-switch--selected .mdc-switch__track::after {
+    background-color: var(--color-800) !important;
+    border-color: var(--color-800) !important;
+  }
+
+  .mdc-switch.mdc-switch--unselected .mdc-switch__track::before {
+    background-color: var(--color-100) !important;
+    border-color: var(--color-200) !important;
+  }
+
+  .mdc-switch.mdc-switch--selected .mdc-switch__handle::before,
+  .mdc-switch.mdc-switch--selected .mdc-switch__handle::after,
+  .mdc-switch.mdc-switch--unselected .mdc-switch__handle::before,
+  .mdc-switch.mdc-switch--unselected .mdc-switch__handle::after {
+    background-color: var(--color-0) !important;
+    border-color: var(--color-0) !important;
+  }
+
+  .mdc-switch__icon,
+  .mdc-switch--selected .mdc-switch__icon,
+  .mdc-switch--unselected .mdc-switch__icon {
+    fill: transparent !important;
+    opacity: 0 !important;
+  }
+
+  .mdc-switch:enabled + .mdc-label {
+    font-size: 11px;
+  }
 }
-.mdc-switch {
-  border: 1px solid black !important;
-  min-height: 26px;
-  width: 50px;
-  margin-right: 0.8em !important;
+
+.mat-mdc-slide-toggle._mat-animation-noopable .mdc-switch__handle-track,
+.mat-mdc-slide-toggle._mat-animation-noopable .mdc-switch__icon,
+.mat-mdc-slide-toggle._mat-animation-noopable .mdc-switch__handle::before,
+.mat-mdc-slide-toggle._mat-animation-noopable .mdc-switch__handle::after,
+.mat-mdc-slide-toggle._mat-animation-noopable .mdc-switch__track::before,
+.mat-mdc-slide-toggle._mat-animation-noopable .mdc-switch__track::after,
+.mat-mdc-slide-toggle-touch-target {
+  border-radius: 20px !important;
 }
-.mdc-switch__track {
-  height: 2rem !important;
-}
+
 .mat-internal-form-field > label {
   padding-right: 10px !important;
+  padding-left: 0 !important;
 }
 .mat-mdc-menu-item-text {
   padding: 5px 0 !important;
