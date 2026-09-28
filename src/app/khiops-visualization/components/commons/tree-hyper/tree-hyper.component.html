@@ -79,6 +79,8 @@
         >
           <app-tree-hyper-selection
             [selectedNode]="hoveredLeafNode"
+            [minLeafTotalFreqs]="treePreparationDatas?.minFrequencies"
+            [maxLeafTotalFreqs]="treePreparationDatas?.maxFrequencies"
             [theme]="'dark'"
           ></app-tree-hyper-selection>
         </div>
@@ -86,6 +88,8 @@
       <div class="tree-hyper-selection screenshot-hide">
         <app-tree-hyper-selection
           [selectedNode]="selectedNode$ | async"
+          [minLeafTotalFreqs]="treePreparationDatas?.minFrequencies"
+          [maxLeafTotalFreqs]="treePreparationDatas?.maxFrequencies"
         ></app-tree-hyper-selection>
       </div>
       <div class="tree-hyper-zoom-tools screenshot-hide">

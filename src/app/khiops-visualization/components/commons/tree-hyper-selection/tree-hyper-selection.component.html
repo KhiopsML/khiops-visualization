@@ -4,46 +4,76 @@
  * at https://spdx.org/licenses/BSD-3-Clause-Clear.html or see the "LICENSE" file for more details.
  -->
 
-<div id="tree-hyper-selection-comp" [class.theme-dark]="isDarkTheme">
+<div id="tree-hyper-selection-comp" [class.dark]="isDarkTheme">
   @if (selectedNode) {
     @if (!isDarkTheme) {
       <div class="selection-title font-code">
         {{ 'GLOBAL.HYPER_TREE_SELECTION' | translate }}
       </div>
     }
-    <div class="selection-row">
+    <div
+      class="tree-hyper-selection-comp-title selection-row"
+      fxLayout="row"
+      fxLayoutAlign="start center"
+    >
+      <span
+        class="node-color-dot"
+        [style.background-color]="selectedNode.color || '#999'"
+      ></span>
       <span class="selection-label">{{ 'GLOBAL.NODE_ID' | translate }}</span>
-      <span class="selection-value node-id-value">
-        <span
-          class="node-color-dot"
-          [style.background-color]="selectedNode.color || '#999'"
-        ></span>
+      <span fxFlex class="selection-value node-id-value">
         <span class="font-code">{{
           selectedNode.nodeId || selectedNode.id || '-'
         }}</span>
       </span>
     </div>
-    <div class="selection-row">
-      <span class="selection-label">{{ 'GLOBAL.POPULATION' | translate }}</span>
-      <kl-important-badge
-        [text]="selectedNode.totalFreqs ?? '-'"
-        [color]="'green'"
-        [theme]="isDarkTheme ? 'dark' : 'light'"
-      ></kl-important-badge>
-    </div>
-    <div class="selection-row">
-      <span class="selection-label">{{ 'GLOBAL.PURITY' | translate }}</span>
-      @if (selectedNode.purity !== undefined) {
-        <kl-important-badge
-          [text]="(selectedNode.purity | toPrecision).toString()"
-          [color]="'green'"
-          [theme]="isDarkTheme ? 'dark' : 'light'"
-        ></kl-important-badge>
-      }
-      @if (selectedNode.purity === undefined) {
-        <span class="selection-value">-</span>
-      }
-    </div>
+    @if (selectedNode.totalFreqs !== undefined) {
+      <div class="selection-row" fxLayout="column" fxLayoutAlign="start start">
+        <div fxLayout="row">
+          <span fxFlex class="selection-label">{{
+            'GLOBAL.POPULATION' | translate
+          }}</span>
+          @if (selectedNode.totalFreqs !== undefined) {
+            <kl-important-badge
+              [text]="selectedNode.totalFreqs ?? '-'"
+              [color]="'green'"
+              [theme]="isDarkTheme ? 'dark' : 'light'"
+            ></kl-important-badge>
+          }
+        </div>
+        @if (selectedNode.totalFreqs !== undefined) {
+          <mat-progress-bar
+            mode="determinate"
+            [value]="populationPercent"
+          ></mat-progress-bar>
+          <div class="selection-range-line">
+            <span class="font-code">min ({{ minLeafTotalFreqs ?? '-' }})</span>
+            <span class="font-code">max ({{ maxLeafTotalFreqs ?? '-' }})</span>
+          </div>
+        }
+      </div>
+
+      <div class="selection-row" fxLayout="column">
+        <div fxLayout="row">
+          <span fxFlex class="selection-label">{{
+            'GLOBAL.PURITY' | translate
+          }}</span>
+          @if (selectedNode.purity !== undefined) {
+            <kl-important-badge
+              [text]="(selectedNode.purity | toPrecision).toString()"
+              [color]="'green'"
+              [theme]="isDarkTheme ? 'dark' : 'light'"
+            ></kl-important-badge>
+          }
+        </div>
+        @if (selectedNode.purity !== undefined) {
+          <mat-progress-bar
+            mode="determinate"
+            [value]="selectedNode.purity * 100"
+          ></mat-progress-bar>
+        }
+      </div>
+    }
   }
   @if (!selectedNode) {
     @if (!isDarkTheme) {

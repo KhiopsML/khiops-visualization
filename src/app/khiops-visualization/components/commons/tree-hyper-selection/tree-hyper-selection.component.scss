@@ -12,50 +12,70 @@
   border: 1px solid var(--color-border-highlight);
   box-shadow: var(--elevate-box-shadow);
   border-radius: var(--border-radius);
-  background: var(--color-0);
+  // background: var(--color-0);
+  backdrop-filter: blur(5px);
 
   .selection-title {
     font-size: 0.72rem;
     font-weight: 700;
-    margin-bottom: 10px;
+    margin-bottom: 15px;
     text-transform: uppercase;
     letter-spacing: 0.08em;
-    color: var(--color-800);
+    color: var(--color-600);
+  }
+  .tree-hyper-selection-comp-title {
+    width: 100%;
+
+    .selection-value {
+      font-weight: 600;
+      text-align: right;
+      word-break: break-word;
+      color: var(--color-800);
+    }
+
+    .node-id-value {
+      display: inline-flex;
+      justify-content: end;
+      font-size: 13px;
+    }
+
+    .node-color-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      margin-right: 5px;
+      border: 2px solid var(--color-0);
+      flex: 0 0 10px;
+    }
   }
 
-  .selection-row {
-    display: flex;
-    justify-content: space-between;
-    align-items: baseline;
-    gap: 8px;
-    margin-bottom: 6px;
-  }
+  ::ng-deep mat-progress-bar {
+    .mdc-linear-progress__buffer {
+      background: var(--color-100);
+    }
 
+    .mdc-linear-progress__bar-inner {
+      border-color: var(--color-brand-green-dark);
+    }
+  }
   .selection-label {
     font-family: var(--font-code) !important;
     color: var(--color-800);
     font-weight: 500;
   }
 
-  .selection-value {
-    font-weight: 600;
-    text-align: right;
-    word-break: break-word;
-    color: var(--color-800);
+  .selection-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 20px;
+    > div {
+      width: 100%;
+      margin-bottom: 5px;
+    }
   }
-
-  .node-id-value {
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-  }
-
-  .node-color-dot {
-    width: 10px;
-    height: 10px;
-    border-radius: 50%;
-    border: 2px solid var(--color-0);
-    flex: 0 0 10px;
+  .selection-row:last-child {
+    margin-bottom: 10px !important;
   }
 
   .selection-empty {
@@ -69,13 +89,33 @@
     font-weight: 600;
   }
 
-  &.theme-dark {
+  .selection-range-line {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    margin-top: 4px;
+    font-size: 11px;
+    color: var(--color-300);
+  }
+
+  &.dark {
     border: none !important;
     background: color-mix(in srgb, var(--color-1000) 90%, transparent);
     color: var(--color-0);
     // backdrop-filter: blur(6px);
     border-radius: var(--border-radius);
+    .selection-value {
+      color: var(--color-0) !important;
+    }
+    ::ng-deep mat-progress-bar {
+      .mdc-linear-progress__buffer {
+        background: var(--color-800) !important;
+      }
 
+      .mdc-linear-progress__bar-inner {
+        border-color: var(--color-brand-green-light) !important;
+      }
+    }
     .selection-title,
     .selection-label,
     .selection-value {
@@ -84,6 +124,10 @@
 
     .selection-empty {
       color: var(--color-200);
+    }
+
+    .selection-range-line {
+      color: var(--color-300);
     }
 
     .node-color-dot {
