@@ -4,7 +4,9 @@
  * at https://spdx.org/licenses/BSD-3-Clause-Clear.html or see the "LICENSE" file for more details.
  */
 
-/* Data type selector component styles */
+.app-data-type-selector {
+  margin-right: 5px;
+}
 .selected-item {
   font-weight: bold;
 }

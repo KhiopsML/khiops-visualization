@@ -259,7 +259,7 @@ app-home-layout {
   }
   .comp-header-tools {
     button {
-      margin-right: 5px;
+      // margin-right: 5px;
     }
     // button:last-child {
     //   margin-right: 0 !important;
@@ -539,8 +539,8 @@ mat-checkbox.kl-checkbox {
 
 .lucid-icon-button {
   max-height: 32px !important;
-  width: 34px !important;
-  min-width: 34px !important;
+  width: 32px !important;
+  min-width: 32px !important;
   // padding: 6px 6px !important;
   svg {
     height: 14px;
@@ -573,4 +573,15 @@ kl-legend {
   border-radius: var(--border-radius);
   // border: 1px solid var(--color-100);
   // background-color: var(--color-50);
+}
+.kl-slider-container {
+  max-height: 32px;
+  color: var(--color-800);
+  border: 1px solid var(--color-border-highlight) !important;
+  border-radius: var(--border-radius);
+  background: var(--color-50);
+  padding-left: 10px;
+  span {
+    font-size: 0.8em;
+  }
 }

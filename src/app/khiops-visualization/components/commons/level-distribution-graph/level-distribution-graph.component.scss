@@ -17,6 +17,9 @@
     padding: 20px 10px;
     background-color: unset !important;
     .comp-header-tools {
+      button {
+        margin-right: 0px !important;
+      }
       h2 {
         margin: 0.8em 1em 0em 2em;
       }

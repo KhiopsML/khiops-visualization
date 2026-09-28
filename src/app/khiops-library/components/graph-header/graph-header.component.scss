@@ -57,17 +57,5 @@
     height: 100%;
     padding: 0px 8px;
     position: relative;
-
-    .kl-slider-container {
-      max-height: 32px;
-      color: var(--color-800);
-      border: 1px solid var(--color-border-highlight) !important;
-      border-radius: var(--border-radius);
-      background: var(--color-50);
-      padding-left: 10px;
-      span {
-        font-size: 0.8em;
-      }
-    }
   }
 }

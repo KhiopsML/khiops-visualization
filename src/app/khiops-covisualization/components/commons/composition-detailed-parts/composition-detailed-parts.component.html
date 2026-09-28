@@ -18,18 +18,18 @@
       id="composition-detailed-parts-header"
       fxLayoutAlign="center center"
     >
-      <svg lucideIcon="grip-vertical" size="18"></svg>
+      <svg class="drag-btn" lucideIcon="grip-vertical" size="18"></svg>
       <h2 fxFlex>{{ 'GLOBAL.PART_DETAILS' | translate | uppercase }}</h2>
       <div class="comp-header-tools screenshot-hide" fxLayout="row">
         <kl-header-tools [showMenu]="false"></kl-header-tools>
       </div>
       <button
-        class="screenshot-hide stroked-icon-button"
-        mat-stroked-button
+        class="screenshot-hide close-btn lucid-icon-button"
+        mat-flat-button
         matTooltip="{{ 'GLOBAL.CLOSE' | translate }}"
         (click)="onClickOnClose()"
       >
-        <mat-icon fxFlexFill fxLayoutAlign="center center">close</mat-icon>
+        <svg lucideIcon="x"></svg>
       </button>
     </div>
     <div

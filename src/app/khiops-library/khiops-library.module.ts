@@ -88,6 +88,7 @@ import {
   LucideLayoutDashboard,
   LucideChartNoAxesCombined,
   LucideGripVertical,
+  LucideFolder,
 } from '@lucide/angular';
 
 // Component imports
@@ -239,6 +240,7 @@ import { ImportantBadgeComponent } from './components/important-badge/important-
     TranslateService,
     DialogService,
     provideLucideIcons(
+      LucideFolder,
       LucideGripVertical,
       LucideEye,
       LucideEyeOff,

@@ -16,6 +16,9 @@
     padding-bottom: 10px;
 
     .comp-header-tools {
+      kl-search-input, button {
+        margin-right: 5px !important;
+      }
       .mdc-button--unelevated {
         height: 33px !important;
         min-width: var(--ag-row-height) !important;

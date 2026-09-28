@@ -41,7 +41,7 @@
       (ngModelChange)="updateSearch($event)"
       autocomplete="off"
     />
-    <button
+    <!-- <button
       type="button"
       attr.aria-label="{{ 'ARIA.AG_GRID.CLOSE_SEARCH_INPUT' | translate }}"
       mat-icon-button
@@ -50,6 +50,15 @@
       (click)="close()"
     >
       <mat-icon fxFlexFill fxLayoutAlign="center center">close</mat-icon>
+    </button> -->
+    <button
+      attr.aria-label="{{ 'ARIA.AG_GRID.CLOSE_SEARCH_INPUT' | translate }}"
+      class="screenshot-hide close-btn lucid-icon-button"
+      mat-icon-button
+      matTooltip="{{ 'GLOBAL.CLOSE' | translate }}"
+      (click)="close()"
+    >
+      <svg lucideIcon="x" size="16"></svg>
     </button>
   }
 </form>

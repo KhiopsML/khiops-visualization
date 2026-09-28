@@ -7,6 +7,7 @@
 <button
   attr.aria-label="{{ 'ARIA.AG_GRID.CHANGE_DATAS_OPTION' | translate }}"
   mat-stroked-button
+  class="app-data-type-selector"
   [matMenuTriggerFor]="dataOptionsTypes"
 >
   {{ selectedDataType() | translate }}

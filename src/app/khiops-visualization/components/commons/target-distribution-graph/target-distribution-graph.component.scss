@@ -28,6 +28,9 @@
   ::ng-deep .comp-header {
     .comp-header-tools {
       align-items: flex-end;
+      kl-btn-fullscreen {
+        margin-left: 5px;
+      }
     }
   }
 }
