@@ -61,7 +61,9 @@ export class HistogramUIService {
           typeof coords.barH === 'number' &&
           typeof coords.x === 'number' &&
           typeof coords.barW === 'number' &&
-          y > coords.y &&
+          // Allow clicking anywhere in the full column height, not just on the bar itself,
+          // so very small bars remain easy to select
+          y > 0 &&
           y < coords.y + coords.barH + yPadding / 2 &&
           x > coords.x &&
           x < coords.x + coords.barW
