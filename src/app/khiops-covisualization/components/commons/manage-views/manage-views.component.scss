@@ -89,6 +89,11 @@
         box-shadow: none;
         margin: 0px !important;
         padding: 5px 0 0 5px !important;
+        mat-checkbox {
+          /* prevent the flex item from shrinking below its content size */
+          flex: 0 1 auto;
+          white-space: nowrap;
+        }
       }
 
       .box-dimension:hover {
