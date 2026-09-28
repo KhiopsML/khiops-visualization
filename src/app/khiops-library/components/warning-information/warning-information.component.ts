@@ -6,8 +6,8 @@
 
 import { Component, input } from '@angular/core';
 import { MatTooltipModule } from '@angular/material/tooltip';
-import { IconComponent } from '../icon/icon.component';
 import { FlexModule } from '@angular/flex-layout';
+import { LucideDynamicIcon } from '@lucide/angular';
 
 type WarningInformationVariant = 'default' | 'inline';
 
@@ -15,7 +15,7 @@ type WarningInformationVariant = 'default' | 'inline';
   selector: 'kl-warning-information',
   templateUrl: './warning-information.component.html',
   styleUrls: ['./warning-information.component.scss'],
-  imports: [MatTooltipModule, IconComponent, FlexModule],
+  imports: [MatTooltipModule, FlexModule, LucideDynamicIcon],
 })
 export class WarningInformationComponent {
   readonly text = input<string>('');

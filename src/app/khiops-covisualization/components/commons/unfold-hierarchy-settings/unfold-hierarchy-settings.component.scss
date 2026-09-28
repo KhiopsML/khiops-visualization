@@ -6,12 +6,62 @@
 
 #unfold-hierarchy-settings {
   border-radius: var(--border-radius);
+
+  .comp-header {
+    width: 100%;
+    h1 {
+      ::ng-deep kl-important-badge {
+        margin: 0 5px;
+        span {
+          font-size: 16px !important;
+        }
+      }
+      span {
+        color: var(--color-600);
+      }
+    }
+  }
   .unfold-hierarchy-settings-container {
     width: 100%;
     margin-top: -15px;
-    padding: 0 20px 20px 20px;
+    padding: 0 10px 10px 10px;
+
+    .informations-main-values {
+      background: var(--color-50);
+      border-radius: var(--border-radius);
+      border: 1px solid var(--color-border-subtle);
+      flex: 1;
+      padding: 2px !important;
+      margin: 0 5px !important;
+      min-height: 60px !important;
+      strong {
+        padding: 0 5px;
+        text-align: center;
+        font-weight: 500;
+        display: block;
+        font-size: 0.85em;
+        text-transform: uppercase;
+      }
+
+      .metric-value {
+        font-size: 24px;
+        font-weight: 500;
+        line-height: 1;
+        text-align: center;
+        white-space: nowrap;
+        padding: 0 5px;
+        em {
+          font-size: 16px;
+        }
+      }
+    }
+
     .unfold-hierarchy-settings-slider {
       width: 100%;
+      mat-slider {
+        // margin: 0;
+        scale: 1 !important;
+      }
     }
     span {
       em {
@@ -26,15 +76,24 @@
     }
 
     .increment {
-      margin-left: 2em;
-
+      scale: 0.8 !important;
       button {
         padding: 0;
         min-width: 30px;
-        margin: 1px;
+        margin: 0px;
         max-height: 30px;
         line-height: 30px;
       }
+    }
+
+    .increment button:first-child {
+      border-radius: 5px 0px 0 5px !important;
+    }
+
+    .increment button:last-child {
+      border-radius: 0px 5px 5px 0 !important;
+      margin-left: -1px;
+      border-left: 0;
     }
 
     .unfold-information-rate {

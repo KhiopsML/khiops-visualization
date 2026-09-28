@@ -10,14 +10,25 @@
   fxLayoutAlign="start start"
   class="kl-card"
 >
-  <div class="comp-header">
-    <h1>
+  <div class="comp-header" fxLayoutAlign="start center">
+    <h1 fxFlex fxLayout="row" fxLayoutAlign="start center">
       {{ 'GLOBAL.NUMBER_OF_CLUSTERS' | translate }}:
-      {{ currentUnfoldHierarchy }}
+      <kl-important-badge [text]="currentUnfoldHierarchy" color="green">
+      </kl-important-badge>
+      <span>
+        / {{ hierarchyDatas?.totalClusters }}
+        {{ 'GLOBAL.MAX' | translate }}</span
+      >
     </h1>
+    @if (currentInformationPerCluster === 0) {
+      <kl-warning-information
+        [text]="'GLOBAL.NON_INFORMATIVE_COCLUSTERING' | translate"
+        variant="inline"
+      ></kl-warning-information>
+    }
   </div>
   <div fxLayout="column" class="unfold-hierarchy-settings-container">
-    <div fxLayout="row">
+    <div fxLayout="row" fxLayoutAlign="start center">
       <div fxLayout="column" class="unfold-hierarchy-settings-slider">
         <mat-slider
           [max]="$safeNavigationMigration(hierarchyDatas?.totalClusters)"
@@ -28,20 +39,20 @@
           <input [(ngModel)]="currentUnfoldHierarchy" matSliderThumb />
         </mat-slider>
       </div>
-      <div fxLayout="column" class="increment">
-        <button
-          class="button-increase-hierarchy"
-          mat-stroked-button
-          (click)="increaseUnfoldHierarchy()"
-        >
-          +
-        </button>
+      <div fxLayout="row" class="increment">
         <button
           class="button-reduce-hierarchy"
           mat-stroked-button
           (click)="decreaseUnfoldHierarchy()"
         >
-          -
+          <svg lucideIcon="minus" size="16"></svg>
+        </button>
+        <button
+          class="button-increase-hierarchy"
+          mat-stroked-button
+          (click)="increaseUnfoldHierarchy()"
+        >
+          <svg lucideIcon="plus" size="16"></svg>
         </button>
       </div>
       <!-- DO NOT REMOVE - used by cypress to load files -->
@@ -53,23 +64,38 @@
       </div>
       <!-- END DO NOT REMOVE -->
     </div>
-    <div class="unfold-information-rate" fxLayout="column">
-      <span>
-        {{ 'GLOBAL.CELLS' | translate }}:
-        <em>
-          {{ currentCellsPerCluster | toPrecision }}
-        </em>
-      </span>
-      <span>
-        {{ 'GLOBAL.INFORMATION_RATE' | translate }}:
-        <em>{{ currentInformationPerCluster | toPrecision: 3 }}%</em>
-      </span>
-      @if (currentInformationPerCluster === 0) {
-        <span class="non-info-warning" fxLayoutAlign="start center">
-          {{ 'GLOBAL.NON_INFORMATIVE_COCLUSTERING' | translate }}
-          <mat-icon fxLayoutAlign="center center">warning</mat-icon>
-        </span>
-      }
+
+    <div class="unfold-information-rate" fxLayout="row">
+      <div
+        fxFlex
+        fxLayoutAlign="center center"
+        class="informations-main-values"
+      >
+        <div fxFlex fxLayout="column">
+          <span fxFlex class="metric-value font-code">{{
+            currentCellsPerCluster | toPrecision
+          }}</span>
+          <strong>{{
+            'GLOBAL.NUMBER_OF_CELLS_IN_THE_CURRENT_UNFOLDING' | translate
+          }}</strong>
+        </div>
+      </div>
+      <div
+        fxFlex
+        class="informations-main-values gauge-container"
+        fxLayoutAlign="center center"
+      >
+        <div fxLayoutAlign="start center" fxLayout="row">
+          <kl-gauge
+            [value]="currentInformationPerCluster | toPrecision: 3"
+            [size]="80"
+          >
+          </kl-gauge>
+          <strong>{{
+            'GLOBAL.NON_INFORMATIVE_COCLUSTERING' | translate
+          }}</strong>
+        </div>
+      </div>
     </div>
   </div>
 </div>

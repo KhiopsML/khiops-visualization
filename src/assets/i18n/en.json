@@ -350,6 +350,8 @@
     "INFORMATION_PER_CLUSTER": "Information per cluster",
     "NON_INFORMATIVE_COCLUSTERING": "Non informative coclustering",
     "NUMBER_OF_CLUSTERS": "Number of clusters",
+    "NUMBER_OF_CELLS_IN_THE_CURRENT_UNFOLDING": "Cells in the current unfolding",
+    "MAX": "Max",
     "LOAD_DATAS": "Load datas",
     "JOINT_KEY": "Join key",
     "SEPARATOR": "Separator",

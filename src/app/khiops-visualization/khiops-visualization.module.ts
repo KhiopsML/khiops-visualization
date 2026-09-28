@@ -49,6 +49,7 @@ import { LevelDistributionButtonComponent } from './components/commons/level-dis
 import { ChangeScaleButtonComponent } from './components/commons/change-scale-button/change-scale-button.component';
 import { ChangeScaleDialogComponent } from './components/commons/change-scale-dialog/change-scale-dialog.component';
 import { VisualizationRoutingModule } from './khiops-visualization-routing.module';
+import { WarningInformationComponent } from '@khiops-library/components/warning-information/warning-information.component';
 @NgModule({
   declarations: [
     HistogramComponent,
@@ -95,6 +96,7 @@ import { VisualizationRoutingModule } from './khiops-visualization-routing.modul
     ImportantBadgeComponent,
     SelectTrainedPredictorComponent,
     TargetLiftGraphComponent,
+    WarningInformationComponent,
   ],
   providers: [
     provideHttpClient(withXhr()),

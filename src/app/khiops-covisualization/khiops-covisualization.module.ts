@@ -47,6 +47,7 @@ import { UnfoldHierarchyInfoRateGraphComponent } from './components/commons/unfo
 import { ImportantBadgeComponent } from '@khiops-library/components/important-badge/important-badge.component';
 import { provideHttpClient, withXhr } from '@angular/common/http';
 import { CovisualizationRoutingModule } from './khiops-covisualization-routing.module';
+import { WarningInformationComponent } from '@khiops-library/components/warning-information/warning-information.component';
 
 @NgModule({
   declarations: [
@@ -92,6 +93,7 @@ import { CovisualizationRoutingModule } from './khiops-covisualization-routing.m
     VariableSearchButtonComponent,
     ImportantBadgeComponent,
     CovisualizationRoutingModule,
+    WarningInformationComponent,
   ],
   providers: [
     provideHttpClient(withXhr()),
