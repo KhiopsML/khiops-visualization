@@ -6,12 +6,10 @@
 
 <div id="tree-hyper-selection-comp" [class.dark]="isDarkTheme">
   @if (selectedNode) {
-    @if (!isDarkTheme) {
-      <div class="selection-title font-code">
-        {{ 'GLOBAL.HYPER_TREE_SELECTION' | translate }}
-      </div>
-    }
-    <div
+    <div class="selection-title font-code">
+      {{ 'GLOBAL.HYPER_TREE_SELECTION' | translate }}
+    </div>
+    <!-- <div
       class="tree-hyper-selection-comp-title selection-row"
       fxLayout="row"
       fxLayoutAlign="start center"
@@ -26,7 +24,39 @@
           selectedNode.nodeId || selectedNode.id || '-'
         }}</span>
       </span>
-    </div>
+    </div> -->
+    @if (lineagePath.length > 0) {
+      <div class="selection-row lineage-path" fxLayout="column">
+        <!-- <span class="selection-title font-code">LINEAGE PATH</span> -->
+        <div
+          class="lineage-path-content header-panel-contrast"
+          fxLayout="row"
+          fxLayoutGap="2px"
+        >
+          @for (pathNode of lineagePath; track $index) {
+            <span
+              class="lineage-chip font-code"
+              [class.current]="$index === lineagePath.length - 1"
+              [style.background-color]="
+                $index === lineagePath.length - 1
+                  ? selectedNode.color || 'var(--color-brand-red)'
+                  : null
+              "
+              [style.border-color]="
+                $index === lineagePath.length - 1
+                  ? selectedNode.color || 'var(--color-brand-red)'
+                  : null
+              "
+            >
+              {{ pathNode }}
+            </span>
+            @if ($index < lineagePath.length - 1) {
+              <span class="lineage-separator font-code">&gt;</span>
+            }
+          }
+        </div>
+      </div>
+    }
     @if (selectedNode.totalFreqs !== undefined) {
       <div class="selection-row" fxLayout="column" fxLayoutAlign="start start">
         <div fxLayout="row">

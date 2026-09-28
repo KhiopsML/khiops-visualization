@@ -5,15 +5,15 @@
  */
 
 #tree-hyper-selection-comp {
-  min-width: 220px;
-  max-width: 320px;
+  min-width: 240px;
+  max-width: 240px;
   padding: 10px 12px;
   color: var(--color-50);
   border: 1px solid var(--color-border-highlight);
   box-shadow: var(--elevate-box-shadow);
   border-radius: var(--border-radius);
   // background: var(--color-0);
-  backdrop-filter: blur(5px);
+  backdrop-filter: blur(10px);
 
   .selection-title {
     font-size: 0.72rem;
@@ -78,6 +78,47 @@
     margin-bottom: 10px !important;
   }
 
+  .lineage-path {
+    margin-bottom: 14px;
+
+    .selection-title {
+      margin-bottom: 5px;
+    }
+  }
+
+  .lineage-path-content {
+    flex-wrap: wrap;
+    padding: 5px;
+    align-items: center;
+  }
+
+  .lineage-chip {
+    display: inline-flex;
+    align-items: center;
+    height: 20px;
+    padding: 0 5px;
+    margin: 1px;
+    border-radius: var(--border-radius);
+    border: 1px solid var(--color-border-highlight);
+    background: var(--color-0);
+    color: var(--color-800);
+    font-size: 12px;
+    font-weight: 700;
+  }
+
+  .lineage-chip.current {
+    background: var(--color-brand-red);
+    border-color: var(--color-brand-red);
+    color: var(--color-0);
+  }
+
+  .lineage-separator {
+    color: var(--color-500);
+    font-size: 11px;
+    font-weight: 600;
+    padding: 0 2px;
+  }
+
   .selection-empty {
     font-size: 0.75rem;
     opacity: 0.85;
@@ -104,6 +145,11 @@
     color: var(--color-0);
     // backdrop-filter: blur(6px);
     border-radius: var(--border-radius);
+
+    .lineage-path-content {
+      border-color: var(--color-800) !important;
+      background: var(--color-1000) !important;
+    }
     .selection-value {
       color: var(--color-0) !important;
     }
@@ -124,6 +170,22 @@
 
     .selection-empty {
       color: var(--color-200);
+    }
+
+    .lineage-chip {
+      background: color-mix(in srgb, var(--color-900) 75%, transparent);
+      border-color: var(--color-700);
+      color: var(--color-100);
+    }
+
+    .lineage-chip.current {
+      background: var(--color-brand-red);
+      border-color: var(--color-brand-red);
+      color: var(--color-0);
+    }
+
+    .lineage-separator {
+      color: var(--color-300);
     }
 
     .selection-range-line {
