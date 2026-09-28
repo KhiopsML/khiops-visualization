@@ -225,6 +225,19 @@ export class HistogramRendererService {
       const outerPadding = 2;
       const selectedStrokeWidth = 1;
       const strokeOffset = outerPadding + selectedStrokeWidth / 2;
+
+      // Fill the gap between the bar and the dashed selection border with a solid white border
+      ctx.save();
+      ctx.strokeStyle = '#ffffff';
+      ctx.lineWidth = outerPadding;
+      ctx.strokeRect(
+        x - outerPadding / 2,
+        y - outerPadding / 2,
+        barW + outerPadding,
+        barH + outerPadding,
+      );
+      ctx.restore();
+
       ctx.save();
       ctx.strokeStyle = defaultBarColor;
       ctx.lineWidth = selectedStrokeWidth;
