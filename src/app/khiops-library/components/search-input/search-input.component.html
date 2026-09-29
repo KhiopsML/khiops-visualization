@@ -48,7 +48,7 @@
       matTooltip="{{ 'GLOBAL.CLOSE' | translate }}"
       (click)="close()"
     >
-      <svg lucideIcon="x" size="16"></svg>
+      <svg [lucideIcon]="fullSearch ? 'trash' : 'x'" size="16"></svg>
     </button>
   }
 </form>
