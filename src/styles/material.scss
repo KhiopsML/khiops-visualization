@@ -7,6 +7,21 @@
 /*******************************************************************/
 /* This file override Angular Material styles                      */
 /*******************************************************************/
+mat-form-field {
+  --mat-form-field-outlined-outline-color: var(--color-300);
+  --mat-form-field-outlined-hover-outline-color: var(--color-600);
+  --mat-form-field-outlined-focus-outline-color: var(--color-600);
+  --mat-form-field-outlined-outline-width: 1px;
+  --mat-form-field-outlined-focus-outline-width: 2px;
+
+  --mat-form-field-outlined-input-text-color: var(--color-900);
+  --mat-form-field-outlined-input-text-placeholder-color: var(--color-400);
+  --mat-form-field-outlined-caret-color: var(--color-500);
+
+  --mat-form-field-outlined-label-text-color: var(--color-600);
+  --mat-form-field-outlined-hover-label-text-color: var(--color-600);
+  --mat-form-field-outlined-focus-label-text-color: var(--color-500);
+}
 
 .mat-mdc-progress-bar .mat-mdc-progress-bar-fill {
   transition-duration: initial !important;

@@ -18,6 +18,10 @@
     min-width: 150px;
     position: relative;
 
+    em {
+      margin-left: 12px;
+    }
+
     mat-select {
       min-height: 2rem;
     }
@@ -92,9 +96,9 @@
         width: 100%;
         box-sizing: border-box;
         padding: 4px 24px 4px 8px;
-        // font-size: 13px;
         border: 0px;
         outline: none;
+        font-size: 12px !important;
         &::placeholder {
           color: var(--color-1000);
           opacity: 0.6;
@@ -108,7 +112,7 @@
         width: 18px;
         height: 18px;
         line-height: 18px;
-        // fill: var(--color-1000) !important;
+        color: var(--color-800) !important;
         cursor: pointer;
         opacity: 0.6;
 
@@ -167,7 +171,7 @@
       }
     }
     .mat-mdc-text-field-wrapper {
-      height: 36px;
+      height: 30px;
       position: relative;
       .mat-mdc-form-field-flex {
         position: absolute;

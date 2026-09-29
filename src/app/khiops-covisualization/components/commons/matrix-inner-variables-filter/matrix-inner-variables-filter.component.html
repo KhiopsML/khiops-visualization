@@ -31,11 +31,11 @@
             (keydown)="$event.stopPropagation()"
           />
           @if (filterText) {
-            <mat-icon
+            <svg
               class="inner-variables-search-clear"
               (click)="$event.stopPropagation(); clearFilterText()"
-              >close</mat-icon
-            >
+              lucideIcon="x" size="16"
+            ></svg>
           }
         </div>
         <!-- Select All row and individual variables: plain click handlers drive -->
@@ -91,7 +91,9 @@
       @if (selectedInnerVariables.length > 0) {
         <div class="inner-variables-value-overlay">{{ triggerLabel }}</div>
       }
-      <em class="screenshot-hide"><svg lucideIcon="chevron-down" size="16"></svg> </em>
+      <em class="screenshot-hide"
+        ><svg lucideIcon="chevron-down" size="16"></svg>
+      </em>
     </mat-form-field>
   </div>
 }

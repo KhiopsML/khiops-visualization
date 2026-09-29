@@ -91,11 +91,11 @@ export function getVisualizationMockFile(): string {
  */
 export function getCovisualizationMockFile(): string {
   // let urlKC = 'Coclustering-100x100.json';
-  // let urlKC = 'IV-Poissons.json';
+  let urlKC = 'IV-Poissons.json';
   // let urlKC = 'cc.json';
   // let urlKC = 'Coclustering.json';
   // let urlKC = 'Co-simple-2vars.json';
-  let urlKC = 'Coclustering-6.json';
+  // let urlKC = 'Coclustering-6.json';
   // let urlKC = 'Coclustering-4.json';
   // let urlKC = '1-Adult2varsEducationOccupation.khcj';
   // let urlKC = '2-Iris3vars-Coclustering.khcj';
