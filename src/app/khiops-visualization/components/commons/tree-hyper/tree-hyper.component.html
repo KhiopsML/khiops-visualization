@@ -83,6 +83,7 @@
             [minLeafTotalFreqs]="treePreparationDatas?.minFrequencies"
             [maxLeafTotalFreqs]="treePreparationDatas?.maxFrequencies"
             [theme]="'dark'"
+            (lineageNodeSelected)="onLineageNodeSelected($event)"
           ></app-tree-hyper-selection>
         </div>
       }
@@ -92,6 +93,7 @@
           [treeRoot]="dimensionTree?.[0]"
           [minLeafTotalFreqs]="treePreparationDatas?.minFrequencies"
           [maxLeafTotalFreqs]="treePreparationDatas?.maxFrequencies"
+          (lineageNodeSelected)="onLineageNodeSelected($event)"
         ></app-tree-hyper-selection>
       </div>
       <div class="tree-hyper-zoom-tools screenshot-hide">

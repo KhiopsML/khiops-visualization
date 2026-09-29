@@ -7,11 +7,18 @@
 import {
   ChangeDetectionStrategy,
   Component,
+  EventEmitter,
   Input,
   OnChanges,
+  Output,
   SimpleChanges,
 } from '@angular/core';
 import { TreeNodeModel } from '@khiops-visualization/model/tree-node.model';
+
+interface LineageNodeEntry {
+  id: string;
+  label: string;
+}
 
 @Component({
   selector: 'app-tree-hyper-selection',
@@ -26,7 +33,8 @@ export class TreeHyperSelectionComponent implements OnChanges {
   @Input() public theme: 'default' | 'dark' = 'default';
   @Input() public minLeafTotalFreqs?: number;
   @Input() public maxLeafTotalFreqs?: number;
-  public lineagePath: string[] = [];
+  @Output() public lineageNodeSelected = new EventEmitter<string>();
+  public lineagePath: LineageNodeEntry[] = [];
 
   ngOnChanges(_changes: SimpleChanges): void {
     this.lineagePath = this.computeLineagePath();
@@ -52,8 +60,16 @@ export class TreeHyperSelectionComponent implements OnChanges {
     return Math.max(0, Math.min(100, percent));
   }
 
-  private computeLineagePath(): string[] {
-    const selectedIdentifier = this.getNodeIdentifier(this.selectedNode);
+  public onLineageChipClick(pathNode: LineageNodeEntry): void {
+    if (!pathNode?.id) {
+      return;
+    }
+
+    this.lineageNodeSelected.emit(pathNode.id);
+  }
+
+  private computeLineagePath(): LineageNodeEntry[] {
+    const selectedIdentifier = this.getNodeId(this.selectedNode);
     if (!selectedIdentifier) {
       return [];
     }
@@ -62,24 +78,29 @@ export class TreeHyperSelectionComponent implements OnChanges {
       const path = this.findLineagePath(this.treeRoot, selectedIdentifier, []);
       if (path.length > 0) {
         const lastPathNode = path[path.length - 1];
-        if (lastPathNode !== selectedIdentifier) {
-          return [...path, selectedIdentifier];
+        if (lastPathNode?.id !== selectedIdentifier) {
+          const selectedNodeEntry = this.toLineageNodeEntry(this.selectedNode);
+          if (selectedNodeEntry) {
+            return [...path, selectedNodeEntry];
+          }
         }
         return path;
       }
     }
 
-    return [selectedIdentifier];
+    const selectedNodeEntry = this.toLineageNodeEntry(this.selectedNode);
+    return selectedNodeEntry ? [selectedNodeEntry] : [];
   }
 
   private findLineagePath(
     node: TreeNodeModel,
     selectedIdentifier: string,
-    parentPath: string[],
-  ): string[] {
-    const currentIdentifier = this.getNodeIdentifier(node);
-    const currentPath = currentIdentifier
-      ? [...parentPath, currentIdentifier]
+    parentPath: LineageNodeEntry[],
+  ): LineageNodeEntry[] {
+    const currentIdentifier = this.getNodeId(node);
+    const currentNodeEntry = this.toLineageNodeEntry(node);
+    const currentPath = currentNodeEntry
+      ? [...parentPath, currentNodeEntry]
       : parentPath;
 
     if (currentIdentifier === selectedIdentifier) {
@@ -104,7 +125,19 @@ export class TreeHyperSelectionComponent implements OnChanges {
     return [];
   }
 
-  private getNodeIdentifier(node?: TreeNodeModel): string {
-    return node?.nodeId || node?.id || '';
+  private toLineageNodeEntry(node?: TreeNodeModel): LineageNodeEntry | null {
+    const id = this.getNodeId(node);
+    if (!id) {
+      return null;
+    }
+
+    return {
+      id,
+      label: node?.nodeId || id,
+    };
+  }
+
+  private getNodeId(node?: TreeNodeModel): string {
+    return node?.id || node?.nodeId || '';
   }
 }

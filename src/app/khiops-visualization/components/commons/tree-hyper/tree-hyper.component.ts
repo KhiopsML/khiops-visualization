@@ -496,6 +496,18 @@ export class TreeHyperComponent
     });
   }
 
+  public onLineageNodeSelected(nodeId: string): void {
+    if (!nodeId) {
+      return;
+    }
+
+    this.ngzone.run(() => {
+      this.store.selectNodesFromId({
+        id: nodeId,
+      });
+    });
+  }
+
   public onClickOnZoomIn(): void {
     const currentLambda =
       this.ht?.args?.geometry?.transformation?.state?.λ ?? undefined;
