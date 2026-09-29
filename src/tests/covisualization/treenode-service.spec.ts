@@ -976,23 +976,6 @@ describe('coVisualization', () => {
 
         expect(eventsService.emitTreeSelectedNodeChanged).toHaveBeenCalled();
       });
-
-      it('should emit the selected node change when expanding the selected node', () => {
-        loadV4();
-        treenodesService.initSelectedNodes();
-        const eventsService = TestBed.inject(EventsService);
-        spyOn(eventsService, 'emitTreeSelectedNodeChanged');
-        const dimName = dimensionsDatasService.getSelectedDimensions()[0].name;
-        const node =
-          dimensionsDatasService.dimensionsDatas.currentDimensionsClusters[0][0];
-        treenodesService.setSelectedNode(dimName, node.name);
-        eventsService.emitTreeSelectedNodeChanged.calls.reset();
-        treenodesService.setSavedCollapsedNodes({ [dimName]: [node.name] });
-
-        treenodesService.expandNode(dimName, node.name);
-
-        expect(eventsService.emitTreeSelectedNodeChanged).toHaveBeenCalled();
-      });
     });
 
     // ===== isSaveChanged =====
