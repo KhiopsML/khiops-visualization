@@ -13,11 +13,15 @@
     <h1
       class="small-title"
       title="{{ 'TOOLTIPS.AXIS.ANNOTATION.TITLE' | translate }}"
+      fxLayout="row"
+      fxLayoutAlign="start center"
     >
+      <svg lucideIcon="notebook-pen" size="16"></svg>
       {{ title }}
     </h1>
   }
   <textarea
+    class="font-code"
     placeholder="{{ 'GLOBAL.TYPE_ANNOTATION' | translate }}"
     [ngModel]="value"
     (ngModelChange)="onAnnotationChanged($event)"

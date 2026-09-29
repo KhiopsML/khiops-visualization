@@ -42,6 +42,7 @@ import { TranslateModule, TranslateService } from '@ngstack/translate';
 import { AgGridModule } from '@ag-grid-community/angular';
 import { AngularSplitModule } from 'angular-split';
 import {
+  LucideNotebookPen,
   LucideChevronDown,
   LucideSquareExclamationPoint,
   LucideChevronRight,
@@ -246,6 +247,7 @@ import { ImportantBadgeComponent } from './components/important-badge/important-
     TranslateService,
     DialogService,
     provideLucideIcons(
+      LucideNotebookPen,
       LucideSquarePlus,
       LucideChevronDown,
       LucideChevronRight,
