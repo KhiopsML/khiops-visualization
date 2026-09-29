@@ -380,6 +380,8 @@ export class TreeHyperComponent
   private onHoverNodeChange(n: N | undefined) {
     this.ngzone.run(() => {
       if (!n?.data) {
+        this.hoveredLeafNode = undefined;
+        this.hoveredNodeIsLeaf = false;
         return;
       }
 
