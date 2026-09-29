@@ -50,6 +50,8 @@
             @if (axisLayout.isAnnotationChecked) {
               <as-split-area [size]="30" order="1" class="kl-card">
                 <app-annotation
+                  fxFlexFill
+                  fxFlex
                   [attr.id]="'cluster-annotation-' + position"
                   [position]="position"
                   [selectedDimension]="
@@ -83,6 +85,8 @@
           class="kl-card"
         >
           <app-external-datas
+            fxFlexFill
+            fxFlex
             [attr.id]="'external-datas-' + position"
             title="{{ 'TOOLTIPS.AXIS.EXTERNAL_DATAS.TITLE' | translate }}"
             [position]="position"
