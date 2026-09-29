@@ -12,12 +12,13 @@ import { GridOptionsModel } from '@khiops-library/model/grid-options.model';
 import { Ls } from '@khiops-library/providers/ls.service';
 import { LS } from '@khiops-library/enum/ls';
 import { TranslateModule } from '@ngstack/translate';
+import { LucideDynamicIcon } from '@lucide/angular';
 
 @Component({
   selector: 'app-data-type-selector',
   templateUrl: './data-type-selector.component.html',
   styleUrls: ['./data-type-selector.component.scss'],
-  imports: [MatButtonModule, MatMenuModule, MatIconModule, TranslateModule],
+  imports: [MatButtonModule, MatMenuModule, MatIconModule, TranslateModule, LucideDynamicIcon],
 })
 export class DataTypeSelectorComponent {
   private readonly ls = inject(Ls);

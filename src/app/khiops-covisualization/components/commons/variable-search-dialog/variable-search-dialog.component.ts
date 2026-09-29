@@ -27,6 +27,7 @@ import { DialogService } from '@khiops-library/providers/dialog.service';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { KhiopsLibraryModule } from '@khiops-library/khiops-library.module';
 import { EventsService } from '@khiops-covisualization/providers/events.service';
+import { LucideDynamicIcon } from '@lucide/angular';
 
 export interface VariableSearchDialogData {
   selectedDimension: DimensionCovisualizationModel;
@@ -44,7 +45,7 @@ export interface VariableSearchResult {
   selector: 'app-variable-search-dialog',
   templateUrl: './variable-search-dialog.component.html',
   styleUrls: ['./variable-search-dialog.component.scss'],
-  imports: [FlexLayoutModule, KhiopsLibraryModule],
+  imports: [FlexLayoutModule, KhiopsLibraryModule, LucideDynamicIcon],
 })
 export class VariableSearchDialogComponent
   extends SelectableComponent

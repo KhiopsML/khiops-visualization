@@ -27,6 +27,7 @@ import { KhiopsLibraryModule } from '@khiops-library/khiops-library.module';
 import { TranslateModule } from '@ngstack/translate';
 import { SelectToggleButtonComponent } from '../select-toggle-button/select-toggle-button.component';
 import { TargetLiftGraphService } from './target-lift-graph.service';
+import {  LucideDynamicIcon } from '@lucide/angular';
 
 @Component({
   selector: 'app-target-lift-graph',
@@ -41,6 +42,7 @@ import { TargetLiftGraphService } from './target-lift-graph.service';
     TranslateModule,
     KhiopsLibraryModule,
     SelectToggleButtonComponent,
+    LucideDynamicIcon,
   ],
 })
 export class TargetLiftGraphComponent extends SelectableComponent {

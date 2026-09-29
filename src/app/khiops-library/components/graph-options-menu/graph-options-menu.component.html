@@ -11,7 +11,7 @@
     [matMenuTriggerFor]="graphOptionsTypes"
   >
     {{ graphOptions()?.selected | translate }}
-    <em><mat-icon>keyboard_arrow_down</mat-icon> </em>
+    <em><svg lucideIcon="chevron-down" size="16"></svg> </em>
   </button>
   <mat-menu #graphOptionsTypes>
     @for (opt of graphOptions()?.types; track opt) {

@@ -18,7 +18,7 @@
       [matMenuTriggerFor]="trainedPredictors"
     >
       {{ selectedPredictor() }}
-      <em><mat-icon>keyboard_arrow_down</mat-icon> </em>
+      <em><svg lucideIcon="chevron-down" size="16"></svg> </em>
     </button>
     <mat-menu #trainedPredictors>
       @for (opt of inputDatas(); track opt.name) {

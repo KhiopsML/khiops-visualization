@@ -18,7 +18,7 @@
     [matMenuTriggerFor]="matrixModesTypes"
   >
     {{ $safeNavigationMigration(matrixModes.selected?.title) | translate }}
-    <em class="screenshot-hide"><mat-icon>keyboard_arrow_down</mat-icon> </em>
+    <em class="screenshot-hide"><svg lucideIcon="chevron-down" size="16"></svg> </em>
   </button>
   <mat-menu #matrixModesTypes>
     @for (opt of matrixModes.types; track opt.mode || $index) {

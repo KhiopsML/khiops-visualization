@@ -38,7 +38,7 @@
               [matMenuTriggerFor]="joinKeyMenu"
             >
               {{ joinKeys.selected
-              }}<em><mat-icon>keyboard_arrow_down</mat-icon> </em>
+              }}<em><svg lucideIcon="chevron-down" size="16"></svg> </em>
             </button>
             <mat-menu #joinKeyMenu>
               @for (key of joinKeys.keys; track key.name || key.value || key) {
@@ -88,7 +88,7 @@
               [matMenuTriggerFor]="dimensionMenu"
             >
               {{ selectedDimension?.name }}
-              <em><mat-icon>keyboard_arrow_down</mat-icon> </em>
+              <em><svg lucideIcon="chevron-down" size="16"></svg> </em>
             </button>
             <mat-menu #dimensionMenu>
               @for (

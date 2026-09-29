@@ -4,22 +4,25 @@
  * at https://spdx.org/licenses/BSD-3-Clause-Clear.html or see the "LICENSE" file for more details.
  */
 
-import {
-  Component,
-  input,
-  output,
-} from '@angular/core';
+import { Component, input, output } from '@angular/core';
 import { DistributionOptionsI } from '@khiops-library/interfaces/distribution-options.interface';
 import { MatButtonModule } from '@angular/material/button';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatIconModule } from '@angular/material/icon';
 import { TranslateModule } from '@ngstack/translate';
+import { LucideDynamicIcon } from '@lucide/angular';
 
 @Component({
-    selector: 'kl-graph-options-menu',
-    templateUrl: './graph-options-menu.component.html',
-    styleUrls: ['./graph-options-menu.component.scss'],
-    imports: [MatButtonModule, MatMenuModule, MatIconModule, TranslateModule]
+  selector: 'kl-graph-options-menu',
+  templateUrl: './graph-options-menu.component.html',
+  styleUrls: ['./graph-options-menu.component.scss'],
+  imports: [
+    MatButtonModule,
+    MatMenuModule,
+    MatIconModule,
+    TranslateModule,
+    LucideDynamicIcon,
+  ],
 })
 export class GraphOptionsMenuComponent {
   graphOptions = input<DistributionOptionsI | undefined>();

@@ -13,6 +13,7 @@ import { TranslateModule } from '@ngstack/translate';
 import { LS } from '@khiops-library/enum/ls';
 import { TrainedPredictor } from '@khiops-visualization/interfaces/modeling-report.interface';
 import { AppService } from '@khiops-visualization/providers/app.service';
+import { LucideDynamicIcon } from '@lucide/angular';
 
 @Component({
   selector: 'app-select-trained-predictor',
@@ -24,6 +25,7 @@ import { AppService } from '@khiops-visualization/providers/app.service';
     MatButtonModule,
     MatMenuModule,
     MatIconModule,
+    LucideDynamicIcon
   ],
 })
 export class SelectTrainedPredictorComponent {

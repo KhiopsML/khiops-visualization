@@ -27,6 +27,7 @@ import { MatMenuModule } from '@angular/material/menu';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { deepEqual } from 'fast-equals';
 import { AppConfig } from '../../../../../environments/environment';
+import { LucideDynamicIcon } from '@lucide/angular';
 
 @Component({
   selector: 'app-select-toggle-button',
@@ -40,6 +41,7 @@ import { AppConfig } from '../../../../../environments/environment';
     MatIconModule,
     MatMenuModule,
     MatPaginatorModule,
+    LucideDynamicIcon,
   ],
 })
 export class SelectToggleButtonComponent {
