@@ -51,13 +51,13 @@
                 (keydown)="$event.stopPropagation()"
               />
               @if (innerVariableFilterText()) {
-                <mat-icon
+                <svg
                   class="inner-variable-search-clear"
                   (click)="
                     $event.stopPropagation(); clearInnerVariableFilterText()
                   "
-                  >close</mat-icon
-                >
+                  lucideIcon="x"
+                ></svg>
               }
             </div>
             @if (isInnerVariablesTruncated()) {
