@@ -59,10 +59,8 @@
       }
 
       h2 {
-        opacity: 0.4;
-
-        mat-icon {
-          opacity: 1;
+        svg {
+          margin-left: 5px;
           pointer-events: auto;
         }
       }
