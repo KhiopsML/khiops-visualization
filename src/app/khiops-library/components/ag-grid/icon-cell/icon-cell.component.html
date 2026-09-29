@@ -5,7 +5,5 @@
  -->
 
 <button mat-icon-button (click)="onClick()" class="kl-icon-cell-comp-btn">
-  <mat-icon style="font-size: 19px" fxFlexFill fxLayoutAlign="center center">{{
-    params.icon
-  }}</mat-icon>
+  <svg [lucideIcon]="params.icon"></svg>
 </button>

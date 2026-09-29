@@ -11,11 +11,17 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 
 import { AgRendererComponent } from '@ag-grid-community/angular';
 import { ICellRendererParams } from '@ag-grid-community/core';
+import { LucideDynamicIcon } from '@lucide/angular';
 
 @Component({
   selector: 'kl-icon-cell',
   templateUrl: './icon-cell.component.html',
-  imports: [MatButtonModule, MatIconModule, FlexLayoutModule],
+  imports: [
+    MatButtonModule,
+    MatIconModule,
+    FlexLayoutModule,
+    LucideDynamicIcon,
+  ],
 })
 export class IconCellComponent implements AgRendererComponent {
   public params: any;

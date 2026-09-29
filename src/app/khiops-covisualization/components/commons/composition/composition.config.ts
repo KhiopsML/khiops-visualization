@@ -102,7 +102,7 @@ export function getCompositionDisplayedColumns(
         field: 'partDetails',
         cellRenderer: IconCellComponent,
         cellRendererParams: {
-          icon: 'add_box',
+          icon: 'square-plus',
           action: (e: ICellRendererParams) => {
             if (showDetailedPartsCallback) {
               showDetailedPartsCallback(e);

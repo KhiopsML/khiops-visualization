@@ -94,6 +94,7 @@ import {
   LucideFolder,
   LucidePlus,
   LucideMinus,
+  LucideSquarePlus,
 } from '@lucide/angular';
 
 // Component imports
@@ -245,6 +246,7 @@ import { ImportantBadgeComponent } from './components/important-badge/important-
     TranslateService,
     DialogService,
     provideLucideIcons(
+      LucideSquarePlus,
       LucideChevronDown,
       LucideChevronRight,
       LucideSquareExclamationPoint,
