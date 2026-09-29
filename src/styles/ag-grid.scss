@@ -53,13 +53,6 @@ ag-grid-angular {
   color: var(--color-selected-row-font) !important;
   transition: none !important;
   font-weight: bold !important;
-
-  mat-icon {
-    color: var(--color-selected-row-font) !important;
-  }
-  mat-icon:hover {
-    background-color: var(--color-150) !important;
-  }
 }
 .ag-row-selected::before {
   background: var(--color-selected-row);

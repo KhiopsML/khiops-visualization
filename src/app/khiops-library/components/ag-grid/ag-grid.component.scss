@@ -16,7 +16,8 @@
     padding-bottom: 10px;
 
     .comp-header-tools {
-      kl-search-input, button {
+      kl-search-input,
+      button {
         margin-right: 5px !important;
       }
       .mdc-button--unelevated {
@@ -25,9 +26,6 @@
         width: var(--ag-row-height) !important;
         padding: 0 !important;
         margin-right: 5px !important;
-        mat-icon {
-          font-size: 18px !important;
-        }
       }
     }
 

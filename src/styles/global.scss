@@ -113,13 +113,9 @@ h1 {
     font-style: normal;
   }
 
-  mat-icon,
   svg {
     color: var(--color-accent);
     min-width: 16px;
-  }
-
-  svg {
     margin-right: 0.4em !important;
     margin-bottom: 1px;
   }
