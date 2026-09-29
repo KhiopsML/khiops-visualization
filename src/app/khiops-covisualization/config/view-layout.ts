@@ -6,7 +6,7 @@
 
 export const VIEW_LAYOUT = {
   axisView: {
-    col: [70, 30],
+    col: [60, 40],
     col0Row: [50, 50],
     col1Row: [20, 80],
     col0Row0Col: [20, 20, 20, 20, 20],
