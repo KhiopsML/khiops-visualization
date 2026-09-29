@@ -80,6 +80,32 @@ export class NodeLayer implements ILayer {
     });
   }
 
+  private updateHoveredLeafRings(s) {
+    s.each((d, index, elements) => {
+      const group = elements[index];
+      const node = group.querySelector('.node-shape');
+      const whiteRing = group.querySelector('.node-hover-ring-white');
+      const blackRing = group.querySelector('.node-hover-ring-black');
+      const hoveredLeaf = d.data && d.data.isLeaf &&
+        this.view.unitdisk.cache.lastHovered === d;
+
+      whiteRing.style.display = hoveredLeaf ? 'block' : 'none';
+      blackRing.style.display = hoveredLeaf ? 'block' : 'none';
+
+      if (!hoveredLeaf) {
+        return;
+      }
+
+      const matrix = group.getScreenCTM();
+      const scale = matrix ? Math.hypot(matrix.a, matrix.b) : 1;
+      const nodeStrokeWidth = parseFloat(getComputedStyle(node).strokeWidth) || 0;
+      const nodeOuterRadius = this.args.r(d) + nodeStrokeWidth / 2;
+
+      whiteRing.setAttribute('r', nodeOuterRadius + 2.5 / scale);
+      blackRing.setAttribute('r', nodeOuterRadius);
+    });
+  }
+
   private updateSelectionPulse(s) {
     s.select('.node-selection-pulse')
       .classed('selected-main', (d) => this.isPrimarySelectedNode(d))
@@ -127,6 +153,24 @@ export class NodeLayer implements ILayer {
             (d) =>
               (d.pathes && d.pathes.labelcolor) || this.args.strokeWidth(d),
           );
+
+        s.append('circle')
+          .attr('class', 'node-hover-ring-white')
+          .style('fill', 'none')
+          .style('stroke', '#fff')
+          .style('stroke-width', '3px')
+          .style('vector-effect', 'non-scaling-stroke')
+          .style('pointer-events', 'none')
+          .style('display', 'none');
+
+        s.append('circle')
+          .attr('class', 'node-hover-ring-black')
+          .style('fill', 'none')
+          .style('stroke', '#393f4d')
+          .style('stroke-width', '2px')
+          .style('vector-effect', 'non-scaling-stroke')
+          .style('pointer-events', 'none')
+          .style('display', 'none');
       },
       updateColor: (s) => {
         this.updateSelectionPulse(s);
@@ -149,6 +193,7 @@ export class NodeLayer implements ILayer {
           .style('fill-opacity', (d) => this.args.opacity(d) || 1);
 
         this.updateSelectionRing(s);
+        this.updateHoveredLeafRings(s);
       },
       //updateColor:       s=> s.classed("hovered",   d=> d.isPartOfAnyHoverPath && d.parent)
       //                        .classed("selected",  d=> d.isPartOfAnySelectionPath && d.parent),
@@ -166,6 +211,7 @@ export class NodeLayer implements ILayer {
           });
 
         this.updateSelectionRing(s);
+        this.updateHoveredLeafRings(s);
       },
     });
   }

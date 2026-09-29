@@ -132,6 +132,7 @@ export class InteractionLayer2 implements ILayer {
     if (this.mousedown) {
       //when we are dragging, hide the popup
       setHoverNodeCache(undefined, this.view.unitdisk.cache);
+      this.updateHoveredNodeStyle();
       this.view.hypertree.args.interaction.onHoverNodeChange(undefined);
       return;
     }
@@ -146,6 +147,7 @@ export class InteractionLayer2 implements ILayer {
 
     if (n) {
       setHoverNodeCache(n, this.view.unitdisk.cache);
+      this.updateHoveredNodeStyle();
       if (this.view.hypertree.args.interaction.onHoverNodeChange) {
         this.view.hypertree.args.interaction.onHoverNodeChange(n);
       }
@@ -155,11 +157,16 @@ export class InteractionLayer2 implements ILayer {
         if (!this.view.unitdisk.cache.lastHovered) return;
 
         setHoverNodeCache(undefined, this.view.unitdisk.cache);
+        this.updateHoveredNodeStyle();
         if (this.view.hypertree.args.interaction.onHoverNodeChange) {
           this.view.hypertree.args.interaction.onHoverNodeChange(undefined);
         }
       }, 100);
     }
+  }
+
+  private updateHoveredNodeStyle() {
+    this.view.layerstack.layers['nodes']?.update.style();
   }
 
   //-----------------------------------------------------------------------------------------
