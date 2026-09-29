@@ -35,14 +35,12 @@
       class="graph-header-tools header-panel-contrast"
     >
       <mat-slide-toggle
-        fxFlex
         [checked]="visualization.purity"
         (change)="togglePurityVisualization($event.checked)"
       >
         {{ 'GLOBAL.DISPLAY_PURITY_BY_OPACITY' | translate }}
       </mat-slide-toggle>
       <mat-slide-toggle
-        fxFlex
         [checked]="visualization.population"
         (change)="togglePopulationVisualization($event.checked)"
       >
@@ -52,7 +50,8 @@
         distributionDatas && distributionDatas.targetDistributionDisplayedValues
       ) {
         <app-select-toggle-button
-          fxLayoutAlign="start center"
+          fxFlex
+          fxLayoutAlign="end center"
           [displayedValues]="
             distributionDatas.targetDistributionDisplayedValues
           "

@@ -37,14 +37,10 @@
               tabindex="0"
               (click)="onLineageChipClick(pathNode)"
               [style.background-color]="
-                $index === lineagePath.length - 1
-                  ? selectedNode.color || 'var(--color-brand-red)'
-                  : null
+                $index === lineagePath.length - 1 ? selectedNode.color : null
               "
               [style.border-color]="
-                $index === lineagePath.length - 1
-                  ? selectedNode.color || 'var(--color-brand-red)'
-                  : null
+                $index === lineagePath.length - 1 ? selectedNode.color : null
               "
             >
               {{ pathNode.label }}
