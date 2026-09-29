@@ -549,6 +549,13 @@ mat-slider {
     color: var(--color-accent) !important;
   }
 }
+.mat-mdc-unelevated-button:hover {
+  background-color: color-mix(
+    in srgb,
+    var(--color-brand-orange) 20%,
+    transparent
+  ) !important;
+}
 .mat-mdc-checkbox {
   display: flow-root !important;
   label {
