@@ -12,7 +12,10 @@
         id="import-ext-datas-header"
         fxLayoutAlign="center center"
       >
-        <h2 fxFlex>{{ 'GLOBAL.EXTERNAL_DATA' | translate | uppercase }}</h2>
+        <h1 fxFlex fxLayoutAlign="start center">
+          <svg lucideIcon="file-up" size="16"></svg>
+          {{ 'GLOBAL.EXTERNAL_DATA' | translate | uppercase }}
+        </h1>
         <button
           class="close-btn lucid-icon-button"
           mat-flat-button
@@ -36,9 +39,6 @@
               fxFlex
               fxLayoutAlign="start center"
             >
-              <h1 class="small-title">
-                {{ 'GLOBAL.IMPORTED_EXTERNAL_DATA' | translate }}
-              </h1>
               <kl-ag-grid
                 [showSearch]="false"
                 [showLineSelection]="false"
