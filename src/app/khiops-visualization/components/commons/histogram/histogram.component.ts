@@ -6,6 +6,7 @@
 
 import {
   Component,
+  ComponentRef,
   ElementRef,
   EventEmitter,
   Input,
@@ -14,8 +15,11 @@ import {
   Output,
   SimpleChanges,
   ViewChild,
+  ViewContainerRef,
   ChangeDetectionStrategy,
 } from '@angular/core';
+import { Overlay, OverlayRef } from '@angular/cdk/overlay';
+import { ComponentPortal } from '@angular/cdk/portal';
 import { HistogramService } from './histogram.service';
 import { HistogramRendererService } from './histogram-renderer.service';
 import { HistogramUIService } from './histogram.ui.service';
@@ -40,6 +44,7 @@ import { BIG_CHART_SIZE } from '@khiops-library/config/global';
 import { ZoomToolsEventsService } from '@khiops-library/components/zoom-tools/zoom-tools.service';
 import { VariableScaleSettingsService } from '@khiops-visualization/providers/variable-scale-settings.service';
 import { Selection } from 'd3';
+import { HistogramTooltipComponent } from './histogram-tooltip/histogram.tooltip.component';
 @Component({
   selector: 'app-histogram',
   templateUrl: './histogram.component.html',
@@ -56,6 +61,8 @@ export class HistogramComponent extends SelectableComponent implements OnInit {
   public componentType = COMPONENT_TYPES.HISTOGRAM; // needed to copy datas
   private svg?: Selection<SVGElement, unknown, HTMLElement, any> | any;
   private resizeSubject = new Subject<ResizedEvent>();
+  private tooltipOverlay?: OverlayRef;
+  private tooltipComponent?: ComponentRef<HistogramTooltipComponent>;
 
   // Outputs
   @Output() private selectedItemChanged: EventEmitter<number> =
@@ -88,11 +95,6 @@ export class HistogramComponent extends SelectableComponent implements OnInit {
   // Local variables
   public isLoading: boolean = false;
   public colorSet: string[];
-  public tooltipTitle: string = '';
-  public tooltipBody: string = '';
-  public tooltipPosX: number = 0;
-  public tooltipPosY: number = 0;
-  public tooltipDisplay: boolean = false;
   private rangeXLog?: RangeXLogI;
   private rangeXLin?: RangeXLinI;
   private rangeYLin?: number;
@@ -125,6 +127,8 @@ export class HistogramComponent extends SelectableComponent implements OnInit {
     public override ngzone: NgZone,
     public override configService: ConfigService,
     private variableScaleSettingsService: VariableScaleSettingsService,
+    private overlay: Overlay,
+    private viewContainerRef: ViewContainerRef,
   ) {
     super(selectableService, ngzone, configService);
 
@@ -231,6 +235,7 @@ export class HistogramComponent extends SelectableComponent implements OnInit {
   }
 
   override ngOnDestroy() {
+    this.tooltipOverlay?.dispose();
     this.histogramSelectedCanvas?.removeEventListener(
       'click',
       this.handleCanvasClick.bind(this),
@@ -491,15 +496,32 @@ export class HistogramComponent extends SelectableComponent implements OnInit {
   }
 
   private showTooltipData(event: MouseEvent, tooltipData: TooltipData) {
-    this.tooltipPosX = event.offsetX + 20;
-    this.tooltipPosY = event.offsetY - 40;
-    this.tooltipTitle = tooltipData.title;
-    this.tooltipBody = tooltipData.body;
-    this.tooltipDisplay = true;
+    if (!this.tooltipComponent) {
+      this.tooltipOverlay = this.overlay.create({
+        positionStrategy: this.overlay
+          .position()
+          .global()
+          .top('0px')
+          .left('0px'),
+      });
+      this.tooltipComponent = this.tooltipOverlay.attach(
+        new ComponentPortal(HistogramTooltipComponent, this.viewContainerRef),
+      );
+    }
+
+    this.tooltipComponent.setInput('title', tooltipData.title);
+    this.tooltipComponent.setInput('body', tooltipData.body);
+    this.tooltipComponent.setInput('posX', event.clientX);
+    this.tooltipComponent.setInput('posY', event.clientY - 40);
+    this.tooltipComponent.setInput(
+      'canvasW',
+      event.view?.innerWidth ?? this.w,
+    );
+    this.tooltipComponent.setInput('display', true);
   }
 
   private hideTooltip() {
-    this.tooltipDisplay = false;
+    this.tooltipComponent?.setInput('display', false);
   }
 
   private update() {
