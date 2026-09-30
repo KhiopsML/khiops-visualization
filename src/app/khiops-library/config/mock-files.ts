@@ -10,7 +10,7 @@
  */
 export function getVisualizationMockFile(): string {
   // let urlKV = 'ALLREPORTS_Std_Iris_AnalysisResults.khj';
-  // let urlKV = 'demo-visualization.json';
+  let urlKV = 'demo-visualization.json';
   // let urlKV = '2d-cells-AllReports.json ';
   // let urlKV = '312-AnalysisResults.khj';
   // let urlKV = 'AnalysisResults-IrisRegressionWithTree.khj';
@@ -73,7 +73,7 @@ export function getVisualizationMockFile(): string {
   // let urlKV = 'CriteoAnalysisResults.khj';
   // let urlKV = 'Words100_AllReports.json';
   // let urlKV = 'UnivariateAnalysisResults.json';
-  let urlKV = 'ylogAdultAllReports.json';
+  // let urlKV = 'ylogAdultAllReports.json';
   // let urlKV = 'AdversePairAnalysisResults.Bug.khj';
   // let urlKV = 'AdversePairAnalysisResults.NoSNB.khj';
   // let urlKV = 'AdversePairAnalysisResults.Corrected.khj';
