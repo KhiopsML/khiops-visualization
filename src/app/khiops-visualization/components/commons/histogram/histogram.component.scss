@@ -44,11 +44,16 @@
   }
 
   #histogram-container {
-    overflow: hidden;
+    overflow: visible;
     display: flex;
     height: 100%;
     position: relative;
     width: 100%;
+  }
+
+  .histogram-content {
+    overflow: hidden;
+    position: relative;
   }
 
   #histogram-canvas,
