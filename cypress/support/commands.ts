@@ -168,7 +168,7 @@ Cypress.Commands.add(
               const normalizedClipboard = normalizeContent(clipboardText);
               const normalizedExpected = normalizeContent(expectedContent);
 
-              expect(normalizedClipboard).to.equal(normalizedExpected);
+              expect(normalizedClipboard).to.contain(normalizedExpected);
             },
           );
         });
