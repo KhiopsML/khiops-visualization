@@ -40,9 +40,10 @@
                   fxLayoutAlign="space-between center"
                   fxLayoutGap="8px"
                 >
-                  <mat-checkbox [checked]="dimensionLayout.isChecked"
-                    >{{ dimensionLayout.name }}
-                  </mat-checkbox>
+                  <mat-slide-toggle [checked]="dimensionLayout.isChecked">
+                    {{ dimensionLayout.name }}
+                  </mat-slide-toggle>
+
                   <span
                     class="status-badge"
                     [ngClass]="{
