@@ -153,7 +153,11 @@ describe('Copy images Test Plan for Khiops Visualization', () => {
         toTest.forEach(({ tab, subtab, id, setup, teardown }) => {
           cy.get(`.mat-mdc-tab:contains("${tab}")`).first().click();
           if (subtab) {
-            cy.get(`.mat-mdc-tab:contains("${subtab}")`).first().click();
+            const subtabSelector =
+              subtab === 'Leaf rules'
+                ? '.leaf-tab-btn:visible'
+                : '.matrix-tab-btn:visible';
+            cy.contains(subtabSelector, subtab).click();
           }
           if (setup) setup();
           cy.testComponentScreenshot(id, tab);
