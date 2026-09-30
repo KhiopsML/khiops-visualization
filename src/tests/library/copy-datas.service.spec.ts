@@ -856,15 +856,28 @@ describe('CopyService', () => {
   describe('getDescriptionsDatas', () => {
     it('should format descriptions data correctly', () => {
       const mockSelectedArea: DynamicI = {
-        title: 'Description Title',
-        value: 'This is a description value with multiple words.',
+        inputDatas: () => ({
+          derivationRule: 'This is a derivation rule.',
+          level: 2,
+        }),
       };
 
       const result = service.getDescriptionsDatas(mockSelectedArea);
 
-      expect(result).toContain('Description Title');
-      expect(result).toContain(
-        'This is a description value with multiple words.',
+      expect(result).toBe(
+        'MOCKED_TRANSLATION\nThis is a derivation rule.\nMOCKED_TRANSLATION\n2\n',
+      );
+    });
+
+    it('should use the fallback derivation rule and preserve level zero', () => {
+      const mockSelectedArea: DynamicI = {
+        inputDatas: { derivationRule: '', level: 0 },
+      };
+
+      const result = service.getDescriptionsDatas(mockSelectedArea);
+
+      expect(result).toBe(
+        'MOCKED_TRANSLATION\nMOCKED_TRANSLATION\nMOCKED_TRANSLATION\n0\n',
       );
     });
   });

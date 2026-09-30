@@ -145,13 +145,6 @@ export class PreparationViewComponent extends SelectableTabComponent {
     }
   }
 
-  getDerivationRuleValue(): string {
-    return (
-      this.preparationDatas?.selectedVariable?.derivationRule ||
-      this.translate.get('GLOBAL.NO_DERIVATION_RULE')
-    );
-  }
-
   /**
    * Checks if the variables data has level information for displaying the level distribution button
    * @returns true if variables data has level property

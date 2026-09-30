@@ -181,9 +181,96 @@ export class CopyImageService {
       backgroundColor: '#ffffff',
       useCORS: true,
       allowTaint: true,
+      onclone: (documentClone, clonedElement) => {
+        this.normalizeClonedColors(documentClone, clonedElement);
+      },
     });
 
     return canvas.toDataURL('image/png');
+  }
+
+  private normalizeClonedColors(
+    documentClone: Document,
+    clonedElement: HTMLElement,
+  ) {
+    const colorCanvas = documentClone.createElement('canvas');
+    const context = colorCanvas.getContext('2d');
+    const view = documentClone.defaultView;
+
+    if (!context || !view) {
+      return;
+    }
+
+    colorCanvas.width = 1;
+    colorCanvas.height = 1;
+
+    const elements = [clonedElement, ...clonedElement.querySelectorAll('*')];
+    for (const element of elements) {
+      const styles = view.getComputedStyle(element);
+      for (let i = 0; i < styles.length; i++) {
+        const property = styles.item(i);
+        const value = styles.getPropertyValue(property);
+        if (value.includes('color(')) {
+          const normalizedValue = this.replaceColorFunctions(value, context);
+          if (normalizedValue !== value) {
+            (element as HTMLElement).style.setProperty(
+              property,
+              normalizedValue,
+            );
+          }
+        }
+      }
+    }
+  }
+
+  private replaceColorFunctions(
+    value: string,
+    context: CanvasRenderingContext2D,
+  ): string {
+    let result = '';
+    let searchFrom = 0;
+
+    while (searchFrom < value.length) {
+      const start = value.toLowerCase().indexOf('color(', searchFrom);
+      if (start < 0) {
+        result += value.slice(searchFrom);
+        break;
+      }
+
+      let depth = 1;
+      let end = start + 'color('.length;
+      while (end < value.length && depth > 0) {
+        if (value[end] === '(') {
+          depth++;
+        } else if (value[end] === ')') {
+          depth--;
+        }
+        end++;
+      }
+
+      if (depth !== 0) {
+        result += value.slice(searchFrom);
+        break;
+      }
+
+      result += value.slice(searchFrom, start);
+      result += this.colorFunctionToRgba(value.slice(start, end), context);
+      searchFrom = end;
+    }
+
+    return result;
+  }
+
+  private colorFunctionToRgba(
+    color: string,
+    context: CanvasRenderingContext2D,
+  ): string {
+    context.clearRect(0, 0, 1, 1);
+    context.fillStyle = color;
+    context.fillRect(0, 0, 1, 1);
+
+    const [red, green, blue, alpha] = context.getImageData(0, 0, 1, 1).data;
+    return `rgba(${red}, ${green}, ${blue}, ${alpha / 255})`;
   }
 
   private restoreGraphAfterCopy(currentDiv: HTMLElement) {

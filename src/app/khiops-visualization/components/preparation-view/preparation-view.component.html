@@ -130,41 +130,17 @@
                       </app-level-distribution-button>
                     }
                   </kl-ag-grid>
-                  <div fxLayout="column">
-                    <div fxFlex="50%">
-                      @if (preparationDatas?.selectedVariable) {
-                        <app-description-block
-                          fxFlex
-                          class="no-border-bottom"
-                          id="preparation-description-block-variable"
-                          title="{{ 'GLOBAL.NAME' | translate }}"
-                          [value]="
-                            $safeNavigationMigration(
-                              preparationDatas?.selectedVariable?.name
-                            )
-                          "
-                        ></app-description-block>
-                      }
-                      @if (!preparationDatas?.selectedVariable) {
-                        <kl-no-data fxFlex></kl-no-data>
-                      }
-                    </div>
-                    <div fxFlex="50%">
-                      @if (preparationDatas?.selectedVariable) {
-                        <app-description-block
-                          fxFlex
-                          class="no-border-top"
-                          id="preparation-description-block-derivation"
-                          title="{{ 'GLOBAL.DERIVATION_RULE' | translate }}"
-                          color="green"
-                          [value]="getDerivationRuleValue()"
-                        >
-                        </app-description-block>
-                      }
-                      @if (!preparationDatas?.selectedVariable) {
-                        <kl-no-data fxFlex></kl-no-data>
-                      }
-                    </div>
+                  <div>
+                    @if (preparationDatas?.selectedVariable) {
+                      <app-description-block
+                        fxFlex
+                        id="preparation-description-block-variable"
+                        [inputDatas]="preparationDatas?.selectedVariable"
+                      ></app-description-block>
+                    }
+                    @if (!preparationDatas?.selectedVariable) {
+                      <kl-no-data fxFlex></kl-no-data>
+                    }
                   </div>
                 </as-split-area>
               </as-split>

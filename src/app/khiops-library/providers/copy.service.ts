@@ -384,20 +384,22 @@ export class CopyService {
   getDescriptionsDatas(selectedArea: DynamicI) {
     let formattedDatas = '';
 
-    const title =
-      typeof selectedArea?.title === 'function'
-        ? selectedArea.title()
-        : selectedArea?.title;
-    const value =
-      typeof selectedArea?.value === 'function'
-        ? selectedArea.value()
-        : selectedArea?.value;
+    const inputDatas =
+      typeof selectedArea?.inputDatas === 'function'
+        ? selectedArea.inputDatas()
+        : selectedArea?.inputDatas;
 
-    if (title !== undefined && title !== null) {
-      formattedDatas += title + '\n';
+    if (!inputDatas) {
+      return formattedDatas;
     }
-    if (value !== undefined && value !== null) {
-      formattedDatas += value + '\n';
+
+    formattedDatas += this.translate.get('GLOBAL.DERIVATION_RULE') + '\n';
+    formattedDatas +=
+      (inputDatas.derivationRule ||
+        this.translate.get('GLOBAL.NO_DERIVATION_RULE')) + '\n';
+    formattedDatas += this.translate.get('GLOBAL.LEVEL') + '\n';
+    if (inputDatas.level !== undefined && inputDatas.level !== null) {
+      formattedDatas += inputDatas.level + '\n';
     }
 
     return formattedDatas;

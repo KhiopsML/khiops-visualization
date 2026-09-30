@@ -9,8 +9,13 @@
   fxFlexFill
   fxLayoutAlign="start center"
   fxLayout="row"
-  title="{{ tooltip() }}"
 >
-  <h1>{{ title() }}:</h1>
-  <kl-important-badge [text]="value() ?? ''" [color]="color()" />
+  <div fxFlex fxLayout="row" fxLayoutAlign="start center">
+    <h1>{{ 'GLOBAL.DERIVATION_RULE' | translate }}:</h1>
+    <kl-important-badge [text]="getDerivationRuleValue() ?? ''" color="green" />
+  </div>
+  <div fxLayout="row" fxLayoutAlign="start center">
+    <h1>{{ 'GLOBAL.LEVEL' | translate }}:</h1>
+    <kl-important-badge [text]="inputDatas()?.level ?? ''" color="orange" />
+  </div>
 </div>

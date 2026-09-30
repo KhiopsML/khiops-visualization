@@ -9,11 +9,10 @@
   border-radius: var(--border-radius);
   font-size: 12px;
   text-wrap: nowrap;
+  border: 1px var(--color-500) solid;
 }
 
 .important-badge-plain {
-  padding: 0;
-  border: none;
   background: transparent;
   font-weight: bold;
   color: var(--color-800);
