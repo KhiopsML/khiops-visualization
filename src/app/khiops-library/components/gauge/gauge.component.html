@@ -45,6 +45,6 @@
     text-anchor="middle"
     dominant-baseline="central"
   >
-    {{ percentageValue() }}%
+    {{ percentageValue() }}<tspan [attr.font-size]="fontSize * 0.7 + 'px'">%</tspan>
   </text>
 </svg>
