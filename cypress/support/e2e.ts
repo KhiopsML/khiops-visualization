@@ -15,6 +15,11 @@
 
 // When a command from ./commands is ready to use, import with `import './commands'` syntax
 import './commands';
+// Force square corners before the application renders on every page load.
+Cypress.on('window:before:load', (win) => {
+  win.document.documentElement.style.setProperty('--border-radius', '0px');
+});
+
 // Global setup: Set number precision to 8 for all tests
 beforeEach(() => {
   // Ensure number precision is set to 8 before every test
