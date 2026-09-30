@@ -122,11 +122,11 @@ describe('VariableSearchDialogComponent', () => {
     ) as jasmine.SpyObj<TreenodesService>;
   });
 
-  // ngOnInit defers heavy work via requestAnimationFrame + setTimeout
-  // (deferAfterPaint); tick() drains that chain so signals are populated
-  // before each test runs. Using a bounded tick (not flush()) avoids
-  // draining unrelated timers scheduled by the real AgGridComponent child.
+  // Run the deferred initialization deterministically under fakeAsync.
   beforeEach(fakeAsync(() => {
+    spyOn(window, 'requestAnimationFrame').and.callFake((callback) =>
+      setTimeout(() => callback(performance.now()), 0) as unknown as number,
+    );
     fixture.detectChanges();
     tick(20);
   }));
