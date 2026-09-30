@@ -63,7 +63,7 @@ export class ImportExtDatasListComponent {
           field: 'remove',
           cellRenderer: IconCellComponent,
           cellRendererParams: {
-            icon: 'delete',
+            icon: 'trash',
             action: this.removeExtDatasFromList.bind(this),
           },
         },
