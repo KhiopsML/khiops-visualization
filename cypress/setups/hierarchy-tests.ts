@@ -8,7 +8,7 @@
 export function setupHierarchyTests(datas) {
   const testsValues = [];
 
-  testsValues.push('UNFOLD HIERARCHY');
+  testsValues.push('Unfold hierarchy');
   testsValues.push('Cells');
   testsValues.push('Information rate');
   testsValues.push('Nb of clusters per dimension');
