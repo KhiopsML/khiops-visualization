@@ -259,7 +259,7 @@ describe('Visualization', () => {
       );
 
       const expectedRes = {
-        title: 'GLOBAL.CURRENT_GROUP',
+        title: 'GLOBAL.DETAILS_OF',
         values: [
           {
             values: 'Husband',
@@ -300,7 +300,7 @@ describe('Visualization', () => {
       );
 
       const expectedRes = {
-        title: 'GLOBAL.CURRENT_GROUP',
+        title: 'GLOBAL.DETAILS_OF',
         values: [
           {
             values: 'Not-in-family',
@@ -374,7 +374,7 @@ describe('Visualization', () => {
       );
 
       const expectedRes = {
-        title: 'GLOBAL.CURRENT_GROUP',
+        title: 'GLOBAL.DETAILS_OF',
         values: [
           {
             values: 'Prof-school',
