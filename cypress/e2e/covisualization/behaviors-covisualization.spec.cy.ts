@@ -152,10 +152,8 @@ describe('Behaviors tests for Khiops Covisualization', () => {
       cy.loadFile('covisualization', fileName);
 
       // Now we check matrix values
-      cy.get('#matrix-selected').trigger('mousemove', {
+      cy.get('#matrix-selected').should('be.visible').trigger('mousemove', {
         position: 'center',
-        ctrlKey: true,
-        force: true,
       });
       cy.get('.matrix-tooltip-comp').contains('2 496');
 
@@ -190,17 +188,9 @@ describe('Behaviors tests for Khiops Covisualization', () => {
       cy.get('#tree-comp-0').contains('A214');
 
       // Now we check matrix values
-      cy.get('#matrix-selected')
-        .should('be.visible')
-        .then(($canvas) => {
-          // bottomRight
-          cy.wrap($canvas).trigger(
-            'mousemove',
-            $canvas.width() - 5,
-            $canvas.height() - 5,
-          );
-        });
-
+      cy.get('#matrix-selected').should('be.visible').trigger('mousemove', {
+        position: 'bottomRight',
+      });
       cy.get('.matrix-tooltip-comp').contains('0.043');
     });
   });
@@ -262,31 +252,24 @@ describe('Behaviors tests for Khiops Covisualization', () => {
       cy.get('#cluster-composition-0').contains('A10');
       cy.get('.annotation-comp').first().contains('A10');
       cy.get('#cluster-distribution-1').contains('A10');
-      cy.get('#matrix-selected')
-        .should('be.visible')
-        .then(($canvas) => {
-          // topLeft
-          cy.wrap($canvas).trigger('mousemove', 5, 5);
-        });
+      cy.get('#matrix-selected').should('be.visible').trigger('mousemove', {
+        position: 'topLeft',
+      });
       cy.get('.matrix-tooltip-comp').contains('A10');
       cy.get('#selected-clusters-grid').contains('A10');
 
       // ### Click on matrix cell
       cy.get('#matrix-selected')
         .should('be.visible')
-        .then(($canvas) => {
-          // topLeft
-          cy.wrap($canvas).trigger('mousemove', 5, 5);
+        .trigger('mousemove', {
+          position: 'topLeft',
         })
         .click(1, 1, { force: true }); // Force coords to click on the matrix
 
       // Re-trigger mousemove after click: the click can dismiss the tooltip temporarily
       cy.get('#matrix-selected')
         .should('be.visible')
-        .then(($canvas) => {
-          // topLeft
-          cy.wrap($canvas).trigger('mousemove', 5, 5);
-        });
+        .trigger('mousemove', { position: 'topLeft' });
 
       // Check values
       cy.get('.matrix-tooltip-comp').contains('A10');

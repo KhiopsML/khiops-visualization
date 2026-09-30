@@ -54,12 +54,9 @@ describe('Test Plan for Khiops Covisualization', () => {
         cy.get('.matrix-toggle-comp .Balanced').click();
 
         // Move to the first matrix cell
-        cy.get('#matrix-selected')
-          .should('be.visible')
-          .then(($canvas) => {
-            //  bottomLeft
-            cy.wrap($canvas).trigger('mousemove', 5, $canvas.height() - 5);
-          });
+        cy.get('#matrix-selected').should('be.visible').trigger('mousemove', {
+          position: 'bottomLeft',
+        });
 
         // Check Matrix tooltip
         cy.get('.matrix-tooltip-comp').contains(res.matrixTooltip[0]);
@@ -69,12 +66,9 @@ describe('Test Plan for Khiops Covisualization', () => {
         cy.get('#tree_1').find('.tree-expando:eq(1)').click();
 
         // Move to the first matrix cell
-        cy.get('#matrix-selected')
-          .should('be.visible')
-          .then(($canvas) => {
-            //  bottomLeft
-            cy.wrap($canvas).trigger('mousemove', 5, $canvas.height() - 5);
-          });
+        cy.get('#matrix-selected').should('be.visible').trigger('mousemove', {
+          position: 'bottomLeft',
+        });
 
         // Check Matrix tooltip
         cy.get('.matrix-tooltip-comp').contains(res.matrixTooltip[1]);
@@ -143,12 +137,9 @@ describe('Test Plan for Khiops Covisualization', () => {
         cy.get('.button-confirm-hierarchy').click();
 
         // Move to the last matrix cell
-        cy.get('#matrix-selected')
-          .should('be.visible')
-          .then(($canvas) => {
-            // topLeft
-            cy.wrap($canvas).trigger('mousemove', 5, 5);
-          });
+        cy.get('#matrix-container').should('be.visible').trigger('mousemove', {
+          position: 'topLeft',
+        });
 
         // Check Matrix tooltip
         cy.get('.matrix-tooltip-comp').contains(res.matrixTooltip[2]);
