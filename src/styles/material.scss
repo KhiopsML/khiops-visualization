@@ -360,7 +360,7 @@ mat-sidenav {
 
 .mdc-slider__track--active,
 .mdc-slider__track--inactive {
-  height: 3px !important;
+  // height: 3px !important;
   background-color: var(--color-100) !important;
 }
 
@@ -515,6 +515,9 @@ button.mat-accent {
 
 mat-slider {
   scale: 0.8 !important;
+  --mat-slider-active-track-shape: 6px !important;
+  --mat-slider-active-track-height: 6px !important;
+  --mat-slider-inactive-track-shape: 3px !important;
 }
 .mat-mdc-slider .mdc-slider__thumb-knob {
   background-color: var(--color-brand-orange) !important;
@@ -522,8 +525,8 @@ mat-slider {
   box-shadow: none;
 }
 .mat-mdc-slider .mdc-slider__track--active_fill {
-  background-color: var(--color-brand-orange) !important;
-  border-color: var(--color-brand-orange) !important;
+  background-color: var(--color-brand-orange-light-100) !important;
+  border-color: var(--color-brand-orange-light-100) !important;
 }
 
 /* Trait inactif (partie restante) */

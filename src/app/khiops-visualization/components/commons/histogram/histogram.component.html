@@ -27,48 +27,81 @@
     }
     <div fxLayout="row" fxLayoutAlign="end center" class="comp-header">
       <div fxFlexFill class="scrollbar-thin">
-        <div fxFlex fxLayout="row" fxLayoutAlign="start center">
-          <h2 fxFlex title="{{ 'TOOLTIPS.DISTRIBUTION.TITLE' | translate }}">
+        <div fxFlex fxLayout="row" fxLayoutAlign="end center">
+          <h2 title="{{ 'TOOLTIPS.DISTRIBUTION.TITLE' | translate }}">
             {{ 'GLOBAL.DENSITY' | translate }}
           </h2>
           @if (histogramNumber > 1) {
             <div
-              class="app-histogram-slider screenshot-hide"
+              class="app-histogram-slider screenshot-hide kl-slider-container"
+              fxLayoutAlign="start center"
               fxFlex
+              fxLayout="row"
               style="width: 100%"
             >
-              <span> {{ 'GLOBAL.INTERPRETABLE_HISTOGRAM' | translate }}</span>
-              <mat-slider
-                [max]="histogramNumber - 1"
-                [min]="0"
-                [step]="1"
-                style="width: 100%"
+              <span>{{ 'GLOBAL.INTERPRETABLE_HISTOGRAM' | translate }}</span>
+              <div
+                class="slider-container"
+                fxFlex
+                fxLayout="column"
+                fxLayoutAlign="center center"
               >
-                <input
-                  [(ngModel)]="defaultInterpretableHistogramNumber"
-                  matSliderThumb
-                />
-              </mat-slider>
-              <mat-slider
-                [max]="histogramNumber - 1"
-                [min]="0"
-                [step]="1"
-                (input)="
-                  onInterpretableHistogramChanged(
-                    $safeNavigationMigration($event?.target?.['valueAsNumber'])
-                  )
-                "
-                style="width: 100%"
-              >
-                <input
-                  [(ngModel)]="interpretableHistogramNumber"
-                  matSliderThumb
-                />
-              </mat-slider>
+                <mat-slider
+                  [max]="histogramNumber - 1"
+                  [min]="0"
+                  [step]="1"
+                  style="width: 100%"
+                >
+                  <input
+                    [(ngModel)]="defaultInterpretableHistogramNumber"
+                    matSliderThumb
+                  />
+                </mat-slider>
+                <mat-slider
+                  [max]="histogramNumber - 1"
+                  [min]="0"
+                  [step]="1"
+                  (input)="
+                    onInterpretableHistogramChanged(
+                      $safeNavigationMigration(
+                        $event?.target?.['valueAsNumber']
+                      )
+                    )
+                  "
+                  style="width: 100%"
+                >
+                  <input
+                    [(ngModel)]="interpretableHistogramNumber"
+                    matSliderThumb
+                  />
+                </mat-slider>
+              </div>
+              <div fxLayout="row" class="increment">
+                <button
+                  class="button-reduce-hierarchy"
+                  mat-stroked-button
+                  aria-label="Decrease interpretable histogram"
+                  (click)="decreaseInterpretableHistogram()"
+                >
+                  <svg lucideIcon="minus" size="16"></svg>
+                </button>
+                <button
+                  class="button-increase-hierarchy"
+                  mat-stroked-button
+                  aria-label="Increase interpretable histogram"
+                  (click)="increaseInterpretableHistogram()"
+                >
+                  <svg lucideIcon="plus" size="16"></svg>
+                </button>
+              </div>
             </div>
           }
         </div>
-        <div class="comp-header-tools" fxLayout="row">
+        <div
+          class="comp-header-tools"
+          fxLayout="row"
+          fxLayoutAlign="start center"
+        >
           <kl-graph-options-menu
             [graphOptions]="graphOptionsX"
             (graphOptionsChange)="changeGraphTypeX($event)"

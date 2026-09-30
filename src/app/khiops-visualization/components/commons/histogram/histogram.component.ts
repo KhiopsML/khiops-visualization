@@ -234,6 +234,28 @@ export class HistogramComponent extends SelectableComponent implements OnInit {
     this.interpretableHistogramChanged.emit(interpretableHistogram);
   }
 
+  public decreaseInterpretableHistogram() {
+    this.setInterpretableHistogram(
+      (this.interpretableHistogramNumber ?? 0) - 1,
+    );
+  }
+
+  public increaseInterpretableHistogram() {
+    this.setInterpretableHistogram(
+      (this.interpretableHistogramNumber ?? 0) + 1,
+    );
+  }
+
+  private setInterpretableHistogram(value: number) {
+    const maximum = Math.max((this.histogramNumber ?? 1) - 1, 0);
+    const histogram = Math.min(Math.max(value, 0), maximum);
+
+    if (histogram !== this.interpretableHistogramNumber) {
+      this.interpretableHistogramNumber = histogram;
+      this.onInterpretableHistogramChanged(histogram);
+    }
+  }
+
   override ngOnDestroy() {
     this.tooltipOverlay?.dispose();
     this.histogramSelectedCanvas?.removeEventListener(
