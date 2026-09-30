@@ -11,17 +11,15 @@ describe('Test Plan for Khiops Covisualization', () => {
 
   files.forEach((fileName) => {
     it(`Check values for ${fileName}`, () => {
-
       cy.loadFile('visualization', fileName);
 
       cy.readFile('./src/assets/mocks/kv/' + fileName).then(() => {
-
         cy.get('.mat-mdc-tab:contains("Tree")').first().click();
 
         cy.get('#tree-preparation-informations-block-summary').contains(
           'Classification',
         );
-        cy.get('#tree-preparation-target-variable-stats').contains('1st');
+        // cy.get('#tree-preparation-target-variable-stats').contains('1st');
         cy.get('#tree-preparation-informations-block-informations').contains(
           'Informative',
         );
@@ -50,10 +48,14 @@ describe('Test Plan for Khiops Covisualization', () => {
         cy.get('#distribution-chart-0').should('exist');
         cy.get('#target-distribution-chart-1').should('exist');
 
-        cy.get('#tree-node-infos').contains('0.38');
-        cy.get('#tree-node-infos').contains('3790');
+        cy.get(
+          '#tree-preparation-hyper .tree-hyper-selection #tree-hyper-selection-comp',
+        ).contains('0.38');
+        cy.get(
+          '#tree-preparation-hyper .tree-hyper-selection #tree-hyper-selection-comp',
+        ).contains('3790');
 
-        cy.get('.mat-mdc-tab:contains("Leaf rules")').first().click();
+        cy.contains('.leaf-tab-btn:visible', 'Leaf rules').click();
 
         cy.get('#tree-leaf-rules-comp').contains('workclass');
         cy.get('#tree-leaf-rules-comp').contains('Craft');

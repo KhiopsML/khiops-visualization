@@ -90,15 +90,4 @@
       }
     }
   }
-
-  #tree-node-infos {
-    padding: 1rem 0 0rem 0;
-    width: 100%;
-    app-description-block {
-      flex: 1;
-    }
-    :first-child {
-      margin-right: 12px;
-    }
-  }
 }
