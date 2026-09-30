@@ -5,6 +5,7 @@
  */
 
 import { TranslateService } from '@ngstack/translate';
+import { LevelCellComponent } from '@khiops-library/components/ag-grid/level-cell/level-cell.component';
 
 export function getPreparation2dVariablesGridColumns(
   translate: TranslateService,
@@ -36,6 +37,7 @@ export function getPreparation2dVariablesGridColumns(
       headerName: translate.get('GLOBAL.LEVEL'),
       field: 'level',
       tooltip: translate.get('TOOLTIPS.PREPARATION_2D.VARIABLES.LEVEL'),
+      cellRenderer: LevelCellComponent,
     },
     {
       headerName: translate.get('GLOBAL.LEVEL_1'),

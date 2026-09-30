@@ -5,6 +5,7 @@
  */
 
 import { BorderTextCellComponent } from '@khiops-library/components/ag-grid/border-text-cell/border-text-cell.component';
+import { LevelCellComponent } from '@khiops-library/components/ag-grid/level-cell/level-cell.component';
 import { TranslateService } from '@ngstack/translate';
 
 export function getPreparationVariablesGridColumns(
@@ -25,6 +26,7 @@ export function getPreparationVariablesGridColumns(
       headerName: translate.get('GLOBAL.LEVEL'),
       field: 'level',
       tooltip: translate.get('TOOLTIPS.PREPARATION.VARIABLES.LEVEL'),
+      cellRenderer: LevelCellComponent,
     },
     {
       headerName: translate.get('GLOBAL.PARTS'),

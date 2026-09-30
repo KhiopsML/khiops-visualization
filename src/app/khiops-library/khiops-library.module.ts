@@ -118,6 +118,7 @@ import { AgGridComponent } from './components/ag-grid/ag-grid.component';
 import { AgGridLoadingOverlayComponent } from './components/ag-grid/ag-grid-loading-overlay.component';
 import { MatrixTooltipComponent } from './components/matrix-tooltip/matrix-tooltip.component';
 import { CheckboxCellComponent } from './components/ag-grid/checkbox-cell/checkbox-cell.component';
+import { LevelCellComponent } from './components/ag-grid/level-cell/level-cell.component';
 import { IconCellComponent } from './components/ag-grid/icon-cell/icon-cell.component';
 import { IconComponent } from './components/icon/icon.component';
 import { DistributionGraphComponent } from './components/distribution-graph/distribution-graph.component';
@@ -211,6 +212,7 @@ import { ImportantBadgeComponent } from './components/important-badge/important-
     ChartComponent,
     InformationsBlockComponent,
     GaugeComponent,
+    LevelCellComponent,
     GravityCellComponent,
     AgGridLoadingOverlayComponent,
     SearchInputComponent,
@@ -336,6 +338,7 @@ import { ImportantBadgeComponent } from './components/important-badge/important-
     GraphOptionsMenuComponent,
     MatrixModeComponent,
     CheckboxCellComponent,
+    LevelCellComponent,
     IconCellComponent,
     IconComponent,
     DistributionGraphComponent,

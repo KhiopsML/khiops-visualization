@@ -42,10 +42,10 @@ mat-form-field {
 }
 
 mat-progress-bar {
-  --mat-progress-bar-track-height: 8px;
-  --mat-progress-bar-active-indicator-height: 8px;
-  --mat-progress-bar-track-shape: 4px;
-  border-radius: 4px;
+  --mat-progress-bar-track-height: 8px !important;
+  --mat-progress-bar-active-indicator-height: 8px !important;
+  --mat-progress-bar-track-shape: 4px !important;
+  border-radius: 4px !important;
 }
 .mat-mdc-progress-bar-secondary {
   animation-duration: 1000ms !important;

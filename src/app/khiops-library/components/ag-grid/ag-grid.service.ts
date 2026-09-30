@@ -56,6 +56,10 @@ export class AgGridService {
     columnField: string,
     threshold: number = 0.7,
   ): 'left' | 'right' {
+    if (columnField === 'level') {
+      return 'left';
+    }
+
     if (!inputDatas || inputDatas.length === 0) {
       return 'left';
     }
@@ -104,6 +108,12 @@ export class AgGridService {
     } = {},
   ): ColDef[] {
     const columnDefs: ColDef[] = [];
+    const maxLevel = displayedColumns.some((col) => col?.field === 'level')
+      ? inputDatas.reduce((maximum, row) => {
+          const level = Number(row?.level);
+          return Number.isFinite(level) ? Math.max(maximum, level) : maximum;
+        }, 0)
+      : undefined;
 
     for (let i = 0; i < displayedColumns.length; i++) {
       const col = displayedColumns[i];
@@ -124,7 +134,13 @@ export class AgGridService {
           hide: col.show === false,
           width: options.cellsSizes?.[options.gridId!]?.[col.field],
           cellRenderer: col.cellRenderer,
-          cellRendererParams: col.cellRendererParams,
+          cellRendererParams:
+            col.field === 'level'
+              ? {
+                  ...(col.cellRendererParams || {}),
+                  maxLevel,
+                }
+              : col.cellRendererParams,
           cellDataType: 'text', // Force all cells to be treated as text to prevent automatic checkbox rendering
           cellClass: (params: any) => {
             const alignmentClass =

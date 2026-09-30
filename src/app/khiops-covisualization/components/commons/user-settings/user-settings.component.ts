@@ -67,6 +67,8 @@ export class UserSettingsComponent implements OnChanges {
 
     AppService.Ls.set(LS.SETTING_NUMBER_PRECISION, this.numberPrecision);
     AppConfig.covisualizationCommon.GLOBAL.TO_FIXED = this.numberPrecision;
+    this.khiopsLibraryService.getAppConfig().common.GLOBAL.TO_FIXED =
+      this.numberPrecision;
 
     // Matrix contrast
     this.contrastValue =
@@ -85,6 +87,8 @@ export class UserSettingsComponent implements OnChanges {
     AppService.Ls.set(LS.SETTING_NUMBER_PRECISION, this.numberPrecision);
     if (this.numberPrecision !== undefined) {
       AppConfig.covisualizationCommon.GLOBAL.TO_FIXED = this.numberPrecision;
+      this.khiopsLibraryService.getAppConfig().common.GLOBAL.TO_FIXED =
+        this.numberPrecision;
     }
 
     AppService.Ls.set(LS.SETTING_MATRIX_CONTRAST, this.contrastValue);

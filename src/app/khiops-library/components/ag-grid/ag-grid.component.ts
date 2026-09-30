@@ -152,7 +152,7 @@ export class AgGridComponent
     this.settingsChangedSub =
       this.khiopsLibraryService.settingsChanged$.subscribe(() => {
         if (this.isGridApiAvailable()) {
-          this.agGrid!.api.refreshCells({ force: true });
+          this.agGrid!.api.redrawRows();
         }
       });
 

@@ -86,6 +86,11 @@ describe('AgGridService', () => {
     expect(service.getCellAlignment(data, 'v')).toBe('right');
   });
 
+  it('getCellAlignment returns "left" for the level column', () => {
+    const data = [{ level: 1 }, { level: 2 }, { level: 3 }];
+    expect(service.getCellAlignment(data, 'level')).toBe('left');
+  });
+
   it('getCellAlignment returns "left" when all values are text', () => {
     const data = [{ v: 'a' }, { v: 'b' }, { v: 'c' }];
     expect(service.getCellAlignment(data, 'v')).toBe('left');
@@ -311,6 +316,26 @@ describe('AgGridService', () => {
       appConfig: { GLOBAL: { TO_FIXED: 4 } },
     });
     expect(result[0].cellRenderer).toBe(customRenderer);
+  });
+
+  it('createColumnDefs passes the maximum level to the level cell renderer', () => {
+    const customRenderer = () => '';
+    const cols: GridColumnsI[] = [
+      {
+        headerName: 'Level',
+        field: 'level',
+        cellRenderer: customRenderer,
+        cellRendererParams: { customOption: true },
+      },
+    ];
+    const data = [{ level: 3 }, { level: 12 }, { level: 7 }];
+
+    const result = service.createColumnDefs(cols, data);
+
+    expect(result[0].cellRendererParams).toEqual({
+      customOption: true,
+      maxLevel: 12,
+    });
   });
 
   // ─── createComparator ────────────────────────────────────────────────
