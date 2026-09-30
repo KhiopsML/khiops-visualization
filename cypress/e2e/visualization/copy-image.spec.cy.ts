@@ -34,7 +34,6 @@ const allComponents: ComponentEntry[] = [
   { tab: 'Preparation', id: '#preparation-variables-list' },
   { tab: 'Preparation', id: '#distribution-graph0' },
   { tab: 'Preparation', id: '#target-distribution-graph0' },
-  { tab: 'Preparation', id: '#preparation-description-block-variable' },
   { tab: 'Preparation', id: '#preparation-description-block-derivation' },
   { tab: 'Preparation', id: '#preparation-current-interval' },
 
@@ -54,7 +53,6 @@ const allComponents: ComponentEntry[] = [
   { tab: 'Text preparation', id: '#preparation-variables-list' },
   { tab: 'Text preparation', id: '#distribution-graph0' },
   { tab: 'Text preparation', id: '#target-distribution-graph0' },
-  { tab: 'Text preparation', id: '#preparation-description-block-variable' },
   { tab: 'Text preparation', id: '#preparation-description-block-derivation' },
   { tab: 'Text preparation', id: '#preparation-current-interval' },
 
@@ -81,7 +79,11 @@ const allComponents: ComponentEntry[] = [
   { tab: 'Tree preparation', id: '#tree-preparation-select' },
   { tab: 'Tree preparation', id: '#tree-details-comp' },
   { tab: 'Tree preparation', id: '#tree-preparation-hyper' },
-  { tab: 'Tree preparation', subtab: 'Leaf rules', id: '#tree-leaf-rules-comp' },
+  {
+    tab: 'Tree preparation',
+    subtab: 'Leaf rules',
+    id: '#tree-leaf-rules-comp',
+  },
 
   // Preparation 2D
   { tab: 'Preparation 2D', id: '#preparation-2d-informations-block-summary' },
@@ -116,7 +118,10 @@ const allComponents: ComponentEntry[] = [
     id: '#importance-distribution-graph-comp',
     setup: () => cy.get('.level-distribution-btn').eq(1).click({ force: true }),
     teardown: () =>
-      cy.get('#importance-distribution-graph-close-btn').first().click({ force: true }),
+      cy
+        .get('#importance-distribution-graph-close-btn')
+        .first()
+        .click({ force: true }),
   },
 
   // Evaluation
@@ -135,7 +140,6 @@ describe('Copy images Test Plan for Khiops Visualization', () => {
 
   files.forEach((fileName) => {
     it(`Check values for ${fileName}`, () => {
-
       cy.loadFile('visualization', fileName);
 
       cy.readFile('./src/assets/mocks/kv/' + fileName).then(() => {

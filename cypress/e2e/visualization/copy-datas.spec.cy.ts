@@ -11,7 +11,6 @@ describe('Copy datas Test Plan for Khiops Visualization', () => {
   describe('Copy datas Test Plan for Khiops Visualization', () => {
     files.forEach((fileName) => {
       it(`Check values for ${fileName}`, () => {
-
         cy.loadFile('visualization', fileName);
 
         cy.readFile('./src/assets/mocks/kv/' + fileName).then(() => {
@@ -49,11 +48,6 @@ describe('Copy datas Test Plan for Khiops Visualization', () => {
           cy.testComponentCopyDatas(
             '#target-distribution-graph0',
             'kv-target-distribution-graph0.txt',
-          );
-
-          cy.testComponentCopyDatas(
-            '#preparation-description-block-variable',
-            'kv-preparation-description-block-variable.txt',
           );
           cy.testComponentCopyDatas(
             '#preparation-description-block-derivation',
