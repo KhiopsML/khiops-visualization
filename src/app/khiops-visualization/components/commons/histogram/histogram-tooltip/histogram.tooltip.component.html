@@ -11,7 +11,13 @@
       <p class="title" [innerHTML]="title"></p>
     }
     @if (body) {
-      <p [innerHTML]="body"></p>
+      <div class="body-item">
+        <span
+          class="body-item-marker"
+          [style.background]="markerColor"
+        ></span>
+        <p [innerHTML]="body"></p>
+      </div>
     }
   </div>
 }

@@ -458,7 +458,11 @@ export class HistogramComponent extends SelectableComponent implements OnInit {
           bar || this.datas[0] || ({} as HistogramValuesI),
           barPosition === 0,
         );
-        this.showTooltipData(event, tooltipData);
+        this.showTooltipData(
+          event,
+          tooltipData,
+          this.bars?.[barPosition]?.color ?? this.defaultBarColor,
+        );
 
         if (this.ctxHover && this.histogramHoverCanvas) {
           HistogramUIService.cleanDomContext(
@@ -495,7 +499,11 @@ export class HistogramComponent extends SelectableComponent implements OnInit {
     }
   }
 
-  private showTooltipData(event: MouseEvent, tooltipData: TooltipData) {
+  private showTooltipData(
+    event: MouseEvent,
+    tooltipData: TooltipData,
+    markerColor: string,
+  ) {
     if (!this.tooltipComponent) {
       this.tooltipOverlay = this.overlay.create({
         positionStrategy: this.overlay
@@ -511,6 +519,7 @@ export class HistogramComponent extends SelectableComponent implements OnInit {
 
     this.tooltipComponent.setInput('title', tooltipData.title);
     this.tooltipComponent.setInput('body', tooltipData.body);
+    this.tooltipComponent.setInput('markerColor', markerColor);
     this.tooltipComponent.setInput('posX', event.clientX);
     this.tooltipComponent.setInput('posY', event.clientY - 40);
     this.tooltipComponent.setInput(

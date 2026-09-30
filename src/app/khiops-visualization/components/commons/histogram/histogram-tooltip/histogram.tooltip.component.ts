@@ -22,6 +22,7 @@ import {
 export class HistogramTooltipComponent implements OnChanges, OnDestroy {
   @Input() public title: string = '';
   @Input() public body: string = '';
+  @Input() public markerColor: string = '#f84700';
   @Input() public display: boolean = false;
   @Input() private posX: number = 0;
   @Input() private posY: number = 0;

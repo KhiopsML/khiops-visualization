@@ -28,3 +28,19 @@
   font-weight: bold;
   margin-bottom: -5px;
 }
+
+.body-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 6px;
+}
+
+.body-item-marker {
+  display: inline-block;
+  border-radius: 50%;
+  flex: 0 0 auto;
+  width: 10px;
+  height: 10px;
+  margin-top: 16px;
+  border: 1px solid var(--color-0);
+}
