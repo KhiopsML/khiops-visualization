@@ -81,6 +81,10 @@ const FULL_HOVER = true;
  */
 const HOVER_HITBOX_PADDING = DASHED_SELECTION_PADDING;
 
+const BAR_BORDER_RADIUS = 3;
+
+const BAR_OPACITY = 0.8; // 0.7
+
 /**
  * Service to manage Chart.js operations and configurations.
  * Handles chart initialization, colorization, selection, and updates.
@@ -93,7 +97,8 @@ export class ChartManagerService {
   private fontColor: string = '#999';
   private lastDataHash: string | null = null;
   private selectedBarIndex: number | undefined;
-  private externalTooltipRef: ComponentRef<ChartExternalTooltipComponent> | undefined;
+  private externalTooltipRef:
+    ComponentRef<ChartExternalTooltipComponent> | undefined;
 
   constructor(
     private configService: ConfigService,
@@ -207,35 +212,6 @@ export class ChartManagerService {
         this.chart?.destroy();
       } catch (e) {}
       this.lastDataHash = null; // Reset hash when reinitializing chart
-
-      const shadowPlugin = {
-        id: 'selectedBarShadow',
-        beforeDatasetsDraw: (chart: ChartJs.Chart) => {
-          if (this.selectedBarIndex === undefined) return;
-          const ctx = chart.ctx;
-          ctx.save();
-          // ctx.shadowColor = 'rgba(0, 0, 0, 0.3)';
-          ctx.shadowColor = 'rgba(0, 0, 0, 0)';
-          ctx.shadowBlur = 2;
-          ctx.shadowOffsetX = 0;
-          ctx.shadowOffsetY = 2;
-          // ctx.fillStyle = 'rgb(0 0 0)';
-          for (let i = 0; i < chart.data.datasets.length; i++) {
-            const meta = chart.getDatasetMeta(i);
-            if (meta.hidden) continue;
-            // @ts-ignore
-            const el = meta.data[this.selectedBarIndex] as any;
-            if (!el) continue;
-            // Draw a solid opaque rectangle so the canvas shadow is fully opaque
-            const barX = el.x - el.width / 2;
-            const barY = el.y;
-            const barW = el.width;
-            const barH = el.base - el.y;
-            ctx.fillRect(barX, barY, barW, barH);
-          }
-          ctx.restore();
-        },
-      };
 
       const chartAreaBorder = {
         id: 'chartAreaBorder',
@@ -498,12 +474,7 @@ export class ChartManagerService {
         type: type,
         data: data,
         options: options,
-        plugins: [
-          shadowPlugin,
-          chartAreaBorder,
-          dashedSelectionPlugin,
-          hoverPaddingPlugin,
-        ],
+        plugins: [chartAreaBorder, dashedSelectionPlugin, hoverPaddingPlugin],
       };
       this.chart = new ChartJs.Chart(ctx, config);
       return true;
@@ -734,11 +705,11 @@ export class ChartManagerService {
         const baseColor = colorSet?.domain[i]!;
         if (dataset.type === CHART_TYPES.LINE) {
           dataset.backgroundColor = new Array(inputDatas.labels.length).fill(
-            UtilsService.hexToRGBa(baseColor, 0.7),
+            UtilsService.hexToRGBa(baseColor, BAR_OPACITY),
           );
         } else {
           dataset.backgroundColor = new Array(inputDatas.labels.length).fill(
-            UtilsService.hexToRGBa(baseColor, 0.7),
+            UtilsService.hexToRGBa(baseColor, BAR_OPACITY),
           );
         }
         const defaultGroupIndex = dataset.extra?.findIndex(
@@ -746,7 +717,7 @@ export class ChartManagerService {
         );
         // Apply hatching for default group index bar, keeping the same base color
         if (defaultGroupIndex !== -1 && defaultGroupIndex !== undefined) {
-          const hatchColor = UtilsService.hexToRGBa(baseColor, 0.7);
+          const hatchColor = UtilsService.hexToRGBa(baseColor, BAR_OPACITY);
           // @ts-ignore
           dataset.backgroundColor[defaultGroupIndex] = this.createHatchPattern(
             hatchColor ?? '',
@@ -800,6 +771,8 @@ export class ChartManagerService {
           }
           dataset.borderWidth = barBorderWidth;
 
+          dataset.borderRadius = BAR_BORDER_RADIUS;
+
           // Chart.js expects a corner object; only convert once, the array/number form is the source of truth
           if (Array.isArray(dataset.borderRadius)) {
             const [topLeft, topRight, bottomLeft, bottomRight] =
@@ -815,8 +788,8 @@ export class ChartManagerService {
             dataset.borderRadius = {
               topLeft: radius,
               topRight: radius,
-              bottomLeft: 0,
-              bottomRight: 0,
+              bottomLeft: radius,
+              bottomRight: radius,
             };
           }
         }
