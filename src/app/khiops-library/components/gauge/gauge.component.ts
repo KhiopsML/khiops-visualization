@@ -50,11 +50,11 @@ export class GaugeComponent {
   );
 
   readonly backgroundStrokeWidth = computed(() =>
-    Math.max(GaugeComponent.minStrokeWidth, this.size() * 0.07),
+    Math.max(GaugeComponent.minStrokeWidth, this.size() * 0.05),
   );
 
   readonly progressStrokeWidth = computed(() =>
-    Math.max(GaugeComponent.minStrokeWidth, this.size() * 0.08),
+    Math.max(GaugeComponent.minStrokeWidth, this.size() * 0.06),
   );
 
   readonly circleTransform = computed(() => {
