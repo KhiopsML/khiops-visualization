@@ -441,12 +441,6 @@ export class PreparationDatasService {
           title = this.translate.get('GLOBAL.CURRENT_GROUP');
         }
 
-        if (variableDetails.isLimitedDatas) {
-          title +=
-            ' ( * ' +
-            this.translate.get('GLOBAL.LIMIT_GRAPH_DATAS_WARNING') +
-            ')';
-        }
       }
       if (this.preparationDatas && this.preparationDatas[preparationSource]) {
         this.preparationDatas[preparationSource].currentIntervalDatas.title =
@@ -515,12 +509,6 @@ export class PreparationDatasService {
           AppConfig.visualizationCommon.GLOBAL.MAX_CHART_SIZE;
         if (currentDatas.values.length > maxDatasSize) {
           currentDatas.values.length = maxDatasSize;
-
-          const title =
-            ' ( * ' +
-            this.translate.get('GLOBAL.LIMIT_GRAPH_DATAS_WARNING') +
-            ')';
-          variableStatsDatas.labels.push(title);
         }
 
         // Calculate total frequency sum once

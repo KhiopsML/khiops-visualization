@@ -5,7 +5,6 @@
  */
 
 import cloneDeep from 'lodash-es/cloneDeep';
-import { AppConfig } from '../../../environments/environment';
 import {
   DimensionVisualization,
   VariableDetail,
@@ -28,10 +27,7 @@ export class VariableDetailsModel {
     values: string[];
     frequencies: string[];
   };
-  isLimitedDatas!: boolean;
-
   constructor(object: VariableDetail) {
-    this.isLimitedDatas = false;
     if (object) {
       const clone: VariableDetail = cloneDeep(object);
 
@@ -41,16 +37,6 @@ export class VariableDetailsModel {
       // @ts-ignore
       this.inputValues = clone?.inputValues || undefined;
 
-      // Limit datas to 10000
-      const maxDatasSize = AppConfig.visualizationCommon.GLOBAL.MAX_TABLE_SIZE;
-      if (
-        maxDatasSize &&
-        this.inputValues &&
-        this.inputValues.values.length > maxDatasSize
-      ) {
-        this.inputValues.values.length = maxDatasSize;
-        this.isLimitedDatas = true;
-      }
     }
   }
 

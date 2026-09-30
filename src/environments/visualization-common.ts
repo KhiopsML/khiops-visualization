@@ -14,7 +14,6 @@ export const visualizationCommonEnvironment = {
     MAX_GRAPH_SCALE: 400,
     MIN_GRAPH_SCALE: 100,
     STEP_GRAPH_SCALE: 10,
-    MAX_TABLE_SIZE: 10000,
     MAX_CHART_SIZE: 1000,
     MAX_GRAPH_TOOLTIP_LABEL_LENGTH: 70,
     MAT_MENU_PAGINATION: 20,

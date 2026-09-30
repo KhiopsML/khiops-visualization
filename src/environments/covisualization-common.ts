@@ -15,7 +15,6 @@ export const covisualizationCommonEnvironment = {
     DEFAULT_GRAPH_SCALE: 100,
     MIN_GRAPH_SCALE: 100,
     STEP_GRAPH_SCALE: 10,
-    MAX_TABLE_SIZE: 10000,
   },
   HOME: {
     ACTIVE_TAB_INDEX: 0,

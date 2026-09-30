@@ -306,7 +306,6 @@
     "PROJECT_FILE": "Project file",
     "COLUMNS": "Columns",
     "LIMIT_GRAPH_DATAS": "Limit graph datas",
-    "LIMIT_GRAPH_DATAS_WARNING": "Datas are limited for visualization",
     "TRAINED_PREDICTORS": "Trained predictors",
     "SELECT_TRAINED_PREDICTOR": "Select trained predictor",
     "VALUES_OF": "Values of ",
