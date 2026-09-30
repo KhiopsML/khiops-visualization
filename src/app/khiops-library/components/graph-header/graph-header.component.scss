@@ -16,12 +16,20 @@
 
     span {
       line-height: 0.95em;
-      min-width: 100px;
       text-transform: none !important;
+      margin-right: 10px;
     }
 
     em {
       font-size: 0.8em;
+    }
+
+    ::ng-deep kl-important-badge {
+      span {
+        font-weight: 100;
+        text-transform: capitalize;
+        padding: 4px 8px !important;
+      }
     }
   }
 

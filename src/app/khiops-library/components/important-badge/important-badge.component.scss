@@ -7,7 +7,7 @@
 .important-badge {
   padding: 2px 8px;
   border-radius: var(--border-radius);
-  font-size: 1em;
+  font-size: 12px;
 }
 
 .important-badge-plain {
@@ -28,7 +28,7 @@
   background-color: var(--color-data-cat);
   color: var(--color-accent) !important;
   border: 1px solid
-    color-mix(in srgb, var(--color-brand-orange) 80%, transparent);
+    color-mix(in srgb, var(--color-brand-orange) 60%, transparent);
 }
 
 .important-badge-blue {
