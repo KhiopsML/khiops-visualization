@@ -22,7 +22,7 @@
         title() || (selectedVariable() && selectedVariable().name)
       }}</span>
       <kl-important-badge
-        [text]="('GLOBAL.RANK' | translate) + ' ' + selectedVariable().rank"
+        [text]="('GLOBAL.RANK' | translate) + ' ' + selectedVariable()?.rank"
         color="orange"
       ></kl-important-badge>
     </h1>
