@@ -438,9 +438,7 @@ export class PreparationDatasService {
             }
           }
 
-          title = this.translate.get('GLOBAL.DETAILS_OF', {
-            variable: datas.map((data: any) => data.values).join(', '),
-          });
+          title = this.translate.get('GLOBAL.CURRENT_GROUP');
         }
 
         if (variableDetails.isLimitedDatas) {
