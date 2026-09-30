@@ -29,8 +29,8 @@ describe('HistogramRendererService', () => {
     mockCanvas = document.createElement('canvas');
     mockContext = mockCanvas.getContext('2d')!;
 
-    // Mock fillRect and strokeRect methods
-    spyOn(mockContext, 'fillRect');
+    // Mock fill and stroke methods
+    spyOn(mockContext, 'fill');
     spyOn(mockContext, 'strokeRect');
   });
 
@@ -78,14 +78,8 @@ describe('HistogramRendererService', () => {
         -1, // selectedItem
       );
 
-      // Verify that fillRect was called
-      expect(mockContext.fillRect).toHaveBeenCalled();
-
-      // Get the parameters passed to fillRect
-      const fillRectCall = (
-        mockContext.fillRect as jasmine.Spy
-      ).calls.mostRecent();
-      const [x, y, width, height] = fillRectCall.args;
+      expect(mockContext.fill).toHaveBeenCalled();
+      const { y, barH: height } = testData.coords!;
 
       // The height should not exceed the maximum allowed height
       const maxBarHeight = canvasHeight - yPadding / 2;
@@ -144,12 +138,8 @@ describe('HistogramRendererService', () => {
         -1,
       );
 
-      expect(mockContext.fillRect).toHaveBeenCalled();
-
-      const fillRectCall = (
-        mockContext.fillRect as jasmine.Spy
-      ).calls.mostRecent();
-      const [x, y, width, height] = fillRectCall.args;
+      expect(mockContext.fill).toHaveBeenCalled();
+      const { barH: height } = testData.coords!;
 
       // For normal values, the height should match expected calculation
       expect(height).toEqual(expectedHeight);
@@ -196,12 +186,8 @@ describe('HistogramRendererService', () => {
         -1,
       );
 
-      expect(mockContext.fillRect).toHaveBeenCalled();
-
-      const fillRectCall = (
-        mockContext.fillRect as jasmine.Spy
-      ).calls.mostRecent();
-      const [x, y, width, height] = fillRectCall.args;
+      expect(mockContext.fill).toHaveBeenCalled();
+      const { barH: height } = testData.coords!;
 
       // Height should be at least the minimum bar height
       expect(height >= minBarHeight).toBeTruthy();
@@ -255,14 +241,8 @@ describe('HistogramRendererService', () => {
         -1, // selectedItem
       );
 
-      // Verify that fillRect was called
-      expect(mockContext.fillRect).toHaveBeenCalled();
-
-      // Get the parameters passed to fillRect
-      const fillRectCall = (
-        mockContext.fillRect as jasmine.Spy
-      ).calls.mostRecent();
-      const [x, y, width, height] = fillRectCall.args;
+      expect(mockContext.fill).toHaveBeenCalled();
+      const { y, barH: height } = testData.coords!;
 
       // The height should not exceed the maximum allowed height
       const maxBarHeight = canvasHeight - yPadding / 2;
@@ -335,10 +315,7 @@ describe('HistogramRendererService', () => {
         -1,
       );
 
-      let fillRectCall = (
-        mockContext.fillRect as jasmine.Spy
-      ).calls.mostRecent();
-      let height1 = fillRectCall.args[3];
+      let height1 = testData1.coords!.barH;
 
       // Test second value
       service.drawRect(
@@ -360,8 +337,7 @@ describe('HistogramRendererService', () => {
         -1,
       );
 
-      fillRectCall = (mockContext.fillRect as jasmine.Spy).calls.mostRecent();
-      let height2 = fillRectCall.args[3];
+      let height2 = testData2.coords!.barH;
 
       // Verify that the higher logValue results in a higher bar
       expect(height2).toBeGreaterThan(height1);
