@@ -24,6 +24,8 @@ import { UtilsService } from '@khiops-library/providers/utils.service';
 import { DistributionOptionsI } from '@khiops-library/interfaces/distribution-options.interface';
 import { NumberFormatter } from '../../../providers/number.utils.service';
 
+const BAR_BORDER_RADIUS = 1;
+
 /**
  * Service responsible for rendering histogram graphics
  * Handles all drawing operations, canvas management, and D3.js chart rendering
@@ -215,10 +217,28 @@ export class HistogramRendererService {
       barH: barH,
     };
 
-    // Draw the rectangle
+    const borderRadius = Math.min(BAR_BORDER_RADIUS, barW / 2, barH);
+    const drawBarPath = (
+      left: number,
+      top: number,
+      width: number,
+      height: number,
+      radius: number,
+    ) => {
+      ctx.beginPath();
+      ctx.moveTo(left, top + height);
+      ctx.lineTo(left, top + radius);
+      ctx.quadraticCurveTo(left, top, left + radius, top);
+      ctx.lineTo(left + width - radius, top);
+      ctx.quadraticCurveTo(left + width, top, left + width, top + radius);
+      ctx.lineTo(left + width, top + height);
+      ctx.closePath();
+    };
+
     ctx.fillStyle = UtilsService.hexToRgba(bar.color, 0.7);
     ctx.lineWidth = 0;
-    ctx.fillRect(x, y, barW, barH);
+    drawBarPath(x, y, barW, barH, borderRadius);
+    ctx.fill();
 
     const isSelected = selectedItem === i;
     if (isSelected) {
@@ -230,12 +250,14 @@ export class HistogramRendererService {
       ctx.save();
       ctx.strokeStyle = '#ffffff';
       ctx.lineWidth = outerPadding;
-      ctx.strokeRect(
+      drawBarPath(
         x - outerPadding / 2,
         y - outerPadding / 2,
         barW + outerPadding,
         barH + outerPadding,
+        borderRadius + outerPadding / 2,
       );
+      ctx.stroke();
       ctx.restore();
 
       ctx.save();
@@ -252,7 +274,8 @@ export class HistogramRendererService {
     } else {
       ctx.strokeStyle = bar.color;
       ctx.lineWidth = 1;
-      ctx.strokeRect(x, y, barW, barH);
+      drawBarPath(x, y, barW, barH, borderRadius);
+      ctx.stroke();
     }
 
     return d;
