@@ -6,7 +6,10 @@
 
 <div id="manage-views-comp" fxFlexFill #manageViews fxLayout="column">
   <div fxLayout="row" id="manage-views-header" fxLayoutAlign="center center">
-    <h2 fxFlex>{{ 'GLOBAL.VIEWS_MANAGER' | translate | uppercase }}</h2>
+    <h1 fxFlex fxLayoutAlign="start center">
+      <svg lucideIcon="layout-dashboard" size="16"></svg>
+      {{ 'GLOBAL.VIEWS_MANAGER' | translate | uppercase }}
+    </h1>
     <button mat-stroked-button (click)="onClickOnCancel()">
       {{ 'GLOBAL.CANCEL' | translate }}
     </button>
@@ -61,6 +64,7 @@
                   matRipple
                   [matRippleColor]="matRippleColor"
                   fxLayoutAlign="center center"
+                  fxLayout="column"
                   fxFlex="20"
                   (click)="
                     dimensionLayout.isHierarchyChecked =
@@ -71,12 +75,18 @@
                   }"
                 >
                   {{ 'GLOBAL.HIERARCHY' | translate }}
+                  @if (!dimensionLayout.isHierarchyChecked) {
+                    <span class="click-to-reveal">{{
+                      'GLOBAL.CLICK_TO_REVEAL' | translate
+                    }}</span>
+                  }
                 </div>
                 <div
                   class="box"
                   matRipple
                   [matRippleColor]="matRippleColor"
                   fxLayoutAlign="center center"
+                  fxLayout="column"
                   fxFlex="20"
                   (click)="
                     dimensionLayout.isClustersChecked =
@@ -87,6 +97,11 @@
                   }"
                 >
                   {{ 'GLOBAL.CURRENT_CLUSTERS' | translate }}
+                  @if (!dimensionLayout.isClustersChecked) {
+                    <span class="click-to-reveal">{{
+                      'GLOBAL.CLICK_TO_REVEAL' | translate
+                    }}</span>
+                  }
                 </div>
                 <div fxLayout="column" class="parent-box">
                   <div
@@ -94,6 +109,7 @@
                     matRipple
                     [matRippleColor]="matRippleColor"
                     fxLayoutAlign="center center"
+                    fxLayout="column"
                     fxFlex
                     [ngClass]="{
                       disabled: !dimensionLayout.isAnnotationChecked,
@@ -104,12 +120,18 @@
                     "
                   >
                     {{ 'GLOBAL.ANNOTATION' | translate }}
+                    @if (!dimensionLayout.isAnnotationChecked) {
+                      <span class="click-to-reveal">{{
+                        'GLOBAL.CLICK_TO_REVEAL' | translate
+                      }}</span>
+                    }
                   </div>
                   <div
                     class="box child-box"
                     matRipple
                     [matRippleColor]="matRippleColor"
                     fxLayoutAlign="center center"
+                    fxLayout="column"
                     fxFlex
                     [ngClass]="{
                       disabled: !dimensionLayout.isCompositionChecked,
@@ -120,6 +142,11 @@
                     "
                   >
                     {{ 'GLOBAL.COMPOSITION' | translate }}
+                    @if (!dimensionLayout.isCompositionChecked) {
+                      <span class="click-to-reveal">{{
+                        'GLOBAL.CLICK_TO_REVEAL' | translate
+                      }}</span>
+                    }
                   </div>
                 </div>
                 <div
@@ -127,6 +154,7 @@
                   matRipple
                   [matRippleColor]="matRippleColor"
                   fxLayoutAlign="center center"
+                  fxLayout="column"
                   fxFlex="20"
                   (click)="
                     dimensionLayout.isExternalDataChecked =
@@ -137,6 +165,11 @@
                   }"
                 >
                   {{ 'GLOBAL.EXTERNAL_DATA' | translate }}
+                  @if (!dimensionLayout.isExternalDataChecked) {
+                    <span class="click-to-reveal">{{
+                      'GLOBAL.CLICK_TO_REVEAL' | translate
+                    }}</span>
+                  }
                 </div>
                 @if (!isContextView) {
                   <div
@@ -144,6 +177,7 @@
                     matRipple
                     [matRippleColor]="matRippleColor"
                     fxLayoutAlign="center center"
+                    fxLayout="column"
                     fxFlex="20"
                     [ngClass]="{
                       disabled: !dimensionLayout.isDistributionChecked,
@@ -154,6 +188,11 @@
                     "
                   >
                     {{ 'GLOBAL.DISTRIBUTION' | translate }}
+                    @if (!dimensionLayout.isDistributionChecked) {
+                      <span class="click-to-reveal">{{
+                        'GLOBAL.CLICK_TO_REVEAL' | translate
+                      }}</span>
+                    }
                   </div>
                 }
               </div>
@@ -178,6 +217,7 @@
         matRipple
         [matRippleColor]="matRippleColor"
         fxLayoutAlign="center center"
+        fxLayout="column"
         fxFlex="30"
         (click)="
           viewsLayout!.isDimensionsChecked = !viewsLayout?.isDimensionsChecked
@@ -185,12 +225,18 @@
         [ngClass]="{ disabled: !viewsLayout?.isDimensionsChecked }"
       >
         {{ 'GLOBAL.DIMENSIONS' | translate }}
+        @if (!viewsLayout?.isDimensionsChecked) {
+          <span class="click-to-reveal">{{
+            'GLOBAL.CLICK_TO_REVEAL' | translate
+          }}</span>
+        }
       </div>
       <div
         class="box"
         matRipple
         [matRippleColor]="matRippleColor"
         fxLayoutAlign="center center"
+        fxLayout="column"
         fxFlex="70"
         (click)="
           viewsLayout!.isCooccurrenceChecked =
@@ -199,6 +245,11 @@
         [ngClass]="{ disabled: !viewsLayout?.isCooccurrenceChecked }"
       >
         {{ 'GLOBAL.COOCCURRENCE' | translate }}
+        @if (!viewsLayout?.isCooccurrenceChecked) {
+          <span class="click-to-reveal">{{
+            'GLOBAL.CLICK_TO_REVEAL' | translate
+          }}</span>
+        }
       </div>
     </div>
   </div>

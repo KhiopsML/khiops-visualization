@@ -37,7 +37,7 @@
       }
 
       .parent-box {
-        height: 150px;
+        height: 190px;
         flex: 1 1 130%;
 
         .child-box {
@@ -52,7 +52,7 @@
         }
 
         .child-box.disabled {
-          border: 2px var(--color-800) dashed;
+          border: 2px var(--color-300) dashed;
         }
       }
 
@@ -61,24 +61,29 @@
         border-style: solid;
         margin: 10px;
         cursor: pointer;
-        height: 140px;
+        height: 180px;
         text-align: center;
         background: var(--color-0);
         color: var(--color-800);
         font-size: 0.9em;
         box-shadow: none;
-        border-radius: var(--border-radius);
+        border-radius: calc(var(--border-radius) * 1.5);
         padding: 5px;
         overflow-wrap: anywhere;
+
+        .click-to-reveal {
+          font-size: 10px;
+          color: var(--color-300);
+        }
       }
       .box:hover {
         background: var(--color-gutter-hover);
       }
       .box.disabled {
-        background: var(--color-100);
+        background: var(--color-50);
         color: var(--color-600);
         box-shadow: none;
-        border: 2px var(--color-600) dashed;
+        border: 2px var(--color-300) dashed;
       }
 
       .box.disabled:hover {
@@ -88,7 +93,7 @@
         border: 0px !important;
         box-shadow: none;
         margin: 0px !important;
-        padding: 5px 0 0 5px !important;
+        padding: 15px 0 5px 5px !important;
         mat-checkbox {
           /* prevent the flex item from shrinking below its content size */
           flex: 0 1 auto;
@@ -118,21 +123,21 @@
       }
 
       .badge-disabled {
-        background-color: var(--color-400);
+        background-color: var(--color-200);
         color: var(--color-800);
       }
     }
 
     .views-container.disabled {
-      background: var(--color-100);
+      background: var(--color-50);
       color: var(--color-600);
-      border: 1px var(--color-600) dashed;
+      // border: 1px var(--color-300) dashed;
 
       .box,
       .child-box {
-        background: var(--color-100) !important;
+        background: var(--color-50) !important;
         color: var(--color-600) !important;
-        border: 2px var(--color-600) dashed !important;
+        border: 2px var(--color-300) dashed !important;
       }
       .box-dimension {
         border: 0px !important;

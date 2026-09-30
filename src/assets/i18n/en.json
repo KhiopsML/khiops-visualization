@@ -123,6 +123,7 @@
     "AUTO_SCALE_FACTOR_DISABLED_TOOLTIP": "Enable Auto mode via \"Change all scales\" to use this setting"
   },
   "GLOBAL": {
+    "CLICK_TO_REVEAL": "Click to reveal",
     "CELL_DETAILS": "Cell details",
     "SELECT_VARIABLE": "Select variable",
     "TARGET_FREQUENCY": "Target Frequency",
