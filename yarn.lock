@@ -8106,10 +8106,10 @@ neo-async@^2.6.2:
   resolved "https://registry.yarnpkg.com/neo-async/-/neo-async-2.6.2.tgz#b4aafb93e3aeb2d8174ca53cf163ab7d7308305f"
   integrity sha512-Yd3UES5mWCSqR+qNT93S3UoYUkqAZ9lLg8a7g9rimsWmYGK8cVToA4/sF3RrshdyV3sAGMXVUmpMYOw+dLpOuw==
 
-ng-packagr@^22.2.2:
-  version "22.2.2"
-  resolved "https://registry.yarnpkg.com/ng-packagr/-/ng-packagr-22.2.2.tgz#b902f2dbbc8e12b5d2e34507fed72e4b25d9873d"
-  integrity sha512-NQ/YcH+rn3ylewb5Li5mT6oVEpDmT/uq6vaEOyatLpCwwpP33mayhcP77d57ZNjj5zDee8/eI05XdgMINK8eGA==
+ng-packagr@^22.2.3:
+  version "22.2.3"
+  resolved "https://registry.yarnpkg.com/ng-packagr/-/ng-packagr-22.2.3.tgz#f9c0a5b865815ee846202a156031a8d166809139"
+  integrity sha512-beDEoCQTYkwzvA7OcBTw3zfDUNiVddynjvIOb76ImuTcFB83pvHqCdtAXa8aRl0rxyKbNcE7gY2DyGr/OsDUdA==
   dependencies:
     "@ampproject/remapping" "^2.3.0"
     ajv "^8.17.1"
