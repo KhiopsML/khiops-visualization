@@ -16,6 +16,6 @@
   </div>
   <div fxLayout="row" fxLayoutAlign="start center">
     <h1>{{ 'GLOBAL.LEVEL' | translate }}:</h1>
-    <kl-important-badge [text]="inputDatas()?.level ?? ''" />
+    <kl-important-badge [text]="inputDatas()?.level || 0" />
   </div>
 </div>

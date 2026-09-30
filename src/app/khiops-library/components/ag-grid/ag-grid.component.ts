@@ -70,6 +70,7 @@ export class AgGridComponent
   @Input() public displayedColumns: GridColumnsI[] | undefined;
   @Input() public override id: string | undefined = undefined;
   @Input() public title?: string = '';
+  @Input() public titleIcon?: string;
   @Input() public titleTooltip: string = '';
   @Input() public showColumnsSelection = true;
   @Input() public showFullscreenBtn = true;

@@ -22,6 +22,9 @@
               fxLayoutAlign="start center"
               title="{{ titleTooltip }}"
             >
+              @if (titleIcon) {
+                <svg [lucideIcon]="titleIcon" size="16"></svg>
+              }
               {{ inputDatas?.length }} {{ title }}
             </h1>
           }
@@ -31,6 +34,9 @@
               fxLayoutAlign="start center"
               title="{{ titleTooltip }}"
             >
+              @if (titleIcon) {
+                <svg [lucideIcon]="titleIcon" size="16"></svg>
+              }
               {{ title }}
             </h1>
           }

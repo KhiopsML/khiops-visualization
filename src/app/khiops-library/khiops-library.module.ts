@@ -97,6 +97,8 @@ import {
   LucidePlus,
   LucideMinus,
   LucideSquarePlus,
+  LucideBraces,
+  LucideTableProperties,
 } from '@lucide/angular';
 
 // Component imports
@@ -250,6 +252,8 @@ import { ImportantBadgeComponent } from './components/important-badge/important-
     TranslateService,
     DialogService,
     provideLucideIcons(
+      LucideTableProperties,
+      LucideBraces,
       LucideTrash,
       LucideNotebookPen,
       LucideSquarePlus,

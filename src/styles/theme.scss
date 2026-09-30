@@ -15,7 +15,7 @@
   --mat-snack-bar-supporting-text-size: 12px;
   --mat-tab-active-indicator-height: 2px;
   --mat-checkbox-label-text-size: 12px;
-  // --mat-menu-item-label-text-size : 12px;
+  --mat-menu-item-label-text-size: 12px;
   --header-height: 50px;
   --border-radius: 5px;
   --border-radius-text: 3px;
@@ -87,6 +87,8 @@
 @media (max-device-width: 1920px) and (max-device-height: 1200px) {
   :root {
     --mat-checkbox-label-text-size: 11px !important;
+    --mat-menu-item-label-text-size: 11px !important;
+    --mat-snack-bar-supporting-text-size: 11px !important;
   }
 }
 
