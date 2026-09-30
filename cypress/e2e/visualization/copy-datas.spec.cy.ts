@@ -78,7 +78,7 @@ describe('Copy datas Test Plan for Khiops Visualization', () => {
             'kv-tree-preparation-hyper.txt',
           );
 
-          cy.get('.mat-mdc-tab:contains("Leaf rules")').first().click();
+          cy.contains('.leaf-tab-btn:visible', 'Leaf rules').click();
           cy.testComponentCopyDatas(
             '#tree-leaf-rules-comp',
             'kv-tree-leaf-rules-comp.txt',
@@ -104,7 +104,7 @@ describe('Copy datas Test Plan for Khiops Visualization', () => {
             'kv-preparation-2d-current-cell-y.txt',
           );
 
-          cy.get('.mat-mdc-tab:contains("Cells")').first().click();
+          cy.contains('.matrix-tab-btn:visible', 'Cells').click();
 
           cy.testComponentCopyDatas(
             '#cooccurrence-matrix-cells-container',
