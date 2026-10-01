@@ -31,6 +31,8 @@ export class DialogWrapperComponent
   implements OnInit, AfterViewInit, OnDestroy
 {
   public dialogContent$: Observable<DialogContentI>;
+  public isSidePanelDragOver = false;
+  private sidePanelDragCounter = 0;
 
   @ViewChild('dynamicComponentContainer', {
     read: ViewContainerRef,
@@ -60,9 +62,53 @@ export class DialogWrapperComponent
         }
         this.createDialogComponent(content);
       } else if (content.type === 'none') {
+        this.sidePanelDragCounter = 0;
+        this.isSidePanelDragOver = false;
         this.clearDynamicComponent();
       }
     });
+  }
+
+  onSidePanelDragEnter(event: DragEvent, isSidePanel?: boolean): void {
+    if (!isSidePanel) {
+      return;
+    }
+    event.preventDefault();
+    event.stopPropagation();
+    this.sidePanelDragCounter++;
+    if (this.sidePanelDragCounter === 1) {
+      this.isSidePanelDragOver = true;
+    }
+  }
+
+  onSidePanelDragOver(event: DragEvent, isSidePanel?: boolean): void {
+    if (!isSidePanel) {
+      return;
+    }
+    event.preventDefault();
+    event.stopPropagation();
+  }
+
+  onSidePanelDragLeave(event: DragEvent, isSidePanel?: boolean): void {
+    if (!isSidePanel) {
+      return;
+    }
+    event.preventDefault();
+    event.stopPropagation();
+    this.sidePanelDragCounter = Math.max(0, this.sidePanelDragCounter - 1);
+    if (this.sidePanelDragCounter === 0) {
+      this.isSidePanelDragOver = false;
+    }
+  }
+
+  onSidePanelDrop(event: DragEvent, isSidePanel?: boolean): void {
+    if (!isSidePanel) {
+      return;
+    }
+    event.preventDefault();
+    event.stopPropagation();
+    this.sidePanelDragCounter = 0;
+    this.isSidePanelDragOver = false;
   }
 
   /**
@@ -121,6 +167,8 @@ export class DialogWrapperComponent
    * Close the dialog
    */
   closeDialog(): void {
+    this.sidePanelDragCounter = 0;
+    this.isSidePanelDragOver = false;
     this.dialogService.closeDialog();
   }
 

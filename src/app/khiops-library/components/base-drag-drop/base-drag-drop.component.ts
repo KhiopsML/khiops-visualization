@@ -16,6 +16,8 @@ import { ConfigService } from '@khiops-library/providers/config.service';
 export abstract class BaseDragDropComponent {
   isDragOver: boolean = false;
   private dragCounter: number = 0;
+  private dragWatchdogTimer?: ReturnType<typeof setTimeout>;
+  private readonly dragWatchdogDelayMs = 250;
 
   constructor(
     protected ngzone: NgZone,
@@ -36,6 +38,7 @@ export abstract class BaseDragDropComponent {
     if (this.dragCounter === 1) {
       this.isDragOver = true;
     }
+    this.scheduleDragWatchdog();
   }
 
   /**
@@ -47,6 +50,7 @@ export abstract class BaseDragDropComponent {
     }
     event.preventDefault();
     event.stopPropagation();
+    this.scheduleDragWatchdog();
   }
 
   /**
@@ -58,9 +62,10 @@ export abstract class BaseDragDropComponent {
     }
     event.preventDefault();
     event.stopPropagation();
-    this.dragCounter--;
+    this.dragCounter = Math.max(0, this.dragCounter - 1);
     if (this.dragCounter === 0) {
       this.isDragOver = false;
+      this.clearDragWatchdog();
     }
   }
 
@@ -73,12 +78,64 @@ export abstract class BaseDragDropComponent {
     }
     event.preventDefault();
     event.stopPropagation();
-    this.dragCounter = 0;
-    this.isDragOver = false;
+    this.resetDragState();
 
     const files = event.dataTransfer?.files;
     if (files && files.length > 0 && files[0]) {
       this.processDroppedFile(files[0]);
+    }
+  }
+
+  /**
+   * Handles drag cancellation events outside the app drop target.
+   */
+  onDragCancel(event: DragEvent): void {
+    if (this.configService.isElectron) {
+      return;
+    }
+    event.preventDefault();
+    this.resetDragState();
+  }
+
+  /**
+   * Clears drag state when cursor exits the viewport without dropping.
+   */
+  onWindowDragLeave(event: DragEvent): void {
+    if (this.configService.isElectron) {
+      return;
+    }
+
+    const hasLeftViewport =
+      event.clientX <= 0 ||
+      event.clientY <= 0 ||
+      event.clientX >= window.innerWidth ||
+      event.clientY >= window.innerHeight;
+
+    if (hasLeftViewport) {
+      this.resetDragState();
+    }
+  }
+
+  /**
+   * Resets the internal drag state for global overlay rendering.
+   */
+  protected resetDragState(): void {
+    this.dragCounter = 0;
+    this.isDragOver = false;
+    this.clearDragWatchdog();
+  }
+
+  private scheduleDragWatchdog(): void {
+    this.clearDragWatchdog();
+    this.dragWatchdogTimer = setTimeout(() => {
+      this.resetDragState();
+    }, this.dragWatchdogDelayMs);
+  }
+
+  private clearDragWatchdog(): void {
+    if (this.dragWatchdogTimer) {
+      clearTimeout(this.dragWatchdogTimer);
+      this.dragWatchdogTimer = undefined;
     }
   }
 

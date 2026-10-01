@@ -18,3 +18,11 @@
 .mat-app-background {
   @include drag-drop.drag-drop-overlay('Drop your JSON or KHCJ file here');
 }
+
+// Side panel owns drag interactions: disable app-wide overlay while hovering it.
+.mat-app-background.drag-over:has(.dialog-content.side-panel.side-panel-drag-over) {
+  &::before,
+  &::after {
+    content: none;
+  }
+}

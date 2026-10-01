@@ -22,11 +22,18 @@
     fxLayout="column"
     *ngIf="dialogContent.type !== 'none'"
     [class.side-panel]="dialogContent.config?.sidePanel"
+    [class.side-panel-drag-over]="
+      dialogContent.config?.sidePanel && isSidePanelDragOver
+    "
     [style.width]="dialogContent.config?.width"
     [style.height]="dialogContent.config?.height"
     [style.max-width]="dialogContent.config?.maxWidth"
     [style.max-height]="dialogContent.config?.maxHeight"
     [class]="dialogContent.config?.panelClass"
+    (dragenter)="onSidePanelDragEnter($event, dialogContent.config?.sidePanel)"
+    (dragover)="onSidePanelDragOver($event, dialogContent.config?.sidePanel)"
+    (dragleave)="onSidePanelDragLeave($event, dialogContent.config?.sidePanel)"
+    (drop)="onSidePanelDrop($event, dialogContent.config?.sidePanel)"
   >
     <!-- Dynamic Component Container -->
     <div class="dialog-body" fxFlex *ngIf="dialogContent.componentType">

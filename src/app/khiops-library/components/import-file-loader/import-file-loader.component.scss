@@ -10,6 +10,7 @@
   }
 
   .import-file-dropzone {
+    position: relative;
     min-height: 132px;
     display: flex;
     flex-direction: column;
@@ -40,6 +41,13 @@
     button {
       min-height: 32px;
       border: 1px solid color-mix(in srgb, var(--color-accent) 35%, white);
+    }
+
+    &.drag-over {
+      border-color: var(--color-accent);
+      background: color-mix(in srgb, var(--color-accent) 10%, white);
+      box-shadow: inset 0 0 0 2px
+        color-mix(in srgb, var(--color-accent) 30%, white);
     }
   }
 }

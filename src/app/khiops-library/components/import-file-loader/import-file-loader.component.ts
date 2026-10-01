@@ -30,6 +30,8 @@ export class ImportFileLoaderComponent implements OnInit {
   @Output() datasLoaded: EventEmitter<any> = new EventEmitter();
   filename?: string;
   isLoadingDatas?: boolean;
+  isDropzoneDragOver = false;
+  private dropzoneDragCounter = 0;
 
   constructor(
     private ngzone: NgZone,
@@ -46,9 +48,34 @@ export class ImportFileLoaderComponent implements OnInit {
     if (e.target.files) this.openFile(e.target.files[0]);
   }
 
+  onDropzoneDragEnter(event: DragEvent) {
+    event.preventDefault();
+    event.stopPropagation();
+    this.dropzoneDragCounter++;
+    if (this.dropzoneDragCounter === 1) {
+      this.isDropzoneDragOver = true;
+    }
+  }
+
+  onDropzoneDragOver(event: DragEvent) {
+    event.preventDefault();
+    event.stopPropagation();
+  }
+
+  onDropzoneDragLeave(event: DragEvent) {
+    event.preventDefault();
+    event.stopPropagation();
+    this.dropzoneDragCounter = Math.max(0, this.dropzoneDragCounter - 1);
+    if (this.dropzoneDragCounter === 0) {
+      this.isDropzoneDragOver = false;
+    }
+  }
+
   onFileDrop(event: DragEvent) {
     event.preventDefault();
     event.stopPropagation();
+    this.dropzoneDragCounter = 0;
+    this.isDropzoneDragOver = false;
     const file = event.dataTransfer?.files[0];
     if (file) this.openFile(file);
   }

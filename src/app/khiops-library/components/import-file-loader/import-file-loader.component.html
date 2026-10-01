@@ -9,9 +9,10 @@
     @if (dropzone) {
       <div
         class="import-file-dropzone"
-        (dragenter)="$event.stopPropagation()"
-        (dragover)="$event.preventDefault(); $event.stopPropagation()"
-        (dragleave)="$event.stopPropagation()"
+        [class.drag-over]="isDropzoneDragOver"
+        (dragenter)="onDropzoneDragEnter($event)"
+        (dragover)="onDropzoneDragOver($event)"
+        (dragleave)="onDropzoneDragLeave($event)"
         (drop)="onFileDrop($event)"
       >
         <svg lucideIcon="file-text" size="24"></svg>
