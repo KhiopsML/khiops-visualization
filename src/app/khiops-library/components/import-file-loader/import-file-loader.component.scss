@@ -8,4 +8,38 @@
   .import-file-loader-row {
     margin: 0 1em;
   }
+
+  .import-file-dropzone {
+    min-height: 132px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 16px;
+    color: var(--color-700);
+    border: 1px dashed color-mix(in srgb, var(--color-accent) 48%, white);
+    border-radius: var(--border-radius);
+    background: color-mix(in srgb, var(--color-accent) 2%, white);
+
+    > svg {
+      box-sizing: content-box;
+      padding: 10px;
+      color: var(--color-accent);
+      border: 1px solid color-mix(in srgb, var(--color-accent) 20%, white);
+      border-radius: var(--border-radius);
+      background: white;
+    }
+
+    > span {
+      color: var(--color-700);
+      font-size: 12px;
+      text-align: center;
+    }
+
+    button {
+      min-height: 32px;
+      border: 1px solid color-mix(in srgb, var(--color-accent) 35%, white);
+    }
+  }
 }

@@ -5,11 +5,33 @@
  */
 
 .external-datas-comp {
-  .external-datas-text {
-    overflow: auto;
-    display: flex;
-    padding: 0 1em;
-    margin: 0;
-    white-space: pre-wrap;
+  .external-datas-header {
+    min-width: 0;
+    width: 100%;
+    h1 {
+      width: 100%;
+
+      button {
+        svg {
+          margin: 0 !important;
+        }
+      }
+    }
+  }
+
+  .external-datas-grid {
+    width: 100%;
+    min-height: 0;
+
+    kl-ag-grid {
+      display: block;
+      min-height: 120px;
+      max-height: 240px;
+      height: 240px;
+    }
+  }
+
+  button {
+    flex: 0 0 auto;
   }
 }

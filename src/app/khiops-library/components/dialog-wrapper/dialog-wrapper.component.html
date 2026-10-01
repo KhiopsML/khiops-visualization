@@ -21,6 +21,7 @@
     class="dialog-content"
     fxLayout="column"
     *ngIf="dialogContent.type !== 'none'"
+    [class.side-panel]="dialogContent.config?.sidePanel"
     [style.width]="dialogContent.config?.width"
     [style.height]="dialogContent.config?.height"
     [style.max-width]="dialogContent.config?.maxWidth"

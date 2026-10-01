@@ -4,32 +4,60 @@
  * at https://spdx.org/licenses/BSD-3-Clause-Clear.html or see the "LICENSE" file for more details.
  -->
 
-<div class="import-file-loader-comp" fxFlexFill fxLayout="column">
+<div class="import-file-loader-comp" fxLayout="column">
   @if (!isLoadingDatas) {
-    <div
-      class="import-file-loader-row"
-      fxLayout="row"
-      fxLayoutAlign="end center"
-    >
-      <button
-        id="import-new-file-btn"
-        class="yellow-btn"
-        type="button"
-        mat-flat-button
-        
-        (click)="fileInput.click()"
+    @if (dropzone) {
+      <div
+        class="import-file-dropzone"
+        (dragenter)="$event.stopPropagation()"
+        (dragover)="$event.preventDefault(); $event.stopPropagation()"
+        (dragleave)="$event.stopPropagation()"
+        (drop)="onFileDrop($event)"
       >
-        {{ translate.get('GLOBAL.IMPORT_NEW_FILE') }}
-      </button>
-      <input
-        hidden
-        (change)="openFileDialog($event)"
-        #fileInput
-        type="file"
-        id="file"
-        accept=".txt"
-      />
-    </div>
+        <svg lucideIcon="file-text" size="24"></svg>
+        <span>{{ 'GLOBAL.DROP_TABULAR_TEXT_FILE' | translate }}</span>
+        <button
+          id="import-new-file-btn"
+          type="button"
+          mat-stroked-button
+          (click)="fileInput.click()"
+        >
+          {{ 'GLOBAL.BROWSE_LOCAL_FILES' | translate }}
+        </button>
+        <input
+          hidden
+          (change)="openFileDialog($event)"
+          #fileInput
+          type="file"
+          id="file"
+          accept=".txt"
+        />
+      </div>
+    } @else {
+      <div
+        class="import-file-loader-row"
+        fxLayout="row"
+        fxLayoutAlign="end center"
+      >
+        <button
+          id="import-new-file-btn"
+          class="yellow-btn"
+          type="button"
+          mat-flat-button
+          (click)="fileInput.click()"
+        >
+          {{ translate.get('GLOBAL.IMPORT_NEW_FILE') }}
+        </button>
+        <input
+          hidden
+          (change)="openFileDialog($event)"
+          #fileInput
+          type="file"
+          id="file"
+          accept=".txt"
+        />
+      </div>
+    }
   }
   @if (isLoadingDatas) {
     <div id="loading-indicator" fxFlexFill fxLayoutAlign="center center">

@@ -13,30 +13,36 @@ import { ConfigService } from '@khiops-library/providers/config.service';
 })
 export class ImportFileLoaderService {
   constructor(private configService: ConfigService) {}
-  readImportFile(file: File): any {
-    if (this.configService.isElectron) {
+  readImportFile(file: File): Promise<FileModel> {
+    const isBrowserFile = typeof File !== 'undefined' && file instanceof File;
+    if (this.configService.isElectron && !isBrowserFile) {
+      const readLocalFile = this.configService.getConfig()?.readLocalFile;
+      if (typeof readLocalFile !== 'function') {
+        return Promise.reject(new Error('Local file reader is unavailable'));
+      }
+
       // Method called automatically at startup
       // For security reasons, local files can not be loaded automatically without Electron
-      return new Promise((resolve) => {
-        this.configService
-          ?.getConfig()
-          ?.readLocalFile?.(file, (fileContent: any, filePath: string) => {
+      return new Promise((resolve, reject) => {
+        try {
+          readLocalFile(file, (fileContent: any, filePath: string) => {
             resolve(new FileModel(fileContent, filePath, file));
           });
+        } catch (error) {
+          reject(error);
+        }
       });
     } else {
       // Method called when user open an external file manually
       return new Promise((resolve, reject) => {
-        console.log(file);
-        let reader = new FileReader();
-        reader.addEventListener('loadend', async (e) => {
-          const datas = e.target?.result?.toString();
-          // @ts-ignore
-          resolve(new FileModel(datas, file.path, file));
+        const reader = new FileReader();
+        reader.addEventListener('load', (event) => {
+          const datas = event.target?.result?.toString();
+          const filePath = (file as File & { path?: string }).path;
+          resolve(new FileModel(datas, filePath || file.name, file));
         });
         reader.addEventListener('error', () => {
-          reader.abort();
-          reject(new Error('failed to process file'));
+          reject(reader.error || new Error('failed to process file'));
         });
         reader.readAsText(file);
       });

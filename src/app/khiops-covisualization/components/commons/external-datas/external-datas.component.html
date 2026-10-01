@@ -11,20 +11,44 @@
   fxLayout="column"
 >
   @if (currentExternalDatasTitle && currentExternalDatas.length > 0) {
-    <h1 class="small-title">
-      {{
-        'GLOBAL.EXTERNAL_DATA_OF'
-          | translate: { value: currentExternalDatasTitle }
-      }}
-    </h1>
-  }
-  @for (datas of currentExternalDatas; track $index) {
-    <div fxLayout="column">
-      <div fxLayout="row">
-        @for (data of datas; track data.value) {
-          <pre class="external-datas-text">{{ data.value }}</pre>
+    <div
+      class="external-datas-header"
+      fxLayout="row"
+      fxLayoutAlign="space-between center"
+    >
+      <h1 class="small-title" fxLayout="row" fxLayoutAlign="start center">
+        <svg lucideIcon="file-up" size="16"></svg>
+        <span fxFlex>
+          {{
+            'GLOBAL.EXTERNAL_DATA_OF'
+              | translate: { value: currentExternalDatasTitle }
+          }}
+        </span>
+        @if (currentMappingSource) {
+          <button
+            class="lucid-icon-button"
+            mat-stroked-button
+            [matTooltip]="'GLOBAL.EDIT_MAPPING' | translate"
+            (click)="editMapping(currentMappingSource)"
+          >
+            <svg lucideIcon="notebook-pen"></svg>
+          </button>
         }
-      </div>
+      </h1>
+    </div>
+  }
+  @if (externalDatasGridRows.length > 0) {
+    <div class="external-datas-grid">
+      <kl-ag-grid
+        [showHeader]="false"
+        [showLineSelection]="false"
+        [enableClickSelection]="false"
+        [showColumnsSelection]="false"
+        [showSearch]="false"
+        [showFullscreenBtn]="false"
+        [inputDatas]="externalDatasGridRows"
+        [displayedColumns]="externalDatasDisplayedColumns"
+      ></kl-ag-grid>
     </div>
   }
   @if (currentExternalDatas.length === 0) {

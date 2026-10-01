@@ -19,6 +19,7 @@ import { KhiopsLibraryService } from '@khiops-library/providers/khiops-library.s
 export class ImportExtDatasService {
   private importExtDatas: ExtDatasModel[];
   private savedExternalDatas: any;
+  private readonly supportedSeparators = ['\t', ',', ';', ' '];
 
   constructor(
     private translate: TranslateService,
@@ -44,46 +45,155 @@ export class ImportExtDatasService {
     fileDatas: FileModel,
     _joinKey?: string,
     __fieldName?: string,
-    _separator?: string,
+    separator?: string,
   ): any {
-    const formatedDatas = {
+    const formatedDatas: { keys: string[]; values: string[][] } = {
       keys: [],
       values: [],
     };
 
     if (fileDatas.datas) {
+      const effectiveSeparator = this.getSeparatorValue(
+        separator || this.detectFieldSeparator(fileDatas),
+      );
+
       // Split lines without removing carriage returns
-      const lines: string[] = fileDatas.datas.split(/\r?\n/);
+      const lines: string[] = fileDatas.datas
+        .split(/\r?\n/)
+        .filter((line: string) => line.length > 0);
 
-      // Process lines
-      lines.forEach((line) => {
-        const columns = line.split(/\t/);
-
-        // Handle merging lines
-        if (columns.length === 1 && formatedDatas.values.length > 0) {
-          // @ts-ignore
-          formatedDatas.values[formatedDatas.values.length - 1][1] +=
-            '\n' + columns[0];
-        } else {
-          // Remove first and last double quotes and trailing newline
-          const formattedColumn = columns[1]
-            ?.replace(/^"|"$/g, '')
-            .replace(/""/g, '"');
-          // @ts-ignore
-          formatedDatas.values.push([columns[0], formattedColumn]);
+      if (lines.length > 0) {
+        const headerLine = lines[0];
+        if (!headerLine) {
+          return formatedDatas;
         }
-      });
 
-      // Set keys and remove the first line for values
-      if (formatedDatas.values.length > 0) {
-        formatedDatas.keys =
-          // @ts-ignore
-          formatedDatas.values.shift()?.map((key) => key.replace(/""/g, '"')) ||
-          [];
+        const headerColumns = this.splitLineWithSeparator(
+          headerLine,
+          effectiveSeparator,
+        );
+        formatedDatas.keys = headerColumns.map((key: string) =>
+          (key || '').replace(/^"|"$/g, '').replace(/""/g, '"'),
+        );
+
+        lines.slice(1).forEach((line) => {
+          const columns = this.splitLineWithSeparator(
+            line,
+            effectiveSeparator,
+            formatedDatas.keys.length,
+          );
+          const formattedColumns = columns.map((column: string) =>
+            (column || '').replace(/^"|"$/g, '').replace(/""/g, '"'),
+          );
+
+          // Handle continuation lines: append content to last column of previous row.
+          if (
+            formattedColumns.length === 1 &&
+            formatedDatas.values.length > 0
+          ) {
+            const currentRow: string[] | undefined =
+              formatedDatas.values[formatedDatas.values.length - 1];
+            if (!currentRow) {
+              return;
+            }
+            const lastColumnIndex = Math.max(0, currentRow.length - 1);
+            currentRow[lastColumnIndex] += '\n' + formattedColumns[0];
+          } else {
+            formatedDatas.values.push(formattedColumns);
+          }
+        });
       }
     }
 
     return formatedDatas;
+  }
+
+  detectFieldSeparator(fileDatas: FileModel): string {
+    const datas = fileDatas?.datas;
+    if (!datas) {
+      return '\t';
+    }
+
+    const firstLine = datas
+      .split(/\r?\n/)
+      .find((line: string) => line.trim().length > 0);
+
+    if (!firstLine) {
+      return '\t';
+    }
+
+    let detectedSeparator = '\t';
+    let maxColumnCount = 1;
+
+    this.supportedSeparators.forEach((candidate) => {
+      const columnCount = this.splitLineWithSeparator(
+        firstLine,
+        candidate,
+      ).length;
+      if (columnCount > maxColumnCount) {
+        maxColumnCount = columnCount;
+        detectedSeparator = candidate;
+      }
+    });
+
+    return detectedSeparator;
+  }
+
+  private getSeparatorValue(separator: string): string {
+    if (separator === '\\t') {
+      return '\t';
+    }
+
+    if (separator === '\\s') {
+      return ' ';
+    }
+
+    return separator || '\t';
+  }
+
+  private splitLineWithSeparator(
+    line: string,
+    separator: string,
+    expectedColumnCount?: number,
+  ): string[] {
+    if (separator === ' ') {
+      return this.splitSpaceSeparatedLine(line, expectedColumnCount);
+    }
+
+    return line.split(separator);
+  }
+
+  private splitSpaceSeparatedLine(
+    line: string,
+    expectedColumnCount?: number,
+  ): string[] {
+    const trimmedLine = line.trim();
+    if (!trimmedLine) {
+      return [];
+    }
+
+    if (!expectedColumnCount || expectedColumnCount <= 1) {
+      return trimmedLine.split(/\s+/);
+    }
+
+    const columns: string[] = [];
+    let remaining = trimmedLine;
+
+    for (let i = 0; i < expectedColumnCount - 1; i++) {
+      const separatorMatch = remaining.match(/\s+/);
+      if (!separatorMatch || separatorMatch.index === undefined) {
+        columns.push(remaining);
+        remaining = '';
+        break;
+      }
+
+      const separatorIndex = separatorMatch.index;
+      columns.push(remaining.slice(0, separatorIndex));
+      remaining = remaining.slice(separatorIndex + separatorMatch[0].length);
+    }
+
+    columns.push(remaining);
+    return columns;
   }
 
   /**
@@ -130,6 +240,18 @@ export class ImportExtDatasService {
     } else {
       return false;
     }
+  }
+
+  updateImportedDatas(
+    importedData: ExtDatasModel,
+    dimension: string,
+    joinKey: string,
+    separator: string,
+  ) {
+    importedData.dimension = dimension;
+    importedData.joinKey = joinKey;
+    importedData.separator = separator;
+    this.khiopsLibraryService.dirtyStateChanged$.next();
   }
 
   /**
@@ -214,7 +336,12 @@ export class ImportExtDatasService {
         const percent: number = (percentIndex / importExtDatasLength) * 100;
         progressCallback(msg, percent);
       }
-      const formatedDatas = this.formatImportedDatas(fileDatas);
+      const formatedDatas = this.formatImportedDatas(
+        fileDatas,
+        undefined,
+        undefined,
+        externalDatas.separator,
+      );
 
       const keyIndex = formatedDatas.keys.indexOf(joinKey);
       const fieldIndex = formatedDatas.keys.indexOf(fieldName);
@@ -247,6 +374,7 @@ export class ImportExtDatasService {
             const currentExtData = {
               key: formatedDatas.keys[fieldIndex],
               value: formatedDatas.values[j][fieldIndex],
+              source: externalDatas,
             };
             this.savedExternalDatas[externalDatas.dimension.toLowerCase()][
               extKey

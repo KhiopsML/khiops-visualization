@@ -128,6 +128,86 @@ describe('coVisualization', () => {
         expect(result.values[1]).toEqual(['2', 'Bob']);
         expect(result.values[2]).toEqual(['3', 'Charlie']);
       });
+
+      it('should parse comma-separated data when separator is provided', () => {
+        const fileDatas = {
+          datas: 'ID,Name,Score\n1,Alice,12\n2,Bob,9',
+        };
+
+        const result = importExtDatasService.formatImportedDatas(
+          fileDatas,
+          undefined,
+          undefined,
+          ',',
+        );
+
+        expect(result.keys).toEqual(['ID', 'Name', 'Score']);
+        expect(result.values[0]).toEqual(['1', 'Alice', '12']);
+        expect(result.values[1]).toEqual(['2', 'Bob', '9']);
+      });
+
+      it('should parse space-separated data when separator is provided', () => {
+        const fileDatas = {
+          datas: 'ID Name Value\n1 Alice 100\n2 Bob 250',
+        };
+
+        const result = importExtDatasService.formatImportedDatas(
+          fileDatas,
+          undefined,
+          undefined,
+          ' ',
+        );
+
+        expect(result.keys).toEqual(['ID', 'Name', 'Value']);
+        expect(result.values[0]).toEqual(['1', 'Alice', '100']);
+        expect(result.values[1]).toEqual(['2', 'Bob', '250']);
+      });
+
+      it('should keep full text after first separator when header has two columns', () => {
+        const fileDatas = {
+          datas:
+            'education Label\n' +
+            'Bachelors This text is standard\n' +
+            'HS-grad This one too (;*/|,......)',
+        };
+
+        const result = importExtDatasService.formatImportedDatas(
+          fileDatas,
+          undefined,
+          undefined,
+          ' ',
+        );
+
+        expect(result.keys).toEqual(['education', 'Label']);
+        expect(result.values[0]).toEqual(['Bachelors', 'This text is standard']);
+        expect(result.values[1]).toEqual(['HS-grad', 'This one too (;*/|,......)']);
+      });
+    });
+
+    describe('detectFieldSeparator', () => {
+      it('should detect comma separator from header', () => {
+        const detectedSeparator = importExtDatasService.detectFieldSeparator({
+          datas: 'ID,Name,Value\n1,Alice,100',
+        });
+
+        expect(detectedSeparator).toBe(',');
+      });
+
+      it('should detect semicolon separator from header', () => {
+        const detectedSeparator = importExtDatasService.detectFieldSeparator({
+          datas: 'ID;Name;Value\n1;Alice;100',
+        });
+
+        expect(detectedSeparator).toBe(';');
+      });
+
+      it('should fallback to tab when no separator candidate is found', () => {
+        const detectedSeparator = importExtDatasService.detectFieldSeparator({
+          datas: 'SingleColumn\nValue',
+        });
+
+        expect(detectedSeparator).toBe('\t');
+      });
     });
 
     // ===== addImportedDatas =====

@@ -137,42 +137,60 @@ export class HomeInitializationFacade {
   }
 
   subscribeToImportedDatasChanges(): Subscription {
-    return this.eventsService.importedDatasChanged.subscribe((event: unknown) => {
-      const dimensionName = this.getFirstImportedDimensionName(event);
-      if (!dimensionName) {
-        return;
-      }
+    return this.eventsService.importedDatasChanged.subscribe(
+      (event: unknown) => {
+        const dimensionNames = this.getImportedDimensionNames(event);
+        if (dimensionNames.length === 0) {
+          return;
+        }
 
-      this.dimensionsDatasService.constructDimensionsTrees();
-      const dimIndex =
-        this.dimensionsDatasService.getDimensionPositionFromName(dimensionName);
-      const selectedDimension =
-        this.dimensionsDatasService.dimensionsDatas.selectedDimensions[dimIndex];
-      const selectedNode =
-        this.dimensionsDatasService.dimensionsDatas.selectedNodes[dimIndex];
+        this.dimensionsDatasService.constructDimensionsTrees();
+        dimensionNames.forEach((dimensionName) => {
+          const dimIndex =
+            this.dimensionsDatasService.getDimensionPositionFromName(
+              dimensionName,
+            );
+          const selectedDimension =
+            this.dimensionsDatasService.dimensionsDatas.selectedDimensions[
+              dimIndex
+            ];
+          const selectedNode =
+            this.dimensionsDatasService.dimensionsDatas.selectedNodes[dimIndex];
 
-      if (selectedDimension && selectedNode) {
-        // Update selected nodes ext datas
-        this.treenodesService.setSelectedNode(
-          selectedDimension.name,
-          selectedNode._id,
-          false,
-        );
-        // Enable ext datas view if not displayed
-        this.viewManagerService.enableExtDatasView(dimensionName);
-      }
-    });
+          if (selectedDimension && selectedNode) {
+            this.treenodesService.setSelectedNode(
+              selectedDimension.name,
+              selectedNode._id,
+              false,
+            );
+            const hasImportedDatas = this.importExtDatasService
+              .getImportedDatas()
+              .some(
+                (source) =>
+                  source.dimension.toLowerCase() ===
+                  dimensionName.toLowerCase(),
+              );
+            if (hasImportedDatas) {
+              this.viewManagerService.enableExtDatasView(dimensionName);
+            } else {
+              this.viewManagerService.disableExtDatasView(dimensionName);
+            }
+          }
+        });
+      },
+    );
   }
 
-  private getFirstImportedDimensionName(event: unknown): string | undefined {
+  private getImportedDimensionNames(event: unknown): string[] {
     if (!Array.isArray(event)) {
-      return undefined;
+      return [];
     }
 
-    const firstDimensionName = event[0];
-    return typeof firstDimensionName === 'string'
-      ? firstDimensionName
-      : undefined;
+    return [
+      ...new Set(
+        event.filter((name): name is string => typeof name === 'string'),
+      ),
+    ];
   }
 
   private openLoadExternalDataDialog(): void {

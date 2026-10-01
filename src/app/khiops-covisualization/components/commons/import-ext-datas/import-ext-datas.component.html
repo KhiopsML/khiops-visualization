@@ -4,117 +4,179 @@
  * at https://spdx.org/licenses/BSD-3-Clause-Clear.html or see the "LICENSE" file for more details.
  -->
 
-<div id="import-ext-datas-comp" fxFlexFill #manageViews fxLayout="column">
-  <div
-    fxLayout="row"
-    id="import-ext-datas-header"
-    fxLayoutAlign="center center"
-  >
-    <h1 fxFlex fxLayoutAlign="start center">
+<div id="import-ext-datas-comp" #manageViews fxLayout="column">
+  <header id="import-ext-datas-header">
+    <h1>
       <svg lucideIcon="file-up" size="16"></svg>
-      {{ 'GLOBAL.IMPORT_NEW_EXTERNAL_DATA' | translate | uppercase }}
+      {{
+        (editingExtData
+          ? 'GLOBAL.EDIT_EXTERNAL_DATA_MAPPING'
+          : 'GLOBAL.IMPORT_NEW_EXTERNAL_DATA'
+        )
+          | translate
+          | uppercase
+      }}
     </h1>
-  </div>
-  <div id="import-ext-datas-content" fxLayout="column" class="kl-card">
+  </header>
+  <div id="import-ext-datas-content">
     @if (importExtDatas && importExtDatas.datas) {
-      <div fxLayout="column">
-        <div
-          class="import-ext-datas-row"
-          fxLayout="row"
-          fxLayoutAlign="start center"
-        >
-          <h1>{{ translate.get('GLOBAL.EXTERNAL_DATA_FILE') }}</h1>
-        </div>
-        <div
-          class="import-ext-datas-row"
-          fxLayout="row"
-          fxLayoutAlign="start center"
-        >
-          <span>{{ 'GLOBAL.JOINT_KEY' | translate }}</span>
-          <div fxLayout="row" fxLayoutAlign="start center">
-            <button
-              class="button-accent"
-              mat-stroked-button
-              color="accent"
-              [matMenuTriggerFor]="joinKeyMenu"
-            >
-              {{ joinKeys.selected
-              }}<em><svg lucideIcon="chevron-down" size="16"></svg> </em>
-            </button>
-            <mat-menu #joinKeyMenu>
-              @for (key of joinKeys.keys; track key.name || key.value || key) {
-                <button mat-menu-item (click)="changeJoinKey(key)">
-                  {{ key }}
-                </button>
-              }
-            </mat-menu>
-          </div>
-          <!-- <span>{{ 'GLOBAL.SEPARATOR' | translate }} :</span>
-          <input  name="separatorInput" [(ngModel)]="separatorInput">
-          <span>{{ 'GLOBAL.EMPTY_HT_INSTRUCTIONS' | translate }}</span> -->
-        </div>
-        <div
-          class="import-ext-datas-row"
-          fxLayout="row"
-          fxLayoutAlign="start center"
-        >
-          <span>{{ 'GLOBAL.FIELDS_TO_IMPORT' | translate }}</span>
-          <div fxFlex id="importext-datas-table" fxLayout="column">
-            <kl-ag-grid
-              fxFlex
-              [showSearch]="false"
-              (gridCheckboxChanged)="onGridCheckboxChanged($event)"
-              [showLineSelection]="false"
-              [enableClickSelection]="false"
-              [showColumnsSelection]="false"
-              [inputDatas]="fieldsToImport.values"
-              [title]="''"
-              [displayedColumns]="fieldsToImport.displayedColumns"
-            >
-            </kl-ag-grid>
-          </div>
-        </div>
-        <div
-          class="import-ext-datas-row"
-          fxLayout="row"
-          fxLayoutAlign="start center"
-        >
-          <span>{{ 'GLOBAL.DIMENSION' | translate }}</span>
-          <div fxFlex fxLayout="row" fxLayoutAlign="start center">
-            <button
-              id="import-ext-datas-dimension-btn"
-              class="button-accent"
-              mat-stroked-button
-              color="accent"
-              [matMenuTriggerFor]="dimensionMenu"
-            >
-              {{ selectedDimension?.name }}
-              <em><svg lucideIcon="chevron-down" size="16"></svg> </em>
-            </button>
-            <mat-menu #dimensionMenu>
-              @for (
-                dimension of dimensionsDatasService.dimensionsDatas.dimensions;
-                track dimension.name
-              ) {
-                <button
-                  mat-menu-item
-                  (click)="changeSelectedDimension(dimension)"
-                >
-                  {{ dimension.name }}
-                </button>
-              }
-            </mat-menu>
-          </div>
-        </div>
+      <div class="file-summary" fxLayout="row" fxLayoutAlign="start center">
+        <strong>{{ importExtDatas.filename }}</strong>
+        <span>{{ fileSizeLabel }}</span>
       </div>
+
+      <section class="import-step">
+        <div class="step-heading">
+          <span class="step-number">1</span>
+          <span>Field separator</span>
+          @if (isSeparatorAutoDetected) {
+            <span class="auto-detected">{{
+              'GLOBAL.AUTO_DETECTED' | translate
+            }}</span>
+          }
+        </div>
+        <div class="separator-options">
+          @for (option of separatorOptions; track option.key) {
+            <button
+              type="button"
+              class="separator-option"
+              mat-stroked-button
+              [class.mat-mdc-unelevated-button]="
+                selectedSeparatorOption === option.key
+              "
+              (click)="selectSeparatorOption(option.key)"
+            >
+              @if (
+                option.key === 'custom' && selectedSeparatorOption === 'custom'
+              ) {
+                <input
+                  class="custom-separator-input"
+                  type="text"
+                  maxlength="8"
+                  [value]="customSeparatorValue"
+                  placeholder="Enter custom separator"
+                  (input)="onCustomSeparatorInput($event)"
+                />
+              } @else {
+                {{ option.label }}
+              }
+            </button>
+          }
+        </div>
+      </section>
+
+      <section class="import-step">
+        <div class="step-heading">
+          <span class="step-number">2</span>
+          <span>{{ 'GLOBAL.JOINT_KEY' | translate }}</span>
+        </div>
+        <button
+          class="step-select"
+          mat-stroked-button
+          [matMenuTriggerFor]="joinKeyMenu"
+        >
+          <span>{{ joinKeys.selected }}</span>
+          @if (isJoinKeyAutoDetected) {
+            <span class="auto-detected">{{
+              'GLOBAL.AUTO_DETECTED' | translate
+            }}</span>
+          }
+          <svg lucideIcon="chevron-down" size="16"></svg>
+        </button>
+        <mat-menu #joinKeyMenu>
+          @for (key of joinKeys.keys; track key.name || key.value || key) {
+            <button mat-menu-item (click)="changeJoinKey(key)">
+              {{ key }}
+            </button>
+          }
+        </mat-menu>
+      </section>
+
+      <section class="import-step">
+        <div class="step-heading">
+          <span class="step-number">3</span>
+          <span>{{ 'GLOBAL.DIMENSION' | translate }}</span>
+        </div>
+        <button
+          id="import-ext-datas-dimension-btn"
+          class="step-select"
+          mat-stroked-button
+          [matMenuTriggerFor]="dimensionMenu"
+        >
+          <span>{{ selectedDimension?.name }}</span>
+          @if (isDimensionAutoDetected) {
+            <span class="auto-detected">{{
+              'GLOBAL.AUTO_DETECTED' | translate
+            }}</span>
+          }
+          <svg lucideIcon="chevron-down" size="16"></svg>
+        </button>
+        <mat-menu #dimensionMenu>
+          @for (
+            dimension of dimensionsDatasService.dimensionsDatas.dimensions;
+            track dimension.name
+          ) {
+            <button mat-menu-item (click)="changeSelectedDimension(dimension)">
+              {{ dimension.name }}
+            </button>
+          }
+        </mat-menu>
+      </section>
+
+      <section class="import-step">
+        <div class="step-heading">
+          <span class="step-number">4</span>
+          <span>{{ 'GLOBAL.FIELDS_TO_IMPORT' | translate }}</span>
+          <span class="selected-count"
+            >{{ selectedFieldCount }} / {{ fieldsToImport.values.length }}</span
+          >
+        </div>
+        <div id="importext-datas-table">
+          <kl-ag-grid
+            [showHeader]="false"
+            [smallHeader]="true"
+            (gridCheckboxChanged)="onGridCheckboxChanged($event)"
+            [showLineSelection]="false"
+            [enableClickSelection]="false"
+            [showColumnsSelection]="false"
+            [inputDatas]="fieldsToImport.values"
+            [title]="''"
+            [displayedColumns]="fieldsToImport.displayedColumns"
+          ></kl-ag-grid>
+        </div>
+      </section>
+
+      <section class="import-preview">
+        <div class="preview-heading">
+          <span>{{ 'GLOBAL.LIVE_MATCH_SAMPLE' | translate }}</span>
+        </div>
+        @if (previewRows.length > 0) {
+          <div
+            class="import-preview-rows"
+            [style.--preview-columns]="previewColumnCount"
+          >
+            <div class="import-preview-row import-preview-header">
+              @for (header of previewHeaders; track header) {
+                <span>{{ header }}</span>
+              }
+            </div>
+            @for (row of previewRows; track $index) {
+              <div class="import-preview-row">
+                @for (cell of row; track $index) {
+                  <span>{{ cell }}</span>
+                }
+              </div>
+            }
+          </div>
+        } @else {
+          <div class="import-preview-empty">
+            {{ 'GLOBAL.NO_MATCHING_FOUND' | translate }}
+          </div>
+        }
+      </section>
     }
   </div>
-  <div
-    id="import-ext-datas-footer"
-    fxLayout="row"
-    fxLayoutAlign="center center"
-  >
-    <h2 fxFlex></h2>
+  <footer id="import-ext-datas-footer">
     <button mat-stroked-button (click)="onClickOnCancel()">
       {{ 'GLOBAL.CANCEL' | translate }}
     </button>
@@ -123,7 +185,7 @@
       mat-flat-button
       (click)="onClickOnSave()"
     >
-      {{ 'GLOBAL.LOAD_DATAS' | translate }}
+      {{ (editingExtData ? 'GLOBAL.SAVE' : 'GLOBAL.LOAD_DATAS') | translate }}
     </button>
-  </div>
+  </footer>
 </div>

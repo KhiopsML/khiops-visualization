@@ -22,6 +22,7 @@ export interface DialogConfigI {
   hidden?: boolean;
   panelClass?: string;
   noOverlay?: boolean;
+  sidePanel?: boolean;
 }
 
 export interface DialogRef<T = any> {

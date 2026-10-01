@@ -7,6 +7,7 @@
 import {
   Component,
   OnInit,
+  Input,
   Output,
   NgZone,
   EventEmitter,
@@ -25,6 +26,7 @@ import { FileModel } from '../../model/file.model';
   standalone: false,
 })
 export class ImportFileLoaderComponent implements OnInit {
+  @Input() dropzone = false;
   @Output() datasLoaded: EventEmitter<any> = new EventEmitter();
   filename?: string;
   isLoadingDatas?: boolean;
@@ -42,6 +44,13 @@ export class ImportFileLoaderComponent implements OnInit {
 
   openFileDialog(e: any) {
     if (e.target.files) this.openFile(e.target.files[0]);
+  }
+
+  onFileDrop(event: DragEvent) {
+    event.preventDefault();
+    event.stopPropagation();
+    const file = event.dataTransfer?.files[0];
+    if (file) this.openFile(file);
   }
 
   openFile(file: any) {

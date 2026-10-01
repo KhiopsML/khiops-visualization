@@ -12,7 +12,7 @@
   [ngClass]="{ fullscreen: isFullscreen }"
   [appFullscreenAnimation]="isFullscreen"
 >
-  @if (inputDatas?.length > 0) {
+  @if (showHeader && inputDatas?.length > 0) {
     <div fxLayout="row" class="comp-header" #headerContainer>
       @if (!showFullSearch) {
         <div fxFlex fxLayoutAlign="start center" fxLayout="row">

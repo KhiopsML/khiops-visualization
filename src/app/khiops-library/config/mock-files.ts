@@ -90,7 +90,7 @@ export function getVisualizationMockFile(): string {
  */
 export function getCovisualizationMockFile(): string {
   // let urlKC = 'Coclustering-100x100.json';
-  let urlKC = 'IV-Poissons.json';
+  // let urlKC = 'IV-Poissons.json';
   // let urlKC = 'cc.json';
   // let urlKC = 'Coclustering.json';
   // let urlKC = 'Co-simple-2vars.json';
@@ -99,7 +99,7 @@ export function getCovisualizationMockFile(): string {
   // let urlKC = '1-Adult2varsEducationOccupation.khcj';
   // let urlKC = '2-Iris3vars-Coclustering.khcj';
   // let urlKC = 'co-IrisMissing.json';
-  // let urlKC = 'adult2var.json';
+  let urlKC = 'adult2var.json';
   // let urlKC = 'sample3.json';
   // let urlKC = 'DataNoisyCorrelatedN1000000_C1000_V10_L5Coclustering.json';
   // let urlKC = 'sample0.json';

@@ -39,10 +39,11 @@ export class HeaderManageViewComponent {
 
   clickImportExternalData() {
     this.dialogService.openDialog(ImportExtDatasListComponent, {
-      width: AppConfig.covisualizationCommon.MANAGE_VIEWS.WIDTH,
-      maxWidth: AppConfig.covisualizationCommon.MANAGE_VIEWS.MAX_WIDTH,
-      height: '600px',
+      width: 'min(560px, 100vw)',
+      maxWidth: '100vw',
+      height: '100vh',
       disableClose: true,
+      sidePanel: true,
     });
   }
 }

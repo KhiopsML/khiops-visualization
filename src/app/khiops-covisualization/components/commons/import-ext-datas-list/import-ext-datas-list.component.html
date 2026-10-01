@@ -4,65 +4,130 @@
  * at https://spdx.org/licenses/BSD-3-Clause-Clear.html or see the "LICENSE" file for more details.
  -->
 
-<div id="import-ext-datas-list-comp" fxFlexFill #manageViews fxLayout="column">
-  @if (!importExtDatas) {
-    <div fxFlexFill id="import-ext-datas-list-comp-container">
-      <div
-        fxLayout="row"
-        id="import-ext-datas-header"
-        fxLayoutAlign="center center"
-      >
-        <h1 fxFlex fxLayoutAlign="start center">
-          <svg lucideIcon="file-up" size="16"></svg>
-          {{ 'GLOBAL.EXTERNAL_DATA' | translate | uppercase }}
-        </h1>
-        <button
-          class="close-btn lucid-icon-button"
-          mat-flat-button
-          matTooltip="{{ 'GLOBAL.CLOSE' | translate }}"
-          (click)="onClickOnClose()"
-        >
-          <svg lucideIcon="x"></svg>
-        </button>
-      </div>
-      @if (!isLoadingDatas) {
-        <div
-          id="import-ext-datas-list-content"
-          fxLayout="column"
-          fxLayoutAlign="start center"
-        >
-          @if (importedDatas && importedDatas.values) {
-            <div
-              id="import-ext-datas-list-table"
-              class="kl-card"
-              fxLayout="column"
-              fxFlex
-              fxLayoutAlign="start center"
-            >
-              <kl-ag-grid
-                [showSearch]="false"
-                [showLineSelection]="false"
-                [enableClickSelection]="false"
-                [showColumnsSelection]="false"
-                [inputDatas]="importedDatas.values"
-                [title]="''"
-                [displayedColumns]="importedDatas.displayedColumns"
-              >
-              </kl-ag-grid>
-            </div>
-          }
-          <kl-import-file-loader
-            (datasLoaded)="datasLoaded($event)"
-          ></kl-import-file-loader>
+<div id="import-ext-datas-list-comp" #manageViews fxLayout="column">
+  <div id="import-ext-datas-list-comp-container">
+    <header id="import-ext-datas-header">
+      <div fxFlex class="external-data-heading">
+        <span class="heading-icon"><svg lucideIcon="file-up"></svg></span>
+        <div fxFlex>
+          <h1>{{ 'GLOBAL.EXTERNAL_DATA_SOURCES' | translate }}</h1>
+          <p>{{ 'GLOBAL.EXTERNAL_DATA_SUBTITLE' | translate }}</p>
         </div>
-      }
-    </div>
-  }
-  @if (importExtDatas && !isLoadingDatas) {
-    <app-import-ext-datas
-      [importExtDatas]="importExtDatas"
-      (closeImport)="closeImport()"
-    >
-    </app-import-ext-datas>
-  }
+        <kl-important-badge
+          [text]="importedSources.length + ' ' + ('GLOBAL.ACTIVE' | translate)"
+          color="orange"
+        />
+      </div>
+
+      <button
+        class="lucid-icon-button"
+        mat-stroked-button
+        (click)="onClickOnClose()"
+        [matTooltip]="'GLOBAL.CLOSE' | translate"
+      >
+        <svg lucideIcon="x"></svg>
+      </button>
+    </header>
+    @if (!isLoadingDatas) {
+      <div id="import-ext-datas-list-content">
+        <kl-import-file-loader
+          [dropzone]="true"
+          (datasLoaded)="datasLoaded($event)"
+        ></kl-import-file-loader>
+
+        <section class="configured-sources">
+          <div class="section-heading">
+            <h2>{{ 'GLOBAL.CONFIGURED_EXTERNAL_FILES' | translate }}</h2>
+            <kl-important-badge [text]="importedSources.length" color="green" />
+          </div>
+
+          @for (
+            source of importedSources;
+            track source.filename +
+              source.path +
+              source.dimension +
+              source.joinKey +
+              source.separator
+          ) {
+            <article
+              class="source-card"
+              [class.expanded]="isEditingSource(source)"
+            >
+              <div class="source-card-topline">
+                <span class="source-file-icon" fxLayoutAlign="center center"
+                  ><svg lucideIcon="file-text" size="18"></svg>
+                </span>
+                <div
+                  class="source-card-title"
+                  fxLayout="row"
+                  fxLayoutAlign="start center"
+                >
+                  <strong>{{ source.filename }}</strong>
+                  <span fxLayoutAlign="center center">
+                    {{ formatFileSize(source.file?.size) }}</span
+                  >
+                </div>
+                <span class="source-status">{{
+                  'GLOBAL.CONFIGURED' | translate
+                }}</span>
+                <div class="source-actions">
+                  <button
+                    mat-icon-button
+                    [matTooltip]="
+                      isEditingSource(source)
+                        ? ('GLOBAL.CANCEL' | translate)
+                        : ('GLOBAL.EDIT_MAPPING' | translate)
+                    "
+                    (click)="editImportedDatas(source)"
+                  >
+                    <svg
+                      [lucideIcon]="
+                        isEditingSource(source) ? 'x' : 'notebook-pen'
+                      "
+                    ></svg>
+                  </button>
+                  <button
+                    mat-icon-button
+                    [matTooltip]="'GLOBAL.DELETE' | translate"
+                    (click)="removeExtDatasFromList(source)"
+                  >
+                    <svg lucideIcon="trash"></svg>
+                  </button>
+                </div>
+              </div>
+              <div class="source-details">
+                <div>
+                  <span>{{ 'GLOBAL.JOIN_KEY' | translate }}</span
+                  ><strong>{{ source.joinKey }}</strong>
+                </div>
+                <div>
+                  <span>{{ 'GLOBAL.DIMENSION' | translate }}</span
+                  ><strong>{{ source.dimension }}</strong>
+                </div>
+              </div>
+              @if (isEditingSource(source) && importExtDatas) {
+                <app-import-ext-datas
+                  class="mapping-editor"
+                  [importExtDatas]="importExtDatas"
+                  [editingExtData]="editingExtData"
+                  [editingGroupFields]="editingGroupFields"
+                  (importSaved)="onImportSaved($event)"
+                  (closeImport)="closeImport()"
+                ></app-import-ext-datas>
+              }
+            </article>
+          }
+
+          @if (importExtDatas && !editingExtData) {
+            <app-import-ext-datas
+              class="mapping-editor new-mapping-editor"
+              [importExtDatas]="importExtDatas"
+              (importSaved)="onImportSaved($event)"
+              (closeImport)="closeImport()"
+            ></app-import-ext-datas>
+          }
+        </section>
+      </div>
+    }
+  </div>
 </div>

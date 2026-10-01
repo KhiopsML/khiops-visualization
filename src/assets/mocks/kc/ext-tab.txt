@@ -1,0 +1,5 @@
+education	Label	label2
+Bachelors	This text is standard	label2
+HS-grad	This one too (;*/|,……)	label2
+Masters	"By cons, it contains a tab"	label2
+Some-college	"Here there are	label2

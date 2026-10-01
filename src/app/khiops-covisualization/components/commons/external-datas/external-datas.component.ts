@@ -18,6 +18,10 @@ import { DimensionCovisualizationModel } from '@khiops-library/model/dimension.c
 import { ConfigService } from '@khiops-library/providers/config.service';
 import { COMPONENT_TYPES } from '../../../../khiops-library/enum/component-types';
 import { DynamicI } from '@khiops-library/interfaces/globals.interface';
+import { DialogService } from '@khiops-library/providers/dialog.service';
+import { ImportExtDatasListComponent } from '../import-ext-datas-list/import-ext-datas-list.component';
+import { ExtDatasModel } from '@khiops-covisualization/model/ext-datas.model';
+import { GridColumnsI } from '@khiops-library/interfaces/grid-columns.interface';
 
 @Component({
   selector: 'app-external-datas',
@@ -38,12 +42,16 @@ export class ExternalDatasComponent
   public override id: string | undefined = undefined;
   public currentExternalDatasTitle: string | undefined = '';
   public currentExternalDatas: any[] = [];
+  public currentMappingSource: ExtDatasModel | undefined;
+  public externalDatasDisplayedColumns: GridColumnsI[] = [];
+  public externalDatasGridRows: DynamicI[] = [];
   public componentType = COMPONENT_TYPES.EXTERNAL_DATAS; // needed to copy datas
 
   constructor(
     public override selectableService: SelectableService,
     public override ngzone: NgZone,
     public override configService: ConfigService,
+    private dialogService: DialogService,
   ) {
     super(selectableService, ngzone, configService);
   }
@@ -68,8 +76,27 @@ export class ExternalDatasComponent
     }
   }
 
+  editMapping(source?: ExtDatasModel) {
+    if (!source) return;
+
+    this.dialogService.openDialog(
+      ImportExtDatasListComponent,
+      {
+        width: 'min(560px, 100vw)',
+        maxWidth: '100vw',
+        height: '100vh',
+        disableClose: true,
+        sidePanel: true,
+      },
+      { editingExtData: source },
+    );
+  }
+
   private updateExternalDatas() {
     this.currentExternalDatas = [];
+    this.currentMappingSource = undefined;
+    this.externalDatasDisplayedColumns = [];
+    this.externalDatasGridRows = [];
     if (this.selectedComposition?.externalData) {
       // If composition is available, load datas from it (faster)
       this.currentExternalDatas.push(this.selectedComposition.externalData);
@@ -82,5 +109,46 @@ export class ExternalDatasComponent
       this.currentExternalDatas = [Object.values(this.externalData)[0]];
       this.currentExternalDatasTitle = Object.keys(this.externalData)[0] || '';
     }
+
+    this.currentMappingSource = this.currentExternalDatas
+      .flatMap((datas: any) => datas || [])
+      .find((data: any) => !!data?.source)?.source;
+
+    this.buildExternalDatasGrid();
+  }
+
+  private buildExternalDatasGrid() {
+    const firstDatasRow = this.currentExternalDatas?.[0];
+    if (!firstDatasRow?.length) {
+      return;
+    }
+
+    const keyColumnField = 'externalDataKey';
+    const valueColumnPrefix = 'externalDataValue';
+
+    this.externalDatasDisplayedColumns = [
+      {
+        headerName: 'key',
+        field: keyColumnField,
+      },
+      ...this.currentExternalDatas.map((_, rowIndex) => ({
+        headerName: `value`,
+        field: `${valueColumnPrefix}${rowIndex + 1}`,
+      })),
+    ];
+
+    this.externalDatasGridRows = firstDatasRow.map(
+      (data: any, keyIndex: number) => {
+        const row: DynamicI = {
+          [keyColumnField]: data.key,
+        };
+
+        this.currentExternalDatas.forEach((datas: any[], rowIndex: number) => {
+          row[`${valueColumnPrefix}${rowIndex + 1}`] = datas?.[keyIndex]?.value;
+        });
+
+        return row;
+      },
+    );
   }
 }

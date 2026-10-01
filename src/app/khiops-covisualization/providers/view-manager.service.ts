@@ -106,6 +106,16 @@ export class ViewManagerService {
     }
   }
 
+  disableExtDatasView(dimension: string) {
+    const currentDim = this.viewsLayout?.dimensionsViewsLayoutsVO?.find(
+      (e) => e.name === dimension,
+    );
+    if (currentDim?.isExternalDataChecked) {
+      currentDim.isExternalDataChecked = false;
+      this.saveViewsLayout(this.viewsLayout);
+    }
+  }
+
   /**
    * Saves the current views layout to local storage and emits an event indicating the layout has changed.
    *

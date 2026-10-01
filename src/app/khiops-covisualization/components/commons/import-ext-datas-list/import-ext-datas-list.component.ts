@@ -4,18 +4,20 @@
  * at https://spdx.org/licenses/BSD-3-Clause-Clear.html or see the "LICENSE" file for more details.
  */
 
-import { Component, ChangeDetectionStrategy } from '@angular/core';
+import {
+  Component,
+  ChangeDetectionStrategy,
+  Input,
+  OnInit,
+} from '@angular/core';
 import { ImportExtDatasService } from '@khiops-covisualization/providers/import-ext-datas.service';
 import { TranslateService } from '@ngstack/translate';
 import { FileModel } from '@khiops-library/model/file.model';
 import { ExtDatasModel } from '@khiops-covisualization/model/ext-datas.model';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { AppConfig } from '../../../../../../src/environments/environment';
-import { LoadExtDatasComponent } from '../load-ext-datas/load-ext-datas.component';
-import { GridDatasI } from '@khiops-library/interfaces/grid-datas.interface';
-import { IconCellComponent } from '@khiops-library/components/ag-grid/icon-cell/icon-cell.component';
 import { EventsService } from '@khiops-covisualization/providers/events.service';
 import { DialogService } from '@khiops-library/providers/dialog.service';
+import { ImportFileLoaderService } from '@khiops-library/components/import-file-loader/import-file-loader.service';
 
 @Component({
   selector: 'app-import-ext-datas-list',
@@ -24,9 +26,11 @@ import { DialogService } from '@khiops-library/providers/dialog.service';
   changeDetection: ChangeDetectionStrategy.Eager,
   standalone: false,
 })
-export class ImportExtDatasListComponent {
+export class ImportExtDatasListComponent implements OnInit {
   importExtDatas: FileModel | undefined;
-  importedDatas: GridDatasI | undefined;
+  @Input() editingExtData: ExtDatasModel | undefined;
+  editingGroupFields: string[] = [];
+  importedSources: ExtDatasModel[] = [];
   isLoadingDatas = false;
 
   constructor(
@@ -34,67 +38,58 @@ export class ImportExtDatasListComponent {
     private eventsService: EventsService,
     private snackBar: MatSnackBar,
     private dialogService: DialogService,
+    private importFileLoaderService: ImportFileLoaderService,
     public translate: TranslateService,
   ) {
-    this.constructImportedDatasTable();
+    this.updateImportedSources();
   }
 
-  constructImportedDatasTable() {
-    this.importedDatas = {
-      displayedColumns: [
-        {
-          headerName: this.translate.get('GLOBAL.FILE_NAME'),
-          field: 'filename',
-        },
-        {
-          headerName: this.translate.get('GLOBAL.JOIN_KEY'),
-          field: 'joinKey',
-        },
-        {
-          headerName: this.translate.get('GLOBAL.FIELD'),
-          field: 'field',
-        },
-        {
-          headerName: this.translate.get('GLOBAL.DIMENSION'),
-          field: 'dimension',
-        },
-        {
-          headerName: '',
-          field: 'remove',
-          cellRenderer: IconCellComponent,
-          cellRendererParams: {
-            icon: 'trash',
-            action: this.removeExtDatasFromList.bind(this),
-          },
-        },
-      ],
-      values: [],
-    };
-
-    const importedValues: ExtDatasModel[] =
-      this.importExtDatasService.getImportedDatas();
-    if (importedValues.length > 0) {
-      for (let i = 0; i < importedValues.length; i++) {
-        this.importedDatas.values!.push({
-          filename: importedValues[i]?.filename,
-          field: importedValues[i]?.field.name,
-          joinKey: importedValues[i]?.joinKey,
-          dimension: importedValues[i]?.dimension,
-        });
-      }
+  ngOnInit() {
+    if (this.editingExtData) {
+      this.loadImportedDataForEditing(this.editingExtData);
     }
   }
 
-  removeExtDatasFromList(e: any) {
-    const dimensionName = e.data.dimension;
-    const removed = this.importExtDatasService.removeImportedDatas(
-      e.data.filename,
-      e.data.dimension,
-      e.data.joinKey,
-      e.data.separator,
-      e.data.field,
-    );
+  updateImportedSources() {
+    const uniqueSources = new Map<string, ExtDatasModel>();
+    this.importExtDatasService.getImportedDatas().forEach((source) => {
+      const sourceKey = this.getSourceGroupKey(source);
+      if (!uniqueSources.has(sourceKey)) {
+        uniqueSources.set(sourceKey, source);
+      }
+    });
+
+    this.importedSources = [...uniqueSources.values()];
+  }
+
+  removeExtDatasFromList(source: ExtDatasModel) {
+    const sourceGroupKey = this.getSourceGroupKey(source);
+    const dimensionName = source.dimension;
+    const sourceGroupEntries = this.importExtDatasService
+      .getImportedDatas()
+      .filter((entry) => this.getSourceGroupKey(entry) === sourceGroupKey);
+
+    let removed = false;
+    sourceGroupEntries.forEach((entry) => {
+      const currentRemoved = this.importExtDatasService.removeImportedDatas(
+        entry.filename,
+        entry.dimension,
+        entry.joinKey,
+        entry.separator,
+        entry.field.name,
+      );
+      removed = removed || currentRemoved;
+    });
+
     if (removed) {
+      if (
+        this.editingExtData &&
+        this.getSourceGroupKey(this.editingExtData) === sourceGroupKey
+      ) {
+        this.closeImport();
+      } else {
+        this.updateImportedSources();
+      }
       this.snackBar.open(
         this.translate.get('SNACKS.EXTERNAL_DATA_DELETED'),
         undefined,
@@ -117,34 +112,84 @@ export class ImportExtDatasListComponent {
         },
       );
     }
-    // Update datas table
-    this.constructImportedDatasTable();
+    if (!removed) this.updateImportedSources();
   }
 
   onClickOnClose() {
     this.dialogService.closeDialog();
-    this.openLoadExternalDataDialog();
-  }
-
-  openLoadExternalDataDialog() {
-    this.dialogService.openDialog(LoadExtDatasComponent, {
-      width: AppConfig.covisualizationCommon.MANAGE_VIEWS.WIDTH,
-      maxWidth: AppConfig.covisualizationCommon.MANAGE_VIEWS.MAX_WIDTH,
-      height: '500px',
-      disableClose: true,
-    });
   }
 
   closeImport() {
     this.importExtDatas = undefined;
-    this.constructImportedDatasTable();
-    // Close current dialog first, then open LoadExtDatasComponent to load and
-    // emit importedDatasChanged. LoadExtDatasComponent closes itself when done.
-    this.dialogService.closeDialog();
-    this.openLoadExternalDataDialog();
+    this.editingExtData = undefined;
+    this.editingGroupFields = [];
+    this.updateImportedSources();
+  }
+
+  editImportedDatas(source: ExtDatasModel) {
+    if (this.isEditingSource(source)) {
+      this.closeImport();
+      return;
+    }
+    this.loadImportedDataForEditing(source);
+  }
+
+  isEditingSource(source: ExtDatasModel): boolean {
+    return (
+      !!this.editingExtData &&
+      this.getSourceGroupKey(this.editingExtData) ===
+        this.getSourceGroupKey(source)
+    );
+  }
+
+  private loadImportedDataForEditing(source: ExtDatasModel) {
+    if (!source.file) return;
+    this.editingGroupFields = this.importExtDatasService
+      .getImportedDatas()
+      .filter(
+        (entry) =>
+          this.getSourceGroupKey(entry) === this.getSourceGroupKey(source),
+      )
+      .map((entry) => entry.field.name);
+
+    this.importFileLoaderService
+      .readImportFile(source.file)
+      .then((fileDatas: FileModel) => {
+        this.importExtDatas = new FileModel(
+          fileDatas.datas,
+          source.filename,
+          source.file,
+        );
+        this.editingExtData = source;
+      });
+  }
+
+  formatFileSize(size?: number) {
+    return size ? `${(size / 1024).toFixed(1)} KB` : '';
+  }
+
+  onImportSaved(changedDimensions: string[] = []) {
+    this.updateImportedSources();
+    this.importExtDatasService.loadSavedExternalDatas().then((dimensions) => {
+      this.eventsService.emitImportedDatasChanged([
+        ...new Set([...dimensions, ...changedDimensions]),
+      ]);
+    });
   }
 
   datasLoaded(fileDatas: FileModel) {
+    this.editingExtData = undefined;
+    this.editingGroupFields = [];
     this.importExtDatas = fileDatas;
+  }
+
+  private getSourceGroupKey(source: ExtDatasModel): string {
+    return [
+      source.filename,
+      source.path || '',
+      source.dimension,
+      source.joinKey,
+      source.separator,
+    ].join('|');
   }
 }
