@@ -21,10 +21,12 @@
       <span>{{
         title() || (selectedVariable() && selectedVariable().name)
       }}</span>
-      <kl-important-badge
-        [text]="('GLOBAL.RANK' | translate) + ' ' + selectedVariable()?.rank"
-        color="orange"
-      ></kl-important-badge>
+      @if (showRank()) {
+        <kl-important-badge
+          [text]="('GLOBAL.RANK' | translate) + ' ' + selectedVariable()?.rank"
+          color="orange"
+        ></kl-important-badge>
+      }
     </h1>
     @if (subTitle()) {
       <h2 class="subtitle">

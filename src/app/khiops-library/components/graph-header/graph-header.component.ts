@@ -30,6 +30,7 @@ export class GraphHeaderComponent {
   title = input<string>('');
   smallTitle = input<boolean>(false);
   hideScale = input<boolean>(false);
+  showRank = input<boolean>(false);
   hidePersistScale = input<boolean>(false);
   showZoom = input<boolean>(false);
   subTitle = input<string | undefined>();

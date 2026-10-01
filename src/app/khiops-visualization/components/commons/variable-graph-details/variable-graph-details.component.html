@@ -35,6 +35,7 @@
     <div fxLayout="column" fxFlexFill>
       <kl-graph-header
         class="header-panel-contrast"
+        [showRank]="true"
         [selectedVariable]="selectedVariable"
         (scaleValueChanged)="onScaleValueChanged($event)"
         (toggleFullscreen)="onToggleFullscreen($event)"
