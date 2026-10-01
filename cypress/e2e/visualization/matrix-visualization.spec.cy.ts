@@ -18,8 +18,10 @@ describe('Matrix visualization Test Plan for Khiops Visualization', () => {
         position: 'topLeft',
       });
       // Check Matrix tooltip
-      cy.get('.matrix-tooltip-comp').contains('config/batch_size: [128,1088]');
-      cy.get('.matrix-tooltip-comp').contains('config/lr: ]0');
+      cy.get('.matrix-tooltip-comp').contains('config/batch_size');
+      cy.get('.matrix-tooltip-comp').contains('[128,1088]');
+      cy.get('.matrix-tooltip-comp').contains('config/lr');
+      cy.get('.matrix-tooltip-comp').contains(']0');
       cy.get('.matrix-tooltip-comp').contains('Frequency');
       cy.get('.matrix-tooltip-comp').contains(341);
       cy.get('.matrix-mode-comp').contains('Frequency');

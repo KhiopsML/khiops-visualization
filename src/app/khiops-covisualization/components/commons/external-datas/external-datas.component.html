@@ -38,8 +38,9 @@
     </div>
   }
   @if (externalDatasGridRows.length > 0) {
-    <div class="external-datas-grid">
+    <div class="external-datas-grid" fxFlex>
       <kl-ag-grid
+        fxFlexFill
         [showHeader]="false"
         [showLineSelection]="false"
         [enableClickSelection]="false"

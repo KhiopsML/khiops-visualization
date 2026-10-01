@@ -9,17 +9,20 @@
   fxFlexFill
   class="annotation-comp selected-area-inner-div"
 >
-  @if (selectedNode()) {
-    <h1
-      class="small-title"
-      title="{{ 'TOOLTIPS.AXIS.ANNOTATION.TITLE' | translate }}"
-      fxLayout="row"
-      fxLayoutAlign="start center"
-    >
-      <svg lucideIcon="notebook-pen" size="16"></svg>
-      {{ title }}
-    </h1>
-  }
+  <div fxLayout="row" fxLayoutAlign="space-between center">
+    @if (selectedNode()) {
+      <h1
+        class="small-title"
+        title="{{ 'TOOLTIPS.AXIS.ANNOTATION.TITLE' | translate }}"
+        fxLayout="row"
+        fxLayoutAlign="start center"
+      >
+        <svg lucideIcon="notebook-pen" size="16"></svg>
+        {{ title }}
+      </h1>
+    }
+  </div>
+
   <textarea
     class="font-code"
     placeholder="{{ 'GLOBAL.TYPE_ANNOTATION' | translate }}"
