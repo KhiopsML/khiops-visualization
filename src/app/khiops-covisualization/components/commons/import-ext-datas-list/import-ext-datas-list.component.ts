@@ -155,9 +155,13 @@ export class ImportExtDatasListComponent implements OnInit {
     this.importFileLoaderService
       .readImportFile(source.file)
       .then((fileDatas: FileModel) => {
+        const filePath =
+          source.path ||
+          (source.file as File & { path?: string })?.path ||
+          fileDatas.filename;
         this.importExtDatas = new FileModel(
           fileDatas.datas,
-          source.filename,
+          filePath,
           source.file,
         );
         this.editingExtData = source;

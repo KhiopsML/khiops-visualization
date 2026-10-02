@@ -21,6 +21,32 @@ export class ImportExtDatasService {
   private savedExternalDatas: any;
   private readonly supportedSeparators = ['\t', ',', ';', ' '];
 
+  private isLikelyAbsolutePath(path: string): boolean {
+    return /^[a-zA-Z]:[\\/]/.test(path) || path.startsWith('/') || path.startsWith('\\\\');
+  }
+
+  private getPathFromFile(file?: File): string {
+    const fileWithPath = file as File & { path?: string };
+    return fileWithPath?.path || '';
+  }
+
+  private resolveExternalDataPath(
+    path: string | undefined,
+    file: File | undefined,
+    filename: string,
+  ): string {
+    if (path) {
+      return path;
+    }
+
+    const filePath = this.getPathFromFile(file);
+    if (filePath) {
+      return filePath;
+    }
+
+    return this.isLikelyAbsolutePath(filename) ? filename : '';
+  }
+
   constructor(
     private translate: TranslateService,
     private importFileLoaderService: ImportFileLoaderService,
@@ -216,6 +242,7 @@ export class ImportExtDatasService {
     field: ExtDatasFieldI,
     file: File,
   ) {
+    const resolvedPath = this.resolveExternalDataPath(path, file, filename);
     const data = new ExtDatasModel(
       filename,
       dimension,
@@ -223,7 +250,7 @@ export class ImportExtDatasService {
       separator,
       field,
       file,
-      path,
+      resolvedPath,
     );
     if (
       !this.importExtDatas.find(
@@ -402,10 +429,23 @@ export class ImportExtDatasService {
         const promise = new Promise((resolve) => {
           const externalDatas: ExtDatasModel | undefined =
             this.importExtDatas[i];
-          if (!(externalDatas?.file instanceof File)) {
-            // If command is called by user
-            // @ts-ignore
-            externalDatas.file.path = externalDatas.path;
+
+          const sourcePath = this.resolveExternalDataPath(
+            externalDatas?.path,
+            externalDatas?.file,
+            externalDatas?.filename || '',
+          );
+
+          if (externalDatas && sourcePath) {
+            externalDatas.path = sourcePath;
+          }
+
+          if (externalDatas && !(externalDatas.file instanceof File) && sourcePath) {
+            externalDatas.file = {
+              ...(externalDatas.file || {}),
+              name: externalDatas.filename,
+              path: sourcePath,
+            } as unknown as File;
           }
 
           if (externalDatas?.file) {
@@ -437,6 +477,10 @@ export class ImportExtDatasService {
   }
 
   initExtDatasFiles() {
-    this.importExtDatas = this.appService.getSavedDatas('importedDatas') || [];
+    const savedImportedDatas = this.appService.getSavedDatas('importedDatas') || [];
+    this.importExtDatas = savedImportedDatas.map((entry: ExtDatasModel) => ({
+      ...entry,
+      path: this.resolveExternalDataPath(entry.path, entry.file, entry.filename),
+    }));
   }
 }

@@ -143,6 +143,27 @@ export class ImportExtDatasComponent implements OnInit, OnChanges {
       this.dimensionsDatasService.dimensionsDatas.dimensions[0];
   }
 
+  private resolveImportFilePath(
+    fallbackPath?: string,
+    fallbackFilename?: string,
+  ): string {
+    const filePath = (this.importExtDatas?.file as File & { path?: string })
+      ?.path;
+    if (filePath) {
+      return filePath;
+    }
+
+    if (fallbackPath) {
+      return fallbackPath;
+    }
+
+    if (fallbackFilename && /[\\/]/.test(fallbackFilename)) {
+      return fallbackFilename;
+    }
+
+    return this.importExtDatas?.filename || '';
+  }
+
   ngOnInit() {
     this.initializeFromInputs();
   }
@@ -450,7 +471,10 @@ export class ImportExtDatasComponent implements OnInit, OnChanges {
       });
 
       const fileName = this.editingExtData.filename;
-      const path = this.editingExtData.path || this.importExtDatas?.filename;
+      const path = this.resolveImportFilePath(
+        this.editingExtData.path,
+        this.editingExtData.filename,
+      );
       const fileObj = this.editingExtData.file || this.importExtDatas?.file;
 
       selectedFieldNames.forEach((fieldName: string) => {
@@ -503,7 +527,7 @@ export class ImportExtDatasComponent implements OnInit, OnChanges {
     for (let i = 0; i < this.fieldsToImport.values.length; i++) {
       const currentField: any = this.fieldsToImport.values[i];
       if (currentField?.import) {
-        let path = this.importExtDatas?.filename;
+        const path = this.resolveImportFilePath();
 
         const fileName =
           this.importExtDatas && this.importExtDatas.file
