@@ -7,32 +7,3 @@
 @use '../../styles/theme.scss';
 @use '../../styles/global.scss';
 @use '../../styles/responsive.scss';
-@use '../../styles/drag-drop.scss';
-
-// Drag and drop styles
-.mat-app-background {
-  @include drag-drop.drag-drop-overlay();
-}
-
-// Side panel drag state maps to external-data overlay variant.
-.mat-app-background.drag-over:has(.dialog-content.side-panel.side-panel-drag-over) {
-  .drag-drop-overlay--default {
-    display: none;
-  }
-
-  .drag-drop-overlay--external {
-    display: flex;
-  }
-}
-
-.mat-app-background.drag-over:not(
-    :has(.dialog-content.side-panel.side-panel-drag-over)
-  ) {
-  .drag-drop-overlay--default {
-    display: flex;
-  }
-
-  .drag-drop-overlay--external {
-    display: none;
-  }
-}
