@@ -391,7 +391,7 @@ mat-sidenav {
   }
 
   .mdc-switch__handle::before {
-    box-shadow: var(--elevate-box-shadow) !important;
+    box-shadow: var(--box-shadow-elevate-100) !important;
   }
 
   // Hard override for MDC internals when CSS vars are ignored by runtime theme.

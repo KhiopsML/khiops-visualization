@@ -52,7 +52,7 @@
     overflow: auto;
     border: 1px solid var(--color-border-highlight);
     margin: 30px 10px 5px 5px;
-    box-shadow: var(--elevate-box-shadow);
+    box-shadow: var(--box-shadow-elevate-100);
     border-radius: var(--border-radius-card);
     padding: 10px;
     background: var(--color-0);
@@ -127,7 +127,7 @@
     #matrix-comp-left-top {
       border: 1px solid var(--color-border-highlight);
       margin: 30px 20px 5px 20px;
-      box-shadow: var(--elevate-box-shadow);
+      box-shadow: var(--box-shadow-elevate-100);
       border-radius: var(--border-radius);
       background: var(--color-0);
       padding: 5px 0;
@@ -158,7 +158,7 @@
         flex: 1;
         position: relative;
         padding: 3px;
-        box-shadow: var(--elevate-box-shadow);
+        box-shadow: var(--box-shadow-elevate-100);
         border-radius: var(--border-radius);
         background: var(--color-0);
 
