@@ -19,7 +19,9 @@
     gap: 8px;
     padding: 16px;
     color: var(--color-700);
-    border: 1px dashed color-mix(in srgb, var(--color-accent) 48%, white);
+    // border: 2px dashed color-mix(in srgb, var(--color-accent) 48%, white);
+    border: 1px dashed
+      color-mix(in srgb, var(--color-brand-orange) 80%, transparent);
     border-radius: var(--border-radius);
     background: color-mix(in srgb, var(--color-accent) 2%, white);
 

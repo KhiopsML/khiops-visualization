@@ -16,5 +16,5 @@
 
 // Drag and drop styles
 .mat-app-background {
-  @include drag-drop.drag-drop-overlay('Drop your JSON or KHJ file here');
+  @include drag-drop.drag-drop-overlay();
 }

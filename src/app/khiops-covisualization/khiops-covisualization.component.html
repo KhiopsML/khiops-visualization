@@ -16,6 +16,19 @@
   (window:drop)="onDragCancel($event)"
   (window:dragend)="onDragCancel($event)"
 >
+  <div class="drag-drop-overlay" aria-hidden="true">
+    <div class="drag-drop-overlay-card drag-drop-overlay--default">
+      <svg class="drag-drop-overlay-icon" lucideIcon="file-down"></svg>
+      <div class="drag-drop-overlay-title">
+        {{ 'GLOBAL.DROP_YOUR_FILE_HERE' | translate }}
+      </div>
+      <div class="drag-drop-overlay-badges">
+        <kl-important-badge text="*.json" color="blue"></kl-important-badge>
+        <kl-important-badge text="*.khcj" color="orange"></kl-important-badge>
+      </div>
+    </div>
+  </div>
+
   <kl-dialog-wrapper></kl-dialog-wrapper>
   <app-khiops-library></app-khiops-library>
   <app-home-layout class="orange-theme" [appDatas]="appdatas"></app-home-layout>

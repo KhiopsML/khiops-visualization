@@ -125,6 +125,7 @@
     "AUTO_SCALE_FACTOR_DISABLED_TOOLTIP": "Enable Auto mode via \"Change all scales\" to use this setting"
   },
   "GLOBAL": {
+    "DROP_YOUR_FILE_HERE": "Drop your file here",
     "CLICK_TO_REVEAL": "Click to reveal",
     "DELETE": "Delete",
     "EXTERNAL_DATA_SOURCES": "External Data Sources",
