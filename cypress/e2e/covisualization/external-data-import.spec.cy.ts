@@ -39,20 +39,9 @@ describe('External data mapping in covisualization', () => {
     });
     cy.get('.mat-app-background').should('not.have.class', 'drag-over');
 
-    cy.readFile('./src/assets/mocks/kc/ExternalDataEducation.txt', 'utf8').then(
-      (contents) => {
-        const file = new File([contents], 'ExternalDataEducation.txt', {
-          type: 'text/plain',
-        });
-        const transfer = new DataTransfer();
-        transfer.items.add(file);
-
-        cy.get('kl-import-file-loader input[type="file"]').then(($input) => {
-          const input = $input[0];
-          input.files = transfer.files;
-          input.dispatchEvent(new Event('change', { bubbles: true }));
-        });
-      },
+    cy.get('kl-import-file-loader input[type="file"]').selectFile(
+      'src/assets/mocks/kc/ExternalDataEducation.txt',
+      { force: true },
     );
 
     cy.get('app-import-ext-datas', { timeout: 10000 }).should('be.visible');
@@ -72,7 +61,7 @@ describe('External data mapping in covisualization', () => {
         expect(normalize(text)).to.match(educationTextPattern);
       });
 
-    cy.get('app-external-datas .external-datas-header button')
+    cy.get('app-external-datas .ext-datas-mapping-button')
       .first()
       .click({ force: true });
     cy.get('app-import-ext-datas h1')

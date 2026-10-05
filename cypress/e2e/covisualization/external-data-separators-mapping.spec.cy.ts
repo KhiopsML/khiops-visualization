@@ -8,20 +8,9 @@ import '../../support/commands';
 
 describe('External data separators and mapping lifecycle', () => {
   const uploadExternalFile = (fileName: string) => {
-    cy.readFile(`./src/assets/mocks/kc/${fileName}`, 'utf8').then(
-      (contents) => {
-        const file = new File([contents], fileName, {
-          type: 'text/plain',
-        });
-        const transfer = new DataTransfer();
-        transfer.items.add(file);
-
-        cy.get('kl-import-file-loader input[type="file"]').then(($input) => {
-          const input = $input[0];
-          input.files = transfer.files;
-          input.dispatchEvent(new Event('change', { bubbles: true }));
-        });
-      },
+    cy.get('kl-import-file-loader input[type="file"]').selectFile(
+      `src/assets/mocks/kc/${fileName}`,
+      { force: true },
     );
 
     cy.get('app-import-ext-datas', { timeout: 10000 }).should('be.visible');
@@ -100,6 +89,7 @@ describe('External data separators and mapping lifecycle', () => {
       3,
     );
     selectDimension('education');
+
     saveMapping();
 
     cy.contains('article.source-card', 'ext-tab.txt', { timeout: 15000 })
@@ -166,7 +156,7 @@ describe('External data separators and mapping lifecycle', () => {
     cy.contains('app-external-datas', 'This text is standard', {
       timeout: 15000,
     }).within(() => {
-      cy.get('.external-datas-header button').first().click({ force: true });
+      cy.get('.ext-datas-mapping-button').first().click({ force: true });
     });
 
     cy.contains('article.source-card', 'ext-tab.txt')
