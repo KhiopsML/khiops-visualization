@@ -56,11 +56,12 @@
     #infosPanelColumn
     let-splitItem="splitItem"
     let-panelSizes="panelSizes"
+    let-direction="direction"
     let-suffix="suffix"
     let-wrapThird="wrapThird"
   >
     <as-split
-      direction="vertical"
+      [direction]="direction"
       (dragEnd)="onSplitDragEnd($event, splitItem)"
     >
       <as-split-area [size]="panelSizes[0]" class="kl-card">
@@ -246,6 +247,7 @@
                   context: {
                     splitItem: 'col0Row0Col',
                     panelSizes: sizes.col0Row0Col,
+                    direction: 'horizontal',
                     suffix: '',
                     wrapThird: true,
                   }
@@ -294,6 +296,7 @@
                   context: {
                     splitItem: 'col0Col0Row',
                     panelSizes: sizes.col0Col0Row,
+                    direction: 'vertical',
                     suffix: '-left',
                     wrapThird: false,
                   }
