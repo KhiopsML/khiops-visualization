@@ -8,9 +8,9 @@
 #home-layout-comp {
   #main-tab-group {
     > ::ng-deep .mat-mdc-tab-header {
-      max-width: calc(100% - 600px);
+      max-width: calc(100% - 400px);
       min-width: 200px !important;
-      margin: 15px auto 0px auto;
+      margin: 15px auto 0px 20px;
     }
     > ::ng-deep .mat-mdc-tab-body-wrapper {
       padding: 0 !important;

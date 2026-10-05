@@ -13,6 +13,7 @@
     attr.aria-label="{{ 'MENU.IMPORT_EXTERNAL_DATA' | translate }}"
   >
     <svg lucideIcon="file-up"></svg>
+    <label>{{ 'MENU.IMPORT_EXTERNAL_DATA' | translate }}</label>
   </button>
   <button
     class="button-unfold-hierarchy lucid-icon-button"
@@ -22,7 +23,7 @@
     attr.aria-label="{{ 'GLOBAL.UNFOLD_HIERARCHY_DESC' | translate }}"
   >
     <svg lucideIcon="chart-no-axes-combined"></svg>
-    <!-- <span>{{ 'GLOBAL.UNFOLD_HIERARCHY' | translate }}</span> -->
+    <label>{{ 'GLOBAL.UNFOLD_HIERARCHY' | translate }}</label>
   </button>
   <button
     class="button-manage-views lucid-icon-button"
@@ -32,5 +33,6 @@
     (click)="clickManageLayout()"
   >
     <svg lucideIcon="layout-dashboard"></svg>
+    <label>{{ 'GLOBAL.MANAGE_VIEWS' | translate }}</label>
   </button>
 </div>

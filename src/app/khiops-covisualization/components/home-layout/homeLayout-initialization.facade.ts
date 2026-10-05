@@ -70,7 +70,7 @@ export class HomeInitializationFacade {
     }
     let showLogo = this.configService.getConfig().showLogo;
     if (showLogo === undefined) {
-      showLogo = true;
+      showLogo = false;
     }
     const selectTabName = this.configService.getConfig().selectTabName;
 

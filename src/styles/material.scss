@@ -109,8 +109,9 @@ mat-button-toggle-group:hover {
 }
 
 .mat-mdc-tab-labels {
-  justify-content: center;
-  align-items: center;
+  // justify-content: center;
+  // align-items: center;
+  justify-content: start !important;
 }
 
 button {
@@ -550,6 +551,10 @@ mat-slider {
   border-color: var(--color-accent) !important;
   span {
     color: var(--color-accent) !important;
+    label {
+      margin-right: 10px;
+      cursor: pointer;
+    }
   }
 }
 .mat-mdc-unelevated-button:hover {

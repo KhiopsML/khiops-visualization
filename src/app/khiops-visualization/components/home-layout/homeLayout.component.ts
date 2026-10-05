@@ -157,7 +157,7 @@ export class HomeLayoutComponent implements OnInit {
     }
     this.showLogo = this.configService.getConfig().showLogo;
     if (this.showLogo === undefined) {
-      this.showLogo = true;
+      this.showLogo = false;
     }
     this.selectTabName = this.configService.getConfig().selectTabName;
     if (!this.isCompatibleJson) {
