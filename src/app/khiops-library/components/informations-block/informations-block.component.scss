@@ -16,6 +16,8 @@
     padding: 0;
     width: 100%;
     margin-bottom: 10px;
+    flex-wrap: wrap;
+    row-gap: 10px;
 
     .important-badge-green {
       background: #ecfdf5;
@@ -53,15 +55,11 @@
       }
     }
   }
-  // first and last instance of informations-main-values
-  .informations-main-values:first-child {
-    margin-left: 10px !important;
-  }
-  .informations-main-values:last-child {
-    margin-right: 10px !important;
-  }
 
   .gauge-container {
+    // flex: 1 1 260px;
+    // min-width: 260px;
+    margin-top: 0 !important;
     padding: 0 10px;
   }
 
