@@ -6,7 +6,7 @@
 // @ts-nocheck
 import '../../support/commands';
 
-describe('Level distribution Test Plan for Khiops Visualization', () => {
+describe('Level distribution Test for Khiops Visualization', () => {
   const files = ['ylogAdultAllReports.json'];
 
   files.forEach((fileName) => {

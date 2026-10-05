@@ -6,7 +6,7 @@
 // @ts-nocheck
 import '../../support/commands';
 
-describe('Test Plan for Khiops Covisualization', () => {
+describe('Tree visualization Test for Khiops Visualization', () => {
   const files = ['tree-education_AllReports.json'];
 
   files.forEach((fileName) => {
@@ -62,7 +62,7 @@ describe('Test Plan for Khiops Covisualization', () => {
 
         cy.get('#hyperTree').should('exist');
 
-        cy.get('#hyperTree').find('circle').should('have.length', 53);
+        cy.get('#hyperTree').find('circle').should('have.length', 242);
 
         cy.get('.mat-mdc-tab:contains("Modeling")').first().click();
         cy.checkCanvasIsNotEmpty('#distribution-chart-0');

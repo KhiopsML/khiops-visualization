@@ -6,7 +6,7 @@
 // @ts-nocheck
 import '../../support/commands';
 
-describe('Level distribution Test Plan for Khiops Visualization', () => {
+describe('Level distribution Test for Khiops Visualization', () => {
   const files = [
     '000_000_10000words_AllReports.json',
     'ylogAdultAllReports.json',

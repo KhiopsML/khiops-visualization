@@ -6,7 +6,7 @@
 // @ts-nocheck
 import '../../support/commands';
 
-describe('Test Plan for Khiops Covisualization', () => {
+describe('Inner variables Test for Khiops Covisualization', () => {
   const files = ['IV-Poissons.json'];
 
   files.forEach((fileName) => {

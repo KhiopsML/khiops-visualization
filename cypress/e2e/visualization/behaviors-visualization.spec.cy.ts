@@ -6,7 +6,7 @@
 // @ts-nocheck
 import '../../support/commands';
 
-describe('Behaviors Test Plan for Khiops Visualization', () => {
+describe('Behaviors Test for Khiops Visualization', () => {
   let files = ['000_000_10000words_AllReports.json'];
 
   files.forEach((fileName) => {

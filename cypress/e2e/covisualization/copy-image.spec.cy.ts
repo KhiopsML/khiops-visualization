@@ -6,10 +6,10 @@
 // @ts-nocheck
 import '../../support/commands';
 
-describe('Copy images Test Plan for Khiops Covisualization', () => {
+describe('Copy images Test for Khiops Covisualization', () => {
   let files = ['check-ext-datas.json'];
 
-  describe('Copy images Test Plan for Khiops CoVisualization', () => {
+  describe('Copy images Test for Khiops CoVisualization', () => {
     files.forEach((fileName) => {
       it(`Check values for ${fileName}`, () => {
         cy.initViews();
@@ -52,7 +52,7 @@ describe('Copy images Test Plan for Khiops Covisualization', () => {
   });
 
   files = ['Coclustering-IV-Glass.khcj'];
-  describe('Copy images Test Plan for Khiops CoVisualization inner variables', () => {
+  describe('Copy images Test for Khiops CoVisualization inner variables', () => {
     files.forEach((fileName) => {
       it(`Check values for ${fileName}`, () => {
         cy.initViews();

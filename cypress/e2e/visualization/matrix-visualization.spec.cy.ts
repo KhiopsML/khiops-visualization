@@ -6,7 +6,7 @@
 // @ts-nocheck
 import '../../support/commands';
 
-describe('Matrix visualization Test Plan for Khiops Visualization', () => {
+describe('Matrix visualization Test for Khiops Visualization', () => {
   it(`Check matrix in cooccurrence`, () => {
     cy.loadFile('visualization', 'co-oc.json');
     cy.readFile('./src/assets/mocks/kv/co-oc.json').then(() => {

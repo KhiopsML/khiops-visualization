@@ -6,9 +6,9 @@
 // @ts-nocheck
 import '../../support/commands';
 
-describe('Copy datas Test Plan for Khiops Visualization', () => {
+describe('Copy datas Test for Khiops Visualization', () => {
   const files = ['ALLREPORTS_Std_Iris_AnalysisResults.khj'];
-  describe('Copy datas Test Plan for Khiops Visualization', () => {
+  describe('Copy datas Test for Khiops Visualization', () => {
     files.forEach((fileName) => {
       it(`Check values for ${fileName}`, () => {
         cy.loadFile('visualization', fileName);

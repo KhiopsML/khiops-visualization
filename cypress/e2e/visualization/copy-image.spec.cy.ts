@@ -135,7 +135,7 @@ const allComponents: ComponentEntry[] = [
   { tab: 'Project', id: '#project-logs' },
 ];
 
-describe('Copy images Test Plan for Khiops Visualization', () => {
+describe('Copy images Test for Khiops Visualization', () => {
   const files = ['ALLREPORTS_Std_Iris_AnalysisResults.khj'];
 
   files.forEach((fileName) => {
