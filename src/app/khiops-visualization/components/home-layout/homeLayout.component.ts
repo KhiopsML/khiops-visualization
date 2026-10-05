@@ -36,6 +36,10 @@ import { AppConfig } from '../../../../environments/environment';
 import { REPORT } from '@khiops-library/enum/report';
 import { DialogService } from '@khiops-library/providers/dialog.service';
 import { GraphSelectionSessionService } from '@khiops-visualization/providers/graph-selection-session.service';
+import {
+  InfoPanelLayoutMode,
+  ViewLayoutModeService,
+} from '@khiops-visualization/providers/view-layout-mode.service';
 
 @Component({
   selector: 'app-home-layout',
@@ -65,6 +69,7 @@ export class HomeLayoutComponent implements OnInit {
   public isCompatibleJson?: boolean;
   public isLoading: boolean = true;
   public REPORT = REPORT;
+  public infoPanelLayoutMode: InfoPanelLayoutMode = 'top';
 
   @ViewChild('fileLoader', {
     static: false,
@@ -72,6 +77,7 @@ export class HomeLayoutComponent implements OnInit {
   private fileLoader?: FileLoaderComponent;
   private currentDatas?: VisualizationDatas;
   private fileLoadedSub?: Subscription;
+  private forcedActiveTabIndex?: number;
 
   constructor(
     private configService: ConfigService,
@@ -89,6 +95,7 @@ export class HomeLayoutComponent implements OnInit {
     private preparation2dDatasService: Preparation2dDatasService,
     private fileLoaderService: FileLoaderService,
     private dialogService: DialogService,
+    private viewLayoutModeService: ViewLayoutModeService,
   ) {
     if (pjson) {
       this.appTitle = pjson.title.visualization;
@@ -109,6 +116,18 @@ export class HomeLayoutComponent implements OnInit {
 
   ngOnInit() {
     this.trackerService.trackEvent('page_view', 'visit', this.appVersion);
+    this.infoPanelLayoutMode =
+      this.viewLayoutModeService.getInfoPanelLayoutMode();
+  }
+
+  onInfoPanelLayoutChanged(mode: InfoPanelLayoutMode) {
+    if (this.infoPanelLayoutMode === mode) {
+      return;
+    }
+
+    this.infoPanelLayoutMode = mode;
+    this.viewLayoutModeService.setInfoPanelLayoutMode(mode);
+    this.reloadView();
   }
 
   ngAfterViewInit() {
@@ -201,6 +220,9 @@ export class HomeLayoutComponent implements OnInit {
   }
 
   private reloadView() {
+    this.forcedActiveTabIndex =
+      this.mainTabGroup?.selectedIndex ?? this.appService.getActiveTabIndex();
+
     const currentDatas = this.currentDatas;
     setTimeout(() => {
       this.initialize();
@@ -243,15 +265,21 @@ export class HomeLayoutComponent implements OnInit {
       this.selectedTab = undefined;
 
       // Restore active tab: savedDatas takes priority, then config, then default
-      const savedActiveTabIndex =
-        this.appService.getSavedDatas('activeTabIndex');
-      if (savedActiveTabIndex !== undefined && savedActiveTabIndex !== null) {
+      const savedActiveTabIndex = this.appService.getSavedDatas('activeTabIndex');
+      if (
+        this.forcedActiveTabIndex !== undefined &&
+        this.forcedActiveTabIndex !== null
+      ) {
+        this.activeTab = this.forcedActiveTabIndex;
+      } else if (savedActiveTabIndex !== undefined && savedActiveTabIndex !== null) {
         this.activeTab = savedActiveTabIndex;
       } else if (this.selectTabName) {
         this.activeTab = this.getTabIndexByName(this.selectTabName);
       } else {
         this.activeTab = 0;
       }
+
+      this.forcedActiveTabIndex = undefined;
 
       this.mainTabGroup.selectedIndex = this.activeTab;
       this.appService.setActiveTabIndex(this.activeTab);

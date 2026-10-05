@@ -154,6 +154,32 @@
         <div id="header-right" fxLayoutAlign="start center" layout="row">
           <div fxLayoutAlign="center center" fxLayout="row">
             @if (appDatas && isCompatibleJson) {
+              <div
+                id="info-layout-toggle"
+                fxLayout="row"
+                fxLayoutAlign="center center"
+              >
+                <button
+                  class="lucid-icon-button"
+                  [class.active]="infoPanelLayoutMode === 'top'"
+                  id="info-layout-top-button"
+                  mat-stroked-button
+                  (click)="onInfoPanelLayoutChanged('top')"
+                  matTooltip="Display info panels at the top"
+                >
+                  <svg lucideIcon="panel-top-dashed" size="16"></svg>
+                </button>
+                <button
+                  class="lucid-icon-button"
+                  [class.active]="infoPanelLayoutMode === 'left'"
+                  id="info-layout-left-button"
+                  mat-stroked-button
+                  (click)="onInfoPanelLayoutChanged('left')"
+                  matTooltip="Display info panels on the left"
+                >
+                  <svg lucideIcon="panel-left-dashed" size="16"></svg>
+                </button>
+              </div>
               <app-change-scale-button></app-change-scale-button>
               <kl-header-tools
                 (toggleNavDrawerChanged)="onToggleNavDrawerChanged($event)"

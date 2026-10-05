@@ -27,6 +27,7 @@ import { TrainedPredictorModel } from '@khiops-visualization/model/trained-predi
 import { VisualizationDatas } from '@khiops-visualization/interfaces/app-datas.interface';
 import { DialogService } from '@khiops-library/providers/dialog.service';
 import { DistributionType } from '@khiops-visualization/types/distribution-type';
+import { ViewLayoutModeService } from '@khiops-visualization/providers/view-layout-mode.service';
 
 @Component({
   selector: 'app-modeling-view',
@@ -47,6 +48,8 @@ export class ModelingViewComponent extends SelectableTabComponent {
   public targetVariableStatsInformations?: InfosDatasI[];
   public override tabIndex = 3; // managed by selectable-tab component
   public trainedPredictors?: TrainedPredictor[];
+  public isLeftInfosPanelMode: boolean = false;
+  private splitViewKey: string = 'modelingView';
 
   private preparationVariable: any; // Complex, can be multiple types according to the preparationSource
 
@@ -59,6 +62,7 @@ export class ModelingViewComponent extends SelectableTabComponent {
     private layoutService: LayoutService,
     private distributionService: DistributionService,
     private dialogService: DialogService,
+    private viewLayoutModeService: ViewLayoutModeService,
   ) {
     super();
 
@@ -74,7 +78,12 @@ export class ModelingViewComponent extends SelectableTabComponent {
       this.preparationDatasService.getAvailablePreparationReport();
 
     this.modelingDatas = this.modelingDatasService.getDatas();
-    this.sizes = this.layoutService.getViewSplitSizes('modelingView');
+    this.isLeftInfosPanelMode =
+      this.viewLayoutModeService.isLeftInfoPanelLayoutMode();
+    this.splitViewKey = this.isLeftInfosPanelMode
+      ? 'modelingViewLeftPanel'
+      : 'modelingView';
+    this.sizes = this.layoutService.getViewSplitSizes(this.splitViewKey);
 
     this.summaryDatas = this.modelingDatasService.getSummaryDatas();
     this.targetVariableStatsDatas =
@@ -90,7 +99,7 @@ export class ModelingViewComponent extends SelectableTabComponent {
       item,
       this.sizes,
       event.sizes,
-      'modelingView',
+      this.splitViewKey,
     );
   }
 

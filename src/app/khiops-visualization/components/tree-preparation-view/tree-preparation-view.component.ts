@@ -37,6 +37,7 @@ import { TreePreparationStore } from '@khiops-visualization/stores/tree-preparat
 import { getTreePreparationVariablesGridColumns } from './tree-preparation-view.config';
 import { DialogService } from '@khiops-library/providers/dialog.service';
 import { GraphSelectionSessionService } from '@khiops-visualization/providers/graph-selection-session.service';
+import { ViewLayoutModeService } from '@khiops-visualization/providers/view-layout-mode.service';
 
 @Component({
   selector: 'app-tree-preparation-view',
@@ -67,6 +68,8 @@ export class TreePreparationViewComponent
   public variablesDisplayedColumns: GridColumnsI[] = [];
   public override tabIndex = 5; // managed by selectable-tab component
   public showFilteredVariablesWarning: boolean = false;
+  public isLeftInfosPanelMode: boolean = false;
+  private splitViewKey: string = 'treePreparationView';
 
   selectedNodes$: Observable<TreeNodeModel[]>;
   selectedNode$: Observable<TreeNodeModel | undefined>;
@@ -84,6 +87,7 @@ export class TreePreparationViewComponent
     private distributionService: DistributionService,
     private dialogService: DialogService,
     private graphSelectionSessionService: GraphSelectionSessionService,
+    private viewLayoutModeService: ViewLayoutModeService,
   ) {
     super();
 
@@ -101,7 +105,12 @@ export class TreePreparationViewComponent
       this.graphSelectionSessionService.getSelectedIndex('treePreparation');
 
     this.treePreparationDatas = this.treePreparationDatasService.getDatas();
-    this.sizes = this.layoutService.getViewSplitSizes('treePreparationView');
+    this.isLeftInfosPanelMode =
+      this.viewLayoutModeService.isLeftInfoPanelLayoutMode();
+    this.splitViewKey = this.isLeftInfosPanelMode
+      ? 'treePreparationViewLeftPanel'
+      : 'treePreparationView';
+    this.sizes = this.layoutService.getViewSplitSizes(this.splitViewKey);
     this.summaryDatas = this.preparationDatasService.getSummaryDatas(
       this.preparationSource,
     );
@@ -172,7 +181,7 @@ export class TreePreparationViewComponent
       item,
       this.sizes,
       event.sizes,
-      'treePreparationView',
+      this.splitViewKey,
     );
 
     // Resize to update graphs dimensions

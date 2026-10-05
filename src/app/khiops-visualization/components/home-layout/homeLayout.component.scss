@@ -16,6 +16,15 @@
     #more-btn {
       margin-right: 1em;
     }
+
+    #info-layout-toggle {
+      gap: 4px;
+      margin-right: 6px;
+
+      .lucid-icon-button.active {
+        border-color: var(--color-accent) !important;
+      }
+    }
   }
 
   #welcome-message {

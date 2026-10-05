@@ -99,6 +99,8 @@ import {
   LucideSquarePlus,
   LucideBraces,
   LucideTableProperties,
+  LucidePanelLeftDashed,
+  LucidePanelTopDashed,
 } from '@lucide/angular';
 
 // Component imports
@@ -252,6 +254,8 @@ import { ImportantBadgeComponent } from './components/important-badge/important-
     TranslateService,
     DialogService,
     provideLucideIcons(
+      LucidePanelTopDashed,
+      LucidePanelLeftDashed,
       LucideFileUp,
       LucideTableProperties,
       LucideBraces,

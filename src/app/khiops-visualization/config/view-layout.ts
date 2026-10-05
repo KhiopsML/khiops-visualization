@@ -16,6 +16,12 @@ export const VIEW_LAYOUT = {
     row1Col1Row: [80, 20],
     row1Col1Row0Col: [30, 70],
   },
+  preparationViewLeftPanel: {
+    col: [22, 78],
+    col0Row: [34, 33, 33],
+    row1Col: [60, 40],
+    row1Col0Row: [80, 20],
+  },
   treePreparationView: {
     col: [70, 30],
     col0Row: [20, 50, 30],
@@ -26,6 +32,15 @@ export const VIEW_LAYOUT = {
     row1Col1Row: [80, 20], // for modeling tree view
     row1Col1Row0Col: [30, 70], // for modeling tree view
   },
+  treePreparationViewLeftPanel: {
+    col: [70, 30],
+    col0Col: [22, 78],
+    col0Col0Row: [34, 33, 33],
+    col0Col1Row: [62, 38],
+    col0Col1Row0Col: [60, 40],
+    col0Col1Row1Col: [30, 70],
+    col0Col1Row1Col1Row: [50, 50],
+  },
   preparation2dView: {
     row: [25, 75],
     row0Col: [40, 30, 30],
@@ -34,6 +49,12 @@ export const VIEW_LAYOUT = {
     row1Col1Row: [80, 20],
     row1Col1Row0Col: [80, 20],
   },
+  preparation2dViewLeftPanel: {
+    col: [22, 78],
+    col0Row: [34, 33, 33],
+    row1Col: [60, 40],
+    row1Col0Row: [100],
+  },
   modelingView: {
     row: [25, 75],
     row0Col: [40, 30, 30],
@@ -41,6 +62,12 @@ export const VIEW_LAYOUT = {
     row1Col0Row: [80, 20],
     row1Col1Row: [60, 40],
     row1Col1Row0Col: [30, 70],
+  },
+  modelingViewLeftPanel: {
+    col: [22, 78],
+    col0Row: [34, 33, 33],
+    row1Col: [60, 40],
+    row1Col0Row: [80, 20],
   },
   evaluationView: {
     col: [50, 50],

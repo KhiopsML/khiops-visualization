@@ -24,6 +24,7 @@ import { DynamicI } from '@khiops-library/interfaces/globals.interface';
 import { GridDatasI } from '@khiops-library/interfaces/grid-datas.interface';
 import { getPreparationVariablesGridColumns } from './preparation-view.config';
 import { DialogService } from '@khiops-library/providers/dialog.service';
+import { ViewLayoutModeService } from '@khiops-visualization/providers/view-layout-mode.service';
 
 @Component({
   selector: 'app-preparation-view',
@@ -47,6 +48,8 @@ export class PreparationViewComponent extends SelectableTabComponent {
   public override tabIndex = 1; // managed by selectable-tab component
   public variablesDisplayedColumns: GridColumnsI[] = [];
   public showFilteredVariablesWarning: boolean = false;
+  public isLeftInfosPanelMode: boolean = false;
+  private splitViewKey: string = 'preparationView';
 
   constructor(
     private preparationDatasService: PreparationDatasService,
@@ -56,6 +59,7 @@ export class PreparationViewComponent extends SelectableTabComponent {
     private modelingDatasService: ModelingDatasService,
     private distributionService: DistributionService,
     private dialogService: DialogService,
+    private viewLayoutModeService: ViewLayoutModeService,
   ) {
     super();
 
@@ -75,7 +79,12 @@ export class PreparationViewComponent extends SelectableTabComponent {
       this.preparationSource,
     );
 
-    this.sizes = this.layoutService.getViewSplitSizes('preparationView');
+    this.isLeftInfosPanelMode =
+      this.viewLayoutModeService.isLeftInfoPanelLayoutMode();
+    this.splitViewKey = this.isLeftInfosPanelMode
+      ? 'preparationViewLeftPanel'
+      : 'preparationView';
+    this.sizes = this.layoutService.getViewSplitSizes(this.splitViewKey);
     this.summaryDatas = this.preparationDatasService.getSummaryDatas();
     this.informationsDatas = this.preparationDatasService.getInformationsDatas(
       this.preparationSource,
@@ -108,7 +117,7 @@ export class PreparationViewComponent extends SelectableTabComponent {
       item,
       this.sizes,
       event.sizes,
-      'preparationView',
+      this.splitViewKey,
     );
   }
 

@@ -25,6 +25,7 @@ import { VariableModel } from '@khiops-visualization/model/variable.model';
 import { getPreparation2dVariablesGridColumns } from './preparation-2d-view.config';
 import { DistributionService } from '@khiops-visualization/providers/distribution.service';
 import { DialogService } from '@khiops-library/providers/dialog.service';
+import { ViewLayoutModeService } from '@khiops-visualization/providers/view-layout-mode.service';
 
 @Component({
   selector: 'app-preparation-2d-view',
@@ -49,6 +50,8 @@ export class Preparation2dViewComponent extends SelectableTabComponent {
   public override tabIndex = 2; // managed by selectable-tab component
   public variablesDisplayedColumns: GridColumnsI[] = [];
   public showFilteredVariablesWarning: boolean = false;
+  public isLeftInfosPanelMode: boolean = false;
+  private splitViewKey: string = 'preparation2dView';
 
   constructor(
     private preparationDatasService: PreparationDatasService,
@@ -59,6 +62,7 @@ export class Preparation2dViewComponent extends SelectableTabComponent {
     private layoutService: LayoutService,
     private distributionService: DistributionService,
     private dialogService: DialogService,
+    private viewLayoutModeService: ViewLayoutModeService,
   ) {
     super();
 
@@ -68,7 +72,12 @@ export class Preparation2dViewComponent extends SelectableTabComponent {
     );
 
     this.preparation2dDatas = this.preparation2dDatasService.getDatas();
-    this.sizes = this.layoutService.getViewSplitSizes('preparation2dView');
+    this.isLeftInfosPanelMode =
+      this.viewLayoutModeService.isLeftInfoPanelLayoutMode();
+    this.splitViewKey = this.isLeftInfosPanelMode
+      ? 'preparation2dViewLeftPanel'
+      : 'preparation2dView';
+    this.sizes = this.layoutService.getViewSplitSizes(this.splitViewKey);
     this.informationsDatas =
       this.preparation2dDatasService.getInformationsDatas();
     this.showFilteredVariablesWarning =
@@ -92,7 +101,7 @@ export class Preparation2dViewComponent extends SelectableTabComponent {
       item,
       this.sizes,
       event.sizes,
-      'preparation2dView',
+      this.splitViewKey,
     );
     this.resizeTargetDistributionGraph();
   }

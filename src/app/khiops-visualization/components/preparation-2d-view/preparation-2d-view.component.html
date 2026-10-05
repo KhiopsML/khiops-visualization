@@ -5,141 +5,179 @@
  -->
 
 <div id="preparation-2d-view-comp" fxFlexFill>
-  <!-- @if (loadingView) {
-    <div fxLayout="column" fxFlexFill fxLayoutAlign="center center">
-      <mat-spinner
-        diameter="30"
-        color="accent"
-        mode="indeterminate"
-      ></mat-spinner>
-    </div>
-  } -->
-  @if (!loadingView) {
-    <as-split direction="vertical" (dragEnd)="onSplitDragEnd($event, 'row')">
-      <as-split-area [size]="sizes.row[0]">
+  <ng-template #summaryBlock let-suffix="suffix">
+    <kl-informations-block
+      fxFlex
+      fxFlexFill
+      id="preparation-2d-informations-block-summary{{ suffix }}"
+      title="{{ 'GLOBAL.SUMMARY' | translate }}"
+      [inputDatas]="summaryDatas"
+    ></kl-informations-block>
+  </ng-template>
+
+  <ng-template #targetStatsBlock let-suffix="suffix">
+    @if (targetVariableStatsDatas) {
+      <app-target-variable-stats
+        id="preparation-2d-target-variable-stats{{ suffix }}"
+        fxFlex
+        fxFlexFill
+        [inputDatas]="targetVariableStatsDatas"
+      >
+      </app-target-variable-stats>
+    }
+    @if (!targetVariableStatsDatas) {
+      <kl-no-data fxFlexFill [message]="'NO_DATAS.NO_VARIABLE_DETAILS'">
+      </kl-no-data>
+    }
+  </ng-template>
+
+  <ng-template #informationsBlock let-suffix="suffix">
+    @if (informationsDatas?.length !== 0) {
+      <kl-informations-block
+        fxFlex
+        fxFlexFill
+        id="preparation-2d-informations-block-informations{{ suffix }}"
+        icon="sliders-horizontal"
+        title="{{ 'GLOBAL.INFORMATIONS' | translate }}"
+        [inputDatas]="informationsDatas"
+        [showFilteredVariablesWarning]="showFilteredVariablesWarning"
+      >
+      </kl-informations-block>
+    }
+    @if (informationsDatas?.length === 0) {
+      <kl-no-data fxFlexFill [message]="'NO_DATAS.NO_INFORMATIONS_DETAILS'">
+      </kl-no-data>
+    }
+  </ng-template>
+
+  <ng-template #mainContent let-suffix="suffix">
+    <as-split
+      direction="horizontal"
+      (dragEnd)="onSplitDragEnd($event, 'row1Col')"
+    >
+      <as-split-area [size]="sizes.row1Col[0]">
         <as-split
-          direction="horizontal"
-          (dragEnd)="onSplitDragEnd($event, 'row0Col')"
+          direction="vertical"
+          (dragEnd)="onSplitDragEnd($event, 'row1Col0Row')"
         >
-          <as-split-area [size]="sizes.row0Col[0]" class="kl-card">
-            <kl-informations-block
-              fxFlex
+          <as-split-area
+            class="variables-list-container kl-card"
+            [size]="sizes.row1Col0Row[0]"
+          >
+            <kl-ag-grid
+              #agGridRef
+              id="preparation-2d-variables-list{{ suffix }}"
+              class="variables-list"
+              [titleIcon]="'table-properties'"
               fxFlexFill
-              id="preparation-2d-informations-block-summary"
-              title="{{ 'GLOBAL.SUMMARY' | translate }}"
-              [inputDatas]="summaryDatas"
-            ></kl-informations-block>
-          </as-split-area>
-          <as-split-area [size]="sizes.row0Col[1]" class="kl-card">
-            @if (targetVariableStatsDatas) {
-              <app-target-variable-stats
-                id="preparation-2d-target-variable-stats"
-                fxFlex
-                fxFlexFill
-                [inputDatas]="targetVariableStatsDatas"
-              >
-              </app-target-variable-stats>
-            }
-            @if (!targetVariableStatsDatas) {
-              <kl-no-data fxFlexFill [message]="'NO_DATAS.NO_VARIABLE_DETAILS'">
-              </kl-no-data>
-            }
-          </as-split-area>
-          <as-split-area [size]="sizes.row0Col[2]" class="kl-card">
-            @if (informationsDatas?.length !== 0) {
-              <kl-informations-block
-                fxFlex
-                fxFlexFill
-                id="preparation-2d-informations-block-informations"
-                icon="sliders-horizontal"
-                title="{{ 'GLOBAL.INFORMATIONS' | translate }}"
-                [inputDatas]="informationsDatas"
-                [showFilteredVariablesWarning]="showFilteredVariablesWarning"
-              >
-              </kl-informations-block>
-            }
-            @if (informationsDatas?.length === 0) {
-              <kl-no-data
-                fxFlexFill
-                [message]="'NO_DATAS.NO_INFORMATIONS_DETAILS'"
-              >
-              </kl-no-data>
-            }
+              [showSearch]="true"
+              [watchResize]="true"
+              [displayCount]="true"
+              (selectListItem)="onSelectListItemChanged($event)"
+              [showLineSelection]="true"
+              [showColumnsSelection]="true"
+              [inputDatas]="variables2dDatas"
+              [displayedColumns]="variablesDisplayedColumns"
+              title="{{ 'GLOBAL.PAIR_VARIABLES' | translate }}"
+              titleTooltip="{{
+                'TOOLTIPS.PREPARATION_2D.VARIABLES.TITLE' | translate
+              }}"
+              [selectedVariable]="
+                $safeNavigationMigration(preparation2dDatas?.selectedVariable)
+              "
+              [noDataMessage]="getNoDataMessage()"
+            >
+              @if (hasLevelData()) {
+                <app-level-distribution-button
+                  slot="header-tools"
+                  distributionType="level"
+                  [title]="levelDistributionTitle"
+                  [isSmallDiv]="agGridRef.isSmallDiv"
+                  [searchFormVisible]="agGridRef.searchFormVisible"
+                  (openLevelDistribution)="onShowLevelDistributionFromButton()"
+                >
+                </app-level-distribution-button>
+              }
+            </kl-ag-grid>
           </as-split-area>
         </as-split>
       </as-split-area>
-      <as-split-area [size]="sizes.row[1]">
+      <as-split-area [size]="sizes.row1Col[1]">
+        @if (isNonInformativeVariable()) {
+          <kl-no-data
+            class="kl-card"
+            fxFlex
+            [message]="'NO_DATAS.NON_INFORMATIVE_VARIABLE'"
+          ></kl-no-data>
+        }
+        @if (!isNonInformativeVariable()) {
+          <app-var-details-preparation-2d
+            fxFlex
+            [selectionScope]="'preparation2d'"
+          ></app-var-details-preparation-2d>
+        }
+      </as-split-area>
+    </as-split>
+  </ng-template>
+
+  @if (!loadingView) {
+    <as-split
+      [direction]="isLeftInfosPanelMode ? 'horizontal' : 'vertical'"
+      (dragEnd)="onSplitDragEnd($event, isLeftInfosPanelMode ? 'col' : 'row')"
+    >
+      <as-split-area
+        [size]="isLeftInfosPanelMode ? sizes.col[0] : sizes.row[0]"
+      >
         <as-split
-          direction="horizontal"
-          (dragEnd)="onSplitDragEnd($event, 'row1Col')"
+          [direction]="isLeftInfosPanelMode ? 'vertical' : 'horizontal'"
+          (dragEnd)="
+            onSplitDragEnd($event, isLeftInfosPanelMode ? 'col0Row' : 'row0Col')
+          "
         >
-          <as-split-area [size]="sizes.row1Col[0]">
-            <as-split
-              direction="vertical"
-              (dragEnd)="onSplitDragEnd($event, 'row1Col0Row')"
-            >
-              <as-split-area
-                class="variables-list-container kl-card"
-                [size]="sizes.row1Col0Row[0]"
-              >
-                <kl-ag-grid
-                  #agGridRef
-                  id="preparation-2d-variables-list"
-                  class="variables-list"
-                  [titleIcon]="'table-properties'"
-                  fxFlexFill
-                  [showSearch]="true"
-                  [watchResize]="true"
-                  [displayCount]="true"
-                  (selectListItem)="onSelectListItemChanged($event)"
-                  [showLineSelection]="true"
-                  [showColumnsSelection]="true"
-                  [inputDatas]="variables2dDatas"
-                  [displayedColumns]="variablesDisplayedColumns"
-                  title="{{ 'GLOBAL.PAIR_VARIABLES' | translate }}"
-                  titleTooltip="{{
-                    'TOOLTIPS.PREPARATION_2D.VARIABLES.TITLE' | translate
-                  }}"
-                  [selectedVariable]="
-                    $safeNavigationMigration(
-                      preparation2dDatas?.selectedVariable
-                    )
-                  "
-                  [noDataMessage]="getNoDataMessage()"
-                >
-                  @if (hasLevelData()) {
-                    <app-level-distribution-button
-                      slot="header-tools"
-                      distributionType="level"
-                      [title]="levelDistributionTitle"
-                      [isSmallDiv]="agGridRef.isSmallDiv"
-                      [searchFormVisible]="agGridRef.searchFormVisible"
-                      (openLevelDistribution)="
-                        onShowLevelDistributionFromButton()
-                      "
-                    >
-                    </app-level-distribution-button>
-                  }
-                </kl-ag-grid>
-              </as-split-area>
-            </as-split>
+          <as-split-area
+            [size]="isLeftInfosPanelMode ? sizes.col0Row[0] : sizes.row0Col[0]"
+            class="kl-card"
+          >
+            <ng-container
+              *ngTemplateOutlet="
+                summaryBlock;
+                context: { suffix: isLeftInfosPanelMode ? '-left' : '' }
+              "
+            ></ng-container>
           </as-split-area>
-          <as-split-area [size]="sizes.row1Col[1]">
-            @if (isNonInformativeVariable()) {
-              <kl-no-data
-                class="kl-card"
-                fxFlex
-                [message]="'NO_DATAS.NON_INFORMATIVE_VARIABLE'"
-              ></kl-no-data>
-            }
-            @if (!isNonInformativeVariable()) {
-              <app-var-details-preparation-2d
-                fxFlex
-                [selectionScope]="'preparation2d'"
-              ></app-var-details-preparation-2d>
-            }
+          <as-split-area
+            [size]="isLeftInfosPanelMode ? sizes.col0Row[1] : sizes.row0Col[1]"
+            class="kl-card"
+          >
+            <ng-container
+              *ngTemplateOutlet="
+                targetStatsBlock;
+                context: { suffix: isLeftInfosPanelMode ? '-left' : '' }
+              "
+            ></ng-container>
+          </as-split-area>
+          <as-split-area
+            [size]="isLeftInfosPanelMode ? sizes.col0Row[2] : sizes.row0Col[2]"
+            class="kl-card"
+          >
+            <ng-container
+              *ngTemplateOutlet="
+                informationsBlock;
+                context: { suffix: isLeftInfosPanelMode ? '-left' : '' }
+              "
+            ></ng-container>
           </as-split-area>
         </as-split>
+      </as-split-area>
+      <as-split-area
+        [size]="isLeftInfosPanelMode ? sizes.col[1] : sizes.row[1]"
+      >
+        <ng-container
+          *ngTemplateOutlet="
+            mainContent;
+            context: { suffix: isLeftInfosPanelMode ? '-left' : '' }
+          "
+        ></ng-container>
       </as-split-area>
     </as-split>
   }

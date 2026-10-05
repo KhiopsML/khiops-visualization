@@ -5,206 +5,268 @@
  -->
 
 <div id="modeling-view-comp" fxFlexFill>
-  <!-- @if (loadingView) {
-    <div fxLayout="column" fxFlexFill fxLayoutAlign="center center">
-      <mat-spinner
-        diameter="30"
-        color="accent"
-        mode="indeterminate"
-      ></mat-spinner>
-    </div>
- } -->
+  <ng-template #summaryBlock let-suffix="suffix">
+    <kl-informations-block
+      fxFlex
+      fxFlexFill
+      id="modeling-informations-block-summary{{ suffix }}"
+      title="{{ 'GLOBAL.SUMMARY' | translate }}"
+      [inputDatas]="summaryDatas"
+    ></kl-informations-block>
+  </ng-template>
+
+  <ng-template #targetStatsBlock let-suffix="suffix">
+    @if (targetVariableStatsDatas) {
+      <app-target-variable-stats
+        id="modeling-target-variable-stats{{ suffix }}"
+        fxFlex
+        fxFlexFill
+        [inputDatas]="targetVariableStatsDatas"
+      >
+      </app-target-variable-stats>
+    }
+    @if (!targetVariableStatsDatas && !targetVariableStatsInformations) {
+      <kl-no-data fxFlexFill [message]="'NO_DATAS.NO_VARIABLE_DETAILS'">
+      </kl-no-data>
+    }
+    @if (targetVariableStatsInformations && !targetVariableStatsDatas) {
+      <kl-informations-block
+        id="preparation-informations-block-summary{{ suffix }}"
+        title="{{ 'GLOBAL.TARGET_VARIABLE_STATS' | translate }}"
+        [inputDatas]="targetVariableStatsInformations"
+      ></kl-informations-block>
+    }
+  </ng-template>
+
+  <ng-template #trainedPredictorsSummaryBlock let-suffix="suffix">
+    <kl-informations-block
+      fxFlex
+      style="overflow: auto"
+      id="modeling-informations-block-informations{{ suffix }}"
+      title="{{ 'GLOBAL.TRAINED_PREDICTORS' | translate }}"
+      icon="sliders-horizontal"
+      [inputDatas]="trainedPredictorsSummaryDatas"
+    ></kl-informations-block>
+  </ng-template>
+
+  <ng-template #predictorDetailsContent let-suffix="suffix">
+    @if (!modelingDatas?.trainedPredictorsListDatas) {
+      <div fxLayout="column" fxFlexFill>
+        <app-select-trained-predictor
+          [inputDatas]="trainedPredictors"
+          (selectedPredictorChanged)="onSelectedPredictorChanged($event)"
+        ></app-select-trained-predictor>
+        <kl-no-data
+          fxFlex
+          class="kl-card"
+          [message]="'NO_DATAS.NO_PREDICTORS_DETAILS'"
+        ></kl-no-data>
+      </div>
+    }
+    @if (modelingDatas?.trainedPredictorsListDatas) {
+      <app-select-trained-predictor
+        [inputDatas]="trainedPredictors"
+        (selectedPredictorChanged)="onSelectedPredictorChanged($event)"
+      ></app-select-trained-predictor>
+      <as-split
+        class="trained-predictor-details-container"
+        direction="horizontal"
+        (dragEnd)="onSplitDragEnd($event, 'row1Col')"
+      >
+        <as-split-area [size]="$safeNavigationMigration(sizes?.row1Col[0])">
+          <as-split
+            direction="vertical"
+            (dragEnd)="onSplitDragEnd($event, 'row1Col0Row')"
+          >
+            <as-split-area class="variables-list-container kl-card">
+              <kl-ag-grid
+                id="modeling-variables-list{{ suffix }}"
+                class="variables-list"
+                [titleIcon]="'table-properties'"
+                #agGridRef
+                fxFlexFill
+                titleTooltip="{{
+                  'TOOLTIPS.MODELING.VARIABLES.TITLE' | translate
+                }}"
+                [showSearch]="true"
+                [watchResize]="true"
+                [displayCount]="true"
+                [selectedVariable]="
+                  $safeNavigationMigration(modelingDatas?.selectedVariable)
+                "
+                (selectListItem)="onSelectListItemChanged($event)"
+                [showLineSelection]="true"
+                [showColumnsSelection]="true"
+                [inputDatas]="
+                  $safeNavigationMigration(
+                    modelingDatas?.trainedPredictorsListDatas
+                  )
+                "
+                [displayedColumns]="trainedPredictorsDisplayedColumns"
+              >
+                @if (hasLevelData()) {
+                  <app-level-distribution-button
+                    slot="header-tools"
+                    distributionType="level"
+                    [isSmallDiv]="agGridRef.isSmallDiv"
+                    [searchFormVisible]="agGridRef.searchFormVisible"
+                    (openLevelDistribution)="
+                      onShowLevelDistributionFromButton()
+                    "
+                  >
+                  </app-level-distribution-button>
+                }
+                @if (hasImportanceData()) {
+                  <app-level-distribution-button
+                    slot="header-tools"
+                    [importance]="true"
+                    distributionType="importance"
+                    [isSmallDiv]="agGridRef.isSmallDiv"
+                    [searchFormVisible]="agGridRef.searchFormVisible"
+                    (openLevelDistribution)="
+                      onShowImportanceDistributionFromButton()
+                    "
+                  >
+                  </app-level-distribution-button>
+                }
+              </kl-ag-grid>
+            </as-split-area>
+          </as-split>
+        </as-split-area>
+        <as-split-area [size]="$safeNavigationMigration(sizes?.row1Col[1])">
+          @if (
+            modelingDatas?.selectedVariable?.variableType === 'preparation' ||
+            modelingDatas?.selectedVariable?.variableType === 'text-preparation'
+          ) {
+            <app-var-details-preparation
+              fxFlex
+              [preparationSource]="preparationSource"
+              [selectionScope]="'modeling'"
+            >
+            </app-var-details-preparation>
+          }
+          @if (
+            modelingDatas?.selectedVariable?.variableType === 'preparation-2d'
+          ) {
+            <app-var-details-preparation-2d
+              fxFlex
+              [selectionScope]="'modeling'"
+            >
+            </app-var-details-preparation-2d>
+          }
+          @if (
+            modelingDatas?.selectedVariable?.variableType === 'tree-preparation'
+          ) {
+            <app-var-details-tree-preparation
+              class="kl-card"
+              fxFlex
+              [selectionScope]="'modeling'"
+            >
+            </app-var-details-tree-preparation>
+          }
+          @if (!modelingDatas?.selectedVariable) {
+            <kl-no-data
+              class="kl-card"
+              fxFlex
+              [message]="'NO_DATAS.NO_PREDICTORS_DETAILS'"
+            ></kl-no-data>
+          }
+        </as-split-area>
+      </as-split>
+    }
+  </ng-template>
+
   @if (!loadingView) {
-    <as-split direction="vertical" (dragEnd)="onSplitDragEnd($event, 'row')">
-      <as-split-area [size]="$safeNavigationMigration(sizes?.row[0])">
+    <as-split
+      [direction]="isLeftInfosPanelMode ? 'horizontal' : 'vertical'"
+      (dragEnd)="onSplitDragEnd($event, isLeftInfosPanelMode ? 'col' : 'row')"
+    >
+      <as-split-area
+        [size]="
+          $safeNavigationMigration(
+            isLeftInfosPanelMode ? sizes?.col[0] : sizes?.row[0]
+          )
+        "
+      >
         <as-split
-          direction="horizontal"
-          (dragEnd)="onSplitDragEnd($event, 'row0Col')"
+          [direction]="isLeftInfosPanelMode ? 'vertical' : 'horizontal'"
+          (dragEnd)="
+            onSplitDragEnd($event, isLeftInfosPanelMode ? 'col0Row' : 'row0Col')
+          "
         >
           <as-split-area
-            [size]="$safeNavigationMigration(sizes?.row0Col[0])"
+            [size]="
+              $safeNavigationMigration(
+                isLeftInfosPanelMode ? sizes?.col0Row[0] : sizes?.row0Col[0]
+              )
+            "
             class="kl-card"
           >
-            <kl-informations-block
-              fxFlex
-              fxFlexFill
-              id="modeling-informations-block-summary"
-              title="{{ 'GLOBAL.SUMMARY' | translate }}"
-              [inputDatas]="summaryDatas"
-            ></kl-informations-block>
+            <ng-container
+              *ngTemplateOutlet="
+                summaryBlock;
+                context: { suffix: isLeftInfosPanelMode ? '-left' : '' }
+              "
+            ></ng-container>
           </as-split-area>
           <as-split-area
-            [size]="$safeNavigationMigration(sizes?.row0Col[1])"
+            [size]="
+              $safeNavigationMigration(
+                isLeftInfosPanelMode ? sizes?.col0Row[1] : sizes?.row0Col[1]
+              )
+            "
             class="kl-card"
           >
-            @if (targetVariableStatsDatas) {
-              <app-target-variable-stats
-                id="modeling-target-variable-stats"
-                fxFlex
-                fxFlexFill
-                [inputDatas]="targetVariableStatsDatas"
-              >
-              </app-target-variable-stats>
-            }
-            @if (
-              !targetVariableStatsDatas && !targetVariableStatsInformations
-            ) {
-              <kl-no-data fxFlexFill [message]="'NO_DATAS.NO_VARIABLE_DETAILS'">
-              </kl-no-data>
-            }
-            @if (targetVariableStatsInformations && !targetVariableStatsDatas) {
-              <kl-informations-block
-                id="preparation-informations-block-summary"
-                title="{{ 'GLOBAL.TARGET_VARIABLE_STATS' | translate }}"
-                [inputDatas]="targetVariableStatsInformations"
-              ></kl-informations-block>
-            }
+            <ng-container
+              *ngTemplateOutlet="
+                targetStatsBlock;
+                context: { suffix: isLeftInfosPanelMode ? '-left' : '' }
+              "
+            ></ng-container>
           </as-split-area>
-          <as-split-area [size]="$safeNavigationMigration(sizes?.row0Col[2])">
-            <as-split direction="vertical" disabled unit="pixel">
-              <as-split-area class="kl-card" fxLayout="column">
-                <kl-informations-block
-                  fxFlex
-                  style="overflow: auto"
-                  id="modeling-informations-block-informations"
-                  title="{{ 'GLOBAL.TRAINED_PREDICTORS' | translate }}"
-                  icon="sliders-horizontal"
-                  [inputDatas]="trainedPredictorsSummaryDatas"
-                ></kl-informations-block>
-              </as-split-area>
-            </as-split>
+          <as-split-area
+            [size]="
+              $safeNavigationMigration(
+                isLeftInfosPanelMode ? sizes?.col0Row[2] : sizes?.row0Col[2]
+              )
+            "
+            class="kl-card"
+          >
+            @if (!isLeftInfosPanelMode) {
+              <as-split direction="vertical" disabled unit="pixel">
+                <as-split-area class="kl-card" fxLayout="column">
+                  <ng-container
+                    *ngTemplateOutlet="
+                      trainedPredictorsSummaryBlock;
+                      context: { suffix: '' }
+                    "
+                  ></ng-container>
+                </as-split-area>
+              </as-split>
+            } @else {
+              <ng-container
+                *ngTemplateOutlet="
+                  trainedPredictorsSummaryBlock;
+                  context: { suffix: '-left' }
+                "
+              ></ng-container>
+            }
           </as-split-area>
         </as-split>
       </as-split-area>
-      <as-split-area [size]="$safeNavigationMigration(sizes?.row[1])">
-        @if (!modelingDatas?.trainedPredictorsListDatas) {
-          <div fxLayout="column" fxFlexFill>
-            <app-select-trained-predictor
-              [inputDatas]="trainedPredictors"
-              (selectedPredictorChanged)="onSelectedPredictorChanged($event)"
-            ></app-select-trained-predictor>
-            <kl-no-data
-              fxFlex
-              class="kl-card"
-              [message]="'NO_DATAS.NO_PREDICTORS_DETAILS'"
-            ></kl-no-data>
-          </div>
-        }
-        @if (modelingDatas?.trainedPredictorsListDatas) {
-          <app-select-trained-predictor
-            [inputDatas]="trainedPredictors"
-            (selectedPredictorChanged)="onSelectedPredictorChanged($event)"
-          ></app-select-trained-predictor>
-          <as-split
-            class="trained-predictor-details-container"
-            direction="horizontal"
-            (dragEnd)="onSplitDragEnd($event, 'row1Col')"
-          >
-            <as-split-area [size]="$safeNavigationMigration(sizes?.row1Col[0])">
-              <as-split
-                direction="vertical"
-                (dragEnd)="onSplitDragEnd($event, 'row1Col0Row')"
-              >
-                <as-split-area class="variables-list-container kl-card">
-                  <kl-ag-grid
-                    id="modeling-variables-list"
-                    class="variables-list"
-                    [titleIcon]="'table-properties'"
-                    #agGridRef
-                    fxFlexFill
-                    titleTooltip="{{
-                      'TOOLTIPS.MODELING.VARIABLES.TITLE' | translate
-                    }}"
-                    [showSearch]="true"
-                    [watchResize]="true"
-                    [displayCount]="true"
-                    [selectedVariable]="
-                      $safeNavigationMigration(modelingDatas?.selectedVariable)
-                    "
-                    (selectListItem)="onSelectListItemChanged($event)"
-                    [showLineSelection]="true"
-                    [showColumnsSelection]="true"
-                    [inputDatas]="
-                      $safeNavigationMigration(
-                        modelingDatas?.trainedPredictorsListDatas
-                      )
-                    "
-                    [displayedColumns]="trainedPredictorsDisplayedColumns"
-                  >
-                    @if (hasLevelData()) {
-                      <app-level-distribution-button
-                        slot="header-tools"
-                        distributionType="level"
-                        [isSmallDiv]="agGridRef.isSmallDiv"
-                        [searchFormVisible]="agGridRef.searchFormVisible"
-                        (openLevelDistribution)="
-                          onShowLevelDistributionFromButton()
-                        "
-                      >
-                      </app-level-distribution-button>
-                    }
-                    @if (hasImportanceData()) {
-                      <app-level-distribution-button
-                        slot="header-tools"
-                        [importance]="true"
-                        distributionType="importance"
-                        [isSmallDiv]="agGridRef.isSmallDiv"
-                        [searchFormVisible]="agGridRef.searchFormVisible"
-                        (openLevelDistribution)="
-                          onShowImportanceDistributionFromButton()
-                        "
-                      >
-                      </app-level-distribution-button>
-                    }
-                  </kl-ag-grid>
-                </as-split-area>
-              </as-split>
-            </as-split-area>
-            <as-split-area [size]="$safeNavigationMigration(sizes?.row1Col[1])">
-              @if (
-                modelingDatas?.selectedVariable?.variableType ===
-                  'preparation' ||
-                modelingDatas?.selectedVariable?.variableType ===
-                  'text-preparation'
-              ) {
-                <app-var-details-preparation
-                  fxFlex
-                  [preparationSource]="preparationSource"
-                  [selectionScope]="'modeling'"
-                >
-                </app-var-details-preparation>
-              }
-              @if (
-                modelingDatas?.selectedVariable?.variableType ===
-                'preparation-2d'
-              ) {
-                <app-var-details-preparation-2d
-                  fxFlex
-                  [selectionScope]="'modeling'"
-                >
-                </app-var-details-preparation-2d>
-              }
-              @if (
-                modelingDatas?.selectedVariable?.variableType ===
-                'tree-preparation'
-              ) {
-                <app-var-details-tree-preparation
-                  class="kl-card"
-                  fxFlex
-                  [selectionScope]="'modeling'"
-                >
-                </app-var-details-tree-preparation>
-              }
-              @if (!modelingDatas?.selectedVariable) {
-                <kl-no-data
-                  class="kl-card"
-                  fxFlex
-                  [message]="'NO_DATAS.NO_PREDICTORS_DETAILS'"
-                ></kl-no-data>
-              }
-            </as-split-area>
-          </as-split>
-        }
+      <as-split-area
+        [size]="
+          $safeNavigationMigration(
+            isLeftInfosPanelMode ? sizes?.col[1] : sizes?.row[1]
+          )
+        "
+      >
+        <ng-container
+          *ngTemplateOutlet="
+            predictorDetailsContent;
+            context: { suffix: isLeftInfosPanelMode ? '-left' : '' }
+          "
+        ></ng-container>
       </as-split-area>
     </as-split>
   }
