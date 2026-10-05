@@ -441,8 +441,13 @@ export class ImportExtDatasService {
           }
 
           if (externalDatas && !(externalDatas.file instanceof File) && sourcePath) {
+            const fileMetadata =
+              externalDatas.file && typeof externalDatas.file === 'object'
+                ? (externalDatas.file as unknown as Record<string, unknown>)
+                : {};
+
             externalDatas.file = {
-              ...(externalDatas.file || {}),
+              ...fileMetadata,
               name: externalDatas.filename,
               path: sourcePath,
             } as unknown as File;
@@ -478,9 +483,21 @@ export class ImportExtDatasService {
 
   initExtDatasFiles() {
     const savedImportedDatas = this.appService.getSavedDatas('importedDatas') || [];
-    this.importExtDatas = savedImportedDatas.map((entry: ExtDatasModel) => ({
-      ...entry,
-      path: this.resolveExternalDataPath(entry.path, entry.file, entry.filename),
-    }));
+    this.importExtDatas = savedImportedDatas.map((entry: ExtDatasModel) => {
+      const resolvedPath = this.resolveExternalDataPath(
+        entry.path,
+        entry.file,
+        entry.filename,
+      );
+
+      if (!resolvedPath) {
+        return entry;
+      }
+
+      return {
+        ...entry,
+        path: resolvedPath,
+      };
+    });
   }
 }
