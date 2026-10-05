@@ -18,11 +18,20 @@
     }
 
     #info-layout-toggle {
-      gap: 4px;
       margin-right: 6px;
 
-      .lucid-icon-button.active {
-        border-color: var(--color-accent) !important;
+      #info-layout-toggle-group {
+        ::ng-deep .mat-button-toggle-label-content {
+          line-height: 30px;
+          padding: 0 8px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+        }
+
+        ::ng-deep .mat-button-toggle-checked svg {
+          color: var(--color-accent);
+        }
       }
     }
   }
