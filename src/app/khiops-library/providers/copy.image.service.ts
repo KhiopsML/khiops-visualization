@@ -9,6 +9,7 @@ import { TranslateService } from '@ngstack/translate';
 import { SelectableService } from '@khiops-library/components/selectable/selectable.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import * as htmlToImage from 'html-to-image';
+import html2canvas from 'html2canvas';
 import { COMPONENT_TYPES } from '@khiops-library/enum/component-types';
 import { ConfigService } from '@khiops-library/providers/config.service';
 // @ts-ignore
@@ -175,7 +176,6 @@ export class CopyImageService {
   private async captureWithHtml2Canvas(
     currentDiv: HTMLElement,
   ): Promise<string> {
-    const { default: html2canvas } = await import('html2canvas');
     const canvas = await html2canvas(currentDiv, {
       scale: 1.0,
       backgroundColor: '#ffffff',
@@ -270,6 +270,8 @@ export class CopyImageService {
     context.fillRect(0, 0, 1, 1);
 
     const [red, green, blue, alpha] = context.getImageData(0, 0, 1, 1).data;
+
+    // @ts-ignore
     return `rgba(${red}, ${green}, ${blue}, ${alpha / 255})`;
   }
 
