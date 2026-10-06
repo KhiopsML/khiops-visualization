@@ -9,7 +9,7 @@
     <kl-informations-block
       fxFlex
       fxFlexFill
-      id="tree-preparation-informations-block-summary{{ suffix }}"
+      id="tree-preparation-informations-block-summary"
       title="{{ 'GLOBAL.SUMMARY' | translate }}"
       [inputDatas]="summaryDatas"
     >
@@ -20,7 +20,7 @@
     @if (targetVariableStatsDatas) {
       <app-target-variable-stats
         fxFlex
-        id="tree-preparation-target-variable-stats{{ suffix }}"
+        id="tree-preparation-target-variable-stats"
         fxFlexFill
         [inputDatas]="targetVariableStatsDatas"
       >
@@ -32,7 +32,7 @@
     }
     @if (targetVariableStatsInformations && !targetVariableStatsDatas) {
       <kl-informations-block
-        id="tree-preparation-informations-block-summary{{ suffix }}"
+        id="tree-preparation-informations-block-summary"
         title="{{ 'GLOBAL.TARGET_VARIABLE_STATS' | translate }}"
         [inputDatas]="targetVariableStatsInformations"
       ></kl-informations-block>
@@ -43,7 +43,7 @@
     <kl-informations-block
       fxFlex
       style="overflow: auto"
-      id="tree-preparation-informations-block-informations{{ suffix }}"
+      id="tree-preparation-informations-block-informations"
       icon="sliders-horizontal"
       title="{{ 'GLOBAL.INFORMATIONS' | translate }}"
       [inputDatas]="informationsDatas"
@@ -108,7 +108,7 @@
       <as-split-area [size]="splitSizes[0]" class="kl-card">
         <kl-ag-grid
           #agGridRef
-          id="tree-preparation-variables-list{{ suffix }}"
+          id="tree-preparation-variables-list"
           class="variables-list"
           [titleIcon]="'table-properties'"
           fxFlexFill
@@ -191,7 +191,7 @@
         [size]="colSizes[0]"
       >
         <app-tree-select
-          id="tree-preparation-select{{ suffix }}"
+          id="tree-preparation-select"
           [dimensionTree]="
             $safeNavigationMigration(treePreparationDatas?.dimensionTree)
           "

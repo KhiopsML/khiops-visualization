@@ -8,7 +8,7 @@
   <ng-template #summaryBlock let-suffix="suffix">
     <kl-informations-block
       fxFlex
-      id="preparation-informations-block-summary{{ suffix }}"
+      id="preparation-informations-block-summary"
       title="{{ 'GLOBAL.SUMMARY' | translate }}"
       [inputDatas]="summaryDatas"
     ></kl-informations-block>
@@ -17,7 +17,7 @@
   <ng-template #targetStatsBlock let-suffix="suffix">
     @if (targetVariableStatsDatas) {
       <app-target-variable-stats
-        id="preparation-target-variable-stats{{ suffix }}"
+        id="preparation-target-variable-stats"
         fxFlex
         fxFlexFill
         [inputDatas]="targetVariableStatsDatas"
@@ -30,7 +30,7 @@
     }
     @if (targetVariableStatsInformations && !targetVariableStatsDatas) {
       <kl-informations-block
-        id="variable-stats-block-summary{{ suffix }}"
+        id="variable-stats-block-summary"
         title="{{ 'GLOBAL.TARGET_VARIABLE_STATS' | translate }}"
         [inputDatas]="targetVariableStatsInformations"
       ></kl-informations-block>
@@ -41,7 +41,7 @@
     <kl-informations-block
       fxFlex
       style="overflow: auto"
-      id="preparation-informations-block-informations{{ suffix }}"
+      id="preparation-informations-block-informations"
       icon="sliders-horizontal"
       title="{{ 'GLOBAL.INFORMATIONS' | translate }}"
       [inputDatas]="informationsDatas"
@@ -75,7 +75,7 @@
             >
               <kl-ag-grid
                 #agGridRef
-                id="preparation-variables-list{{ suffix }}"
+                id="preparation-variables-list"
                 class="variables-list"
                 fxFlex
                 [titleIcon]="'table-properties'"
@@ -112,7 +112,7 @@
                 @if (preparationDatas?.selectedVariable) {
                   <app-description-block
                     fxFlex
-                    id="preparation-description-block-derivation{{ suffix }}"
+                    id="preparation-description-block-derivation"
                     [inputDatas]="preparationDatas?.selectedVariable"
                   ></app-description-block>
                 }

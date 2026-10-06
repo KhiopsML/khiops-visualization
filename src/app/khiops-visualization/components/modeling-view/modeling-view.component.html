@@ -9,7 +9,7 @@
     <kl-informations-block
       fxFlex
       fxFlexFill
-      id="modeling-informations-block-summary{{ suffix }}"
+      id="modeling-informations-block-summary"
       title="{{ 'GLOBAL.SUMMARY' | translate }}"
       [inputDatas]="summaryDatas"
     ></kl-informations-block>
@@ -18,7 +18,7 @@
   <ng-template #targetStatsBlock let-suffix="suffix">
     @if (targetVariableStatsDatas) {
       <app-target-variable-stats
-        id="modeling-target-variable-stats{{ suffix }}"
+        id="modeling-target-variable-stats"
         fxFlex
         fxFlexFill
         [inputDatas]="targetVariableStatsDatas"
@@ -31,7 +31,7 @@
     }
     @if (targetVariableStatsInformations && !targetVariableStatsDatas) {
       <kl-informations-block
-        id="preparation-informations-block-summary{{ suffix }}"
+        id="preparation-informations-block-summary"
         title="{{ 'GLOBAL.TARGET_VARIABLE_STATS' | translate }}"
         [inputDatas]="targetVariableStatsInformations"
       ></kl-informations-block>
@@ -42,7 +42,7 @@
     <kl-informations-block
       fxFlex
       style="overflow: auto"
-      id="modeling-informations-block-informations{{ suffix }}"
+      id="modeling-informations-block-informations"
       title="{{ 'GLOBAL.TRAINED_PREDICTORS' | translate }}"
       icon="sliders-horizontal"
       [inputDatas]="trainedPredictorsSummaryDatas"
@@ -80,7 +80,7 @@
           >
             <as-split-area class="variables-list-container kl-card">
               <kl-ag-grid
-                id="modeling-variables-list{{ suffix }}"
+                id="modeling-variables-list"
                 class="variables-list"
                 [titleIcon]="'table-properties'"
                 #agGridRef

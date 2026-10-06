@@ -9,7 +9,7 @@
     <kl-informations-block
       fxFlex
       fxFlexFill
-      id="preparation-2d-informations-block-summary{{ suffix }}"
+      id="preparation-2d-informations-block-summary"
       title="{{ 'GLOBAL.SUMMARY' | translate }}"
       [inputDatas]="summaryDatas"
     ></kl-informations-block>
@@ -18,7 +18,7 @@
   <ng-template #targetStatsBlock let-suffix="suffix">
     @if (targetVariableStatsDatas) {
       <app-target-variable-stats
-        id="preparation-2d-target-variable-stats{{ suffix }}"
+        id="preparation-2d-target-variable-stats"
         fxFlex
         fxFlexFill
         [inputDatas]="targetVariableStatsDatas"
@@ -36,7 +36,7 @@
       <kl-informations-block
         fxFlex
         fxFlexFill
-        id="preparation-2d-informations-block-informations{{ suffix }}"
+        id="preparation-2d-informations-block-informations"
         icon="sliders-horizontal"
         title="{{ 'GLOBAL.INFORMATIONS' | translate }}"
         [inputDatas]="informationsDatas"
@@ -66,7 +66,7 @@
           >
             <kl-ag-grid
               #agGridRef
-              id="preparation-2d-variables-list{{ suffix }}"
+              id="preparation-2d-variables-list"
               class="variables-list"
               [titleIcon]="'table-properties'"
               fxFlexFill
