@@ -9,22 +9,6 @@
     <div class="selection-title font-code">
       {{ 'GLOBAL.HYPER_TREE_SELECTION' | translate }}
     </div>
-    <!-- <div
-      class="tree-hyper-selection-comp-title selection-row"
-      fxLayout="row"
-      fxLayoutAlign="start center"
-    >
-      <span
-        class="node-color-dot"
-        [style.background-color]="selectedNode.color || '#999'"
-      ></span>
-      <span class="selection-label">{{ 'GLOBAL.NODE_ID' | translate }}</span>
-      <span fxFlex class="selection-value node-id-value">
-        <span class="font-code">{{
-          selectedNode.nodeId || selectedNode.id || '-'
-        }}</span>
-      </span>
-    </div> -->
     @if (lineagePath.length > 0) {
       <div class="selection-row lineage-path" fxLayout="column">
         <!-- <span class="selection-title font-code">LINEAGE PATH</span> -->
