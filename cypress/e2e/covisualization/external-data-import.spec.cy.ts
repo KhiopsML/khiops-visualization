@@ -84,7 +84,7 @@ describe('External data mapping in covisualization', () => {
     cy.get('app-external-datas', { timeout: 15000 })
       .invoke('text')
       .then((text) => {
-        expect(normalize(text)).to.contain(normalize('example text'));
+        expect(normalize(text)).to.contain(normalize('example of text'));
       });
 
     // Deletion behavior is covered in external-data-separators-mapping.spec.cy.ts.

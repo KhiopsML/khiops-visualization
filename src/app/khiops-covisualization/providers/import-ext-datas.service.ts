@@ -20,6 +20,7 @@ export class ImportExtDatasService {
   private importExtDatas: ExtDatasModel[];
   private savedExternalDatas: any;
   private readonly supportedSeparators = ['\t', ',', ';', ' '];
+  private readonly separatorDetectionSampleSize = 20;
 
   private isLikelyAbsolutePath(path: string): boolean {
     return /^[a-zA-Z]:[\\/]/.test(path) || path.startsWith('/') || path.startsWith('\\\\');
@@ -140,29 +141,58 @@ export class ImportExtDatasService {
       return '\t';
     }
 
-    const firstLine = datas
+    const candidateLines = datas
       .split(/\r?\n/)
-      .find((line: string) => line.trim().length > 0);
+      .filter((line: string) => line.trim().length > 0)
+      .slice(0, this.separatorDetectionSampleSize);
 
-    if (!firstLine) {
+    if (candidateLines.length === 0) {
       return '\t';
     }
 
     let detectedSeparator = '\t';
-    let maxColumnCount = 1;
+    let bestScore = -1;
 
     this.supportedSeparators.forEach((candidate) => {
-      const columnCount = this.splitLineWithSeparator(
-        firstLine,
-        candidate,
-      ).length;
-      if (columnCount > maxColumnCount) {
-        maxColumnCount = columnCount;
+      const score = this.getSeparatorDetectionScore(candidateLines, candidate);
+      if (score > bestScore) {
+        bestScore = score;
         detectedSeparator = candidate;
       }
     });
 
     return detectedSeparator;
+  }
+
+  private getSeparatorDetectionScore(lines: string[], separator: string): number {
+    const columnCounts = lines.map(
+      (line) => this.splitLineWithSeparator(line, separator).length,
+    );
+    const splitCounts = columnCounts.filter((count) => count > 1);
+
+    if (splitCounts.length === 0) {
+      return -1;
+    }
+
+    const countFrequencies = new Map<number, number>();
+    splitCounts.forEach((count) => {
+      countFrequencies.set(count, (countFrequencies.get(count) || 0) + 1);
+    });
+
+    let mostFrequentColumnCount = 0;
+    let consistency = 0;
+
+    countFrequencies.forEach((frequency, columnCount) => {
+      if (frequency > consistency) {
+        consistency = frequency;
+        mostFrequentColumnCount = columnCount;
+      }
+    });
+
+    const spreadPenalty = splitCounts.length - consistency;
+
+    // Favor separators producing stable column counts across sampled lines.
+    return consistency * 100 + mostFrequentColumnCount - spreadPenalty;
   }
 
   private getSeparatorValue(separator: string): string {
@@ -186,7 +216,44 @@ export class ImportExtDatasService {
       return this.splitSpaceSeparatedLine(line, expectedColumnCount);
     }
 
-    return line.split(separator);
+    return this.splitDelimitedLine(line, separator);
+  }
+
+  private splitDelimitedLine(line: string, separator: string): string[] {
+    if (!line) {
+      return [''];
+    }
+
+    const columns: string[] = [];
+    let currentColumn = '';
+    let isInsideQuotes = false;
+
+    for (let index = 0; index < line.length; index++) {
+      const char = line[index];
+
+      if (char === '"') {
+        if (isInsideQuotes && line[index + 1] === '"') {
+          currentColumn += '""';
+          index++;
+          continue;
+        }
+
+        isInsideQuotes = !isInsideQuotes;
+        currentColumn += char;
+        continue;
+      }
+
+      if (!isInsideQuotes && char === separator) {
+        columns.push(currentColumn);
+        currentColumn = '';
+        continue;
+      }
+
+      currentColumn += char;
+    }
+
+    columns.push(currentColumn);
+    return columns;
   }
 
   private splitSpaceSeparatedLine(
