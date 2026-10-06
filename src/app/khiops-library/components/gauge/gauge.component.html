@@ -11,6 +11,14 @@
   version="1.1"
   xmlns="http://www.w3.org/2000/svg"
 >
+  <!-- Gradient definition: light orange to #ff6600 -->
+  <defs>
+    <linearGradient id="progress-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ffb380" />
+      <stop offset="100%" stop-color="#ff6600" />
+    </linearGradient>
+  </defs>
+
   <!-- Background circle -->
   <circle
     [attr.r]="radius()"
@@ -26,7 +34,7 @@
     [attr.r]="radius()"
     [attr.cx]="center()"
     [attr.cy]="center()"
-    stroke="#ff6600"
+    stroke="url(#progress-gradient)"
     [attr.stroke-width]="progressStrokeWidth()"
     stroke-linecap="round"
     [attr.stroke-dashoffset]="strokeDashOffset()"
@@ -45,6 +53,7 @@
     text-anchor="middle"
     dominant-baseline="central"
   >
-    {{ percentageValue() }}<tspan [attr.font-size]="fontSize * 0.7 + 'px'">%</tspan>
+    {{ percentageValue() }}
+    <tspan [attr.font-size]="fontSize * 0.7 + 'px'">%</tspan>
   </text>
 </svg>
