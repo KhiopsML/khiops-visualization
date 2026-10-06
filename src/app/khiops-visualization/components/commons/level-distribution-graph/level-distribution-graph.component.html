@@ -8,7 +8,10 @@
   <div fxFlexFill fxLayout="column">
     <div fxLayout="row" fxLayoutAlign="start center" class="comp-header">
       <div fxFlex fxLayout="column" fxLayoutAlign="start start">
-        <h1>{{ levelDistributionTitle }}</h1>
+        <h1 fxLayout="row" fxLayoutAlign="start center">
+          <svg lucideIcon="chart-column-big" size="16"></svg>
+          {{ levelDistributionTitle }}
+        </h1>
         @if (showTooManyVariablesWarning) {
           <kl-warning-information
             [text]="'SNACKS.TOO_MANY_VARIABLES' | translate"
