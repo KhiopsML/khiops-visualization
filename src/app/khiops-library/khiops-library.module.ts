@@ -40,7 +40,7 @@ import { HotkeyModule } from 'angular2-hotkeys';
 import { ResizableModule } from 'angular-resizable-element';
 import { TranslateModule, TranslateService } from '@ngstack/translate';
 import { AgGridModule } from '@ag-grid-community/angular';
-import { AngularSplitModule } from 'angular-split';
+import { AngularSplitModule, provideAngularSplitOptions } from 'angular-split';
 import {
   LucideFileUp,
   LucideTrash,
@@ -251,6 +251,7 @@ import { ImportantBadgeComponent } from './components/important-badge/important-
     MenuFocusSelectedDirective,
   ],
   providers: [
+    provideAngularSplitOptions({ gutterSize: 15 }),
     TranslateService,
     DialogService,
     provideLucideIcons(

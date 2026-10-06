@@ -9,7 +9,6 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppComponent } from './khiops-application.component';
 import { KhiopsApplicationRoutingModule } from './khiops-application-routing.module';
 import { MatButtonModule } from '@angular/material/button';
-import { provideAngularSplitOptions } from 'angular-split';
 import { EffectsModule } from '@ngrx/effects';
 import { StoreModule } from '@ngrx/store';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
@@ -31,7 +30,6 @@ import { ConfigService } from '@khiops-library/providers/config.service';
     }),
   ],
   providers: [
-    provideAngularSplitOptions({gutterSize: 15}),
     provideAnimationsAsync(),
     ConfigService,
   ],
