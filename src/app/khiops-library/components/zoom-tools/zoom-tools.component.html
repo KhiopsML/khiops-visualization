@@ -10,6 +10,7 @@
     mat-icon-button
     (click)="onClickOnZoomIn()"
     [matTooltip]="'GLOBAL.ZOOM_IN' | translate"
+    matTooltipPosition="left"
     [attr.aria-label]="'GLOBAL.ZOOM_IN' | translate"
   >
     <svg lucideIcon="zoom-in"></svg>
@@ -19,6 +20,7 @@
     class="screenshot-hide lucid-icon-button"
     (click)="onClickOnResetZoom()"
     [matTooltip]="'GLOBAL.RESET_ZOOM' | translate"
+    matTooltipPosition="left"
     [attr.aria-label]="'GLOBAL.RESET_ZOOM' | translate"
   >
     <svg lucideIcon="fullscreen"></svg>
@@ -28,6 +30,7 @@
     mat-icon-button
     (click)="onClickOnZoomOut()"
     [matTooltip]="'GLOBAL.ZOOM_OUT' | translate"
+    matTooltipPosition="left"
     [attr.aria-label]="'GLOBAL.ZOOM_OUT' | translate"
   >
     <svg lucideIcon="zoom-out"></svg>
