@@ -41,14 +41,20 @@
       (ngModelChange)="updateSearch($event)"
       autocomplete="off"
     />
-    <button
-      attr.aria-label="{{ 'ARIA.AG_GRID.CLOSE_SEARCH_INPUT' | translate }}"
-      class="screenshot-hide close-btn lucid-icon-button"
-      mat-stroked-button
-      matTooltip="{{ 'GLOBAL.CLOSE' | translate }}"
-      (click)="close()"
-    >
-      <svg [lucideIcon]="fullSearch ? 'trash' : 'x'" size="16"></svg>
-    </button>
+    @if ((fullSearch && search) || !fullSearch) {
+      <button
+        attr.aria-label="{{ 'ARIA.AG_GRID.CLOSE_SEARCH_INPUT' | translate }}"
+        class="screenshot-hide close-btn lucid-icon-button"
+        mat-stroked-button
+        [matTooltip]="
+          fullSearch
+            ? ('GLOBAL.DELETE' | translate)
+            : ('GLOBAL.CLOSE' | translate)
+        "
+        (click)="close()"
+      >
+        <svg [lucideIcon]="fullSearch ? 'trash' : 'x'" size="16"></svg>
+      </button>
+    }
   }
 </form>
