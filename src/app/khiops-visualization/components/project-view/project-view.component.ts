@@ -7,7 +7,6 @@
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { SelectableTabComponent } from '@khiops-library/components/selectable-tab/selectable-tab.component';
 import { TrackerService } from '../../../khiops-library/providers/tracker.service';
-import { ConfigService } from '@khiops-library/providers/config.service';
 import { LayoutService } from '@khiops-library/providers/layout.service';
 import { ProjectDatasService } from '@khiops-visualization/providers/project-datas.service';
 import { FileLoaderService } from '@khiops-library/providers/file-loader.service';
@@ -15,7 +14,6 @@ import { Subscription } from 'rxjs';
 import { SplitGutterInteractionEvent } from 'angular-split';
 import { DynamicI } from '@khiops-library/interfaces/globals.interface';
 import { ProjectLogModel } from '@khiops-library/model/project-log.model';
-import { AppConfig } from '../../../../environments/environment';
 
 @Component({
   selector: 'app-project-view',
@@ -31,9 +29,6 @@ export class ProjectViewComponent
   private fileLoadedSub?: Subscription;
 
   public sizes?: DynamicI = { row: [null, null] };
-  public isElectron: boolean = false;
-  public debugFile = AppConfig.debugFile;
-  public showOpenFileBtn: boolean | undefined = false;
   public projectLogsDatas?: ProjectLogModel[];
 
   // managed by selectable-tab component
@@ -41,18 +36,15 @@ export class ProjectViewComponent
 
   constructor(
     private fileLoaderService: FileLoaderService,
-    private configService: ConfigService,
     private trackerService: TrackerService,
     private layoutService: LayoutService,
     public projectDatasService: ProjectDatasService,
   ) {
     super();
-    this.isElectron = this.configService.isElectron;
   }
 
   ngOnInit() {
     this.trackerService.trackEvent('page_view', 'project');
-    this.showOpenFileBtn = this.configService.getConfig().showOpenFileBtn;
     // Initialize sizes to avoid the ExpressionChangedAfterItHasBeenCheckedError
     this.sizes = this.layoutService.getViewSplitSizes('projectView');
   }
@@ -62,7 +54,8 @@ export class ProjectViewComponent
       (datas) => {
         if (datas) {
           this.sizes = this.layoutService.getViewSplitSizes('projectView');
-          this.projectLogsDatas = this.projectDatasService.getProjectLogsDatas();
+          this.projectLogsDatas =
+            this.projectDatasService.getProjectLogsDatas();
         }
       },
     );

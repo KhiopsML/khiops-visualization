@@ -25,6 +25,11 @@
     right: 15px;
     height: var(--header-height);
     z-index: 1000;
+
+    kl-file-loader {
+      display: flex;
+      margin-right: 15px;
+    }
   }
 
   #version {
@@ -49,9 +54,9 @@
     position: absolute;
     width: calc(100% - var(--layout-padding) - var(--layout-padding));
     height: calc(
-      100% - var(--header-height) - var(--layout-padding) - var(--layout-padding) - var(
+      100% - var(--header-height) - var(--layout-padding) - var(
           --layout-padding
-        )
+        ) - var(--layout-padding)
     );
   }
 }

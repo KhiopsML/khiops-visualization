@@ -13,6 +13,11 @@
     height: var(--header-height);
     z-index: 1000;
 
+    kl-file-loader {
+      display: flex;
+      margin-right: 15px;
+    }
+
     #more-btn {
       margin-right: 1em;
     }

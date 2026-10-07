@@ -70,6 +70,9 @@ export class HomeLayoutComponent implements OnInit {
   public isLoading: boolean = true;
   public REPORT = REPORT;
   public infoPanelLayoutMode: InfoPanelLayoutMode = 'top';
+  public isElectron: boolean = false;
+  public debugFile = AppConfig.debugFile;
+  public showOpenFileBtn: boolean | undefined = false;
 
   @ViewChild('fileLoader', {
     static: false,
@@ -101,6 +104,7 @@ export class HomeLayoutComponent implements OnInit {
       this.appTitle = pjson.title.visualization;
       this.appVersion = pjson.version;
     }
+    this.isElectron = this.configService.isElectron;
   }
 
   onSelectedTabChanged(e: MatTabChangeEvent) {
@@ -118,6 +122,7 @@ export class HomeLayoutComponent implements OnInit {
     this.trackerService.trackEvent('page_view', 'visit', this.appVersion);
     this.infoPanelLayoutMode =
       this.viewLayoutModeService.getInfoPanelLayoutMode();
+    this.showOpenFileBtn = this.configService.getConfig().showOpenFileBtn;
   }
 
   onInfoPanelLayoutChanged(mode: InfoPanelLayoutMode) {

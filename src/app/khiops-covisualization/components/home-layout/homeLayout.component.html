@@ -23,9 +23,6 @@
       @if (showLogo && isCompatibleJson) {
         <kl-header-title [title]="appTitle"> </kl-header-title>
       }
-      <div class="container" [hidden]="isCompatibleJson" fxLayout="column">
-        <kl-file-loader #fileLoader [hidden]="true"></kl-file-loader>
-      </div>
       @if (isCompatibleJson) {
         <div class="container" fxLayout="column">
           <mat-tab-group
@@ -33,7 +30,6 @@
             id="main-tab-group"
             [animationDuration]="0"
             mat-align-tabs="center"
-            
             [@.disabled]="true"
             [selectedIndex]="activeTab"
             (selectedTabChange)="onSelectedTabChanged($event)"
@@ -80,6 +76,10 @@
         </div>
       }
       <div id="header-right" layout="row" fxLayoutAlign="center center">
+        <kl-file-loader
+          #fileLoader
+          [hidden]="!((debugFile && !isElectron) || showOpenFileBtn)"
+        ></kl-file-loader>
         @if (showAxisView() && isCompatibleJson) {
           <app-header-manage-view></app-header-manage-view>
         }

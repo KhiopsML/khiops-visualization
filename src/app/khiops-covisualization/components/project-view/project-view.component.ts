@@ -7,12 +7,10 @@
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { ProjectDatasService } from '@khiops-covisualization/providers/project-datas.service';
 import { SelectableTabComponent } from '@khiops-library/components/selectable-tab/selectable-tab.component';
-import { ConfigService } from '@khiops-library/providers/config.service';
 import { TrackerService } from '@khiops-library/providers/tracker.service';
 import { FileLoaderService } from '@khiops-library/providers/file-loader.service';
 import { ProjectLogModel } from '@khiops-library/model/project-log.model';
 import { Subscription } from 'rxjs';
-import { AppConfig } from '../../../../environments/environment';
 
 @Component({
   selector: 'app-project-view',
@@ -27,32 +25,27 @@ export class ProjectViewComponent
 {
   // managed by selectable-tab component
   override tabIndex = 0;
-  isElectron: boolean = false;
-  public debugFile = AppConfig.debugFile;
-  public showOpenFileBtn: boolean | undefined = false;
   public projectLogsDatas?: ProjectLogModel[];
   private fileLoadedSub?: Subscription;
 
   constructor(
     private trackerService: TrackerService,
-    private configService: ConfigService,
     private fileLoaderService: FileLoaderService,
     public projectDatasService: ProjectDatasService,
   ) {
     super();
-    this.isElectron = this.configService.isElectron;
   }
 
   ngOnInit() {
     this.trackerService.trackEvent('page_view', 'project');
-    this.showOpenFileBtn = this.configService.getConfig().showOpenFileBtn;
   }
 
   ngAfterViewInit() {
     this.fileLoadedSub = this.fileLoaderService.fileLoaded$.subscribe(
       (datas) => {
         if (datas) {
-          this.projectLogsDatas = this.projectDatasService.getProjectLogsDatas();
+          this.projectLogsDatas =
+            this.projectDatasService.getProjectLogsDatas();
         }
       },
     );

@@ -72,6 +72,9 @@ export class HomeLayoutComponent implements OnInit, AfterViewInit, OnDestroy {
   public isContextDimensions = false;
   public appVersion: string = '';
   public opened = false;
+  public isElectron: boolean = false;
+  public debugFile = AppConfig.debugFile;
+  public showOpenFileBtn: boolean | undefined = false;
   public get openContextView(): boolean {
     return this.tabNavigationService.openContextView;
   }
@@ -106,12 +109,14 @@ export class HomeLayoutComponent implements OnInit, AfterViewInit, OnDestroy {
       this.appTitle = pjson.title.covisualization;
       this.appVersion = pjson.version;
     }
+    this.isElectron = this.configService.isElectron;
   }
 
   ngOnInit() {
     this.subscribeToImportedDatasChanges();
     this.trackerService.trackEvent('page_view', 'axis');
     this.trackerService.trackEvent('page_view', 'visit', this.appVersion);
+    this.showOpenFileBtn = this.configService.getConfig().showOpenFileBtn;
   }
 
   ngAfterViewInit() {
