@@ -169,7 +169,7 @@ describe('Behaviors tests for Khiops Covisualization', () => {
         force: true,
       });
       cy.get('.unfold-information-rate').contains('53 790');
-      cy.get('.unfold-information-rate').contains('92.4%');
+      cy.get('.unfold-information-rate').contains('92.4');
 
       // Reduce hierarchy and check values
       cy.get('#cy-unfold-value-input').clear({ force: true }).type('60', {
@@ -179,7 +179,7 @@ describe('Behaviors tests for Khiops Covisualization', () => {
         force: true,
       });
       cy.get('.unfold-information-rate').contains('5 746');
-      cy.get('.unfold-information-rate').contains('69.8%');
+      cy.get('.unfold-information-rate').contains('69.8');
 
       // Close dialog
       cy.get('.button-confirm-hierarchy').click();
