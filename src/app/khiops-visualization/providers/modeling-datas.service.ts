@@ -18,6 +18,7 @@ import { PreparationVariableModel } from '@khiops-visualization/model/preparatio
 import { Preparation2dVariableModel } from '@khiops-visualization/model/preparation2d-variable.model';
 import { TreePreparationVariableModel } from '@khiops-visualization/model/tree-preparation-variable.model';
 import { UtilsService } from '@khiops-library/providers/utils.service';
+import { LevelCellComponent } from '@khiops-library/components/ag-grid/level-cell/level-cell.component';
 import {
   ModelingVariableStatistic,
   TrainedPredictor,
@@ -186,6 +187,7 @@ export class ModelingDatasService {
             tooltip: this.translate.get(
               'TOOLTIPS.MODELING.VARIABLES.' + key.toUpperCase(),
             ),
+            cellRenderer: key === 'level' ? LevelCellComponent : undefined,
           });
         }
       });
