@@ -9,7 +9,6 @@ import '../../support/commands';
 describe('External data mapping in covisualization', () => {
   it('updates displayed external data when mapping is edited from the data view', () => {
     const normalize = (text) => text.replace(/\s+/g, '');
-    const educationTextPattern = /thistextisstandard|istextstandard/i;
 
     cy.initViews();
     cy.loadFile('covisualization', 'adult2var.json');
@@ -54,11 +53,13 @@ describe('External data mapping in covisualization', () => {
     cy.get('.source-card', { timeout: 15000 })
       .should('contain.text', 'ExternalDataEducation.txt')
       .and('contain.text', 'education');
+
+    cy.wait(1000);
     cy.get('app-external-datas').should('have.length', 2);
     cy.get('app-external-datas', { timeout: 15000 })
       .invoke('text')
       .then((text) => {
-        expect(normalize(text)).to.match(educationTextPattern);
+        expect(normalize(text)).to.contain(normalize('This text is standard'));
       });
 
     cy.get('app-external-datas .ext-datas-mapping-button')
