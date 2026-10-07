@@ -450,6 +450,10 @@
       "AXIS": "Presents the coclustering",
       "CONTEXT": "cCntextual dimensions of the coclustering (if more than 2 dimensions)"
     },
+    "HOME_LAYOUT": {
+      "INFO_PANEL_TOP": "Display info panels at the top",
+      "INFO_PANEL_LEFT": "Display info panels on the left"
+    },
     "COMMONS": {
       "IMPORTANCE_DISTRIBUTION": "display the importance distribution of the variables",
       "LEVEL_DISTRIBUTION": "display the level distribution of the variables",
