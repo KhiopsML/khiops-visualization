@@ -9,6 +9,7 @@ import {
   ViewChild,
   ChangeDetectionStrategy,
   DoCheck,
+  OnDestroy,
 } from '@angular/core';
 import { SelectableTabComponent } from '@khiops-library/components/selectable-tab/selectable-tab.component';
 import { ModelingDatasService } from '@khiops-visualization/providers/modeling-datas.service';
@@ -37,7 +38,11 @@ import { TreePreparationStore } from '@khiops-visualization/stores/tree-preparat
 import { getTreePreparationVariablesGridColumns } from './tree-preparation-view.config';
 import { DialogService } from '@khiops-library/providers/dialog.service';
 import { GraphSelectionSessionService } from '@khiops-visualization/providers/graph-selection-session.service';
-import { ViewLayoutModeService } from '@khiops-visualization/providers/view-layout-mode.service';
+import {
+  InfoPanelLayoutMode,
+  ViewLayoutModeService,
+} from '@khiops-visualization/providers/view-layout-mode.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-tree-preparation-view',
@@ -48,7 +53,7 @@ import { ViewLayoutModeService } from '@khiops-visualization/providers/view-layo
 })
 export class TreePreparationViewComponent
   extends SelectableTabComponent
-  implements DoCheck
+  implements DoCheck, OnDestroy
 {
   @ViewChild('appVariableGraphDetails', {
     static: false,
@@ -74,6 +79,7 @@ export class TreePreparationViewComponent
   selectedNodes$: Observable<TreeNodeModel[]>;
   selectedNode$: Observable<TreeNodeModel | undefined>;
   private previousSelectedVariableRank?: string;
+  private infoPanelLayoutModeSub?: Subscription;
 
   constructor(
     private preparationDatasService: PreparationDatasService,
@@ -105,12 +111,13 @@ export class TreePreparationViewComponent
       this.graphSelectionSessionService.getSelectedIndex('treePreparation');
 
     this.treePreparationDatas = this.treePreparationDatasService.getDatas();
-    this.isLeftInfosPanelMode =
-      this.viewLayoutModeService.isLeftInfoPanelLayoutMode();
-    this.splitViewKey = this.isLeftInfosPanelMode
-      ? 'treePreparationViewLeftPanel'
-      : 'treePreparationView';
-    this.sizes = this.layoutService.getViewSplitSizes(this.splitViewKey);
+    this.applyInfoPanelLayoutMode(
+      this.viewLayoutModeService.getInfoPanelLayoutMode(),
+    );
+    this.infoPanelLayoutModeSub =
+      this.viewLayoutModeService.infoPanelLayoutMode$.subscribe((mode) => {
+        this.applyInfoPanelLayoutMode(mode);
+      });
     this.summaryDatas = this.preparationDatasService.getSummaryDatas(
       this.preparationSource,
     );
@@ -156,6 +163,10 @@ export class TreePreparationViewComponent
         }
       }
     });
+  }
+
+  ngOnDestroy() {
+    this.infoPanelLayoutModeSub?.unsubscribe();
   }
 
   ngDoCheck() {
@@ -237,6 +248,14 @@ export class TreePreparationViewComponent
    */
   hasLevelData(): boolean {
     return this.distributionService.hasLevelData(this.variablesDatas || []);
+  }
+
+  private applyInfoPanelLayoutMode(mode: InfoPanelLayoutMode) {
+    this.isLeftInfosPanelMode = mode === 'left';
+    this.splitViewKey = this.isLeftInfosPanelMode
+      ? 'treePreparationViewLeftPanel'
+      : 'treePreparationView';
+    this.sizes = this.layoutService.getViewSplitSizes(this.splitViewKey);
   }
 
   /**

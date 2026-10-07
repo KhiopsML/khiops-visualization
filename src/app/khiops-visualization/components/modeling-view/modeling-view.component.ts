@@ -4,7 +4,7 @@
  * at https://spdx.org/licenses/BSD-3-Clause-Clear.html or see the "LICENSE" file for more details.
  */
 
-import { Component, ChangeDetectionStrategy } from '@angular/core';
+import { Component, ChangeDetectionStrategy, OnDestroy } from '@angular/core';
 import { ModelingDatasService } from '@khiops-visualization/providers/modeling-datas.service';
 import { PreparationDatasService } from '@khiops-visualization/providers/preparation-datas.service';
 import { SelectableTabComponent } from '@khiops-library/components/selectable-tab/selectable-tab.component';
@@ -27,7 +27,11 @@ import { TrainedPredictorModel } from '@khiops-visualization/model/trained-predi
 import { VisualizationDatas } from '@khiops-visualization/interfaces/app-datas.interface';
 import { DialogService } from '@khiops-library/providers/dialog.service';
 import { DistributionType } from '@khiops-visualization/types/distribution-type';
-import { ViewLayoutModeService } from '@khiops-visualization/providers/view-layout-mode.service';
+import {
+  InfoPanelLayoutMode,
+  ViewLayoutModeService,
+} from '@khiops-visualization/providers/view-layout-mode.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-modeling-view',
@@ -36,7 +40,10 @@ import { ViewLayoutModeService } from '@khiops-visualization/providers/view-layo
   changeDetection: ChangeDetectionStrategy.Eager,
   standalone: false,
 })
-export class ModelingViewComponent extends SelectableTabComponent {
+export class ModelingViewComponent
+  extends SelectableTabComponent
+  implements OnDestroy
+{
   public preparationSource: string;
   public appDatas?: VisualizationDatas;
   public sizes?: DynamicI;
@@ -50,6 +57,7 @@ export class ModelingViewComponent extends SelectableTabComponent {
   public trainedPredictors?: TrainedPredictor[];
   public isLeftInfosPanelMode: boolean = false;
   private splitViewKey: string = 'modelingView';
+  private infoPanelLayoutModeSub?: Subscription;
 
   private preparationVariable: any; // Complex, can be multiple types according to the preparationSource
 
@@ -78,12 +86,13 @@ export class ModelingViewComponent extends SelectableTabComponent {
       this.preparationDatasService.getAvailablePreparationReport();
 
     this.modelingDatas = this.modelingDatasService.getDatas();
-    this.isLeftInfosPanelMode =
-      this.viewLayoutModeService.isLeftInfoPanelLayoutMode();
-    this.splitViewKey = this.isLeftInfosPanelMode
-      ? 'modelingViewLeftPanel'
-      : 'modelingView';
-    this.sizes = this.layoutService.getViewSplitSizes(this.splitViewKey);
+    this.applyInfoPanelLayoutMode(
+      this.viewLayoutModeService.getInfoPanelLayoutMode(),
+    );
+    this.infoPanelLayoutModeSub =
+      this.viewLayoutModeService.infoPanelLayoutMode$.subscribe((mode) => {
+        this.applyInfoPanelLayoutMode(mode);
+      });
 
     this.summaryDatas = this.modelingDatasService.getSummaryDatas();
     this.targetVariableStatsDatas =
@@ -92,6 +101,10 @@ export class ModelingViewComponent extends SelectableTabComponent {
       this.preparationDatasService.getTargetVariableStatsInformations();
     this.trainedPredictorsSummaryDatas =
       this.modelingDatasService.getTrainedPredictorsSummaryDatas();
+  }
+
+  ngOnDestroy() {
+    this.infoPanelLayoutModeSub?.unsubscribe();
   }
 
   onSplitDragEnd(event: SplitGutterInteractionEvent, item: string) {
@@ -223,5 +236,13 @@ export class ModelingViewComponent extends SelectableTabComponent {
     return this.distributionService.hasImportanceData(
       this.modelingDatas?.trainedPredictorsListDatas || [],
     );
+  }
+
+  private applyInfoPanelLayoutMode(mode: InfoPanelLayoutMode) {
+    this.isLeftInfosPanelMode = mode === 'left';
+    this.splitViewKey = this.isLeftInfosPanelMode
+      ? 'modelingViewLeftPanel'
+      : 'modelingView';
+    this.sizes = this.layoutService.getViewSplitSizes(this.splitViewKey);
   }
 }

@@ -4,7 +4,12 @@
  * at https://spdx.org/licenses/BSD-3-Clause-Clear.html or see the "LICENSE" file for more details.
  */
 
-import { Component, ViewChild, ChangeDetectionStrategy } from '@angular/core';
+import {
+  Component,
+  ViewChild,
+  ChangeDetectionStrategy,
+  OnDestroy,
+} from '@angular/core';
 import { Preparation2dDatasService } from '@khiops-visualization/providers/preparation2d-datas.service';
 import { SelectableTabComponent } from '@khiops-library/components/selectable-tab/selectable-tab.component';
 import { PreparationDatasService } from '@khiops-visualization/providers/preparation-datas.service';
@@ -25,7 +30,11 @@ import { VariableModel } from '@khiops-visualization/model/variable.model';
 import { getPreparation2dVariablesGridColumns } from './preparation-2d-view.config';
 import { DistributionService } from '@khiops-visualization/providers/distribution.service';
 import { DialogService } from '@khiops-library/providers/dialog.service';
-import { ViewLayoutModeService } from '@khiops-visualization/providers/view-layout-mode.service';
+import {
+  InfoPanelLayoutMode,
+  ViewLayoutModeService,
+} from '@khiops-visualization/providers/view-layout-mode.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-preparation-2d-view',
@@ -34,13 +43,16 @@ import { ViewLayoutModeService } from '@khiops-visualization/providers/view-layo
   changeDetection: ChangeDetectionStrategy.Eager,
   standalone: false,
 })
-export class Preparation2dViewComponent extends SelectableTabComponent {
+export class Preparation2dViewComponent
+  extends SelectableTabComponent
+  implements OnDestroy
+{
   @ViewChild('targetDistributionGraph', {
     static: false,
   })
   private targetDistributionGraph: TargetDistributionGraphComponent | undefined;
 
-  public sizes: DynamicI;
+  public sizes: DynamicI | undefined;
   public preparation2dDatas?: Preparation2dDatasModel;
   public summaryDatas: InfosDatasI[];
   public informationsDatas?: InfosDatasI[];
@@ -52,6 +64,7 @@ export class Preparation2dViewComponent extends SelectableTabComponent {
   public showFilteredVariablesWarning: boolean = false;
   public isLeftInfosPanelMode: boolean = false;
   private splitViewKey: string = 'preparation2dView';
+  private infoPanelLayoutModeSub?: Subscription;
 
   constructor(
     private preparationDatasService: PreparationDatasService,
@@ -72,12 +85,9 @@ export class Preparation2dViewComponent extends SelectableTabComponent {
     );
 
     this.preparation2dDatas = this.preparation2dDatasService.getDatas();
-    this.isLeftInfosPanelMode =
-      this.viewLayoutModeService.isLeftInfoPanelLayoutMode();
-    this.splitViewKey = this.isLeftInfosPanelMode
-      ? 'preparation2dViewLeftPanel'
-      : 'preparation2dView';
-    this.sizes = this.layoutService.getViewSplitSizes(this.splitViewKey);
+    this.applyInfoPanelLayoutMode(
+      this.viewLayoutModeService.getInfoPanelLayoutMode(),
+    );
     this.informationsDatas =
       this.preparation2dDatasService.getInformationsDatas();
     this.showFilteredVariablesWarning =
@@ -94,6 +104,14 @@ export class Preparation2dViewComponent extends SelectableTabComponent {
 
   ngOnInit() {
     this.trackerService.trackEvent('page_view', 'preparation2d');
+    this.infoPanelLayoutModeSub =
+      this.viewLayoutModeService.infoPanelLayoutMode$.subscribe((mode) => {
+        this.applyInfoPanelLayoutMode(mode);
+      });
+  }
+
+  ngOnDestroy() {
+    this.infoPanelLayoutModeSub?.unsubscribe();
   }
 
   onSplitDragEnd(event: SplitGutterInteractionEvent, item: string) {
@@ -201,5 +219,13 @@ export class Preparation2dViewComponent extends SelectableTabComponent {
     }
 
     return undefined;
+  }
+
+  private applyInfoPanelLayoutMode(mode: InfoPanelLayoutMode) {
+    this.isLeftInfosPanelMode = mode === 'left';
+    this.splitViewKey = this.isLeftInfosPanelMode
+      ? 'preparation2dViewLeftPanel'
+      : 'preparation2dView';
+    this.sizes = this.layoutService.getViewSplitSizes(this.splitViewKey);
   }
 }

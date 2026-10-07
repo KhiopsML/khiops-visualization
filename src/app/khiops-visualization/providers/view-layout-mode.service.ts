@@ -7,6 +7,7 @@
 import { Injectable } from '@angular/core';
 import { LS } from '@khiops-library/enum/ls';
 import { Ls } from '@khiops-library/providers/ls.service';
+import { BehaviorSubject, Observable } from 'rxjs';
 
 export type InfoPanelLayoutMode = 'top' | 'left';
 
@@ -14,9 +15,21 @@ export type InfoPanelLayoutMode = 'top' | 'left';
   providedIn: 'root',
 })
 export class ViewLayoutModeService {
-  constructor(private ls: Ls) {}
+  private readonly infoPanelLayoutModeSubject: BehaviorSubject<InfoPanelLayoutMode>;
+  public readonly infoPanelLayoutMode$: Observable<InfoPanelLayoutMode>;
+
+  constructor(private ls: Ls) {
+    this.infoPanelLayoutModeSubject = new BehaviorSubject<InfoPanelLayoutMode>(
+      this.getStoredInfoPanelLayoutMode(),
+    );
+    this.infoPanelLayoutMode$ = this.infoPanelLayoutModeSubject.asObservable();
+  }
 
   getInfoPanelLayoutMode(): InfoPanelLayoutMode {
+    return this.infoPanelLayoutModeSubject.value;
+  }
+
+  private getStoredInfoPanelLayoutMode(): InfoPanelLayoutMode {
     const mode = this.ls.get(LS.KV_INFO_PANEL_LAYOUT);
     return mode === 'left' ? 'left' : 'top';
   }
@@ -26,6 +39,11 @@ export class ViewLayoutModeService {
   }
 
   setInfoPanelLayoutMode(mode: InfoPanelLayoutMode) {
+    if (this.infoPanelLayoutModeSubject.value === mode) {
+      return;
+    }
+
     this.ls.set(LS.KV_INFO_PANEL_LAYOUT, mode);
+    this.infoPanelLayoutModeSubject.next(mode);
   }
 }

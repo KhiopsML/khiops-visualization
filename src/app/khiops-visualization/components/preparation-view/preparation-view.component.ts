@@ -4,7 +4,12 @@
  * at https://spdx.org/licenses/BSD-3-Clause-Clear.html or see the "LICENSE" file for more details.
  */
 
-import { Component, Input, ChangeDetectionStrategy } from '@angular/core';
+import {
+  Component,
+  Input,
+  ChangeDetectionStrategy,
+  OnDestroy,
+} from '@angular/core';
 import { PreparationDatasService } from '../../providers/preparation-datas.service';
 import { SelectableTabComponent } from '@khiops-library/components/selectable-tab/selectable-tab.component';
 import { ModelingDatasService } from '@khiops-visualization/providers/modeling-datas.service';
@@ -24,7 +29,11 @@ import { DynamicI } from '@khiops-library/interfaces/globals.interface';
 import { GridDatasI } from '@khiops-library/interfaces/grid-datas.interface';
 import { getPreparationVariablesGridColumns } from './preparation-view.config';
 import { DialogService } from '@khiops-library/providers/dialog.service';
-import { ViewLayoutModeService } from '@khiops-visualization/providers/view-layout-mode.service';
+import {
+  InfoPanelLayoutMode,
+  ViewLayoutModeService,
+} from '@khiops-visualization/providers/view-layout-mode.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-preparation-view',
@@ -33,7 +42,10 @@ import { ViewLayoutModeService } from '@khiops-visualization/providers/view-layo
   changeDetection: ChangeDetectionStrategy.Eager,
   standalone: false,
 })
-export class PreparationViewComponent extends SelectableTabComponent {
+export class PreparationViewComponent
+  extends SelectableTabComponent
+  implements OnDestroy
+{
   @Input() public preparationSource = REPORT.PREPARATION_REPORT; // By default
   public sizes?: DynamicI;
   public preparationDatas?: {
@@ -50,6 +62,7 @@ export class PreparationViewComponent extends SelectableTabComponent {
   public showFilteredVariablesWarning: boolean = false;
   public isLeftInfosPanelMode: boolean = false;
   private splitViewKey: string = 'preparationView';
+  private infoPanelLayoutModeSub?: Subscription;
 
   constructor(
     private preparationDatasService: PreparationDatasService,
@@ -79,12 +92,13 @@ export class PreparationViewComponent extends SelectableTabComponent {
       this.preparationSource,
     );
 
-    this.isLeftInfosPanelMode =
-      this.viewLayoutModeService.isLeftInfoPanelLayoutMode();
-    this.splitViewKey = this.isLeftInfosPanelMode
-      ? 'preparationViewLeftPanel'
-      : 'preparationView';
-    this.sizes = this.layoutService.getViewSplitSizes(this.splitViewKey);
+    this.applyInfoPanelLayoutMode(
+      this.viewLayoutModeService.getInfoPanelLayoutMode(),
+    );
+    this.infoPanelLayoutModeSub =
+      this.viewLayoutModeService.infoPanelLayoutMode$.subscribe((mode) => {
+        this.applyInfoPanelLayoutMode(mode);
+      });
     this.summaryDatas = this.preparationDatasService.getSummaryDatas();
     this.informationsDatas = this.preparationDatasService.getInformationsDatas(
       this.preparationSource,
@@ -110,6 +124,10 @@ export class PreparationViewComponent extends SelectableTabComponent {
         ),
       });
     }
+  }
+
+  ngOnDestroy() {
+    this.infoPanelLayoutModeSub?.unsubscribe();
   }
 
   onSplitDragEnd(event: SplitGutterInteractionEvent, item: string) {
@@ -205,5 +223,13 @@ export class PreparationViewComponent extends SelectableTabComponent {
     }
 
     return undefined;
+  }
+
+  private applyInfoPanelLayoutMode(mode: InfoPanelLayoutMode) {
+    this.isLeftInfosPanelMode = mode === 'left';
+    this.splitViewKey = this.isLeftInfosPanelMode
+      ? 'preparationViewLeftPanel'
+      : 'preparationView';
+    this.sizes = this.layoutService.getViewSplitSizes(this.splitViewKey);
   }
 }

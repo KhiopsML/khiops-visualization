@@ -127,7 +127,6 @@ export class HomeLayoutComponent implements OnInit {
 
     this.infoPanelLayoutMode = mode;
     this.viewLayoutModeService.setInfoPanelLayoutMode(mode);
-    this.reloadView();
   }
 
   ngAfterViewInit() {
@@ -265,13 +264,17 @@ export class HomeLayoutComponent implements OnInit {
       this.selectedTab = undefined;
 
       // Restore active tab: savedDatas takes priority, then config, then default
-      const savedActiveTabIndex = this.appService.getSavedDatas('activeTabIndex');
+      const savedActiveTabIndex =
+        this.appService.getSavedDatas('activeTabIndex');
       if (
         this.forcedActiveTabIndex !== undefined &&
         this.forcedActiveTabIndex !== null
       ) {
         this.activeTab = this.forcedActiveTabIndex;
-      } else if (savedActiveTabIndex !== undefined && savedActiveTabIndex !== null) {
+      } else if (
+        savedActiveTabIndex !== undefined &&
+        savedActiveTabIndex !== null
+      ) {
         this.activeTab = savedActiveTabIndex;
       } else if (this.selectTabName) {
         this.activeTab = this.getTabIndexByName(this.selectTabName);
