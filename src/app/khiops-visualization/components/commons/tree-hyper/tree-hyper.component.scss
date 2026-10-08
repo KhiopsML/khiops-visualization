@@ -46,6 +46,7 @@
   }
   .tree-hyper-comp-container {
     position: relative;
+    padding-bottom: 10vh; // Ensure there is space at the bottom for selection elements
 
     .tree-hyper-hover-tooltip {
       position: absolute;
