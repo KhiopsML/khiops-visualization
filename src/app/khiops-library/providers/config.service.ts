@@ -13,7 +13,11 @@ import { ElementRef, Injectable } from '@angular/core';
 export class ConfigService {
   private appRootElement!: ElementRef<HTMLElement>;
 
-  private config: ConfigModel = new ConfigModel();
+  private config: ConfigModel = this.createDefaultConfig();
+
+  private createDefaultConfig(): ConfigModel {
+    return new ConfigModel();
+  }
 
   /**
    * Sets the root element for the application.
@@ -44,7 +48,11 @@ export class ConfigService {
    * @param config The configuration object to set.
    */
   setConfig(config: ConfigModel) {
-    this.config = config;
+    this.config = {
+      ...this.createDefaultConfig(),
+      ...this.config,
+      ...(config || {}),
+    };
   }
 
   /**
@@ -60,13 +68,11 @@ export class ConfigService {
    * @returns True if the app source is 'ELECTRON', otherwise false.
    */
   get isElectron(): boolean {
-    return this.getConfig().appSource === 'ELECTRON';
+    return this.config.appSource === 'ELECTRON';
   }
 
   set isElectron(value: boolean) {
-    this.getConfig().appSource = value
-      ? 'ELECTRON'
-      : this.getConfig().appSource;
+    this.config.appSource = value ? 'ELECTRON' : 'WEB';
   }
 
   /**
@@ -74,6 +80,6 @@ export class ConfigService {
    * @returns True if the storage is 'ELECTRON', otherwise false.
    */
   get isElectronStorage(): boolean {
-    return this.getConfig().storage === 'ELECTRON';
+    return this.config.storage === 'ELECTRON';
   }
 }

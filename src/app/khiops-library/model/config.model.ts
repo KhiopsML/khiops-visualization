@@ -9,7 +9,7 @@ export class ConfigModel {
   showOpenFileBtn?: boolean;
   showLogo?: boolean;
   selectTabName?: string;
-  appSource!: string;
+  appSource: string = 'WEB';
   storage: string = 'DEFAULT';
   lsId: string = '';
   trackerId?: string;
