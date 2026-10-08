@@ -21,6 +21,9 @@
     kl-file-loader {
       display: flex;
       margin-right: 15px;
+      &[hidden] {
+        display: none;
+      }
     }
 
     #more-btn {
