@@ -215,6 +215,7 @@ button {
 .mat-mdc-tab-group {
   z-index: 99;
   position: relative;
+  background: var(--color-0) !important;
 }
 
 mat-button-toggle-group {
