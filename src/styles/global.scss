@@ -104,7 +104,6 @@ h1 {
   font-size: 1em;
   font-weight: 600;
   text-transform: uppercase;
-  // min-height: 29px;
   line-height: 1em;
   em {
     font-weight: 300;
@@ -226,19 +225,10 @@ app-home-layout {
   margin: 1px; // for selection border
   overflow-x: auto;
   overflow-y: hidden;
-  // padding-top: 5px;
 
   h1 {
     margin-top: 0;
     margin-bottom: 0;
-  }
-  .comp-header-tools {
-    button {
-      // margin-right: 5px;
-    }
-    // button:last-child {
-    //   margin-right: 0 !important;
-    // }
   }
 }
 
@@ -326,7 +316,6 @@ kl-chart {
 }
 
 kl-matrix {
-  // width: calc(100% - 2px); // for selectable service
   padding-bottom: 1px; // important to avoid useless scrollbar
 }
 
@@ -352,7 +341,6 @@ button {
     font-weight: 400 !important;
     border-radius: 0 !important;
     white-space: nowrap;
-    // font-size: 12px !important;
     font-size: 0.97em;
     color: var(--color-800) !important;
   }
@@ -435,10 +423,6 @@ kl-dialog-wrapper {
   color: white;
 }
 
-.cc-floating .cc-message {
-  // font-size: 13px;
-}
-
 .cc-floating .cc-compliance > .cc-btn {
   background-color: #00000099;
   color: white;
@@ -473,21 +457,14 @@ app-home-layout {
   background: var(--color-50);
 }
 #home-layout-comp {
-  // height: calc(100% - 25px);
-  // width: calc(100% - 30px);
   height: 100%;
   width: 100%;
   contain: layout;
-  // padding-top: 10px;
-  // padding-left: 15px;
 }
 
 mat-checkbox.kl-checkbox {
-  margin: auto 0.5rem !important;
+  margin: 0 0.5rem !important;
   padding: 0px !important;
-  // border-radius: var(--border-radius);
-  // background: var(--color-50);
-  // border: 1px solid var(--color-border-subtle);
   .mdc-form-field {
     label {
       min-width: unset !important;
@@ -512,7 +489,6 @@ mat-checkbox.kl-checkbox {
   max-height: 32px !important;
   width: 32px !important;
   min-width: 32px !important;
-  // padding: 6px 6px !important;
   svg {
     height: 14px;
     color: var(--color-800);
@@ -522,10 +498,6 @@ mat-checkbox.kl-checkbox {
   svg {
     color: var(--color-accent) !important;
   }
-}
-
-app-change-scale-button {
-  // margin-top: 10px;
 }
 
 .header-panel-contrast {
@@ -542,8 +514,6 @@ kl-legend {
   background-image: radial-gradient(var(--color-150) 1px, transparent 1px);
   background-size: 20px 20px;
   border-radius: var(--border-radius);
-  // border: 1px solid var(--color-100);
-  // background-color: var(--color-50);
 }
 .kl-slider-container {
   max-height: 32px;
