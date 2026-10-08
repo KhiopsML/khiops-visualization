@@ -40,15 +40,16 @@
     strong {
       margin-right: 5px;
       overflow: hidden;
-      font-size: 13px;
-      font-weight: 600;
+      font-size: 12px;
+      font-weight: 400;
       text-overflow: ellipsis;
-      white-space: nowrap;
+      color: var(--color-800);
     }
 
     span {
       color: var(--color-600);
       font-size: 11px;
+      white-space: nowrap;
     }
   }
 
