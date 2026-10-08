@@ -96,16 +96,18 @@ mat-button-toggle-group:hover {
   width: 100% !important;
   background-color: transparent !important;
 }
-.mat-mdc-tab-header .mat-mdc-tab {
-  flex-grow: 0 !important;
-  min-width: 100px;
-  width: auto;
-  padding: 0 15px !important;
-  align-items: center;
-
-  height: var(--header-height) !important;
-  z-index: 1000;
-  box-shadow: none !important;
+.mat-mdc-tab-header {
+  .mat-mdc-tab {
+    flex-grow: 0 !important;
+    min-width: 100px;
+    width: auto;
+    padding: 0 15px !important;
+    align-items: center;
+    z-index: 1000;
+    box-shadow: none !important;
+    height: calc(var(--header-height) - 5px) !important;
+    margin-top: 5px;
+  }
 }
 
 .mat-mdc-tab-labels {
