@@ -382,18 +382,14 @@ canvas:focus {
     100% - var(--layout-padding) - var(--layout-padding)
   ) !important;
   height: calc(
-    100% - var(--header-height) - var(--layout-padding) - var(
-        --layout-padding
-      ) - var(--layout-padding)
+    100% - var(--header-height) - var(--layout-padding) - var(--layout-padding)
   ) !important;
   min-height: calc(
-    100% - var(--header-height) - var(--layout-padding) - var(
-        --layout-padding
-      ) - var(--layout-padding)
+    100% - var(--header-height) - var(--layout-padding) - var(--layout-padding)
   ) !important;
-  margin: 69px 0px 0px 0px;
+  margin: 65px 0px 0px 0px;
   left: 15px !important;
-  top: 11px !important;
+  top: 0px !important;
   background-color: var(--color-0) !important;
   box-shadow: 0 1px 5px 0px rgba(0, 0, 0, 0.2);
   border-radius: var(--border-radius);
