@@ -9,6 +9,7 @@ import {
   ComponentFixture,
   TestBed,
   fakeAsync,
+  flush,
   tick,
 } from '@angular/core/testing';
 import { TranslateModule } from '@ngstack/translate';
@@ -128,7 +129,7 @@ describe('VariableSearchDialogComponent', () => {
       setTimeout(() => callback(performance.now()), 0) as unknown as number,
     );
     fixture.detectChanges();
-    tick(20);
+    flush();
   }));
 
   it('should create', () => {
