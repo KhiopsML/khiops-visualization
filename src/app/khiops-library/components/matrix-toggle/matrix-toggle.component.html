@@ -17,9 +17,13 @@
       [ngClass]="opt | translate"
       [value]="opt"
       title="{{
-        (opt === types.BALANCED
-          ? 'TOOLTIPS.COMMONS.MATRIX_BALANCED_MODE'
-          : 'TOOLTIPS.COMMONS.MATRIX_MODE'
+        (opt === types.STANDARD
+          ? 'TOOLTIPS.COMMONS.MATRIX_STANDARD_MODE'
+          : opt === types.FREQUENCY
+            ? 'TOOLTIPS.COMMONS.MATRIX_FREQUENCY_MODE'
+            : opt === types.BALANCED
+              ? 'TOOLTIPS.COMMONS.MATRIX_BALANCED_MODE'
+              : 'TOOLTIPS.COMMONS.MATRIX_MODE'
         ) | translate
       }}"
       (click)="changeMatrixType(opt)"
