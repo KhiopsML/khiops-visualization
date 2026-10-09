@@ -31,6 +31,7 @@ import { ConfigService } from '@khiops-library/providers/config.service';
 import { HistogramType } from '../../../../khiops-visualization/components/commons/histogram/histogram.type';
 import { DimensionCovisualizationModel } from '@khiops-library/model/dimension.covisualization.model';
 import { DimensionsDatasService } from '../../../providers/dimensions-datas.service';
+import { AppConfig } from '../../../../../environments/environment';
 
 @Component({
   selector: 'app-variable-graph-details',
@@ -67,6 +68,8 @@ export class VariableGraphDetailsComponent
 
   private treeSelectedNodeChangedSub: Subscription;
   private conditionalOnContextChangedSub: Subscription;
+  private readonly hiddenScaleValue =
+    AppConfig.covisualizationCommon.GLOBAL.MIN_GRAPH_SCALE;
 
   get subTitle(): string | undefined {
     return this.dimensionsDatasService?.dimensionsDatas.conditionalOnContext &&
@@ -211,6 +214,15 @@ export class VariableGraphDetailsComponent
         );
       }
       this.updateGraphTitle();
+
+      // When scale control is hidden (few bars), keep graph at a stable value
+      // and force a post-render resize to avoid stale canvas dimensions.
+      if (this.hideScaleElt()) {
+        this.scaleValue = this.hiddenScaleValue;
+      }
+      setTimeout(() => {
+        this.resize();
+      });
     }
   }
 
