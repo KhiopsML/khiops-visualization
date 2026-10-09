@@ -777,6 +777,378 @@ describe('Visualization', () => {
       expect(invalidVar).toBeUndefined();
     });
 
+    describe('computeCellDatasByAxis - additional coverage', () => {
+      it('should format numerical tuple as a single interval string', () => {
+        const datas = preparation2dDatasService.computeCellDatasByAxis(
+          [2, 3.05],
+          [{ headerName: 'Interval', field: 'interval' }],
+          'SepalWidth',
+          false,
+          'Numerical',
+        );
+
+        expect(datas?.length).toBe(1);
+        expect(datas?.[0]?.interval).toBe('[2,3.05]');
+      });
+
+      it('should format empty numerical interval as GLOBAL.MISSING', () => {
+        const datas = preparation2dDatasService.computeCellDatasByAxis(
+          [],
+          [{ headerName: 'Interval', field: 'interval' }],
+          'PetalWidth',
+          false,
+          'Numerical',
+        );
+
+        expect(datas?.length).toBe(1);
+        expect(datas?.[0]?.interval).toBe('GLOBAL.MISSING');
+      });
+
+      it('should keep provided numerical string label', () => {
+        const datas = preparation2dDatasService.computeCellDatasByAxis(
+          'Missing',
+          [{ headerName: 'Interval', field: 'interval' }],
+          'PetalWidth',
+          false,
+          'Numerical',
+        );
+
+        expect(datas?.length).toBe(1);
+        expect(datas?.[0]?.interval).toBe('Missing');
+      });
+
+      it('should append default-group marker for numerical axis', () => {
+        const datas = preparation2dDatasService.computeCellDatasByAxis(
+          [45.51, 77.7784],
+          [{ headerName: 'Interval', field: 'interval' }],
+          'duration_p99',
+          true,
+          'Numerical',
+        );
+
+        expect(datas?.length).toBe(2);
+        expect(datas?.[1]?.values).toBe('*');
+      });
+
+      it('should aggregate frequency on x axis for numerical values', () => {
+        const fileDatas = require('../../assets/mocks/kv/iris2d.json');
+        appService.setFileDatas(fileDatas);
+        preparation2dDatasService.initialize();
+        const selectedVariable = preparation2dDatasService.setSelectedVariable(
+          'SepalWidth',
+          'UpperPetalWidth',
+        );
+        const matrixDatas = preparation2dDatasService.getMatrixDatas(
+          selectedVariable!,
+        );
+        preparation2dDatasService.setSelectedCellIndex(0);
+
+        const selectedCell = preparation2dDatasService.getSelectedCell();
+        const expectedFrequency = (matrixDatas?.matrixCellDatas || [])
+          .filter((cell) => cell.xaxisPart === selectedCell?.xaxisPart)
+          .reduce((sum, cell) => sum + (cell.cellFreq || 0), 0);
+
+        const datas = preparation2dDatasService.computeCellDatasByAxis(
+          selectedCell?.xaxisPartValues || [],
+          [
+            { headerName: 'Interval', field: 'interval' },
+            { headerName: 'Frequency', field: 'frequency' },
+          ],
+          'SepalWidth',
+          false,
+          'Numerical',
+          'x',
+        );
+
+        expect(datas?.[0]?.frequency).toBe(expectedFrequency);
+      });
+
+      it('should aggregate frequency on y axis for numerical values', () => {
+        const fileDatas = require('../../assets/mocks/kv/iris2d.json');
+        appService.setFileDatas(fileDatas);
+        preparation2dDatasService.initialize();
+        const selectedVariable = preparation2dDatasService.setSelectedVariable(
+          'SepalWidth',
+          'UpperPetalWidth',
+        );
+        const matrixDatas = preparation2dDatasService.getMatrixDatas(
+          selectedVariable!,
+        );
+        preparation2dDatasService.setSelectedCellIndex(0);
+
+        const selectedCell = preparation2dDatasService.getSelectedCell();
+        const expectedFrequency = (matrixDatas?.matrixCellDatas || [])
+          .filter((cell) => cell.yaxisPart === selectedCell?.yaxisPart)
+          .reduce((sum, cell) => sum + (cell.cellFreq || 0), 0);
+
+        const datas = preparation2dDatasService.computeCellDatasByAxis(
+          selectedCell?.yaxisPartValues || [],
+          [
+            { headerName: 'Interval', field: 'interval' },
+            { headerName: 'Frequency', field: 'frequency' },
+          ],
+          'UpperPetalWidth',
+          false,
+          'Numerical',
+          'y',
+        );
+
+        expect(datas?.[0]?.frequency).toBe(expectedFrequency);
+      });
+
+      it('should fallback to selected cell frequency when matrix is unavailable', () => {
+        const mockCell = new CellModel();
+        mockCell.index = 99;
+        mockCell.cellFreq = 12;
+        preparation2dDatasService.setSelectedCell(mockCell);
+
+        const datas = preparation2dDatasService.computeCellDatasByAxis(
+          [1, 2],
+          [
+            { headerName: 'Interval', field: 'interval' },
+            { headerName: 'Frequency', field: 'frequency' },
+          ],
+          'Any',
+          false,
+          'Numerical',
+          'x',
+        );
+
+        expect(datas?.[0]?.frequency).toBe(12);
+      });
+
+      it('should fallback to 0 frequency when no selected cell exists', () => {
+        const fileDatas = require('../../assets/mocks/kv/iris2d.json');
+        appService.setFileDatas(fileDatas);
+        preparation2dDatasService.initialize();
+
+        const datas = preparation2dDatasService.computeCellDatasByAxis(
+          [1, 2],
+          [
+            { headerName: 'Interval', field: 'interval' },
+            { headerName: 'Frequency', field: 'frequency' },
+          ],
+          'Any',
+          false,
+          'Numerical',
+          'x',
+        );
+
+        expect(datas?.[0]?.frequency).toBe(0);
+      });
+
+      it('should treat a single categorical string as one value', () => {
+        const datas = preparation2dDatasService.computeCellDatasByAxis(
+          'United-States',
+          [{ headerName: 'Values', field: 'values' }],
+          'native_country',
+          false,
+        );
+
+        expect(datas?.length).toBe(1);
+        expect(datas?.[0]?.values).toBe('United-States');
+      });
+
+      it('should append default-group marker for categorical values', () => {
+        const datas = preparation2dDatasService.computeCellDatasByAxis(
+          ['A', 'B'],
+          [{ headerName: 'Values', field: 'values' }],
+          'Any',
+          true,
+        );
+
+        expect(datas?.length).toBe(3);
+        expect(datas?.[2]?.values).toBe('*');
+      });
+    });
+
+    describe('getCurrentCellDatas - additional coverage', () => {
+      it('should return initialized empty structures when no variable is selected', () => {
+        const currentCellDatas =
+          preparation2dDatasService.getCurrentCellDatas();
+        expect(currentCellDatas?.values).toEqual([[], []]);
+        expect(currentCellDatas?.displayedColumns).toEqual([[], []]);
+      });
+
+      it('should expose interval/frequency columns for numerical x and y axes', () => {
+        const fileDatas = require('../../assets/mocks/kv/iris2d.json');
+        appService.setFileDatas(fileDatas);
+        preparation2dDatasService.initialize();
+        const selectedVariable = preparation2dDatasService.setSelectedVariable(
+          'SepalWidth',
+          'UpperPetalWidth',
+        );
+        preparation2dDatasService.getMatrixDatas(selectedVariable!);
+        preparation2dDatasService.setSelectedCellIndex(0);
+
+        const currentCellDatas =
+          preparation2dDatasService.getCurrentCellDatas();
+        expect(currentCellDatas?.displayedColumns?.[0]?.[0]?.field).toBe(
+          'interval',
+        );
+        expect(currentCellDatas?.displayedColumns?.[0]?.[1]?.field).toBe(
+          'frequency',
+        );
+        expect(currentCellDatas?.displayedColumns?.[1]?.[0]?.field).toBe(
+          'interval',
+        );
+      });
+
+      it('should keep numerical interval text for non-missing data', () => {
+        const fileDatas = require('../../assets/mocks/kv/iris2d.json');
+        appService.setFileDatas(fileDatas);
+        preparation2dDatasService.initialize();
+        const selectedVariable = preparation2dDatasService.setSelectedVariable(
+          'SepalWidth',
+          'UpperPetalWidth',
+        );
+        preparation2dDatasService.getMatrixDatas(selectedVariable!);
+        preparation2dDatasService.setSelectedCellIndex(0);
+
+        const currentCellDatas =
+          preparation2dDatasService.getCurrentCellDatas();
+        expect(currentCellDatas?.values?.[0]?.[0]?.interval).toBe('[2,3.05]');
+      });
+
+      it('should aggregate x-axis frequency from matrix cells', () => {
+        const fileDatas = require('../../assets/mocks/kv/iris2d.json');
+        appService.setFileDatas(fileDatas);
+        preparation2dDatasService.initialize();
+        const selectedVariable = preparation2dDatasService.setSelectedVariable(
+          'SepalWidth',
+          'UpperPetalWidth',
+        );
+        const matrixDatas = preparation2dDatasService.getMatrixDatas(
+          selectedVariable!,
+        );
+        preparation2dDatasService.setSelectedCellIndex(0);
+
+        const selectedCell = preparation2dDatasService.getSelectedCell();
+        const expectedFrequency = (matrixDatas?.matrixCellDatas || [])
+          .filter((cell) => cell.xaxisPart === selectedCell?.xaxisPart)
+          .reduce((sum, cell) => sum + (cell.cellFreq || 0), 0);
+
+        const currentCellDatas =
+          preparation2dDatasService.getCurrentCellDatas();
+        expect(currentCellDatas?.values?.[0]?.[0]?.frequency).toBe(
+          expectedFrequency,
+        );
+      });
+
+      it('should aggregate y-axis frequency from matrix cells', () => {
+        const fileDatas = require('../../assets/mocks/kv/iris2d.json');
+        appService.setFileDatas(fileDatas);
+        preparation2dDatasService.initialize();
+        const selectedVariable = preparation2dDatasService.setSelectedVariable(
+          'SepalWidth',
+          'UpperPetalWidth',
+        );
+        const matrixDatas = preparation2dDatasService.getMatrixDatas(
+          selectedVariable!,
+        );
+        preparation2dDatasService.setSelectedCellIndex(0);
+
+        const selectedCell = preparation2dDatasService.getSelectedCell();
+        const expectedFrequency = (matrixDatas?.matrixCellDatas || [])
+          .filter((cell) => cell.yaxisPart === selectedCell?.yaxisPart)
+          .reduce((sum, cell) => sum + (cell.cellFreq || 0), 0);
+
+        const currentCellDatas =
+          preparation2dDatasService.getCurrentCellDatas();
+        expect(currentCellDatas?.values?.[1]?.[0]?.frequency).toBe(
+          expectedFrequency,
+        );
+      });
+
+      it('should expose mixed columns for adult-bivar (numerical + categorical)', () => {
+        const fileDatas = require('../../assets/mocks/kv/adult-bivar.json');
+        appService.setFileDatas(fileDatas);
+        preparation2dDatasService.initialize();
+        const selectedVariable = preparation2dDatasService.setSelectedVariable(
+          'capital_loss',
+          'native_country',
+        );
+        preparation2dDatasService.getMatrixDatas(selectedVariable!);
+        preparation2dDatasService.setSelectedCellIndex(0);
+
+        const currentCellDatas =
+          preparation2dDatasService.getCurrentCellDatas();
+        expect(currentCellDatas?.displayedColumns?.[0]?.[0]?.field).toBe(
+          'interval',
+        );
+        expect(currentCellDatas?.displayedColumns?.[1]?.[0]?.field).toBe(
+          'values',
+        );
+      });
+
+      it('should return categorical modalities for adult-bivar y axis', () => {
+        const fileDatas = require('../../assets/mocks/kv/adult-bivar.json');
+        appService.setFileDatas(fileDatas);
+        preparation2dDatasService.initialize();
+        const selectedVariable = preparation2dDatasService.setSelectedVariable(
+          'capital_loss',
+          'native_country',
+        );
+        preparation2dDatasService.getMatrixDatas(selectedVariable!);
+        preparation2dDatasService.setSelectedCellIndex(0);
+
+        const currentCellDatas =
+          preparation2dDatasService.getCurrentCellDatas();
+        expect(currentCellDatas?.values?.[1]?.[0]?.values).toBe(
+          'United-States',
+        );
+      });
+
+      it('should switch interval text when selecting another adult-bivar cell', () => {
+        const fileDatas = require('../../assets/mocks/kv/adult-bivar.json');
+        appService.setFileDatas(fileDatas);
+        preparation2dDatasService.initialize();
+        const selectedVariable = preparation2dDatasService.setSelectedVariable(
+          'capital_loss',
+          'native_country',
+        );
+        preparation2dDatasService.getMatrixDatas(selectedVariable!);
+        preparation2dDatasService.setSelectedCellIndex(1);
+
+        const currentCellDatas =
+          preparation2dDatasService.getCurrentCellDatas();
+        expect(currentCellDatas?.values?.[0]?.[0]?.interval).toBe(']70,1457]');
+      });
+
+      it('should display Missing label for missing-only numerical interval', () => {
+        const fileDatas = require('../../assets/mocks/kv/322-CoclusteringBivariateMissing.json');
+        appService.setFileDatas(fileDatas);
+        preparation2dDatasService.initialize();
+        const selectedVariable = preparation2dDatasService.setSelectedVariable(
+          'Class',
+          'PetalWidth',
+        );
+        preparation2dDatasService.getMatrixDatas(selectedVariable!);
+        preparation2dDatasService.setSelectedCellIndex(0);
+
+        const currentCellDatas =
+          preparation2dDatasService.getCurrentCellDatas();
+        expect(['Missing', 'GLOBAL.MISSING']).toContain(
+          currentCellDatas?.values?.[1]?.[0]?.interval,
+        );
+      });
+
+      it('should keep empty values if matrix is not initialized', () => {
+        const fileDatas = require('../../assets/mocks/kv/iris2d.json');
+        appService.setFileDatas(fileDatas);
+        preparation2dDatasService.initialize();
+        preparation2dDatasService.setSelectedVariable(
+          'SepalWidth',
+          'UpperPetalWidth',
+        );
+
+        const currentCellDatas =
+          preparation2dDatasService.getCurrentCellDatas();
+        expect(currentCellDatas?.values?.[0]?.length).toBe(0);
+        expect(currentCellDatas?.values?.[1]?.length).toBe(0);
+      });
+    });
+
     // Tests for isFilteredVariables method
     it('isFilteredVariables should return false when no bivariate report data exists', () => {
       appService.setFileDatas(undefined);
