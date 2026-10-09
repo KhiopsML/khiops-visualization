@@ -74,7 +74,8 @@ export class Preparation2dDatasService {
         this.setSelectedVariable(defaultVariable.name1, defaultVariable.name2);
 
         // Restore selected cell
-        const savedSelected2dCell = this.appService.getSavedDatas('selected2dCell');
+        const savedSelected2dCell =
+          this.appService.getSavedDatas('selected2dCell');
         if (savedSelected2dCell !== undefined && savedSelected2dCell !== null) {
           this.setSelectedCellIndex(savedSelected2dCell);
         }
@@ -143,7 +144,7 @@ export class Preparation2dDatasService {
         );
       if (currentCell) {
         this.setSelectedCell(currentCell);
-      } 
+      }
     }
   }
 
@@ -343,20 +344,22 @@ export class Preparation2dDatasService {
 
     if (this.preparation2dDatas?.matrixDatas?.matrixCellDatas) {
       const selectedVariable = this.getSelectedVariable();
+      const targets = this.getTargetsIfAvailable() || [];
       matrixCells = new CooccurrenceCellsModel(
         selectedVariable?.nameX || '',
         selectedVariable?.nameY || '',
+        targets,
       );
 
       const values: CooccurrenceCellModel[] = [];
+      let cumulativeCoverage = 0;
+      const sortedMatrixCells =
+        this.preparation2dDatas.matrixDatas.matrixCellDatas
+          .slice()
+          .sort((a, b) => a.index - b.index);
 
-      for (
-        let i = 0;
-        i < this.preparation2dDatas.matrixDatas.matrixCellDatas.length;
-        i++
-      ) {
-        const cell: CellModel | undefined =
-          this.preparation2dDatas.matrixDatas.matrixCellDatas[i];
+      for (let i = 0; i < sortedMatrixCells.length; i++) {
+        const cell: CellModel | undefined = sortedMatrixCells[i];
         if (cell) {
           const cooccurrenceCell = new CooccurrenceCellModel(cell.index);
 
@@ -369,8 +372,29 @@ export class Preparation2dDatasService {
             cooccurrenceCell[matrixCells.displayedColumns[2].field] =
               UtilsService.ellipsis(cell.yDisplayaxisPart || '', 60);
           }
+
+          if (matrixCells.targetFields.length > 0) {
+            for (
+              let targetIndex = 0;
+              targetIndex < matrixCells.targetFields.length;
+              targetIndex++
+            ) {
+              const targetField = matrixCells.targetFields[targetIndex];
+              // Skip undefined entries so the index type is narrowed to string
+              if (targetField === undefined) {
+                continue;
+              }
+              const targetFrequency = cell.cellFreqs?.[targetIndex] || 0;
+              const cellFrequency = cell.cellFreq || 0;
+              cooccurrenceCell[targetField] =
+                cellFrequency > 0 ? targetFrequency / cellFrequency : 0;
+            }
+          }
+
           cooccurrenceCell.frequency = cell?.cellFreq;
           cooccurrenceCell.coverage = cell?.coverage;
+          cumulativeCoverage += cell?.coverage || 0;
+          cooccurrenceCell.cumulative = cumulativeCoverage;
           values.push(cooccurrenceCell);
         }
       }
@@ -467,11 +491,15 @@ export class Preparation2dDatasService {
         }
         const xAxisPartValues =
           xType === TYPES.NUMERICAL
-            ? selectedCell.xDisplayaxisPart || selectedCell.xaxisPartValues || []
+            ? selectedCell.xDisplayaxisPart ||
+              selectedCell.xaxisPartValues ||
+              []
             : selectedCell.xaxisPartValues || [];
         const yAxisPartValues =
           yType === TYPES.NUMERICAL
-            ? selectedCell.yDisplayaxisPart || selectedCell.yaxisPartValues || []
+            ? selectedCell.yDisplayaxisPart ||
+              selectedCell.yaxisPartValues ||
+              []
             : selectedCell.yaxisPartValues || [];
 
         const datasX = this.computeCellDatasByAxis(
@@ -528,7 +556,10 @@ export class Preparation2dDatasService {
           let intervalLabel: string = this.translate.get('GLOBAL.MISSING');
           if (typeof axisPartValues === 'string') {
             intervalLabel = axisPartValues;
-          } else if (Array.isArray(axisPartValues) && axisPartValues.length === 2) {
+          } else if (
+            Array.isArray(axisPartValues) &&
+            axisPartValues.length === 2
+          ) {
             // Format as [min, max] like in Preparation tab.
             intervalLabel = JSON.stringify(axisPartValues);
           }
@@ -574,7 +605,8 @@ export class Preparation2dDatasService {
           // get value into global json
           datasAxis[k] = {};
           if (displayedColumns[0]?.field) {
-            datasAxis[k][displayedColumns[0].field] = formattedAxisPartValues[k];
+            datasAxis[k][displayedColumns[0].field] =
+              formattedAxisPartValues[k];
           }
           if (displayedColumns[1]) {
             const modalityFreq = this.getModalityFrequency(
@@ -707,9 +739,7 @@ export class Preparation2dDatasService {
    */
   getMatrixDatas(
     selectedVariable:
-      | Variable2dModel
-      | Preparation2dVariableModel
-      | VariableModel,
+      Variable2dModel | Preparation2dVariableModel | VariableModel,
   ): MatrixDatasModel | undefined {
     if (this.preparation2dDatas) {
       this.preparation2dDatas.matrixDatas = undefined;
@@ -931,9 +961,7 @@ export class Preparation2dDatasService {
    */
   getGlobalMinAndMax2dValues(
     variablesDatas:
-      | Variable2dModel[]
-      | Preparation2dVariableModel[]
-      | VariableModel[], // for regression,
+      Variable2dModel[] | Preparation2dVariableModel[] | VariableModel[], // for regression,
   ): MatrixRangeValuesI {
     const currentRes: MatrixRangeValuesI = {
       FREQUENCY: [],

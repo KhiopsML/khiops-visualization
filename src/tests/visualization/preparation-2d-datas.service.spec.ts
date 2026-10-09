@@ -84,6 +84,489 @@ describe('Visualization', () => {
       expect(matrixCells?.values[0]!.coverage).toEqual(0.37373737373737376);
       expect(matrixCells?.values[0]!.SepalWidth).toEqual('[2,3.05]');
       expect(matrixCells?.values[0]!.UpperPetalWidth).toEqual('[1.5,1.55]');
+      expect(
+        matrixCells?.displayedColumns.some((c) => c.field === 'target_1'),
+      ).toBe(true);
+      expect(
+        matrixCells?.displayedColumns.some((c) => c.field === 'target_2'),
+      ).toBe(true);
+      expect(
+        matrixCells?.displayedColumns.some((c) => c.field === 'target_3'),
+      ).toBe(true);
+      expect(
+        matrixCells?.displayedColumns.some((c) => c.field === 'cumulative'),
+      ).toBe(true);
+      const firstCellTargetsTotal =
+        (matrixCells?.values[0]!.target_1 || 0) +
+        (matrixCells?.values[0]!.target_2 || 0) +
+        (matrixCells?.values[0]!.target_3 || 0);
+      expect(firstCellTargetsTotal).toBeCloseTo(1, 10);
+      expect(matrixCells?.values[0]!.target_1).toBeLessThanOrEqual(1);
+      expect(matrixCells?.values[0]!.target_2).toBeLessThanOrEqual(1);
+      expect(matrixCells?.values[0]!.target_3).toBeLessThanOrEqual(1);
+      expect(matrixCells?.values[0]!.cumulative).toEqual(
+        matrixCells?.values[0]!.coverage,
+      );
+      expect(matrixCells?.values[1]!.cumulative).toBeCloseTo(
+        (matrixCells?.values[0]!.coverage || 0) +
+          (matrixCells?.values[1]!.coverage || 0),
+        10,
+      );
+    });
+
+    it('getMatrixCooccurrenceCellsDatas should return undefined when matrix datas are missing', () => {
+      const fileDatas = require('../../assets/mocks/kv/iris2d.json');
+      appService.setFileDatas(fileDatas);
+      preparation2dDatasService.initialize();
+
+      const datas = preparation2dDatasService.getDatas();
+      if (datas) {
+        datas.matrixDatas = undefined;
+      }
+
+      const matrixCells =
+        preparation2dDatasService.getMatrixCooccurrenceCellsDatas();
+
+      expect(matrixCells).toBeUndefined();
+    });
+
+    it('getMatrixCooccurrenceCellsDatas should not create target columns when targets are unavailable', () => {
+      const fileDatas = require('../../assets/mocks/kv/iris2d.json');
+      appService.setFileDatas(fileDatas);
+      preparation2dDatasService.initialize();
+
+      const datas = preparation2dDatasService.getDatas();
+      if (datas) {
+        datas.selectedVariable = undefined;
+        datas.matrixDatas = {
+          matrixCellDatas: [
+            {
+              index: 0,
+              xDisplayaxisPart: 'x',
+              yDisplayaxisPart: 'y',
+              cellFreq: 1,
+              coverage: 1,
+            },
+          ],
+          variable: {
+            nameX: 'X',
+            nameY: 'Y',
+          },
+        } as any;
+      }
+
+      const matrixCells =
+        preparation2dDatasService.getMatrixCooccurrenceCellsDatas();
+
+      expect(
+        matrixCells?.displayedColumns.some((c) =>
+          c.field.startsWith('target_'),
+        ),
+      ).toBe(false);
+    });
+
+    it('getMatrixCooccurrenceCellsDatas should expose translated cumulative column metadata', () => {
+      const fileDatas = require('../../assets/mocks/kv/iris2d.json');
+      appService.setFileDatas(fileDatas);
+      preparation2dDatasService.initialize();
+      const selectedVariable = preparation2dDatasService.setSelectedVariable(
+        'SepalWidth',
+        'UpperPetalWidth',
+      );
+      preparation2dDatasService.getMatrixDatas(selectedVariable!);
+
+      const matrixCells =
+        preparation2dDatasService.getMatrixCooccurrenceCellsDatas();
+      const cumulativeColumn = matrixCells?.displayedColumns.find(
+        (c) => c.field === 'cumulative',
+      );
+
+      expect(cumulativeColumn?.headerName).toBe('GLOBAL.CUMULATIVE');
+      expect(cumulativeColumn?.tooltip).toBe(
+        'TOOLTIPS.PREPARATION_2D.CELLS.CUMULATIVE',
+      );
+    });
+
+    it('getMatrixCooccurrenceCellsDatas should sort rows by cell index before computing cumulative', () => {
+      const fileDatas = require('../../assets/mocks/kv/iris2d.json');
+      appService.setFileDatas(fileDatas);
+      preparation2dDatasService.initialize();
+      const selectedVariable = preparation2dDatasService.setSelectedVariable(
+        'SepalWidth',
+        'UpperPetalWidth',
+      );
+      preparation2dDatasService.getMatrixDatas(selectedVariable!);
+
+      const datas = preparation2dDatasService.getDatas();
+      if (datas?.matrixDatas) {
+        datas.matrixDatas.matrixCellDatas = [
+          {
+            index: 3,
+            xDisplayaxisPart: 'x3',
+            yDisplayaxisPart: 'y3',
+            cellFreq: 10,
+            coverage: 0.4,
+            cellFreqs: [2, 5, 3],
+          },
+          {
+            index: 1,
+            xDisplayaxisPart: 'x1',
+            yDisplayaxisPart: 'y1',
+            cellFreq: 10,
+            coverage: 0.2,
+            cellFreqs: [3, 4, 3],
+          },
+          {
+            index: 2,
+            xDisplayaxisPart: 'x2',
+            yDisplayaxisPart: 'y2',
+            cellFreq: 10,
+            coverage: 0.3,
+            cellFreqs: [1, 7, 2],
+          },
+          {
+            index: 0,
+            xDisplayaxisPart: 'x0',
+            yDisplayaxisPart: 'y0',
+            cellFreq: 10,
+            coverage: 0.1,
+            cellFreqs: [4, 2, 4],
+          },
+        ] as any;
+      }
+
+      const matrixCells =
+        preparation2dDatasService.getMatrixCooccurrenceCellsDatas();
+      const ids = matrixCells?.values.map((v) => Number(v.id));
+
+      expect(ids).toEqual([0, 1, 2, 3]);
+      expect(matrixCells?.values[0]!.cumulative).toBeCloseTo(0.1, 10);
+      expect(matrixCells?.values[3]!.cumulative).toBeCloseTo(1, 10);
+    });
+
+    it('getMatrixCooccurrenceCellsDatas should keep target ratios between 0 and 1', () => {
+      const fileDatas = require('../../assets/mocks/kv/iris2d.json');
+      appService.setFileDatas(fileDatas);
+      preparation2dDatasService.initialize();
+      const selectedVariable = preparation2dDatasService.setSelectedVariable(
+        'SepalLength',
+        'SepalWidth',
+      );
+      preparation2dDatasService.getMatrixDatas(selectedVariable!);
+
+      const matrixCells =
+        preparation2dDatasService.getMatrixCooccurrenceCellsDatas();
+
+      expect(matrixCells?.targetFields.length).toBeGreaterThan(0);
+      for (let i = 0; i < (matrixCells?.values.length || 0); i++) {
+        const row = matrixCells?.values[i];
+        for (let j = 0; j < (matrixCells?.targetFields.length || 0); j++) {
+          const field = matrixCells?.targetFields[j];
+          if (field && row) {
+            expect(row[field]).toBeGreaterThanOrEqual(0);
+            expect(row[field]).toBeLessThanOrEqual(1);
+          }
+        }
+      }
+    });
+
+    it('getMatrixCooccurrenceCellsDatas should produce target ratios summing to 1 when frequency is positive', () => {
+      const fileDatas = require('../../assets/mocks/kv/iris2d.json');
+      appService.setFileDatas(fileDatas);
+      preparation2dDatasService.initialize();
+      const selectedVariable = preparation2dDatasService.setSelectedVariable(
+        'SepalLength',
+        'SepalWidth',
+      );
+      preparation2dDatasService.getMatrixDatas(selectedVariable!);
+
+      const matrixCells =
+        preparation2dDatasService.getMatrixCooccurrenceCellsDatas();
+
+      for (let i = 0; i < (matrixCells?.values.length || 0); i++) {
+        const row = matrixCells?.values[i];
+        if ((row?.frequency || 0) > 0) {
+          const ratioSum = (matrixCells?.targetFields || []).reduce(
+            (sum, field) => sum + (row?.[field] || 0),
+            0,
+          );
+          expect(ratioSum).toBeCloseTo(1, 10);
+        }
+      }
+    });
+
+    it('getMatrixCooccurrenceCellsDatas should set target ratios to 0 when cell frequency is 0', () => {
+      const fileDatas = require('../../assets/mocks/kv/iris2d.json');
+      appService.setFileDatas(fileDatas);
+      preparation2dDatasService.initialize();
+      const selectedVariable = preparation2dDatasService.setSelectedVariable(
+        'SepalWidth',
+        'UpperPetalWidth',
+      );
+      preparation2dDatasService.getMatrixDatas(selectedVariable!);
+
+      const datas = preparation2dDatasService.getDatas();
+      if (datas?.matrixDatas) {
+        datas.matrixDatas.matrixCellDatas = [
+          {
+            index: 0,
+            xDisplayaxisPart: 'x',
+            yDisplayaxisPart: 'y',
+            cellFreq: 0,
+            coverage: 0,
+            cellFreqs: [5, 2, 1],
+          },
+        ] as any;
+      }
+
+      const matrixCells =
+        preparation2dDatasService.getMatrixCooccurrenceCellsDatas();
+      const first = matrixCells?.values[0];
+
+      for (const targetField of matrixCells?.targetFields || []) {
+        expect(first?.[targetField]).toBe(0);
+      }
+    });
+
+    it('getMatrixCooccurrenceCellsDatas should compute cumulative from sorted rows', () => {
+      const fileDatas = require('../../assets/mocks/kv/iris2d.json');
+      appService.setFileDatas(fileDatas);
+      preparation2dDatasService.initialize();
+      const selectedVariable = preparation2dDatasService.setSelectedVariable(
+        'SepalWidth',
+        'UpperPetalWidth',
+      );
+      preparation2dDatasService.getMatrixDatas(selectedVariable!);
+
+      const datas = preparation2dDatasService.getDatas();
+      if (datas?.matrixDatas) {
+        datas.matrixDatas.matrixCellDatas = [
+          {
+            index: 2,
+            xDisplayaxisPart: 'x2',
+            yDisplayaxisPart: 'y2',
+            cellFreq: 1,
+            coverage: 0.5,
+            cellFreqs: [1, 0, 0],
+          },
+          {
+            index: 0,
+            xDisplayaxisPart: 'x0',
+            yDisplayaxisPart: 'y0',
+            cellFreq: 1,
+            coverage: 0.2,
+            cellFreqs: [0, 1, 0],
+          },
+          {
+            index: 1,
+            xDisplayaxisPart: 'x1',
+            yDisplayaxisPart: 'y1',
+            cellFreq: 1,
+            coverage: 0.3,
+            cellFreqs: [0, 0, 1],
+          },
+        ] as any;
+      }
+
+      const matrixCells =
+        preparation2dDatasService.getMatrixCooccurrenceCellsDatas();
+
+      expect(matrixCells?.values[0]!.cumulative).toBeCloseTo(0.2, 10);
+      expect(matrixCells?.values[1]!.cumulative).toBeCloseTo(0.5, 10);
+      expect(matrixCells?.values[2]!.cumulative).toBeCloseTo(1, 10);
+    });
+
+    it('getMatrixCooccurrenceCellsDatas should ellipsis long axis labels', () => {
+      const fileDatas = require('../../assets/mocks/kv/iris2d.json');
+      appService.setFileDatas(fileDatas);
+      preparation2dDatasService.initialize();
+      const selectedVariable = preparation2dDatasService.setSelectedVariable(
+        'SepalWidth',
+        'UpperPetalWidth',
+      );
+      preparation2dDatasService.getMatrixDatas(selectedVariable!);
+
+      const longLabel =
+        'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789LONG_LABEL';
+
+      const datas = preparation2dDatasService.getDatas();
+      if (datas?.matrixDatas) {
+        datas.matrixDatas.matrixCellDatas = [
+          {
+            index: 0,
+            xDisplayaxisPart: longLabel,
+            yDisplayaxisPart: longLabel,
+            cellFreq: 10,
+            coverage: 1,
+            cellFreqs: [10, 0, 0],
+          },
+        ] as any;
+      }
+
+      const matrixCells =
+        preparation2dDatasService.getMatrixCooccurrenceCellsDatas();
+      const first = matrixCells?.values[0];
+
+      expect((first?.SepalWidth || '').length).toBeLessThanOrEqual(63);
+      expect((first?.UpperPetalWidth || '').length).toBeLessThanOrEqual(63);
+      expect(first?.SepalWidth.endsWith('...')).toBe(true);
+      expect(first?.UpperPetalWidth.endsWith('...')).toBe(true);
+    });
+
+    it('getMatrixCooccurrenceCellsDatas should default target ratios to 0 when cellFreqs are missing', () => {
+      const fileDatas = require('../../assets/mocks/kv/iris2d.json');
+      appService.setFileDatas(fileDatas);
+      preparation2dDatasService.initialize();
+      const selectedVariable = preparation2dDatasService.setSelectedVariable(
+        'SepalWidth',
+        'UpperPetalWidth',
+      );
+      preparation2dDatasService.getMatrixDatas(selectedVariable!);
+
+      const datas = preparation2dDatasService.getDatas();
+      if (datas?.matrixDatas) {
+        datas.matrixDatas.matrixCellDatas = [
+          {
+            index: 0,
+            xDisplayaxisPart: 'x',
+            yDisplayaxisPart: 'y',
+            cellFreq: 10,
+            coverage: 1,
+          },
+        ] as any;
+      }
+
+      const matrixCells =
+        preparation2dDatasService.getMatrixCooccurrenceCellsDatas();
+      const first = matrixCells?.values[0];
+
+      expect(matrixCells?.targetFields.length).toBeGreaterThan(0);
+      for (const targetField of matrixCells?.targetFields || []) {
+        expect(first?.[targetField]).toBe(0);
+      }
+    });
+
+    it('getMatrixCooccurrenceCellsDatas should return expected first rows for adult-bivar [R01]', () => {
+      const fileDatas = require('../../assets/mocks/kv/adult-bivar.json');
+      appService.setFileDatas(fileDatas);
+      preparation2dDatasService.initialize();
+      const selectedVariable = preparation2dDatasService.setSelectedVariable(
+        'capital_loss',
+        'native_country',
+      );
+      preparation2dDatasService.getMatrixDatas(selectedVariable!);
+
+      const matrixCells =
+        preparation2dDatasService.getMatrixCooccurrenceCellsDatas();
+
+      expect(matrixCells?.targetFields.length).toBe(2);
+      expect(matrixCells?.values.length).toBe(34);
+
+      const row0 = matrixCells?.values[0];
+      expect(row0?.id).toBe('0');
+      expect(row0?.frequency).toBe(31158);
+      expect(row0?.coverage).toBeCloseTo(0.911746, 6);
+      expect(row0?.cumulative).toBeCloseTo(0.911746, 6);
+      expect(row0?.target_1).toBeCloseTo(0.767572, 6);
+      expect(row0?.target_2).toBeCloseTo(0.232428, 6);
+
+      const row1 = matrixCells?.values[1];
+      expect(row1?.id).toBe('1');
+      expect(row1?.frequency).toBe(92);
+      expect(row1?.coverage).toBeCloseTo(0.00269211, 8);
+      expect(row1?.cumulative).toBeCloseTo(0.914438, 6);
+      expect(row1?.target_1).toBeCloseTo(0.978261, 6);
+      expect(row1?.target_2).toBeCloseTo(0.0217391, 7);
+    });
+
+    it('getMatrixCooccurrenceCellsDatas should compute expected cumulative checkpoints for adult-bivar [R01]', () => {
+      const fileDatas = require('../../assets/mocks/kv/adult-bivar.json');
+      appService.setFileDatas(fileDatas);
+      preparation2dDatasService.initialize();
+      const selectedVariable = preparation2dDatasService.setSelectedVariable(
+        'capital_loss',
+        'native_country',
+      );
+      preparation2dDatasService.getMatrixDatas(selectedVariable!);
+
+      const matrixCells =
+        preparation2dDatasService.getMatrixCooccurrenceCellsDatas();
+
+      const row9 = matrixCells?.values[9];
+      expect(row9?.id).toBe('9');
+      expect(row9?.coverage).toBeCloseTo(0.011061, 6);
+      expect(row9?.cumulative).toBeCloseTo(0.941242, 6);
+
+      const row17 = matrixCells?.values[17];
+      expect(row17?.id).toBe('17');
+      expect(row17?.frequency).toBe(1398);
+      expect(row17?.coverage).toBeCloseTo(0.0409083, 7);
+      expect(row17?.cumulative).toBeCloseTo(0.998947, 6);
+
+      const lastRow = matrixCells?.values[33];
+      expect(lastRow?.id).toBe('33');
+      expect(lastRow?.frequency).toBe(3);
+      expect(lastRow?.coverage).toBeCloseTo(0.000087786, 9);
+      expect(lastRow?.cumulative).toBeCloseTo(1, 9);
+    });
+
+    it('getMatrixCooccurrenceCellsDatas should keep cumulative unchanged on zero-frequency adult-bivar rows', () => {
+      const fileDatas = require('../../assets/mocks/kv/adult-bivar.json');
+      appService.setFileDatas(fileDatas);
+      preparation2dDatasService.initialize();
+      const selectedVariable = preparation2dDatasService.setSelectedVariable(
+        'capital_loss',
+        'native_country',
+      );
+      preparation2dDatasService.getMatrixDatas(selectedVariable!);
+
+      const matrixCells =
+        preparation2dDatasService.getMatrixCooccurrenceCellsDatas();
+
+      const row19 = matrixCells?.values[19];
+      const row20 = matrixCells?.values[20];
+      const row21 = matrixCells?.values[21];
+
+      expect(row19?.id).toBe('19');
+      expect(row20?.id).toBe('20');
+      expect(row21?.id).toBe('21');
+
+      expect(row19?.frequency).toBe(1);
+      expect(row20?.frequency).toBe(0);
+      expect(row21?.frequency).toBe(0);
+
+      expect(row20?.target_1).toBe(0);
+      expect(row20?.target_2).toBe(0);
+      expect(row21?.target_1).toBe(0);
+      expect(row21?.target_2).toBe(0);
+
+      expect(row20?.coverage).toBe(0);
+      expect(row21?.coverage).toBe(0);
+      expect(row20?.cumulative).toBeCloseTo(row19?.cumulative || 0, 12);
+      expect(row21?.cumulative).toBeCloseTo(row19?.cumulative || 0, 12);
+    });
+
+    it('getMatrixCooccurrenceCellsDatas should preserve target ratios sum=1 for non-zero adult-bivar rows', () => {
+      const fileDatas = require('../../assets/mocks/kv/adult-bivar.json');
+      appService.setFileDatas(fileDatas);
+      preparation2dDatasService.initialize();
+      const selectedVariable = preparation2dDatasService.setSelectedVariable(
+        'capital_loss',
+        'native_country',
+      );
+      preparation2dDatasService.getMatrixDatas(selectedVariable!);
+
+      const matrixCells =
+        preparation2dDatasService.getMatrixCooccurrenceCellsDatas();
+
+      for (const row of matrixCells?.values || []) {
+        const ratioSum = (row.target_1 || 0) + (row.target_2 || 0);
+        if ((row.frequency || 0) > 0) {
+          expect(ratioSum).toBeCloseTo(1, 9);
+        } else {
+          expect(ratioSum).toBe(0);
+        }
+      }
     });
 
     it('computeCellDatasByAxis should return valid datas [iris2d, R10]', () => {

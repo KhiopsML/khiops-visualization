@@ -11,11 +11,12 @@ import { AppService } from '@khiops-visualization/providers/app.service';
 export class CooccurrenceCellsModel {
   title: string;
   values!: CooccurrenceCellModel[];
+  targetFields: string[] = [];
 
   // cooccurrenceCell has dynamic fields
   displayedColumns: GridColumnsI[] = [];
 
-  constructor(nameX: string, nameY: string) {
+  constructor(nameX: string, nameY: string, targets: string[] = []) {
     this.title =
       AppService.translate.get('GLOBAL.CELLS_OF') + ' ' + nameX + ' x ' + nameY;
 
@@ -34,6 +35,18 @@ export class CooccurrenceCellsModel {
       field: nameY,
       tooltip: AppService.translate.get('TOOLTIPS.PREPARATION_2D.CELLS.NAMEY'),
     });
+
+    for (let i = 0; i < targets.length; i++) {
+      const target = targets[i] || '';
+      const targetField = `target_${i + 1}`;
+      this.targetFields.push(targetField);
+      this.displayedColumns.push({
+        headerName: target,
+        field: targetField,
+        tooltip: AppService.translate.get('GLOBAL.TARGET_FREQUENCY'),
+      });
+    }
+
     this.displayedColumns.push({
       headerName: AppService.translate.get('GLOBAL.FREQUENCY'),
       field: 'frequency',
@@ -46,6 +59,13 @@ export class CooccurrenceCellsModel {
       field: 'coverage',
       tooltip: AppService.translate.get(
         'TOOLTIPS.PREPARATION_2D.CELLS.COVERAGE',
+      ),
+    });
+    this.displayedColumns.push({
+      headerName: AppService.translate.get('GLOBAL.CUMULATIVE'),
+      field: 'cumulative',
+      tooltip: AppService.translate.get(
+        'TOOLTIPS.PREPARATION_2D.CELLS.CUMULATIVE',
       ),
     });
   }

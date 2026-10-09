@@ -312,6 +312,7 @@
     "COVERAGE": "Coverage",
     "FREQUENCY": "Frequency",
     "PROBABILITIES": "Probabilities",
+    "CUMULATIVE": "Cumulative",
     "VALUES": "Values",
     "INTERNAL": "Internal",
     "TARGET_DISTRIBUTION": "Target distribution",
@@ -582,7 +583,8 @@
         "LESS": "percentage of the $less$ target value in the cell",
         "MORE": "percentage of the $more$ target value in the cell",
         "FREQUENCY": "instance number in the cell",
-        "COVERAGE": "coverage of the cell"
+        "COVERAGE": "coverage of the cell",
+        "CUMULATIVE": "cumulative coverage up to this cell"
       }
     },
     "MATRIX": {
