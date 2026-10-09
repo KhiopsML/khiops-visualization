@@ -11,7 +11,7 @@ import {
   Input,
   OnChanges,
   Output,
-  SimpleChanges,
+  type SimpleChanges,
 } from '@angular/core';
 import { TreeNodeModel } from '@khiops-visualization/model/tree-node.model';
 

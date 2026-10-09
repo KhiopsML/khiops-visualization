@@ -11,9 +11,9 @@ import {
   OnChanges,
   OnDestroy,
   NgZone,
-  SimpleChanges,
   ChangeDetectionStrategy,
 } from '@angular/core';
+import type { SimpleChanges } from '@angular/core';
 import { TranslateService } from '@ngstack/translate';
 import { DimensionCovisualizationModel } from '@khiops-library/model/dimension.covisualization.model';
 import { ClustersService } from '@khiops-covisualization/providers/clusters.service';

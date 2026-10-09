@@ -8,7 +8,7 @@ import {
   Component,
   Input,
   Output,
-  SimpleChanges,
+  type SimpleChanges,
   EventEmitter,
   ViewChild,
   AfterViewInit,

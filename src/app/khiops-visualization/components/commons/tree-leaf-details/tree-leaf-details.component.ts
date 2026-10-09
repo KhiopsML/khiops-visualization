@@ -10,7 +10,7 @@ import {
   NgZone,
   Input,
   OnChanges,
-  SimpleChanges,
+  type SimpleChanges,
   ChangeDetectionStrategy,
 } from '@angular/core';
 import { SelectableService } from '@khiops-library/components/selectable/selectable.service';

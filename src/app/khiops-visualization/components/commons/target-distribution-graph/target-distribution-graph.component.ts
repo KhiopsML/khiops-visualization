@@ -14,7 +14,7 @@ import {
   EventEmitter,
   NgZone,
   Output,
-  SimpleChanges,
+  type SimpleChanges,
   ChangeDetectionStrategy,
   ViewChild,
   input,

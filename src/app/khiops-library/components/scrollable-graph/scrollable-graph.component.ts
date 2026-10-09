@@ -9,7 +9,7 @@ import {
   OnChanges,
   AfterViewInit,
   Input,
-  SimpleChanges,
+  type SimpleChanges,
   Output,
   EventEmitter,
   ChangeDetectionStrategy,

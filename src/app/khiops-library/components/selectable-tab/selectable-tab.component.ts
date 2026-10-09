@@ -9,7 +9,7 @@ import {
   Input,
   OnChanges,
   ChangeDetectionStrategy,
-  SimpleChanges,
+  type SimpleChanges,
 } from '@angular/core';
 import { MatTabChangeEvent } from '@angular/material/tabs';
 

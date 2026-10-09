@@ -8,11 +8,11 @@ import {
   Component,
   Input,
   OnChanges,
-  SimpleChanges,
   EventEmitter,
   Output,
   ChangeDetectionStrategy,
 } from '@angular/core';
+import type { SimpleChanges } from '@angular/core';
 import { TrackerService } from '../../../../khiops-library/providers/tracker.service';
 import { KhiopsLibraryService } from '@khiops-library/providers/khiops-library.service';
 import { LS } from '@khiops-library/enum/ls';

@@ -13,7 +13,7 @@ import {
   NgZone,
   OnInit,
   Output,
-  SimpleChanges,
+  type SimpleChanges,
   ViewChild,
   ViewContainerRef,
   ChangeDetectionStrategy,

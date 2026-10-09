@@ -11,7 +11,7 @@ import {
   EventEmitter,
   OnInit,
   OnChanges,
-  SimpleChanges,
+  type SimpleChanges,
   ChangeDetectionStrategy,
 } from '@angular/core';
 import { DimensionCovisualizationModel } from '@khiops-library/model/dimension.covisualization.model';

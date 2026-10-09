@@ -6,7 +6,7 @@
 
 import {
   Component,
-  SimpleChanges,
+  type SimpleChanges,
   OnChanges,
   Input,
   NgZone,

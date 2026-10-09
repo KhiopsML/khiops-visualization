@@ -11,7 +11,7 @@ import {
   EventEmitter,
   OnInit,
   OnChanges,
-  SimpleChanges,
+  type SimpleChanges,
   ChangeDetectionStrategy,
 } from '@angular/core';
 import { DimensionsDatasService } from '@khiops-covisualization/providers/dimensions-datas.service';
@@ -407,7 +407,8 @@ export class ImportExtDatasComponent implements OnInit, OnChanges {
       .filter((field: any) => field.import)
       .map((field: any) => field.name);
     const selectedDimensionName = this.selectedDimension?.name;
-    const targetDimension = selectedDimensionName || this.editingExtData?.dimension;
+    const targetDimension =
+      selectedDimensionName || this.editingExtData?.dimension;
     const targetJoinKey =
       this.joinKeys.selected || this.editingExtData?.joinKey || '';
     const targetSeparator = this.separatorInput;

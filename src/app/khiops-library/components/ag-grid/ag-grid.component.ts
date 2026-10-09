@@ -11,7 +11,7 @@ import {
   Output,
   AfterViewInit,
   ViewChild,
-  SimpleChanges,
+  type SimpleChanges,
   OnChanges,
   NgZone,
   ChangeDetectionStrategy,

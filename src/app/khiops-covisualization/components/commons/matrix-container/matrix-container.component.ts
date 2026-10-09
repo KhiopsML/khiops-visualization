@@ -10,7 +10,7 @@ import {
   ViewChild,
   OnDestroy,
   Input,
-  SimpleChanges,
+  type SimpleChanges,
   OnChanges,
   ChangeDetectionStrategy,
 } from '@angular/core';

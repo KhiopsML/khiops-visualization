@@ -9,7 +9,7 @@ import {
   ElementRef,
   Input,
   OnChanges,
-  SimpleChanges,
+  type SimpleChanges,
   OnDestroy,
 } from '@angular/core';
 

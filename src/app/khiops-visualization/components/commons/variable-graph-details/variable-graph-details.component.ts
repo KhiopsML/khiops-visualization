@@ -6,7 +6,6 @@
 
 import {
   Component,
-  SimpleChanges,
   Input,
   ViewChild,
   EventEmitter,
@@ -16,6 +15,7 @@ import {
   OnDestroy,
   ChangeDetectionStrategy,
 } from '@angular/core';
+import type { SimpleChanges } from '@angular/core';
 import { PreparationDatasService } from '@khiops-visualization/providers/preparation-datas.service';
 import { DistributionDatasService } from '@khiops-visualization/providers/distribution-datas.service';
 import { DistributionGraphComponent } from '@khiops-library/components/distribution-graph/distribution-graph.component';

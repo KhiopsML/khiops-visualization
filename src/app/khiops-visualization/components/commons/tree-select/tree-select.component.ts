@@ -10,7 +10,7 @@ import {
   HostListener,
   NgZone,
   OnChanges,
-  SimpleChanges,
+  type SimpleChanges,
   AfterViewInit,
   Input,
   ChangeDetectionStrategy,

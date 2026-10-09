@@ -9,7 +9,7 @@ import {
   OnInit,
   NgZone,
   OnChanges,
-  SimpleChanges,
+  type SimpleChanges,
   AfterViewInit,
   Input,
   ViewChild,

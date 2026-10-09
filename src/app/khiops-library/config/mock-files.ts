@@ -10,7 +10,7 @@
  */
 export function getVisualizationMockFile(): string {
   // let urlKV = 'ALLREPORTS_Std_Iris_AnalysisResults.khj';
-  let urlKV = 'demo-visualization.json';
+  // let urlKV = 'demo-visualization.json';
   // let urlKV = '2d-cells-AllReports.json ';
   // let urlKV = '312-AnalysisResults.khj';
   // let urlKV = 'AnalysisResults-IrisRegressionWithTree.khj';
@@ -28,6 +28,7 @@ export function getVisualizationMockFile(): string {
   // let urlKV = 'onlyEvaluationReport.json';
   // let urlKV = 'explanatory.json';
   // let urlKV = 'adult-bivar.json';
+  let urlKV = '322-CoclusteringBivariateMissing.json';
   // let urlKV = 'desc-bivar.json';
   // let urlKV = 'irisR.json';
   // let urlKV = 'bi2.json';

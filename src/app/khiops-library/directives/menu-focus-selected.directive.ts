@@ -10,7 +10,7 @@ import {
   OnDestroy,
   Optional,
   OnChanges,
-  SimpleChanges,
+  type SimpleChanges,
 } from '@angular/core';
 import { MatMenuTrigger } from '@angular/material/menu';
 import { Subscription } from 'rxjs';

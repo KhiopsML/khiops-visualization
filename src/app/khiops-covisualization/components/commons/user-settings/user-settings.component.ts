@@ -8,7 +8,7 @@ import {
   Component,
   Input,
   OnChanges,
-  SimpleChanges,
+  type SimpleChanges,
   EventEmitter,
   Output,
   ChangeDetectionStrategy,

@@ -14,7 +14,7 @@ import {
   Input,
   Output,
   EventEmitter,
-  SimpleChanges,
+  type SimpleChanges,
   ChangeDetectionStrategy,
 } from '@angular/core';
 import { TranslateService } from '@ngstack/translate';

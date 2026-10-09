@@ -12,7 +12,7 @@ import {
   OnInit,
   OnChanges,
   OnDestroy,
-  SimpleChanges,
+  type SimpleChanges,
   EventEmitter,
   ChangeDetectionStrategy,
 } from '@angular/core';

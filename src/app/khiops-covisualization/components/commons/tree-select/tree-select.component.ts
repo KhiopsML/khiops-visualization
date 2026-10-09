@@ -10,7 +10,7 @@ import {
   OnDestroy,
   ChangeDetectionStrategy,
   OnChanges,
-  SimpleChanges,
+  type SimpleChanges,
   AfterViewInit,
   Input,
 } from '@angular/core';
