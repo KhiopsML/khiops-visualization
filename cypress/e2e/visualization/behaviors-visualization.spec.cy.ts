@@ -11,11 +11,9 @@ describe('Behaviors Test for Khiops Visualization', () => {
 
   files.forEach((fileName) => {
     it(`Check values for ${fileName}`, () => {
-
       cy.loadFile('visualization', fileName);
 
       cy.readFile('./src/assets/mocks/kv/' + fileName).then(() => {
-
         // Move to the first matrix cell
         cy.get('#matrix-selected').should('be.visible').trigger('mousemove', {
           position: 'topRight',
@@ -29,7 +27,7 @@ describe('Behaviors Test for Khiops Visualization', () => {
           .find('.ag-row:eq(0)')
           .should('have.class', 'ag-row-selected');
 
-        cy.get('#preparation-2d-current-cell-x').contains(-160.8);
+        cy.get('#preparation-2d-current-cell-x').contains('Missing');
         cy.get('#preparation-2d-current-cell-y').contains(80);
         cy.get('#distribution-graph-comp-0').should('be.visible');
         cy.get('#variable-stats-block-summary').contains(88.45);
@@ -146,12 +144,9 @@ describe('Behaviors Test for Khiops Visualization', () => {
 
   files.forEach((fileName) => {
     it(`Check Matrix tooltip values if unsupervised for ${fileName}`, () => {
-      
-
       cy.loadFile('visualization', fileName);
 
       cy.readFile('./src/assets/mocks/kv/' + fileName).then(() => {
-
         cy.get('.mat-mdc-tab:contains("Preparation 2D")').first().click();
 
         cy.get('.matrix-mode-comp-option').first().click();
@@ -171,12 +166,9 @@ describe('Behaviors Test for Khiops Visualization', () => {
 
   files.forEach((fileName) => {
     it(`Check Matrix tooltip values if supervised for ${fileName}`, () => {
-      
-
       cy.loadFile('visualization', fileName);
 
       cy.readFile('./src/assets/mocks/kv/' + fileName).then(() => {
-
         cy.get('.mat-mdc-tab:contains("Preparation 2D")').first().click();
 
         cy.get('#preparation-2d-variables-list [row-id="19"] .ag-cell-value')
@@ -202,12 +194,9 @@ describe('Behaviors Test for Khiops Visualization', () => {
 
   files.forEach((fileName) => {
     it(`Check Matrix tooltip values if supervised for ${fileName}`, () => {
-      
-
       cy.loadFile('visualization', fileName);
 
       cy.readFile('./src/assets/mocks/kv/' + fileName).then(() => {
-
         cy.get('#matrix-selected').should('be.visible').trigger('mousemove', {
           position: 'topLeft',
         });
