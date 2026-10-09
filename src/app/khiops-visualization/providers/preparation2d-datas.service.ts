@@ -465,8 +465,17 @@ export class Preparation2dDatasService {
             selectedCell.xaxisPartValues,
           );
         }
+        const xAxisPartValues =
+          xType === TYPES.NUMERICAL
+            ? selectedCell.xDisplayaxisPart || selectedCell.xaxisPartValues || []
+            : selectedCell.xaxisPartValues || [];
+        const yAxisPartValues =
+          yType === TYPES.NUMERICAL
+            ? selectedCell.yDisplayaxisPart || selectedCell.yaxisPartValues || []
+            : selectedCell.yaxisPartValues || [];
+
         const datasX = this.computeCellDatasByAxis(
-          selectedCell.xaxisPartValues || [],
+          xAxisPartValues,
           displayedColumnsX,
           xName,
           isCurrentDefaultGroup,
@@ -474,7 +483,7 @@ export class Preparation2dDatasService {
           'x', // Pass axis identifier
         );
         const datasY = this.computeCellDatasByAxis(
-          selectedCell.yaxisPartValues || [],
+          yAxisPartValues,
           displayedColumnsY,
           yName,
           isCurrentDefaultGroup,
@@ -503,7 +512,7 @@ export class Preparation2dDatasService {
    * @param axis - The axis identifier ('x' for X axis, 'y' for Y axis).
    */
   computeCellDatasByAxis(
-    axisPartValues: number[] | string,
+    axisPartValues: number[] | string[] | string,
     displayedColumns: GridColumnsI[],
     variableName: string,
     isCurrentDefaultGroup: boolean,
@@ -512,17 +521,18 @@ export class Preparation2dDatasService {
   ) {
     const datasAxis: any = [];
     if (axisPartValues) {
-      if (
-        variableType === TYPES.NUMERICAL &&
-        Array.isArray(axisPartValues) &&
-        axisPartValues.length === 2
-      ) {
-        // For numerical variables, group min and max bounds on a single line
+      if (variableType === TYPES.NUMERICAL) {
+        // For numerical variables, always display one row.
         datasAxis[0] = {};
         if (displayedColumns[0]?.field) {
-          // Format as [min, max] like in Preparation tab
-          datasAxis[0][displayedColumns[0].field] =
-            JSON.stringify(axisPartValues);
+          let intervalLabel: string = this.translate.get('GLOBAL.MISSING');
+          if (typeof axisPartValues === 'string') {
+            intervalLabel = axisPartValues;
+          } else if (Array.isArray(axisPartValues) && axisPartValues.length === 2) {
+            // Format as [min, max] like in Preparation tab.
+            intervalLabel = JSON.stringify(axisPartValues);
+          }
+          datasAxis[0][displayedColumns[0].field] = intervalLabel;
         }
         if (displayedColumns[1]?.field === 'frequency') {
           // For numerical variables, we need to sum the frequencies of all cells
@@ -557,16 +567,19 @@ export class Preparation2dDatasService {
         }
       } else {
         // For categorical variables or other cases, keep the original behavior
-        for (let k = 0; k < axisPartValues.length; k++) {
+        const formattedAxisPartValues = Array.isArray(axisPartValues)
+          ? axisPartValues
+          : [axisPartValues];
+        for (let k = 0; k < formattedAxisPartValues.length; k++) {
           // get value into global json
           datasAxis[k] = {};
           if (displayedColumns[0]?.field) {
-            datasAxis[k][displayedColumns[0].field] = axisPartValues[k];
+            datasAxis[k][displayedColumns[0].field] = formattedAxisPartValues[k];
           }
           if (displayedColumns[1]) {
             const modalityFreq = this.getModalityFrequency(
               variableName,
-              axisPartValues[k]?.toString() || '',
+              formattedAxisPartValues[k]?.toString() || '',
             );
             datasAxis[k][displayedColumns[1].field] = modalityFreq;
           }

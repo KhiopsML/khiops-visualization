@@ -173,8 +173,12 @@ describe('Visualization', () => {
 
       preparation2dDatasService.setSelectedCellIndex(1);
       currentCellDatas = preparation2dDatasService.getCurrentCellDatas();
-      expect(currentCellDatas?.values[0]![0]!.interval).toEqual('[70,1457]');
+      expect(currentCellDatas?.values[0]![0]!.interval).toEqual(']70,1457]');
       expect(currentCellDatas?.values[0]![0]!.frequency).toEqual(94);
+
+      preparation2dDatasService.setSelectedCellIndex(0);
+      currentCellDatas = preparation2dDatasService.getCurrentCellDatas();
+      expect(currentCellDatas?.values[0]![0]!.interval).toEqual('[0,70]'); // first cell has [
     });
 
     it('getGlobalMinAndMax2dValues should return valid datas [co-oc, R1]', () => {
