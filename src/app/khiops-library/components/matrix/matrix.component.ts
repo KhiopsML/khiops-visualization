@@ -130,6 +130,16 @@ export class MatrixComponent extends SelectableComponent implements OnChanges {
   private currentMouseY: number = 0;
   private isDrawing = false;
 
+  // Zoom anchor captured before a zoom, applied once the canvas has been resized
+  private pendingZoomAnchor:
+    | {
+        mouseX: number; // mouse X relative to the matrix area viewport
+        mouseY: number; // mouse Y relative to the matrix area viewport
+        ratioX: number; // horizontal position of the anchor in the scrollable content (0..1)
+        ratioY: number; // vertical position of the anchor in the scrollable content (0..1)
+      }
+    | undefined;
+
   // Multi-cell selection with Ctrl+Click+Drag
   private isMultiSelecting = false;
   private multiSelectStartCell: CellModel | undefined;
@@ -366,6 +376,9 @@ export class MatrixComponent extends SelectableComponent implements OnChanges {
             if (this.matrixDiv && this.matrixArea) {
               let [width, height] = this.prepareCanvasDimensions();
 
+              // Keep the point under the mouse fixed now that the canvas has its new size
+              this.applyPendingZoomAnchor();
+
               if (this.inputDatas.matrixCellDatas) {
                 this.setupMatrixLabelsAndLegend(width, height);
                 this.drawMatrixCells(width, height);
@@ -492,7 +505,7 @@ export class MatrixComponent extends SelectableComponent implements OnChanges {
     if (!this.unpanzoom) {
       this.unpanzoom = panzoom(
         this.matrixContainerDiv?.nativeElement,
-        (e: { dz: number; dx: number; dy: number }) => {
+        (e: { dz: number; dx: number; dy: number; x?: number; y?: number }) => {
           // Disable panning if CTRL is pressed (for cell selection)
           if (!this.matrixCursorService.isPanningAllowed()) {
             return;
@@ -504,10 +517,13 @@ export class MatrixComponent extends SelectableComponent implements OnChanges {
             this.updateCursor();
           }
           if (e.dz) {
+            // Zoom around the mouse position (fallback on the last known wheel/mouse event)
+            const mouseClientX = e.x ?? this.currentEvent?.clientX;
+            const mouseClientY = e.y ?? this.currentEvent?.clientY;
             if (e.dz > 0) {
-              this.onClickOnZoomOut();
+              this.zoomCanvas(1, mouseClientX, mouseClientY);
             } else {
-              this.onClickOnZoomIn();
+              this.zoomCanvas(-1, mouseClientX, mouseClientY);
             }
           } else {
             if (e.dx !== 0 || e.dy !== 0) {
@@ -779,7 +795,14 @@ export class MatrixComponent extends SelectableComponent implements OnChanges {
     }
   }
 
-  private zoomCanvas(delta: number, preventTranslate = false) {
+  /**
+   * Zoom the canvas, keeping the point under the given client coordinates fixed.
+   * If no coordinates are given, the center of the visible area is used.
+   * @param delta negative to zoom in, positive to zoom out, 0 to reset
+   * @param clientX mouse X in client coordinates (optional)
+   * @param clientY mouse Y in client coordinates (optional)
+   */
+  private zoomCanvas(delta: number, clientX?: number, clientY?: number) {
     const previousZoom = this.zoom;
     if (delta < 0) {
       this.zoom = this.zoom + this.zoomFactor;
@@ -797,48 +820,74 @@ export class MatrixComponent extends SelectableComponent implements OnChanges {
     if (previousZoom !== this.zoom) {
       this.zoom = Number(this.zoom.toFixed(1));
 
-      const containerPosition =
-        this.matrixArea?.nativeElement.getBoundingClientRect();
-      if (this.currentEvent && containerPosition) {
-        this.currentMouseY = Math.round(
-          this.currentEvent.y - containerPosition.top,
-        );
-        this.currentMouseX = Math.round(
-          this.currentEvent.x - containerPosition.left,
-        );
-      }
+      // Capture the anchor BEFORE the canvas is resized (resize happens in drawMatrix)
+      this.captureZoomAnchor(clientX, clientY);
 
       this.drawMatrix();
-
-      let deltaX = 0;
-      let deltaY = 0;
-      if (previousZoom !== 1) {
-        deltaX =
-          (this.currentMouseX - this.lastScrollPosition.scrollLeft) /
-          previousZoom;
-        deltaY =
-          (this.currentMouseY - this.lastScrollPosition.scrollTop) /
-          previousZoom;
-      }
-
-      deltaX = deltaX + 10; // 10 for scrollbars
-      deltaY = deltaY + 10;
-
-      if (!preventTranslate) {
-        this.matrixArea!.nativeElement.scrollLeft =
-          this.currentMouseX * this.zoom - this.currentMouseX - deltaX;
-        this.matrixArea!.nativeElement.scrollTop =
-          this.currentMouseY * this.zoom - this.currentMouseY - deltaY;
-      }
-
-      this.lastScrollPosition = {
-        scrollLeft: this.currentMouseX,
-        scrollTop: this.currentMouseY,
-      };
-
-      this.currentMouseY = 0;
-      this.currentMouseX = 0;
     }
+  }
+
+  /**
+   * Stores the zoom anchor (point under the mouse) relative to the scrollable content.
+   * Only the first anchor is kept until the next draw, because it is measured
+   * against the layout that is still unchanged.
+   */
+  private captureZoomAnchor(clientX?: number, clientY?: number) {
+    const area = this.matrixArea?.nativeElement;
+    if (!area || this.pendingZoomAnchor) {
+      return;
+    }
+
+    // Default anchor: center of the visible area (zoom buttons use case)
+    let mouseX = area.clientWidth / 2;
+    let mouseY = area.clientHeight / 2;
+
+    if (clientX !== undefined && clientY !== undefined) {
+      const containerPosition = area.getBoundingClientRect();
+      mouseX = clientX - containerPosition.left;
+      mouseY = clientY - containerPosition.top;
+    }
+
+    // Keep the anchor inside the visible area
+    mouseX = Math.min(Math.max(mouseX, 0), area.clientWidth);
+    mouseY = Math.min(Math.max(mouseY, 0), area.clientHeight);
+
+    this.currentMouseX = Math.round(mouseX);
+    this.currentMouseY = Math.round(mouseY);
+
+    this.pendingZoomAnchor = {
+      mouseX: this.currentMouseX,
+      mouseY: this.currentMouseY,
+      ratioX:
+        (area.scrollLeft + this.currentMouseX) / Math.max(area.scrollWidth, 1),
+      ratioY:
+        (area.scrollTop + this.currentMouseY) / Math.max(area.scrollHeight, 1),
+    };
+  }
+
+  /**
+   * Applies the pending zoom anchor once the canvas has been resized,
+   * so the content under the mouse stays under the mouse.
+   */
+  private applyPendingZoomAnchor() {
+    const anchor = this.pendingZoomAnchor;
+    const area = this.matrixArea?.nativeElement;
+    if (!anchor || !area) {
+      return;
+    }
+    this.pendingZoomAnchor = undefined;
+
+    // Reading scrollWidth/scrollHeight forces a layout with the new canvas size
+    area.scrollLeft = anchor.ratioX * area.scrollWidth - anchor.mouseX;
+    area.scrollTop = anchor.ratioY * area.scrollHeight - anchor.mouseY;
+
+    this.lastScrollPosition = {
+      scrollLeft: area.scrollLeft,
+      scrollTop: area.scrollTop,
+    };
+
+    this.currentMouseY = 0;
+    this.currentMouseX = 0;
   }
 
   private updateLegendBar() {
@@ -926,14 +975,16 @@ export class MatrixComponent extends SelectableComponent implements OnChanges {
     // this.trackerService.trackEvent('click', 'matrix_zoom', 'in');
     this.currentMouseY = 0;
     this.currentMouseX = 0;
-    this.zoomCanvas(-1, true);
+    // No coordinates: zoom around the center of the visible area
+    this.zoomCanvas(-1);
   }
 
   onClickOnZoomOut() {
     // this.trackerService.trackEvent('click', 'matrix_zoom', 'out');
     this.currentMouseY = 0;
     this.currentMouseX = 0;
-    this.zoomCanvas(1, true);
+    // No coordinates: zoom around the center of the visible area
+    this.zoomCanvas(1);
   }
 
   onClickOnResetZoom() {
