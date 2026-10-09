@@ -635,7 +635,7 @@
         "NB_CLUSTERS": "Number of clusters on each dimension for the current unfolding"
       },
       "UNFOLD_HIERARCHY": {
-        "INFO_RATE_CHART": "The evolution of the information according to the number of clusters: the percentage of information kept at each granularity of the hierarchy",
+        "INFO_RATE_CHART": "The evolution of the information according to the number of clusters : the percentage of information kept at each granularity of the hierarchy",
         "LEGEND": "Click on dimension to highlight data"
       }
     }
