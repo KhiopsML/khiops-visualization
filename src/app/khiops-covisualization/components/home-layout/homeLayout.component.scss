@@ -61,7 +61,7 @@
     height: calc(
       100% - var(--header-height) - var(--layout-padding) - var(
           --layout-padding
-        ) - var(--layout-padding)
+        )
     );
   }
 }
