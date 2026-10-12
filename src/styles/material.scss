@@ -261,6 +261,13 @@ mat-pseudo-checkbox {
   font-size: 0.4rem !important;
   height: 32px !important;
 }
+mat-button-toggle-group .mat-button-toggle-checked button:hover {
+  // box-shadow: var(--box-shadow-elevate-500) !important;
+  background: var(--color-50) !important;
+}
+.mat-button-toggle-appearance-standard:hover .mat-button-toggle-focus-overlay {
+  opacity: 0 !important;
+}
 
 .mat-button-toggle {
   color: var(--color-800) !important;
