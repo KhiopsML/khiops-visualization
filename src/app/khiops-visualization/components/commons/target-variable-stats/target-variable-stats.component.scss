@@ -8,6 +8,7 @@
   position: relative;
   padding-top: 1px;
   padding-bottom: 1px;
+  container-type: inline-size;
 
   kl-btn-fullscreen {
     margin-right: 5px;
@@ -22,6 +23,30 @@
 
     canvas {
       min-width: 200px !important;
+    }
+  }
+}
+
+@container (max-width: 300px) {
+  #target-variable-stats-header {
+    display: grid !important;
+    grid-template-areas:
+      'title fullscreen'
+      'legend legend';
+    grid-template-columns: minmax(0, 1fr) auto;
+
+    .header-title {
+      grid-area: title;
+      min-width: 0;
+    }
+
+    .header-legend {
+      grid-area: legend;
+      min-width: 0;
+    }
+
+    kl-btn-fullscreen {
+      grid-area: fullscreen;
     }
   }
 }

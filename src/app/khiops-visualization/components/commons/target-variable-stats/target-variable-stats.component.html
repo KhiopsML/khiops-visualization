@@ -18,13 +18,14 @@
     fxLayoutAlign="start center"
     class="comp-header"
   >
-    <div fxLayout="row" fxLayoutAlign="start center">
+    <div class="header-title" fxLayout="row" fxLayoutAlign="start center">
       <h1 fxLayout="row" fxLayoutAlign="start center">
         <svg lucideIcon="chart-column-big" size="16"></svg>
         {{ title }}
       </h1>
     </div>
     <kl-legend
+      class="header-legend"
       fxFlex
       [inputDatas]="inputDatas"
       [type]="'chart-nd'"
