@@ -158,7 +158,8 @@ describe('Copy datas Test for Khiops Visualization', () => {
             .contains('Iris-setosa')
             .first()
             .click({ force: true });
-          cy.get('body').click(0, 0);
+          cy.get('.cdk-overlay-backdrop').click({ force: true });
+          cy.get('.cdk-overlay-backdrop').should('not.exist');
           cy.testComponentCopyDatas(
             '#target-distribution-graph0',
             'kv-target-distribution-graph-filtered.txt',

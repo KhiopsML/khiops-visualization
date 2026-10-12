@@ -64,8 +64,9 @@ describe('Evaluation chart labels and axis precision #80', () => {
         expect(text).to.not.equal('Population');
       });
 
-      // Close menu by pressing Escape
-      cy.get('body').trigger('keydown', { key: 'Escape' });
+      // Close menu via backdrop to avoid body visibility/actionability issues.
+      cy.get('.cdk-overlay-backdrop').click({ force: true });
+      cy.get('.mat-mdc-menu-panel').should('not.exist');
     });
 
     it('should have x-axis values ranging from 0 to 100', () => {

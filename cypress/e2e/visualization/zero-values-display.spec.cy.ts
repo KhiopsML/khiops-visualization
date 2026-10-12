@@ -43,7 +43,7 @@ describe('Zero values displayed in variables table #347', () => {
       .contains('Min')
       .click({ force: true });
     // Close the menu by clicking elsewhere
-    cy.get('body').click(0, 0);
+    cy.get('.cdk-overlay-backdrop').click({ force: true });
 
     // capital_gain is at row index 2, with min=0
     cy.get(

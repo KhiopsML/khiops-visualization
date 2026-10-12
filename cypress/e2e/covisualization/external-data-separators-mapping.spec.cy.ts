@@ -246,7 +246,7 @@ describe('External data separators and mapping lifecycle', () => {
     cy.get('.mat-mdc-menu-panel button.mat-mdc-menu-item')
       .contains('key')
       .should('be.visible');
-    cy.get('body').click(0, 0);
+    cy.get('.cdk-overlay-backdrop').click({ force: true });
 
     // Save still works after reset.
     selectDimension('occupation');
