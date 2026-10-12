@@ -56,5 +56,5 @@ export function setupAxisTests(datas, testsValues, fileName) {
   if (datas.coclusteringReport?.dimensionSummaries?.length > 2) {
     testsValues.Axis.push('Conditional on context'); // Matrix component
   }
-  testsValues.Axis.push('Cell stats'); // Matrix component
+  testsValues.Axis.push('Frequency'); // Matrix component
 }

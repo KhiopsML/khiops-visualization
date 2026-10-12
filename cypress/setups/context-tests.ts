@@ -55,5 +55,5 @@ export function setupContextTests(datas, testsValues, fileName) {
     testsValues.Context.push('I ('); // Matrix component
   }
   testsValues.Context.push('Conditional on context'); // Matrix component
-  testsValues.Context.push('Cell stats'); // Matrix component
+  testsValues.Context.push('Frequency'); // Matrix component
 }
