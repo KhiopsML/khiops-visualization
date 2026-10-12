@@ -89,8 +89,52 @@
     }
   }
 
+  // .metric-label-stat {
+  //   font-size: 10px;
+  //   text-transform: uppercase;
+  //   font-weight: 500;
+  //   line-height: 1.2;
+  //   letter-spacing: 0.03em;
+  // }
+
   .metric-label {
     font-family: var(--font-code) !important;
     color: var(--color-300);
+  }
+
+  .metric-row-frequency {
+    .metric-label-stat {
+      // color: var(--color-brand-green-dark);
+    }
+
+    ::ng-deep .important-badge.important-badge-dark {
+      color: var(--color-brand-green-light) !important;
+      border-color: var(--color-brand-green-light) !important;
+      background-color: var(--color-1000) !important;
+    }
+  }
+
+  .metric-row-expected {
+    .metric-label-stat {
+      // color: var(--color-600);
+    }
+
+    ::ng-deep .important-badge.important-badge-dark {
+      color: var(--color-highlight) !important;
+      border-color: var(--color-border-highlight) !important;
+      background-color: var(--color-1000) !important;
+    }
+  }
+
+  .metric-row-interest {
+    .metric-label-stat {
+      // color: var(--color-accent);
+    }
+
+    ::ng-deep .important-badge.important-badge-dark {
+      color: var(--color-brand-orange-light-100) !important;
+      border-color: var(--color-brand-orange-light-100) !important;
+      background-color: var(--color-1000) !important;
+    }
   }
 }

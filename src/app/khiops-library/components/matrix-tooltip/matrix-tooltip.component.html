@@ -34,8 +34,13 @@
     <div class="matrix-tooltip-content">
       <!-- Main value (not for Hellinger type) -->
       @if (shouldShowMainValue) {
-        <div>
-          <span class="metric-label"
+        <div
+          class="metric-row"
+          [class.metric-row-frequency]="getMainMetricClass() === 'metric-row-frequency'"
+          [class.metric-row-expected]="getMainMetricClass() === 'metric-row-expected'"
+          [class.metric-row-interest]="getMainMetricClass() === 'metric-row-interest'"
+        >
+          <span class="metric-label metric-label-stat"
             >{{ getMainValueLabel() | translate }}:</span
           >
           <kl-important-badge
@@ -47,8 +52,8 @@
       }
       <!-- Frequency (not for Frequency type) -->
       @if (shouldShowFrequency) {
-        <div>
-          <span class="metric-label"
+        <div class="metric-row metric-row-frequency">
+          <span class="metric-label metric-label-stat"
             >{{ 'GLOBAL.FREQUENCY' | translate }}:</span
           >
           <!-- {{ cell.displayedFreqValue | toPrecision }} -->
@@ -61,8 +66,8 @@
       }
       <!-- Expected frequency (conditionally shown) -->
       @if (shouldShowExpectedFrequency) {
-        <div>
-          <span class="metric-label"
+        <div class="metric-row metric-row-expected">
+          <span class="metric-label metric-label-stat"
             >{{ 'GLOBAL.EXPECTED_FREQUENCY' | translate }}:</span
           >
           <!-- {{ cell.displayedValue.ef | toPrecision }} -->
@@ -75,8 +80,8 @@
       }
       <!-- Hellinger value (only for Hellinger type) -->
       @if (shouldShowHellingerValue) {
-        <div>
-          <span class="metric-label"
+        <div class="metric-row metric-row-interest">
+          <span class="metric-label metric-label-stat"
             >{{ getHellingerValueLabel() | translate }}:</span
           >
           <!-- {{ cell.displayedValue.extra | toPrecision }} -->

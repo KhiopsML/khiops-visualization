@@ -144,6 +144,19 @@ export class MatrixTooltipComponent implements OnChanges {
     return `MATRIX_MODES_DETAILED.${this.cell.displayedValue.type}`;
   }
 
+  getMainMetricClass(): string {
+    switch (this.cell?.displayedValue?.type) {
+      case 'MUTUAL_INFO':
+      case 'MUTUAL_INFO_TARGET_WITH_CELL':
+        return 'metric-row-interest';
+      case 'FREQUENCY':
+      case 'TARGET_FREQUENCY':
+        return 'metric-row-frequency';
+      default:
+        return 'metric-row-expected';
+    }
+  }
+
   /**
    * Get the translated label for Hellinger value
    */
