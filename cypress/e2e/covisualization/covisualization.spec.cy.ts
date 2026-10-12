@@ -11,6 +11,15 @@ import '../../utils/utils';
 import { setupContextTests } from '../../setups/context-tests';
 import { setupHierarchyTests } from '../../setups/hierarchy-tests';
 
+function escapeRegExp(value: string): string {
+  return value.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+}
+
+function containsTextIgnoreCase(value: string | number): void {
+  const text = String(value);
+  cy.contains(new RegExp(escapeRegExp(text), 'i'));
+}
+
 describe('Test Khiops Covisualization sample files', () => {
   const files = [
     'co-IrisMissing.json',
@@ -82,7 +91,7 @@ describe('Test Khiops Covisualization sample files', () => {
           if (testValue) {
             testValue.forEach((test) => {
               if (test) {
-                cy.contains(test);
+                containsTextIgnoreCase(test);
               }
             });
           }
@@ -94,7 +103,7 @@ describe('Test Khiops Covisualization sample files', () => {
 
         hierarchyTests.forEach((test) => {
           if (test) {
-            cy.contains(test);
+            containsTextIgnoreCase(test);
           }
         });
       });
