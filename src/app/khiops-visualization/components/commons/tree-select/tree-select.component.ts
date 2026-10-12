@@ -9,6 +9,7 @@ import {
   Component,
   HostListener,
   NgZone,
+  OnDestroy,
   OnChanges,
   type SimpleChanges,
   AfterViewInit,
@@ -23,6 +24,7 @@ import { TranslateService } from '@ngstack/translate';
 import { TreeNodeModel } from '@khiops-visualization/model/tree-node.model';
 import { COMPONENT_TYPES } from '@khiops-library/enum/component-types';
 import { firstValueFrom, Observable } from 'rxjs';
+import { Subscription } from 'rxjs';
 import { TreePreparationStore } from '@khiops-visualization/stores/tree-preparation.store';
 import { TreeView } from '@khiops-treeview';
 import { GraphSelectionSessionService } from '@khiops-visualization/providers/graph-selection-session.service';
@@ -36,7 +38,7 @@ import { GraphSelectionSessionService } from '@khiops-visualization/providers/gr
 })
 export class TreeSelectComponent
   extends SelectableComponent
-  implements AfterViewInit, OnChanges
+  implements AfterViewInit, OnChanges, OnDestroy
 {
   @Input() public dimensionTree?: [TreeNodeModel];
 
@@ -44,6 +46,8 @@ export class TreeSelectComponent
   public override id: string | undefined = undefined;
   public isFullscreen: boolean = false;
   private tree: any;
+  private initTreeTimer?: ReturnType<typeof setTimeout>;
+  private subscriptions = new Subscription();
 
   selectedNodes$: Observable<TreeNodeModel[]>;
   selectedNode$: Observable<TreeNodeModel | undefined>;
@@ -69,23 +73,46 @@ export class TreeSelectComponent
   }
 
   ngOnInit() {
-    this.selectedNodes$.subscribe((selectedNodes) => {
-      this.tree?.selectNodes(selectedNodes);
-    });
-    this.selectedNode$.subscribe((selectedNode) => {
-      if (selectedNode) {
-        this.tree?.scrollToNode(selectedNode._id);
-      }
-    });
+    this.subscriptions.add(
+      this.selectedNodes$.subscribe((selectedNodes) => {
+        this.tree?.selectNodes(selectedNodes);
+      }),
+    );
+    this.subscriptions.add(
+      this.selectedNode$.subscribe((selectedNode) => {
+        if (selectedNode) {
+          this.tree?.scrollToNode(selectedNode._id);
+        }
+      }),
+    );
   }
 
   override ngAfterViewInit() {
-    // Init at first time
-    this.initTree();
+    this.scheduleTreeInit();
+  }
+
+  override ngOnDestroy() {
+    if (this.initTreeTimer) {
+      clearTimeout(this.initTreeTimer);
+    }
+    this.subscriptions.unsubscribe();
+    super.ngOnDestroy();
   }
 
   onToggleFullscreen(isFullscreen: boolean) {
     this.isFullscreen = isFullscreen;
+    this.scheduleTreeInit();
+  }
+
+  private scheduleTreeInit() {
+    if (this.initTreeTimer) {
+      clearTimeout(this.initTreeTimer);
+    }
+
+    // Let split layout finish reflow before rendering tree.
+    this.initTreeTimer = setTimeout(() => {
+      this.initTree();
+    }, 80);
   }
 
   private initTree() {
