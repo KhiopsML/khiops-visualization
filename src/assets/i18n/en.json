@@ -101,10 +101,10 @@
     "TARGET_FREQUENCY": "TF"
   },
   "MATRIX_MODES_DETAILED": {
-    "MUTUAL_INFO": "Mutual information",
+    "MUTUAL_INFO": "Mutual info",
     "PROB_CELL": "Probability",
     "HELLINGER": "Hellinger",
-    "MUTUAL_INFO_TARGET_WITH_CELL": "Mutual information",
+    "MUTUAL_INFO_TARGET_WITH_CELL": "Mutual info",
     "PROB_TARGET_WITH_CELL": "Probability",
     "PROB_CELL_REVERSE": "Probability",
     "PROB_CELL_WITH_TARGET": "Probability",
@@ -159,6 +159,8 @@
     "AUTO_SCALE_DESCRIPTION": "X and Y scales are automatically selected for best readability.",
     "AUTO_SCALE_SETTINGS_HINT": "The Lin/Log switching sensitivity can be fine-tuned in Settings.",
     "EXPECTED_FREQUENCY": "Expected frequency",
+    "EXPECTED": "Expected",
+    "TOTAL": "Total",
     "GROUP": "Group",
     "IMPORTANCE": "Importance",
     "GRAVITY": "Gravity",

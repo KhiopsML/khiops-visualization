@@ -7,33 +7,58 @@
 <div
   id="cell-stats-comp"
   fxLayout="row"
+  fxLayoutGap="0.5rem"
+  fxLayoutAlign="start center"
   fxFlexFill
-  fxLayoutAlign="center center"
 >
   @if (cellStats(); as stats) {
-    <div class="cell-stats-content">
-      <b>{{ 'GLOBAL.CELL_STATS' | translate }}</b>
-
-      <kl-important-badge
+    <div
+      class="cell-stats-cards"
+      fxFlexFill
+      fxLayout="row"
+      fxLayoutGap="0.5rem"
+    >
+      <div
+        class="stats-card stats-card-frequency"
         title="{{ 'TOOLTIPS.MATRIX.CELL_STATS_FREQUENCY' | translate }}"
-        [text]="'F= ' + (stats.F | toPrecision)"
-        [color]="'green'"
-      ></kl-important-badge>
-      <span
+      >
+        <span class="stats-card-label"
+          >{{ 'GLOBAL.FREQUENCY' | translate }} (F)</span
+        >
+        <span class="stats-card-value">{{ stats.F | toPrecision }}</span>
+      </div>
+
+      <div
+        class="stats-card stats-card-expected"
         title="{{
           'TOOLTIPS.MATRIX.CELL_STATS_EXPECTED_FREQUENCY' | translate
         }}"
-        >EF= {{ stats.EF | toPrecision }}</span
       >
+        <span class="stats-card-label"
+          >{{ 'GLOBAL.EXPECTED' | translate }} (EF)</span
+        >
+        <span class="stats-card-value">{{ stats.EF | toPrecision }}</span>
+      </div>
+
       @if (stats.I !== undefined) {
-        <kl-important-badge
-          title="{{ 'TOOLTIPS.MATRIX.CELL_STATS_INFORMATION' | translate }}"
-          [text]="'I= ' + (stats.I | toPrecision)"
-          [color]="'orange'"
-        ></kl-important-badge>
+        <div
+          class="stats-card stats-card-interest"
+          title="{{ 'TOOLTIPS.MATRIX.I' | translate }}"
+        >
+          <span class="stats-card-label"
+            >{{ 'MATRIX_MODES_DETAILED.MUTUAL_INFO' | translate }} ({{
+              'MATRIX_MODES.MUTUAL_INFO' | translate
+            }})</span
+          >
+          <span class="stats-card-value">{{ stats.I | toPrecision }}</span>
+        </div>
       }
+
       @if (stats.Total !== undefined) {
-        <span>Total= {{ stats.Total | toPrecision }} </span>
+        <div class="stats-card stats-card-total">
+          <span class="stats-card-label">{{ 'GLOBAL.TOTAL' | translate }}</span>
+          <span class="stats-card-value">{{ stats.Total | toPrecision }}</span>
+        </div>
       }
     </div>
   }

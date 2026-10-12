@@ -5,40 +5,81 @@
  */
 
 #cell-stats-comp {
-  padding: 0.5rem;
-  max-height: 38px;
-  min-height: 38px !important;
+  padding: 10px 0 0 0;
   overflow-x: auto;
   overflow-y: hidden;
   white-space: nowrap;
-  display: block !important;
-  font-size: 0.8rem;
-  margin: 0px;
-  padding: 1px;
+  display: flex !important;
+  align-items: center;
+  margin: 0;
 
-  .cell-stats-content {
-    font-size: 0.9em;
+  .cell-stats-cards {
+    display: inline-flex;
+    align-items: stretch;
+    min-width: fit-content;
+  }
+
+  .stats-card {
+    flex: 1;
+    padding: 5px 8px;
+    border-radius: var(--border-radius);
+    border: 1px solid var(--color-100);
+    background: var(--bgColor-000);
+    box-shadow: 0 1px 2px rgb(0 0 0 / 6%);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 0.15rem;
+    font-family: var(--font-primary) !important;
+  }
+
+  .stats-card-label {
+    font-size: 10px;
+    text-transform: uppercase;
     font-weight: 500;
+    color: var(--color-500);
+    line-height: 1.2;
+  }
+
+  .stats-card-value {
+    font-size: 12px;
+    line-height: 1;
+    font-weight: 700;
     color: var(--color-800);
-    padding: 1px 5px;
-    margin: 5px;
-    display: initial;
-    b {
-      font-weight: 600;
-      text-transform: uppercase;
-      font-family: var(--font-code) !important;
+    font-family: var(--font-code) !important;
+  }
+
+  .stats-card-frequency {
+    border-color: var(--color-brand-green-light);
+
+    .stats-card-label,
+    .stats-card-value {
+      color: var(--color-brand-green-dark);
+    }
+  }
+
+  .stats-card-expected {
+    border-color: var(--color-border-highlight);
+
+    .stats-card-label {
+      color: var(--color-600);
     }
 
-    span {
-      margin-left: 1rem;
-      font-family: var(--font-code) !important;
+    .stats-card-value {
+      color: var(--color-800);
     }
+  }
 
-    ::ng-deep kl-important-badge {
-      margin-left: 10px;
-      span {
-        padding: 2px 2px !important;
-      }
+  .stats-card-interest {
+    border-color: var(--color-brand-orange-light-100);
+
+    .stats-card-label,
+    .stats-card-value {
+      color: var(--color-accent);
     }
+  }
+
+  .stats-card-total {
+    border-color: var(--color-border-subtle);
   }
 }
