@@ -269,7 +269,7 @@ export class AppComponent
                 disableClose: true,
               },
               {
-                displayCancelBtn: true,
+                displayCancelBtn: false,
                 displayRejectBtn: true,
                 confirmTranslation: this.translate.get('GLOBAL.YES'),
                 title: this.translate.get('GLOBAL.FILE_MODIFIED_TITLE'),
