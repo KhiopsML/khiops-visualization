@@ -49,6 +49,7 @@ export class TreeHyperComponent
   extends SelectableComponent
   implements OnInit, AfterViewInit, OnChanges, OnDestroy
 {
+  private static readonly CONTAINER_WIDE_BREAKPOINT = 800;
   private static readonly HYPERTREE_ZOOM_FACTOR = 1.175;
   private static readonly HOVER_TOOLTIP_OFFSET = 14;
   private static readonly HOVER_TOOLTIP_EDGE_PADDING = 8;
@@ -57,6 +58,8 @@ export class TreeHyperComponent
 
   @ViewChild('hyperTree') private hyperTree?: ElementRef<HTMLElement>;
   @ViewChild('hoverTooltip') private hoverTooltip?: ElementRef<HTMLElement>;
+  @ViewChild('treeHyperCompContainer')
+  private treeHyperCompContainer?: ElementRef<HTMLElement>;
 
   @Input() public dimensionTree?: [TreeNodeModel];
   @Input() private displayedValues?: ChartToggleValuesI[];
@@ -81,6 +84,7 @@ export class TreeHyperComponent
     left: '0px',
     top: '0px',
   };
+  public isTreeHyperCompContainerWide = false;
   private lastMousePosition?: { x: number; y: number };
 
   selectedNodes$: Observable<TreeNodeModel[]>;
@@ -185,14 +189,29 @@ export class TreeHyperComponent
   }
 
   private setupResizeObserver() {
-    if (this.hyperTree?.nativeElement) {
+    if (this.treeHyperCompContainer?.nativeElement) {
       this.resizeObserver = new ResizeObserver(() => {
+        this.updateTreeHyperCompContainerWidthState();
+
         if (this.ht) {
           this.ht?.api.updateNodesVisualization();
         }
       });
 
-      this.resizeObserver.observe(this.hyperTree.nativeElement);
+      this.resizeObserver.observe(this.treeHyperCompContainer.nativeElement);
+
+      this.updateTreeHyperCompContainerWidthState();
+    }
+  }
+
+  private updateTreeHyperCompContainerWidthState() {
+    const width = this.treeHyperCompContainer?.nativeElement.clientWidth ?? 0;
+    const isWide = width > TreeHyperComponent.CONTAINER_WIDE_BREAKPOINT;
+
+    if (isWide !== this.isTreeHyperCompContainerWide) {
+      this.ngzone.run(() => {
+        this.isTreeHyperCompContainerWide = isWide;
+      });
     }
   }
 

@@ -66,6 +66,8 @@
       fxFlex
       fxLayout="column"
       class="tree-hyper-comp-container bg-dotted"
+      [class.tree-hyper-comp-container-wide]="isTreeHyperCompContainerWide"
+      #treeHyperCompContainer
       (mousemove)="onTreeMouseMove($event)"
       (mouseleave)="onTreeMouseLeave()"
     >
