@@ -154,7 +154,7 @@
 // Ensure sort indicator stays on the right of the label text (not the cell)
 .ag-right-aligned-header .ag-header-cell-label {
   flex-direction: row-reverse;
-  justify-content: flex-end; // Align content to the right
+  justify-content: flex-start;
 
   .ag-sort-indicator-container {
     order: -1 !important; // Force to be first in reverse order (appears after text)

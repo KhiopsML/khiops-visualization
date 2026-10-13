@@ -82,7 +82,7 @@
 
   // Control alignment at the label level for right alignment
   ::ng-deep .ag-right-aligned-header .ag-header-cell-label {
-    justify-content: flex-end !important;
+    justify-content: flex-start !important;
   }
 
   // Hide the "press space" message by targeting the ag-grid's accessibility messages
