@@ -38,19 +38,17 @@
           </div>
         </div>
       }
-      <!-- Gauge display for sample percentage -->
+      <!-- sample percentage -->
       @if (gaugeData(); as gaugeDataValue) {
         <div
           fxFlex
-          class="informations-main-values gauge-container"
+          class="informations-main-values important-badge-orange"
           fxLayoutAlign="center center"
         >
-          <div fxLayoutAlign="start center" fxLayout="row">
-            <kl-gauge
-              [value]="getPercentageValue(gaugeDataValue.value)"
-              [size]="gaugeSize()"
+          <div fxLayoutAlign="start center" fxLayout="column">
+            <span fxFlex class="metric-value font-code"
+              >{{ gaugeDataValue.value | toPrecision }}%</span
             >
-            </kl-gauge>
             <strong>{{ gaugeDataValue.title | translate }}</strong>
           </div>
         </div>

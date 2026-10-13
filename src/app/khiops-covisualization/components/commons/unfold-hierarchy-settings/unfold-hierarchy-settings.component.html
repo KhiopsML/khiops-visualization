@@ -101,11 +101,9 @@
         fxLayoutAlign="center center"
       >
         <div fxLayoutAlign="start center" fxLayout="row">
-          <kl-gauge
-            [value]="currentInformationPerCluster | toPrecision: 3"
-            [size]="80"
-          >
-          </kl-gauge>
+          <span fxFlex class="metric-value font-code">{{
+            currentInformationPerCluster | toPrecision
+          }}</span>
           <div fxLayout="column" fxLayoutAlign="start center">
             <strong>{{ 'GLOBAL.INFORMATION_RATE' | translate }}</strong>
             @if (currentInformationPerCluster === 0) {
