@@ -30,7 +30,6 @@ import {
   DISPLAY_TYPE,
 } from '@khiops-library/enum/info-data-types';
 import { UtilsService } from '@khiops-library/providers/utils.service';
-import { GaugeComponent } from '../gauge/gauge.component';
 import { WarningInformationComponent } from '../warning-information/warning-information.component';
 import { NoDataComponent } from '../no-data/no-data.component';
 import { ToPrecisionPipe } from '../../pipes/to-precision.pipe';
@@ -46,7 +45,6 @@ import { MatSnackBar } from '@angular/material/snack-bar';
     FlexModule,
     MatIconModule,
     TranslateModule,
-    GaugeComponent,
     WarningInformationComponent,
     NoDataComponent,
     ToPrecisionPipe,
