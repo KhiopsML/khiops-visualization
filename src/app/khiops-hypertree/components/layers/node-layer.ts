@@ -67,10 +67,20 @@ export class NodeLayer implements ILayer {
       const pulse = group.querySelector('.node-selection-pulse');
       const matrix = group.getScreenCTM();
       const scale = matrix ? Math.hypot(matrix.a, matrix.b) : 1;
-      const nodeStrokeWidth = parseFloat(getComputedStyle(node).strokeWidth) || 0;
-      const ringStrokeWidth = parseFloat(getComputedStyle(ring).strokeWidth) || 0;
+      if (!Number.isFinite(scale) || scale <= 0) {
+        return;
+      }
+
+      const nodeStyle = getComputedStyle(node);
+      const nodeStrokeWidth =
+        (parseFloat(nodeStyle.strokeWidth) || 0) /
+        (nodeStyle.vectorEffect === 'non-scaling-stroke' ? scale : 1);
+      const ringStrokeWidth =
+        parseFloat(getComputedStyle(ring).strokeWidth) || 0;
       const baseRadius =
-        this.args.r(d) + nodeStrokeWidth / 2 + (3 + ringStrokeWidth / 2) / scale;
+        this.args.r(d) +
+        nodeStrokeWidth / 2 +
+        (3 + ringStrokeWidth / 2) / scale;
 
       ring.setAttribute('r', baseRadius);
 
@@ -86,8 +96,8 @@ export class NodeLayer implements ILayer {
       const node = group.querySelector('.node-shape');
       const whiteRing = group.querySelector('.node-hover-ring-white');
       const blackRing = group.querySelector('.node-hover-ring-black');
-      const hoveredLeaf = d.data && d.data.isLeaf &&
-        this.view.unitdisk.cache.lastHovered === d;
+      const hoveredLeaf =
+        d.data && d.data.isLeaf && this.view.unitdisk.cache.lastHovered === d;
 
       whiteRing.style.display = hoveredLeaf ? 'block' : 'none';
       blackRing.style.display = hoveredLeaf ? 'block' : 'none';
@@ -98,7 +108,14 @@ export class NodeLayer implements ILayer {
 
       const matrix = group.getScreenCTM();
       const scale = matrix ? Math.hypot(matrix.a, matrix.b) : 1;
-      const nodeStrokeWidth = parseFloat(getComputedStyle(node).strokeWidth) || 0;
+      if (!Number.isFinite(scale) || scale <= 0) {
+        return;
+      }
+
+      const nodeStyle = getComputedStyle(node);
+      const nodeStrokeWidth =
+        (parseFloat(nodeStyle.strokeWidth) || 0) /
+        (nodeStyle.vectorEffect === 'non-scaling-stroke' ? scale : 1);
       const nodeOuterRadius = this.args.r(d) + nodeStrokeWidth / 2;
 
       whiteRing.setAttribute('r', nodeOuterRadius + 2.5 / scale);

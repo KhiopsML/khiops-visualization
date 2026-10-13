@@ -38,8 +38,9 @@
 
     #nodes {
       .node {
-        stroke: #FFFFFFD5;
+        stroke: #ffffffd5;
         stroke-width: 3px;
+        vector-effect: non-scaling-stroke;
       }
     }
 
