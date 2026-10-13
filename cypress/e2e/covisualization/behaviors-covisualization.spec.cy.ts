@@ -190,6 +190,7 @@ describe('Behaviors tests for Khiops Covisualization', () => {
       // Now we check matrix values
       cy.get('#matrix-selected').should('be.visible').trigger('mousemove', {
         position: 'bottomRight',
+        force: true,
       });
       cy.get('.matrix-tooltip-comp').contains('0.043');
     });
