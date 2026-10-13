@@ -14,6 +14,7 @@ import {
   ElementRef,
 } from '@angular/core';
 import { CellModel } from '@khiops-library/model/cell.model';
+import { MATRIX_MODES } from '@khiops-library/enum/matrix-modes';
 
 const MATRIX_MAX_WIDTH = 400;
 const DEFAULT_MATRIX_MIN_WIDTH = 200;
@@ -29,6 +30,7 @@ const TOOLTIP_CURSOR_OFFSET = 40;
 export class MatrixTooltipComponent implements OnChanges {
   public readonly matrixMaxWidth: number = MATRIX_MAX_WIDTH;
   @Input() public cell?: CellModel;
+  @Input() public graphMode?: string;
   @Input() public showExpectedFrequency: boolean = false;
   @Input() public minWidth: number = DEFAULT_MATRIX_MIN_WIDTH;
   @Input() private position?: {
@@ -163,5 +165,13 @@ export class MatrixTooltipComponent implements OnChanges {
   getHellingerValueLabel(): string {
     if (!this.cell?.displayedValue?.type) return '';
     return `MATRIX_MODES_DETAILED.${this.cell.displayedValue.type}`;
+  }
+
+  get shouldDisplayYAxisFirst(): boolean {
+    return (
+      this.graphMode === MATRIX_MODES.PROB_CELL ||
+      this.graphMode === MATRIX_MODES.PROB_TARGET_WITH_CELL ||
+      this.graphMode === MATRIX_MODES.PROB_CELL_WITH_TARGET
+    );
   }
 }

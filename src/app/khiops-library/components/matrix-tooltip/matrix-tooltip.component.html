@@ -16,20 +16,39 @@
         {{ 'GLOBAL.CELL_DETAILS' | translate }}
       </h1>
     </div>
-    <h2>{{ cell.xnamePart }} x {{ cell.ynamePart }}</h2>
+    @if (shouldDisplayYAxisFirst) {
+      <h2>{{ cell.ynamePart }} x {{ cell.xnamePart }}</h2>
+    } @else {
+      <h2>{{ cell.xnamePart }} x {{ cell.ynamePart }}</h2>
+    }
     <div class="matrix-tooltip-title" fxLayout="column">
-      <div fxLayout="column">
-        <span class="metric-label"> {{ cell.xnamePart }}:</span>
-        <span class="axis-value">{{
-          truncateText(cell.xDisplayaxisPart)
-        }}</span>
-      </div>
-      <div fxLayout="column">
-        <span class="metric-label"> {{ cell.ynamePart }}:</span>
-        <span class="axis-value">{{
-          truncateText(cell.yDisplayaxisPart)
-        }}</span>
-      </div>
+      @if (shouldDisplayYAxisFirst) {
+        <div fxLayout="column">
+          <span class="metric-label"> {{ cell.ynamePart }}:</span>
+          <span class="axis-value">{{
+            truncateText(cell.yDisplayaxisPart)
+          }}</span>
+        </div>
+        <div fxLayout="column">
+          <span class="metric-label"> {{ cell.xnamePart }}:</span>
+          <span class="axis-value">{{
+            truncateText(cell.xDisplayaxisPart)
+          }}</span>
+        </div>
+      } @else {
+        <div fxLayout="column">
+          <span class="metric-label"> {{ cell.xnamePart }}:</span>
+          <span class="axis-value">{{
+            truncateText(cell.xDisplayaxisPart)
+          }}</span>
+        </div>
+        <div fxLayout="column">
+          <span class="metric-label"> {{ cell.ynamePart }}:</span>
+          <span class="axis-value">{{
+            truncateText(cell.yDisplayaxisPart)
+          }}</span>
+        </div>
+      }
     </div>
     <div class="matrix-tooltip-content">
       <!-- Main value (not for Hellinger type) -->
