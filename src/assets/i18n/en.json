@@ -406,6 +406,8 @@
     "LOGVALUE": "LOG value",
     "VALUE": "Value",
     "FILE": "File",
+    "FILE_MODIFIED_TITLE": "File modified",
+    "FILE_MODIFIED_MESSAGE": "This file was modified outside the application: {filename}.\n\tDo you want to reload it?",
     "SAVE_BEFORE_QUIT": "Do you want to save the changes you made?",
     "CLUSTER_LENGTH": "Values",
     "NODE": "Node",

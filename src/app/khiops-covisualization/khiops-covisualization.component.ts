@@ -254,6 +254,46 @@ export class AppComponent
         cb('reject');
       }
     };
+    this.element.nativeElement.openFileModifiedDialog = (
+      cb: Function,
+      options?: { filename?: string; message?: string },
+    ) => {
+      try {
+        this.ngzone.run(() => {
+          try {
+            const dialogRef = this.dialogService.openDialog(
+              ConfirmDialogComponent,
+              {
+                width: 'auto',
+                height: 'auto',
+                disableClose: true,
+              },
+              {
+                displayCancelBtn: true,
+                displayRejectBtn: true,
+                confirmTranslation: this.translate.get('GLOBAL.YES'),
+                title: this.translate.get('GLOBAL.FILE_MODIFIED_TITLE'),
+                message:
+                  options?.message ||
+                  this.translate.get('GLOBAL.FILE_MODIFIED_MESSAGE', {
+                    filename: options?.filename || '',
+                  }),
+              },
+            );
+
+            dialogRef.afterClosed().subscribe((result) => {
+              cb(result === 'confirm' ? 'confirm' : 'reject');
+            });
+          } catch (error) {
+            console.error('Error opening file modified dialog:', error);
+            cb('reject');
+          }
+        });
+      } catch (error) {
+        console.error('Error in openFileModifiedDialog:', error);
+        cb('reject');
+      }
+    };
     this.element.nativeElement.rightClick = (e: any, cb?: Function) => {
       UtilsService.processRightClick(e.x, e.y);
       cb && cb(e);
