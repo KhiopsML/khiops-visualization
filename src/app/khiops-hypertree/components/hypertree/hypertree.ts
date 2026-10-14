@@ -95,14 +95,9 @@ export class Hypertree {
           return;
         }
 
-        const previousPosition = JSON.parse(
-          JSON.stringify(this.args.geometry.transformation.state.P),
-        );
         this.updateWeights_();
         this.update.transformation();
-
-        // Go to previous state without animation
-        this.animateTo(ok, err, previousPosition, null);
+        ok();
       });
     },
 
@@ -111,13 +106,9 @@ export class Hypertree {
       this.args.langloader((langMap, t1, dl) => {
         this.langMap = langMap || {};
         this.updateLang_();
-        this.update.data();
         if (this.data) {
           this.isInitializing = false;
-          // try to fix broken hyperview at init #170
-          // works on nodes change but not at first init
-          // this.api.updateNodesVisualization();
-
+          this.update.data();
           ok();
         }
       });
@@ -130,6 +121,7 @@ export class Hypertree {
         this.initData(d3h, t0, t1, dl);
         if (this.langMap) {
           this.isInitializing = false;
+          this.update.data();
           ok();
         }
       });
@@ -143,6 +135,7 @@ export class Hypertree {
         this.initData(d3h, t0, t1, dl);
         if (this.langMap) {
           this.isInitializing = false;
+          this.update.data();
           ok();
         }
       });
@@ -745,8 +738,8 @@ class Animation extends Transition {
       const p01 = done / args.duration;
 
       if (now > this.endTime) {
-        args.frame(1);
         this.end();
+        args.frame(1);
         args.resolve();
       } else {
         args.frame(p01);

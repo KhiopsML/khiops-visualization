@@ -132,43 +132,7 @@ export class TreeHyperComponent
     // listen for selectedNodes change
     this.selectedNodes$?.subscribe((selectedNodes) => {
       if (selectedNodes) {
-        // get previous values of selected nodes from store synchronously
-        let previousSelectedNodes: TreeNodeModel[] = [];
-        this.store.previousSelectedNodes$
-          .pipe(take(1))
-          .subscribe(
-            (nodes: TreeNodeModel[]) => (previousSelectedNodes = nodes),
-          );
-
-        this.removeNodes(previousSelectedNodes);
-        this.selectNodes(selectedNodes);
-
-        // Handle centering on leaf with proper timing
-        setTimeout(() => {
-          this.selectedNode$.pipe(take(1)).subscribe((selectedNode) => {
-            if (this.ht?.args?.objects && selectedNode?.id) {
-              this.ht.args.objects.primarySelectionNodeId = selectedNode?.id;
-            }
-
-            if (selectedNode) {
-              const treeNode = UtilsService.deepFind(
-                this.ht?.data,
-                selectedNode.id,
-              );
-              if (treeNode?.data) {
-                // Center on any node (leaf or non-leaf) then update visualization
-                this.ht?.initPromise.then(async () => {
-                  await this.ht?.api.gotoNode(treeNode, 300);
-                  setTimeout(() => {
-                    this.ht?.api.updateNodesVisualization();
-                  });
-                });
-              } else {
-                this.ht?.api.updateNodesVisualization();
-              }
-            }
-          });
-        });
+        this.updateSelection();
       }
     });
   }
@@ -215,6 +179,35 @@ export class TreeHyperComponent
         this.ht?.api.addPath('SelectionPath', dataTree, node?.color);
       }
     }
+  }
+
+  private updateSelection(ht = this.ht) {
+    if (!ht) return;
+
+    ht.initPromise.then(async () => {
+      if (this.ht !== ht) return;
+
+      const selectedNodes = await firstValueFrom(this.selectedNodes$);
+      const previousSelectedNodes = await firstValueFrom(
+        this.previousSelectedNodes$,
+      );
+      const selectedNode = await firstValueFrom(this.selectedNode$);
+      if (this.ht !== ht) return;
+
+      this.removeNodes(previousSelectedNodes || []);
+      this.selectNodes(selectedNodes || []);
+      ht.args.objects.primarySelectionNodeId = selectedNode?.id;
+      await ht.api.updateNodesVisualization();
+      if (this.ht !== ht) return;
+
+      const treeNode = selectedNode && UtilsService.deepFind(ht.data, selectedNode.id);
+      if (treeNode?.layout?.z) {
+        await ht.api.gotoNode(treeNode, 300);
+        if (this.ht === ht) {
+          ht.api.updateNodesVisualization();
+        }
+      }
+    });
   }
 
   ngOnChanges(changes: SimpleChanges) {
@@ -363,14 +356,13 @@ export class TreeHyperComponent
       );
 
       if (initView) {
-        // zoom out
-        this.ht?.initPromise.then(() => {
+        const ht = this.ht;
+        ht.initPromise.then(() => {
+          if (this.ht !== ht) return;
           this.initialLambda =
-            this.ht?.args?.geometry?.transformation?.state?.λ ??
+            ht.args?.geometry?.transformation?.state?.λ ??
             this.initialLambda;
-          // this.ht?.api.gotoλ(0.15)
-          // At init select the first node
-          this.selectNodes(this.selectedNodes || []);
+          this.updateSelection(ht);
         });
       }
       this.ht?.api.updateNodesVisualization();
