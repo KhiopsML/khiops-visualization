@@ -67,6 +67,6 @@
   @if (showZoom()) {
     <kl-zoom-tools [alignment]="'row'"></kl-zoom-tools>
   }
-  <kl-btn-fullscreen (toggleFullscreen)="onToggleFullscreen($event)">
+  <kl-btn-fullscreen [isFullscreen]="isFullscreen" (toggleFullscreen)="onToggleFullscreen($event)">
   </kl-btn-fullscreen>
 </div>

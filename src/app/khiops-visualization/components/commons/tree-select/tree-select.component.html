@@ -25,6 +25,7 @@
         <span fxFlex>{{ 'GLOBAL.DECISION_TREE' | translate }}</span>
       </h1>
       <kl-btn-fullscreen
+        [isFullscreen]="isFullscreen"
         class="screenshot-hide"
         (toggleFullscreen)="onToggleFullscreen($event)"
       >

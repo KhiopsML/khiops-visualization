@@ -24,6 +24,7 @@
       (toggleFullscreen)="onToggleFullscreen($event)"
     >
       <kl-btn-fullscreen
+        [isFullscreen]="isFullscreen"
         slot="header-tools"
         class="screenshot-hide"
         (toggleFullscreen)="onToggleFullscreen($event)"

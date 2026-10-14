@@ -80,6 +80,7 @@
               (matrixOptionChange)="changeMatrixType($event)"
             ></kl-matrix-toggle>
             <kl-btn-fullscreen
+              [isFullscreen]="isFullscreen"
               class="screenshot-hide"
               (toggleFullscreen)="onToggleFullscreen($event)"
             >

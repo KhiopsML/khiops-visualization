@@ -52,6 +52,7 @@
           ></kl-graph-options-menu>
           @if (showFullscreenBtn) {
             <kl-btn-fullscreen
+              [isFullscreen]="isFullscreen"
               class="screenshot-hide"
               (toggleFullscreen)="onToggleFullscreen($event)"
             >

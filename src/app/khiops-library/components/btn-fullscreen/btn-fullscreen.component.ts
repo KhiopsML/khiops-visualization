@@ -4,7 +4,7 @@
  * at https://spdx.org/licenses/BSD-3-Clause-Clear.html or see the "LICENSE" file for more details.
  */
 
-import { Component, inject, output, signal } from '@angular/core';
+import { Component, inject, model, output } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { LucideDynamicIcon } from '@lucide/angular';
@@ -21,7 +21,7 @@ import { TranslateService } from '@ngstack/translate';
   ],
 })
 export class BtnFullscreenComponent {
-  readonly isFullscreen = signal(false);
+  readonly isFullscreen = model(false);
   readonly toggleFullscreen = output<boolean>();
   public readonly translate = inject(TranslateService);
 

@@ -20,9 +20,29 @@ describe('Double click fullscreen behaviors', () => {
 
     cy.get('@preparationGrid').should('not.have.class', 'fullscreen');
 
+    cy.get('@preparationGrid')
+      .find('kl-btn-fullscreen button')
+      .invoke('attr', 'aria-label')
+      .as('openFullscreenLabel', { type: 'static' });
+
     cy.get('#preparation-variables-list .comp-header')
       .first()
       .dblclick({ force: true });
+
+    cy.get('@preparationGrid').should('have.class', 'fullscreen');
+
+    cy.get('@openFullscreenLabel').then((label) => {
+      cy.get('@preparationGrid')
+        .find('kl-btn-fullscreen button')
+        .should('not.have.attr', 'aria-label', label)
+        .click();
+
+      cy.get('@preparationGrid').should('not.have.class', 'fullscreen');
+      cy.get('@preparationGrid')
+        .find('kl-btn-fullscreen button')
+        .should('have.attr', 'aria-label', label)
+        .click();
+    });
 
     cy.get('@preparationGrid').should('have.class', 'fullscreen');
 
@@ -69,7 +89,27 @@ describe('Double click fullscreen behaviors', () => {
 
     cy.get('@targetDistributionWithButton').should('not.have.class', 'fullscreen');
 
+    cy.get('@targetDistributionWithButton')
+      .find('kl-btn-fullscreen button')
+      .invoke('attr', 'aria-label')
+      .as('openFullscreenLabel', { type: 'static' });
+
     cy.get('@targetDistributionWithButton').dblclick({ force: true });
+
+    cy.get('@targetDistributionWithButton').should('have.class', 'fullscreen');
+
+    cy.get('@openFullscreenLabel').then((label) => {
+      cy.get('@targetDistributionWithButton')
+        .find('kl-btn-fullscreen button')
+        .should('not.have.attr', 'aria-label', label)
+        .click();
+
+      cy.get('@targetDistributionWithButton').should('not.have.class', 'fullscreen');
+      cy.get('@targetDistributionWithButton')
+        .find('kl-btn-fullscreen button')
+        .should('have.attr', 'aria-label', label)
+        .click();
+    });
 
     cy.get('@targetDistributionWithButton').should('have.class', 'fullscreen');
 

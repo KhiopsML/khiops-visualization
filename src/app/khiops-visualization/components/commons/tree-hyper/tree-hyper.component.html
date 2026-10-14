@@ -27,7 +27,7 @@
           {{ 'GLOBAL.HYPER_TREE' | translate }}
         </h1>
 
-        <kl-btn-fullscreen (toggleFullscreen)="onToggleFullscreen($event)">
+        <kl-btn-fullscreen [isFullscreen]="isFullscreen" (toggleFullscreen)="onToggleFullscreen($event)">
         </kl-btn-fullscreen>
       </div>
     </div>
