@@ -4,6 +4,10 @@
     "safe": "main"
   },
   {
+    "name": "1146-redesign",
+    "safe": "1146-redesign"
+  },
+  {
     "name": "feat-multi-tabs",
     "safe": "feat-multi-tabs"
   }
