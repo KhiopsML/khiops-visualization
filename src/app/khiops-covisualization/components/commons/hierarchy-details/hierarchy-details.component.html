@@ -20,6 +20,8 @@
       [dimensions]="dimensions"
       [selectedTreeCluster]="selectedTreeCluster"
       (selectedTreeClusterChange)="onClusterChange($event)"
+      [dblClickFullScreen]="isFullscreen"
+      (toggleFullscreen)="onToggleFullscreen($event)"
     >
       <kl-btn-fullscreen
         slot="header-tools"

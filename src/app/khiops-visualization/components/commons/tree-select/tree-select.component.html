@@ -17,6 +17,8 @@
       fxLayout="row"
       fxLayoutAlign="start center"
       class="scrollbar-thin"
+      [dblClickFullScreen]="isFullscreen"
+      (toggleFullscreen)="onToggleFullscreen($event)"
     >
       <h1 fxLayoutAlign="start center" fxFlex>
         <svg lucideIcon="folder" size="16"></svg>

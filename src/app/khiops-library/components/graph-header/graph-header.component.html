@@ -10,6 +10,8 @@
   fxLayout="row"
   fxLayoutAlign="start center"
   class="scrollbar-thin"
+  [dblClickFullScreen]="isFullscreen"
+  (toggleFullscreen)="onToggleFullscreen($event)"
 >
   <div fxLayout="column" fxFlex>
     <h1

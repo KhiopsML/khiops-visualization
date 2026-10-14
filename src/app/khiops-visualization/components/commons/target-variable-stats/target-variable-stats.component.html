@@ -17,6 +17,8 @@
     fxLayout="row"
     fxLayoutAlign="start center"
     class="comp-header"
+    [dblClickFullScreen]="isFullscreen"
+    (toggleFullscreen)="onToggleFullscreen($event)"
   >
     <div class="header-title" fxLayout="row" fxLayoutAlign="start center">
       <h1 fxLayout="row" fxLayoutAlign="start center">

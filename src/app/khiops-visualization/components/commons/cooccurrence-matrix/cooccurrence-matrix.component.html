@@ -24,6 +24,8 @@
         fxLayout="row"
         fxLayoutAlign="start center"
         class="scrollbar-thin"
+        [dblClickFullScreen]="isFullscreen"
+        (toggleFullscreen)="onToggleFullscreen($event)"
       >
         <div fxFlex class="matrix-tabs-tools" fxLayout="row" fxLayoutGap="6px">
           <button

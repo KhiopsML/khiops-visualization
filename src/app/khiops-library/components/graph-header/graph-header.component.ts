@@ -51,6 +51,7 @@ export class GraphHeaderComponent {
   minScale = signal(this.appConfig.MIN_GRAPH_SCALE);
   stepScale = signal(this.appConfig.STEP_GRAPH_SCALE);
   scaleValue = signal(this.appConfig.DEFAULT_GRAPH_SCALE);
+  isFullscreen = false;
 
   persistScaleOptions = computed(() => {
     const stored = this.ls.get(LS.SETTING_PERSIST_SCALE_OPTIONS);
@@ -70,6 +71,7 @@ export class GraphHeaderComponent {
   }
 
   onToggleFullscreen(event: boolean) {
+    this.isFullscreen = event;
     this.toggleFullscreen.emit(event);
   }
 

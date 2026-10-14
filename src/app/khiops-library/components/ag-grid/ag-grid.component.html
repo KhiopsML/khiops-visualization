@@ -13,7 +13,13 @@
   [appFullscreenAnimation]="isFullscreen"
 >
   @if (showHeader && inputDatas?.length > 0) {
-    <div fxLayout="row" class="comp-header" #headerContainer>
+    <div
+      fxLayout="row"
+      class="comp-header"
+      #headerContainer
+      [dblClickFullScreen]="isFullscreen"
+      (toggleFullscreen)="onToggleFullscreen($event)"
+    >
       @if (!showFullSearch) {
         <div fxFlex fxLayoutAlign="start center" fxLayout="row">
           @if (displayCount) {

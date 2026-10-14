@@ -34,7 +34,13 @@
           [ngClass]="{ fullscreen: isFullscreen }"
           [appFullscreenAnimation]="isFullscreen"
         >
-          <div fxLayout="row" fxLayoutAlign="start center" class="comp-header">
+          <div
+            fxLayout="row"
+            fxLayoutAlign="start center"
+            class="comp-header"
+            [dblClickFullScreen]="isFullscreen"
+            (toggleFullscreen)="onToggleFullscreen($event)"
+          >
             <kl-matrix-mode
               fxFlex
               [matrixModes]="matrixModes"

@@ -152,6 +152,7 @@ import { DialogWrapperComponent } from './components/dialog-wrapper/dialog-wrapp
 import { DialogService } from './providers/dialog.service';
 import { FullscreenAnimationDirective } from './directives/fullscreen-animation.directive';
 import { SearchInputComponent } from './components/search-input/search-input.component';
+import { DblClickFullscreenDirective } from './directives/dbl-click-fullscreen.directive';
 
 // Translation data
 import EnTransaltion from '../../assets/i18n/en.json';
@@ -204,6 +205,7 @@ import { ImportantBadgeComponent } from './components/important-badge/important-
     ScalePersistenceSettingComponent,
     // Standalone directives
     FullscreenAnimationDirective,
+    DblClickFullscreenDirective,
     KeyboardTooltipComponent,
     ZoomToolsComponent,
     WarningInformationComponent,
@@ -362,6 +364,7 @@ import { ImportantBadgeComponent } from './components/important-badge/important-
     // Directives
     MenuFocusSelectedDirective,
     FullscreenAnimationDirective,
+    DblClickFullscreenDirective,
     NoDataComponent,
     // Modules for re-export
     CommonModule,
