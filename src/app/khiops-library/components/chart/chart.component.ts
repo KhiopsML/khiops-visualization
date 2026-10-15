@@ -215,12 +215,18 @@ export class ChartComponent implements AfterViewInit, OnDestroy {
    */
   private graphClickEvent(_e: ChartEvent, items: ActiveElement[]) {
     if (this.enableSelection()) {
+      const processedIndices = new Set<number>();
       const l = items.length;
       if (l > 0) {
         for (let i = 0; i < l; i++) {
           // undefined if click outside bar
           const item = items[i];
-          if (item && item.index !== undefined) {
+          if (
+            item &&
+            item.index !== undefined &&
+            !processedIndices.has(item.index)
+          ) {
+            processedIndices.add(item.index);
             this.currentActiveEntries.set(item.index);
             this.chartManagerService.selectCurrentBarIndex(
               item.index,

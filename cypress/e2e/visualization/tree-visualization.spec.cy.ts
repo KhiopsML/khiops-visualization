@@ -75,3 +75,97 @@ describe('Tree visualization Test for Khiops Visualization', () => {
     });
   });
 });
+
+describe('Tree preparation target distribution selection', () => {
+  const selectedTreeNodes = '#tree-select-comp .tree-leaf-content.tree-selected';
+  const hyperSelection = '#tree-preparation-hyper .tree-hyper-selection';
+  const leafChart = '#target-distribution-chart-1';
+  const lastBarIndex = 7;
+
+  function getChart(canvas: HTMLCanvasElement) {
+    return canvas.closest('kl-chart').componentInstance.chartManagerService.getChart();
+  }
+
+  function clickBar(canvasSelector: string, index: number) {
+    cy.get(canvasSelector)
+      .scrollIntoView()
+      .should('be.visible')
+      .should(($canvas) => {
+        const chart = getChart($canvas[0]);
+        expect(chart.data.labels.length).to.be.greaterThan(index);
+        expect(chart.getDatasetMeta(0).data[index].width).to.be.greaterThan(0);
+      })
+      .then(($canvas) => {
+        const canvas = $canvas[0] as HTMLCanvasElement;
+        const chart = getChart(canvas);
+        const bar = chart.data.datasets
+          .map((dataset, datasetIndex) => chart.getDatasetMeta(datasetIndex).data[index])
+          .find((element) => element && Math.abs(element.base - element.y) > 1);
+        expect(bar, 'nonempty bar to click').to.exist;
+        const bounds = canvas.getBoundingClientRect();
+
+        cy.wrap($canvas).click(
+          bar.x * bounds.width / chart.width,
+          (bar.y + bar.base) / 2 * bounds.height / chart.height,
+        );
+      });
+  }
+
+  function nodeIds(elements: JQuery<HTMLElement>) {
+    return Array.from(elements, (element) => element.closest('[id^="tree-leaf-"]').id)
+      .sort();
+  }
+
+  function leafDistribution(canvas: HTMLCanvasElement) {
+    return getChart(canvas).data.datasets.map((dataset) => Array.from(dataset.data));
+  }
+
+  it('restores all tree views when the eighth and last target bar is clicked after another graph changes selection', () => {
+    cy.loadFile('visualization', 'accidents.json');
+    cy.contains('.mat-mdc-tab', 'Tree preparation').click();
+    cy.checkCanvasIsNotEmpty('#target-distribution-chart-0');
+    cy.get('#target-distribution-chart-0').should(($canvas) => {
+      expect(getChart($canvas[0]).data.labels).to.have.length(lastBarIndex + 1);
+    });
+
+    clickBar('#target-distribution-chart-0', lastBarIndex);
+    cy.get(selectedTreeNodes).should('have.length.greaterThan', 0);
+    cy.get(`${hyperSelection} .lineage-chip.current`).should('not.be.empty');
+    cy.checkCanvasIsNotEmpty(leafChart);
+
+    cy.get(selectedTreeNodes).then(($nodes) => {
+      const expectedNodeIds = nodeIds($nodes);
+
+      cy.get(hyperSelection).invoke('text').then((expectedHyperText) => {
+        cy.get(leafChart).then(($canvas) => {
+          const expectedDistribution = leafDistribution($canvas[0]);
+
+          clickBar('#distribution-chart-0', 0);
+          cy.get(selectedTreeNodes).should(($changedNodes) => {
+            expect(nodeIds($changedNodes)).not.to.deep.equal(expectedNodeIds);
+          });
+          cy.get(hyperSelection).should(($selection) => {
+            expect($selection.text()).not.to.equal(expectedHyperText);
+          });
+          cy.get(leafChart).should(($changedCanvas) => {
+            expect(leafDistribution($changedCanvas[0])).not.to.deep.equal(expectedDistribution);
+          });
+
+          clickBar('#target-distribution-chart-0', lastBarIndex);
+
+          cy.get(selectedTreeNodes).should(($restoredNodes) => {
+            expect(nodeIds($restoredNodes)).to.deep.equal(expectedNodeIds);
+          });
+          cy.get(hyperSelection).should(($selection) => {
+            expect($selection.text()).to.equal(expectedHyperText);
+          });
+          cy.get(leafChart).should(($restoredCanvas) => {
+            expect(leafDistribution($restoredCanvas[0])).to.deep.equal(expectedDistribution);
+          });
+          cy.checkCanvasIsNotEmpty(leafChart);
+          cy.get('#tree-preparation-variables-list .ag-row-selected').should('have.length', 1);
+        });
+      });
+    });
+  });
+});

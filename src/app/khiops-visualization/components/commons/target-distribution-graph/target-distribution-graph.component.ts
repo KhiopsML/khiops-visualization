@@ -80,7 +80,6 @@ export class TargetDistributionGraphComponent
   public chartOptions: ChartOptions;
   public isFullscreen = false;
   public isSmallDiv = false;
-  private selectedBarIndex?: number;
 
   @ViewChild('headerContainer', { read: ElementRef })
   private headerContainerRef?: ElementRef<HTMLElement>;
@@ -316,13 +315,7 @@ export class TargetDistributionGraphComponent
    * @param index The index of the selected bar
    */
   onSelectBarChanged(index: number) {
-    // Debounce each events
-    // Each bar of grouped chart launch same event
-    if (this.selectedBarIndex !== index) {
-      // pass event from chart to parent
-      this.selectedItemChanged.emit(index);
-    }
-    this.selectedBarIndex = index;
+    this.selectedItemChanged.emit(index);
   }
 
   /**
