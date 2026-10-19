@@ -96,7 +96,7 @@ export class CopyImageService {
                   saveAs(blob, currentSelectedArea.id + '.png');
                 });
             } else {
-              this.configService.getConfig().onCopyImage(dataUrl);
+              await this.configService.getConfig().onCopyImage(dataUrl);
             }
 
             // Show snack
