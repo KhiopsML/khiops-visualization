@@ -408,7 +408,16 @@ describe('Visualization', () => {
           evaluationType: 'Test',
           summary: { dictionary: 'Iris', instances: 45 },
           predictorsPerformance,
-          predictorsDetailedPerformance,
+          predictorsDetailedPerformance: {
+            R1: {
+              ...predictorsDetailedPerformance.R1,
+              aucValues: { values, aucs: [1, 0.89, 0.88] },
+            },
+            R2: {
+              ...predictorsDetailedPerformance.R2,
+              aucValues: { values, aucs: [1, 0.85, 0.8] },
+            },
+          },
           liftCurves: [],
         },
       };
@@ -434,25 +443,53 @@ describe('Visualization', () => {
       expect(res).toBeUndefined();
     });
 
-    it('getDetailedPredictorsAucValues should return one column per target modality and one row per predictor', () => {
+    it('getDetailedPredictorsAucValues should return one row per predictor and evaluation type', () => {
       initThreeClassMock();
       const res = evaluationDatasService.getDetailedPredictorsAucValues();
       expect(res).toBeTruthy();
-      expect(res.displayedColumns.length).toBe(4); // predictor + A + B + C
+      expect(res.displayedColumns.length).toBe(5);
       expect(res.displayedColumns[0].field).toBe('predictor');
+      expect(res.displayedColumns[1].field).toBe('type');
       expect(res.displayedColumns.map((c) => c.headerName)).toEqual([
         jasmine.any(String),
+        'type',
         'A',
         'B',
         'C',
       ]);
-      expect(res.values.length).toBe(2);
-      expect(res.values[0].predictor).toBe('Selective Naive Bayes');
-      expect(res.values[0]['0']).toBe(1);
-      expect(res.values[1]['1']).toBe(0.95);
+      expect(res.values).toEqual([
+        {
+          predictor: 'Selective Naive Bayes',
+          type: 'Train',
+          '0': 1,
+          '1': 0.99,
+          '2': 0.98,
+        },
+        {
+          predictor: 'Univariate PetalWidth',
+          type: 'Train',
+          '0': 1,
+          '1': 0.95,
+          '2': 0.9,
+        },
+        {
+          predictor: 'Selective Naive Bayes',
+          type: 'Test',
+          '0': 1,
+          '1': 0.89,
+          '2': 0.88,
+        },
+        {
+          predictor: 'Univariate PetalWidth',
+          type: 'Test',
+          '0': 1,
+          '1': 0.85,
+          '2': 0.8,
+        },
+      ]);
     });
 
-    it('getDetailedPredictorsAucValues should handle Test evaluation type', () => {
+    it('getDetailedPredictorsAucValues should keep both types when Test is selected', () => {
       initThreeClassMock();
       const datas = evaluationDatasService.getDatas();
       const testType = datas.evaluationTypesSummary.values.find(
@@ -462,14 +499,47 @@ describe('Visualization', () => {
 
       const res = evaluationDatasService.getDetailedPredictorsAucValues();
       expect(res).toBeTruthy();
-      expect(res.values.length).toBe(2);
+      expect(res.values.map((row) => row.type)).toEqual([
+        'Train',
+        'Train',
+        'Test',
+        'Test',
+      ]);
+      expect(res.values[0]['1']).toBe(0.99);
+      expect(res.values[2]['1']).toBe(0.89);
     });
+
+    for (const type of ['Train', 'Test', 'Evaluation']) {
+      it(`getDetailedPredictorsAucValues should handle a standalone ${type} report`, () => {
+        const reports = threeClassEvaluationMock();
+        const report =
+          type === 'Test'
+            ? reports.testEvaluationReport
+            : reports.trainEvaluationReport;
+        const reportKey =
+          type === 'Evaluation'
+            ? 'evaluationReport'
+            : `${type.toLowerCase()}EvaluationReport`;
+        if (type === 'Evaluation') {
+          delete report.evaluationType;
+        }
+        appService.setFileDatas({ [reportKey]: report });
+        evaluationDatasService.initialize();
+
+        const res = evaluationDatasService.getDetailedPredictorsAucValues();
+        expect(res.values.length).toBe(2);
+        expect(res.values.map((row) => row.type)).toEqual([type, type]);
+        expect(res.values[0].predictor).toBe('Selective Naive Bayes');
+        expect(res.values[0]['1']).toBe(type === 'Test' ? 0.89 : 0.99);
+      });
+    }
 
     it('getDetailedPredictorsAucValues should replace empty modality name with a dash', () => {
       initThreeClassMock(true);
       const res = evaluationDatasService.getDetailedPredictorsAucValues();
       expect(res.displayedColumns.map((c) => c.headerName)).toEqual([
         jasmine.any(String),
+        'type',
         'A',
         '-',
         'C',

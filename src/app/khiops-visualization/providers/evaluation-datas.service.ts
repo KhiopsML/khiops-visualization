@@ -120,9 +120,7 @@ export class EvaluationDatasService {
    * @returns An array of evaluation types.
    */
   getEvaluationTypes():
-    | EvaluationReport[]
-    | TestEvaluationReport[]
-    | TrainEvaluationReport[] {
+    EvaluationReport[] | TestEvaluationReport[] | TrainEvaluationReport[] {
     this.evaluationDatas.evaluationTypes = [];
 
     const appDatas = this.appService.appDatas as Record<string, any>;
@@ -323,35 +321,20 @@ export class EvaluationDatasService {
   getDetailedPredictorsAucValues(): GridDatasI | undefined {
     this.evaluationDatas.detailedPredictorsAucValues = undefined;
 
-    let currentReport: any;
-    // get the correct report : train or test
-    if (
-      this.evaluationDatas?.selectedEvaluationTypeVariable?.type ===
-      PREDICTOR_TYPES.TRAIN
-    ) {
-      currentReport = this.appService.appDatas?.trainEvaluationReport;
-    } else if (
-      this.evaluationDatas?.selectedEvaluationTypeVariable?.type ===
-      PREDICTOR_TYPES.TEST
-    ) {
-      currentReport = this.appService.appDatas?.testEvaluationReport;
-    } else {
-      currentReport = this.appService.appDatas?.evaluationReport;
-    }
-
-    if (
-      !currentReport?.predictorsDetailedPerformance ||
-      !currentReport?.predictorsPerformance
-    ) {
-      return undefined;
-    }
-
-    const ranks = Object.keys(currentReport.predictorsDetailedPerformance);
-    const targetValues: string[] | undefined = ranks
-      .map(
-        (rank) =>
-          currentReport.predictorsDetailedPerformance[rank]?.aucValues
-            ?.values,
+    const reports: any[] = [
+      this.appService.appDatas?.trainEvaluationReport,
+      this.appService.appDatas?.testEvaluationReport,
+      this.appService.appDatas?.evaluationReport,
+    ].filter(
+      (report) =>
+        report?.predictorsDetailedPerformance && report?.predictorsPerformance,
+    );
+    const targetValues: string[] | undefined = reports
+      .flatMap((report) =>
+        Object.keys(report.predictorsDetailedPerformance).map(
+          (rank) =>
+            report.predictorsDetailedPerformance[rank]?.aucValues?.values,
+        ),
       )
       .find((values: string[] | undefined) => values && values.length > 0);
 
@@ -371,6 +354,11 @@ export class EvaluationDatasService {
             'TOOLTIPS.EVALUATION.DETAILED_AUC.PREDICTOR',
           ),
         },
+        {
+          headerName: 'type',
+          field: 'type',
+          tooltip: this.translate.get('TOOLTIPS.EVALUATION.EVALUATIONS.TYPE'),
+        },
       ],
     };
 
@@ -386,18 +374,22 @@ export class EvaluationDatasService {
       );
 
     const datas: DynamicI[] = [];
-    for (const rank of ranks) {
-      const aucValues =
-        currentReport.predictorsDetailedPerformance[rank]?.aucValues;
-      if (aucValues) {
-        const predictorPerf = currentReport.predictorsPerformance.find(
-          (p: any) => p.rank === rank,
-        );
-        const row: DynamicI = { predictor: predictorPerf?.name || rank };
-        for (let i = 0; i < aucValues.aucs.length; i++) {
-          row[i.toString()] = aucValues.aucs[i];
+    for (const report of reports) {
+      for (const rank of Object.keys(report.predictorsDetailedPerformance)) {
+        const aucValues = report.predictorsDetailedPerformance[rank]?.aucValues;
+        if (aucValues) {
+          const predictorPerf = report.predictorsPerformance.find(
+            (predictor: any) => predictor.rank === rank,
+          );
+          const row: DynamicI = {
+            predictor: predictorPerf?.name || rank,
+            type: report.evaluationType || report.reportType,
+          };
+          for (let i = 0; i < aucValues.aucs.length; i++) {
+            row[i.toString()] = aucValues.aucs[i];
+          }
+          datas.push(row);
         }
-        datas.push(row);
       }
     }
     this.evaluationDatas.detailedPredictorsAucValues.values = datas;
@@ -453,7 +445,9 @@ export class EvaluationDatasService {
       // Init selection the first time
       if (!this.evaluationDatas.selectedEvaluationTypeVariable) {
         // Restore saved evaluation type if available
-        const savedType = this.appService.getSavedDatas('selectedEvaluationType');
+        const savedType = this.appService.getSavedDatas(
+          'selectedEvaluationType',
+        );
         const savedEvalType = savedType
           ? datas.find((e) => e.type === savedType)
           : undefined;
@@ -560,9 +554,7 @@ export class EvaluationDatasService {
           );
           const savedPredictor =
             savedName && savedType
-              ? datas.find(
-                  (e) => e.name === savedName && e.type === savedType,
-                )
+              ? datas.find((e) => e.name === savedName && e.type === savedType)
               : undefined;
           this.setSelectedPredictorEvaluationVariable(
             savedPredictor || datas[0],
