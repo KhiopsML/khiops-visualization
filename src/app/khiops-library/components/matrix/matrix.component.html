@@ -28,11 +28,11 @@
   </div>
   <div fxLayout="column" fxFlex class="matrix-comp-container bg-dotted">
     <div fxLayout="row" fxFlex>
-      <div fxLayout="column" id="matrix-comp-left">
-        <div id="matrix-comp-left-top" class="screenshot-hide">
+      <div fxLayout="column" id="matrix-comp-left" class="screenshot-hide">
+        <div id="matrix-comp-left-top">
           <kl-zoom-tools></kl-zoom-tools>
           @if (isKhiopsCovisu) {
-            <hr class="screenshot-hide" />
+            <hr />
           }
           @if (isKhiopsCovisu) {
             <kl-keyboard-tooltip
@@ -44,7 +44,6 @@
           }
           @if (graphMode?.mode === 'MUTUAL_INFO' && !isKhiopsCovisu) {
             <button
-              class="screenshot-hide"
               mat-icon-button
               matTooltip="{{ 'GLOBAL.TOGGLE_ZERO' | translate }}"
               (click)="onClickOnToggleZeros()"
@@ -59,7 +58,7 @@
           }
 
           <button
-            class="screenshot-hide lucid-icon-button"
+            class="lucid-icon-button"
             mat-icon-button
             matTooltip="{{ 'GLOBAL.INVERT_AXIS' | translate }}"
             (click)="onClickOnInvertAxis()"

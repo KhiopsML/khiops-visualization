@@ -125,6 +125,7 @@
     z-index: 1;
     min-width: 42px;
     #matrix-comp-left-top {
+      flex-direction: column !important;
       border: 1px solid var(--color-border-highlight);
       margin: 30px 20px 5px 20px;
       box-shadow: var(--box-shadow-elevate-100);
