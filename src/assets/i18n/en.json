@@ -288,6 +288,8 @@
     "VARIABLES": "Variables",
     "DELTA_LEVEL_DISTRIBUTION": "Delta level distribution",
     "LEVEL_DISTRIBUTION": "Level distribution",
+    "LEVEL_DISPLAY_MODE_RELATIVE": "Relatively to the current maximum",
+    "LEVEL_DISPLAY_MODE_ABSOLUTE": "Absolutely (normalized on 1)",
     "IMPORTANCE_DISTRIBUTION": "Importance",
     "LEVEL": "Level",
     "SEARCH": "Search",
@@ -422,6 +424,7 @@
       "FILTER_DATAS_GRID": "Filter datas in the grid",
       "FILTER_DATA": "Filter data: {data}",
       "CHANGE_DATAS_OPTION": "Changes datas option",
+      "TOGGLE_LEVEL_DISPLAY_MODE": "Toggle level display mode",
       "CHANGE_TO": "Changes to {type}"
     },
     "HEADER": {

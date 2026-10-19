@@ -11,6 +11,8 @@ import { visualizationCommonEnvironment } from '../../../environments/visualizat
 // Capture defaults at module load time, before any AppConfig mutation
 const INITIAL_TO_FIXED = visualizationCommonEnvironment.GLOBAL.TO_FIXED;
 const INITIAL_MATRIX_CONTRAST = visualizationCommonEnvironment.GLOBAL.MATRIX_CONTRAST;
+const INITIAL_LEVEL_RELATIVE_VALUE =
+  visualizationCommonEnvironment.GLOBAL.LEVEL_RELATIVE_VALUE;
 import { KhiopsLibraryService } from '@khiops-library/providers/khiops-library.service';
 import { REPORT } from '@khiops-library/enum/report';
 import { LS } from '@khiops-library/enum/ls';
@@ -85,12 +87,21 @@ export class AppService {
    * Initializes global configuration variables from local storage or defaults.
    */
   initGlobalConfigVariables() {
+    const persistedLevelRelativeValue = this.ls.get(
+      LS.SETTING_LEVEL_RELATIVE_VALUE,
+    );
+
     AppConfig.visualizationCommon.GLOBAL.TO_FIXED =
       parseInt(this.ls.get(LS.SETTING_NUMBER_PRECISION) || '', 10) ||
       INITIAL_TO_FIXED;
     AppConfig.visualizationCommon.GLOBAL.MATRIX_CONTRAST =
       parseInt(this.ls.get(LS.SETTING_MATRIX_CONTRAST) || '', 10) ||
       INITIAL_MATRIX_CONTRAST;
+    AppConfig.visualizationCommon.GLOBAL.LEVEL_RELATIVE_VALUE =
+      persistedLevelRelativeValue === undefined
+        ? INITIAL_LEVEL_RELATIVE_VALUE
+        : persistedLevelRelativeValue === true ||
+          persistedLevelRelativeValue === 'true';
 
     AppConfig.common = {
       ...AppConfig.visualizationCommon,

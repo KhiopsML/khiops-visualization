@@ -12,6 +12,8 @@ export interface GridColumnsI {
   tooltip?: string;
   cellRenderer?: any;
   cellRendererParams?: any;
+  headerComponent?: any;
+  headerComponentParams?: any;
   cellClass?: string | ((params: any) => string); // CSS class for cells
   headerClass?: string | ((params: any) => string); // CSS class for headers
 }

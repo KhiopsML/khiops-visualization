@@ -9,6 +9,7 @@ import { ColDef } from '@ag-grid-community/core';
 import { GridColumnsI } from '@khiops-library/interfaces/grid-columns.interface';
 import { DynamicI } from '@khiops-library/interfaces/globals.interface';
 import { UtilsService } from '@khiops-library/providers/utils.service';
+import { LevelHeaderComponent } from './level-header/level-header.component';
 
 @Injectable({
   providedIn: 'root',
@@ -133,6 +134,10 @@ export class AgGridService {
           resizable: true,
           hide: col.show === false,
           width: options.cellsSizes?.[options.gridId!]?.[col.field],
+          headerComponent:
+            col.headerComponent ||
+            (col.field === 'level' ? LevelHeaderComponent : undefined),
+          headerComponentParams: col.headerComponentParams,
           cellRenderer: col.cellRenderer,
           cellRendererParams:
             col.field === 'level'

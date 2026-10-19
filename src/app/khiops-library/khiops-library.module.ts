@@ -46,6 +46,7 @@ import {
   LucideTrash,
   LucideNotebookPen,
   LucideChevronDown,
+  LucideChevronUp,
   LucideSquareExclamationPoint,
   LucideChevronRight,
   LucideEye,
@@ -120,6 +121,7 @@ import { GraphHeaderComponent } from './components/graph-header/graph-header.com
 import { MatrixComponent } from './components/matrix/matrix.component';
 import { AgGridComponent } from './components/ag-grid/ag-grid.component';
 import { AgGridLoadingOverlayComponent } from './components/ag-grid/ag-grid-loading-overlay.component';
+import { LevelHeaderComponent } from './components/ag-grid/level-header/level-header.component';
 import { MatrixTooltipComponent } from './components/matrix-tooltip/matrix-tooltip.component';
 import { CheckboxCellComponent } from './components/ag-grid/checkbox-cell/checkbox-cell.component';
 import { LevelCellComponent } from './components/ag-grid/level-cell/level-cell.component';
@@ -242,6 +244,7 @@ import { ImportantBadgeComponent } from './components/important-badge/important-
     SelectableTabComponent,
     MatrixComponent,
     AgGridComponent,
+    LevelHeaderComponent,
     MatrixTooltipComponent,
     MatrixToggleComponent,
     MatrixModeComponent,
@@ -266,6 +269,7 @@ import { ImportantBadgeComponent } from './components/important-badge/important-
       LucideNotebookPen,
       LucideSquarePlus,
       LucideChevronDown,
+      LucideChevronUp,
       LucideChevronRight,
       LucideSquareExclamationPoint,
       LucidePlus,
@@ -342,6 +346,7 @@ import { ImportantBadgeComponent } from './components/important-badge/important-
     InformationsBlockComponent,
     MatrixComponent,
     AgGridComponent,
+    LevelHeaderComponent,
     AgGridLoadingOverlayComponent,
     SearchInputComponent,
     MatrixTooltipComponent,

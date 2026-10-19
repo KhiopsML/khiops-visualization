@@ -11,8 +11,6 @@ import { ICellRendererParams } from '@ag-grid-community/core';
 import { UtilsService } from '@khiops-library/providers/utils.service';
 import { KhiopsLibraryService } from '@khiops-library/providers/khiops-library.service';
 
-const LEVEL_RELATIVE_VALUE = false; // Set to true to display the level as a percentage of the maximum level, false to display it as a percentage of 1.0
-
 interface LevelCellRendererParams extends ICellRendererParams {
   maxLevel: number;
 }
@@ -65,7 +63,7 @@ export class LevelCellComponent implements AgRendererComponent {
       return 0;
     }
 
-    if (!LEVEL_RELATIVE_VALUE) {
+    if (!this.isRelativeValue) {
       return Math.min(100, Math.max(0, level * 100));
     }
 
@@ -75,5 +73,12 @@ export class LevelCellComponent implements AgRendererComponent {
     }
 
     return Math.min(100, Math.max(0, (level / maxLevel) * 100));
+  }
+
+  private get isRelativeValue(): boolean {
+    return Boolean(
+      this.khiopsLibraryService.getAppConfig().common?.GLOBAL
+        ?.LEVEL_RELATIVE_VALUE,
+    );
   }
 }

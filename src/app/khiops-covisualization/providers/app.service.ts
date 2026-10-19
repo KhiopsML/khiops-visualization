@@ -12,6 +12,8 @@ import { covisualizationCommonEnvironment } from '../../../environments/covisual
 // Capture defaults at module load time, before any AppConfig mutation
 const INITIAL_TO_FIXED = covisualizationCommonEnvironment.GLOBAL.TO_FIXED;
 const INITIAL_MATRIX_CONTRAST = covisualizationCommonEnvironment.GLOBAL.MATRIX_CONTRAST;
+const INITIAL_LEVEL_RELATIVE_VALUE =
+  covisualizationCommonEnvironment.GLOBAL.LEVEL_RELATIVE_VALUE;
 import { Ls } from '@khiops-library/providers/ls.service';
 import { LayoutService } from '@khiops-library/providers/layout.service';
 import { VIEW_LAYOUT } from '@khiops-covisualization/config/view-layout';
@@ -192,12 +194,21 @@ export class AppService {
    * in the KhiopsLibraryService.
    */
   initGlobalConfigVariables() {
+    const persistedLevelRelativeValue = this.ls.get(
+      LS.SETTING_LEVEL_RELATIVE_VALUE,
+    );
+
     AppConfig.covisualizationCommon.GLOBAL.TO_FIXED =
       parseInt(this.ls.get(LS.SETTING_NUMBER_PRECISION) || '', 10) ||
       INITIAL_TO_FIXED;
     AppConfig.covisualizationCommon.GLOBAL.MATRIX_CONTRAST =
       parseInt(this.ls.get(LS.SETTING_MATRIX_CONTRAST) || '', 10) ||
       INITIAL_MATRIX_CONTRAST;
+    AppConfig.covisualizationCommon.GLOBAL.LEVEL_RELATIVE_VALUE =
+      persistedLevelRelativeValue === undefined
+        ? INITIAL_LEVEL_RELATIVE_VALUE
+        : persistedLevelRelativeValue === true ||
+          persistedLevelRelativeValue === 'true';
 
     AppConfig.common = {
       ...AppConfig.covisualizationCommon,

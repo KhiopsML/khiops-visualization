@@ -7,6 +7,7 @@
 export const covisualizationCommonEnvironment = {
   GLOBAL: {
     TO_FIXED: 4,
+    LEVEL_RELATIVE_VALUE: false,
     LS_ID: 'KHIOPS_COVISUALIZATION_',
     DEBUG_SOFTWARE_LABEL: 'KC',
     MATRIX_CONTRAST: 10,

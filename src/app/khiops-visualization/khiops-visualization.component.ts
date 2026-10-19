@@ -252,6 +252,9 @@ export class AppComponent
     this.khiopsLibraryService.saveFileRequested$.subscribe(() => {
       const settings: Record<string, any> = {
         SETTING_NUMBER_PRECISION: AppService.Ls.get('SETTING_NUMBER_PRECISION'),
+        SETTING_LEVEL_RELATIVE_VALUE: AppService.Ls.get(
+          'SETTING_LEVEL_RELATIVE_VALUE',
+        ),
         SETTING_MATRIX_CONTRAST: AppService.Ls.get('SETTING_MATRIX_CONTRAST'),
         SETTING_AUTO_SCALE: AppService.Ls.get('SETTING_AUTO_SCALE'),
         SETTING_AUTO_SCALE_FACTOR: AppService.Ls.get(
