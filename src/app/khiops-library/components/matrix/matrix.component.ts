@@ -940,7 +940,11 @@ export class MatrixComponent extends SelectableComponent implements OnChanges {
   onContrastChanged(event: Event) {
     const target = event.target as HTMLInputElement;
     this.contrast = parseInt(target.value, 10);
-    this.contrast && this.ls.set(LS.SETTING_MATRIX_CONTRAST, this.contrast);
+    if (this.contrast) {
+      this.ls.set(LS.SETTING_MATRIX_CONTRAST, this.contrast);
+      this.ls.setAll();
+      this.khiopsLibraryService.saveFileRequested$.next();
+    }
     this.drawMatrix();
   }
 
