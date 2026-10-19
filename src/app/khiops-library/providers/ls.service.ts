@@ -120,7 +120,13 @@ export class Ls {
     if (!this.configService.isElectronStorage) {
       localStorage.removeItem(this.LS_ID + key);
     } else {
-      this.lsDatas && this.lsDatas[key] && delete this.lsDatas[key];
+      if (this.lsDatas) {
+        if (Object.getOwnPropertyDescriptor(this.lsDatas, key)?.set) {
+          this.lsDatas[key] = undefined;
+        } else {
+          delete this.lsDatas[key];
+        }
+      }
     }
   }
 

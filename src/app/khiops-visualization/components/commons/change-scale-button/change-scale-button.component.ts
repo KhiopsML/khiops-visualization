@@ -110,5 +110,6 @@ export class ChangeScaleButtonComponent {
         yScale: yScaleType,
       });
     }
+    AppService.Ls.setAll();
   }
 }
