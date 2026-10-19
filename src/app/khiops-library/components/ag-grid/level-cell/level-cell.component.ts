@@ -11,7 +11,7 @@ import { ICellRendererParams } from '@ag-grid-community/core';
 import { UtilsService } from '@khiops-library/providers/utils.service';
 import { KhiopsLibraryService } from '@khiops-library/providers/khiops-library.service';
 
-const LEVEL_RELATIVE_VALUE = true; // Set to true to display the level as a percentage of the maximum level, false to display it as a percentage of 1.0
+const LEVEL_RELATIVE_VALUE = false; // Set to true to display the level as a percentage of the maximum level, false to display it as a percentage of 1.0
 
 interface LevelCellRendererParams extends ICellRendererParams {
   maxLevel: number;
