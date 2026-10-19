@@ -17,6 +17,42 @@ describe('MatrixUtilsService', () => {
     TestBed.configureTestingModule({});
   });
 
+  describe('getFrequencyAxisValues', () => {
+    const cellFrequencies = [
+      0, 20, 33295,
+      37, 0, 19,
+      33240, 18, 0,
+      38, 0, 18,
+      0, 18, 33297,
+    ];
+
+    for (const [xType, yType] of [
+      ['Numerical', 'Numerical'],
+      ['Categorical', 'Numerical'],
+      ['Numerical', 'Categorical'],
+      ['Categorical', 'Categorical'],
+    ]) {
+      it(`should size ${xType}/${yType} axes by marginal frequencies`, () => {
+        const [xValues, yValues] = MatrixUtilsService.getFrequencyAxisValues(
+          { type: xType, parts: 3 },
+          { type: yType, parts: 5 },
+          cellFrequencies,
+        );
+
+        const expectedX = [0, 33.315, 33.371, 100];
+        const expectedY = [0, 33.315, 33.371, 66.629, 66.685, 100];
+        expect(xValues.length).toBe(4);
+        expect(yValues.length).toBe(6);
+        expectedX.forEach((value, index) => {
+          expect(xValues[index]).toBeCloseTo(value, 6);
+        });
+        expectedY.forEach((value, index) => {
+          expect(yValues[index]).toBeCloseTo(value, 6);
+        });
+      });
+    }
+  });
+
   // ─── computeValsByContext ────────────────────────────────────────────
 
   describe('computeValsByContext', () => {

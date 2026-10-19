@@ -48,8 +48,8 @@ describe('CoVisualization', () => {
     it('Cell[0] w.standard should return valid datas', () => {
       expect(cells![0].w.standard).toEqual(25);
     });
-    it('Cell[0] w.frequency should return valid datas', () => {
-      expect(cells![0].w.frequency).toEqual(33.333333333333336);
+    it('Cell[0] w.frequency should reflect marginal frequency across contexts', () => {
+      expect(cells![0].w.frequency).toBeCloseTo(30.555555555555557, 10);
     });
     it('Cell[0] cellFreqs should return valid datas', () => {
       expect(cells![0].cellFreqs).toEqual([2000, 0]);

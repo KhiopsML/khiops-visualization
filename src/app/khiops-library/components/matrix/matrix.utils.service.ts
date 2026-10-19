@@ -480,7 +480,10 @@ export class MatrixUtilsService {
     let xValues: number[] = [];
     let yValues: number[] = [];
 
-    if (xDimension.type === TYPES.CATEGORICAL) {
+    if (
+      xDimension.type === TYPES.CATEGORICAL ||
+      xDimension.type === TYPES.NUMERICAL
+    ) {
       const currentLineVal = UtilsService.getLinesTotals(
         xDimension.parts,
         yDimension.parts,
@@ -488,13 +491,11 @@ export class MatrixUtilsService {
       );
       xValues =
         UtilsService.generateArrayPercentsFromArrayValues(currentLineVal);
-    } else if (xDimension.type === TYPES.NUMERICAL) {
-      // Same behavior on KC and KV
-      xValues = UtilsService.generateArrayPercentsFromArrayIntervals(
-        xDimension.parts,
-      );
     }
-    if (yDimension.type === TYPES.CATEGORICAL) {
+    if (
+      yDimension.type === TYPES.CATEGORICAL ||
+      yDimension.type === TYPES.NUMERICAL
+    ) {
       const currentColVal = UtilsService.getColumnsTotals(
         xDimension.parts,
         yDimension.parts,
@@ -502,11 +503,6 @@ export class MatrixUtilsService {
       );
       yValues =
         UtilsService.generateArrayPercentsFromArrayValues(currentColVal);
-    } else if (yDimension.type === TYPES.NUMERICAL) {
-      // Same behavior on KC and KV
-      yValues = UtilsService.generateArrayPercentsFromArrayIntervals(
-        yDimension.parts,
-      );
     }
 
     return [xValues, yValues];
