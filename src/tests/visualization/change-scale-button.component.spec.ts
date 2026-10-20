@@ -32,7 +32,7 @@ describe('ChangeScaleButtonComponent', () => {
       'VariableScaleSettingsService',
       ['clearAllVariableScaleSettings'],
     );
-    lsSpy = jasmine.createSpyObj('Ls', ['set', 'del']);
+    lsSpy = jasmine.createSpyObj('Ls', ['set', 'del', 'setAll']);
     AppService.Ls = lsSpy;
 
     await TestBed.configureTestingModule({
@@ -69,5 +69,6 @@ describe('ChangeScaleButtonComponent', () => {
     expect(lsSpy.set).toHaveBeenCalledWith('SETTING_AUTO_SCALE', true);
     expect(lsSpy.del).toHaveBeenCalledWith('DISTRIBUTION_GRAPH_OPTION_X');
     expect(lsSpy.del).toHaveBeenCalledWith('DISTRIBUTION_GRAPH_OPTION_Y');
+    expect(lsSpy.setAll).toHaveBeenCalledTimes(2);
   });
 });
