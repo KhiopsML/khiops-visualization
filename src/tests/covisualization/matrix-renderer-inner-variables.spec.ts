@@ -41,6 +41,45 @@ describe('MatrixRendererService', () => {
       ).toBe(true);
     });
 
+    for (const axis of ['x', 'y']) {
+      it(`should preserve spaces in numerical inner variable names on ${axis} axis`, () => {
+        const parts = ['Body mass index ]27.25,32.05]'];
+        const cell = makeCell(axis === 'x' ? parts : [], axis === 'y' ? parts : []);
+
+        expect(
+          (service as any).shouldHatchCellForInnerVariables(
+            cell,
+            ['Body mass index'],
+            true,
+          ),
+        ).toBe(false);
+      });
+    }
+
+    it('should match categorical inner variable names containing spaces', () => {
+      const cell = makeCell(['Patient class {0}']);
+
+      expect(
+        (service as any).shouldHatchCellForInnerVariables(
+          cell,
+          ['Patient class'],
+          true,
+        ),
+      ).toBe(false);
+    });
+
+    it('should hatch clusters containing only unrelated inner variables', () => {
+      const cell = makeCell(['Age ]29.5,+inf[', 'Class {1}']);
+
+      expect(
+        (service as any).shouldHatchCellForInnerVariables(
+          cell,
+          ['Body mass index'],
+          true,
+        ),
+      ).toBe(true);
+    });
+
     // 3. Core bug fix: "V11 B0" must NOT match "V1"
     it('should return false when xAxisFullPart value starts with a longer variable name (V11 should not match V1)', () => {
       const cell = makeCell(['V11 B0', 'V12 B1'], []);

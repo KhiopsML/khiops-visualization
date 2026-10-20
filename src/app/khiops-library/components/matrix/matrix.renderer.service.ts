@@ -586,12 +586,14 @@ export class MatrixRendererService {
     const innerVarsSet = this.selectedInnerVarsSet;
 
     // Check if any value matches a selected inner variable.
-    // Values are formatted as "InnerVarName PartName" (e.g. "V1 B0"),
-    // so we check for exact match or prefix before space.
     const matchesAny = (value: string): boolean => {
       if (innerVarsSet.has(value)) return true;
-      const spaceIdx = value.indexOf(' ');
-      return spaceIdx !== -1 && innerVarsSet.has(value.substring(0, spaceIdx));
+      let spaceIdx = value.indexOf(' ');
+      while (spaceIdx !== -1) {
+        if (innerVarsSet.has(value.substring(0, spaceIdx))) return true;
+        spaceIdx = value.indexOf(' ', spaceIdx + 1);
+      }
+      return false;
     };
 
     return yAxisFullPart.some(matchesAny) || xAxisFullPart.some(matchesAny);
