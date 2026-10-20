@@ -209,7 +209,8 @@
             <app-tree-details> </app-tree-details>
           </as-split-area>
           <as-split-area
-            class="variables-list-container kl-card"
+            class="variables-list-container"
+            [class.kl-card]="!treePreparationDatas?.selectedVariable"
             [size]="rowSizes[1]"
           >
             @if (treePreparationDatas?.selectedVariable) {
@@ -233,82 +234,68 @@
   </ng-template>
 
   @if (!loadingView && sizes) {
-    <as-split direction="horizontal" (dragEnd)="onSplitDragEnd($event, 'col')">
-      <as-split-area [size]="sizes.col[0]">
-        @if (!isLeftInfosPanelMode) {
-          <as-split
-            direction="vertical"
-            (dragEnd)="onSplitDragEnd($event, 'col0Row')"
-          >
-            <as-split-area [size]="sizes.col0Row[0]">
-              <ng-container
-                *ngTemplateOutlet="
-                  infosPanelColumn;
-                  context: {
-                    splitItem: 'col0Row0Col',
-                    panelSizes: sizes.col0Row0Col,
-                    direction: 'horizontal',
-                    suffix: '',
-                    wrapThird: true,
-                  }
-                "
-              ></ng-container>
-            </as-split-area>
-            <as-split-area
-              class="variables-list-container"
-              [size]="sizes.col0Row[1]"
-            >
-              <ng-container
-                *ngTemplateOutlet="
-                  variableGraphBlock;
-                  context: {
-                    splitItem: 'col0Row1Col',
-                    splitSizes: sizes.col0Row1Col,
-                    suffix: '',
-                  }
-                "
-              ></ng-container>
-            </as-split-area>
-            <as-split-area [size]="sizes.col0Row[2]">
-              <ng-container
-                *ngTemplateOutlet="
-                  treeDetailsBlock;
-                  context: {
-                    colItem: 'col0Row2Col',
-                    rowItem: 'col0Row2Col1Row',
-                    colSizes: sizes.col0Row2Col,
-                    rowSizes: sizes.col0Row2Col1Row,
-                    suffix: '',
-                  }
-                "
-              ></ng-container>
-            </as-split-area>
-          </as-split>
-        } @else {
-          <as-split
-            direction="horizontal"
-            (dragEnd)="onSplitDragEnd($event, 'col0Col')"
-          >
-            <as-split-area [size]="sizes.col0Col[0]">
-              <ng-container
-                *ngTemplateOutlet="
-                  infosPanelColumn;
-                  context: {
-                    splitItem: 'col0Col0Row',
-                    panelSizes: sizes.col0Col0Row,
-                    direction: 'vertical',
-                    suffix: '-left',
-                    wrapThird: false,
-                  }
-                "
-              ></ng-container>
-            </as-split-area>
-            <as-split-area [size]="sizes.col0Col[1]">
+    <as-split direction="vertical" (dragEnd)="onSplitDragEnd($event, 'row')">
+      <as-split-area [size]="sizes.row[0]">
+        <as-split
+          direction="horizontal"
+          (dragEnd)="onSplitDragEnd($event, 'col')"
+        >
+          <as-split-area [size]="sizes.col[0]">
+            @if (!isLeftInfosPanelMode) {
               <as-split
                 direction="vertical"
-                (dragEnd)="onSplitDragEnd($event, 'col0Col1Row')"
+                (dragEnd)="onSplitDragEnd($event, 'upperRow')"
               >
-                <as-split-area [size]="sizes.col0Col1Row[0]">
+                <as-split-area [size]="sizes.upperRow[0]">
+                  <ng-container
+                    *ngTemplateOutlet="
+                      infosPanelColumn;
+                      context: {
+                        splitItem: 'col0Row0Col',
+                        panelSizes: sizes.col0Row0Col,
+                        direction: 'horizontal',
+                        suffix: '',
+                        wrapThird: true,
+                      }
+                    "
+                  ></ng-container>
+                </as-split-area>
+                <as-split-area
+                  class="variables-list-container"
+                  [size]="sizes.upperRow[1]"
+                >
+                  <ng-container
+                    *ngTemplateOutlet="
+                      variableGraphBlock;
+                      context: {
+                        splitItem: 'col0Row1Col',
+                        splitSizes: sizes.col0Row1Col,
+                        suffix: '',
+                      }
+                    "
+                  ></ng-container>
+                </as-split-area>
+              </as-split>
+            } @else {
+              <as-split
+                direction="horizontal"
+                (dragEnd)="onSplitDragEnd($event, 'col0Col')"
+              >
+                <as-split-area [size]="sizes.col0Col[0]">
+                  <ng-container
+                    *ngTemplateOutlet="
+                      infosPanelColumn;
+                      context: {
+                        splitItem: 'col0Col0Row',
+                        panelSizes: sizes.col0Col0Row,
+                        direction: 'vertical',
+                        suffix: '-left',
+                        wrapThird: false,
+                      }
+                    "
+                  ></ng-container>
+                </as-split-area>
+                <as-split-area [size]="sizes.col0Col[1]">
                   <ng-container
                     *ngTemplateOutlet="
                       variableGraphBlock;
@@ -320,39 +307,45 @@
                     "
                   ></ng-container>
                 </as-split-area>
-                <as-split-area [size]="sizes.col0Col1Row[1]">
-                  <ng-container
-                    *ngTemplateOutlet="
-                      treeDetailsBlock;
-                      context: {
-                        colItem: 'col0Col1Row1Col',
-                        rowItem: 'col0Col1Row1Col1Row',
-                        colSizes: sizes.col0Col1Row1Col,
-                        rowSizes: sizes.col0Col1Row1Col1Row,
-                        suffix: '-left',
-                      }
-                    "
-                  ></ng-container>
-                </as-split-area>
               </as-split>
-            </as-split-area>
-          </as-split>
-        }
+            }
+          </as-split-area>
+          <as-split-area [size]="sizes.col[1]" class="kl-card">
+            <app-tree-hyper
+              id="tree-preparation-hyper"
+              label_size="1.5"
+              [displayedValues]="
+                $safeNavigationMigration(
+                  distributionDatas?.targetDistributionDisplayedValues
+                )
+              "
+              [dimensionTree]="
+                $safeNavigationMigration(treePreparationDatas?.dimensionTree)
+              "
+            >
+            </app-tree-hyper>
+          </as-split-area>
+        </as-split>
       </as-split-area>
-      <as-split-area [size]="sizes.col[1]" class="kl-card">
-        <app-tree-hyper
-          id="tree-preparation-hyper"
-          label_size="1.5"
-          [displayedValues]="
-            $safeNavigationMigration(
-              distributionDatas?.targetDistributionDisplayedValues
-            )
+      <as-split-area [size]="sizes.row[1]">
+        <ng-container
+          *ngTemplateOutlet="
+            treeDetailsBlock;
+            context: {
+              colItem: isLeftInfosPanelMode ? 'col0Col1Row1Col' : 'col0Row2Col',
+              rowItem: isLeftInfosPanelMode
+                ? 'col0Col1Row1Col1Row'
+                : 'col0Row2Col1Row',
+              colSizes: isLeftInfosPanelMode
+                ? sizes.col0Col1Row1Col
+                : sizes.col0Row2Col,
+              rowSizes: isLeftInfosPanelMode
+                ? sizes.col0Col1Row1Col1Row
+                : sizes.col0Row2Col1Row,
+              suffix: isLeftInfosPanelMode ? '-left' : '',
+            }
           "
-          [dimensionTree]="
-            $safeNavigationMigration(treePreparationDatas?.dimensionTree)
-          "
-        >
-        </app-tree-hyper>
+        ></ng-container>
       </as-split-area>
     </as-split>
   }

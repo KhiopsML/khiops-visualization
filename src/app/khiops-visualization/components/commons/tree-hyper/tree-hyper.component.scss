@@ -48,7 +48,6 @@
   }
   .tree-hyper-comp-container {
     position: relative;
-    padding-bottom: 10vh; // Ensure there is space at the bottom for selection elements
 
     .tree-hyper-hover-tooltip {
       position: absolute;
@@ -59,18 +58,10 @@
       border-radius: var(--border-radius);
     }
 
-    .tree-hyper-selection {
-      position: absolute;
-      left: 16px;
-      bottom: 16px;
-      z-index: 3;
-      max-width: min(40%, 340px);
-    }
-
     .tree-hyper-zoom-tools {
       position: absolute;
-      right: 16px;
-      bottom: 16px;
+      right: 0px;
+      top: 0px;
       z-index: 3;
       border: 1px solid var(--color-border-highlight);
       box-shadow: var(--box-shadow-elevate-100);
@@ -93,9 +84,6 @@
           }
         }
       }
-    }
-    @container (min-width: 800px) {
-      padding-bottom: 0 !important;
     }
   }
 }

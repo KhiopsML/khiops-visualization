@@ -23,6 +23,8 @@ export const VIEW_LAYOUT = {
     row1Col0Row: [80, 20],
   },
   treePreparationView: {
+    row: [70, 30],
+    upperRow: [28, 72],
     col: [70, 30],
     col0Row: [20, 50, 30],
     col0Row0Col: [40, 30, 30],
@@ -33,6 +35,7 @@ export const VIEW_LAYOUT = {
     row1Col1Row0Col: [30, 70], // for modeling tree view
   },
   treePreparationViewLeftPanel: {
+    row: [70, 30],
     col: [70, 30],
     col0Col: [22, 78],
     col0Col0Row: [34, 33, 33],

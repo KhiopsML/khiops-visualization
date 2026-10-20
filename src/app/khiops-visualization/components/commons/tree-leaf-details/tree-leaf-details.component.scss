@@ -8,76 +8,17 @@
   height: 100%;
   position: relative;
 
-  .tree-leaf-details-tools {
-    padding-right: 0 !important;
-    padding: 5px;
-    background: var(--color-0);
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-
-    > div {
-      overflow-y: hidden;
-      overflow-x: auto;
-    }
-
-    .leaf-tabs-tools {
-      display: flex;
-      align-items: center;
-      justify-content: flex-start;
-      gap: 2px;
-      margin-right: 10px;
-
-      .leaf-tab-btn {
-        min-width: auto;
-        border-radius: 0 !important;
-        color: var(--color-600);
-        border-bottom: var(--mat-tab-active-indicator-height) solid transparent !important;
-      }
-
-      .active-tab {
-        color: var(--color-brand-orange) !important;
-        border-bottom: var(--mat-tab-active-indicator-height) solid
-          var(--color-brand-orange) !important;
-      }
-    }
-  }
-
   ::ng-deep #tree-leaf-rules-comp {
     .ag-grid-comp {
       padding-top: 15px;
     }
   }
 
-  ::ng-deep .mat-mdc-tab-body-wrapper {
-    padding: 0 !important;
-  }
-
-  .distribution-graph,
   .target-distribution-graph {
     position: relative;
     width: 100%;
-    height: 50%;
+    height: 100%;
     overflow: hidden !important;
-  }
-
-  ::ng-deep mat-tab-body {
-    background-color: var(--color-0) !important;
-  }
-
-  ::ng-deep .mat-mdc-tab-header {
-    display: none !important;
-  }
-
-  ::ng-deep .mat-mdc-tab-labels {
-    justify-content: unset !important;
-  }
-
-  ::ng-deep .mat-mdc-tab.mdc-tab {
-    max-height: 40px !important;
-  }
-  ::ng-deep .mat-mdc-tab-label.mat-mdc-tab-disabled:hover {
-    background-color: transparent !important;
   }
 
   ::ng-deep kl-distribution-graph,

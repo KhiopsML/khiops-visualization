@@ -5,15 +5,9 @@
  */
 
 #tree-hyper-selection-comp {
-  min-width: 240px;
-  max-width: 240px;
+  min-width: 0;
   padding: 10px 12px;
   color: var(--color-50);
-  border: 1px solid var(--color-border-highlight);
-  box-shadow: var(--box-shadow-elevate-100);
-  border-radius: var(--border-radius);
-  // background: var(--color-0);
-  backdrop-filter: blur(10px);
 
   .selection-title {
     font-size: 0.72rem;
@@ -141,6 +135,9 @@
   }
 
   &.dark {
+    min-width: 240px;
+    max-width: 240px;
+    backdrop-filter: blur(10px);
     border: none !important;
     background: color-mix(in srgb, var(--color-1000) 90%, transparent);
     color: var(--color-0);

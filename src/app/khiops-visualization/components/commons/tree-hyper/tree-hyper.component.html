@@ -27,7 +27,10 @@
           {{ 'GLOBAL.HYPER_TREE' | translate }}
         </h1>
 
-        <kl-btn-fullscreen [isFullscreen]="isFullscreen" (toggleFullscreen)="onToggleFullscreen($event)">
+        <kl-btn-fullscreen
+          [isFullscreen]="isFullscreen"
+          (toggleFullscreen)="onToggleFullscreen($event)"
+        >
         </kl-btn-fullscreen>
       </div>
     </div>
@@ -88,15 +91,6 @@
           ></app-tree-hyper-selection>
         </div>
       }
-      <div class="tree-hyper-selection screenshot-hide">
-        <app-tree-hyper-selection
-          [selectedNode]="selectedNode$ | async"
-          [treeRoot]="dimensionTree?.[0]"
-          [minLeafTotalFreqs]="treePreparationDatas?.minFrequencies"
-          [maxLeafTotalFreqs]="treePreparationDatas?.maxFrequencies"
-          (lineageNodeSelected)="onLineageNodeSelected($event)"
-        ></app-tree-hyper-selection>
-      </div>
       <div class="tree-hyper-zoom-tools screenshot-hide">
         <kl-zoom-tools
           [emitGlobalEvents]="false"

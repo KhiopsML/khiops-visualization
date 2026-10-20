@@ -35,9 +35,6 @@ import { TreePreparationStore } from '@khiops-visualization/stores/tree-preparat
 })
 export class TreeLeafDetailsComponent implements OnInit, OnChanges {
   @Input() public displayedValues?: ChartToggleValuesI[];
-  public selectedLeafTabIndex = 0;
-
-  private readonly LEAF_INFOS_TAB_INDEX = 0;
 
   selectedNode$: Observable<TreeNodeModel | undefined>;
   public selectedNode?: TreeNodeModel;
@@ -102,33 +99,14 @@ export class TreeLeafDetailsComponent implements OnInit, OnChanges {
     }
   }
 
-  /**
-   * Keep selected tab index in sync with tab group.
-   * @param event The selected tab event
-   */
-  onSelectedLeafTabChanged(event: { index: number }): void {
-    this.selectedLeafTabIndex = event.index;
-  }
-
-  /**
-   * Select a tab from toolbar controls.
-   * @param index Tab index
-   */
-  selectLeafTab(index: number): void {
-    if (this.selectedLeafTabIndex === index) {
+  public onLineageNodeSelected(nodeId: string): void {
+    if (!nodeId) {
       return;
     }
 
-    this.selectedLeafTabIndex = index;
-
-    // Ensure graph repaints when returning to first tab.
-    if (index === this.LEAF_INFOS_TAB_INDEX && this.selectedNode) {
-      setTimeout(() => {
-        this.distributionDatasService.getTreeNodeTargetDistributionGraphDatas(
-          this.selectedNode!,
-        );
-      });
-    }
+    this.ngzone.run(() => {
+      this.store.selectNodesFromId({ id: nodeId });
+    });
   }
 
   private updateComponentDatas(selectedNode: TreeNodeModel | undefined) {
