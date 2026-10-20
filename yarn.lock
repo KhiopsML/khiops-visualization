@@ -2048,10 +2048,10 @@
   resolved "https://registry.yarnpkg.com/@lmdb/lmdb-win32-x64/-/lmdb-win32-x64-3.5.6.tgz#8e26cbb62abb1454130fe73bd475df3b24a97567"
   integrity sha512-1g7G0knRX2iV/voDu54yxrGqw5Dk0w2oIYb7dgJq8IkOi+m7wbD8Q3QpPFjh0C01G58S88dqGn03len6UPCXsg==
 
-"@lucide/angular@^1.59.0":
-  version "1.59.0"
-  resolved "https://registry.yarnpkg.com/@lucide/angular/-/angular-1.59.0.tgz#484ff835c33d8f23aef74bef0e3cdc424dcd523b"
-  integrity sha512-DyCmxhMvneVI76fiP8JtBVW3tBh/UBWBPvl2YsqIboSsepZFk0mQIOhVdw+0oyQg+I8y6rZ5srWqA/mDdWJFQQ==
+"@lucide/angular@^1.60.0":
+  version "1.60.0"
+  resolved "https://registry.yarnpkg.com/@lucide/angular/-/angular-1.60.0.tgz#0b967eaf16d574bda94bd46627a51a9f4b17f061"
+  integrity sha512-+i6/+FqEoc8M477qdEgH07jy+zB7wbXMLKw8+0jkwzOxj1p6DfonE7WMzFqfER9/XvfvmjkTNaKtg5gcgTlYTg==
   dependencies:
     tslib "^2.3.0"
 
