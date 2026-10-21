@@ -90,7 +90,7 @@ export class TargetDistributionGraphComponent
   @ViewChild('legendMeasurer', { read: ElementRef })
   private legendMeasurerRef?: ElementRef<HTMLElement>;
 
-  private readonly HEADER_SAFETY_MARGIN = 24;
+  private readonly HEADER_SAFETY_MARGIN = 30;
   private readonly PERCENTAGE_SUFFIX = '%';
 
   constructor(
