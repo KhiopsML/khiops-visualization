@@ -6,6 +6,14 @@
 // @ts-nocheck
 import '../../support/commands';
 
+function openSettings() {
+  cy.get('#header-tools-comp button').first().click();
+  cy.get('mat-sidenav')
+    .should('have.class', 'mat-drawer-opened')
+    .and('not.have.class', 'mat-drawer-animating');
+  cy.get('#user-settings-comp').should('be.visible');
+}
+
 function setSliderValue(selector: string, value: number) {
   cy.get(selector).then(($input) => {
     cy.wrap($input).invoke('val', value).trigger('input').trigger('change');
@@ -23,8 +31,7 @@ describe('Settings changes without reload for Khiops Covisualization', () => {
 
       cy.get('.tree-selected').should('exist');
 
-      cy.get('#header-tools-comp button').first().click();
-      cy.get('#user-settings-comp').should('be.visible');
+      openSettings();
       setSliderValue('.kl-number-precision input[matSliderThumb]', 2);
       cy.get('#user-settings-comp button').contains('Save').click();
       cy.get('#user-settings-comp').should('not.be.visible');
@@ -40,8 +47,7 @@ describe('Settings changes without reload for Khiops Covisualization', () => {
           textAt2 = text;
         });
 
-      cy.get('#header-tools-comp button').first().click();
-      cy.get('#user-settings-comp').should('be.visible');
+      openSettings();
       setSliderValue('.kl-number-precision input[matSliderThumb]', 6);
       cy.get('#user-settings-comp button').contains('Save').click();
       cy.get('#user-settings-comp').should('not.be.visible');
@@ -64,8 +70,7 @@ describe('Settings changes without reload for Khiops Covisualization', () => {
 
       cy.get('.tree-selected').should('exist');
 
-      cy.get('#header-tools-comp button').first().click();
-      cy.get('#user-settings-comp').should('be.visible');
+      openSettings();
       setSliderValue('.kl-matrix-contrast-setting input[matSliderThumb]', 10);
       cy.get('#user-settings-comp button').contains('Save').click();
       cy.get('#user-settings-comp').should('not.be.visible');
@@ -86,8 +91,7 @@ describe('Settings changes without reload for Khiops Covisualization', () => {
         );
       });
 
-      cy.get('#header-tools-comp button').first().click();
-      cy.get('#user-settings-comp').should('be.visible');
+      openSettings();
       setSliderValue('.kl-matrix-contrast-setting input[matSliderThumb]', 80);
       cy.get('#user-settings-comp button').contains('Save').click();
       cy.get('#user-settings-comp').should('not.be.visible');
@@ -122,8 +126,7 @@ describe('Settings changes without reload for Khiops Covisualization', () => {
       cy.get('#tree-expando-6').first().click();
       cy.get('#cluster-composition-0').contains('A11');
 
-      cy.get('#header-tools-comp button').first().click();
-      cy.get('#user-settings-comp').should('be.visible');
+      openSettings();
       setSliderValue('.kl-matrix-contrast-setting input[matSliderThumb]', 10);
       cy.get('#user-settings-comp button').contains('Save').click();
       cy.get('#user-settings-comp').should('not.be.visible');
@@ -144,8 +147,7 @@ describe('Settings changes without reload for Khiops Covisualization', () => {
         );
       });
 
-      cy.get('#header-tools-comp button').first().click();
-      cy.get('#user-settings-comp').should('be.visible');
+      openSettings();
       setSliderValue('.kl-matrix-contrast-setting input[matSliderThumb]', 80);
       cy.get('#user-settings-comp button').contains('Save').click();
       cy.get('#user-settings-comp').should('not.be.visible');
@@ -178,8 +180,7 @@ describe('Settings changes without reload for Khiops Covisualization', () => {
     cy.readFile('./src/assets/mocks/kc/adult2var.json').then(() => {
       cy.get('#cluster-details-grid-0').should('be.visible');
 
-      cy.get('#header-tools-comp button').first().click();
-      cy.get('#user-settings-comp').should('be.visible');
+      openSettings();
       setSliderValue('.kl-number-precision input[matSliderThumb]', 2);
       cy.get('#user-settings-comp button').contains('Save').click();
       cy.get('#user-settings-comp').should('not.be.visible');
@@ -192,8 +193,7 @@ describe('Settings changes without reload for Khiops Covisualization', () => {
           textAt2 = text;
         });
 
-      cy.get('#header-tools-comp button').first().click();
-      cy.get('#user-settings-comp').should('be.visible');
+      openSettings();
       setSliderValue('.kl-number-precision input[matSliderThumb]', 6);
       cy.get('#user-settings-comp button').contains('Save').click();
       cy.get('#user-settings-comp').should('not.be.visible');
