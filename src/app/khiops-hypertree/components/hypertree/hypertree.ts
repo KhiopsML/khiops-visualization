@@ -642,6 +642,13 @@ export class Hypertree {
     newλ: number,
     duration = 750,
   ): void {
+    if (duration === 0) {
+      CassignC(this.args.geometry.transformation.state.P, newP);
+      this.update.transformation();
+      resolve();
+      return;
+    }
+
     const initTS = clone(this.args.geometry.transformation.state);
     // Add null checks to prevent reading properties of null
     // @ts-ignore

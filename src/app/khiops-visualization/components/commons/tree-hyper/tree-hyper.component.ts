@@ -76,6 +76,7 @@ export class TreeHyperComponent
   private options: any;
   private ht?: Hypertree;
   private initialLambda?: number;
+  private initialSelectionPending = true;
   public treePreparationDatas?: TreePreparationDatasModel;
   public distributionDatas?: DistributionDatasModel;
   public hoveredLeafNode?: TreeNodeModel;
@@ -209,7 +210,9 @@ export class TreeHyperComponent
       const treeNode =
         selectedNode && UtilsService.deepFind(ht.data, selectedNode.id);
       if (treeNode?.layout?.z) {
-        await ht.api.gotoNode(treeNode, 300);
+        const duration = this.initialSelectionPending ? 0 : 300;
+        this.initialSelectionPending = false;
+        await ht.api.gotoNode(treeNode, duration);
         if (this.ht === ht) {
           ht.api.updateNodesVisualization();
         }
@@ -271,6 +274,7 @@ export class TreeHyperComponent
 
   private initHyperTree(initView = true) {
     if (this.dimensionTree?.[0]) {
+      this.initialSelectionPending = true;
       this.options = {
         dataloader: (ok: any) => ok(this.dimensionTree?.[0]),
         langInitBFS: (_ht: any, n: N) => (n.precalc.label = n.data.id),
