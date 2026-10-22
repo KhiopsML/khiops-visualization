@@ -16,7 +16,10 @@ import {
   ElementRef,
   OnDestroy,
   ChangeDetectionStrategy,
+  DestroyRef,
+  inject,
 } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { SelectableComponent } from '@khiops-library/components/selectable/selectable.component';
 import { SelectableService } from '@khiops-library/components/selectable/selectable.service';
 import { TranslateService } from '@ngstack/translate';
@@ -88,6 +91,7 @@ export class TreeHyperComponent
   selectedNode$: Observable<TreeNodeModel | undefined>;
 
   private resizeObserver?: ResizeObserver;
+  private readonly destroyRef = inject(DestroyRef);
 
   constructor(
     public override ngzone: NgZone,
@@ -130,11 +134,13 @@ export class TreeHyperComponent
     this.distributionDatas = this.distributionDatasService.getDatas();
 
     // listen for selectedNodes change
-    this.selectedNodes$?.subscribe((selectedNodes) => {
-      if (selectedNodes) {
-        this.updateSelection();
-      }
-    });
+    this.selectedNodes$
+      ?.pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe((selectedNodes) => {
+        if (selectedNodes) {
+          this.updateSelection();
+        }
+      });
   }
 
   override ngAfterViewInit() {
@@ -200,7 +206,8 @@ export class TreeHyperComponent
       await ht.api.updateNodesVisualization();
       if (this.ht !== ht) return;
 
-      const treeNode = selectedNode && UtilsService.deepFind(ht.data, selectedNode.id);
+      const treeNode =
+        selectedNode && UtilsService.deepFind(ht.data, selectedNode.id);
       if (treeNode?.layout?.z) {
         await ht.api.gotoNode(treeNode, 300);
         if (this.ht === ht) {
@@ -360,8 +367,7 @@ export class TreeHyperComponent
         ht.initPromise.then(() => {
           if (this.ht !== ht) return;
           this.initialLambda =
-            ht.args?.geometry?.transformation?.state?.λ ??
-            this.initialLambda;
+            ht.args?.geometry?.transformation?.state?.λ ?? this.initialLambda;
           this.updateSelection(ht);
         });
       }
@@ -426,7 +432,8 @@ export class TreeHyperComponent
     const containerHeight = rootElement?.clientHeight || 0;
     const tooltipElement = this.hoverTooltip?.nativeElement;
     const tooltipWidth =
-      tooltipElement?.offsetWidth || TreeHyperComponent.HOVER_TOOLTIP_FALLBACK_WIDTH;
+      tooltipElement?.offsetWidth ||
+      TreeHyperComponent.HOVER_TOOLTIP_FALLBACK_WIDTH;
     const tooltipHeight =
       tooltipElement?.offsetHeight ||
       TreeHyperComponent.HOVER_TOOLTIP_FALLBACK_HEIGHT;

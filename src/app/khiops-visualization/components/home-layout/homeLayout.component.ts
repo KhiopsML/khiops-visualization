@@ -111,6 +111,7 @@ export class HomeLayoutComponent implements OnInit {
   }
 
   onSelectedTabChanged(e: MatTabChangeEvent) {
+    this.dialogService.setActiveTab(e.tab);
     // init selected area to undefined
     this.selectableService.initialize();
     this.selectedTab = e;

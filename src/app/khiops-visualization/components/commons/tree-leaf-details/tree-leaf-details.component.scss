@@ -61,6 +61,10 @@
     overflow: hidden !important;
   }
 
+  app-tree-node-details {
+    padding: 10px 10px 0 10px;
+  }
+
   ::ng-deep mat-tab-body {
     background-color: var(--color-0) !important;
   }

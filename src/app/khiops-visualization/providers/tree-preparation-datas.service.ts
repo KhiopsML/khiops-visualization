@@ -12,9 +12,7 @@ import { UtilsService } from '@khiops-library/providers/utils.service';
 import { TreePreparationVariableModel } from '../model/tree-preparation-variable.model';
 import { TreeNodeModel } from '../model/tree-node.model';
 import { TREE_COLORS } from '@khiops-visualization/config/colors';
-import {
-  TreePreparationDatasModel,
-} from '../model/tree-preparation-datas.model';
+import { TreePreparationDatasModel } from '../model/tree-preparation-datas.model';
 import { GridDatasI } from '@khiops-library/interfaces/grid-datas.interface';
 import { PreparationDatasService } from './preparation-datas.service';
 import { REPORT } from '@khiops-library/enum/report';
@@ -108,8 +106,7 @@ export class TreePreparationDatasService {
   initSelectedNodes() {
     let nodes;
     const variablesDetailedStatistics:
-      | { [key: string]: VariableDetail }
-      | undefined =
+      { [key: string]: VariableDetail } | undefined =
       this.appService.appDatas?.treePreparationReport
         ?.variablesDetailedStatistics;
     if (this.treePreparationDatas?.selectedVariable) {
@@ -155,7 +152,11 @@ export class TreePreparationDatasService {
    * @param {number} index - The index of the node.
    * @returns {string[]} An array containing the linked nodes.
    */
-  getNodesLinkedToOneIndex(index: number): string[] {
+  getNodesLinkedToOneIndex(index: number): string[] | undefined {
+    return this.getNodeGroups()[index];
+  }
+
+  getNodeGroups(): string[][] {
     let currentValues;
     if (this.treePreparationDatas?.isRegressionAnalysis) {
       const partition =
@@ -173,7 +174,7 @@ export class TreePreparationDatasService {
           this.treePreparationDatas?.selectedVariable?.rank || ''
         ]?.dataGrid?.dimensions[0]?.partition;
     }
-    return currentValues?.[index] as string[];
+    return (currentValues || []) as string[][];
   }
 
   /**

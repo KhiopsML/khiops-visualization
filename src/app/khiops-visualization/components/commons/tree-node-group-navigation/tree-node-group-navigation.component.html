@@ -1,0 +1,44 @@
+<div
+  class="node-group-navigation"
+  role="group"
+  [attr.aria-label]="'GLOBAL.NODE_GROUP' | translate"
+>
+  <div class="node-group-label" aria-live="polite">
+    <button
+      mat-icon-button
+      [attr.aria-label]="'GLOBAL.PREVIOUS_NODE_GROUP' | translate"
+      [matTooltip]="'GLOBAL.PREVIOUS_NODE_GROUP' | translate"
+      [disabled]="!groups.length || selectedGroupIndex === 0"
+      (click)="navigateGroup(-1)"
+    >
+      <svg lucideIcon="chevron-left"></svg>
+    </button>
+    @if (selectedGroupIndex >= 0) {
+      <button
+        type="button"
+        class="node-group-select"
+        (click)="navigateGroup(0)"
+      >
+        <kl-important-badge
+          [text]="
+            ('GLOBAL.GROUP' | translate) +
+            ' ' +
+            (selectedGroupIndex + 1) +
+            ' / ' +
+            groups.length
+          "
+          color="green"
+        ></kl-important-badge>
+      </button>
+    }
+  </div>
+  <button
+    mat-icon-button
+    [attr.aria-label]="'GLOBAL.NEXT_NODE_GROUP' | translate"
+    [matTooltip]="'GLOBAL.NEXT_NODE_GROUP' | translate"
+    [disabled]="!groups.length || selectedGroupIndex === groups.length - 1"
+    (click)="navigateGroup(1)"
+  >
+    <svg lucideIcon="chevron-right"></svg>
+  </button>
+</div>

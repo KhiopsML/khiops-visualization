@@ -12,15 +12,16 @@ import {
   OnChanges,
   type SimpleChanges,
   ChangeDetectionStrategy,
+  DestroyRef,
+  inject,
 } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { SelectableService } from '@khiops-library/components/selectable/selectable.service';
 import { DistributionDatasService } from '@khiops-visualization/providers/distribution-datas.service';
 import { TranslateService } from '@ngstack/translate';
 import { TreePreparationDatasService } from '@khiops-visualization/providers/tree-preparation-datas.service';
-import { GridDatasI } from '@khiops-library/interfaces/grid-datas.interface';
 import { TreePreparationDatasModel } from '@khiops-visualization/model/tree-preparation-datas.model';
 import { DistributionDatasModel } from '@khiops-visualization/model/distribution-datas.model';
-import { UtilsService } from '@khiops-library/providers/utils.service';
 import { ChartToggleValuesI } from '@khiops-visualization/interfaces/chart-toggle-values.interface';
 import { TreeNodeModel } from '@khiops-visualization/model/tree-node.model';
 import { Observable } from 'rxjs';
@@ -34,19 +35,15 @@ import { TreePreparationStore } from '@khiops-visualization/stores/tree-preparat
   standalone: false,
 })
 export class TreeLeafDetailsComponent implements OnInit, OnChanges {
+  private readonly destroyRef = inject(DestroyRef);
   @Input() public displayedValues?: ChartToggleValuesI[];
-  public selectedLeafTabIndex = 0;
-
-  private readonly LEAF_INFOS_TAB_INDEX = 0;
 
   selectedNode$: Observable<TreeNodeModel | undefined>;
   public selectedNode?: TreeNodeModel;
 
-  public populationCount: number = 10;
   public treePreparationDatas: TreePreparationDatasModel | undefined;
   public distributionDatas?: DistributionDatasModel;
   public position = 1; // to change graph id
-  public treeLeafRules?: GridDatasI;
 
   constructor(
     public ngzone: NgZone,
@@ -62,10 +59,12 @@ export class TreeLeafDetailsComponent implements OnInit, OnChanges {
   ngOnInit() {
     this.treePreparationDatas = this.treePreparationDatasService.getDatas();
     this.distributionDatas = this.distributionDatasService.getDatas();
-    this.selectedNode$.subscribe((selectedNode) => {
-      this.selectedNode = selectedNode;
-      this.updateComponentDatas(selectedNode);
-    });
+    this.selectedNode$
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe((selectedNode) => {
+        this.selectedNode = selectedNode;
+        this.updateComponentDatas(selectedNode);
+      });
   }
 
   ngOnChanges(changes: SimpleChanges) {
@@ -88,6 +87,12 @@ export class TreeLeafDetailsComponent implements OnInit, OnChanges {
     }
   }
 
+  onLineageNodeSelected(nodeId: string): void {
+    if (nodeId) {
+      this.store.selectNodesFromId({ id: nodeId });
+    }
+  }
+
   onTreeNodeTargetDistributionGraphDisplayedValuesChanged(
     displayedValues: ChartToggleValuesI[],
   ) {
@@ -102,44 +107,10 @@ export class TreeLeafDetailsComponent implements OnInit, OnChanges {
     }
   }
 
-  /**
-   * Keep selected tab index in sync with tab group.
-   * @param event The selected tab event
-   */
-  onSelectedLeafTabChanged(event: { index: number }): void {
-    this.selectedLeafTabIndex = event.index;
-  }
-
-  /**
-   * Select a tab from toolbar controls.
-   * @param index Tab index
-   */
-  selectLeafTab(index: number): void {
-    if (this.selectedLeafTabIndex === index) {
-      return;
-    }
-
-    this.selectedLeafTabIndex = index;
-
-    // Ensure graph repaints when returning to first tab.
-    if (index === this.LEAF_INFOS_TAB_INDEX && this.selectedNode) {
-      setTimeout(() => {
-        this.distributionDatasService.getTreeNodeTargetDistributionGraphDatas(
-          this.selectedNode!,
-        );
-      });
-    }
-  }
-
   private updateComponentDatas(selectedNode: TreeNodeModel | undefined) {
-    if (selectedNode) {
+    if (selectedNode?.isLeaf) {
       this.distributionDatasService.getTreeNodeTargetDistributionGraphDatas(
         selectedNode,
-      );
-      this.treeLeafRules =
-        this.treePreparationDatasService.getTreeLeafRules(selectedNode);
-      this.populationCount = UtilsService.arraySum(
-        selectedNode.targetValues.frequencies,
       );
     }
   }

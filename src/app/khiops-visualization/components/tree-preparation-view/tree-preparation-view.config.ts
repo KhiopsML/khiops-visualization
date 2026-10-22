@@ -6,12 +6,25 @@
 
 import { BorderTextCellComponent } from '@khiops-library/components/ag-grid/border-text-cell/border-text-cell.component';
 import { LevelCellComponent } from '@khiops-library/components/ag-grid/level-cell/level-cell.component';
+import { IconCellComponent } from '@khiops-library/components/ag-grid/icon-cell/icon-cell.component';
+import { ICellRendererParams } from '@ag-grid-community/core';
 import { TranslateService } from '@ngstack/translate';
 
 export function getTreePreparationVariablesGridColumns(
   translate: TranslateService,
+  onAnalyzeTree: (params: ICellRendererParams) => void,
 ) {
   return [
+    {
+      headerName: 'Tree analysis',
+      field: 'treeAnalysis',
+      tooltip: 'Tree analysis',
+      cellRenderer: IconCellComponent,
+      cellRendererParams: {
+        icon: 'square-plus',
+        action: onAnalyzeTree,
+      },
+    },
     {
       headerName: translate.get('GLOBAL.RANK'),
       field: 'rank',

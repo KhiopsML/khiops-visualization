@@ -15,6 +15,17 @@
   // background: var(--color-0);
   backdrop-filter: blur(10px);
 
+  &.embedded {
+    box-sizing: border-box;
+    width: 100%;
+    min-width: 0;
+    max-width: none;
+    border: 0;
+    border-radius: 0;
+    box-shadow: none;
+    backdrop-filter: none;
+  }
+
   .selection-title {
     font-size: 0.72rem;
     font-weight: 700;

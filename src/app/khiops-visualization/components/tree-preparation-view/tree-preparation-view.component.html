@@ -174,73 +174,15 @@
     </as-split>
   </ng-template>
 
-  <ng-template
-    #treeDetailsBlock
-    let-colItem="colItem"
-    let-rowItem="rowItem"
-    let-colSizes="colSizes"
-    let-rowSizes="rowSizes"
-    let-suffix="suffix"
-  >
-    <as-split
-      direction="horizontal"
-      (dragEnd)="onSplitDragEnd($event, colItem)"
-    >
-      <as-split-area
-        class="variables-list-container kl-card"
-        [size]="colSizes[0]"
-      >
-        <app-tree-select
-          id="tree-preparation-select"
-          [dimensionTree]="
-            $safeNavigationMigration(treePreparationDatas?.dimensionTree)
-          "
-        ></app-tree-select>
-      </as-split-area>
-      <as-split-area class="variables-list-container" [size]="colSizes[1]">
-        <as-split
-          direction="horizontal"
-          (dragEnd)="onSplitDragEnd($event, rowItem)"
-        >
-          <as-split-area
-            class="variables-list-container kl-card"
-            [size]="rowSizes[0]"
-          >
-            <app-tree-details> </app-tree-details>
-          </as-split-area>
-          <as-split-area
-            class="variables-list-container kl-card"
-            [size]="rowSizes[1]"
-          >
-            @if (treePreparationDatas?.selectedVariable) {
-              <app-tree-leaf-details
-                fxFlexFill
-                [displayedValues]="
-                  $safeNavigationMigration(
-                    distributionDatas?.targetDistributionDisplayedValues
-                  )
-                "
-              >
-              </app-tree-leaf-details>
-            }
-            @if (!treePreparationDatas?.selectedVariable) {
-              <kl-no-data fxFlex></kl-no-data>
-            }
-          </as-split-area>
-        </as-split>
-      </as-split-area>
-    </as-split>
-  </ng-template>
-
   @if (!loadingView && sizes) {
     <as-split direction="horizontal" (dragEnd)="onSplitDragEnd($event, 'col')">
-      <as-split-area [size]="sizes.col[0]">
+      <as-split-area [size]="100">
         @if (!isLeftInfosPanelMode) {
           <as-split
             direction="vertical"
             (dragEnd)="onSplitDragEnd($event, 'col0Row')"
           >
-            <as-split-area [size]="sizes.col0Row[0]">
+            <as-split-area [size]="25">
               <ng-container
                 *ngTemplateOutlet="
                   infosPanelColumn;
@@ -254,30 +196,13 @@
                 "
               ></ng-container>
             </as-split-area>
-            <as-split-area
-              class="variables-list-container"
-              [size]="sizes.col0Row[1]"
-            >
+            <as-split-area class="variables-list-container" [size]="75">
               <ng-container
                 *ngTemplateOutlet="
                   variableGraphBlock;
                   context: {
                     splitItem: 'col0Row1Col',
                     splitSizes: sizes.col0Row1Col,
-                    suffix: '',
-                  }
-                "
-              ></ng-container>
-            </as-split-area>
-            <as-split-area [size]="sizes.col0Row[2]">
-              <ng-container
-                *ngTemplateOutlet="
-                  treeDetailsBlock;
-                  context: {
-                    colItem: 'col0Row2Col',
-                    rowItem: 'col0Row2Col1Row',
-                    colSizes: sizes.col0Row2Col,
-                    rowSizes: sizes.col0Row2Col1Row,
                     suffix: '',
                   }
                 "
@@ -304,55 +229,19 @@
               ></ng-container>
             </as-split-area>
             <as-split-area [size]="sizes.col0Col[1]">
-              <as-split
-                direction="vertical"
-                (dragEnd)="onSplitDragEnd($event, 'col0Col1Row')"
-              >
-                <as-split-area [size]="sizes.col0Col1Row[0]">
-                  <ng-container
-                    *ngTemplateOutlet="
-                      variableGraphBlock;
-                      context: {
-                        splitItem: 'col0Col1Row0Col',
-                        splitSizes: sizes.col0Col1Row0Col,
-                        suffix: '-left',
-                      }
-                    "
-                  ></ng-container>
-                </as-split-area>
-                <as-split-area [size]="sizes.col0Col1Row[1]">
-                  <ng-container
-                    *ngTemplateOutlet="
-                      treeDetailsBlock;
-                      context: {
-                        colItem: 'col0Col1Row1Col',
-                        rowItem: 'col0Col1Row1Col1Row',
-                        colSizes: sizes.col0Col1Row1Col,
-                        rowSizes: sizes.col0Col1Row1Col1Row,
-                        suffix: '-left',
-                      }
-                    "
-                  ></ng-container>
-                </as-split-area>
-              </as-split>
+              <ng-container
+                *ngTemplateOutlet="
+                  variableGraphBlock;
+                  context: {
+                    splitItem: 'col0Col1Row0Col',
+                    splitSizes: sizes.col0Col1Row0Col,
+                    suffix: '-left',
+                  }
+                "
+              ></ng-container>
             </as-split-area>
           </as-split>
         }
-      </as-split-area>
-      <as-split-area [size]="sizes.col[1]" class="kl-card">
-        <app-tree-hyper
-          id="tree-preparation-hyper"
-          label_size="1.5"
-          [displayedValues]="
-            $safeNavigationMigration(
-              distributionDatas?.targetDistributionDisplayedValues
-            )
-          "
-          [dimensionTree]="
-            $safeNavigationMigration(treePreparationDatas?.dimensionTree)
-          "
-        >
-        </app-tree-hyper>
       </as-split-area>
     </as-split>
   }

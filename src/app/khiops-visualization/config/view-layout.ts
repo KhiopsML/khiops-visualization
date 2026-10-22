@@ -32,6 +32,11 @@ export const VIEW_LAYOUT = {
     row1Col1Row: [80, 20], // for modeling tree view
     row1Col1Row0Col: [30, 70], // for modeling tree view
   },
+  treePreparationAnalysis: {
+    analysisColumns: [45, 55],
+    analysisLeftRows: [60, 40],
+    analysisRightRows: [25, 50, 25],
+  },
   treePreparationViewLeftPanel: {
     col: [70, 30],
     col0Col: [22, 78],

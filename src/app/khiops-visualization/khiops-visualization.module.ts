@@ -31,10 +31,16 @@ import { RegressionMatrixComponent } from './components/commons/regression-matri
 import { AgGridModule } from '@ag-grid-community/angular';
 import { TargetDistributionGraphComponent } from './components/commons/target-distribution-graph/target-distribution-graph.component';
 import { TreePreparationViewComponent } from './components/tree-preparation-view/tree-preparation-view.component';
+import { TreePreparationAnalysisComponent } from './components/tree-preparation-analysis/tree-preparation-analysis.component';
+import { TreeNodeGroupNavigationComponent } from './components/commons/tree-node-group-navigation/tree-node-group-navigation.component';
 import { TreeDetailsComponent } from './components/commons/tree-details/tree-details.component';
 import { TreeLeafDetailsComponent } from './components/commons/tree-leaf-details/tree-leaf-details.component';
+import { TreeLeafRulesComponent } from './components/commons/tree-leaf-rules/tree-leaf-rules.component';
 import { TreeHyperComponent } from './components/commons/tree-hyper/tree-hyper.component';
 import { TreeHyperSelectionComponent } from './components/commons/tree-hyper-selection/tree-hyper-selection.component';
+import { TreeLineagePathComponent } from './components/commons/tree-lineage-path/tree-lineage-path.component';
+import { TreeNodeStatisticsComponent } from './components/commons/tree-node-statistics/tree-node-statistics.component';
+import { TreeNodeDetailsComponent } from './components/commons/tree-node-details/tree-node-details.component';
 import { TreeSelectComponent } from './components/commons/tree-select/tree-select.component';
 import { VarDetailsPreparationComponent } from './components/commons/var-details-preparation/var-details-preparation.component';
 import { VarDetailsTreePreparationComponent } from './components/commons/var-details-tree-preparation/var-details-tree-preparation.component';
@@ -58,14 +64,20 @@ import { WarningInformationComponent } from '@khiops-library/components/warning-
     HomeLayoutComponent,
     PreparationViewComponent,
     TreePreparationViewComponent,
+    TreePreparationAnalysisComponent,
+    TreeNodeGroupNavigationComponent,
     TreeSelectComponent,
     TreeDetailsComponent,
     TreeLeafDetailsComponent,
+    TreeLeafRulesComponent,
     VarDetailsPreparationComponent,
     VarDetailsTreePreparationComponent,
     VarDetailsPreparation2dComponent,
     TreeHyperComponent,
     TreeHyperSelectionComponent,
+    TreeLineagePathComponent,
+    TreeNodeStatisticsComponent,
+    TreeNodeDetailsComponent,
     Preparation2dViewComponent,
     ModelingViewComponent,
     EvaluationViewComponent,

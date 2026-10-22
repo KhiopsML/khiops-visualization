@@ -1,0 +1,48 @@
+@if (selectedNode && selectedNode.totalFreqs !== undefined) {
+  <div class="node-statistics" [class.dark]="theme === 'dark'">
+    <div class="selection-row" fxLayout="column" fxLayoutAlign="start start">
+      <div fxLayout="row">
+        <span fxFlex class="selection-label">{{
+          'GLOBAL.POPULATION' | translate
+        }}</span>
+        <kl-important-badge
+          [text]="selectedNode.totalFreqs ?? '-'"
+          [color]="'green'"
+          [theme]="theme === 'dark' ? 'dark' : 'light'"
+        ></kl-important-badge>
+      </div>
+      <mat-progress-bar
+        mode="determinate"
+        [value]="populationPercent"
+      ></mat-progress-bar>
+      <div class="selection-range-line">
+        <span class="font-code"
+          >{{ 'GLOBAL.MIN' | translate }} ({{ minLeafTotalFreqs ?? '-' }})</span
+        >
+        <span class="font-code"
+          >{{ 'GLOBAL.MAX' | translate }} ({{ maxLeafTotalFreqs ?? '-' }})</span
+        >
+      </div>
+    </div>
+    <div class="selection-row" fxLayout="column">
+      <div fxLayout="row">
+        <span fxFlex class="selection-label">{{
+          'GLOBAL.PURITY' | translate
+        }}</span>
+        @if (selectedNode.purity !== undefined) {
+          <kl-important-badge
+            [text]="(selectedNode.purity | toPrecision).toString()"
+            [color]="'green'"
+            [theme]="theme === 'dark' ? 'dark' : 'light'"
+          ></kl-important-badge>
+        }
+      </div>
+      @if (selectedNode.purity !== undefined) {
+        <mat-progress-bar
+          mode="determinate"
+          [value]="selectedNode.purity * 100"
+        ></mat-progress-bar>
+      }
+    </div>
+  </div>
+}

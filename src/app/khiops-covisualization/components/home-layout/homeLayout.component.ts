@@ -173,6 +173,7 @@ export class HomeLayoutComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   onSelectedTabChanged(e: MatTabChangeEvent) {
+    this.dialogService.setActiveTab(e.tab);
     this.tabNavigationService.onSelectedTabChanged(
       e,
       this.isContextDimensions,

@@ -6,7 +6,7 @@
 
 .important-badge {
   padding: 2px 8px;
-  border-radius: var(--border-radius);
+  border-radius: var(--border-radius) !important;
   font-size: 12px;
   text-wrap: nowrap;
   border: 1px var(--color-500) solid;
@@ -19,9 +19,9 @@
 }
 
 .important-badge-green {
-  background: #ecfdf5;
-  border: 1px var(--color-brand-green-light) solid;
-  color: var(--color-brand-green-dark);
+  background: #ecfdf5 !important;
+  border: 1px var(--color-brand-green-light) solid !important;
+  color: var(--color-brand-green-dark) !important;
 }
 
 .important-badge-orange {

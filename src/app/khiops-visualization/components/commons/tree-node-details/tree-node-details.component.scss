@@ -1,0 +1,12 @@
+:host {
+  display: block;
+  min-width: 0;
+}
+
+.tree-node-details {
+  background: var(--color-0);
+
+  &.dark {
+    background: var(--color-1000);
+  }
+}

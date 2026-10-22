@@ -1,0 +1,14 @@
+<div class="tree-node-details" [class.dark]="theme === 'dark'">
+  <app-tree-lineage-path
+    [selectedNode]="selectedNode"
+    [treeRoot]="treeRoot"
+    [theme]="theme"
+    (lineageNodeSelected)="lineageNodeSelected.emit($event)"
+  ></app-tree-lineage-path>
+  <app-tree-node-statistics
+    [selectedNode]="selectedNode"
+    [minLeafTotalFreqs]="minLeafTotalFreqs"
+    [maxLeafTotalFreqs]="maxLeafTotalFreqs"
+    [theme]="theme"
+  ></app-tree-node-statistics>
+</div>

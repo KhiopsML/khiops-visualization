@@ -8,105 +8,44 @@
   @if (!selectedNode?.isLeaf) {
     <kl-no-data fxFlexFill fxLayoutAlign="center center"> </kl-no-data>
   }
-  <div
-    class="tree-leaf-details-tools header-panel-contrast"
-    fxLayout="row"
-    fxLayoutAlign="start center"
-  >
-    <div
+  @if (selectedNode?.isLeaf) {
+    <app-target-distribution-graph
       fxFlex
-      fxLayout="row"
-      fxLayoutAlign="start center"
-      class="scrollbar-thin"
+      [title]="
+        ('GLOBAL.LEAF_INFOS' | translate) + ' : ' + (selectedNode?.nodeId || '')
+      "
+      [enableSelection]="false"
+      [maxBarThickness]="40"
+      #targetDistributionGraph
+      class="target-distribution-graph"
+      [showFullscreenBtn]="true"
+      titleTooltip="{{
+        'TOOLTIPS.PREPARATION.TARGET_DISTRIBUTION.TITLE' | translate
+      }}"
+      [position]="position"
+      id="{{ 'target-distribution-graph' + position }}"
+      [attr.id]="'target-distribution-graph' + position"
+      [displayedValues]="displayedValues"
+      [inputDatas]="
+        $safeNavigationMigration(
+          distributionDatas?.treeNodeTargetDistributionGraphDatas
+        )
+      "
+      [variableType]="
+        $safeNavigationMigration(treePreparationDatas?.selectedVariable?.type)
+      "
+      (graphTypeChanged)="onTreeNodeTargetDistributionGraphTypeChanged($event)"
+      (targetDistributionGraphDisplayedValuesChanged)="
+        onTreeNodeTargetDistributionGraphDisplayedValuesChanged($event)
+      "
     >
-      <div fxFlex class="leaf-tabs-tools" fxLayout="row" fxLayoutGap="6px">
-        <button
-          mat-button
-          class="leaf-tab-btn"
-          [class.active-tab]="selectedLeafTabIndex === 0"
-          (click)="selectLeafTab(0)"
-        >
-          {{ 'GLOBAL.LEAF_INFOS' | translate }}
-        </button>
-        <button
-          mat-button
-          class="leaf-tab-btn"
-          [class.active-tab]="selectedLeafTabIndex === 1"
-          (click)="selectLeafTab(1)"
-        >
-          {{ 'GLOBAL.LEAF_RULES' | translate }}
-        </button>
-      </div>
-    </div>
-  </div>
-  <mat-tab-group
-    [animationDuration]="0"
-    fxFlex
-    [@.disabled]="true"
-    [selectedIndex]="selectedLeafTabIndex"
-    fxLayout="column"
-    (selectedTabChange)="onSelectedLeafTabChanged($event)"
-  >
-    <mat-tab label="{{ 'GLOBAL.LEAF_INFOS' | translate }}">
-      <ng-template matTabContent>
-        <div fxFlexFill fxLayout="column">
-          <app-target-distribution-graph
-            fxFlex
-            [enableSelection]="false"
-            [maxBarThickness]="40"
-            #targetDistributionGraph
-            class="target-distribution-graph"
-            [showFullscreenBtn]="true"
-            titleTooltip="{{
-              'TOOLTIPS.PREPARATION.TARGET_DISTRIBUTION.TITLE' | translate
-            }}"
-            [position]="position"
-            id="{{ 'target-distribution-graph' + position }}"
-            [attr.id]="'target-distribution-graph' + position"
-            class="target-distribution-graph"
-            [displayedValues]="displayedValues"
-            [inputDatas]="
-              $safeNavigationMigration(
-                distributionDatas?.treeNodeTargetDistributionGraphDatas
-              )
-            "
-            [variableType]="
-              $safeNavigationMigration(
-                treePreparationDatas?.selectedVariable?.type
-              )
-            "
-            (graphTypeChanged)="
-              onTreeNodeTargetDistributionGraphTypeChanged($event)
-            "
-            (targetDistributionGraphDisplayedValuesChanged)="
-              onTreeNodeTargetDistributionGraphDisplayedValuesChanged($event)
-            "
-          >
-          </app-target-distribution-graph>
-        </div>
-      </ng-template>
-    </mat-tab>
-    <mat-tab label="{{ 'GLOBAL.LEAF_RULES' | translate }}">
-      <ng-template matTabContent>
-        @if (treeLeafRules && treeLeafRules.values) {
-          <kl-ag-grid
-            id="tree-leaf-rules-comp"
-            [smallHeader]="true"
-            [enableClickSelection]="false"
-            class="variables-list"
-            fxFlexFill
-            [showSearch]="false"
-            [displayCount]="false"
-            [showLineSelection]="true"
-            [title]="treeLeafRules.title"
-            [showColumnsSelection]="true"
-            [selectedVariable]="selectedNode$ | async"
-            [inputDatas]="treeLeafRules.values"
-            [displayedColumns]="treeLeafRules.displayedColumns"
-          >
-          </kl-ag-grid>
-        }
-      </ng-template>
-    </mat-tab>
-  </mat-tab-group>
+    </app-target-distribution-graph>
+    <app-tree-node-details
+      [selectedNode]="selectedNode"
+      [treeRoot]="treePreparationDatas?.dimensionTree?.[0]"
+      [minLeafTotalFreqs]="treePreparationDatas?.minFrequencies"
+      [maxLeafTotalFreqs]="treePreparationDatas?.maxFrequencies"
+      (lineageNodeSelected)="onLineageNodeSelected($event)"
+    ></app-tree-node-details>
+  }
 </div>

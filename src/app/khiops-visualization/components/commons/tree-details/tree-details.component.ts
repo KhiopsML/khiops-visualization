@@ -4,7 +4,14 @@
  * at https://spdx.org/licenses/BSD-3-Clause-Clear.html or see the "LICENSE" file for more details.
  */
 
-import { Component, NgZone, ChangeDetectionStrategy } from '@angular/core';
+import {
+  Component,
+  NgZone,
+  ChangeDetectionStrategy,
+  DestroyRef,
+  inject,
+} from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { SelectableService } from '@khiops-library/components/selectable/selectable.service';
 import { GridDatasI } from '@khiops-library/interfaces/grid-datas.interface';
 import { TranslateService } from '@ngstack/translate';
@@ -21,6 +28,7 @@ import { TreePreparationStore } from '@khiops-visualization/stores/tree-preparat
   standalone: false,
 })
 export class TreeDetailsComponent {
+  private readonly destroyRef = inject(DestroyRef);
   public treeDetails?: GridDatasI;
 
   selectedNodes$: Observable<TreeNodeModel[]>;
@@ -38,10 +46,12 @@ export class TreeDetailsComponent {
   }
 
   ngOnInit() {
-    this.selectedNodes$.subscribe((selectedNodes) => {
-      this.treeDetails =
-        this.treePreparationDatasService.getTreeDetails(selectedNodes);
-    });
+    this.selectedNodes$
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe((selectedNodes) => {
+        this.treeDetails =
+          this.treePreparationDatasService.getTreeDetails(selectedNodes);
+      });
   }
 
   onSelectListItemChanged(item: TreeNodeModel) {

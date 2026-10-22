@@ -1,0 +1,44 @@
+:host {
+  display: block;
+  min-width: 0;
+}
+
+.node-group-select {
+  display: inline-flex;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+}
+
+.node-group-navigation {
+  display: flex;
+  align-items: center;
+  min-width: 0;
+
+  button {
+    flex-shrink: 0;
+
+    &:disabled {
+      opacity: 0.38;
+      cursor: default;
+    }
+  }
+  ::ng-deep kl-important-badge {
+    span {
+      font-size: 11px;
+    }
+  }
+}
+
+.node-group-label {
+  display: flex;
+  align-items: center;
+  flex: 1;
+  min-width: 0;
+  font-size: 14px;
+
+  kl-important-badge {
+    flex-shrink: 0;
+  }
+}

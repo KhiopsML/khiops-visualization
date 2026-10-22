@@ -1,5 +1,10 @@
 <div
+  #dialogWrapper
   class="kl-dialog-wrapper"
+  [style.top.px]="sidePanelBounds?.top"
+  [style.left.px]="sidePanelBounds?.left"
+  [style.width.px]="sidePanelBounds?.width"
+  [style.height.px]="sidePanelBounds?.height"
   [class.active]="
     (dialogContent$ | async)?.type !== 'none' &&
     !(dialogContent$ | async)?.config?.noOverlay
@@ -8,7 +13,7 @@
   fxLayout="row"
   fxFlexFill
   fxLayoutAlign="center center"
-  [hidden]="$safeNavigationMigration(dialogContent.config?.hidden)"
+  [hidden]="dialogContent.config?.hidden || (sidePanelHidden$ | async)"
   *ngIf="dialogContent$ | async as dialogContent"
 >
   <div

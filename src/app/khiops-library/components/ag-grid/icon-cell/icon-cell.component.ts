@@ -7,6 +7,7 @@
 import { Component } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
+import { MatTooltipModule } from '@angular/material/tooltip';
 import { FlexLayoutModule } from '@angular/flex-layout';
 
 import { AgRendererComponent } from '@ag-grid-community/angular';
@@ -19,6 +20,7 @@ import { LucideDynamicIcon } from '@lucide/angular';
   imports: [
     MatButtonModule,
     MatIconModule,
+    MatTooltipModule,
     FlexLayoutModule,
     LucideDynamicIcon,
   ],

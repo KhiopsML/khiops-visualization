@@ -1,0 +1,46 @@
+@if (lineagePath.length > 0) {
+  <div
+    class="selection-row lineage-path"
+    [class.dark]="theme === 'dark'"
+    fxLayout="column"
+  >
+    <span fxFlex class="selection-label">{{
+      'GLOBAL.HYPER_TREE_SELECTION' | translate
+    }}</span>
+    <div class="lineage-path-content header-panel-contrast" fxLayout="row">
+      @for (pathNode of lineagePath; track pathNode.id) {
+        <span
+          class="lineage-chip font-code"
+          [class.current]="
+            pathNode.id === (selectedNode?.id || selectedNode?.nodeId)
+          "
+          role="button"
+          tabindex="0"
+          (click)="lineageNodeSelected.emit(pathNode.id)"
+          (keydown.enter)="lineageNodeSelected.emit(pathNode.id)"
+          (keydown.space)="
+            $event.preventDefault(); lineageNodeSelected.emit(pathNode.id)
+          "
+          [style.background-color]="
+            pathNode.id === (selectedNode?.id || selectedNode?.nodeId)
+              ? selectedNode?.color
+              : null
+          "
+          [style.border-color]="
+            pathNode.id === (selectedNode?.id || selectedNode?.nodeId)
+              ? selectedNode?.color
+              : null
+          "
+          >{{ pathNode.label }}</span
+        >
+        @if (!$last) {
+          <svg
+            class="lineage-separator"
+            lucideIcon="chevron-right"
+            size="12"
+          ></svg>
+        }
+      }
+    </div>
+  </div>
+}

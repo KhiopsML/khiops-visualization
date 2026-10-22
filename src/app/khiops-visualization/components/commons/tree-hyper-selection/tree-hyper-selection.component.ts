@@ -31,6 +31,7 @@ export class TreeHyperSelectionComponent implements OnChanges {
   @Input() public selectedNode?: TreeNodeModel;
   @Input() public treeRoot?: TreeNodeModel;
   @Input() public theme: 'default' | 'dark' = 'default';
+  @Input() public embedded = false;
   @Input() public minLeafTotalFreqs?: number;
   @Input() public maxLeafTotalFreqs?: number;
   @Output() public lineageNodeSelected = new EventEmitter<string>();

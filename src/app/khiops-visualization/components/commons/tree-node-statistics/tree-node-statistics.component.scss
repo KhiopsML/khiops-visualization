@@ -1,0 +1,76 @@
+:host {
+  display: block;
+  min-width: 0;
+  container-type: inline-size;
+  container-name: node-statistics;
+}
+
+.node-statistics {
+  @container node-statistics (width > 500px) {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    column-gap: 20px;
+  }
+}
+
+.selection-label {
+  font-family: var(--font-code) !important;
+  color: var(--color-800);
+  font-weight: 500;
+}
+
+.selection-row {
+  display: flex;
+  justify-content: start;
+  align-items: baseline;
+  margin-bottom: 20px;
+
+  > div {
+    width: 100%;
+    margin-bottom: 5px;
+  }
+
+  &:last-child {
+    margin-bottom: 10px;
+  }
+}
+
+kl-important-badge {
+  transform: translateY(-1px);
+  font-weight: 600;
+}
+
+.selection-range-line {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  margin-top: 4px;
+  font-size: 11px;
+  color: var(--color-300);
+}
+
+::ng-deep app-tree-node-statistics mat-progress-bar {
+  .mdc-linear-progress__buffer {
+    background: var(--color-100);
+  }
+
+  .mdc-linear-progress__bar-inner {
+    border-color: var(--color-brand-orange);
+  }
+}
+
+.dark {
+  .selection-label {
+    color: var(--color-200);
+  }
+
+  ::ng-deep mat-progress-bar {
+    .mdc-linear-progress__buffer {
+      background: var(--color-800) !important;
+    }
+
+    .mdc-linear-progress__bar-inner {
+      border-color: var(--color-brand-orange-light) !important;
+    }
+  }
+}

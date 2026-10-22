@@ -41,8 +41,26 @@ export class DialogService {
 
   private componentRef?: ComponentRef<any>;
   private afterClosedSubject = new Subject<any>();
+  private activeTab?: object;
+  private sidePanelTab?: object;
+  private sidePanelHiddenSubject = new BehaviorSubject(false);
+  public sidePanelHidden$ = this.sidePanelHiddenSubject.asObservable();
 
   constructor() {}
+
+  setActiveTab(tab: object): void {
+    this.activeTab = tab;
+    this.sidePanelHiddenSubject.next(
+      !!this.dialogContentSubject.value.config?.sidePanel &&
+        this.sidePanelTab !== tab,
+    );
+  }
+
+  hideSidePanelForTabChange(): void {
+    if (this.dialogContentSubject.value.config?.sidePanel) {
+      this.sidePanelHiddenSubject.next(true);
+    }
+  }
 
   /**
    * Open a dialog with any component
@@ -57,6 +75,8 @@ export class DialogService {
   ): DialogRef<any> {
     // Reset the subject for new dialog
     this.afterClosedSubject = new Subject<any>();
+    this.sidePanelTab = config?.sidePanel ? this.activeTab : undefined;
+    this.sidePanelHiddenSubject.next(false);
 
     this.dialogContentSubject.next({
       type: 'component',
@@ -76,6 +96,8 @@ export class DialogService {
    * Close the dialog
    */
   closeDialog(result?: any): void {
+    this.sidePanelTab = undefined;
+    this.sidePanelHiddenSubject.next(false);
     if (this.componentRef) {
       this.componentRef.destroy();
       this.componentRef = undefined;

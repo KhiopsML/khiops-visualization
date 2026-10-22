@@ -1,0 +1,99 @@
+<section fxFlexFill fxLayout="column" aria-labelledby="tree-analysis-title">
+  <header class="tree-analysis-header">
+    <div fxFlex fxLayout="row" fxLayoutAlign="start center">
+      <button
+        mat-icon-button
+        [attr.aria-label]="'GLOBAL.PREVIOUS_TREE' | translate"
+        [matTooltip]="'GLOBAL.PREVIOUS_TREE' | translate"
+        [disabled]="selectedTreeIndex <= 0"
+        (click)="navigateTree(-1)"
+      >
+        <svg lucideIcon="chevron-left"></svg>
+      </button>
+      <h2 id="tree-analysis-title">
+        {{ 'GLOBAL.TREE_ANALYSIS' | translate }}:
+        {{ treePreparationDatas?.selectedVariable?.name }}
+      </h2>
+      <button
+        mat-icon-button
+        [attr.aria-label]="'GLOBAL.NEXT_TREE' | translate"
+        [matTooltip]="'GLOBAL.NEXT_TREE' | translate"
+        [disabled]="
+          selectedTreeIndex < 0 ||
+          selectedTreeIndex >= variablesDatas.length - 1
+        "
+        (click)="navigateTree(1)"
+      >
+        <svg lucideIcon="chevron-right"></svg>
+      </button>
+    </div>
+    <app-tree-node-group-navigation></app-tree-node-group-navigation>
+    <div>
+      <button
+        mat-icon-button
+        [attr.aria-label]="'GLOBAL.CLOSE_TREE_ANALYSIS' | translate"
+        [matTooltip]="'GLOBAL.CLOSE_TREE_ANALYSIS' | translate"
+        (click)="close()"
+      >
+        <svg lucideIcon="x"></svg>
+      </button>
+    </div>
+  </header>
+  <as-split
+    direction="horizontal"
+    class="tree-analysis-content"
+    (dragEnd)="onSplitDragEnd($event, 'analysisColumns')"
+  >
+    <as-split-area [size]="sizes.analysisColumns[0]">
+      <as-split
+        direction="vertical"
+        (dragEnd)="onSplitDragEnd($event, 'analysisLeftRows')"
+      >
+        <as-split-area class="kl-card" [size]="sizes.analysisLeftRows[0]">
+          <app-tree-hyper
+            id="tree-preparation-hyper"
+            label_size="1.5"
+            [displayedValues]="
+              $safeNavigationMigration(
+                distributionDatas?.targetDistributionDisplayedValues
+              )
+            "
+            [dimensionTree]="
+              $safeNavigationMigration(treePreparationDatas?.dimensionTree)
+            "
+          ></app-tree-hyper>
+        </as-split-area>
+        <as-split-area class="kl-card" [size]="sizes.analysisLeftRows[1]">
+          <app-tree-select
+            id="tree-preparation-select"
+            [dimensionTree]="
+              $safeNavigationMigration(treePreparationDatas?.dimensionTree)
+            "
+          ></app-tree-select>
+        </as-split-area>
+      </as-split>
+    </as-split-area>
+    <as-split-area [size]="sizes.analysisColumns[1]">
+      <as-split
+        direction="vertical"
+        (dragEnd)="onSplitDragEnd($event, 'analysisRightRows')"
+      >
+        <as-split-area class="kl-card" [size]="sizes.analysisRightRows[0]">
+          <app-tree-details></app-tree-details>
+        </as-split-area>
+        <as-split-area class="kl-card" [size]="sizes.analysisRightRows[1]">
+          <app-tree-leaf-details
+            [displayedValues]="
+              $safeNavigationMigration(
+                distributionDatas?.targetDistributionDisplayedValues
+              )
+            "
+          ></app-tree-leaf-details>
+        </as-split-area>
+        <as-split-area class="kl-card" [size]="sizes.analysisRightRows[2]">
+          <app-tree-leaf-rules></app-tree-leaf-rules>
+        </as-split-area>
+      </as-split>
+    </as-split-area>
+  </as-split>
+</section>

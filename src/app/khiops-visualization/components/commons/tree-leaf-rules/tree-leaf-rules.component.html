@@ -1,0 +1,20 @@
+@let treeLeafRules = treeLeafRules$ | async;
+@if (treeLeafRules?.values) {
+  <kl-ag-grid
+    id="tree-leaf-rules-comp"
+    [smallHeader]="true"
+    [enableClickSelection]="false"
+    class="variables-list"
+    fxFlexFill
+    [showSearch]="false"
+    [displayCount]="false"
+    [showLineSelection]="true"
+    [title]="treeLeafRules.title"
+    [showColumnsSelection]="true"
+    [selectedVariable]="selectedNode$ | async"
+    [inputDatas]="treeLeafRules.values"
+    [displayedColumns]="treeLeafRules.displayedColumns"
+  ></kl-ag-grid>
+} @else {
+  <kl-no-data fxFlexFill fxLayoutAlign="center center"></kl-no-data>
+}

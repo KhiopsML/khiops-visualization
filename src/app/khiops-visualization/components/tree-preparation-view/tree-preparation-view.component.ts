@@ -43,6 +43,7 @@ import {
   ViewLayoutModeService,
 } from '@khiops-visualization/providers/view-layout-mode.service';
 import { Subscription } from 'rxjs';
+import { TreePreparationAnalysisComponent } from '../tree-preparation-analysis/tree-preparation-analysis.component';
 
 @Component({
   selector: 'app-tree-preparation-view',
@@ -102,6 +103,17 @@ export class TreePreparationViewComponent
 
     this.variablesDisplayedColumns = getTreePreparationVariablesGridColumns(
       this.translate,
+      (params) => {
+        if (params.data) {
+          this.onSelectListItemChanged(params.data);
+          this.dialogService.openDialog(TreePreparationAnalysisComponent, {
+            width: '80vw',
+            maxWidth: '100vw',
+            sidePanel: true,
+            panelClass: 'tree-preparation-analysis-panel',
+          });
+        }
+      },
     );
   }
 
@@ -202,6 +214,9 @@ export class TreePreparationViewComponent
   }
 
   onSelectListItemChanged(item: TreePreparationVariableModel) {
+    if (item.name === this.treePreparationDatas?.selectedVariable?.name) {
+      return;
+    }
     const modelingVariable =
       this.treePreparationDatasService.setSelectedVariable(item.name);
     if (modelingVariable) {
