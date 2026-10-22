@@ -45,7 +45,8 @@ jobs:
         with:
           # Bind explicitly to IPv4 so the dev server and wait-on agree
           start: yarn start --host 127.0.0.1 --port 4200
-          wait-on: 'http-get://127.0.0.1:4200'
+          # Plain http URL on 127.0.0.1 (no http-get:// scheme)
+          wait-on: 'http://127.0.0.1:4200'
           wait-on-timeout: 180
 
       - name: Archive test results

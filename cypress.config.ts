@@ -4,7 +4,7 @@ import { defineConfig } from 'cypress';
 
 export default defineConfig({
   e2e: {
-    baseUrl: 'http://localhost:4200/',
+    baseUrl: 'http://127.0.0.1:4200/',
     setupNodeEvents(on, config) {
       on('task', {
         log(message) {
@@ -13,7 +13,10 @@ export default defineConfig({
         },
       });
       on('before:browser:launch', (browser = {}, launchOptions) => {
-        if ((browser.family === 'chromium' || browser.name === 'chrome') && browser.name !== 'electron') {
+        if (
+          (browser.family === 'chromium' || browser.name === 'chrome') &&
+          browser.name !== 'electron'
+        ) {
           launchOptions.args.push('--no-sandbox');
           launchOptions.args.push('--disable-setuid-sandbox');
           launchOptions.args.push('--disable-dev-shm-usage');
@@ -41,7 +44,10 @@ export default defineConfig({
     specPattern: 'cypress/**/*.cy.ts',
     setupNodeEvents(on, config) {
       on('before:browser:launch', (browser = {}, launchOptions) => {
-        if ((browser.family === 'chromium' || browser.name === 'chrome') && browser.name !== 'electron') {
+        if (
+          (browser.family === 'chromium' || browser.name === 'chrome') &&
+          browser.name !== 'electron'
+        ) {
           launchOptions.args.push('--no-sandbox');
           launchOptions.args.push('--disable-setuid-sandbox');
           launchOptions.args.push('--disable-dev-shm-usage');
