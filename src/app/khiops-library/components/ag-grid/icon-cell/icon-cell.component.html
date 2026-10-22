@@ -4,12 +4,26 @@
  * at https://spdx.org/licenses/BSD-3-Clause-Clear.html or see the "LICENSE" file for more details.
  -->
 
-<button
-  mat-icon-button
-  (click)="$event.stopPropagation(); onClick()"
-  [attr.aria-label]="params.colDef.headerName"
-  [matTooltip]="params.colDef.headerName"
-  class="kl-icon-cell-comp-btn"
->
-  <svg [lucideIcon]="params.icon"></svg>
-</button>
+@if (params.label) {
+  <button
+    mat-flat-button
+    (click)="$event.stopPropagation(); onClick()"
+    [attr.aria-label]="params.label"
+    [matTooltip]="params.colDef.headerName"
+    class="kl-icon-cell-comp-btn lucid-icon-button"
+    [class]="params.buttonClass"
+  >
+    <svg [lucideIcon]="params.icon"></svg>
+    <label>{{ params.label }}</label>
+  </button>
+} @else {
+  <button
+    mat-icon-button
+    (click)="$event.stopPropagation(); onClick()"
+    [attr.aria-label]="params.colDef.headerName"
+    [matTooltip]="params.colDef.headerName"
+    class="kl-icon-cell-comp-btn"
+  >
+    <svg [lucideIcon]="params.icon"></svg>
+  </button>
+}

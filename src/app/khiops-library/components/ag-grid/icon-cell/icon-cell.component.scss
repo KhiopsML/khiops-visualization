@@ -1,0 +1,16 @@
+.kl-icon-cell-comp-btn {
+  &.lucid-icon-button {
+    width: auto !important;
+  }
+
+  &.kl-tree-inspect-button {
+    padding: 3px 0 !important;
+    height: 24px !important;
+    min-height: 24px !important;
+    max-height: 24px !important;
+
+    label {
+      font-size: 12px;
+    }
+  }
+}

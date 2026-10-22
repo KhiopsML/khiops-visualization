@@ -17,6 +17,7 @@ import { LucideDynamicIcon } from '@lucide/angular';
 @Component({
   selector: 'kl-icon-cell',
   templateUrl: './icon-cell.component.html',
+  styleUrls: ['./icon-cell.component.scss'],
   imports: [
     MatButtonModule,
     MatIconModule,

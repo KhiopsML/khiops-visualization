@@ -8,6 +8,23 @@
   height: 100%;
   position: relative;
 
+  .tree-inspect-button.lucid-icon-button {
+    width: auto !important;
+    padding: 3px 0 !important;
+    height: 30px !important;
+    min-height: 30px !important;
+    max-height: 30px !important;
+    margin-right: 8px;
+
+    svg {
+      margin-right: 5px;
+    }
+
+    label {
+      font-size: 12px;
+    }
+  }
+
   kl-graph-header {
     z-index: 1;
     position: relative;

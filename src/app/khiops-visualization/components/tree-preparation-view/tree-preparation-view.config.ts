@@ -21,7 +21,9 @@ export function getTreePreparationVariablesGridColumns(
       tooltip: 'Tree analysis',
       cellRenderer: IconCellComponent,
       cellRendererParams: {
-        icon: 'square-plus',
+        icon: 'square-mouse-pointer',
+        label: translate.get('GLOBAL.INSPECT'),
+        buttonClass: 'kl-tree-inspect-button',
         action: onAnalyzeTree,
       },
     },

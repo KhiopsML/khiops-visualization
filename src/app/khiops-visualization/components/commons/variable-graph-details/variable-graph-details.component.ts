@@ -33,6 +33,8 @@ import { AppService } from '@khiops-visualization/providers/app.service';
 import { ScaleChangeEventsService } from '@khiops-visualization/providers/scale-change-events.service';
 import { KhiopsLibraryService } from '@khiops-library/providers/khiops-library.service';
 import { Subscription } from 'rxjs';
+import { DialogService } from '@khiops-library/providers/dialog.service';
+import { TreePreparationAnalysisComponent } from '../../tree-preparation-analysis/tree-preparation-analysis.component';
 
 @Component({
   selector: 'app-variable-graph-details',
@@ -63,11 +65,12 @@ export class VariableGraphDetailsComponent
   @Input() public selectedVariable?:
     PreparationVariableModel | TreePreparationVariableModel;
   @Input() private selectedGraphItemIndex = 0;
-  @Input() private preparationSource?: string;
+  @Input() public preparationSource?: string;
   @Input() public displayedValues?: ChartToggleValuesI[]; // optional input to update chart on value changes (for instance when another component of tree preparation view changed)
   @Input() public position = 0; // in case of multiple component in the same page
 
   public scrollPosition = 0;
+  public readonly REPORT = REPORT;
   public scaleValue?: number;
   public activeEntries = 0;
   public isFullscreen: boolean = false;
@@ -87,6 +90,7 @@ export class VariableGraphDetailsComponent
     private distributionDatasService: DistributionDatasService,
     private scaleChangeEventsService: ScaleChangeEventsService,
     private khiopsLibraryService: KhiopsLibraryService,
+    private dialogService: DialogService,
   ) {
     this.targetDistributionGraphType = AppService.Ls.get(
       LS.TARGET_DISTRIBUTION_GRAPH_OPTION,
@@ -201,6 +205,15 @@ export class VariableGraphDetailsComponent
         !this.preparationDatasService.isSupervised()) ||
       false
     );
+  }
+
+  onInspectTree(): void {
+    this.dialogService.openDialog(TreePreparationAnalysisComponent, {
+      width: '80vw',
+      maxWidth: '100vw',
+      sidePanel: true,
+      panelClass: 'tree-preparation-analysis-panel',
+    });
   }
 
   resize() {

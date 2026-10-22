@@ -67,6 +67,7 @@
   @if (showZoom()) {
     <kl-zoom-tools [alignment]="'row'"></kl-zoom-tools>
   }
+  <ng-content select="[slot=header-tools]"></ng-content>
   <kl-btn-fullscreen [isFullscreen]="isFullscreen" (toggleFullscreen)="onToggleFullscreen($event)">
   </kl-btn-fullscreen>
 </div>
