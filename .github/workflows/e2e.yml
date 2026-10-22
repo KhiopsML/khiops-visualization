@@ -16,17 +16,9 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      # Pin Node so runner image updates cannot change it silently
-      - name: Setup Node
-        uses: actions/setup-node@v4
-        with:
-          node-version: 22.22.3
-          cache: 'yarn'
-
       - name: Build
         run: |
-          node -v
-          yarn install --frozen-lockfile
+          yarn install
           yarn build:webcomponents
 
       - name: Generate SBOM
@@ -41,13 +33,10 @@ jobs:
           sbom-path: 'sbom.spdx.json'
 
       - name: Cypress run
-        uses: cypress-io/github-action@v6
+        uses: cypress-io/github-action@v7.4.4
         with:
-          # Bind explicitly to IPv4 so the dev server and wait-on agree
-          start: yarn start --host 127.0.0.1 --port 4200
-          # Plain http URL on 127.0.0.1 (no http-get:// scheme)
-          wait-on: 'http://127.0.0.1:4200'
-          wait-on-timeout: 180
+          start: yarn start
+          wait-on: 'http://localhost:4200'
 
       - name: Archive test results
         if: always()
