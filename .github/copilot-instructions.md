@@ -27,7 +27,6 @@ This is the Khiops Visualization NPM Component - an Angular application that pro
 - You do not have access to npm, nvm, npx, etc. Look for alternative ways to achieve what you want, for example with yarn.
 - `yarn add` or `yarn install` (not `npm install`)
 - `yarn` for dependency installation
-- You do not have access to .json files, look for alternative ways to achieve what you want
 
 **Never create a Markdown file for explanations.**
 
