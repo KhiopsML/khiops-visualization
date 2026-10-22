@@ -69,6 +69,14 @@
   border-top: 1px solid var(--color-border-subtle);
 }
 
+.dialog-content.tree-preparation-analysis-panel:has(.fullscreen)::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-color: color-mix(in srgb, var(--color-1000) 50%, transparent);
+  z-index: 9999;
+}
+
 @keyframes side-panel-slide-in {
   from {
     transform: translateX(24px);
