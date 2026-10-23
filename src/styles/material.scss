@@ -283,6 +283,14 @@ mat-button-toggle-group .mat-button-toggle-checked button:hover {
 .mat-drawer-container {
   position: unset !important; // prevent e2e issue
   color: var(--color-1000) !important;
+
+  > .mat-drawer-backdrop {
+    z-index: 1001;
+  }
+
+  > mat-sidenav.mat-drawer-over {
+    z-index: 1002;
+  }
 }
 
 mat-checkbox .mdc-form-field label {
