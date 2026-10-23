@@ -4,7 +4,26 @@
  * at https://spdx.org/licenses/BSD-3-Clause-Clear.html or see the "LICENSE" file for more details.
  */
 
-// Self-hosted "JetBrains Mono" font, used for code/monospace content via .font-code
-@import '@fontsource/jetbrains-mono/400.css';
-@import '@fontsource/jetbrains-mono/500.css';
-@import '@fontsource/jetbrains-mono/700.css';
+@font-face {
+	font-family: 'JetBrains Mono NL';
+	font-style: normal;
+	font-weight: 400;
+	font-display: swap;
+	src: url('./JetBrainsMonoNL-Regular.ttf') format('truetype');
+}
+
+@font-face {
+	font-family: 'JetBrains Mono NL';
+	font-style: normal;
+	font-weight: 500;
+	font-display: swap;
+	src: url('./JetBrainsMonoNL-Medium.ttf') format('truetype');
+}
+
+@font-face {
+	font-family: 'JetBrains Mono NL';
+	font-style: normal;
+	font-weight: 700;
+	font-display: swap;
+	src: url('./JetBrainsMonoNL-Bold.ttf') format('truetype');
+}

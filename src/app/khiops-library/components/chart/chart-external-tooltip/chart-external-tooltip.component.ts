@@ -280,7 +280,7 @@ export class ChartExternalTooltipComponent {
     fallbackBold: boolean,
   ): Record<string, string> {
     return {
-      fontFamily: font?.family || 'JetBrains Mono, Courier New, monospace',
+      fontFamily: font?.family || 'JetBrains Mono NL, Courier New, monospace',
       fontSize: `${font?.size ?? 12}px`,
       fontWeight: font?.weight || (fallbackBold ? 'bold' : 'normal'),
       lineHeight: `${font?.lineHeight ?? 1.2}`,

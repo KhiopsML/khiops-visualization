@@ -35,19 +35,19 @@ export function createDefaultChartOptions(
       tooltip: {
         boxPadding: UtilsService.isSmallScreen() ? 0 : 10,
         titleFont: {
-          family: 'JetBrains Mono, Courier New, monospace',
+          family: 'JetBrains Mono NL, Courier New, monospace',
           size: 12,
           weight: 'bold',
           lineHeight: 1.2,
         },
         bodyFont: {
-          family: 'JetBrains Mono, Courier New, monospace',
+          family: 'JetBrains Mono NL, Courier New, monospace',
           size: 12,
           weight: 'normal',
           lineHeight: 1.2,
         },
         footerFont: {
-          family: 'JetBrains Mono, Courier New, monospace',
+          family: 'JetBrains Mono NL, Courier New, monospace',
           size: 12,
           weight: 'normal',
           lineHeight: 1.2,
@@ -110,7 +110,7 @@ export function createDefaultChartOptions(
         min: 0,
         ticks: {
           font: {
-            family: 'JetBrains Mono, Courier New, monospace',
+            family: 'JetBrains Mono NL, Courier New, monospace',
             size: 11,
           },
           color: params.fontColor,
@@ -135,7 +135,7 @@ export function createDefaultChartOptions(
         min: 0,
         ticks: {
           font: {
-            family: 'JetBrains Mono, Courier New, monospace',
+            family: 'JetBrains Mono NL, Courier New, monospace',
             size: 11,
           },
           color: params.fontColor,
