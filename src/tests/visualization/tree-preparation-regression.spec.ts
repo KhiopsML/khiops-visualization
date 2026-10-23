@@ -108,6 +108,43 @@ describe('Visualization - Tree Select Focus Selection', () => {
     expect(store.selectNodesFromId).not.toHaveBeenCalled();
   }));
 
+  it('scrolls only the decision tree container when Firefox selects an offscreen group node', fakeAsync(() => {
+    component.ngAfterViewInit();
+    tick(80);
+
+    const container = document.createElement('div');
+    container.style.overflow = 'auto';
+    root.appendChild(container);
+    container.appendChild(root.querySelector('#tree_0'));
+    Object.defineProperties(container, {
+      clientHeight: { value: 100 },
+      scrollHeight: { value: 600 },
+      clientWidth: { value: 200 },
+      scrollWidth: { value: 200 },
+    });
+    spyOn(container, 'getBoundingClientRect').and.returnValue({
+      top: 100, bottom: 200, left: 0, right: 200, width: 200, height: 100,
+    });
+    const node = root.querySelector('#tree-leaf-L3');
+    Object.defineProperty(node, 'scrollIntoViewIfNeeded', { value: undefined });
+    spyOn(node, 'getBoundingClientRect').and.returnValue({
+      top: 300, bottom: 320, left: 0, right: 60, width: 60, height: 20,
+    });
+    const nativeScroll = spyOn(node, 'scrollIntoView');
+    const localScroll = spyOn(container, 'scrollTo');
+    const appScrollTop = root.scrollTop;
+    const windowScrollTop = window.scrollY;
+
+    store.selectedNode$.next({ _id: 'L3' });
+
+    expect(localScroll).toHaveBeenCalledOnceWith({
+      top: 160, left: 0, behavior: 'smooth',
+    });
+    expect(nativeScroll).not.toHaveBeenCalled();
+    expect(root.scrollTop).toBe(appScrollTop);
+    expect(window.scrollY).toBe(windowScrollTop);
+  }));
+
   it('keeps selected leaf and ancestors without mutating source tree', fakeAsync(() => {
     component.onToggleFocusSelection(true);
     tick();

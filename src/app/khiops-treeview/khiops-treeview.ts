@@ -67,14 +67,33 @@ function scrollIntoView(node: HTMLElement, center = true) {
     return;
   }
 
-  if (!(node as any).scrollIntoViewIfNeeded) {
-    const options: ScrollIntoViewOptions = {
-      behavior: 'smooth',
-      block: center ? 'center' : 'start',
-    };
-    node.scrollIntoView(options);
-  } else {
-    (node as any).scrollIntoViewIfNeeded(center);
+  let container = node.parentElement;
+  while (container && container !== document.body && container !== document.documentElement) {
+    const style = window.getComputedStyle(container);
+    const scrollsVertically = /(auto|scroll)/.test(style.overflowY) &&
+      container.scrollHeight > container.clientHeight;
+    const scrollsHorizontally = /(auto|scroll)/.test(style.overflowX) &&
+      container.scrollWidth > container.clientWidth;
+
+    if (scrollsVertically || scrollsHorizontally) {
+      const containerRect = container.getBoundingClientRect();
+      const top = containerRect.top + container.clientTop;
+      const left = containerRect.left + container.clientLeft;
+      const scrollTop = scrollsVertically &&
+        (rect.top < top || rect.bottom > top + container.clientHeight)
+        ? container.scrollTop + rect.top - top -
+          (center ? (container.clientHeight - rect.height) / 2 : 0)
+        : container.scrollTop;
+      const scrollLeft = scrollsHorizontally &&
+        (rect.left < left || rect.right > left + container.clientWidth)
+        ? container.scrollLeft + rect.left - left -
+          (center ? (container.clientWidth - rect.width) / 2 : 0)
+        : container.scrollLeft;
+
+      container.scrollTo({ top: scrollTop, left: scrollLeft, behavior: 'smooth' });
+      return;
+    }
+    container = container.parentElement;
   }
 }
 
