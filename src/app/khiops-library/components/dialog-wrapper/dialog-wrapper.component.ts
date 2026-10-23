@@ -261,6 +261,11 @@ export class DialogWrapperComponent
     // Focus the primary action button after the dialog is rendered
     const hostEl = this.componentRef.location.nativeElement as HTMLElement;
     setTimeout(() => {
+      if (content.config?.sidePanel) {
+        hostEl.tabIndex = -1;
+        hostEl.focus({ preventScroll: true });
+        return;
+      }
       const primaryBtn =
         hostEl.querySelector<HTMLElement>('button[mat-flat-button]') ??
         hostEl.querySelector<HTMLElement>('button');
