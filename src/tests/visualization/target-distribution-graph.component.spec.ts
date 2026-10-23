@@ -42,6 +42,43 @@ describe('TargetDistributionGraphComponent bar selection', () => {
   });
 });
 
+describe('TargetDistributionGraphComponent container resizing', () => {
+  let component: TargetDistributionGraphComponent;
+
+  beforeEach(() => {
+    component = Object.create(TargetDistributionGraphComponent.prototype);
+    spyOn(component, 'resizeGraph');
+    spyOn(component, 'scheduleLegendLayoutUpdate');
+  });
+
+  it('resizes the canvas when the analysis panel receives its available size', () => {
+    component.onResized({ newRect: { width: 600, height: 280 } });
+
+    expect(component.resizeGraph).toHaveBeenCalledTimes(1);
+    expect(component.scheduleLegendLayoutUpdate).toHaveBeenCalledTimes(1);
+  });
+
+  it('resizes again when panel height changes without a width change', () => {
+    component.onResized({ newRect: { width: 600, height: 280 } });
+    component.onResized({ newRect: { width: 600, height: 220 } });
+
+    expect(component.resizeGraph).toHaveBeenCalledTimes(2);
+  });
+
+  it('ignores hidden container sizes and resizes when the panel becomes visible', () => {
+    component.onResized({ newRect: { width: 0, height: 0 } });
+    component.onResized({ newRect: { width: 600, height: 0 } });
+    component.onResized(undefined);
+
+    expect(component.resizeGraph).not.toHaveBeenCalled();
+    expect(component.scheduleLegendLayoutUpdate).not.toHaveBeenCalled();
+
+    component.onResized({ newRect: { width: 600, height: 280 } });
+
+    expect(component.resizeGraph).toHaveBeenCalledTimes(1);
+  });
+});
+
 describe('ChartComponent grouped bar clicks', () => {
   let component: ChartComponent;
   let selectBarIndex: jasmine.Spy;

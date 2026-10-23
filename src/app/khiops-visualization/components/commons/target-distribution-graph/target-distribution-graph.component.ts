@@ -259,7 +259,8 @@ export class TargetDistributionGraphComponent
    * @param event The resized event containing new dimensions
    */
   onResized(event: ResizedEvent) {
-    if (event?.newRect?.width) {
+    if (event?.newRect?.width && event.newRect.height) {
+      this.resizeGraph();
       this.scheduleLegendLayoutUpdate();
     }
   }
