@@ -200,6 +200,7 @@
     "TOO_MANY_VALUES": "Too many values. Only the 200 first are displayed.",
     "NODES_SELECTION_DETAILS": "Selection details",
     "DECISION_TREE": "Decision tree",
+    "FOCUS_SELECTION": "Focus selection",
     "LIB_VERSION": "Khiops lib version",
     "INTEREST": "Interest",
     "FILES": "files",

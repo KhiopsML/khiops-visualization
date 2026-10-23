@@ -31,6 +31,19 @@
       >
       </kl-btn-fullscreen>
     </div>
+    <div
+      fxLayout="row"
+      fxLayoutAlign="start center"
+      class="graph-header-tools header-panel-contrast"
+    >
+      <mat-slide-toggle
+        class="screenshot-hide"
+        [checked]="focusSelection"
+        (change)="onToggleFocusSelection($event.checked)"
+      >
+        {{ 'GLOBAL.FOCUS_SELECTION' | translate }}
+      </mat-slide-toggle>
+    </div>
     <div id="tree-select-comp-content" fxFlex>
       <div id="{{ 'tree_0' }}"></div>
     </div>

@@ -28,6 +28,7 @@ import { Subscription } from 'rxjs';
 import { TreePreparationStore } from '@khiops-visualization/stores/tree-preparation.store';
 import { TreeView } from '@khiops-treeview';
 import { GraphSelectionSessionService } from '@khiops-visualization/providers/graph-selection-session.service';
+import { cloneDeep } from 'lodash-es';
 
 @Component({
   selector: 'app-tree-select',
@@ -45,6 +46,8 @@ export class TreeSelectComponent
   public componentType = COMPONENT_TYPES.KV_TREE; // needed to copy datas
   public override id: string | undefined = undefined;
   public isFullscreen: boolean = false;
+  public focusSelection: boolean = false;
+  private selectedNodes: TreeNodeModel[] = [];
   private tree: any;
   private initTreeTimer?: ReturnType<typeof setTimeout>;
   private subscriptions = new Subscription();
@@ -75,7 +78,12 @@ export class TreeSelectComponent
   ngOnInit() {
     this.subscriptions.add(
       this.selectedNodes$.subscribe((selectedNodes) => {
-        this.tree?.selectNodes(selectedNodes);
+        this.selectedNodes = selectedNodes;
+        if (this.focusSelection) {
+          this.initTree(false);
+        } else {
+          this.tree?.selectNodes(selectedNodes);
+        }
       }),
     );
     this.subscriptions.add(
@@ -104,6 +112,29 @@ export class TreeSelectComponent
     this.scheduleTreeInit();
   }
 
+  onToggleFocusSelection(focusSelection: boolean) {
+    this.focusSelection = focusSelection;
+    this.initTree(false);
+  }
+
+  private getDisplayedTree(): TreeNodeModel[] {
+    if (!this.focusSelection) {
+      return this.dimensionTree || [];
+    }
+
+    const selectedIds = new Set(this.selectedNodes.map((node) => node.nodeId));
+    const filterNodes = (nodes: TreeNodeModel[]): TreeNodeModel[] =>
+      nodes.flatMap((node) => {
+        if (selectedIds.has(node.nodeId)) {
+          return [node];
+        }
+        node.children = filterNodes(node.children || []);
+        return node.children.length ? [node] : [];
+      });
+
+    return filterNodes(cloneDeep(this.dimensionTree || []));
+  }
+
   private scheduleTreeInit() {
     if (this.initTreeTimer) {
       clearTimeout(this.initTreeTimer);
@@ -115,10 +146,10 @@ export class TreeSelectComponent
     }, 80);
   }
 
-  private initTree() {
+  private initTree(restoreSelection = true) {
     if (this.dimensionTree?.[0]) {
-      this.tree = new TreeView(
-        this.dimensionTree,
+      const tree = new TreeView(
+        this.getDisplayedTree(),
         this.configService.getRootElementDom(),
         'tree_0',
         {
@@ -126,8 +157,16 @@ export class TreeSelectComponent
           disableUpdateName: true,
         },
       );
+      this.tree = tree;
 
       this.tree.on('init', async () => {
+        if (this.tree !== tree) {
+          return;
+        }
+        if (!restoreSelection) {
+          tree.selectNodes(this.selectedNodes);
+          return;
+        }
         // Restore from in-session node selection if available.
         const sessionNodeId =
           this.graphSelectionSessionService.getSelectedTreeNodeId(
