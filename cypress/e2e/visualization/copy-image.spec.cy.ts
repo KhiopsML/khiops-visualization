@@ -75,15 +75,6 @@ const allComponents: ComponentEntry[] = [
   { tab: 'Tree preparation', id: '#tree-preparation-variables-list' },
   { tab: 'Tree preparation', id: '#distribution-graph0' },
   { tab: 'Tree preparation', id: '#target-distribution-graph0' },
-  { tab: 'Tree preparation', id: '#target-distribution-graph1' },
-  { tab: 'Tree preparation', id: '#tree-preparation-select' },
-  { tab: 'Tree preparation', id: '#tree-details-comp' },
-  { tab: 'Tree preparation', id: '#tree-preparation-hyper' },
-  {
-    tab: 'Tree preparation',
-    subtab: 'Leaf rules',
-    id: '#tree-leaf-rules-comp',
-  },
 
   // Preparation 2D
   { tab: 'Preparation 2D', id: '#preparation-2d-informations-block-summary' },
@@ -153,17 +144,35 @@ describe('Copy images Test for Khiops Visualization', () => {
         toTest.forEach(({ tab, subtab, id, setup, teardown }) => {
           cy.get(`.mat-mdc-tab:contains("${tab}")`).first().click();
           if (subtab) {
-            const subtabSelector =
-              subtab === 'Leaf rules'
-                ? '.leaf-tab-btn:visible'
-                : '.matrix-tab-btn:visible';
-            cy.contains(subtabSelector, subtab).click();
+            cy.contains('.matrix-tab-btn:visible', subtab).click();
           }
           if (setup) setup();
           cy.testComponentScreenshot(id, tab);
           if (teardown) teardown();
         });
       });
+    });
+
+    it(`copies images from Tree analysis for ${fileName}`, () => {
+      cy.loadFile('visualization', fileName);
+      cy.contains('.mat-mdc-tab', 'Tree preparation').click();
+      cy.get('#tree-preparation-variables-list .ag-row-selected .kl-tree-inspect-button')
+        .click();
+      cy.get('#tree-analysis-title').should('be.visible');
+      cy.window().then((win) => {
+        cy.spy(win, 'fetch').as('fetchSpy');
+      });
+
+      [
+        '#target-distribution-graph1',
+        '#tree-preparation-select',
+        '#tree-details-comp',
+        '#tree-preparation-hyper',
+        '#tree-leaf-rules-comp',
+      ].forEach((id) => cy.testComponentScreenshot(id, 'Tree analysis'));
+
+      cy.get('button[aria-label="Close tree analysis"]').click();
+      cy.get('#tree-preparation-variables-list').should('be.visible');
     });
   });
 });

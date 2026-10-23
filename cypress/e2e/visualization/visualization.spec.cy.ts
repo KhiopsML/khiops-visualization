@@ -139,6 +139,18 @@ describe('Test Khiops Visualization sample files', () => {
               }
             });
           }
+          if (view === 'Tree preparation' && testsValues.TreeAnalysis.length) {
+            cy.get('#tree-preparation-variables-list .ag-row-selected .kl-tree-inspect-button')
+              .click();
+            cy.get('#tree-analysis-title').should('be.visible');
+            testsValues.TreeAnalysis.forEach((test) => {
+              if (test) {
+                cy.get('app-tree-preparation-analysis').contains(test);
+              }
+            });
+            cy.get('button[aria-label="Close tree analysis"]').click();
+            cy.get('#tree-preparation-variables-list').should('be.visible');
+          }
         });
       });
     });
@@ -150,6 +162,7 @@ function initTestValues() {
     Preparation: [],
     Preparation2d: [],
     TreePreparation: [],
+    TreeAnalysis: [],
     TextPreparation: [],
     Modeling: [],
     Evaluation: [],

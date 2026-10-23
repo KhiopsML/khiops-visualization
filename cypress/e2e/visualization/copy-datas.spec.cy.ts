@@ -60,6 +60,9 @@ describe('Copy datas Test for Khiops Visualization', () => {
 
           // Tree preparation Tab datas
           cy.get('.mat-mdc-tab:contains("Tree preparation")').first().click();
+          cy.get('#tree-preparation-variables-list .ag-row-selected .kl-tree-inspect-button')
+            .click();
+          cy.get('#tree-analysis-title').should('be.visible');
           cy.testComponentCopyDatas(
             '#target-distribution-graph1',
             'kv-target-distribution-graph1.txt',
@@ -78,11 +81,11 @@ describe('Copy datas Test for Khiops Visualization', () => {
             'kv-tree-preparation-hyper.txt',
           );
 
-          cy.contains('.leaf-tab-btn:visible', 'Leaf rules').click();
           cy.testComponentCopyDatas(
             '#tree-leaf-rules-comp',
             'kv-tree-leaf-rules-comp.txt',
           );
+          cy.get('button[aria-label="Close tree analysis"]').click();
 
           // Preparation 2D Tab datas
           cy.get('.mat-mdc-tab:contains("Preparation 2D")').first().click();

@@ -23,13 +23,18 @@ describe('Tree details component cleanup on file change #78', () => {
     cy.get('#tree-preparation-variables-list').contains('Tree_6');
 
     // Verify tree details grid is visible
-    cy.get('#tree-details-comp').should('exist');
+    cy.get('#tree-preparation-variables-list .ag-row-selected .kl-tree-inspect-button')
+      .click();
+    cy.get('#tree-analysis-title').should('contain.text', 'Tree_6');
+    cy.get('#tree-details-comp').should('be.visible');
 
     // 2. Load a file WITHOUT tree preparation data
     cy.loadFile('visualization', 'AdultAllReports.json');
 
     // The Tree preparation tab should not exist
     cy.get('.mat-mdc-tab:contains("Tree preparation")').should('not.exist');
+    cy.get('#tree-analysis-title').should('not.exist');
+    cy.get('#tree-details-comp').should('not.exist');
   });
 
   it('should show fresh tree details when loading a second file with trees', () => {
@@ -45,6 +50,11 @@ describe('Tree details component cleanup on file change #78', () => {
       'be.visible',
     );
     cy.get('#tree-preparation-variables-list').contains('Tree_6');
+
+    cy.get('#tree-preparation-variables-list .ag-row-selected .kl-tree-inspect-button')
+      .click();
+    cy.get('#tree-analysis-title').should('contain.text', 'Tree_6');
+    cy.get('#tree-details-comp').should('be.visible');
 
     // 2. Load a file WITHOUT trees, then one WITH different trees
     cy.loadFile('visualization', 'AdultAllReports.json');
@@ -69,5 +79,11 @@ describe('Tree details component cleanup on file change #78', () => {
 
     // Verify Tree_6 from the first file is NOT present
     cy.get('#tree-preparation-variables-list').should('not.contain', 'Tree_6');
+    cy.get('#tree-preparation-variables-list .ag-row-selected .kl-tree-inspect-button')
+      .click();
+    cy.get('#tree-analysis-title')
+      .should('contain.text', 'Tree_1')
+      .and('not.contain.text', 'Tree_6');
+    cy.get('#tree-details-comp').should('be.visible');
   });
 });

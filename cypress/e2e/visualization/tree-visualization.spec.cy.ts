@@ -30,6 +30,13 @@ describe('Tree visualization Test for Khiops Visualization', () => {
 
         cy.get('#tree-preparation-variables-list').contains('Tree_1');
 
+        cy.checkCanvasIsNotEmpty('#target-distribution-chart-0');
+        cy.checkCanvasIsNotEmpty('#distribution-chart-0');
+        cy.get('#tree-preparation-select').should('not.exist');
+        cy.get('#tree-preparation-variables-list .ag-row-selected .kl-tree-inspect-button')
+          .click();
+        cy.get('#tree-analysis-title').should('contain.text', 'Tree_1');
+
         cy.get('#tree-select-comp').contains('L61');
 
         cy.get('#tree-leaf-L61')
@@ -44,18 +51,14 @@ describe('Tree visualization Test for Khiops Visualization', () => {
           .find('.ag-row:eq(0)')
           .should('have.class', 'ag-row-selected');
 
-        cy.get('#target-distribution-chart-0').should('exist');
-        cy.get('#distribution-chart-0').should('exist');
         cy.get('#target-distribution-chart-1').should('exist');
 
         cy.get(
-          '#tree-preparation-hyper .tree-hyper-selection #tree-hyper-selection-comp',
+          '#tree-leaf-details-comp .tree-node-details',
         ).contains('0.38');
         cy.get(
-          '#tree-preparation-hyper .tree-hyper-selection #tree-hyper-selection-comp',
+          '#tree-leaf-details-comp .tree-node-details',
         ).contains('3790');
-
-        cy.contains('.leaf-tab-btn:visible', 'Leaf rules').click();
 
         cy.get('#tree-leaf-rules-comp').contains('workclass');
         cy.get('#tree-leaf-rules-comp').contains('Craft');
@@ -64,6 +67,8 @@ describe('Tree visualization Test for Khiops Visualization', () => {
 
         cy.get('#hyperTree').find('circle').should('have.length', 242);
 
+        cy.get('button[aria-label="Close tree analysis"]').click();
+        cy.get('#tree-preparation-variables-list').should('be.visible');
         cy.get('.mat-mdc-tab:contains("Modeling")').first().click();
         cy.checkCanvasIsNotEmpty('#distribution-chart-0');
 
@@ -78,7 +83,7 @@ describe('Tree visualization Test for Khiops Visualization', () => {
 
 describe('Tree preparation target distribution selection', () => {
   const selectedTreeNodes = '#tree-select-comp .tree-leaf-content.tree-selected';
-  const hyperSelection = '#tree-preparation-hyper .tree-hyper-selection';
+  const nodeDetails = '#tree-leaf-details-comp .tree-node-details';
   const leafChart = '#target-distribution-chart-1';
   const lastBarIndex = 7;
 
@@ -129,40 +134,52 @@ describe('Tree preparation target distribution selection', () => {
     });
 
     clickBar('#target-distribution-chart-0', lastBarIndex);
+    cy.get('#tree-preparation-variables-list .ag-row-selected .kl-tree-inspect-button')
+      .click();
+    cy.get('#tree-analysis-title').should('be.visible');
     cy.get(selectedTreeNodes).should('have.length.greaterThan', 0);
-    cy.get(`${hyperSelection} .lineage-chip.current`).should('not.be.empty');
+    cy.get(`${nodeDetails} .lineage-chip.current`).should('not.be.empty');
     cy.checkCanvasIsNotEmpty(leafChart);
 
     cy.get(selectedTreeNodes).then(($nodes) => {
       const expectedNodeIds = nodeIds($nodes);
 
-      cy.get(hyperSelection).invoke('text').then((expectedHyperText) => {
+      cy.get(nodeDetails).invoke('text').then((expectedNodeDetails) => {
         cy.get(leafChart).then(($canvas) => {
           const expectedDistribution = leafDistribution($canvas[0]);
 
+          cy.get('button[aria-label="Close tree analysis"]').click();
           clickBar('#distribution-chart-0', 0);
+          cy.get('#tree-preparation-variables-list .ag-row-selected .kl-tree-inspect-button')
+            .click();
+          cy.get('#tree-analysis-title').should('be.visible');
           cy.get(selectedTreeNodes).should(($changedNodes) => {
             expect(nodeIds($changedNodes)).not.to.deep.equal(expectedNodeIds);
           });
-          cy.get(hyperSelection).should(($selection) => {
-            expect($selection.text()).not.to.equal(expectedHyperText);
+          cy.get(nodeDetails).should(($selection) => {
+            expect($selection.text()).not.to.equal(expectedNodeDetails);
           });
           cy.get(leafChart).should(($changedCanvas) => {
             expect(leafDistribution($changedCanvas[0])).not.to.deep.equal(expectedDistribution);
           });
 
+          cy.get('button[aria-label="Close tree analysis"]').click();
           clickBar('#target-distribution-chart-0', lastBarIndex);
+          cy.get('#tree-preparation-variables-list .ag-row-selected .kl-tree-inspect-button')
+            .click();
+          cy.get('#tree-analysis-title').should('be.visible');
 
           cy.get(selectedTreeNodes).should(($restoredNodes) => {
             expect(nodeIds($restoredNodes)).to.deep.equal(expectedNodeIds);
           });
-          cy.get(hyperSelection).should(($selection) => {
-            expect($selection.text()).to.equal(expectedHyperText);
+          cy.get(nodeDetails).should(($selection) => {
+            expect($selection.text()).to.equal(expectedNodeDetails);
           });
           cy.get(leafChart).should(($restoredCanvas) => {
             expect(leafDistribution($restoredCanvas[0])).to.deep.equal(expectedDistribution);
           });
           cy.checkCanvasIsNotEmpty(leafChart);
+          cy.get('button[aria-label="Close tree analysis"]').click();
           cy.get('#tree-preparation-variables-list .ag-row-selected').should('have.length', 1);
         });
       });

@@ -200,20 +200,22 @@ Cypress.Commands.add('testComponentScreenshot', (id: string, tab?: string) => {
   // Verify the component is selected (has selected class)
   cy.get(id, { timeout: 10000 }).should('have.class', 'selected');
 
+  cy.get('#header-tools-copy-image-button .loader-circle-icon').should('not.exist');
+  cy.get('@fetchSpy').then((spy) => spy.resetHistory());
   cy.get('#header-tools-copy-image-button').first().click({ force: true });
 
-  // Verify the snackbar success message appears
-  cy.get('.mat-mdc-snack-bar-container')
-    .should('be.visible')
-    .and('contain', 'copied');
-
   // Verify fetch was called with a valid PNG data URL
-  cy.get('@fetchSpy', { timeout: 2000 }).should((spy) => {
-    const dataUrl = spy.args.at(-1)?.[0];
-    expect(spy).to.have.been.called;
+  cy.get('@fetchSpy').should((spy) => {
+    const dataUrl = spy.args
+      .map((args) => args[0])
+      .find((url) => typeof url === 'string' && url.startsWith('data:image/png;base64,'));
     expect(dataUrl)
       .to.be.a('string')
       .and.include('data:image/png;base64,')
       .and.have.length.greaterThan(1000);
   });
+  cy.get('#header-tools-copy-image-button .loader-circle-icon').should('not.exist');
+  cy.get('.mat-mdc-snack-bar-container')
+    .should('be.visible')
+    .and('contain', 'copied');
 });

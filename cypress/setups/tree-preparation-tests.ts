@@ -20,7 +20,7 @@ export function setupTreePreparationTests(datas, testsValues) {
   );
   testsValues.TreePreparation.push('Evaluated variables');
   if (datas.treePreparationReport?.dimensionTree) {
-    testsValues.TreePreparation.push('Hyper tree visualization');
+    testsValues.TreeAnalysis.push('Hyper tree visualization');
 
     testsValues.TreePreparation.push(
       datas.treePreparationReport?.variablesStatistics.length + ' Variables',
@@ -31,23 +31,23 @@ export function setupTreePreparationTests(datas, testsValues) {
     testsValues.TreePreparation.push(
       datas.treePreparationReport?.variablesStatistics[0]?.name,
     );
-    testsValues.TreePreparation.push('Decision tree');
+    testsValues.TreeAnalysis.push('Decision tree');
 
-    testsValues.TreePreparation.push(
+    testsValues.TreeAnalysis.push(
       datas.treePreparationReport?.treeDetails?.R01?.treeNodes?.nodeId,
     );
-    testsValues.TreePreparation.push(
+    testsValues.TreeAnalysis.push(
       datas.treePreparationReport?.treeDetails?.R01?.treeNodes?.variable,
     );
-    testsValues.TreePreparation.push(
+    testsValues.TreeAnalysis.push(
       datas.treePreparationReport?.treeDetails?.R001?.treeNodes?.nodeId,
     );
-    testsValues.TreePreparation.push(
+    testsValues.TreeAnalysis.push(
       datas.treePreparationReport?.treeDetails?.R001?.treeNodes?.variable,
     );
-    testsValues.TreePreparation.push('Selection details');
-    testsValues.TreePreparation.push('Leaf infos');
-    testsValues.TreePreparation.push('Leaf rules');
+    testsValues.TreeAnalysis.push('Selection details');
+    testsValues.TreeAnalysis.push('Leaf infos');
+    testsValues.TreeAnalysis.push('Leaf rules');
     testsValues.TreePreparation.push('Target distribution');
   }
 
