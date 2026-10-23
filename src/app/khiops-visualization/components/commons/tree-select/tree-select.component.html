@@ -24,18 +24,6 @@
         <svg lucideIcon="folder" size="16"></svg>
         <span fxFlex>{{ 'GLOBAL.DECISION_TREE' | translate }}</span>
       </h1>
-      <kl-btn-fullscreen
-        [isFullscreen]="isFullscreen"
-        class="screenshot-hide"
-        (toggleFullscreen)="onToggleFullscreen($event)"
-      >
-      </kl-btn-fullscreen>
-    </div>
-    <div
-      fxLayout="row"
-      fxLayoutAlign="start center"
-      class="graph-header-tools header-panel-contrast"
-    >
       <mat-slide-toggle
         class="screenshot-hide"
         [checked]="focusSelection"
@@ -43,6 +31,12 @@
       >
         {{ 'GLOBAL.FOCUS_SELECTION' | translate }}
       </mat-slide-toggle>
+      <kl-btn-fullscreen
+        [isFullscreen]="isFullscreen"
+        class="screenshot-hide"
+        (toggleFullscreen)="onToggleFullscreen($event)"
+      >
+      </kl-btn-fullscreen>
     </div>
     <div id="tree-select-comp-content" fxFlex>
       <div id="{{ 'tree_0' }}"></div>
