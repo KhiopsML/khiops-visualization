@@ -37,6 +37,11 @@
               ? selectedNode?.color
               : null
           "
+          [style.color]="
+            pathNode.id === (selectedNode?.id || selectedNode?.nodeId)
+              ? selectedTextColor
+              : null
+          "
           >{{ pathNode.label }}</span
         >
         @if (!$last) {

@@ -13,6 +13,7 @@ import {
   Output,
 } from '@angular/core';
 import { TreeNodeModel } from '@khiops-visualization/model/tree-node.model';
+import { color } from 'd3';
 
 interface LineageNodeEntry {
   id: string;
@@ -32,8 +33,10 @@ export class TreeLineagePathComponent implements OnChanges {
   @Input() theme: 'default' | 'dark' = 'default';
   @Output() lineageNodeSelected = new EventEmitter<string>();
   lineagePath: LineageNodeEntry[] = [];
+  selectedTextColor: string | null = null;
 
   ngOnChanges(): void {
+    this.selectedTextColor = this.getTextColor(this.selectedNode?.color);
     const selectedIdentifier = this.getNodeId(this.selectedNode);
     if (!selectedIdentifier) {
       this.lineagePath = [];
@@ -50,6 +53,27 @@ export class TreeLineagePathComponent implements OnChanges {
         },
       ];
     }
+  }
+
+  private getTextColor(background?: string): string | null {
+    const parsedColor = background ? color(background) : null;
+    if (!parsedColor) {
+      return null;
+    }
+    const { r: red, g: green, b: blue } = parsedColor.rgb();
+    const [linearRed, linearGreen, linearBlue] = [red, green, blue].map(
+      (channel) => {
+        const normalized = channel / 255;
+        return normalized <= 0.04045
+          ? normalized / 12.92
+          : ((normalized + 0.055) / 1.055) ** 2.4;
+      },
+    );
+    const luminance =
+      0.2126 * linearRed! + 0.7152 * linearGreen! + 0.0722 * linearBlue!;
+    const whiteContrast = 1.05 / (luminance + 0.05);
+    const blackContrast = (luminance + 0.05) / 0.05;
+    return blackContrast > whiteContrast ? '#000000' : '#ffffff';
   }
 
   private findLineagePath(
