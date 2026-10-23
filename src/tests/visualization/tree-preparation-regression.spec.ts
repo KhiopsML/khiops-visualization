@@ -71,6 +71,43 @@ describe('Visualization - Tree Select Focus Selection', () => {
     root.remove();
   });
 
+  it('preserves distribution group selection when analysis tree initializes', fakeAsync(() => {
+    selectedNodes.next([{ nodeId: 'L2' }, { nodeId: 'L3' }]);
+    spyOn(component['graphSelectionSessionService'], 'getSelectedTreeNodeId')
+      .and.returnValue('L1');
+
+    component.ngAfterViewInit();
+    tick(80);
+
+    expect(Array.from(root.querySelectorAll('.tree-selected .tree-leaf-text'))
+      .map((node) => node.id)).toEqual(['L2', 'L3']);
+    expect(store.selectNodesFromId).not.toHaveBeenCalled();
+    expect(store.initSelectedNodes).not.toHaveBeenCalled();
+    expect(selectedNodes.value.map((node) => node.nodeId)).toEqual(['L2', 'L3']);
+  }));
+
+  it('restores session node only when shared selection is empty', fakeAsync(() => {
+    selectedNodes.next([]);
+    spyOn(component['graphSelectionSessionService'], 'getSelectedTreeNodeId')
+      .and.returnValue('L2');
+
+    component.ngAfterViewInit();
+    tick(80);
+
+    expect(store.selectNodesFromId).toHaveBeenCalledOnceWith({ id: 'L2' });
+    expect(store.initSelectedNodes).not.toHaveBeenCalled();
+  }));
+
+  it('initializes selection only when shared selection and session are empty', fakeAsync(() => {
+    selectedNodes.next([]);
+
+    component.ngAfterViewInit();
+    tick(80);
+
+    expect(store.initSelectedNodes).toHaveBeenCalledTimes(1);
+    expect(store.selectNodesFromId).not.toHaveBeenCalled();
+  }));
+
   it('keeps selected leaf and ancestors without mutating source tree', fakeAsync(() => {
     component.onToggleFocusSelection(true);
     tick();

@@ -163,7 +163,7 @@ export class TreeSelectComponent
         if (this.tree !== tree) {
           return;
         }
-        if (!restoreSelection) {
+        if (!restoreSelection || this.selectedNodes.length > 0) {
           tree.selectNodes(this.selectedNodes);
           return;
         }
