@@ -390,11 +390,12 @@ canvas:focus {
 /* Override fullscreen styles when inside a modal dialog */
 kl-dialog-wrapper {
   .fullscreen {
-    width: calc(100% - 30px) !important;
-    height: calc(100% - 164px) !important;
-    min-width: calc(100% - 30px) !important;
-    min-height: calc(100% - 164px) !important;
-    top: 78px !important;
+    width: calc(
+      100% - var(--layout-padding) - var(--layout-padding)
+    ) !important;
+    min-width: calc(
+      100% - var(--layout-padding) - var(--layout-padding)
+    ) !important;
   }
 }
 
