@@ -378,7 +378,7 @@ mat-sidenav.mat-drawer-over.mat-drawer-end {
   right: 8px;
   bottom: 8px;
   max-width: calc(100% - 16px);
-  border-radius: 12px !important;
+  border-radius: var(--border-radius) !important;
 }
 
 .mdc-slider__track--active,
