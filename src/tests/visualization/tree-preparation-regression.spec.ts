@@ -116,7 +116,7 @@ describe('Visualization - Tree Preparation Analysis Dialog', () => {
     expect(resize).toHaveBeenCalledTimes(1);
   });
 
-  it('opens analysis as a modal with a 16px viewport margin', () => {
+  it('opens analysis as a modal with a 16px margin inside the tab body', () => {
     const openDialog = jasmine.createSpy();
 
     VariableGraphDetailsComponent.prototype.onInspectTree.call({
@@ -126,10 +126,10 @@ describe('Visualization - Tree Preparation Analysis Dialog', () => {
     expect(openDialog).toHaveBeenCalledOnceWith(
       TreePreparationAnalysisComponent,
       {
-        width: 'calc(100vw - 32px)',
-        height: 'calc(100dvh - 32px)',
-        maxWidth: 'calc(100vw - 32px)',
-        maxHeight: 'calc(100dvh - 32px)',
+        width: 'calc(100% - 32px)',
+        height: 'calc(100% - 32px)',
+        maxWidth: 'calc(100% - 32px)',
+        maxHeight: 'calc(100% - 32px)',
         panelClass: 'tree-preparation-analysis-panel',
       },
     );

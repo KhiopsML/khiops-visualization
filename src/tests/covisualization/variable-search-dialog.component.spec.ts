@@ -108,10 +108,6 @@ describe('VariableSearchDialogComponent', () => {
       'ngAfterViewInit',
     );
 
-    fixture = TestBed.createComponent(VariableSearchDialogComponent);
-    component = fixture.componentInstance;
-    // Set data before detectChanges, simulating what DialogWrapperComponent does
-    component.data = mockDialogData;
     mockDialogService = TestBed.inject(
       DialogService,
     ) as jasmine.SpyObj<DialogService>;
@@ -128,6 +124,9 @@ describe('VariableSearchDialogComponent', () => {
     spyOn(window, 'requestAnimationFrame').and.callFake((callback) =>
       setTimeout(() => callback(performance.now()), 0) as unknown as number,
     );
+    fixture = TestBed.createComponent(VariableSearchDialogComponent);
+    component = fixture.componentInstance;
+    component.data = mockDialogData;
     fixture.detectChanges();
     flush();
   }));

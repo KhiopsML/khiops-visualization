@@ -49,7 +49,7 @@ export class TreePreparationAnalysisComponent {
   ) {
     this.selectedNode$ = this.store.selectedNode$;
     this.selectedNodes$ = this.store.selectedNodes$;
-    this.selectedGraphItemIndex$ = this.selectedNode$.pipe(
+    this.selectedGraphItemIndex$ = this.store.selectedNode$.pipe(
       map((node) =>
         node?._id
           ? (this.treePreparationDatasService.getNodesLinkedToOneNode(
