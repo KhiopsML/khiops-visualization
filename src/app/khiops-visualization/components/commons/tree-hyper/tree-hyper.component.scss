@@ -50,10 +50,15 @@
     position: relative;
 
     .tree-hyper-hover-tooltip {
-      position: absolute;
-      z-index: 4;
+      position: fixed;
+      inset: auto;
+      margin: 0;
+      padding: 0;
+      border: 0;
+      overflow: visible;
+      background: transparent;
+      color: inherit;
       pointer-events: none;
-      max-width: min(38%, 320px);
       box-shadow: var(--box-shadow-elevate-100);
       border-radius: var(--border-radius);
     }

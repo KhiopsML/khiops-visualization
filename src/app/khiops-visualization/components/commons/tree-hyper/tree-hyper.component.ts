@@ -59,7 +59,13 @@ export class TreeHyperComponent
   private static readonly HOVER_TOOLTIP_FALLBACK_HEIGHT = 130;
 
   @ViewChild('hyperTree') private hyperTree?: ElementRef<HTMLElement>;
-  @ViewChild('hoverTooltip') private hoverTooltip?: ElementRef<HTMLElement>;
+  private hoverTooltip?: ElementRef<HTMLElement>;
+
+  @ViewChild('hoverTooltip')
+  set hoverTooltipElement(element: ElementRef<HTMLElement> | undefined) {
+    this.hoverTooltip = element;
+    element?.nativeElement.showPopover();
+  }
 
   @Input() public dimensionTree?: [TreeNodeModel];
   @Input() private displayedValues?: ChartToggleValuesI[];
@@ -395,17 +401,9 @@ export class TreeHyperComponent
   }
 
   public onTreeMouseMove(event: MouseEvent) {
-    const rootElement = this.hyperTree?.nativeElement.querySelector(
-      '#hyperTree',
-    ) as HTMLElement | null;
-    if (!rootElement) {
-      return;
-    }
-
-    const rect = rootElement.getBoundingClientRect();
     this.lastMousePosition = {
-      x: event.clientX - rect.left,
-      y: event.clientY - rect.top,
+      x: event.clientX,
+      y: event.clientY,
     };
 
     if (this.hoveredLeafNode) {
@@ -424,16 +422,12 @@ export class TreeHyperComponent
   }
 
   private computeHoveredLeafTooltipStyle(): { left: string; top: string } {
-    const rootElement = this.hyperTree?.nativeElement.querySelector(
-      '#hyperTree',
-    ) as HTMLElement | null;
-
-    if (!rootElement || !this.lastMousePosition) {
+    if (!this.lastMousePosition) {
       return this.hoveredLeafTooltipStyle;
     }
 
-    const containerWidth = rootElement?.clientWidth || 0;
-    const containerHeight = rootElement?.clientHeight || 0;
+    const containerWidth = document.documentElement.clientWidth;
+    const containerHeight = document.documentElement.clientHeight;
     const tooltipElement = this.hoverTooltip?.nativeElement;
     const tooltipWidth =
       tooltipElement?.offsetWidth ||
