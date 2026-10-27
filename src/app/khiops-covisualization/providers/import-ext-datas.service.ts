@@ -12,11 +12,21 @@ import { TranslateService } from '@ngstack/translate';
 import { ImportFileLoaderService } from '@khiops-library/components/import-file-loader/import-file-loader.service';
 import { ExtDatasFieldI } from '@khiops-covisualization/interfaces/ext-datas-field.interface';
 import { KhiopsLibraryService } from '@khiops-library/providers/khiops-library.service';
+import { Subject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ImportExtDatasService {
+  private readonly importPanelRequested = new Subject<{
+    editingExtData?: ExtDatasModel;
+  }>();
+  readonly importPanelRequested$ = this.importPanelRequested.asObservable();
+
+  openImportPanel(editingExtData?: ExtDatasModel) {
+    this.importPanelRequested.next({ editingExtData });
+  }
+
   private importExtDatas: ExtDatasModel[];
   private savedExternalDatas: any;
   private readonly supportedSeparators = ['\t', ',', ';', ' '];

@@ -8,6 +8,8 @@ import {
   Component,
   ChangeDetectionStrategy,
   Input,
+  Output,
+  EventEmitter,
   OnInit,
 } from '@angular/core';
 import { ImportExtDatasService } from '@khiops-covisualization/providers/import-ext-datas.service';
@@ -16,7 +18,6 @@ import { FileModel } from '@khiops-library/model/file.model';
 import { ExtDatasModel } from '@khiops-covisualization/model/ext-datas.model';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { EventsService } from '@khiops-covisualization/providers/events.service';
-import { DialogService } from '@khiops-library/providers/dialog.service';
 import { ImportFileLoaderService } from '@khiops-library/components/import-file-loader/import-file-loader.service';
 
 @Component({
@@ -29,6 +30,7 @@ import { ImportFileLoaderService } from '@khiops-library/components/import-file-
 export class ImportExtDatasListComponent implements OnInit {
   importExtDatas: FileModel | undefined;
   @Input() editingExtData: ExtDatasModel | undefined;
+  @Output() closePanel = new EventEmitter<void>();
   editingGroupFields: string[] = [];
   importedSources: ExtDatasModel[] = [];
   isLoadingDatas = false;
@@ -37,7 +39,6 @@ export class ImportExtDatasListComponent implements OnInit {
     private importExtDatasService: ImportExtDatasService,
     private eventsService: EventsService,
     private snackBar: MatSnackBar,
-    private dialogService: DialogService,
     private importFileLoaderService: ImportFileLoaderService,
     public translate: TranslateService,
   ) {
@@ -116,7 +117,7 @@ export class ImportExtDatasListComponent implements OnInit {
   }
 
   onClickOnClose() {
-    this.dialogService.closeDialog();
+    this.closePanel.emit();
   }
 
   closeImport() {

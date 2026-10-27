@@ -14,12 +14,22 @@
       disableClose="true"
       autoFocus="dialog"
       [(opened)]="opened"
+      [class.external-data-panel]="externalDataPanelOpened"
     >
-      <app-user-settings
-        (toggleNavDrawerChanged)="onToggleNavDrawerChanged($event)"
-        [opened]="opened"
-      >
-      </app-user-settings>
+      @if (externalDataPanelOpened) {
+        @if (opened) {
+          <app-import-ext-datas-list
+            [editingExtData]="editingExtData"
+            (closePanel)="opened = false"
+          ></app-import-ext-datas-list>
+        }
+      } @else {
+        <app-user-settings
+          (toggleNavDrawerChanged)="onToggleNavDrawerChanged($event)"
+          [opened]="opened"
+        >
+        </app-user-settings>
+      }
     </mat-sidenav>
     <mat-sidenav-content>
       @if (showLogo && isCompatibleJson) {

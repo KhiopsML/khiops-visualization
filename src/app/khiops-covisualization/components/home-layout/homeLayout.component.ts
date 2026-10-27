@@ -35,6 +35,8 @@ import {
   HomeInitializationState,
 } from '@khiops-covisualization/components/home-layout/homeLayout-initialization.facade';
 import { TabNavigationService } from '@khiops-covisualization/components/home-layout/homeLayout-tab-navigation.service';
+import { ImportExtDatasService } from '@khiops-covisualization/providers/import-ext-datas.service';
+import { ExtDatasModel } from '@khiops-covisualization/model/ext-datas.model';
 
 @Component({
   selector: 'app-home-layout',
@@ -72,6 +74,8 @@ export class HomeLayoutComponent implements OnInit, AfterViewInit, OnDestroy {
   public isContextDimensions = false;
   public appVersion: string = '';
   public opened = false;
+  public externalDataPanelOpened = false;
+  public editingExtData?: ExtDatasModel;
   public get isElectron(): boolean {
     return this.configService.isElectron;
   }
@@ -99,6 +103,7 @@ export class HomeLayoutComponent implements OnInit, AfterViewInit, OnDestroy {
   }
   private importedDatasChangedSub?: Subscription;
   private fileLoadedSub?: Subscription;
+  private importPanelRequestedSub?: Subscription;
 
   constructor(
     private configService: ConfigService,
@@ -108,6 +113,7 @@ export class HomeLayoutComponent implements OnInit, AfterViewInit, OnDestroy {
     private fileLoaderService: FileLoaderService,
     private homeInitializationFacade: HomeInitializationFacade,
     private tabNavigationService: TabNavigationService,
+    private importExtDatasService: ImportExtDatasService,
   ) {
     if (pjson) {
       this.appTitle = pjson.title.covisualization;
@@ -116,6 +122,14 @@ export class HomeLayoutComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   ngOnInit() {
+    this.importPanelRequestedSub =
+      this.importExtDatasService.importPanelRequested$.subscribe(
+        ({ editingExtData }) => {
+          this.editingExtData = editingExtData;
+          this.externalDataPanelOpened = true;
+          this.opened = true;
+        },
+      );
     this.subscribeToImportedDatasChanges();
     this.trackerService.trackEvent('page_view', 'axis');
     this.trackerService.trackEvent('page_view', 'visit', this.appVersion);
@@ -139,6 +153,7 @@ export class HomeLayoutComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   ngOnDestroy() {
+    this.importPanelRequestedSub?.unsubscribe();
     this.fileLoadedSub?.unsubscribe();
     this.importedDatasChangedSub?.unsubscribe();
   }
@@ -182,6 +197,7 @@ export class HomeLayoutComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   onToggleNavDrawerChanged(mustReload: boolean) {
+    this.externalDataPanelOpened = false;
     this.opened = !this.opened;
 
     if (mustReload) {

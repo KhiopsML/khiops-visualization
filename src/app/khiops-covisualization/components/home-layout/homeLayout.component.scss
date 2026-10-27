@@ -7,6 +7,11 @@
 @use '../../../../styles/theme.scss';
 #home-layout-comp {
   background: var(--color-0);
+  mat-sidenav.external-data-panel {
+    width: 640px;
+    max-width: 100%;
+  }
+
   #main-tab-group {
     > ::ng-deep .mat-mdc-tab-header {
       max-width: calc(100% - 570px);

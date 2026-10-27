@@ -18,8 +18,7 @@ import { DimensionCovisualizationModel } from '@khiops-library/model/dimension.c
 import { ConfigService } from '@khiops-library/providers/config.service';
 import { COMPONENT_TYPES } from '../../../../khiops-library/enum/component-types';
 import { DynamicI } from '@khiops-library/interfaces/globals.interface';
-import { DialogService } from '@khiops-library/providers/dialog.service';
-import { ImportExtDatasListComponent } from '../import-ext-datas-list/import-ext-datas-list.component';
+import { ImportExtDatasService } from '@khiops-covisualization/providers/import-ext-datas.service';
 import { ExtDatasModel } from '@khiops-covisualization/model/ext-datas.model';
 import { GridColumnsI } from '@khiops-library/interfaces/grid-columns.interface';
 
@@ -51,7 +50,7 @@ export class ExternalDatasComponent
     public override selectableService: SelectableService,
     public override ngzone: NgZone,
     public override configService: ConfigService,
-    private dialogService: DialogService,
+    private importExtDatasService: ImportExtDatasService,
   ) {
     super(selectableService, ngzone, configService);
   }
@@ -79,17 +78,7 @@ export class ExternalDatasComponent
   editMapping(source?: ExtDatasModel) {
     if (!source) return;
 
-    this.dialogService.openDialog(
-      ImportExtDatasListComponent,
-      {
-        width: 'min(560px, 100vw)',
-        maxWidth: '100vw',
-        height: '100vh',
-        disableClose: true,
-        sidePanel: true,
-      },
-      { editingExtData: source },
-    );
+    this.importExtDatasService.openImportPanel(source);
   }
 
   private updateExternalDatas() {

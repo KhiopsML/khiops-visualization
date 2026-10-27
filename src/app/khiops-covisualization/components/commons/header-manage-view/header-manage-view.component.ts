@@ -9,7 +9,7 @@ import { DialogService } from '@khiops-library/providers/dialog.service';
 import { AppConfig } from '../../../../../environments/environment';
 import { UnfoldHierarchyComponent } from '../unfold-hierarchy/unfold-hierarchy.component';
 import { ManageViewsComponent } from '../manage-views/manage-views.component';
-import { ImportExtDatasListComponent } from '../import-ext-datas-list/import-ext-datas-list.component';
+import { ImportExtDatasService } from '@khiops-covisualization/providers/import-ext-datas.service';
 
 @Component({
   selector: 'app-header-manage-view',
@@ -19,7 +19,10 @@ import { ImportExtDatasListComponent } from '../import-ext-datas-list/import-ext
   standalone: false,
 })
 export class HeaderManageViewComponent {
-  constructor(private dialogService: DialogService) {}
+  constructor(
+    private dialogService: DialogService,
+    private importExtDatasService: ImportExtDatasService,
+  ) {}
 
   clickUnfodHierarchy() {
     this.dialogService.openDialog(UnfoldHierarchyComponent, {
@@ -38,12 +41,6 @@ export class HeaderManageViewComponent {
   }
 
   clickImportExternalData() {
-    this.dialogService.openDialog(ImportExtDatasListComponent, {
-      width: 'min(560px, 100vw)',
-      maxWidth: '100vw',
-      height: '100vh',
-      disableClose: true,
-      sidePanel: true,
-    });
+    this.importExtDatasService.openImportPanel();
   }
 }
