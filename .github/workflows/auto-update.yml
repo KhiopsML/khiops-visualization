@@ -21,7 +21,7 @@ jobs:
       - name: Install Node.js and Yarn
         uses: actions/setup-node@v4
         with:
-          node-version: 22
+          node-version: 24
 
       - name: Update dependencies
         run: |
