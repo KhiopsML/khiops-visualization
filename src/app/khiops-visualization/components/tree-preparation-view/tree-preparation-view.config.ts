@@ -16,13 +16,14 @@ export function getTreePreparationVariablesGridColumns(
 ) {
   return [
     {
-      headerName: 'Tree analysis',
+      headerName: translate.get('GLOBAL.TREE_ANALYSIS'),
       field: 'treeAnalysis',
-      tooltip: 'Tree analysis',
+      tooltip: translate.get('GLOBAL.TREE_ANALYSIS'),
       cellRenderer: IconCellComponent,
       cellRendererParams: {
         icon: 'square-mouse-pointer',
         label: translate.get('GLOBAL.INSPECT'),
+        tooltipPosition: 'right',
         buttonClass: 'kl-tree-inspect-button',
         action: onAnalyzeTree,
       },

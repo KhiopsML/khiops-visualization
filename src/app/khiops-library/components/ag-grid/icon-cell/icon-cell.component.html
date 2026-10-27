@@ -10,6 +10,7 @@
     (click)="$event.stopPropagation(); onClick()"
     [attr.aria-label]="params.label"
     [matTooltip]="params.colDef.headerName"
+    [matTooltipPosition]="params.tooltipPosition || 'below'"
     class="kl-icon-cell-comp-btn lucid-icon-button"
     [class]="params.buttonClass"
   >
@@ -22,6 +23,7 @@
     (click)="$event.stopPropagation(); onClick()"
     [attr.aria-label]="params.colDef.headerName"
     [matTooltip]="params.colDef.headerName"
+    [matTooltipPosition]="params.tooltipPosition || 'below'"
     class="kl-icon-cell-comp-btn"
   >
     <svg [lucideIcon]="params.icon"></svg>
