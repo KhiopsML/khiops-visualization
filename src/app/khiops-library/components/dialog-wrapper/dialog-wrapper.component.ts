@@ -269,7 +269,10 @@ export class DialogWrapperComponent
     // Focus the primary action button after the dialog is rendered
     const hostEl = this.componentRef.location.nativeElement as HTMLElement;
     setTimeout(() => {
-      if (content.config?.sidePanel) {
+      if (
+        content.config?.sidePanel ||
+        content.config?.panelClass === 'tree-preparation-analysis-panel'
+      ) {
         hostEl.tabIndex = -1;
         hostEl.focus({ preventScroll: true });
         return;
