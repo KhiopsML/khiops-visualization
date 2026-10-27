@@ -59,19 +59,19 @@
 
 .dialog-content.side-panel {
   position: absolute;
-  top: 0;
-  right: 0;
-  height: 100%;
-  max-height: 100%;
-  max-width: 100%;
-  border-radius: 0 !important;
+  top: 8px;
+  right: 8px;
+  height: calc(100% - 16px);
+  max-height: calc(100% - 16px);
+  max-width: calc(100% - 16px);
+  border-radius: 12px !important;
   animation: side-panel-enter 180ms ease-out;
   padding: 0;
 }
 
 .dialog-content.side-panel.tree-preparation-analysis-panel {
   animation-name: side-panel-slide-in;
-  height: calc(100% - var(--header-height));
+  height: calc(100% - var(--header-height) - 16px);
   border-top: 1px solid var(--color-border-subtle);
 }
 

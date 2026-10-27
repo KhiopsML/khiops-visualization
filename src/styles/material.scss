@@ -373,8 +373,12 @@ mat-tab-body {
   padding: 0 0.6rem !important;
 }
 
-mat-sidenav {
-  border-radius: 0 !important;
+mat-sidenav.mat-drawer-over.mat-drawer-end {
+  top: 8px;
+  right: 8px;
+  bottom: 8px;
+  max-width: calc(100% - 16px);
+  border-radius: 12px !important;
 }
 
 .mdc-slider__track--active,
