@@ -65,6 +65,26 @@
     }
   }
 
+  @media (height < 1000px) {
+    .metrics-container {
+      margin-bottom: 6px;
+      row-gap: 6px;
+
+      .informations-main-values {
+        min-height: 44px !important;
+        padding: 5px !important;
+
+        .metric-value {
+          font-size: 17px;
+
+          em {
+            font-size: 14px;
+          }
+        }
+      }
+    }
+  }
+
   .gauge-container {
     // flex: 1 1 260px;
     // min-width: 260px;
