@@ -50,7 +50,33 @@
     class="tree-analysis-content"
     (dragEnd)="onSplitDragEnd($event, 'analysisColumns')"
   >
-    <as-split-area [size]="sizes.analysisColumns[0]">
+    <as-split-area class="kl-card" [size]="sizes.analysisColumns[0]">
+      @if (isNonInformativeVariable()) {
+        <kl-no-data
+          fxFlexFill
+          [message]="'NO_DATAS.NON_INFORMATIVE_VARIABLE'"
+        ></kl-no-data>
+      } @else if (treePreparationDatas?.selectedVariable) {
+        <app-variable-graph-details
+          #variableGraphDetails
+          [preparationSource]="preparationSource"
+          [selectedVariable]="
+            $safeNavigationMigration(treePreparationDatas?.selectedVariable)
+          "
+          [displayedValues]="
+            $safeNavigationMigration(
+              distributionDatas?.targetDistributionDisplayedValues
+            )
+          "
+          [selectedGraphItemIndex]="(selectedGraphItemIndex$ | async) ?? 0"
+          [position]="1"
+          (selectedItemChanged)="onSelectedGraphItemChanged($event)"
+        ></app-variable-graph-details>
+      } @else {
+        <kl-no-data fxFlexFill></kl-no-data>
+      }
+    </as-split-area>
+    <as-split-area [size]="sizes.analysisColumns[1]">
       <as-split
         direction="vertical"
         (dragEnd)="onSplitDragEnd($event, 'analysisLeftRows')"
@@ -79,7 +105,7 @@
         </as-split-area>
       </as-split>
     </as-split-area>
-    <as-split-area [size]="sizes.analysisColumns[1]">
+    <as-split-area [size]="sizes.analysisColumns[2]">
       <as-split
         direction="vertical"
         (dragEnd)="onSplitDragEnd($event, 'analysisRightRows')"

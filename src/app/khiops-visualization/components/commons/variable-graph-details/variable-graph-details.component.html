@@ -42,21 +42,6 @@
         [hideScale]="hideScaleElt()"
         [showZoom]="distributionDatas?.histogramDatas ? true : false"
       >
-        @if (
-          preparationSource === REPORT.TREE_PREPARATION_REPORT && selectedVariable
-        ) {
-          <button
-            slot="header-tools"
-            mat-flat-button
-            class="tree-inspect-button lucid-icon-button"
-            [attr.aria-label]="'GLOBAL.INSPECT' | translate"
-            [matTooltip]="'GLOBAL.INSPECT' | translate"
-            (click)="$event.stopPropagation(); onInspectTree()"
-          >
-            <svg lucideIcon="square-mouse-pointer"></svg>
-            <label>{{ 'GLOBAL.INSPECT' | translate }}</label>
-          </button>
-        }
       </kl-graph-header>
       @if (
         showDistributionGraph &&

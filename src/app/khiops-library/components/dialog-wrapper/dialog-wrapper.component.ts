@@ -85,7 +85,10 @@ export class DialogWrapperComponent
     );
     // Now that the view is initialized, dynamicComponentContainer is available
     this.subscription = this.dialogContent$.subscribe((content) => {
-      this.updateSidePanelContainer(!!content.config?.sidePanel);
+      this.updateSidePanelContainer(
+        !!content.config?.sidePanel,
+        content.config?.panelClass === 'tree-preparation-analysis-panel',
+      );
       if (content.type === 'component' && content.componentType) {
         // If container not ready yet, defer to next tick
         if (!this.dynamicComponentContainer) {
@@ -101,12 +104,15 @@ export class DialogWrapperComponent
     });
   }
 
-  private updateSidePanelContainer(isSidePanel: boolean): void {
+  private updateSidePanelContainer(
+    isSidePanel: boolean,
+    constrainToTabBody = false,
+  ): void {
     this.sidePanelResizeObserver?.disconnect();
     this.removeTabActivationListeners?.();
     this.removeTabActivationListeners = undefined;
     this.sidePanelBounds = undefined;
-    if (!isSidePanel) {
+    if (!isSidePanel && !constrainToTabBody) {
       return;
     }
 
@@ -141,12 +147,14 @@ export class DialogWrapperComponent
         this.dialogService.hideSidePanelForTabChange();
       }
     };
-    tabHeader.addEventListener('click', onTabActivation, true);
-    tabHeader.addEventListener('keydown', onTabActivation, true);
-    this.removeTabActivationListeners = () => {
-      tabHeader.removeEventListener('click', onTabActivation, true);
-      tabHeader.removeEventListener('keydown', onTabActivation, true);
-    };
+    if (isSidePanel) {
+      tabHeader.addEventListener('click', onTabActivation, true);
+      tabHeader.addEventListener('keydown', onTabActivation, true);
+      this.removeTabActivationListeners = () => {
+        tabHeader.removeEventListener('click', onTabActivation, true);
+        tabHeader.removeEventListener('keydown', onTabActivation, true);
+      };
+    }
 
     const updateBounds = () => {
       const wrapper = this.dialogWrapper?.nativeElement;

@@ -4,7 +4,7 @@
  * at https://spdx.org/licenses/BSD-3-Clause-Clear.html or see the "LICENSE" file for more details.
  */
 
-import { Component, ChangeDetectionStrategy } from '@angular/core';
+import { Component, ChangeDetectionStrategy, ViewChild } from '@angular/core';
 import { DialogService } from '@khiops-library/providers/dialog.service';
 import { LayoutService } from '@khiops-library/providers/layout.service';
 import { DistributionDatasService } from '@khiops-visualization/providers/distribution-datas.service';
@@ -14,6 +14,8 @@ import { ModelingDatasService } from '@khiops-visualization/providers/modeling-d
 import { REPORT } from '@khiops-library/enum/report';
 import { SplitGutterInteractionEvent } from 'angular-split';
 import { TreePreparationStore } from '@khiops-visualization/stores/tree-preparation.store';
+import { map } from 'rxjs';
+import type { VariableGraphDetailsComponent } from '../commons/variable-graph-details/variable-graph-details.component';
 
 @Component({
   selector: 'app-tree-preparation-analysis',
@@ -23,12 +25,17 @@ import { TreePreparationStore } from '@khiops-visualization/stores/tree-preparat
   standalone: false,
 })
 export class TreePreparationAnalysisComponent {
+  @ViewChild('variableGraphDetails')
+  private variableGraphDetails?: VariableGraphDetailsComponent;
+
+  readonly preparationSource = REPORT.TREE_PREPARATION_REPORT;
   readonly treePreparationDatas;
   readonly distributionDatas;
   readonly sizes;
   readonly variablesDatas;
   readonly selectedNode$;
   readonly selectedNodes$;
+  readonly selectedGraphItemIndex$;
   private readonly splitViewKey = 'treePreparationAnalysis';
 
   constructor(
@@ -42,9 +49,23 @@ export class TreePreparationAnalysisComponent {
   ) {
     this.selectedNode$ = this.store.selectedNode$;
     this.selectedNodes$ = this.store.selectedNodes$;
+    this.selectedGraphItemIndex$ = this.selectedNode$.pipe(
+      map((node) =>
+        node?._id
+          ? (this.treePreparationDatasService.getNodesLinkedToOneNode(
+              node._id,
+            )[0] ?? 0)
+          : 0,
+      ),
+    );
     this.treePreparationDatas = this.treePreparationDatasService.getDatas();
     this.distributionDatas = this.distributionDatasService.getDatas();
     this.sizes = this.layoutService.getViewSplitSizes(this.splitViewKey);
+    if (this.sizes.analysisColumns.length === 2) {
+      const [trees, details] = this.sizes.analysisColumns;
+      this.sizes.analysisColumns = [trees * 0.7, 30, details * 0.7];
+      this.layoutService.setViewSplitSizes(this.splitViewKey, this.sizes);
+    }
     if (this.sizes.analysisRightRows.length === 4) {
       const [details, infos, rules, selection] = this.sizes.analysisRightRows;
       this.sizes.analysisRightRows = [details, infos + selection, rules];
@@ -83,6 +104,17 @@ export class TreePreparationAnalysisComponent {
     }
   }
 
+  onSelectedGraphItemChanged(index: number): void {
+    this.store.selectNodesFromIndex({ index });
+  }
+
+  isNonInformativeVariable(): boolean {
+    return (
+      this.treePreparationDatas?.selectedVariable?.level === 0 ||
+      !this.treePreparationDatasService.hasDetailedStatistics()
+    );
+  }
+
   onSplitDragEnd(event: SplitGutterInteractionEvent, item: string) {
     this.layoutService.resizeAndSetSplitSizes(
       item,
@@ -90,6 +122,7 @@ export class TreePreparationAnalysisComponent {
       event.sizes,
       this.splitViewKey,
     );
+    this.variableGraphDetails?.resize();
   }
 
   close() {

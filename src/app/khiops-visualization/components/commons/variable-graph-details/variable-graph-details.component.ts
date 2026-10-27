@@ -209,9 +209,10 @@ export class VariableGraphDetailsComponent
 
   onInspectTree(): void {
     this.dialogService.openDialog(TreePreparationAnalysisComponent, {
-      width: '80vw',
-      maxWidth: '100vw',
-      sidePanel: true,
+      width: 'calc(100% - 32px)',
+      height: 'calc(100% - 32px)',
+      maxWidth: 'calc(100% - 32px)',
+      maxHeight: 'calc(100% - 32px)',
       panelClass: 'tree-preparation-analysis-panel',
     });
   }

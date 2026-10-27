@@ -17,6 +17,124 @@ import { TreeChildNode } from '@khiops-visualization/interfaces/tree-preparation
 import { TreePreparationDatasModel } from '@khiops-visualization/model/tree-preparation-datas.model';
 import { TreePreparationStore } from '@khiops-visualization/stores/tree-preparation.store';
 import { TreeSelectComponent } from '@khiops-visualization/components/commons/tree-select/tree-select.component';
+import { TreePreparationAnalysisComponent } from '@khiops-visualization/components/tree-preparation-analysis/tree-preparation-analysis.component';
+import { VariableGraphDetailsComponent } from '@khiops-visualization/components/commons/variable-graph-details/variable-graph-details.component';
+
+describe('Visualization - Tree Preparation Analysis Dialog', () => {
+  let component: TreePreparationAnalysisComponent;
+  let selectedNode: BehaviorSubject<any>;
+  let treeService: any;
+  let layoutService: any;
+  let store: any;
+  let dialogService: any;
+
+  beforeEach(() => {
+    selectedNode = new BehaviorSubject({ _id: 'L2' });
+    treeService = {
+      getDatas: () => ({ selectedVariable: { name: 'Tree_1', level: 0.5 } }),
+      getNodesLinkedToOneNode: jasmine
+        .createSpy()
+        .and.callFake((nodeId) => [nodeId === 'L2' ? 2 : undefined, []]),
+      hasDetailedStatistics: jasmine.createSpy().and.returnValue(true),
+    };
+    layoutService = {
+      getViewSplitSizes: () => ({
+        analysisColumns: [45, 55],
+        analysisRightRows: [25, 50, 25],
+      }),
+      setViewSplitSizes: jasmine.createSpy(),
+      resizeAndSetSplitSizes: jasmine.createSpy(),
+    };
+    store = {
+      selectedNode$: selectedNode,
+      selectedNodes$: new BehaviorSubject([]),
+      selectNodesFromIndex: jasmine.createSpy(),
+    };
+    dialogService = { closeDialog: jasmine.createSpy() };
+    component = new TreePreparationAnalysisComponent(
+      treeService,
+      { getDatas: () => ({}) },
+      layoutService,
+      dialogService,
+      { getVariablesDatas: () => [] },
+      {},
+      store,
+    );
+  });
+
+  it('migrates saved two-column sizes while reserving space for distributions', () => {
+    expect(component.sizes.analysisColumns[0]).toBeCloseTo(31.5);
+    expect(component.sizes.analysisColumns[1]).toBe(30);
+    expect(component.sizes.analysisColumns[2]).toBeCloseTo(38.5);
+    expect(layoutService.setViewSplitSizes).toHaveBeenCalledWith(
+      'treePreparationAnalysis',
+      component.sizes,
+    );
+  });
+
+  it('highlights distribution group linked to current tree node', () => {
+    const indices: number[] = [];
+    const subscription = component.selectedGraphItemIndex$.subscribe((index) =>
+      indices.push(index),
+    );
+    selectedNode.next({ _id: 'branch' });
+    selectedNode.next(undefined);
+    selectedNode.next({ _id: 'L2' });
+
+    expect(indices).toEqual([2, 0, 0, 2]);
+    subscription.unsubscribe();
+  });
+
+  it('selects tree nodes when a distribution bar is clicked', () => {
+    component.onSelectedGraphItemChanged(3);
+
+    expect(store.selectNodesFromIndex).toHaveBeenCalledOnceWith({ index: 3 });
+  });
+
+  it('keeps distribution no-data state consistent with tree preparation view', () => {
+    expect(component.isNonInformativeVariable()).toBe(false);
+    component.treePreparationDatas.selectedVariable.level = 0;
+    expect(component.isNonInformativeVariable()).toBe(true);
+    component.treePreparationDatas.selectedVariable.level = 0.5;
+    treeService.hasDetailedStatistics.and.returnValue(false);
+    expect(component.isNonInformativeVariable()).toBe(true);
+  });
+
+  it('resizes distributions after dragging split gutters', () => {
+    const resize = jasmine.createSpy();
+    component['variableGraphDetails'] = { resize };
+    const event = { sizes: [40, 30, 30] };
+
+    component.onSplitDragEnd(event, 'analysisColumns');
+
+    expect(layoutService.resizeAndSetSplitSizes).toHaveBeenCalledOnceWith(
+      'analysisColumns',
+      component.sizes,
+      event.sizes,
+      'treePreparationAnalysis',
+    );
+    expect(resize).toHaveBeenCalledTimes(1);
+  });
+
+  it('opens analysis as a modal with a 16px viewport margin', () => {
+    const openDialog = jasmine.createSpy();
+
+    VariableGraphDetailsComponent.prototype.onInspectTree.call({
+      dialogService: { openDialog },
+    });
+
+    expect(openDialog).toHaveBeenCalledOnceWith(
+      TreePreparationAnalysisComponent,
+      {
+        width: 'calc(100vw - 32px)',
+        height: 'calc(100dvh - 32px)',
+        maxWidth: 'calc(100vw - 32px)',
+        maxHeight: 'calc(100dvh - 32px)',
+        panelClass: 'tree-preparation-analysis-panel',
+      },
+    );
+  });
+});
 
 describe('Visualization - Tree Select Focus Selection', () => {
   let component: TreeSelectComponent;
@@ -73,23 +191,33 @@ describe('Visualization - Tree Select Focus Selection', () => {
 
   it('preserves distribution group selection when analysis tree initializes', fakeAsync(() => {
     selectedNodes.next([{ nodeId: 'L2' }, { nodeId: 'L3' }]);
-    spyOn(component['graphSelectionSessionService'], 'getSelectedTreeNodeId')
-      .and.returnValue('L1');
+    spyOn(
+      component['graphSelectionSessionService'],
+      'getSelectedTreeNodeId',
+    ).and.returnValue('L1');
 
     component.ngAfterViewInit();
     tick(80);
 
-    expect(Array.from(root.querySelectorAll('.tree-selected .tree-leaf-text'))
-      .map((node) => node.id)).toEqual(['L2', 'L3']);
+    expect(
+      Array.from(root.querySelectorAll('.tree-selected .tree-leaf-text')).map(
+        (node) => node.id,
+      ),
+    ).toEqual(['L2', 'L3']);
     expect(store.selectNodesFromId).not.toHaveBeenCalled();
     expect(store.initSelectedNodes).not.toHaveBeenCalled();
-    expect(selectedNodes.value.map((node) => node.nodeId)).toEqual(['L2', 'L3']);
+    expect(selectedNodes.value.map((node) => node.nodeId)).toEqual([
+      'L2',
+      'L3',
+    ]);
   }));
 
   it('restores session node only when shared selection is empty', fakeAsync(() => {
     selectedNodes.next([]);
-    spyOn(component['graphSelectionSessionService'], 'getSelectedTreeNodeId')
-      .and.returnValue('L2');
+    spyOn(
+      component['graphSelectionSessionService'],
+      'getSelectedTreeNodeId',
+    ).and.returnValue('L2');
 
     component.ngAfterViewInit();
     tick(80);
@@ -123,12 +251,22 @@ describe('Visualization - Tree Select Focus Selection', () => {
       scrollWidth: { value: 200 },
     });
     spyOn(container, 'getBoundingClientRect').and.returnValue({
-      top: 100, bottom: 200, left: 0, right: 200, width: 200, height: 100,
+      top: 100,
+      bottom: 200,
+      left: 0,
+      right: 200,
+      width: 200,
+      height: 100,
     });
     const node = root.querySelector('#tree-leaf-L3');
     Object.defineProperty(node, 'scrollIntoViewIfNeeded', { value: undefined });
     spyOn(node, 'getBoundingClientRect').and.returnValue({
-      top: 300, bottom: 320, left: 0, right: 60, width: 60, height: 20,
+      top: 300,
+      bottom: 320,
+      left: 0,
+      right: 60,
+      width: 60,
+      height: 20,
     });
     const nativeScroll = spyOn(node, 'scrollIntoView');
     const localScroll = spyOn(container, 'scrollTo');
@@ -138,7 +276,9 @@ describe('Visualization - Tree Select Focus Selection', () => {
     store.selectedNode$.next({ _id: 'L3' });
 
     expect(localScroll).toHaveBeenCalledOnceWith({
-      top: 160, left: 0, behavior: 'smooth',
+      top: 160,
+      left: 0,
+      behavior: 'smooth',
     });
     expect(nativeScroll).not.toHaveBeenCalled();
     expect(root.scrollTop).toBe(appScrollTop);
@@ -150,9 +290,9 @@ describe('Visualization - Tree Select Focus Selection', () => {
     tick();
 
     expect(displayedIds()).toEqual(['root', 'branch', 'L1']);
-    expect(component.dimensionTree[0].children.map((node) => node.nodeId)).toEqual([
-      'branch', 'L3',
-    ]);
+    expect(
+      component.dimensionTree[0].children.map((node) => node.nodeId),
+    ).toEqual(['branch', 'L3']);
     expect(component.dimensionTree[0].children[0].children.length).toBe(2);
     expect(root.querySelectorAll('.tree-selected').length).toBe(1);
     expect(root.querySelector('.tree-selected .tree-leaf-text').id).toBe('L1');

@@ -111,7 +111,8 @@
   padding: var(--layout-padding);
 }
 
-.dialog-content.side-panel > .dialog-body {
+.dialog-content.side-panel > .dialog-body,
+.dialog-content.tree-preparation-analysis-panel > .dialog-body {
   flex-basis: 0 !important;
   min-height: 0;
   box-sizing: border-box;

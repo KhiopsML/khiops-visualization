@@ -17,7 +17,6 @@
   "
   [class.no-overlay]="(dialogContent$ | async)?.config?.noOverlay"
   fxLayout="row"
-  fxFlexFill
   fxLayoutAlign="center center"
   [hidden]="dialogContent.config?.hidden || (sidePanelHidden$ | async)"
   *ngIf="dialogContent$ | async as dialogContent"
