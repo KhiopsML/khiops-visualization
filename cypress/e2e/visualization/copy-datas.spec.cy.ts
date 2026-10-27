@@ -63,8 +63,14 @@ describe('Copy datas Test for Khiops Visualization', () => {
           cy.get('#tree-preparation-variables-list .ag-row-selected .kl-tree-inspect-button')
             .click();
           cy.get('#tree-analysis-title').should('be.visible');
+          cy.get('#tree-preparation-select #tree-leaf-L1 > .tree-leaf-content')
+            .scrollIntoView()
+            .click();
+          const treeTargetDistributionSelector =
+            '#target-distribution-graph-leaf-1';
+          cy.get(treeTargetDistributionSelector).should('have.length', 1);
           cy.testComponentCopyDatas(
-            '#target-distribution-graph1',
+            treeTargetDistributionSelector,
             'kv-target-distribution-graph1.txt',
           );
 

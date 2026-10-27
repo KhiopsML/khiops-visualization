@@ -51,7 +51,8 @@ describe('Tree visualization Test for Khiops Visualization', () => {
           .find('.ag-row:eq(0)')
           .should('have.class', 'ag-row-selected');
 
-        cy.get('#target-distribution-chart-1').should('exist');
+        cy.get('#target-distribution-chart-1').should('have.length', 1);
+        cy.get('#target-distribution-chart-leaf-1').should('have.length', 1);
 
         cy.get(
           '#tree-leaf-details-comp .tree-node-details',
@@ -84,7 +85,7 @@ describe('Tree visualization Test for Khiops Visualization', () => {
 describe('Tree preparation target distribution selection', () => {
   const selectedTreeNodes = '#tree-select-comp .tree-leaf-content.tree-selected';
   const nodeDetails = '#tree-leaf-details-comp .tree-node-details';
-  const leafChart = '#target-distribution-chart-1';
+  const leafChart = '#target-distribution-chart-leaf-1';
   const lastBarIndex = 7;
 
   function getChart(canvas: HTMLCanvasElement) {

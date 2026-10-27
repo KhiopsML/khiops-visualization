@@ -22,9 +22,9 @@
       titleTooltip="{{
         'TOOLTIPS.PREPARATION.TARGET_DISTRIBUTION.TITLE' | translate
       }}"
-      [position]="position"
-      id="{{ 'target-distribution-graph' + position }}"
-      [attr.id]="'target-distribution-graph' + position"
+      [position]="'leaf-' + position"
+      id="{{ 'target-distribution-graph-leaf-' + position }}"
+      [attr.id]="'target-distribution-graph-leaf-' + position"
       [displayedValues]="displayedValues"
       [inputDatas]="
         $safeNavigationMigration(

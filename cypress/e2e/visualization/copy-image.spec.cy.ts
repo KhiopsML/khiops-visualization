@@ -165,6 +165,7 @@ describe('Copy images Test for Khiops Visualization', () => {
 
       [
         '#target-distribution-graph1',
+        '#target-distribution-graph-leaf-1',
         '#tree-preparation-select',
         '#tree-details-comp',
         '#tree-preparation-hyper',

@@ -56,7 +56,7 @@ export class TargetDistributionGraphComponent
 
   @Input() override scrollPosition = 0;
   @Input() override inputDatas?: ChartDatasModel = undefined;
-  @Input() public position = 0;
+  @Input() public position: number | string = 0;
   @Input() public titleTooltip?: string;
   @Input() public title?: string;
   @Input() public activeEntries?: number;
