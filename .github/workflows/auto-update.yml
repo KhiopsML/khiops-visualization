@@ -23,6 +23,9 @@ jobs:
         with:
           node-version: 24
 
+      - name: Enable Corepack
+        run: corepack enable
+
       - name: Update dependencies
         run: |
           npm install -g npm-check-updates
