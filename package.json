@@ -135,5 +135,6 @@
   "title": {
     "visualization": "Khiops Visualization",
     "covisualization": "Khiops Covisualization"
-  }
+  },
+  "packageManager": "yarn@4.18.1"
 }
