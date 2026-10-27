@@ -19,6 +19,69 @@ import { TreePreparationStore } from '@khiops-visualization/stores/tree-preparat
 import { TreeSelectComponent } from '@khiops-visualization/components/commons/tree-select/tree-select.component';
 import { TreePreparationAnalysisComponent } from '@khiops-visualization/components/tree-preparation-analysis/tree-preparation-analysis.component';
 import { VariableGraphDetailsComponent } from '@khiops-visualization/components/commons/variable-graph-details/variable-graph-details.component';
+import { DialogWrapperComponent } from '@khiops-library/components/dialog-wrapper/dialog-wrapper.component';
+
+describe('Visualization - Tree Analysis Opening Feedback', () => {
+  let wrapper: DialogWrapperComponent;
+  let content: BehaviorSubject<any>;
+  let createComponent: jasmine.Spy;
+
+  beforeEach(() => {
+    content = new BehaviorSubject({ type: 'none' });
+    wrapper = new DialogWrapperComponent(
+      {
+        dialogContent$: content,
+        sidePanelHidden$: new BehaviorSubject(false),
+      },
+      {},
+      {},
+      { detectChanges: jasmine.createSpy('detectChanges') },
+    );
+    spyOn<any>(wrapper, 'updateSidePanelContainer');
+    createComponent = spyOn<any>(wrapper, 'createDialogComponent');
+    wrapper.ngAfterViewInit();
+  });
+
+  afterEach(() => wrapper.ngOnDestroy());
+
+  const analysisContent = {
+    type: 'component',
+    componentType: TreePreparationAnalysisComponent,
+    config: { panelClass: 'tree-preparation-analysis-panel' },
+  };
+
+  it('paints opening feedback before initializing expensive analysis panels', fakeAsync(() => {
+    content.next(analysisContent);
+
+    expect(wrapper.isContentLoading).toBe(true);
+    expect(createComponent).not.toHaveBeenCalled();
+    tick(16);
+    expect(createComponent).not.toHaveBeenCalled();
+    tick(16);
+    expect(createComponent).toHaveBeenCalledOnceWith(analysisContent);
+    expect(wrapper.isContentLoading).toBe(false);
+  }));
+
+  it('cancels pending analysis when closed between frames', fakeAsync(() => {
+    content.next(analysisContent);
+    tick(16);
+    content.next({ type: 'none' });
+    tick(32);
+
+    expect(createComponent).not.toHaveBeenCalled();
+    expect(wrapper.isContentLoading).toBe(false);
+  }));
+
+  it('does not delay other dialogs or allow stale analysis to replace them', fakeAsync(() => {
+    content.next(analysisContent);
+    const otherDialog = { ...analysisContent, config: {} };
+    content.next(otherDialog);
+    tick(32);
+
+    expect(createComponent).toHaveBeenCalledOnceWith(otherDialog);
+    expect(wrapper.isContentLoading).toBe(false);
+  }));
+});
 
 describe('Visualization - Tree Preparation Analysis Dialog', () => {
   let component: TreePreparationAnalysisComponent;

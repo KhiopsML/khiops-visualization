@@ -111,6 +111,30 @@
   padding: var(--layout-padding);
 }
 
+.dialog-loading {
+  position: absolute;
+  top: calc(50% - 16px);
+  left: calc(50% - 16px);
+  width: 32px;
+  height: 32px;
+  border: 3px solid var(--color-border-subtle);
+  border-top-color: currentColor;
+  border-radius: 50%;
+  animation: dialog-loading-spin 800ms linear infinite;
+}
+
+@keyframes dialog-loading-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .dialog-loading {
+    animation: none;
+  }
+}
+
 .dialog-content.side-panel > .dialog-body,
 .dialog-content.tree-preparation-analysis-panel > .dialog-body {
   flex-basis: 0 !important;

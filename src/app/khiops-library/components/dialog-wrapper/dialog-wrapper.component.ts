@@ -13,6 +13,7 @@ import {
   ComponentRef,
   OnDestroy,
   ChangeDetectionStrategy,
+  ChangeDetectorRef,
   ElementRef,
   Renderer2,
 } from '@angular/core';
@@ -35,6 +36,8 @@ export class DialogWrapperComponent
   public dialogContent$: Observable<DialogContentI>;
   public sidePanelHidden$: Observable<boolean>;
   public isSidePanelDragOver = false;
+  public isContentLoading = false;
+  private contentFrame?: number;
   private sidePanelDragCounter = 0;
   public sidePanelBounds?: {
     top: number;
@@ -62,6 +65,7 @@ export class DialogWrapperComponent
     private dialogService: DialogService,
     private elementRef: ElementRef<HTMLElement>,
     private renderer: Renderer2,
+    private changeDetectorRef: ChangeDetectorRef,
   ) {
     this.dialogContent$ = this.dialogService.dialogContent$;
     this.sidePanelHidden$ = this.dialogService.sidePanelHidden$;
@@ -90,12 +94,22 @@ export class DialogWrapperComponent
         content.config?.panelClass === 'tree-preparation-analysis-panel',
       );
       if (content.type === 'component' && content.componentType) {
-        // If container not ready yet, defer to next tick
-        if (!this.dynamicComponentContainer) {
-          setTimeout(() => this.createDialogComponent(content), 0);
-          return;
+        this.clearDynamicComponent();
+        this.isContentLoading =
+          content.config?.panelClass === 'tree-preparation-analysis-panel';
+        this.changeDetectorRef.detectChanges();
+        if (this.isContentLoading) {
+          this.contentFrame = requestAnimationFrame(() => {
+            this.contentFrame = requestAnimationFrame(() => {
+              this.contentFrame = undefined;
+              this.createDialogComponent(content);
+              this.isContentLoading = false;
+              this.changeDetectorRef.detectChanges();
+            });
+          });
+        } else {
+          this.createDialogComponent(content);
         }
-        this.createDialogComponent(content);
       } else if (content.type === 'none') {
         this.sidePanelDragCounter = 0;
         this.isSidePanelDragOver = false;
@@ -317,6 +331,11 @@ export class DialogWrapperComponent
    * Clear the dynamic component
    */
   private clearDynamicComponent(): void {
+    if (this.contentFrame !== undefined) {
+      cancelAnimationFrame(this.contentFrame);
+      this.contentFrame = undefined;
+    }
+    this.isContentLoading = false;
     if (this.componentRef) {
       this.componentRef.destroy();
       this.componentRef = undefined;

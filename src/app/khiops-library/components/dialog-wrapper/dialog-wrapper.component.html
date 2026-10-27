@@ -46,7 +46,18 @@
     (drop)="onSidePanelDrop($event, dialogContent.config?.sidePanel)"
   >
     <!-- Dynamic Component Container -->
-    <div class="dialog-body" fxFlex *ngIf="dialogContent.componentType">
+    <div
+      class="dialog-body"
+      fxFlex
+      *ngIf="dialogContent.componentType"
+      [attr.aria-busy]="isContentLoading"
+    >
+      <div
+        *ngIf="isContentLoading"
+        class="dialog-loading"
+        role="progressbar"
+        [attr.aria-label]="'GLOBAL.TREE_ANALYSIS' | translate"
+      ></div>
       <ng-container #dynamicComponentContainer></ng-container>
     </div>
   </div>
