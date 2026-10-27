@@ -10,7 +10,8 @@ import {
   Input,
   Output,
   EventEmitter,
-  OnInit,
+  OnChanges,
+  type SimpleChanges,
 } from '@angular/core';
 import { ImportExtDatasService } from '@khiops-covisualization/providers/import-ext-datas.service';
 import { TranslateService } from '@ngstack/translate';
@@ -27,7 +28,7 @@ import { ImportFileLoaderService } from '@khiops-library/components/import-file-
   changeDetection: ChangeDetectionStrategy.Eager,
   standalone: false,
 })
-export class ImportExtDatasListComponent implements OnInit {
+export class ImportExtDatasListComponent implements OnChanges {
   importExtDatas: FileModel | undefined;
   @Input() editingExtData: ExtDatasModel | undefined;
   @Output() closePanel = new EventEmitter<void>();
@@ -45,8 +46,8 @@ export class ImportExtDatasListComponent implements OnInit {
     this.updateImportedSources();
   }
 
-  ngOnInit() {
-    if (this.editingExtData) {
+  ngOnChanges(changes: SimpleChanges) {
+    if (changes.editingExtData && this.editingExtData) {
       this.loadImportedDataForEditing(this.editingExtData);
     }
   }
