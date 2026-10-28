@@ -28,14 +28,12 @@ jobs:
 
       - name: Update dependencies
         run: |
-          npm install -g npm-check-updates
-
           # Update to latest minor+patch (non-breaking)
           # This covers both minor and patch updates in one command
-          ncu -u --target minor
+          yarn dlx npm-check-updates -u --target minor
 
           # Install dependencies and update yarn.lock
-          yarn install
+          yarn install --no-immutable
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 

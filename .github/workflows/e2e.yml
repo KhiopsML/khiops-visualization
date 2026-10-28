@@ -43,6 +43,7 @@ jobs:
       - name: Cypress run
         uses: cypress-io/github-action@v7.4.4
         with:
+          install: false
           start: yarn start
           wait-on: 'http://localhost:4200'
 
