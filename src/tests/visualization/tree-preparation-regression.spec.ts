@@ -98,6 +98,9 @@ describe('Visualization - Tree Preparation Analysis Dialog', () => {
       getNodesLinkedToOneNode: jasmine
         .createSpy()
         .and.callFake((nodeId) => [nodeId === 'L2' ? 2 : undefined, []]),
+      getNodeGroupIndex: jasmine
+        .createSpy()
+        .and.callFake((nodeId) => (nodeId === 'L2' ? 2 : undefined)),
       hasDetailedStatistics: jasmine.createSpy().and.returnValue(true),
     };
     layoutService = {
