@@ -126,7 +126,8 @@
   },
   "resolutions": {
     "@angular-builders/custom-webpack/@angular-devkit/build-angular": "^22.1.6",
-    "@jridgewell/sourcemap-codec": "^1.4.15"
+    "@jridgewell/sourcemap-codec": "^1.4.15",
+    "sass-embedded": "npm:sass@1.107.0"
   },
   "appdescription": {
     "visualization": "Khiops Visualization",
