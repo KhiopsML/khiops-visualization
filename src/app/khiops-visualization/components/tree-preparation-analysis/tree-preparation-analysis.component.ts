@@ -52,9 +52,7 @@ export class TreePreparationAnalysisComponent {
     this.selectedGraphItemIndex$ = this.store.selectedNode$.pipe(
       map((node) =>
         node?._id
-          ? (this.treePreparationDatasService.getNodesLinkedToOneNode(
-              node._id,
-            )[0] ?? 0)
+          ? (this.treePreparationDatasService.getNodeGroupIndex(node._id) ?? 0)
           : 0,
       ),
     );

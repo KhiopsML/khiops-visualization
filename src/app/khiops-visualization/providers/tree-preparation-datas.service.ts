@@ -177,6 +177,53 @@ export class TreePreparationDatasService {
     return (currentValues || []) as string[][];
   }
 
+  /** Finds the graph group containing a node or one of its descendant leaves. */
+  getNodeGroupIndex(nodeId: string): number | undefined {
+    const groups = this.getNodeGroups();
+    const matchingGroupIndex = groups.findIndex((group) =>
+      group.includes(nodeId),
+    );
+    if (matchingGroupIndex >= 0) {
+      return matchingGroupIndex;
+    }
+
+    const findNode = (
+      nodes: TreeNodeModel[],
+    ): TreeNodeModel | undefined => {
+      for (const node of nodes) {
+        if (node.nodeId === nodeId) {
+          return node;
+        }
+        const childNode = findNode(node.children || []);
+        if (childNode) {
+          return childNode;
+        }
+      }
+      return undefined;
+    };
+    const selectedNode = findNode(
+      this.treePreparationDatas?.dimensionTree || [],
+    );
+    if (!selectedNode) {
+      return undefined;
+    }
+
+    const descendantLeafIds: string[] = [];
+    const collectLeafIds = (node: TreeNodeModel) => {
+      if (node.isLeaf) {
+        descendantLeafIds.push(node.nodeId);
+        return;
+      }
+      node.children.forEach(collectLeafIds);
+    };
+    collectLeafIds(selectedNode);
+
+    const descendantGroupIndex = groups.findIndex((group) =>
+      group.some((id) => descendantLeafIds.includes(id)),
+    );
+    return descendantGroupIndex >= 0 ? descendantGroupIndex : undefined;
+  }
+
   /**
    * Retrieves nodes linked to a specific node by its ID.
    * @param {string} id - The ID of the node.
