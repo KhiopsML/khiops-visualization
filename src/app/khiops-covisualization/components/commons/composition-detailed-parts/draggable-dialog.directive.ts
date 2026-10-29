@@ -40,31 +40,20 @@ export class DraggableDialogDirective implements OnInit {
       // Ensure the dialog itself captures events
       parent.style.pointerEvents = 'auto';
 
-      // Convert the dialog container to fixed positioning
-      // immediately using getBoundingClientRect to get the real visual position,
-      // bypassing any CSS centering from the wrapper
-      const fixPositioning = () => {
-        const parentRect = parent.getBoundingClientRect();
-
-        parent.style.position = 'fixed';
-        parent.style.left = parentRect.left + 'px';
-        parent.style.top = parentRect.top + 'px';
-        parent.style.transform = 'none';
-        parent.style.margin = '0'; // Ensure no margins affect positioning
-      };
-      fixPositioning();
-
-      // Ensure the parent has a positioning context so the absolute child is positioned relative to it
-      if (getComputedStyle(parent).position === 'static') {
-        parent.style.position = 'relative';
-      }
-
       // Add drag event listeners manually for better control
       let isDragging = false;
       let startX = 0;
       let startY = 0;
-      let initialX = 0;
-      let initialY = 0;
+      let dragOffsetX = 0;
+      let dragOffsetY = 0;
+      let startDragOffsetX = 0;
+      let startDragOffsetY = 0;
+      const currentTransform = getComputedStyle(parent).transform;
+      if (currentTransform !== 'none') {
+        const transformMatrix = new DOMMatrixReadOnly(currentTransform);
+        dragOffsetX = transformMatrix.m41;
+        dragOffsetY = transformMatrix.m42;
+      }
 
       parent.addEventListener('mousedown', (event: MouseEvent) => {
         // Only allow dragging from the header area
@@ -80,25 +69,18 @@ export class DraggableDialogDirective implements OnInit {
           return;
         }
 
-        // Ensure positioning is fixed before drag starts to prevent centering issues
-        fixPositioning();
-
         isDragging = true;
         startX = event.clientX;
         startY = event.clientY;
-        // Use getBoundingClientRect to get real visual position (not affected by transforms)
-        const parentRect = parent.getBoundingClientRect();
-        initialX = parentRect.left;
-        initialY = parentRect.top;
-        parent.style.position = 'fixed';
+        startDragOffsetX = dragOffsetX;
+        startDragOffsetY = dragOffsetY;
       });
 
       document.addEventListener('mousemove', (event: MouseEvent) => {
         if (isDragging) {
-          const deltaX = event.clientX - startX;
-          const deltaY = event.clientY - startY;
-          parent.style.left = initialX + deltaX + 'px';
-          parent.style.top = initialY + deltaY + 'px';
+          dragOffsetX = startDragOffsetX + event.clientX - startX;
+          dragOffsetY = startDragOffsetY + event.clientY - startY;
+          parent.style.transform = `translate(${dragOffsetX}px, ${dragOffsetY}px)`;
         }
       });
 
@@ -138,9 +120,6 @@ export class DraggableDialogDirective implements OnInit {
       resizeHandle.addEventListener('mousedown', (event: MouseEvent) => {
         event.preventDefault();
         event.stopPropagation(); // Stop propagation to prevent dragging while resizing
-
-        // Ensure positioning is fixed before resizing to prevent centering issues
-        fixPositioning();
 
         isResizing = true;
         resizeStartX = event.clientX;
