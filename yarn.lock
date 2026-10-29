@@ -10263,7 +10263,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"sass-embedded@npm:sass@latest, sass@npm:^1.103.1":
+"sass-embedded@npm:sass@1.107.0, sass@npm:^1.103.1":
   version: 1.107.0
   resolution: "sass@npm:1.107.0"
   dependencies:
