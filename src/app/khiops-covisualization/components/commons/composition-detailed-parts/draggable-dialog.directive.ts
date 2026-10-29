@@ -68,7 +68,15 @@ export class DraggableDialogDirective implements OnInit {
 
       parent.addEventListener('mousedown', (event: MouseEvent) => {
         // Only allow dragging from the header area
-        if (!header || !header.contains(event.target as Node)) {
+        const target = event.target;
+        if (
+          !header ||
+          !(target instanceof Element) ||
+          !header.contains(target) ||
+          target.closest(
+            'button, a, input, select, textarea, [role="button"], .screenshot-hide',
+          )
+        ) {
           return;
         }
 
