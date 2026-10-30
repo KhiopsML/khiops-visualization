@@ -4,6 +4,11 @@
  * at https://spdx.org/licenses/BSD-3-Clause-Clear.html or see the "LICENSE" file for more details.
  */
 
+:host {
+  display: block;
+  height: 100%;
+}
+
 #user-settings-comp {
   background-color: var(--color-0) !important;
 
@@ -14,6 +19,7 @@
   }
 
   #user-settings-header {
+    flex-shrink: 0;
     padding: 20px;
     button {
       outline: none;
@@ -21,8 +27,14 @@
   }
 
   #user-settings-content {
+    flex: 1;
+    min-height: 0;
     padding: 2em;
     overflow: auto;
+
+    > * {
+      flex-shrink: 0;
+    }
 
     h2 {
       margin-top: 2em;
