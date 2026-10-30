@@ -20,6 +20,8 @@ import { TreeSelectComponent } from '@khiops-visualization/components/commons/tr
 import { TreePreparationAnalysisComponent } from '@khiops-visualization/components/tree-preparation-analysis/tree-preparation-analysis.component';
 import { VariableGraphDetailsComponent } from '@khiops-visualization/components/commons/variable-graph-details/variable-graph-details.component';
 import { DialogWrapperComponent } from '@khiops-library/components/dialog-wrapper/dialog-wrapper.component';
+import { GraphSelectionSessionService } from '@khiops-visualization/providers/graph-selection-session.service';
+import { HomeLayoutComponent } from '@khiops-visualization/components/home-layout/homeLayout.component';
 
 describe('Visualization - Tree Analysis Opening Feedback', () => {
   let wrapper: DialogWrapperComponent;
@@ -207,6 +209,27 @@ describe('Visualization - Tree Select Focus Selection', () => {
   let root: HTMLElement;
   let selectedNodes: BehaviorSubject<TreeNodeModel[]>;
   let store: any;
+  let session: GraphSelectionSessionService;
+
+  const createComponent = () =>
+    new TreeSelectComponent(
+      { run: (callback) => callback() },
+      { selectedServiceChange: new Subject() },
+      { getRootElementDom: () => root },
+      { get: (key) => key },
+      { open: jasmine.createSpy('open') },
+      store,
+      session,
+    );
+
+  const reopenComponent = () => {
+    const dimensionTree = component.dimensionTree;
+    component.ngOnDestroy();
+    component = createComponent();
+    component.dimensionTree = dimensionTree;
+    component.ngOnInit();
+    component.ngAfterViewInit();
+  };
 
   const makeLeaf = (nodeId: string) => ({
     nodeId,
@@ -226,18 +249,8 @@ describe('Visualization - Tree Select Focus Selection', () => {
       initSelectedNodes: jasmine.createSpy('initSelectedNodes'),
       selectNodesFromId: jasmine.createSpy('selectNodesFromId'),
     };
-    component = new TreeSelectComponent(
-      { run: (callback) => callback() },
-      { selectedServiceChange: new Subject() },
-      { getRootElementDom: () => root },
-      { get: (key) => key },
-      { open: jasmine.createSpy('open') },
-      store,
-      {
-        getSelectedTreeNodeId: () => undefined,
-        setSelectedTreeNodeId: jasmine.createSpy('setSelectedTreeNodeId'),
-      },
-    );
+    session = new GraphSelectionSessionService();
+    component = createComponent();
     component.dimensionTree = [
       new TreeNodeModel({
         nodeId: 'root',
@@ -254,6 +267,61 @@ describe('Visualization - Tree Select Focus Selection', () => {
     component.ngOnDestroy();
     root.remove();
   });
+
+  it('starts with focus selection disabled', () => {
+    expect(component.focusSelection).toBe(false);
+    expect(session.treeFocusSelection).toBe(false);
+  });
+
+  it('restores focus selection and filtered nodes when analysis reopens', fakeAsync(() => {
+    component.onToggleFocusSelection(true);
+    tick();
+    reopenComponent();
+    tick(80);
+
+    expect(component.focusSelection).toBe(true);
+    expect(session.treeFocusSelection).toBe(true);
+    expect(displayedIds()).toEqual(['root', 'branch', 'L1']);
+    expect(root.querySelector('.tree-selected .tree-leaf-text').id).toBe('L1');
+  }));
+
+  it('remembers disabling focus selection when analysis reopens', fakeAsync(() => {
+    component.onToggleFocusSelection(true);
+    tick();
+    component.onToggleFocusSelection(false);
+    tick();
+    reopenComponent();
+    tick(80);
+
+    expect(component.focusSelection).toBe(false);
+    expect(session.treeFocusSelection).toBe(false);
+    expect(displayedIds()).toEqual(['root', 'branch', 'L1', 'L2', 'L3']);
+  }));
+
+  it('resets focus selection before initializing a newly loaded file', fakeAsync(() => {
+    component.onToggleFocusSelection(true);
+    tick();
+    const fileLoaded = new Subject();
+    const datas = { treePreparationReport: {} };
+    const home = {
+      fileLoaderService: { fileLoaded$: fileLoaded },
+      graphSelectionSessionService: session,
+      fileLoader: { loadDebugFile: jasmine.createSpy('loadDebugFile') },
+      initialize: jasmine.createSpy('initialize').and.callFake((loaded) => {
+        expect(loaded).toBe(datas);
+        expect(session.treeFocusSelection).toBe(false);
+      }),
+    };
+    HomeLayoutComponent.prototype.ngAfterViewInit.call(home);
+    fileLoaded.next(datas);
+    HomeLayoutComponent.prototype.ngOnDestroy.call(home);
+    reopenComponent();
+    tick(100);
+
+    expect(home.initialize).toHaveBeenCalledOnceWith(datas);
+    expect(component.focusSelection).toBe(false);
+    expect(displayedIds()).toEqual(['root', 'branch', 'L1', 'L2', 'L3']);
+  }));
 
   it('preserves distribution group selection when analysis tree initializes', fakeAsync(() => {
     selectedNodes.next([{ nodeId: 'L2' }, { nodeId: 'L3' }]);

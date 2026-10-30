@@ -17,6 +17,7 @@ export type GraphSelectionScope =
   providedIn: 'root',
 })
 export class GraphSelectionSessionService {
+  public treeFocusSelection = false;
   private readonly DEFAULT_INDEX = 0;
   private readonly selectedIndexByScope = new Map<GraphSelectionScope, number>();
   private readonly selectedMatrixCellIndexByScope = new Map<

@@ -65,6 +65,7 @@ export class TreeSelectComponent
     private graphSelectionSessionService: GraphSelectionSessionService,
   ) {
     super(selectableService, ngzone, configService);
+    this.focusSelection = this.graphSelectionSessionService.treeFocusSelection;
     this.selectedNodes$ = this.store.selectedNodes$;
     this.selectedNode$ = this.store.selectedNode$;
   }
@@ -114,6 +115,7 @@ export class TreeSelectComponent
 
   onToggleFocusSelection(focusSelection: boolean) {
     this.focusSelection = focusSelection;
+    this.graphSelectionSessionService.treeFocusSelection = focusSelection;
     this.initTree(false);
   }
 

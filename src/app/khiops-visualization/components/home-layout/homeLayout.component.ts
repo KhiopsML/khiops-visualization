@@ -103,6 +103,7 @@ export class HomeLayoutComponent implements OnInit {
     private fileLoaderService: FileLoaderService,
     private dialogService: DialogService,
     private viewLayoutModeService: ViewLayoutModeService,
+    private graphSelectionSessionService: GraphSelectionSessionService,
   ) {
     if (pjson) {
       this.appTitle = pjson.title.visualization;
@@ -145,6 +146,7 @@ export class HomeLayoutComponent implements OnInit {
     }
     this.fileLoadedSub = this.fileLoaderService.fileLoaded$.subscribe(
       (datas) => {
+        this.graphSelectionSessionService.treeFocusSelection = false;
         this.initialize(datas);
       },
     );
