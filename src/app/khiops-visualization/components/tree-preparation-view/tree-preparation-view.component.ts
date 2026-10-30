@@ -159,9 +159,10 @@ export class TreePreparationViewComponent
 
     this.selectedNode$?.subscribe((selectedNode) => {
       if (selectedNode?._id) {
-        const index = this.treePreparationDatasService.getNodeGroupIndex(
-          selectedNode._id,
-        );
+        let [index, _nodesToSelect] =
+          this.treePreparationDatasService.getNodesLinkedToOneNode(
+            selectedNode._id,
+          );
         if (index !== undefined && index !== null) {
           this.selectedBarIndex = index;
           this.graphSelectionSessionService.setSelectedIndex(

@@ -631,28 +631,6 @@ describe('Visualization', () => {
       });
     });
 
-    describe('getNodeGroupIndex', () => {
-      it('should return the graph index of a node descendant group', () => {
-        initWithTreeEducation();
-
-        expect(treePreparationDatasService.getNodeGroupIndex('L19')).toBe(1);
-      });
-
-      it('should return the graph index for a leaf node', () => {
-        initWithTreeEducation();
-
-        expect(treePreparationDatasService.getNodeGroupIndex('L73')).toBe(2);
-      });
-
-      it('should return undefined for a node that is not in the tree', () => {
-        initWithTreeEducation();
-
-        expect(
-          treePreparationDatasService.getNodeGroupIndex('unknown'),
-        ).toBeUndefined();
-      });
-    });
-
     // ===== initSelectedNodes =====
 
     describe('initSelectedNodes', () => {
