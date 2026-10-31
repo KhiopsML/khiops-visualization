@@ -2848,15 +2848,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@lucide/angular@npm:^1.65.0":
-  version: 1.65.0
-  resolution: "@lucide/angular@npm:1.65.0"
+"@lucide/angular@npm:^1.66.0":
+  version: 1.66.0
+  resolution: "@lucide/angular@npm:1.66.0"
   dependencies:
     tslib: "npm:^2.3.0"
   peerDependencies:
     "@angular/common": ">=17.0.0"
     "@angular/core": ">=17.0.0"
-  checksum: 10c0/9845af8d4ccbcacc44fd4a44f6696a64d3afffcabdbfddb00beb9a56af6285e457bc7b885ab3a4f4a8df85f396d6a865a020e7779d91bd8ed93614d4d33b6a1e
+  checksum: 10c0/9297accb9d571a99ca06a25a5c98235a74684ac8774411729a084bb78e3c9f4467f01473e0e1d95d545489b2a8e03d95f39c9cdbc3c1ef03783e295d53864e07
   languageName: node
   linkType: hard
 
@@ -11063,6 +11063,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"tslib@npm:^2.9.1":
+  version: 2.9.1
+  resolution: "tslib@npm:2.9.1"
+  checksum: 10c0/8ff46e7a4d19fa62c23483c89cf5ccc3906e742ef6e6d60bd3826b686143b300b4f6f04161cc1cf31a6b11fe70e1058ae4d4e4a108b5c68326d469684736a83c
+  languageName: node
+  linkType: hard
+
 "tsyringe@npm:^4.10.0":
   version: 4.10.0
   resolution: "tsyringe@npm:4.10.0"
@@ -11336,7 +11343,7 @@ __metadata:
     "@cypress/schematic": "npm:^6.0.0"
     "@fontsource/jetbrains-mono": "npm:5.3.0"
     "@fontsource/poppins": "npm:^5.3.0"
-    "@lucide/angular": "npm:^1.65.0"
+    "@lucide/angular": "npm:^1.66.0"
     "@ngrx/component-store": "npm:^22.0.1"
     "@ngrx/effects": "npm:^22.0.1"
     "@ngrx/store": "npm:^22.0.1"
@@ -11374,7 +11381,7 @@ __metadata:
     rxjs: "npm:^7.8.2"
     source-map-explorer: "npm:^2.5.3"
     ts-node: "npm:^10.9.2"
-    tslib: "npm:^2.8.1"
+    tslib: "npm:^2.9.1"
     typescript: "npm:^6.0.3"
     webpack-bundle-analyzer: "npm:^5.4.0"
     zone.js: "npm:^0.16.3"
