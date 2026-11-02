@@ -6870,10 +6870,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"fast-equals@npm:^6.2.1":
-  version: 6.2.1
-  resolution: "fast-equals@npm:6.2.1"
-  checksum: 10c0/48b58dcc3d2cf0862ef20e5ea02db7efe4c8fea8d0bbdd32707994398c9d06f788d2950bafd050b0572088e4ecbc6747864e43d63f9e985109def680b7fe0fdf
+"fast-equals@npm:^6.2.2":
+  version: 6.2.2
+  resolution: "fast-equals@npm:6.2.2"
+  checksum: 10c0/bb4a06e682054cd270a946ea463c8cfe75d26e23e78232f575f017feaff896f138c69846639b4ceabb35abdc1fdfe0412c06af923e9853d9386741e9b0a777d5
   languageName: node
   linkType: hard
 
@@ -11363,7 +11363,7 @@ __metadata:
     chart.js: "npm:^4.6.1"
     cypress: "npm:^16.2.1"
     d3: "npm:^7.9.0"
-    fast-equals: "npm:^6.2.1"
+    fast-equals: "npm:^6.2.2"
     file-saver: "npm:^2.0.5"
     html-to-image: "npm:^1.11.13"
     html2canvas: "npm:^1.4.1"
