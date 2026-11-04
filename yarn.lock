@@ -2848,15 +2848,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@lucide/angular@npm:^1.67.0":
-  version: 1.67.0
-  resolution: "@lucide/angular@npm:1.67.0"
+"@lucide/angular@npm:^1.68.0":
+  version: 1.68.0
+  resolution: "@lucide/angular@npm:1.68.0"
   dependencies:
     tslib: "npm:^2.3.0"
   peerDependencies:
     "@angular/common": ">=17.0.0"
     "@angular/core": ">=17.0.0"
-  checksum: 10c0/59a2dea89761f1980b84e98170cfed96e532067727cba5f23e420b03652467eca1144d57c9a9ddb2b1a745d659e484aeb6a4fb69e660a7126f3652450dc62cbf
+  checksum: 10c0/8665c1f8feaab056660747460e182fb009d11e29ce61d35d2a596f577e6460ea2be2066659d21ef6c334642a6fa90f6e847c70720bf979dbec1956250cd24736
   languageName: node
   linkType: hard
 
@@ -5904,12 +5904,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"d3-delaunay@npm:^6.0.5":
-  version: 6.0.5
-  resolution: "d3-delaunay@npm:6.0.5"
+"d3-delaunay@npm:^6.0.6":
+  version: 6.0.6
+  resolution: "d3-delaunay@npm:6.0.6"
   dependencies:
     delaunator: "npm:5"
-  checksum: 10c0/ee29d7549fcd3c3e7730c324705e8095b115b9e9166f2d24d89304e71e994a4185130bd624af9b6518d0008ff22d32559e75522a0dd19745ca49ad5246ecd7a9
+  checksum: 10c0/cecec91a48e5df25b709fa19deb2212896ab662e3b935333a3aa62492ede9553733598b02147ff70a4ba42d96faf9ab6e5110f922c23434f883289e908585ceb
   languageName: node
   linkType: hard
 
@@ -6253,9 +6253,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"d3@npm:^7.9.1":
-  version: 7.9.1
-  resolution: "d3@npm:7.9.1"
+"d3@npm:^7.9.2":
+  version: 7.9.2
+  resolution: "d3@npm:7.9.2"
   dependencies:
     d3-array: "npm:^3.2.5"
     d3-axis: "npm:^3.0.1"
@@ -6263,7 +6263,7 @@ __metadata:
     d3-chord: "npm:^3.0.2"
     d3-color: "npm:^3.1.1"
     d3-contour: "npm:^4.0.3"
-    d3-delaunay: "npm:^6.0.5"
+    d3-delaunay: "npm:^6.0.6"
     d3-dispatch: "npm:^3.0.2"
     d3-drag: "npm:^3.0.1"
     d3-dsv: "npm:^3.0.2"
@@ -6287,7 +6287,7 @@ __metadata:
     d3-timer: "npm:^3.0.2"
     d3-transition: "npm:^3.0.2"
     d3-zoom: "npm:^3.0.1"
-  checksum: 10c0/b33ef6c1129a27c0751270e727b8f15f288ec9c5a1c9fb9eae97c5eb414caae5b8956ff4d5a80b1e33bc0191877520a96581d0c2d410999b472b801d089900f3
+  checksum: 10c0/779dab79424e3d9cea7151059e6770369f13d5e7dc11eb6d08ead0e9bf5dbca134b32b6559a635ca6c62b18e7cba202919931cafa54a6306c305d190a8b6c502
   languageName: node
   linkType: hard
 
@@ -11482,7 +11482,7 @@ __metadata:
     "@cypress/schematic": "npm:^6.0.0"
     "@fontsource/jetbrains-mono": "npm:5.3.0"
     "@fontsource/poppins": "npm:^5.3.0"
-    "@lucide/angular": "npm:^1.67.0"
+    "@lucide/angular": "npm:^1.68.0"
     "@ngrx/component-store": "npm:^22.0.1"
     "@ngrx/effects": "npm:^22.0.1"
     "@ngrx/store": "npm:^22.0.1"
@@ -11501,7 +11501,7 @@ __metadata:
     autoprefixer: "npm:^10.6.2"
     chart.js: "npm:^4.6.1"
     cypress: "npm:^16.2.1"
-    d3: "npm:^7.9.1"
+    d3: "npm:^7.9.2"
     fast-equals: "npm:^6.2.2"
     file-saver: "npm:^2.0.5"
     html-to-image: "npm:^1.11.13"
