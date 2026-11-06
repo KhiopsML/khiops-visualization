@@ -3122,15 +3122,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@lucide/angular@npm:^1.69.0":
-  version: 1.69.0
-  resolution: "@lucide/angular@npm:1.69.0"
+"@lucide/angular@npm:^1.70.0":
+  version: 1.70.0
+  resolution: "@lucide/angular@npm:1.70.0"
   dependencies:
     tslib: "npm:^2.3.0"
   peerDependencies:
     "@angular/common": ">=17.0.0"
     "@angular/core": ">=17.0.0"
-  checksum: 10c0/c43778d890587db68a3d058c9158113dfc8a723d55d8f8abfd8310b9e742ad7d4c95d81f358fee43f5abdc7e5e2ea77aa06b7f597b0daab76893f0cdc04c99ee
+  checksum: 10c0/fa422623fe792425f9a9fd77817512bff5af40da8263d426ca13bd2af2f559e9039086baf4a239217fddb532fbe96ab8ee3f47751193a1c4600d41a43124b3e5
   languageName: node
   linkType: hard
 
@@ -12173,7 +12173,7 @@ __metadata:
     "@cypress/schematic": "npm:^6.0.0"
     "@fontsource/jetbrains-mono": "npm:5.3.0"
     "@fontsource/poppins": "npm:^5.3.0"
-    "@lucide/angular": "npm:^1.69.0"
+    "@lucide/angular": "npm:^1.70.0"
     "@ngrx/component-store": "npm:^22.0.1"
     "@ngrx/effects": "npm:^22.0.1"
     "@ngrx/store": "npm:^22.0.1"
@@ -12213,7 +12213,7 @@ __metadata:
     ts-node: "npm:^10.9.2"
     tslib: "npm:^2.9.1"
     typescript: "npm:^6.0.3"
-    webpack-bundle-analyzer: "npm:^5.4.1"
+    webpack-bundle-analyzer: "npm:^5.4.2"
     zone.js: "npm:^0.16.3"
   languageName: unknown
   linkType: soft
@@ -12298,9 +12298,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"webpack-bundle-analyzer@npm:^5.4.1":
-  version: 5.4.1
-  resolution: "webpack-bundle-analyzer@npm:5.4.1"
+"webpack-bundle-analyzer@npm:^5.4.2":
+  version: 5.4.2
+  resolution: "webpack-bundle-analyzer@npm:5.4.2"
   dependencies:
     "@discoveryjs/json-ext": "npm:^0.6.3"
     acorn: "npm:^8.0.4"
@@ -12314,7 +12314,7 @@ __metadata:
     ws: "npm:^8.19.0"
   bin:
     webpack-bundle-analyzer: lib/bin/analyzer.js
-  checksum: 10c0/95595874de4dec3a8dd0217aea5e01d5a015378ae1f9fc28a4b70353eb0ccb6ca117933e5b45b8df08ab8185c84eef275d2ef27ae80c728d86088c5b8ae8f371
+  checksum: 10c0/caa2a937952f702c9ebb821f8cb9bd7da05d87a2c8c50bc46a7b256aa16ddefe335c3f32888e0237352c35a2df87bfbda877f3a750632f635fba202d43e342ad
   languageName: node
   linkType: hard
 
