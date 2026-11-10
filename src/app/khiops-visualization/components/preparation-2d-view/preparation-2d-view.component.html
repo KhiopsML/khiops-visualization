@@ -129,6 +129,7 @@
         [size]="isLeftInfosPanelMode ? sizes.col[0] : sizes.row[0]"
       >
         <as-split
+          id="preparation-view-2d-informations-split"
           [direction]="isLeftInfosPanelMode ? 'vertical' : 'horizontal'"
           (dragEnd)="
             onSplitDragEnd($event, isLeftInfosPanelMode ? 'col0Row' : 'row0Col')

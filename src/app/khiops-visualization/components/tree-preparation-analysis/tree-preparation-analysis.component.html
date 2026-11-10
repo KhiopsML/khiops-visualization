@@ -36,6 +36,7 @@
     <app-tree-node-group-navigation></app-tree-node-group-navigation>
     <div>
       <button
+        id="tree-analysis-close-button"
         mat-flat-button
         [attr.aria-label]="'GLOBAL.CLOSE_TREE_ANALYSIS' | translate"
         [matTooltip]="'GLOBAL.CLOSE_TREE_ANALYSIS' | translate"
@@ -58,6 +59,7 @@
         ></kl-no-data>
       } @else if (treePreparationDatas?.selectedVariable) {
         <app-variable-graph-details
+          id="tree-preparation-variable-graph-details"
           #variableGraphDetails
           [preparationSource]="preparationSource"
           [selectedVariable]="
