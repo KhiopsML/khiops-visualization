@@ -13,7 +13,7 @@
     <button mat-stroked-button (click)="onClickOnCancel()">
       {{ 'GLOBAL.CANCEL' | translate }}
     </button>
-    <button mat-flat-button (click)="onClickOnSave()">
+    <button id="manage-views-save" mat-flat-button (click)="onClickOnSave()">
       {{ 'GLOBAL.SAVE' | translate }}
     </button>
   </div>
@@ -173,7 +173,7 @@
                 </div>
                 @if (!isContextView) {
                   <div
-                    class="box"
+                    class="box box-distribution"
                     matRipple
                     [matRippleColor]="matRippleColor"
                     fxLayoutAlign="center center"
