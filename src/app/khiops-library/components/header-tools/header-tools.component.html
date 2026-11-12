@@ -21,42 +21,48 @@
       <svg lucideIcon="settings"></svg>
     </button>
   }
-  <button
-    id="header-tools-copy-datas-button"
-    class="lucid-icon-button"
-    mat-stroked-button
-    matTooltip="{{
-      'GLOBAL.COPY_DATAS' | translate: { shortcut: copyDatasShortcut }
-    }}"
-    (click)="copyDatas()"
-    attr.aria-label="{{
-      'GLOBAL.COPY_DATAS' | translate: { shortcut: copyDatasShortcut }
-    }}"
-  >
-    <svg lucideIcon="copy"></svg>
-  </button>
-  <button
-    id="header-tools-copy-image-button"
-    class="lucid-icon-button"
-    mat-stroked-button
-    matTooltip="{{
-      'GLOBAL.COPY_IMAGE' | translate: { shortcut: copyImageShortcut }
-    }}"
+  <div
+    id="header-tools-comp-copy-paste"
+    fxLayout="row"
     fxLayoutAlign="center center"
-    (click)="copyImage()"
-    attr.aria-label="{{
-      'GLOBAL.COPY_IMAGE' | translate: { shortcut: copyImageShortcut }
-    }}"
   >
-    @if (!(copyImageService.isCopyingImage$ | async)) {
-      <svg lucideIcon="images"></svg>
-    }
-    @if (copyImageService.isCopyingImage$ | async) {
-      <svg
-        class="loader-circle-icon"
-        lucideIcon="loader-circle"
-        aria-hidden="true"
-      ></svg>
-    }
-  </button>
+    <button
+      id="header-tools-copy-datas-button"
+      class="lucid-icon-button"
+      mat-stroked-button
+      matTooltip="{{
+        'GLOBAL.COPY_DATAS' | translate: { shortcut: copyDatasShortcut }
+      }}"
+      (click)="copyDatas()"
+      attr.aria-label="{{
+        'GLOBAL.COPY_DATAS' | translate: { shortcut: copyDatasShortcut }
+      }}"
+    >
+      <svg lucideIcon="copy"></svg>
+    </button>
+    <button
+      id="header-tools-copy-image-button"
+      class="lucid-icon-button"
+      mat-stroked-button
+      matTooltip="{{
+        'GLOBAL.COPY_IMAGE' | translate: { shortcut: copyImageShortcut }
+      }}"
+      fxLayoutAlign="center center"
+      (click)="copyImage()"
+      attr.aria-label="{{
+        'GLOBAL.COPY_IMAGE' | translate: { shortcut: copyImageShortcut }
+      }}"
+    >
+      @if (!(copyImageService.isCopyingImage$ | async)) {
+        <svg lucideIcon="images"></svg>
+      }
+      @if (copyImageService.isCopyingImage$ | async) {
+        <svg
+          class="loader-circle-icon"
+          lucideIcon="loader-circle"
+          aria-hidden="true"
+        ></svg>
+      }
+    </button>
+  </div>
 </div>
