@@ -56,83 +56,96 @@
       >
         <!-- Slot for custom header tools -->
         <ng-content select="[slot=header-tools]"></ng-content>
-        @if (showSearch) {
-          <kl-search-input
-            [visible]="searchFormVisible"
-            [fullSearch]="showFullSearch"
-            [search]="searchInput"
-            (searchChange)="searchInput = $event; search()"
-            (opened)="showSearchForm()"
-            (closed)="removeSearch()"
-          />
-        }
-        @if (showFullSearch) {
-          <div fxFlex></div>
-        }
-        <button
-          class="kl-grid-btn-fit-columns lucid-icon-button"
-          mat-stroked-button
-          attr.aria-label="{{ 'GLOBAL.FIT_COLUMNS_TO_SPACE' | translate }}"
-          matTooltip="{{ 'GLOBAL.FIT_COLUMNS_TO_SPACE' | translate }}"
-          matTooltipPosition="above"
-          (click)="fitToSpace()"
+
+        <div
+          class="ag-grid-comp-header-tools"
+          fxLayout="row"
+          fxLayoutAlign="end center"
         >
-          <svg lucideIcon="unfold-horizontal"></svg>
-        </button>
-        <button
-          class="lucid-icon-button"
-          mat-stroked-button
-          attr.aria-label="{{ 'GLOBAL.FIT_COLUMNS_TO_CONTENT' | translate }}"
-          matTooltip="{{ 'GLOBAL.FIT_COLUMNS_TO_CONTENT' | translate }}"
-          matTooltipPosition="above"
-          (click)="fitToContent()"
-        >
-          <svg lucideIcon="fold-horizontal"></svg>
-        </button>
-        @if (showColumnsSelection) {
+          @if (showSearch) {
+            <kl-search-input
+              [visible]="searchFormVisible"
+              [fullSearch]="showFullSearch"
+              [search]="searchInput"
+              (searchChange)="searchInput = $event; search()"
+              (opened)="showSearchForm()"
+              (closed)="removeSearch()"
+            />
+          }
+          @if (showFullSearch) {
+            <div fxFlex></div>
+          }
+
           <button
-            matBadge="-"
-            matBadgeSize="small"
-            class="lucid-icon-button"
-            [matBadgeHidden]="hideFilterBadge"
-            attr.aria-label="{{ 'ARIA.AG_GRID.FILTER_DATAS_GRID' | translate }}"
-            matBadgeColor="accent"
+            class="kl-grid-btn-fit-columns lucid-icon-button"
             mat-stroked-button
-            matTooltip="{{ 'GLOBAL.FILTER_COLUMS' | translate }}"
+            attr.aria-label="{{ 'GLOBAL.FIT_COLUMNS_TO_SPACE' | translate }}"
+            matTooltip="{{ 'GLOBAL.FIT_COLUMNS_TO_SPACE' | translate }}"
             matTooltipPosition="above"
-            [matMenuTriggerFor]="tableColumns"
+            (click)="fitToSpace()"
           >
-            <svg lucideIcon="funnel"></svg>
+            <svg lucideIcon="unfold-horizontal"></svg>
           </button>
-        }
-        <mat-menu #tableColumns>
-          @for (
-            opt of displayedColumns | rowIdentifierPipe: 'rowIdentifiers';
-            track opt.headerName || $index
-          ) {
+          <button
+            class="lucid-icon-button"
+            mat-stroked-button
+            attr.aria-label="{{ 'GLOBAL.FIT_COLUMNS_TO_CONTENT' | translate }}"
+            matTooltip="{{ 'GLOBAL.FIT_COLUMNS_TO_CONTENT' | translate }}"
+            matTooltipPosition="above"
+            (click)="fitToContent()"
+          >
+            <svg lucideIcon="fold-horizontal"></svg>
+          </button>
+          @if (showColumnsSelection) {
             <button
-              mat-menu-item
-              class="mat-menu-item-checkbox"
-              (click)="$event.stopPropagation()"
+              matBadge="-"
+              matBadgeSize="small"
+              class="lucid-icon-button"
+              [matBadgeHidden]="hideFilterBadge"
+              attr.aria-label="{{
+                'ARIA.AG_GRID.FILTER_DATAS_GRID' | translate
+              }}"
+              matBadgeColor="accent"
+              mat-stroked-button
+              matTooltip="{{ 'GLOBAL.FILTER_COLUMS' | translate }}"
+              matTooltipPosition="above"
+              [matMenuTriggerFor]="tableColumns"
             >
-              @if (opt.headerName !== '_id') {
-                <mat-checkbox
-                  attr.aria-label="{{
-                    'ARIA.AG_GRID.FILTER_DATA'
-                      | translate: { data: opt.headerName }
-                  }}"
-                  [checked]="opt.show !== false"
-                  (change)="toggleTableColumn($event, opt)"
-                  >{{ opt.headerName }}</mat-checkbox
-                >
-              }
+              <svg lucideIcon="funnel"></svg>
             </button>
           }
-        </mat-menu>
-        @if (showFullscreenBtn) {
-          <kl-btn-fullscreen [isFullscreen]="isFullscreen" (toggleFullscreen)="onToggleFullscreen($event)">
-          </kl-btn-fullscreen>
-        }
+          <mat-menu #tableColumns>
+            @for (
+              opt of displayedColumns | rowIdentifierPipe: 'rowIdentifiers';
+              track opt.headerName || $index
+            ) {
+              <button
+                mat-menu-item
+                class="mat-menu-item-checkbox"
+                (click)="$event.stopPropagation()"
+              >
+                @if (opt.headerName !== '_id') {
+                  <mat-checkbox
+                    attr.aria-label="{{
+                      'ARIA.AG_GRID.FILTER_DATA'
+                        | translate: { data: opt.headerName }
+                    }}"
+                    [checked]="opt.show !== false"
+                    (change)="toggleTableColumn($event, opt)"
+                    >{{ opt.headerName }}</mat-checkbox
+                  >
+                }
+              </button>
+            }
+          </mat-menu>
+          @if (showFullscreenBtn) {
+            <kl-btn-fullscreen
+              [isFullscreen]="isFullscreen"
+              (toggleFullscreen)="onToggleFullscreen($event)"
+            >
+            </kl-btn-fullscreen>
+          }
+        </div>
       </div>
     </div>
   }
