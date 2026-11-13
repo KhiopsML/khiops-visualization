@@ -203,6 +203,7 @@ function render(self: TreeView) {
 
     text.setAttribute('class', 'tree-leaf-text');
     text.setAttribute('id', item.id);
+    text.setAttribute('data-original-name', item.bounds ?? item.name);
 
     if (item.isLeaf) {
       icon.classList.add('is-leaf');
@@ -312,7 +313,8 @@ function render(self: TreeView) {
       <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/>
     </svg>`; // Modern check SVG
     iconAccept.onclick = function () {
-      let newName = input.value;
+      const newName =
+        input.value || node.getAttribute('data-original-name') || '';
 
       if (newName !== '') {
         // change current node name - preserve the edit button
