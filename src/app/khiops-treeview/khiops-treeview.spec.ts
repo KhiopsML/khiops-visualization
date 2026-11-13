@@ -65,7 +65,9 @@ describe('TreeView folder icons', () => {
       input.value = '';
       root.querySelector<HTMLElement>('.valid-rename')!.click();
 
-      expect(root.querySelector('.tree-leaf-text')!.textContent).toBe('[0;5[');
+      expect(root.querySelector('.tree-leaf-text')!.firstChild!.textContent).toBe(
+        '[0;5[',
+      );
       expect(root.querySelector('.tree-leaf-text-input')).toBeNull();
       expect(root.querySelector('.edit-button')).not.toBeNull();
       expect(updateName).toHaveBeenCalledOnceWith({
@@ -91,7 +93,9 @@ describe('TreeView folder icons', () => {
       input.value = '';
       input.dispatchEvent(new KeyboardEvent('keyup', { key: 'Enter' }));
 
-      expect(root.querySelector('.tree-leaf-text')!.textContent).toBe('[0;5[');
+      expect(root.querySelector('.tree-leaf-text')!.firstChild!.textContent).toBe(
+        '[0;5[',
+      );
       expect(updateName).toHaveBeenCalledWith({
         data: { name: ']-inf;5[', newName: '[0;5[' },
       });
@@ -105,7 +109,9 @@ describe('TreeView folder icons', () => {
         .querySelector<HTMLElement>('.tree-leaf-text-input .edit-icons')!
         .click();
 
-      expect(root.querySelector('.tree-leaf-text')!.textContent).toBe('Saved name');
+      expect(root.querySelector('.tree-leaf-text')!.firstChild!.textContent).toBe(
+        'Saved name',
+      );
       expect(root.querySelector('.tree-leaf-text-input')).toBeNull();
       expect(updateName).not.toHaveBeenCalled();
     });
@@ -120,7 +126,9 @@ describe('TreeView folder icons', () => {
       editNode().value = '';
       root.querySelector<HTMLElement>('.valid-rename')!.click();
 
-      expect(root.querySelector('.tree-leaf-text')!.textContent).toBe('Original');
+      expect(root.querySelector('.tree-leaf-text')!.firstChild!.textContent).toBe(
+        'Original',
+      );
       expect(updateName).toHaveBeenCalledOnceWith({
         data: { name: 'Original', newName: 'Original' },
       });
@@ -130,7 +138,9 @@ describe('TreeView folder icons', () => {
       editNode().value = '  ';
       root.querySelector<HTMLElement>('.valid-rename')!.click();
 
-      expect(root.querySelector('.tree-leaf-text')!.textContent).toBe('  ');
+      expect(root.querySelector('.tree-leaf-text')!.firstChild!.textContent).toBe(
+        '  ',
+      );
       expect(updateName).toHaveBeenCalledOnceWith({
         data: { name: ']-inf;5[', newName: '  ' },
       });
