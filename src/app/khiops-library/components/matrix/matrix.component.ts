@@ -94,6 +94,8 @@ export class MatrixComponent extends SelectableComponent implements OnChanges {
   public isKhiopsCovisu: boolean;
   public componentType = COMPONENT_TYPES.MATRIX; // needed to copy datas
   public selectedCells: CellModel[] | undefined;
+  // Bounds of the currently selected cell, used by annotationSelectedCell for positioning annotations
+  private selectedCellBounds?: { x: number; y: number; width: number; height: number };
   public xAxisLabel: string = '';
   public yAxisLabel: string = '';
   public legend: {
@@ -283,6 +285,15 @@ export class MatrixComponent extends SelectableComponent implements OnChanges {
         this.updateCursor();
       }
     });
+  }
+
+  override ngAfterViewInit(): void {
+    super.ngAfterViewInit();
+    if (this.matrixSelectedDiv) {
+      Object.assign(this.matrixSelectedDiv.nativeElement, {
+        getSelectedCellBounds: () => this.selectedCellBounds,
+      });
+    }
   }
 
   override ngOnDestroy() {
@@ -749,6 +760,12 @@ export class MatrixComponent extends SelectableComponent implements OnChanges {
   drawSelectedCell(cell: CellModel) {
     if (cell) {
       this.matrixRendererService.drawSelectedCell(this.matrixSelectedCtx, cell);
+      const bounds = this.selectedCellBounds;
+      const x = Math.min(bounds?.x ?? cell.xCanvas, cell.xCanvas);
+      const y = Math.min(bounds?.y ?? cell.yCanvas, cell.yCanvas);
+      const right = Math.max(bounds ? bounds.x + bounds.width : cell.xCanvas + cell.wCanvas, cell.xCanvas + cell.wCanvas);
+      const bottom = Math.max(bounds ? bounds.y + bounds.height : cell.yCanvas + cell.hCanvas, cell.yCanvas + cell.hCanvas);
+      this.selectedCellBounds = { x, y, width: right - x, height: bottom - y };
     }
   }
 
@@ -778,6 +795,7 @@ export class MatrixComponent extends SelectableComponent implements OnChanges {
   }
 
   private cleanSelectedDomContext() {
+    this.selectedCellBounds = undefined;
     if (this.matrixSelectedDiv) {
       let width = this.matrixSelectedDiv.nativeElement.width;
       let height = this.matrixSelectedDiv.nativeElement.height;
