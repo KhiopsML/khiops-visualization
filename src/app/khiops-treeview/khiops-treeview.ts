@@ -192,6 +192,7 @@ function render(self: TreeView) {
       // icon.className += ' web_asset';
     } else {
       setFolderIcon(icon, item.isCollapsed ? 'folder-close' : 'folder-open');
+       icon.classList.add(item.isCollapsed ? 'folder-close' : 'folder-open');
     }
 
     if (item.color) {
