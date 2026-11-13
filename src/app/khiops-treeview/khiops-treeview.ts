@@ -68,29 +68,45 @@ function scrollIntoView(node: HTMLElement, center = true) {
   }
 
   let container = node.parentElement;
-  while (container && container !== document.body && container !== document.documentElement) {
+  while (
+    container &&
+    container !== document.body &&
+    container !== document.documentElement
+  ) {
     const style = window.getComputedStyle(container);
-    const scrollsVertically = /(auto|scroll)/.test(style.overflowY) &&
+    const scrollsVertically =
+      /(auto|scroll)/.test(style.overflowY) &&
       container.scrollHeight > container.clientHeight;
-    const scrollsHorizontally = /(auto|scroll)/.test(style.overflowX) &&
+    const scrollsHorizontally =
+      /(auto|scroll)/.test(style.overflowX) &&
       container.scrollWidth > container.clientWidth;
 
     if (scrollsVertically || scrollsHorizontally) {
       const containerRect = container.getBoundingClientRect();
       const top = containerRect.top + container.clientTop;
       const left = containerRect.left + container.clientLeft;
-      const scrollTop = scrollsVertically &&
+      const scrollTop =
+        scrollsVertically &&
         (rect.top < top || rect.bottom > top + container.clientHeight)
-        ? container.scrollTop + rect.top - top -
-          (center ? (container.clientHeight - rect.height) / 2 : 0)
-        : container.scrollTop;
-      const scrollLeft = scrollsHorizontally &&
+          ? container.scrollTop +
+            rect.top -
+            top -
+            (center ? (container.clientHeight - rect.height) / 2 : 0)
+          : container.scrollTop;
+      const scrollLeft =
+        scrollsHorizontally &&
         (rect.left < left || rect.right > left + container.clientWidth)
-        ? container.scrollLeft + rect.left - left -
-          (center ? (container.clientWidth - rect.width) / 2 : 0)
-        : container.scrollLeft;
+          ? container.scrollLeft +
+            rect.left -
+            left -
+            (center ? (container.clientWidth - rect.width) / 2 : 0)
+          : container.scrollLeft;
 
-      container.scrollTo({ top: scrollTop, left: scrollLeft, behavior: 'smooth' });
+      container.scrollTo({
+        top: scrollTop,
+        left: scrollLeft,
+        behavior: 'smooth',
+      });
       return;
     }
     container = container.parentElement;
@@ -146,6 +162,8 @@ function setFolderIcon(
   iconName: 'folder-open' | 'folder-close',
 ) {
   iconContainer.setAttribute('data-lucide-icon', iconName);
+  iconContainer.classList.remove('folder-open', 'folder-close');
+  iconContainer.classList.add(iconName);
   iconContainer.innerHTML = getFolderIconSvg(iconName);
 }
 
@@ -188,11 +206,8 @@ function render(self: TreeView) {
 
     if (item.isLeaf) {
       icon.classList.add('is-leaf');
-      // icon.textContent = 'web_asset';
-      // icon.className += ' web_asset';
     } else {
       setFolderIcon(icon, item.isCollapsed ? 'folder-close' : 'folder-open');
-       icon.classList.add(item.isCollapsed ? 'folder-close' : 'folder-open');
     }
 
     if (item.color) {
