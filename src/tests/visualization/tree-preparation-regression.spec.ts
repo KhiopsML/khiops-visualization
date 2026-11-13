@@ -20,6 +20,7 @@ import { TreeSelectComponent } from '@khiops-visualization/components/commons/tr
 import { TreePreparationAnalysisComponent } from '@khiops-visualization/components/tree-preparation-analysis/tree-preparation-analysis.component';
 import { VariableGraphDetailsComponent } from '@khiops-visualization/components/commons/variable-graph-details/variable-graph-details.component';
 import { DialogWrapperComponent } from '@khiops-library/components/dialog-wrapper/dialog-wrapper.component';
+import { DialogService } from '@khiops-library/providers/dialog.service';
 import { GraphSelectionSessionService } from '@khiops-visualization/providers/graph-selection-session.service';
 import { HomeLayoutComponent } from '@khiops-visualization/components/home-layout/homeLayout.component';
 
@@ -83,6 +84,42 @@ describe('Visualization - Tree Analysis Opening Feedback', () => {
     expect(createComponent).toHaveBeenCalledOnceWith(otherDialog);
     expect(wrapper.isContentLoading).toBe(false);
   }));
+});
+
+describe('Visualization - Tab-scoped Dialog', () => {
+  it('hides on tab change and restores the same open dialog on return', () => {
+    const service = new DialogService();
+    const treeTab = {};
+    const modelingTab = {};
+    const visibility: boolean[] = [];
+    service.sidePanelHidden$.subscribe((hidden) => visibility.push(hidden));
+    service.setActiveTab(treeTab);
+    service.openDialog(TreePreparationAnalysisComponent, {
+      hideOnTabChange: true,
+    });
+    const content = service.getDialogContent();
+
+    service.hideDialogForTabChange();
+    service.setActiveTab(modelingTab);
+    expect(visibility[visibility.length - 1]).toBe(true);
+    expect(service.getDialogContent()).toBe(content);
+
+    service.setActiveTab(treeTab);
+    expect(visibility[visibility.length - 1]).toBe(false);
+    expect(service.getDialogContent()).toBe(content);
+  });
+
+  it('leaves ordinary dialogs visible across tab changes', () => {
+    const service = new DialogService();
+    let hidden = false;
+    service.sidePanelHidden$.subscribe((value) => (hidden = value));
+    service.setActiveTab({});
+    service.openDialog(TreePreparationAnalysisComponent);
+    service.hideDialogForTabChange();
+    service.setActiveTab({});
+
+    expect(hidden).toBe(false);
+  });
 });
 
 describe('Visualization - Tree Preparation Analysis Dialog', () => {
@@ -199,6 +236,7 @@ describe('Visualization - Tree Preparation Analysis Dialog', () => {
         maxWidth: 'calc(100% - 32px)',
         maxHeight: 'calc(100% - 32px)',
         panelClass: 'tree-preparation-analysis-panel',
+        hideOnTabChange: true,
       },
     );
   });

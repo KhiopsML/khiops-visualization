@@ -214,6 +214,7 @@ export class VariableGraphDetailsComponent
       maxWidth: 'calc(100% - 32px)',
       maxHeight: 'calc(100% - 32px)',
       panelClass: 'tree-preparation-analysis-panel',
+      hideOnTabChange: true,
     });
   }
 

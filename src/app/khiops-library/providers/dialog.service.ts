@@ -23,6 +23,7 @@ export interface DialogConfigI {
   panelClass?: string;
   noOverlay?: boolean;
   sidePanel?: boolean;
+  hideOnTabChange?: boolean;
 }
 
 export interface DialogRef<T = any> {
@@ -51,15 +52,20 @@ export class DialogService {
   setActiveTab(tab: object): void {
     this.activeTab = tab;
     this.sidePanelHiddenSubject.next(
-      !!this.dialogContentSubject.value.config?.sidePanel &&
+      this.isTabScopedDialog() &&
         this.sidePanelTab !== tab,
     );
   }
 
-  hideSidePanelForTabChange(): void {
-    if (this.dialogContentSubject.value.config?.sidePanel) {
+  hideDialogForTabChange(): void {
+    if (this.isTabScopedDialog()) {
       this.sidePanelHiddenSubject.next(true);
     }
+  }
+
+  private isTabScopedDialog(): boolean {
+    const config = this.dialogContentSubject.value.config;
+    return !!(config?.sidePanel || config?.hideOnTabChange);
   }
 
   /**
@@ -75,7 +81,8 @@ export class DialogService {
   ): DialogRef<any> {
     // Reset the subject for new dialog
     this.afterClosedSubject = new Subject<any>();
-    this.sidePanelTab = config?.sidePanel ? this.activeTab : undefined;
+    this.sidePanelTab =
+      config?.sidePanel || config?.hideOnTabChange ? this.activeTab : undefined;
     this.sidePanelHiddenSubject.next(false);
 
     this.dialogContentSubject.next({

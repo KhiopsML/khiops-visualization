@@ -92,6 +92,7 @@ export class DialogWrapperComponent
       this.updateSidePanelContainer(
         !!content.config?.sidePanel,
         content.config?.panelClass === 'tree-preparation-analysis-panel',
+        !!content.config?.hideOnTabChange,
       );
       if (content.type === 'component' && content.componentType) {
         this.clearDynamicComponent();
@@ -121,12 +122,13 @@ export class DialogWrapperComponent
   private updateSidePanelContainer(
     isSidePanel: boolean,
     constrainToTabBody = false,
+    hideOnTabChange = false,
   ): void {
     this.sidePanelResizeObserver?.disconnect();
     this.removeTabActivationListeners?.();
     this.removeTabActivationListeners = undefined;
     this.sidePanelBounds = undefined;
-    if (!isSidePanel && !constrainToTabBody) {
+    if (!isSidePanel && !constrainToTabBody && !hideOnTabChange) {
       return;
     }
 
@@ -158,10 +160,10 @@ export class DialogWrapperComponent
         tab.getAttribute('aria-selected') !== 'true' &&
         tab.getAttribute('aria-disabled') !== 'true'
       ) {
-        this.dialogService.hideSidePanelForTabChange();
+        this.dialogService.hideDialogForTabChange();
       }
     };
-    if (isSidePanel) {
+    if (isSidePanel || hideOnTabChange) {
       tabHeader.addEventListener('click', onTabActivation, true);
       tabHeader.addEventListener('keydown', onTabActivation, true);
       this.removeTabActivationListeners = () => {
@@ -283,6 +285,9 @@ export class DialogWrapperComponent
     // Focus the primary action button after the dialog is rendered
     const hostEl = this.componentRef.location.nativeElement as HTMLElement;
     setTimeout(() => {
+      if (this.dialogWrapper?.nativeElement.hidden) {
+        return;
+      }
       if (
         content.config?.sidePanel ||
         content.config?.panelClass === 'tree-preparation-analysis-panel'

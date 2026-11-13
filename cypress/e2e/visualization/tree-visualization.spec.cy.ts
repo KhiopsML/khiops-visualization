@@ -68,6 +68,16 @@ describe('Tree visualization Test for Khiops Visualization', () => {
 
         cy.get('#hyperTree').find('circle').should('have.length', 242);
 
+        cy.get('#tree-analysis-title').then(($title) => {
+          cy.contains('.mat-mdc-tab', 'Modeling').click();
+          cy.get('#tree-analysis-title').should('not.be.visible');
+          cy.get('#modeling-variables-list').should('be.visible');
+          cy.contains('.mat-mdc-tab', 'Tree preparation').click();
+          cy.get('#tree-analysis-title').should('be.visible').should(($restored) => {
+            expect($restored[0]).to.equal($title[0]);
+          });
+        });
+
         cy.get('button[aria-label="Close tree analysis"]').click();
         cy.get('#tree-preparation-variables-list').should('be.visible');
         cy.get('.mat-mdc-tab:contains("Modeling")').first().click();
