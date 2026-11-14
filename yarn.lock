@@ -3122,15 +3122,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@lucide/angular@npm:^1.72.0":
-  version: 1.72.0
-  resolution: "@lucide/angular@npm:1.72.0"
+"@lucide/angular@npm:^1.73.0":
+  version: 1.73.0
+  resolution: "@lucide/angular@npm:1.73.0"
   dependencies:
     tslib: "npm:^2.3.0"
   peerDependencies:
     "@angular/common": ">=17.0.0"
     "@angular/core": ">=17.0.0"
-  checksum: 10c0/e3bb6ece1467e421a493057bd17cad5336ada7caef3abe80170bddd7da0d09fddf949a9d735a573722e986119e1ea6cf7d606d4262d85472893d9bc2b94cbffb
+  checksum: 10c0/4b1dd8fb2115967c432d1616af8fbb824dd4b5c15c7300b4483955a5e26154aa54db18ccdc2ff12cbbe1824aa62020db641309f3f3002a350f42aa342a05fa22
   languageName: node
   linkType: hard
 
@@ -12173,7 +12173,7 @@ __metadata:
     "@cypress/schematic": "npm:^6.0.0"
     "@fontsource/jetbrains-mono": "npm:5.3.0"
     "@fontsource/poppins": "npm:^5.3.0"
-    "@lucide/angular": "npm:^1.72.0"
+    "@lucide/angular": "npm:^1.73.0"
     "@ngrx/component-store": "npm:^22.0.1"
     "@ngrx/effects": "npm:^22.0.1"
     "@ngrx/store": "npm:^22.0.1"
