@@ -75,26 +75,31 @@
             <div fxFlex></div>
           }
 
-          <button
-            class="kl-grid-btn-fit-columns lucid-icon-button"
-            mat-stroked-button
-            attr.aria-label="{{ 'GLOBAL.FIT_COLUMNS_TO_SPACE' | translate }}"
-            matTooltip="{{ 'GLOBAL.FIT_COLUMNS_TO_SPACE' | translate }}"
-            matTooltipPosition="above"
-            (click)="fitToSpace()"
-          >
-            <svg lucideIcon="unfold-horizontal"></svg>
-          </button>
-          <button
-            class="lucid-icon-button"
-            mat-stroked-button
-            attr.aria-label="{{ 'GLOBAL.FIT_COLUMNS_TO_CONTENT' | translate }}"
-            matTooltip="{{ 'GLOBAL.FIT_COLUMNS_TO_CONTENT' | translate }}"
-            matTooltipPosition="above"
-            (click)="fitToContent()"
-          >
-            <svg lucideIcon="fold-horizontal"></svg>
-          </button>
+          <div class="kl-grid-resize-btns" fxLayout="row">
+            <button
+              class="kl-grid-btn-fit-columns lucid-icon-button"
+              mat-stroked-button
+              attr.aria-label="{{ 'GLOBAL.FIT_COLUMNS_TO_SPACE' | translate }}"
+              matTooltip="{{ 'GLOBAL.FIT_COLUMNS_TO_SPACE' | translate }}"
+              matTooltipPosition="above"
+              (click)="fitToSpace()"
+            >
+              <svg lucideIcon="unfold-horizontal"></svg>
+            </button>
+            <button
+              class="lucid-icon-button"
+              mat-stroked-button
+              attr.aria-label="{{
+                'GLOBAL.FIT_COLUMNS_TO_CONTENT' | translate
+              }}"
+              matTooltip="{{ 'GLOBAL.FIT_COLUMNS_TO_CONTENT' | translate }}"
+              matTooltipPosition="above"
+              (click)="fitToContent()"
+            >
+              <svg lucideIcon="fold-horizontal"></svg>
+            </button>
+          </div>
+
           @if (showColumnsSelection) {
             <button
               matBadge="-"
