@@ -8136,10 +8136,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"fast-equals@npm:^6.4.0":
-  version: 6.4.0
-  resolution: "fast-equals@npm:6.4.0"
-  checksum: 10c0/86d37863904058ac40f4edbc9b31f841efb35993f89bb080ad969a83e4b445fdd8008ef62b4278622f16e1d7a567320341565f3b1a91e45c15c3ca3d18308691
+"fast-equals@npm:^6.4.1":
+  version: 6.4.1
+  resolution: "fast-equals@npm:6.4.1"
+  checksum: 10c0/c3189df309cc6277357c978b0c871edf318becb05e7afcd1d4826cc4e140ccd9b72c9ea2a85a8319250161d3818a4d7919d4784056a2065095baea74a218e0e1
   languageName: node
   linkType: hard
 
@@ -11099,7 +11099,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"postcss-loader@npm:8.2.1, postcss-loader@npm:^8.2.1":
+"postcss-loader@npm:8.2.1":
   version: 8.2.1
   resolution: "postcss-loader@npm:8.2.1"
   dependencies:
@@ -11116,6 +11116,26 @@ __metadata:
     webpack:
       optional: true
   checksum: 10c0/8ef4687f05972a85b4ad8e714f692fceec16f334d99edaa09c222dc08d01afcdcf7bed2b3a45f7888900cb9fd3324b9741d98ce694e33e87bebdc038dd17e30b
+  languageName: node
+  linkType: hard
+
+"postcss-loader@npm:^8.2.2":
+  version: 8.2.2
+  resolution: "postcss-loader@npm:8.2.2"
+  dependencies:
+    cosmiconfig: "npm:^9.0.0"
+    jiti: "npm:^2.5.1"
+    semver: "npm:^7.6.2"
+  peerDependencies:
+    "@rspack/core": 0.x || ^1.0.0 || ^2.0.0-0
+    postcss: ^7.0.0 || ^8.0.1
+    webpack: ^5.0.0
+  peerDependenciesMeta:
+    "@rspack/core":
+      optional: true
+    webpack:
+      optional: true
+  checksum: 10c0/14db3626993fc653f0667ab1f36abd9c97facbbac5f13b664ccf7e321a5b63dd49e7ad9c2032cdcc4b4f89ba7d7c8652d3bf3add0c95539d1649c6e790961cc5
   languageName: node
   linkType: hard
 
@@ -13082,7 +13102,7 @@ __metadata:
     chart.js: "npm:^4.6.1"
     cypress: "npm:^16.3.0"
     d3: "npm:^7.9.2"
-    fast-equals: "npm:^6.4.0"
+    fast-equals: "npm:^6.4.1"
     file-saver: "npm:^2.0.5"
     html-to-image: "npm:^1.11.13"
     html2canvas: "npm:^1.4.1"
@@ -13095,7 +13115,7 @@ __metadata:
     lodash-es: "npm:^4.18.1"
     ng-packagr: "npm:^22.3.0"
     pan-zoom: "npm:^3.5.2"
-    postcss-loader: "npm:^8.2.1"
+    postcss-loader: "npm:^8.2.2"
     prettier: "npm:^3.10.1"
     rxjs: "npm:^7.8.2"
     source-map-explorer: "npm:^2.5.3"
