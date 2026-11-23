@@ -8,7 +8,7 @@
     "schematicCollections": ["@cypress/schematic", "@schematics/angular"]
   },
   "projects": {
-    "visualization-component": {
+    "khiops-visualization": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -43,7 +43,7 @@
               "fraction.js",
               "escape-latex"
             ],
-            "outputPath": "dist/visualization-component",
+            "outputPath": "dist/khiops-visualization",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
@@ -90,10 +90,10 @@
           "builder": "@angular-builders/custom-webpack:dev-server",
           "configurations": {
             "production": {
-              "buildTarget": "visualization-component:build:production"
+              "buildTarget": "khiops-visualization:build:production"
             },
             "development": {
-              "buildTarget": "visualization-component:build:development"
+              "buildTarget": "khiops-visualization:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -101,7 +101,7 @@
         "extract-i18n": {
           "builder": "@angular-builders/custom-webpack:extract-i18n",
           "options": {
-            "buildTarget": "visualization-component:build"
+            "buildTarget": "khiops-visualization:build"
           }
         },
         "test": {
@@ -120,11 +120,11 @@
         "cypress-run": {
           "builder": "@cypress/schematic:cypress",
           "options": {
-            "devServerTarget": "visualization-component:serve"
+            "devServerTarget": "khiops-visualization:serve"
           },
           "configurations": {
             "production": {
-              "devServerTarget": "visualization-component:serve:production"
+              "devServerTarget": "khiops-visualization:serve:production"
             }
           }
         },
@@ -138,27 +138,27 @@
         "ct": {
           "builder": "@cypress/schematic:cypress",
           "options": {
-            "devServerTarget": "visualization-component:serve",
+            "devServerTarget": "khiops-visualization:serve",
             "watch": true,
             "headless": false,
             "testingType": "component"
           },
           "configurations": {
             "development": {
-              "devServerTarget": "visualization-component:serve:development"
+              "devServerTarget": "khiops-visualization:serve:development"
             }
           }
         },
         "e2e": {
           "builder": "@cypress/schematic:cypress",
           "options": {
-            "devServerTarget": "visualization-component:serve",
+            "devServerTarget": "khiops-visualization:serve",
             "watch": true,
             "headless": false
           },
           "configurations": {
             "production": {
-              "devServerTarget": "visualization-component:serve:production"
+              "devServerTarget": "khiops-visualization:serve:production"
             }
           }
         }

@@ -33,5 +33,5 @@ yarn build --configuration production --stats-json
 ### Then analyze with
 
 ```bash
-npx webpack-bundle-analyzer dist/visualization-component/stats.json
+npx webpack-bundle-analyzer dist/khiops-visualization/stats.json
 ```

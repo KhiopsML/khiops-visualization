@@ -22,7 +22,7 @@ module.exports = function (config) {
     coverageReporter: {
       dir: require('path').join(
         __dirname,
-        './coverage/visualization-component',
+        './coverage/khiops-visualization',
       ),
       subdir: '.',
       reporters: [{ type: 'html' }, { type: 'text-summary' }],

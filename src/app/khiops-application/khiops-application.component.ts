@@ -14,7 +14,7 @@ import { Component, ChangeDetectionStrategy } from '@angular/core';
   standalone: false,
 })
 export class AppComponent {
-  title = 'visualization-component';
+  title = 'khiops-visualization';
 
   constructor() {
     console.log(`                                                              

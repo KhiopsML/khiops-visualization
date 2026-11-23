@@ -1,5 +1,5 @@
 {
-  "name": "visualization-component",
+  "name": "khiops-visualization",
   "version": "11.17.3",
   "license": "BSD-3-Clause-Clear",
   "author": {
@@ -31,8 +31,8 @@
     "build:stats": "ng build --stats-json --source-map --output-hashing none && yarn stats:webpack-bundle-analyzer & yarn stats:source-map-explorer",
     "build:webcomponents": "./scripts/build.sh",
     "buildDev:webcomponents": "./scripts/build-dev-watch.sh",
-    "stats:webpack-bundle-analyzer": "webpack-bundle-analyzer dist/visualization-component/stats.json",
-    "stats:source-map-explorer": "source-map-explorer dist/visualization-component/main.js --no-border-checks",
+    "stats:webpack-bundle-analyzer": "webpack-bundle-analyzer dist/khiops-visualization/stats.json",
+    "stats:source-map-explorer": "source-map-explorer dist/khiops-visualization/main.js --no-border-checks",
     "setTag": "./scripts/tag.sh",
     "ng": "ng",
     "start": "ng serve",

@@ -1,13 +1,13 @@
 ---
 name: e2e
 description: >-
-  Write Cypress e2e tests for the khiops visualization-component.
+  Write Cypress e2e tests for the khiops khiops-visualization.
   Use when asked to add e2e tests, write spec files, cover a new feature or bug
   fix with end-to-end tests, or reproduce a UI regression as a Cypress test.
 argument-hint: 'feature or component to test'
 ---
 
-# Cypress E2E Test — khiops visualization-component
+# Cypress E2E Test — khiops khiops-visualization
 
 ## When to Use
 - Adding a new Cypress spec for a visualization or covisualization feature

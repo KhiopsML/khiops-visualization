@@ -24,9 +24,9 @@
       "@khiops-hypertree": ["./src/app/khiops-hypertree"],
       "@khiops-visualization/*": ["./src/app/khiops-visualization/*"],
       "@khiops-covisualization/*": ["./src/app/khiops-covisualization/*"],
-      "khiops-visualization-components": [
-        "./dist/khiops-visualization-components/khiops-visualization-components",
-        "./dist/khiops-visualization-components"
+      "khiops-khiops-visualizations": [
+        "./dist/khiops-khiops-visualizations/khiops-khiops-visualizations",
+        "./dist/khiops-khiops-visualizations"
       ],
       "stream": ["./node_modules/stream-browserify"]
     }
