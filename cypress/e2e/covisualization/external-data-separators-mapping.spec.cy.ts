@@ -216,7 +216,7 @@ describe('External data separators and mapping lifecycle', () => {
     selectDimension('education');
     setCustomSeparator('0');
 
-    // Browse another file without Load Datas: editor must reinitialize.
+    // Browse another file without Load Data: editor must reinitialize.
     uploadExternalFile('ext-comma.txt');
 
     cy.get('app-import-ext-datas .file-summary strong').should(

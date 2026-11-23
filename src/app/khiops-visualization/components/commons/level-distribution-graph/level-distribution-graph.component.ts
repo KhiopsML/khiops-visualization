@@ -110,7 +110,7 @@ export class LevelDistributionGraphComponent
     // Initialize dynamic properties
     this.initializeDynamicProperties();
 
-    // load datas
+    // load data
     this.inputDatas = this.distributionDatasService.getDistributionGraphDatas(
       this.datas ?? [],
       this.distributionType,

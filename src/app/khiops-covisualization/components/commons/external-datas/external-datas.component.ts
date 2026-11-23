@@ -87,7 +87,7 @@ export class ExternalDatasComponent
     this.externalDatasDisplayedColumns = [];
     this.externalDatasGridRows = [];
     if (this.selectedComposition?.externalData) {
-      // If composition is available, load datas from it (faster)
+      // If composition is available, load data from it (faster)
       this.currentExternalDatas.push(this.selectedComposition.externalData);
       this.currentExternalDatasTitle = this.selectedComposition.value;
     } else if (
