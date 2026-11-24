@@ -713,6 +713,7 @@ export class SaveService {
    * This method processes each node, retrieves its children, and updates the intervals in the partition
    * by removing the intervals corresponding to the children nodes and adding the interval for the parent node.
    * It also ensures that the intervals are sorted and removes any included intervals.
+   * Already-leaf clusters from exported hierarchies are kept unchanged.
    *
    * @param {string[]} nodes - The list of node names to process.
    * @param {number} dimIndex - The index of the dimension in the dimensionsClusters array.
@@ -733,7 +734,7 @@ export class SaveService {
         this.dimensionsDatasService.dimensionsDatas.dimensionsClusters[
           dimIndex
         ]?.find((e) => e.cluster === nodeName);
-      if (nodeDetails?.childrenList) {
+      if (nodeDetails?.childrenList && !nodeDetails.isLeaf) {
         nodeChildren = nodeDetails.childrenList;
         const nodeChildrenLength = nodeChildren.length;
         for (let j = 0; j < nodeChildrenLength; j++) {

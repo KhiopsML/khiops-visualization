@@ -60,11 +60,12 @@ export class HierarchyService {
   }
 
   /**
-   * Unfolds the hierarchy for the given rank, updating the collapsed nodes and refreshing dimension data.
+   * Unfolds checked dimensions for the given rank, preserving existing folds in unchecked dimensions.
+   * Updates the collapsed nodes and refreshes dimension data.
    * @param currentRank - The rank for which to unfold the hierarchy.
    */
   unfoldHierarchy(currentRank: number) {
-    const collapsedNodes =
+    const rankCollapsedNodes =
       this.treenodesService.getLeafNodesForARank(currentRank);
 
     for (
@@ -75,9 +76,13 @@ export class HierarchyService {
       const dim = this.dimensionsDatasService.dimensionsDatas.dimensions[i];
       // Remove dimension if unchecked
       if (dim?.hierarchyFold === false) {
-        delete collapsedNodes[dim.name];
+        delete rankCollapsedNodes[dim.name];
       }
     }
+    const collapsedNodes = {
+      ...this.treenodesService.getSavedCollapsedNodes(),
+      ...rankCollapsedNodes,
+    };
     this.treenodesService.setSavedCollapsedNodes(collapsedNodes);
 
     let datas = this.saveService.constructSavedJson(collapsedNodes);
