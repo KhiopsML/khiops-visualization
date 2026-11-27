@@ -13,34 +13,66 @@ function normalizeText(value: string | undefined | null): string {
   return (value || '').replace(/\s+/g, ' ').trim();
 }
 
-function getMatrixHash() {
-  return cy.get('#matrix').should('be.visible').then(($canvas) => {
-    const canvas = $canvas[0] as HTMLCanvasElement;
-    const ctx = canvas.getContext('2d');
-    if (!ctx || canvas.width === 0 || canvas.height === 0) {
-      return 'empty';
-    }
-
-    const data = ctx.getImageData(0, 0, canvas.width, canvas.height).data;
-    let hash = 0;
-
-    for (let i = 0; i < data.length; i += 64) {
-      hash = (hash * 31 + data[i] + data[i + 1] * 3 + data[i + 2] * 7) >>> 0;
-    }
-
-    return `${canvas.width}x${canvas.height}:${hash}`;
-  });
+function waitForMatrixDraw() {
+  return cy.window().then(
+    (win) =>
+      new Cypress.Promise<void>((resolve) => {
+        // Matrix input changes schedule a timer followed by requestAnimationFrame.
+        win.setTimeout(() => {
+          win.requestAnimationFrame(() =>
+            win.requestAnimationFrame(() => resolve()),
+          );
+        }, 0);
+      }),
+  );
 }
 
-function getTooltipAtSameMatrixPosition() {
+function getMatrixHash(previousHash?: string) {
+  let hash: string;
+  return cy
+    .get('#matrix')
+    .should('be.visible')
+    .should(($canvas) => {
+      const canvas = $canvas[0] as HTMLCanvasElement;
+      const ctx = canvas.getContext('2d');
+      expect(ctx).not.to.be.null;
+      expect(canvas.width).to.be.greaterThan(0);
+      expect(canvas.height).to.be.greaterThan(0);
+
+      const data = ctx!.getImageData(0, 0, canvas.width, canvas.height).data;
+      let value = 0;
+
+      for (let i = 0; i < data.length; i += 64) {
+        value =
+          (value * 31 + data[i] + data[i + 1] * 3 + data[i + 2] * 7) >>> 0;
+      }
+
+      hash = `${canvas.width}x${canvas.height}:${value}`;
+      if (previousHash !== undefined) {
+        expect(hash).not.to.equal(previousHash);
+      }
+    })
+    .then(() => hash);
+}
+
+function getTooltipAtSameMatrixPosition(previousText?: string) {
   return cy
     .get('#matrix-selected')
     .should('be.visible')
-    .trigger('mousemove', { position: 'topLeft', force: true })
+    .trigger('mousemove', {
+      position: 'center',
+      eventConstructor: 'MouseEvent',
+      force: true,
+    })
     .then(() => {
       return cy
         .get('.matrix-tooltip-comp.visible', { timeout: 10000 })
         .first()
+        .should(($tooltip) => {
+          if (previousText !== undefined) {
+            expect(normalizeText($tooltip.text())).not.to.equal(previousText);
+          }
+        })
         .invoke('text')
         .then((text) => normalizeText(text));
     });
@@ -54,23 +86,39 @@ function clickDifferentLeaf(
   const selector = `#hierarchy-details-comp-${position}`;
 
   const tryClickVisibleLeaf = () => {
-    return cy.get(selector).should('be.visible').then(($container) => {
-      const $leaves = $container.find('.tree-leaf-text:visible');
-      const candidate = [...$leaves].find((node) => {
-        const text = normalizeText((node as HTMLElement).innerText);
-        return text && !forbiddenTexts.includes(text);
+    return cy
+      .get(selector)
+      .should('be.visible')
+      .then(($container) => {
+        const $leaves = $container.find('.tree-leaf-text:visible');
+        const candidate = [...$leaves].find((node) => {
+          const text = normalizeText((node as HTMLElement).innerText);
+          return text && !forbiddenTexts.includes(text);
+        });
+
+        if (candidate) {
+          const clickedText = normalizeText(
+            (candidate as HTMLElement).innerText,
+          );
+          return cy
+            .wrap(candidate)
+            .click({ force: true })
+            .then(() =>
+              cy
+                .get(`${selector} .tree-selected .tree-leaf-text:visible`)
+                .should(($selected) => {
+                  expect(
+                    [...$selected].some(
+                      (node) => normalizeText(node.textContent) === clickedText,
+                    ),
+                  ).to.be.true;
+                }),
+            )
+            .then(() => clickedText);
+        }
+
+        return cy.wrap('');
       });
-
-      if (candidate) {
-        const clickedText = normalizeText((candidate as HTMLElement).innerText);
-        return cy
-          .wrap(candidate)
-          .click({ force: true })
-          .then(() => clickedText);
-      }
-
-      return cy.wrap('');
-    });
   };
 
   return tryClickVisibleLeaf().then((clickedText) => {
@@ -95,21 +143,19 @@ function clickDifferentLeaf(
         }
 
         if (allowExpandoFallback) {
-          return cy
-            .get(selector)
-            .then(($expandos) => {
-              const $visibleExpandos = $expandos.find(
-                '.tree-expando:not(.hidden):visible',
-              );
-              if ($visibleExpandos.length > 0) {
-                cy.wrap($visibleExpandos[0]).click({ force: true });
-                return '__expando_toggled__';
-              }
+          return cy.get(selector).then(($expandos) => {
+            const $visibleExpandos = $expandos.find(
+              '.tree-expando:not(.hidden):visible',
+            );
+            if ($visibleExpandos.length > 0) {
+              cy.wrap($visibleExpandos[0]).click({ force: true });
+              return '__expando_toggled__';
+            }
 
-              throw new Error(
-                `Unable to interact with context tree in hierarchy-details-comp-${position}`,
-              );
-            });
+            throw new Error(
+              `Unable to interact with context tree in hierarchy-details-comp-${position}`,
+            );
+          });
         }
 
         throw new Error(
@@ -131,16 +177,9 @@ function verifyContextChangeRedrawsMatrix(position: number) {
 
       return getMatrixHash().then((matrixHashBefore) => {
         return getTooltipAtSameMatrixPosition().then((tooltipBefore) => {
-          return clickDifferentLeaf(position, [selectedBefore]).then((clickedLeaf) => {
-            return getMatrixHash().then((matrixHashAfter) => {
-              expect(matrixHashAfter).to.not.equal(matrixHashBefore);
-
-              return getTooltipAtSameMatrixPosition().then((tooltipAfter) => {
-                expect(
-                  tooltipAfter,
-                  `Tooltip should change after selecting ${clickedLeaf} in hierarchy-details-comp-${position}`,
-                ).to.not.equal(tooltipBefore);
-              });
+          return clickDifferentLeaf(position, [selectedBefore]).then(() => {
+            return getMatrixHash(matrixHashBefore).then(() => {
+              return getTooltipAtSameMatrixPosition(tooltipBefore);
             });
           });
         });
@@ -160,9 +199,11 @@ function verifyContextChangeKeepsMatrix(position: number) {
 
       return getMatrixHash().then((matrixHashBefore) => {
         return clickDifferentLeaf(position, [selectedBefore], true).then(() => {
-          return getMatrixHash().then((matrixHashAfter) => {
-            expect(matrixHashAfter).to.equal(matrixHashBefore);
-          });
+          return waitForMatrixDraw()
+            .then(() => getMatrixHash())
+            .then((matrixHashAfter) => {
+              expect(matrixHashAfter).to.equal(matrixHashBefore);
+            });
         });
       });
     });
@@ -187,6 +228,7 @@ describe('Context matrix redraw with Coclustering-6', () => {
       'mat-checkbox.conditionnal-checkbox input[type="checkbox"]';
 
     cy.get(conditionalCheckbox).should('be.checked');
+    waitForMatrixDraw();
 
     cy.wrap(CONTEXT_POSITIONS).each((position: number) => {
       return verifyContextChangeRedrawsMatrix(position);
@@ -203,13 +245,17 @@ describe('Context matrix redraw with Coclustering-6', () => {
           .first()
           .click({ force: true });
 
-        getMatrixHash().then((hashBeforeFold) => {
-          cy.wrap($expando).click({ force: true });
+        waitForMatrixDraw()
+          .then(() => getMatrixHash())
+          .then((hashBeforeFold) => {
+            cy.wrap($expando).click({ force: true });
 
-          getMatrixHash().then((hashAfterFold) => {
-            expect(hashAfterFold).to.equal(hashBeforeFold);
+            waitForMatrixDraw()
+              .then(() => getMatrixHash())
+              .then((hashAfterFold) => {
+                expect(hashAfterFold).to.equal(hashBeforeFold);
+              });
           });
-        });
       });
 
     // Conditional OFF: changing leaves/nodes in context trees must not redraw matrix.
@@ -219,6 +265,7 @@ describe('Context matrix redraw with Coclustering-6', () => {
       }
     });
     cy.get(conditionalCheckbox).should('not.be.checked');
+    waitForMatrixDraw();
 
     cy.wrap(CONTEXT_POSITIONS).each((position: number) => {
       return verifyContextChangeKeepsMatrix(position);
