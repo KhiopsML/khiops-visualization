@@ -3445,14 +3445,14 @@ __metadata:
   linkType: hard
 
 "@lucide/angular@npm:^1.77.0":
-  version: 1.77.0
-  resolution: "@lucide/angular@npm:1.77.0"
+  version: 1.78.0
+  resolution: "@lucide/angular@npm:1.78.0"
   dependencies:
     tslib: "npm:^2.3.0"
   peerDependencies:
     "@angular/common": ">=17.0.0"
     "@angular/core": ">=17.0.0"
-  checksum: 10c0/56527cccf9bad9f3ede00156325bdfd35edc5745d6c3d27c1d381afc19b99125672619ea1cb351d7644c70cad47df83ec6642fe1fec44bffc2df5e6c3922bd12
+  checksum: 10c0/7d4ba2c1b8e8faf1524ed1ed940031eea380d40a26069346db294d746e94ab0c16b83d5f2a2292c64f41489c2d5acdcc6adfc5c40e60768f2b7164dffb15ae1c
   languageName: node
   linkType: hard
 
