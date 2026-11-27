@@ -1,13 +1,15 @@
 #!/usr/bin/env bash
 
+set -e
+
+git pull origin main --tags
+
 if [ $# -ne 1 ]; then
     echo "Usage: $0 <tag>"
     exit 1
 fi
 
 TAG=$1
-
-git pull origin main --tags
 
 # Replace version into package.json
 if [ "$(uname -s)" = "Darwin" ]; then

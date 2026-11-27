@@ -103,7 +103,6 @@ const modelBase: () => HypertreeArgs = () => ({
     onCenterNodeChange: (n: N) => {},
     onWikiCenterNodeChange: (n: N) => {},
     onHoverNodeChange: (n: N) => {
-      // console.log("🚀 ~ file: preset-base.ts ~ line 99 ~ n", n)
     },
     onNodeSelect: () => {},
     onNodeHold: () => {},

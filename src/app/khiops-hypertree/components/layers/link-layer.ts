@@ -68,7 +68,6 @@ export class ArcLayer implements ILayer {
       updateColor: (s) =>
         this.args.classed(s, this.args.width, this.args.stroke),
       updateTransform: (s) => {
-        // console.log("🚀 ~ file: link-layer.ts ~ line 74 ~ ArcLayer ~ attach ~ s", s)
         //const c = d=> d.height===0 ? '+' : '-'
         const c = (d) => this.args.curvature;
 
