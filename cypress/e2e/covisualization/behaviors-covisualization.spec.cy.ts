@@ -70,6 +70,15 @@ describe('Behaviors tests for Khiops Covisualization', () => {
 
       cy.loadFile('covisualization', fileName);
 
+      cy.get('#hierarchy-details-comp-0 .tree-expando')
+        .should('have.length.greaterThan', 0)
+        .then(($elements) =>
+          [...$elements].map((element) => ({
+            id: element.id,
+            expanded: element.classList.contains('expanded'),
+          })),
+        )
+        .as('digitCurveFolds');
       // Open unfold Hierarchy view
       cy.get('.button-unfold-hierarchy').click();
 
@@ -83,23 +92,55 @@ describe('Behaviors tests for Khiops Covisualization', () => {
       cy.get('#cy-unfold-value-button').click({
         force: true,
       });
+      cy.get('#unfold-hierarchy-settings').contains('Number of clusters: 20');
       cy.get('.button-reduce-hierarchy').click();
+      cy.get('#unfold-hierarchy-settings').contains('Number of clusters: 19');
 
-      cy.wait(5000);
-
-      cy.get('kl-checkbox-cell').first().find('input').click({ force: true });
+      cy.contains('#unfold-hierarchy-table .ag-row', 'DigitCurve')
+        .find('kl-checkbox-cell input')
+        .should('be.checked')
+        .click({ force: true });
+      cy.contains('#unfold-hierarchy-table .ag-row', 'DigitCurve')
+        .find('kl-checkbox-cell input')
+        .should('not.be.checked');
+      cy.contains('#unfold-hierarchy-table .ag-row', 'X')
+        .find('kl-checkbox-cell input')
+        .should('be.checked');
 
       // Close dialog
       cy.get('.button-confirm-hierarchy').click();
+      cy.get('#unfold-hierarchy-comp').should('not.exist');
+
+      cy.get('@digitCurveFolds').then((foldsBefore) => {
+        cy.get('#hierarchy-details-comp-0 .tree-expando').should(
+          ($elements) => {
+            const foldsAfter = [...$elements].map((element) => ({
+              id: element.id,
+              expanded: element.classList.contains('expanded'),
+            }));
+            expect(foldsAfter).to.deep.equal(foldsBefore);
+          },
+        );
+      });
 
       // Open statistics panels
       cy.get('.hierarchy-infos-button').eq(0).click({ force: true });
       cy.get('.hierarchy-infos-button').eq(1).click({ force: true });
 
       // Check values
-      cy.get('.hierarchy-select-comp').eq(0).contains('473');
-      cy.get('.hierarchy-select-comp').eq(0).contains('19275');
+      cy.get('.hierarchy-select-comp')
+        .eq(0)
+        .contains('td', 'Clusters')
+        .parent()
+        .find('strong')
+        .should('have.text', '24');
 
+      cy.get('.hierarchy-select-comp')
+        .eq(1)
+        .contains('td', 'Intervals')
+        .parent()
+        .find('strong')
+        .should('have.text', '5');
       cy.get('.hierarchy-select-comp').eq(1).contains(']-inf;9.5]');
       cy.get('.hierarchy-select-comp').eq(1).contains('623752');
     });
